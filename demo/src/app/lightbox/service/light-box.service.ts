@@ -1,13 +1,16 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import { Injectable, Optional } from '@angular/core';
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class LightBoxService {
 
   state: BehaviorSubject<LightBoxState>;
+  config: LightBoxConfig = defaultConfig;
 
-  constructor() {
+  constructor( @Optional() config: LightBoxConfig) {
+    console.log('service works');
     this.state = new BehaviorSubject<LightBoxState>(defaultState);
+    this.config = Object.assign({}, defaultConfig, config);
   }
 
   load(images: LightBoxImage[]) {
@@ -62,18 +65,29 @@ export class LightBoxService {
     }));
   }
 
-  reset(){
+  reset() {
     this.state.next(defaultState);
   }
 }
 
-const defaultState ={
+const defaultState = {
   images: undefined,
   currIndex: undefined,
   hasNext: undefined,
   hasPrev: undefined,
   active: false
 };
+
+const defaultConfig = {
+  width: 1000,
+  height: 500,
+  thumb: {
+    width: 90,
+    height: 60,
+    position: true,
+    overlay: false
+  }
+}
 
 export interface LightBoxState {
   active: boolean;
@@ -88,4 +102,15 @@ export interface LightBoxImage {
   src: string;
   thumbnail?: string;
   text?: string;
+}
+
+export interface LightBoxConfig {
+  width?,
+  height?,
+  thumb?: {
+    width?;
+    height?;
+    position?;
+    overlay?;
+  }
 }

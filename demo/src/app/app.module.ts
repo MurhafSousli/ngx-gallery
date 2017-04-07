@@ -19,7 +19,18 @@ import { RibbonComponent } from './ribbon/ribbon.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    LightboxModule
+    LightboxModule.forRoot(
+      {
+        width: 1000,
+        height: 500,
+        thumb: {
+          width: 90,
+          height: 60,
+          position: true,
+          overlay: false
+        }
+      }
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,7 +2,8 @@
 
   <div *ngIf="state.active" class="lightbox">
 
-    <div class="lightbox-container">
+    <div class="lightbox-container" [ngStyle]="getContainerStyle()">
+      
       <light-box-images [state]="state"></light-box-images>
 
       <div class="lightbox-image">
@@ -10,7 +11,12 @@
         <light-box-nav [state]="state"></light-box-nav>
       </div>
 
-      <div class="lightbox-text" [innerHtml]="state.images[state.currIndex]?.text"></div>
+      <div class="lightbox-description">
+        <div class="lightbox-text" [innerHtml]="state.images[state.currIndex]?.text"></div>
+        <div class="lightbox-number">
+          {{(state.currIndex + 1) + '/' + state.images.length}}
+        </div>
+      </div>
 
     </div>
 
@@ -18,14 +24,3 @@
     <div class="lightbox-overlay" (click)="lightbox.close()"></div>
   </div>
 </div>
-
-<!--<svg display="none">-->
-<!--<filter id="dropshadow">-->
-<!--<feGaussianBlur in="SourceAlpha" stdDeviation="2"/>-->
-<!--<feOffset dx="1" dy="1" result="offsetblur"/>-->
-<!--<feMerge>-->
-<!--<feMergeNode/>-->
-<!--<feMergeNode in="SourceGraphic"/>-->
-<!--</feMerge>-->
-<!--</filter>-->
-<!--</svg>-->

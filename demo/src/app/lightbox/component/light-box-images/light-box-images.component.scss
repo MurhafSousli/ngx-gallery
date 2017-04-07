@@ -1,16 +1,29 @@
+*{
+  box-sizing: border-box;
+}
+
 .lightbox-thumbnails{
   z-index: 206;
-
-  position: absolute;
+  // position: absolute;
+  position: relative;
+  width: 100%;
   left: 0;
   top: 0;
   display: flex;
-  background-color: black;
+  background-color: rgba(black, 0.8);
+}
+
+.lightbox-thumbnail{
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 img{
   cursor: pointer;
   display: block;
+  width: 100%;
 }
 
 .lightbox-ruler{
@@ -18,14 +31,13 @@ img{
   top: 0;
   display: flex;
   align-items: center;
-  transition: all ease 0.2s;
+  transition: margin ease 200ms;
 }
 
 .lightbox-current{
   // position: absolute;   
   // z-index: -1;
-  background-color: white;
-  box-shadow: 0 0 4px white;
+  background-color: lightgrey;
   position: absolute;
 }
 
