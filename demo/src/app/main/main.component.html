@@ -1,0 +1,18 @@
+<div class="container">
+
+  <h4>Lightbox for *ngFor Images</h4>
+
+  <div class="group">
+    <div class="group-img" *ngFor="let image of group1">
+      <img [src]="image">
+    </div>
+  </div>
+
+  <h4>Lightbox to detect InnerHTML changes</h4>
+
+  <div [lightBox]="'html'" class="group" [innerHtml]="group2 | async">
+  </div>
+
+</div>
+
+<light-box></light-box>

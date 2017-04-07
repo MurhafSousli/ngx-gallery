@@ -1,0 +1,15 @@
+<div *ngIf="state.images.length > 1" class="lightbox-nav">
+
+  <div class="lightbox-nav-prev" (click)="lightbox.prev()">
+    <i class="prev-arrow-ico"></i>
+  </div>
+
+  <div class="lightbox-nav-next" (click)="lightbox.next()">
+    <i class="next-arrow-ico"></i>
+  </div>
+
+</div>
+
+<div class="lightbox-number">
+  {{(state.currIndex + 1) + '/' + state.images.length}}
+</div>

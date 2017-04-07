@@ -1,0 +1,16 @@
+<div class="lightbox-thumbnails" [ngStyle]="getContainerStyle()">
+
+  <div class="lightbox-current" [ngStyle]="getCurrThumbStyle()">
+
+  </div>
+
+  <div class="lightbox-ruler" [ngStyle]="getRulerStyle()">
+
+    <div *ngFor="let image of state.images; let i = index" class="lightbox-thumbnail" [class.lightbox-thumbnail-current]="i === state.currIndex">
+
+      <img [src]="image.thumbnail || image.src" (click)="lightbox.setCurrent(i)" [style.width.px]="thumbnailWidth" [style.height.px]="thumbnailHeight">
+
+    </div>
+
+  </div>
+</div>

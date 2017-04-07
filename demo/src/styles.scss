@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~animate.css';
+@import url('https://fonts.googleapis.com/css?family=Libre+Baskerville:400,700');
+
+body{
+    font-family: 'Libre Baskerville', serif;
+    background-color: black;
+}
+
+.container{
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.group{
+  display: flex;
+  margin: 3em 0;
+  img{
+    height: 100px;
+  }
+}

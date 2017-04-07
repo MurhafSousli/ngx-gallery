@@ -1,0 +1,31 @@
+<div *ngIf="lightbox.state | async as state">
+
+  <div *ngIf="state.active" class="lightbox">
+
+    <div class="lightbox-container">
+      <light-box-images [state]="state"></light-box-images>
+
+      <div class="lightbox-image">
+        <img [lazyImage]="state.images[state.currIndex].src" (lazyDim)="dim = $event">
+        <light-box-nav [state]="state"></light-box-nav>
+      </div>
+
+      <div class="lightbox-text" [innerHtml]="state.images[state.currIndex]?.text"></div>
+
+    </div>
+
+    <div class="lightbox-btn-close" (click)="lightbox.close()">CLOSE</div>
+    <div class="lightbox-overlay" (click)="lightbox.close()"></div>
+  </div>
+</div>
+
+<!--<svg display="none">-->
+<!--<filter id="dropshadow">-->
+<!--<feGaussianBlur in="SourceAlpha" stdDeviation="2"/>-->
+<!--<feOffset dx="1" dy="1" result="offsetblur"/>-->
+<!--<feMerge>-->
+<!--<feMergeNode/>-->
+<!--<feMergeNode in="SourceGraphic"/>-->
+<!--</feMerge>-->
+<!--</filter>-->
+<!--</svg>-->
