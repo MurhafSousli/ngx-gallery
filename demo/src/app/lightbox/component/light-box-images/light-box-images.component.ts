@@ -22,35 +22,53 @@ export class LightBoxImagesComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    let direction, ruleX = 0, ruleY = 0;
+    // ruler variables
+    let rulerX = 0, rulerY = 0, rulerCenterX = 0, rulerCenterY = 0, rulerDirection = 'row';
+
     switch (this.config.position) {
       case 'top':
-        ruleX = this.state.currIndex * this.config.width + (this.config.width / 2);
-        this.setRulerStyle(ruleX, 0, 50, 0, 'row');
+        // ruler top position
+        rulerX = this.state.currIndex * this.config.width + (this.config.width / 2);
+        rulerCenterX = 50;
+        // current thumbnail position
         this.setCurrThumbStyle(`calc(50% - ${this.config.width / 2}px)`, 'unset');
+        // container position
         this.setContainerStyle('100%', `${this.config.height}px`, 'column', 0);
         break;
       case 'bottom':
-        ruleX = this.state.currIndex * this.config.width + (this.config.width / 2);
-        this.setRulerStyle(ruleX, 0, 50, 0, 'row');
+        // ruler bottom position
+        rulerX = this.state.currIndex * this.config.width + (this.config.width / 2);
+        rulerCenterX = 50;
+        // current thumbnail position
         this.setCurrThumbStyle(`calc(50% - ${this.config.width / 2}px)`, 'unset');
+        // container position
         this.setContainerStyle('100%', `${this.config.height}px`, 'column', 3);
         break;
       case 'left':
-        ruleY = this.state.currIndex * this.config.height + (this.config.height / 2);
-        this.setRulerStyle(0, ruleY, 0, 50, 'column');
+        // ruler position
+        rulerY = this.state.currIndex * this.config.height + (this.config.height / 2);
+        rulerCenterY = 50;
+        rulerDirection = 'column';
+        // current thumbnail position
         this.setCurrThumbStyle('unset', `calc(50% - ${this.config.height / 2}px)`);
+        // container position
         this.setContainerStyle(`${this.config.width}px`, '100%', 'row', 0);
         break;
       case 'right':
-        ruleY = this.state.currIndex * this.config.height + (this.config.height / 2);
-        this.setRulerStyle(0, ruleY, 0, 50, 'column');
+        // ruler position
+        rulerY = this.state.currIndex * this.config.height + (this.config.height / 2);
+        rulerCenterY = 50;
+        rulerDirection = 'column';
+        // current thumbnail position
         this.setCurrThumbStyle('unset', `calc(50% - ${this.config.height / 2}px)`);
+        // container position
         this.setContainerStyle(`${this.config.width}px`, '100%', 'row', 3);
         break;
       default:
         break;
     }
+
+    this.setRulerStyle(rulerX, rulerY, rulerCenterX, rulerCenterY, rulerDirection);
 
   }
 
