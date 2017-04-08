@@ -3,19 +3,23 @@
   <div *ngIf="state.active" class="lightbox">
 
     <div class="lightbox-container" [ngStyle]="getContainerStyle()">
-      
-      <light-box-images [state]="state"></light-box-images>
 
-      <div class="lightbox-image">
-        <img [lazyImage]="state.images[state.currIndex].src" (lazyDim)="dim = $event">
-        <light-box-nav [state]="state"></light-box-nav>
-      </div>
+      <light-box-thumbnails *ngIf="lightbox.config.thumb" [state]="state"></light-box-thumbnails>
 
-      <div class="lightbox-description">
-        <div class="lightbox-text" [innerHtml]="state.images[state.currIndex]?.text"></div>
-        <div class="lightbox-number">
-          {{(state.currIndex + 1) + '/' + state.images.length}}
+      <div class="lightbox-current">
+
+        <div class="lightbox-image">
+          <img [lazyImage]="state.images[state.currIndex].src" [style.transition]="lightbox.config.transition">
+          <light-box-nav [state]="state"></light-box-nav>
         </div>
+
+        <div class="lightbox-description">
+          <div class="lightbox-text" [innerHtml]="state.images[state.currIndex]?.text"></div>
+          <div class="lightbox-number">
+            {{(state.currIndex + 1) + '/' + state.images.length}}
+          </div>
+        </div>
+
       </div>
 
     </div>

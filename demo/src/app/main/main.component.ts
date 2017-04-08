@@ -36,9 +36,11 @@ export class MainComponent implements OnInit {
     // ]
 
     this.group2 = Observable.of(`
+      <img src="assets/img/img1.jpg" alt="Clock">
+      <img src="assets/img/img2.jpg" alt="See Sunset View">
       <img src="assets/img/img5.jpg" alt="Peacock">
       <img src="assets/img/img6.jpg" alt="Snow Mountains View">
-      <img src="assets/img/img7.jpg" alt="City Sunset">
+      <img src="assets/img/img7.jpg" alt="City Sunset View">
     `).delay(1500);
 
   }

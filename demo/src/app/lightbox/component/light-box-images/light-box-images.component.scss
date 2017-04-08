@@ -4,8 +4,6 @@
 
 .lightbox-thumbnails{
   z-index: 206;
-  // position: absolute;
-  position: relative;
   width: 100%;
   left: 0;
   top: 0;
@@ -34,14 +32,11 @@ img{
   transition: margin ease 200ms;
 }
 
-.lightbox-current{
-  // position: absolute;   
-  // z-index: -1;
+.lightbox-thumbnail-placeholder{
   background-color: lightgrey;
   position: absolute;
 }
 
 .lightbox-thumbnail-current{
-  // border: 2px solid white;
+  
 }
-

@@ -23,10 +23,11 @@ import { RibbonComponent } from './ribbon/ribbon.component';
       {
         width: 1000,
         height: 500,
+        transition: 'all linear 200ms',
         thumb: {
           width: 90,
           height: 60,
-          position: true,
+          position: 'right',
           overlay: false
         }
       }

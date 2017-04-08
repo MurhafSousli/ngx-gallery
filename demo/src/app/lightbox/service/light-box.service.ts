@@ -107,6 +107,7 @@ export interface LightBoxImage {
 export interface LightBoxConfig {
   width?,
   height?,
+  transition?,
   thumb?: {
     width?;
     height?;

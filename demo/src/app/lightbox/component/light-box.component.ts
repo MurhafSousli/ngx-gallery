@@ -12,7 +12,7 @@ export class LightBoxComponent implements OnInit, OnDestroy {
   }
 
   getContainerStyle() {
-    let width = 'unset', height = 'unset', maxWidth = 'unset', maxHeight = 'unset';
+    let width = 'unset', height = 'unset', maxWidth = 'unset', maxHeight = 'unset', direction;
     if (this.lightbox.config.width) {
       width = '100%';
       maxWidth = this.lightbox.config.width + 'px';
@@ -21,7 +21,17 @@ export class LightBoxComponent implements OnInit, OnDestroy {
       height = '100%';
       maxHeight = this.lightbox.config.height + 'px';
     }
+
+    if (this.lightbox.config.thumb.position === 'left'
+      || this.lightbox.config.thumb.position === 'right') {
+      direction = 'column'
+    } else if (this.lightbox.config.thumb.position === 'top'
+      || this.lightbox.config.thumb.position === 'bottom') {
+      direction = 'row'
+    }
+
     return {
+      flexDirection: direction,
       maxHeight: maxHeight,
       maxWidth: maxWidth,
       height: height,
