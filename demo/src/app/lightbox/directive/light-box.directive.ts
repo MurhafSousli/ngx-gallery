@@ -1,5 +1,6 @@
 import { Directive, ElementRef, Renderer2, Input, SimpleChanges } from '@angular/core';
-import { LightBoxService, LightBoxImage } from '../service/light-box.service';
+import { LightBoxService } from '../service/light-box.service';
+import { LightBoxImage } from '../service/light-box.interface';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';

@@ -1,11 +1,15 @@
 import { NgModule, ModuleWithProviders, InjectionToken } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { LightBoxService } from './service/light-box.service';
+import { LightBoxConfig } from './service/light-box.interface';
+
 import { LightBoxComponent } from './component/light-box.component';
-import { LightBoxService, LightBoxConfig } from './service/light-box.service';
 import { LightBoxNavComponent } from './component/light-box-nav/light-box-nav.component';
-import { LazyLoadImageDirective } from "./directive/lazyload-image.directive";
 import { LightBoxImagesComponent } from './component/light-box-images/light-box-images.component';
+
 import { LightBoxDirective } from './directive/light-box.directive';
+import { LazyLoadImageDirective } from "./directive/lazyload-image.directive";
 
 /** Initialize ConfigService with URL */
 export function lightBoxFactory(config: LightBoxConfig) {
@@ -30,7 +34,7 @@ export const CONFIG = new InjectionToken<LightBoxConfig>('config');
     LightBoxDirective
   ]
 })
-class LightboxModule {
+export class LightboxModule {
   static forRoot(config?: LightBoxConfig): ModuleWithProviders {
 
     return {
@@ -47,4 +51,3 @@ class LightboxModule {
   }
 }
 
-export { LightboxModule, LightBoxService, LightBoxDirective };

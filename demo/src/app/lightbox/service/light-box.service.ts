@@ -1,5 +1,6 @@
 import { Injectable, Optional } from '@angular/core';
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { LightBoxConfig, LightBoxState, LightBoxImage } from './light-box.interface';
 
 @Injectable()
 export class LightBoxService {
@@ -70,7 +71,7 @@ export class LightBoxService {
   }
 }
 
-const defaultState = {
+const defaultState: LightBoxState = {
   images: undefined,
   currIndex: undefined,
   hasNext: undefined,
@@ -78,7 +79,7 @@ const defaultState = {
   active: false
 };
 
-const defaultConfig = {
+const defaultConfig: LightBoxConfig = {
   width: 1000,
   height: 500,
   thumb: {
@@ -86,32 +87,5 @@ const defaultConfig = {
     height: 60,
     position: true,
     overlay: false
-  }
-}
-
-export interface LightBoxState {
-  active: boolean;
-  images?: LightBoxImage[];
-  currIndex?: number;
-  hasNext?: boolean;
-  hasPrev?: boolean;
-}
-
-export interface LightBoxImage {
-
-  src: string;
-  thumbnail?: string;
-  text?: string;
-}
-
-export interface LightBoxConfig {
-  width?,
-  height?,
-  transition?,
-  thumb?: {
-    width?;
-    height?;
-    position?;
-    overlay?;
   }
 }

@@ -28,7 +28,7 @@ import { RibbonComponent } from './ribbon/ribbon.component';
           width: 90,
           height: 60,
           position: 'right',
-          overlay: false
+          overlay: true
         }
       }
     )
