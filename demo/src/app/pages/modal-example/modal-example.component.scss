@@ -1,0 +1,28 @@
+.example-card {
+  width: 400px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/shiba1.d84e1a8ed94377452dbf.jpg');
+  background-size: cover;
+}
+button{
+  margin: 1.5em;
+  border-radius: 0.2em;
+  overflow: hidden;
+  padding: 0;
+  width: 180px;
+  height: 140px;
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+.grid{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 3em 0;
+}

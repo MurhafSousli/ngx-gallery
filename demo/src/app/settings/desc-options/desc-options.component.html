@@ -1,0 +1,26 @@
+<md-toolbar class="option-header" color="primary">
+  <md-checkbox [ngModel]="config" (ngModelChange)="enabledChanged($event)">description</md-checkbox>
+</md-toolbar>
+
+<ul>
+
+  <li>
+    <md-select [(ngModel)]="config.position"
+               placeholder="position" [disabled]="!config">
+      <md-option *ngFor="let p of positionOptions" [value]="p">{{p}}</md-option>
+    </md-select>
+  </li>
+
+  <li>
+    <md-checkbox [(ngModel)]="config.text" [disabled]="!config">text</md-checkbox>
+  </li>
+
+  <li>
+    <md-checkbox [(ngModel)]="config.counter" [disabled]="!config">counter</md-checkbox>
+  </li>
+
+  <li>
+    <md-checkbox [(ngModel)]="config.overlay" [disabled]="!config">overlay</md-checkbox>
+  </li>
+
+</ul>

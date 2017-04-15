@@ -1,0 +1,14 @@
+<div class="gallery-image"
+    [@imgIn]="(imgLoad) ? 'notloading' : 'loading'"
+    [lazyImage]="getCurrImage()"
+    (lazyLoad)="imageLoad($event)"></div>
+
+<div class="gallery-image gallery-image-prev"
+    [@imgOut]="(imgLoad) ? 'notloading' : 'loading'"
+    [style.backgroundImage]="'url(' + prevImg + ')'"></div>
+
+<gallery-loader *ngIf="!imgLoad"></gallery-loader>
+
+
+
+<!--[@imgIn]="(imgLoad) ? 'notloading' : 'loading'"-->

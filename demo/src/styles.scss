@@ -1,21 +1,116 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'assets/theme.scss';
+@import '~prismjs/themes/prism';
 @import '~animate.css';
-@import url('https://fonts.googleapis.com/css?family=Libre+Baskerville:400,700');
+@import '~font-awesome/css/font-awesome.css';
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700');
 
-body{
-    font-family: 'Libre Baskerville', serif;
-    background-color: black;
+* {
+  box-sizing: border-box;
 }
 
-.container{
+body {
+  font-family: 'Roboto Slab', serif;
+}
+
+.container {
   max-width: 700px;
   margin: 0 auto;
+  overflow: hidden;
 }
 
-.group{
+md-toolbar {
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
+
+  .mat-button {
+    text-transform: uppercase;
+  }
+}
+
+md-toolbar.mat-toolbar {
+  min-height: 50px;
+}
+
+md-toolbar-row.mat-toolbar-row {
+  height: 50px;
+}
+
+header md-toolbar-row {
+  justify-content: space-between;
+}
+
+.btn-icon {
   display: flex;
+  align-items: center;
+  i {
+    font-size: 1.7em;
+    margin-right: 0.4em;
+  }
+}
+
+code[highlight] {
+  font-size: .8em;
+}
+
+highlight, code[highlight] {
+  border-radius: .2em;
+  background-color: rgba(lightgray, .2) !important;
+}
+
+.content {
   margin: 3em 0;
-  img{
-    height: 100px;
+  display: block;
+  width: 100%;
+  section {
+    margin-bottom: 3em;
+  }
+
+  .config-scheme {
+    p {
+      padding: 1em;
+      background-color: rgba(lightgray, 0.2);
+    }
+    p, li {
+      display: flex;
+      align-items: center;
+    }
+    li {
+      padding: 1em;
+    }
+    ul {
+      list-style: circle;
+      padding-left: 1em;
+      background-color: rgba(lavenderblush, 0.8);
+    }
+    span {
+      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+      font-size: 0.8em;
+      color: rgba(black, 0.6);
+      text-align: right;
+      flex: 1;
+    }
+  }
+
+}
+
+.gallery-modal {
+  right: 300px !important;
+}
+
+auto-detect-example {
+  img {
+    max-height: 130px;
+  }
+}
+
+h1 {
+  margin-top: 2em;
+}
+.gallery-options {
+  ul {
+    padding-left: 2em;
+    list-style: none;
+  }
+  md-select {
+    margin: 1em 0;
   }
 }

@@ -1,0 +1,42 @@
+<md-toolbar class="option-header" color="primary">
+
+  <div class="options-title">
+    <span>Gallery options</span>
+    <md-select [ngModel]="currTheme.name" (ngModelChange)="setTheme($event)" placeholder="theme">
+      <md-option *ngFor="let theme of themes" [value]="theme">{{theme.name}}</md-option>
+    </md-select>
+  </div>
+
+  <md-toolbar-row class="button-row">
+    <button md-raised-button (click)="importConfig()">import</button>
+    <button md-raised-button (click)="exportConfig()">export</button>
+  </md-toolbar-row>
+
+</md-toolbar>
+
+
+<div class="gallery-options">
+
+  <div class="option-padding">
+
+    <md-select [(ngModel)]="gallery.config.animate" placeholder="animate">
+      <md-option *ngFor="let p of animateOptions" [value]="p">{{p}}</md-option>
+    </md-select>
+
+    <md-input-container>
+      <input mdInput placeholder="width" [(ngModel)]="gallery.config.width">
+    </md-input-container>
+
+    <md-input-container>
+      <input mdInput placeholder="height" [(ngModel)]="gallery.config.height">
+    </md-input-container>
+  </div>
+
+
+  <desc-options [config]="gallery.config.description" (value)="gallery.config.description = $event"></desc-options>
+
+  <thumb-options [config]="gallery.config.thumbnails" (value)="gallery.config.thumbnails = $event"></thumb-options>
+
+  <loader-options [config]="gallery.config.loader" (value)="gallery.config.loader = $event"></loader-options>
+
+</div>

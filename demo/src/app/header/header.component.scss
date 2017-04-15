@@ -1,42 +1,71 @@
-.header{
-    width: 100%;
-    margin-top: 1em;
-    display: flex;
+.logo {
+  width: 200px;
 }
 
-.logo{
-    width: 200px;
+.header {
+  margin-left: 20px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 300px;
+  padding: 4em;
+  transition: margin-top ease-in 0.3s;
+  margin-top: 0;
 }
-.header-text{
-    margin-left: 20px;
+
+.close-header {
+  transition: margin-top ease-out 0.3s;
+  margin-top: -300px;
 }
 
-h1{
-    color: #4e005f;
+.header-text {
+  margin: 2em;
+}
 
-    background: linear-gradient(0deg, #4e005f, #cf15e3, #e35f15, #100cb0);
-    background-size: 800% 800%;
+h1 {
+  margin: 1em 0;
+  color: #4e005f;
 
-    -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
+  background: linear-gradient(0deg, #4e005f, #cf15e3, #e35f15, #100cb0);
+  background-size: 800% 800%;
 
-    -webkit-animation: ColorTransition 44s ease infinite;
-    -moz-animation: ColorTransition 44s ease infinite;
-    animation: ColorTransition 44s ease infinite;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
 
-    @-webkit-keyframes ColorTransition {
-        0%{background-position:0% 90%}
-        50%{background-position:100% 11%}
-        100%{background-position:0% 90%}
+  animation: ColorTransition 44s ease infinite;
+
+  @-webkit-keyframes ColorTransition {
+    0% {
+      background-position: 0% 90%
     }
-    @-moz-keyframes ColorTransition {
-        0%{background-position:0% 90%}
-        50%{background-position:100% 11%}
-        100%{background-position:0% 90%}
+    50% {
+      background-position: 100% 11%
     }
-    @keyframes ColorTransition {
-        0%{background-position:0% 90%}
-        50%{background-position:100% 11%}
-        100%{background-position:0% 90%}
+    100% {
+      background-position: 0% 90%
     }
+  }
+  @-moz-keyframes ColorTransition {
+    0% {
+      background-position: 0% 90%
+    }
+    50% {
+      background-position: 100% 11%
+    }
+    100% {
+      background-position: 0% 90%
+    }
+  }
+  @keyframes ColorTransition {
+    0% {
+      background-position: 0% 90%
+    }
+    50% {
+      background-position: 100% 11%
+    }
+    100% {
+      background-position: 0% 90%
+    }
+  }
 }
+

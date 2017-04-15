@@ -1,0 +1,25 @@
+*{
+  box-sizing: border-box;
+}
+:host{
+  left: 0;
+  width: 100%;
+  z-index: 205;
+  background-clip: padding-box;
+  background-color: rgba(0, 0, 0, .8);
+  color: #ccc;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  padding: 1em 2em;
+  // @media (max-width: 480px) {
+  //   top: 100%;
+  //   bottom: unset;
+  // }
+}
+
+.gallery-text {
+  flex: 1;
+}

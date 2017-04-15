@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+}
+
+:host{
+  display: block;
+}
+
+.gallery{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gallery-container {
+  overflow: hidden;
+  position: relative;
+  z-index: 200;
+  //max-height: 94%;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 480px) {
+    margin: 0.8em;
+  }
+}
+
+.gallery-current, .gallery-image-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  order: 1;
+}
+
+

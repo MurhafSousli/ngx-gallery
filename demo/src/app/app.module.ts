@@ -1,39 +1,52 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { LightboxModule } from './lightbox/lightbox.module';
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { MainComponent } from './main/main.component';
-import { RibbonComponent } from './ribbon/ribbon.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MdCheckboxModule, MdButtonModule, MdToolbarModule, MdIconModule} from '@angular/material';
+
+import {AppRoutingModule} from './routing.module';
+import {GalleryModule} from './gallery/gallery.module';
+import {SettingsModule} from './settings/settings.module';
+
+import {AppComponent} from './app.component';
+import {HeaderComponent} from './header/header.component';
+import {MainComponent} from './main/main.component';
+import {FooterComponent} from './footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     MainComponent,
-    RibbonComponent
+    FooterComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    HttpModule,
-    LightboxModule.forRoot(
+    BrowserAnimationsModule,
+    MdCheckboxModule,
+    MdToolbarModule,
+    MdButtonModule,
+    MdIconModule,
+    AppRoutingModule,
+    SettingsModule,
+    GalleryModule.forRoot(
       {
-        width: 1000,
-        height: 500,
-        transition: 'all linear 200ms',
-        thumb: {
-          width: 90,
-          height: 60,
-          position: 'right',
-          overlay: true
+        width: '900px',
+        height: '500px',
+        description: {
+          position: 'bottom',
+          overlay: true,
+          text: true,
+          counter: true
+        },
+        thumbnails: {
+          width: 120,
+          height: 90,
+          position: 'top'
         }
       }
     )
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -1,0 +1,12 @@
+<div *ngIf="gallery.state | async as state">
+
+  <div *ngIf="state.active" class="gallery-modal">
+
+    <gallery-base [state]="state"></gallery-base>
+
+    <div class="gallery-overlay" (click)="gallery.close()"></div>
+
+    <div *ngIf="closeButton" class="gallery-btn-close" [ngStyle]="getCloseStyle()" (click)="gallery.close()"></div>
+  </div>
+
+</div>
