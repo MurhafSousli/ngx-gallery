@@ -1,11 +1,10 @@
-<md-toolbar class="option-header" color="primary">
+<md-toolbar class="option-header" color="secondary">
   <md-checkbox [ngModel]="config" (ngModelChange)="enabledChanged($event)">description</md-checkbox>
 </md-toolbar>
 
 <ul>
-
   <li>
-    <md-select [(ngModel)]="config.position"
+    <md-select [(ngModel)]="config.position" color="secondary"
                placeholder="position" [disabled]="!config">
       <md-option *ngFor="let p of positionOptions" [value]="p">{{p}}</md-option>
     </md-select>

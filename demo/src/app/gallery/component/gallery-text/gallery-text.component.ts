@@ -1,17 +1,18 @@
-import {Component, Input, OnChanges, ElementRef, Renderer2} from '@angular/core';
-import {GalleryService} from '../../service/gallery.service';
-import {GalleryState} from '../../service/gallery.state';
+import {Component, Input, OnChanges, ElementRef, Renderer2, ChangeDetectionStrategy} from '@angular/core';
+import { GalleryService } from '../../service/gallery.service';
+import { GalleryState } from '../../service/gallery.state';
 
 @Component({
   selector: 'gallery-text',
   templateUrl: './gallery-text.component.html',
-  styleUrls: ['./gallery-text.component.scss']
+  styleUrls: ['./gallery-text.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GalleryTextComponent implements OnChanges {
 
   @Input() state: GalleryState;
 
-  constructor(private gallery: GalleryService, private el: ElementRef, private renderer: Renderer2) {
+  constructor(public gallery: GalleryService, private el: ElementRef, private renderer: Renderer2) {
   }
 
   ngOnChanges() {

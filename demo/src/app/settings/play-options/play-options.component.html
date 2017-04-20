@@ -1,0 +1,18 @@
+<md-toolbar class="option-header" color="secondary">
+  <md-checkbox [ngModel]="config" (ngModelChange)="enabledChanged($event)">player</md-checkbox>
+</md-toolbar>
+
+<ul>
+  <li>
+    <md-checkbox [(ngModel)]="config.autoplay" [disabled]="!config">autoplay</md-checkbox>
+  </li>
+  <li>
+    <md-checkbox [(ngModel)]="config.progress" [disabled]="!config">progress</md-checkbox>
+  </li>
+  <li>
+    <md-input-container>
+      <input mdInput placeholder="speed" [(ngModel)]="config.speed" [disabled]="!config">
+    </md-input-container>
+  </li>
+
+</ul>

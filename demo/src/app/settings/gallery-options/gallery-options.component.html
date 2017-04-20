@@ -1,15 +1,15 @@
-<md-toolbar class="option-header" color="primary">
+<md-toolbar class="option-header">
 
   <div class="options-title">
     <span>Gallery options</span>
-    <md-select [ngModel]="currTheme.name" (ngModelChange)="setTheme($event)" placeholder="theme">
+    <md-select *ngIf="themes" [ngModel]="currTheme.name" (ngModelChange)="setTheme($event)" placeholder="theme">
       <md-option *ngFor="let theme of themes" [value]="theme">{{theme.name}}</md-option>
     </md-select>
   </div>
 
   <md-toolbar-row class="button-row">
-    <button md-raised-button (click)="importConfig()">import</button>
-    <button md-raised-button (click)="exportConfig()">export</button>
+    <button md-raised-button (click)="importConfig()">IMPORT</button>
+    <button md-raised-button (click)="exportConfig()">EXPORT</button>
   </md-toolbar-row>
 
 </md-toolbar>
@@ -19,7 +19,7 @@
 
   <div class="option-padding">
 
-    <md-select [(ngModel)]="gallery.config.animate" placeholder="animate">
+    <md-select [(ngModel)]="gallery.config.animation" placeholder="animation">
       <md-option *ngFor="let p of animateOptions" [value]="p">{{p}}</md-option>
     </md-select>
 
@@ -35,8 +35,13 @@
 
   <desc-options [config]="gallery.config.description" (value)="gallery.config.description = $event"></desc-options>
 
-  <thumb-options [config]="gallery.config.thumbnails" (value)="gallery.config.thumbnails = $event"></thumb-options>
-
   <loader-options [config]="gallery.config.loader" (value)="gallery.config.loader = $event"></loader-options>
 
+  <thumb-options [config]="gallery.config.thumbnails" (value)="gallery.config.thumbnails = $event"></thumb-options>
+
+  <bullets-options [config]="gallery.config.bullets" (value)="gallery.config.bullets = $event"></bullets-options>
+
+  <play-options [config]="gallery.config.player" (value)="gallery.config.player = $event"></play-options>
+
+  <service-options></service-options>
 </div>

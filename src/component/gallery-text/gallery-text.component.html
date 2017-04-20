@@ -1,0 +1,5 @@
+<div *ngIf="gallery.config.description.text" class="gallery-text" [innerHtml]="state.images[state.currIndex]?.text">
+</div>
+<div *ngIf="gallery.config.description.counter" class="gallery-number">
+  {{(state.currIndex + 1) + '/' + state.images.length}}
+</div>

@@ -1,9 +1,9 @@
-<h1>Gallery in a modal</h1>
+<h1 class="colorful">Gallery in a modal</h1>
 
 <div class="grid">
   <button md-raised-button md-ripple
           *ngFor="let image of shared.getImages(); let i = index"
-          (click)="gallery.setCurrent(i)">
+          (click)="gallery.set(i)">
     <img [src]="image.src"/>
   </button>
 </div>
@@ -12,32 +12,14 @@
 
 <div class="content">
 
-  <h4>Code</h4>
+  <h4 class="colorful">Code</h4>
 
-  <highlight [lang]="'html'" [code]="shared.galleryImageGridTemplate"></highlight>
+  <highlight [lang]="'html'" [code]="shared.codes.gridTemplate"></highlight>
 
-  <p>Images array would look something like:</p>
+  <p></p>
 
-  <highlight [lang]="'ts'" [code]="shared.galleryImageArrayScheme"></highlight>
+  <highlight [lang]="'ts'" [code]="shared.codes.imagesScheme"></highlight>
+  <highlight [lang]="'ts'" [code]="shared.codes.loadImages"></highlight>
 
 </div>
 
-<!--<md-card class="example-card">-->
-<!--<md-card-header>-->
-<!--<div md-card-avatar class="example-header-image"></div>-->
-<!--<md-card-title>Shiba Inu</md-card-title>-->
-<!--<md-card-subtitle>Dog Breed</md-card-subtitle>-->
-<!--</md-card-header>-->
-<!--<img md-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">-->
-<!--<md-card-content>-->
-<!--<p>-->
-<!--The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.-->
-<!--A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally-->
-<!--bred for hunting.-->
-<!--</p>-->
-<!--</md-card-content>-->
-<!--<md-card-actions>-->
-<!--<button md-button>LIKE</button>-->
-<!--<button md-button>SHARE</button>-->
-<!--</md-card-actions>-->
-<!--</md-card>-->

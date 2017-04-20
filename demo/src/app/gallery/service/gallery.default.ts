@@ -3,14 +3,15 @@ import {GalleryConfig} from './gallery.config';
 
 export const defaultState: GalleryState = {
   images: undefined,
-  currIndex: undefined,
+  prevIndex: 0,
+  currIndex: 0,
   hasNext: undefined,
   hasPrev: undefined,
   active: false
 };
 
 export const defaultConfig: GalleryConfig = {
-  animate: 'none',
+  animation: 'fade',
   width: '900px',
   height: '500px',
   loader: {
@@ -24,6 +25,16 @@ export const defaultConfig: GalleryConfig = {
     overlay: true,
     text: true,
     counter: true
+  },
+  bullets: {
+    width: 30,
+    height: 30,
+    position: 'top'
+  },
+  player: {
+    progress: false,
+    autoplay: false,
+    speed: 1000
   },
   thumbnails: {
     width: 120,

@@ -1,5 +1,4 @@
-import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
   selector: 'header',
@@ -8,7 +7,4 @@ import {NavigationEnd, Router} from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
-
-  @Input() showHeader;
-
 }

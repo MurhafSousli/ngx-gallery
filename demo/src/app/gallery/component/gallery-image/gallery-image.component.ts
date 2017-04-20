@@ -1,73 +1,45 @@
-import {Component, Input} from '@angular/core';
-import {transition, state, trigger, style, animate} from '@angular/animations';
-import {GalleryService} from "../../service/gallery.service";
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import { GalleryService } from '../../service/gallery.service';
+import {animation} from './gallery-image.animation';
 
 @Component({
   selector: 'gallery-image',
   templateUrl: './gallery-image.component.html',
   styleUrls: ['./gallery-image.component.scss'],
-  animations: [
-    trigger('imgIn', [
-      transition('loading => notloading', [
-        style({
-          transform: 'translateX(100%)'
-        }),
-        animate('0.5s ease-in')
-      ]),
-    ]),
-    trigger('imgOut', [
-      state('loading', style({transform: 'translateX(-100%)'})),
-      transition('loading => notloading', [
-        style({
-          transform: 'translateX(0)'
-        }),
-        animate('0.5s ease-in')
-      ]),
-    ]),
-  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: animation
 })
 export class GalleryImageComponent {
 
-  /** Index of the previous image (to check if the current image is next or prev) */
-  tempIndex;
-  prevIndex;
-  prevImage;
-
   @Input() state;
-  prevImg;
-  imgLoad;
+  loadDone;
+  animate;
 
-  animateIn;
-  animateOut;
-
-  constructor(private gallery: GalleryService) {
+  constructor(public gallery: GalleryService) {
   }
 
-  getCurrImage() {
-    if (this.prevIndex) {
-      this.prevIndex = this.state.currIndex;
-    }
-    return this.state.images[this.state.currIndex].src;
-  }
+  imageLoad(done) {
+    this.loadDone = done;
 
-  imageLoad(e) {
-    this.imgLoad = e;
-
-    switch (this.gallery.config.animate) {
-      case 'fade':
-        this.animateIn = '';
-        break;
-      case '':
-        break;
-      default:
-        this.animateIn = 'none';
+    if (done) {
+      this.animate = 'none';
+    } else {
+      switch (this.gallery.config.animation) {
+        case 'fade':
+          this.animate = 'fade';
+          break;
+        case 'slide':
+          if (this.state.currIndex > this.state.prevIndex) {
+            this.animate = 'slideLeft';
+          } else {
+            this.animate = 'slideRight';
+          }
+          break;
+        default:
+          this.animate = 'none';
+      }
     }
 
-    // set previous image index to the current one
-    // this.prevIndex = this.state.currIndex;
-    if (this.prevIndex !== undefined) {
-      this.prevImg = this.state.images[this.prevIndex].src;
-    }
   }
 
 

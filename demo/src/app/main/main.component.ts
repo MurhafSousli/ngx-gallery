@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, Input} from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
   selector: 'main',
@@ -7,5 +7,4 @@ import {Component, ChangeDetectionStrategy, Input} from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainComponent {
-  @Input() showHeader;
 }

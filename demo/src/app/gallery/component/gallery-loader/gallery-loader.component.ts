@@ -1,14 +1,15 @@
-import {Component} from '@angular/core';
-import {GalleryService} from '../../service/gallery.service';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import { GalleryService } from '../../service/gallery.service';
 
 @Component({
   selector: 'gallery-loader',
   templateUrl: './gallery-loader.component.html',
-  styleUrls: ['./gallery-loader.component.scss']
+  styleUrls: ['./gallery-loader.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GalleryLoaderComponent {
 
-  constructor(private gallery: GalleryService) {
+  constructor(public gallery: GalleryService) {
   }
 
   getIcon() {
@@ -35,7 +36,7 @@ export class GalleryLoaderComponent {
         return 'https://cdn.rawgit.com/SamHerbert/SVG-Loaders/75b65ef5/svg-loaders/tail-spin.svg';
 
       default:
-        return 'https://cdn.rawgit.com/SamHerbert/SVG-Loaders/75b65ef5/svg-loaders/bars.svg';
+        return this.gallery.config.loader.icon;
     }
   }
 

@@ -1,8 +1,8 @@
-import {Directive, ElementRef, Renderer2, Input, OnInit} from '@angular/core';
-import {GalleryService} from '../service/gallery.service';
-import {GalleryImage} from '../service/gallery.state';
+import { Directive, ElementRef, Renderer2, Input, OnInit } from '@angular/core';
+import { GalleryService } from '../service/gallery.service';
+import { GalleryImage } from '../service/gallery.state';
 
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
 
 @Directive({
@@ -12,7 +12,7 @@ export class GalleryDirective implements OnInit {
 
   @Input() gallerize;
 
-  constructor(private el: ElementRef, private renderer: Renderer2, private gallery: GalleryService) {
+  constructor(public el: ElementRef, public renderer: Renderer2, public gallery: GalleryService) {
   }
 
   ngOnInit() {
@@ -34,7 +34,7 @@ export class GalleryDirective implements OnInit {
               // add click event to open image in the lightbox
               this.renderer.setStyle(img, 'cursor', 'pointer');
               this.renderer.setProperty(img, 'onclick', () => {
-                this.gallery.setCurrent(i);
+                this.gallery.set(i);
               });
 
               // create an image item

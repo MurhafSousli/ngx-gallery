@@ -1,42 +1,45 @@
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {GalleryService} from '../../service/gallery.service';
-import {GalleryConfig} from '../../service/gallery.config';
+import {GalleryState} from '../../service/gallery.state';
 
 @Component({
   selector: 'gallery-base',
   templateUrl: './gallery-base.component.html',
-  styleUrls: ['./gallery-base.component.scss']
+  styleUrls: ['./gallery-base.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GalleryBaseComponent {
+export class GalleryBaseComponent implements OnInit {
 
-  @Input() state: GalleryConfig;
+  @Input() state: GalleryState;
 
-  constructor(private gallery: GalleryService) {
+  constructor(public gallery: GalleryService) {
   }
 
+  ngOnInit() {
+    /** Start auto-play if enabled */
+    if (this.gallery.config.player.autoplay && !this.state.play) {
+      this.gallery.play();
+    }
+  }
+
+  /** TODO: set in ngOnInit */
   getContainerStyle() {
-    // just a shortcut for thumbnail position
+    // shortcut for thumbnail config
     const thumbPos = this.gallery.config.thumbnails.position;
 
-    // Container Style
-    let width = 'unset', height = 'unset', maxWidth = 'unset', maxHeight = 'unset';
+    // set container size
+    let height = 'unset', maxWidth = 'unset';
     if (this.gallery.config.width) {
-      // width = '100%';
-      width = this.gallery.config.width;
       maxWidth = this.gallery.config.width;
     }
     if (this.gallery.config.height) {
-      // height = '100%';
       height = this.gallery.config.height;
-      maxHeight = this.gallery.config.height;
     }
 
     return {
       flexDirection: (thumbPos === 'left' || thumbPos === 'right') ? 'row' : 'column',
-      maxHeight: maxHeight,
       maxWidth: maxWidth,
-      height: height,
-      width: width
+      height: height
     };
   }
 

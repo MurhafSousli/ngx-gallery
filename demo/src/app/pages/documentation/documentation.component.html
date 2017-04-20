@@ -1,3 +1,4 @@
+<h1 class="colorful">Getting started</h1>
 <div class="content">
 
   <section>
@@ -11,18 +12,18 @@
 
     <p>Import <b>GalleryModule</b> and set the gallery configuration in your root module</p>
 
-    <highlight [lang]="'ts'" [code]="shared.importCode"></highlight>
+    <highlight [lang]="'ts'" [code]="shared.codes.importModule"></highlight>
 
     <p>After that you will be able to use Gallery's components and there is two options:</p>
 
     <ul>
       <li>
-        <code highlight [textContent]="'<gallery></gallery>'"></code> : to insert the gallery right in the template, see
-        <a routerLink="basic">Basic Example</a>
+        <code highlight [textContent]="'<gallery></gallery>'"></code> to insert the gallery right in the template, see
+        <a class="colorful" [routerLink]="['/basic']">basic example</a>
       </li>
       <li>
-        <code highlight [textContent]="'<gallery-modal></gallery-modal>'"></code> : to open the gallery in a modal, see
-        <a routerLink="modal">Modal Example</a>
+        <code highlight [textContent]="'<gallery-modal></gallery-modal>'"></code> to open the gallery in a modal, see
+        <a class="colorful" [routerLink]="['/modal']">modal example</a>
       </li>
     </ul>
 
@@ -31,45 +32,14 @@
     <ul>
       <li>
         <p>using <code highlight [textContent]="'GalleryService'"></code></p>
-        <highlight [lang]="'ts'" [code]="shared.loadImageCode"></highlight>
+        <highlight [lang]="'ts'" [code]="shared.codes.loadImages"></highlight>
       </li>
       <li>
         <p>using <code highlight [textContent]="'[gallerize]'"></code> directive</p>
-        <highlight [lang]="'html'" [code]="shared.gallerizeTemplateCode"></highlight>
+        <highlight [lang]="'html'" [code]="shared.codes.gallerizeTemplate"></highlight>
       </li>
     </ul>
 
   </section>
-
-
-  <section class="config-scheme">
-    <h2>Options</h2>
-
-    <p><b>animate</b><span>animate images transition (string)</span></p>
-    <p><b>width</b><span>gallery's width [any units] (string)</span></p>
-    <p><b>height</b><span>gallery's height [any units] (string)</span></p>
-    <p><b>description</b><span>add description bar (GalleryDescriptionConfig | false)</span></p>
-    <ul>
-      <li><b>position</b><span>description's position before or after the main image [top, bottom] (string)</span></li>
-      <li><b>overlay</b><span>description's overlay enable (boolean)</span></li>
-      <li><b>text</b><span>description's text (boolean)</span></li>
-      <li><b>counter</b><span>slides' counter (boolean)</span></li>
-    </ul>
-    <p><b>thumbnails</b><span>add thumbnail carousel (GalleryThumbnailsConfig | false)</span></p>
-    <ul>
-      <li><b>width</b><span>thumbnails' width [px] (number)</span></li>
-      <li><b>height</b><span>thumbnails' height [px] (number)</span></li>
-      <li><b>position</b><span>thumbnails' container position [top, left, right, bottom] (string)</span></li>
-    </ul>
-    <p><b>loader</b><span> add loader for lazy load image (GalleryLoaderConfig | false)</span></p>
-    <ul>
-      <li><b>width</b><span>loader's width [any units] (string)</span></li>
-      <li><b>height</b><span>loader's height [any units] (string)</span></li>
-      <li><b>position</b><span>loader's position [center, topLeft, topRight, bottomLeft, bottomRight] (string)</span>
-      </li>
-      <li><b>icon</b><span>loader's icon [source url] (string)</span></li>
-    </ul>
-  </section>
-
 </div>
 

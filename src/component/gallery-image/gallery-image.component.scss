@@ -1,0 +1,22 @@
+*{
+  box-sizing: border-box;
+}
+:host{
+  flex: 1;
+  order: 1;
+  width: 100%;
+}
+.gallery-image {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+  z-index: 3;
+}
+.gallery-image-prev{
+  transform: translateX(-100%);
+}

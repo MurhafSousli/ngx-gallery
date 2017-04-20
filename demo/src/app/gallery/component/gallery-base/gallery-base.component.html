@@ -1,21 +1,21 @@
-<div class="gallery">
+<div class="g-container" [ngStyle]="getContainerStyle()">
 
-  <div class="gallery-container" [ngStyle]="getContainerStyle()">
+  <gallery-thumb *ngIf="gallery.config.thumbnails" [state]="state"></gallery-thumb>
 
-    <gallery-thumb *ngIf="gallery.config.thumbnails" [state]="state"></gallery-thumb>
+  <div class="g-current">
+    <div class="g-image-container">
 
-    <div class="gallery-current">
-      <div class="gallery-image-container">
+      <gallery-image [state]="state"></gallery-image>
 
-        <gallery-image [state]="state"></gallery-image>
-
-        <gallery-nav [state]="state"></gallery-nav>
-
-      </div>
-
-      <gallery-text *ngIf="gallery.config.description" [state]="state"></gallery-text>
+      <gallery-nav [state]="state"></gallery-nav>
 
     </div>
 
+    <gallery-text *ngIf="gallery.config.description" [state]="state"></gallery-text>
+
+    <gallery-bullets *ngIf="gallery.config.bullets" [state]="state"></gallery-bullets>
+
+    <gallery-player *ngIf="gallery.config.player" [state]="state"></gallery-player>
   </div>
+
 </div>

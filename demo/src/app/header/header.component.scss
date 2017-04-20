@@ -1,16 +1,28 @@
+@import "../../assets/mixin";
+
 .logo {
   width: 200px;
 }
 
 .header {
-  margin-left: 20px;
   justify-content: center;
   align-items: center;
   display: flex;
-  height: 300px;
+  max-height: 300px;
   padding: 4em;
   transition: margin-top ease-in 0.3s;
   margin-top: 0;
+  @include mobile() {
+    flex-direction: column;
+    padding: 0;
+    margin-top: 2em;
+  }
+}
+
+.menu {
+  @include mobile() {
+    display: none;
+  }
 }
 
 .close-header {
@@ -20,52 +32,14 @@
 
 .header-text {
   margin: 2em;
+  @include mobile() {
+    margin: 0;
+  }
 }
 
-h1 {
-  margin: 1em 0;
-  color: #4e005f;
-
-  background: linear-gradient(0deg, #4e005f, #cf15e3, #e35f15, #100cb0);
-  background-size: 800% 800%;
-
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
-
-  animation: ColorTransition 44s ease infinite;
-
-  @-webkit-keyframes ColorTransition {
-    0% {
-      background-position: 0% 90%
-    }
-    50% {
-      background-position: 100% 11%
-    }
-    100% {
-      background-position: 0% 90%
-    }
-  }
-  @-moz-keyframes ColorTransition {
-    0% {
-      background-position: 0% 90%
-    }
-    50% {
-      background-position: 100% 11%
-    }
-    100% {
-      background-position: 0% 90%
-    }
-  }
-  @keyframes ColorTransition {
-    0% {
-      background-position: 0% 90%
-    }
-    50% {
-      background-position: 100% 11%
-    }
-    100% {
-      background-position: 0% 90%
-    }
-  }
+.example-container {
+  width: 500px;
+  height: 300px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
 }
 

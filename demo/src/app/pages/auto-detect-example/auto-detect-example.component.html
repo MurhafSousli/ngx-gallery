@@ -1,20 +1,20 @@
-<h1>Detects images automatically</h1>
+<h1 class="colorful">Detects images automatically</h1>
 
 <p>Here is a demo content that has img tags inside.</p>
 
-<div [gallerize] class="dynamic-content" [innerHtml]="shared.galleryHtmlString"></div>
+<div [gallerize] class="dynamic-content" [innerHtml]="shared.htmlString"></div>
 
 <div class="content">
 
-  <h4>Code</h4>
+  <p>Use <code highlight>[gallerize]</code> directive to detect all images inside the host element</p>
 
-  <p><code highlight>[gallerize]</code> directive detects all img tags and adds click events</p>
+  <h4 class="colorful">Code</h4>
 
-  <highlight [lang]="'html'" [code]="shared.gallerizeModalCode"></highlight>
+  <highlight [lang]="'html'" [code]="shared.codes.gallerizeModal"></highlight>
 
-  <p>Html content would look something like:</p>
+  <p>The variable <code highlight>dynamicHtml</code> would look something like:</p>
 
-  <highlight [lang]="'ts'" [code]="shared.galleryHtmlStringCode"></highlight>
+  <highlight [lang]="'ts'" [code]="shared.codes.htmlString"></highlight>
 
   <gallery-modal></gallery-modal>
 

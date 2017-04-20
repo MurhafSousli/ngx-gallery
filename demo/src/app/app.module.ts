@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MdCheckboxModule, MdButtonModule, MdToolbarModule, MdIconModule} from '@angular/material';
+import {MdCheckboxModule, MdButtonModule, MdToolbarModule, MdIconModule, MdSidenavModule} from '@angular/material';
 
 import {AppRoutingModule} from './routing.module';
 import {GalleryModule} from './gallery/gallery.module';
@@ -26,6 +26,7 @@ import {FooterComponent} from './footer/footer.component';
     MdToolbarModule,
     MdButtonModule,
     MdIconModule,
+    MdSidenavModule,
     AppRoutingModule,
     SettingsModule,
     GalleryModule.forRoot(

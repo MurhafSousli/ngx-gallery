@@ -1,17 +1,19 @@
-import {Component, ElementRef, HostListener, Input, OnDestroy, ViewChild} from '@angular/core';
-import {GalleryService} from '../../service/gallery.service';
-import {GalleryBaseComponent} from '../gallery-base/gallery-base.component';
+import {ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, OnDestroy, ViewChild} from '@angular/core';
+import { GalleryService } from '../../service/gallery.service';
+import { GalleryBaseComponent } from '../gallery-base/gallery-base.component';
 
 @Component({
   selector: 'gallery-modal',
   templateUrl: './gallery-modal.component.html',
-  styleUrls: ['./gallery-modal.component.scss']
+  styleUrls: ['./gallery-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GalleryModalComponent implements OnDestroy {
 
-  @ViewChild(GalleryBaseComponent, {read: ElementRef}) galleryBase: ElementRef;
+  @ViewChild(GalleryBaseComponent, { read: ElementRef }) galleryBase: ElementRef;
   @Input() closeButton = true;
 
+  /** Activate keyboard for navigation */
   @HostListener('window:keydown', ['$event'])
   keyboardInput(event: KeyboardEvent) {
     switch (event.keyCode) {
@@ -32,19 +34,20 @@ export class GalleryModalComponent implements OnDestroy {
     }
   }
 
-  constructor(private gallery: GalleryService) {
+  constructor(public gallery: GalleryService) {
   }
 
   ngOnDestroy() {
     this.gallery.reset();
   }
 
+  /** positioning close button */
   getCloseStyle() {
 
     if (this.galleryBase) {
       const left = this.galleryBase.nativeElement.offsetLeft + this.galleryBase.nativeElement.offsetWidth - 15;
       const top = this.galleryBase.nativeElement.offsetTop - 15;
-      console.log('close button position', top, left);
+
       return {
         top: `${top}px`,
         left: `${left}px`,

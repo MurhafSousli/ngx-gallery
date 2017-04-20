@@ -1,2 +1,3 @@
-<main [showHeader]="homePage"></main>
-<gallery-options *ngIf="!homePage" class="animated slideInRight"></gallery-options>
+<main [class.g-options-padding]="gOptions"
+      [style.backgroundColor]="(homePage) ? 'unset' : '#f7f7f7'"></main>
+<gallery-options *ngIf="gOptions" class="g-options animated slideInRight"></gallery-options>

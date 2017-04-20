@@ -1,16 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {GalleryService} from '../../service/gallery.service';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import { GalleryService } from '../../service/gallery.service';
 
 @Component({
   selector: 'gallery-nav',
   templateUrl: './gallery-nav.component.html',
-  styleUrls: ['./gallery-nav.component.scss']
+  styleUrls: ['./gallery-nav.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GalleryNavComponent implements OnInit {
 
   @Input() state;
 
-  constructor(private gallery: GalleryService) {
+  constructor(public gallery: GalleryService) {
   }
 
   ngOnInit() {

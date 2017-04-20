@@ -2,7 +2,11 @@
   box-sizing: border-box;
 }
 
-.gallery-modal {
+gallery-base{
+  //box-shadow: 0 6px 14px 2px rgba(black, 0.6);
+}
+
+.g-modal {
   position: fixed;
   left: 0;
   right: 0;
@@ -18,7 +22,7 @@
   align-items: center;
 }
 
-.gallery-overlay {
+.g-overlay {
   position: absolute;
   left: 0;
   right: 0;
@@ -27,7 +31,7 @@
 
 }
 
-.gallery-btn-close {
+.g-btn-close {
   position: absolute;
   z-index: 210;
   visibility: hidden;

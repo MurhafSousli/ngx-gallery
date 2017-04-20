@@ -4,13 +4,35 @@
  * overlay: true to launch it in a gallery modal, false to normal use
  */
 export interface GalleryConfig {
-  animate?: string;
+  animation?: string;
   width?: string;
   height?: string;
-  animation?: GalleryAnimation;
   description?: GalleryDescriptionConfig;
   thumbnails?: GalleryThumbConfig;
   loader?: GalleryLoaderConfig;
+  navigation?: GalleryNavConfig;
+  bullets?: GalleryBulletConfig;
+  player?: GalleryPlayConfig;
+}
+
+export interface GalleryBulletConfig {
+  width?: number;
+  height?: number;
+  position?: string;
+}
+
+export interface GalleryPlayConfig {
+  progress?: boolean;
+  autoplay?: boolean;
+  speed?: number;
+}
+
+export interface GalleryNavConfig {
+  nextIcon?: string;
+  prevIcon?: string;
+  iconWidth?: string;
+  iconHeight?: string;
+  position?: string;
 }
 
 /**
@@ -20,11 +42,11 @@ export interface GalleryConfig {
  * out: out animation class name
  * TODO: use angular animation
  */
-export interface GalleryAnimation {
-  in?: string | string[];
-  out?: string | string[];
-  duration?: number;
-}
+// export interface GalleryAnimation {
+//   in?: string | string[];
+//   out?: string | string[];
+//   duration?: number;
+// }
 
 /**
  * Gallery text config

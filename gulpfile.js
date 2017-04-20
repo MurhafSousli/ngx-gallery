@@ -52,7 +52,7 @@ const rollupNodeResolve = require('rollup-plugin-node-resolve');
 const rollupUglify = require('rollup-plugin-uglify');
 
 
-const LIBRARY_NAME = 'ng-lightbox';
+const LIBRARY_NAME = 'ng-gallery';
 
 const config = {
     allTs: 'src/**/!(*.spec).ts',
@@ -194,7 +194,7 @@ gulp.task('package', (cb) => {
     //only copy needed properties from project's package json
     fieldsToCopy.forEach((field) => { targetPkgJson[field] = pkgJson[field]; });
 
-    targetPkgJson['main'] = `bundles/ng-lightbox.umd.js`;
+    targetPkgJson['main'] = `bundles/ng-gallery.umd.js`;
     targetPkgJson['module'] = 'index.js';
     targetPkgJson['typings'] = 'index.d.ts';
 
@@ -231,7 +231,8 @@ gulp.task('bundle', () => {
         '@angular/common': 'ng.common',
 
         // Rxjs dependencies
-        'rxjs/Subject': 'Rx',
+        'rxjs/BehaviorSubject': 'Rx',
+        'rxjs/Observable': 'Rx'
     };
 
     const rollupOptions = {
@@ -246,10 +247,10 @@ gulp.task('bundle', () => {
     const rollupGenerateOptions = {
         // Keep the moduleId empty because we don't want to force developers to a specific moduleId.
         moduleId: '',
-        moduleName: 'ngLightbox', //require for 'umd' bundling, must be a valid js identifier, see rollup/rollup/issues/584
+        moduleName: 'ngGallery', //require for 'umd' bundling, must be a valid js identifier, see rollup/rollup/issues/584
         format: 'umd',
         globals,
-        dest: 'ng-lightbox.umd.js'
+        dest: 'ng-gallery.umd.js'
     };
 
     return gulp.src(`${config.outputDir}/index.js`)
@@ -266,9 +267,9 @@ gulp.task('demo', (done) => {
 
 });
 
-// Link 'dist' folder (create a local 'ng-lightbox' package that symlinks to it)
-// This way, we can have the demo project declare a dependency on 'ng-lightbox' (as it should)
-// and, thanks to 'npm link ng-lightbox' on demo project, be sure to always use the latest built
+// Link 'dist' folder (create a local 'ng-gallery' package that symlinks to it)
+// This way, we can have the demo project declare a dependency on 'ng-gallery' (as it should)
+// and, thanks to 'npm link ng-gallery' on demo project, be sure to always use the latest built
 // version of the library ( which is in 'dist/' folder)
 gulp.task('link', (done) => {
     exec('npm link', { cwd: `${config.outputDir}` }, execCallback(done)); // run 'npm link' from 'dist' folder

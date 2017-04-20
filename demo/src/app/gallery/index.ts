@@ -7,8 +7,7 @@ import {
 import {
   GalleryConfig,
   GalleryDescriptionConfig,
-  GalleryThumbConfig,
-  GalleryAnimation
+  GalleryThumbConfig
 } from './service/gallery.config';
 
 export {
@@ -18,6 +17,5 @@ export {
   GalleryImage,
   GalleryConfig,
   GalleryDescriptionConfig,
-  GalleryThumbConfig,
-  GalleryAnimation
+  GalleryThumbConfig
 };

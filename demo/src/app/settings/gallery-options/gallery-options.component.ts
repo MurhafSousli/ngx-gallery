@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MdDialog} from '@angular/material';
 import {GalleryService} from '../../gallery';
 import {ImportDialogComponent} from '../import-dialog/import-dialog.component';
+import {Http} from "@angular/http";
 
 @Component({
   selector: 'gallery-options',
@@ -12,46 +13,7 @@ export class GalleryOptionsComponent implements OnInit {
 
   currTheme;
 
-  themes = [
-    {
-      name: 'Default'
-      ,
-      config: {
-        width: '900px',
-        height: '500px',
-        description: {
-          position: 'bottom',
-          overlay: true,
-          text: true,
-          counter: true
-        },
-        thumbnails: {
-          width: 120,
-          height: 90,
-          position: 'top'
-        }
-      }
-    },
-    {
-      name: 'Style1'
-      ,
-      config: {
-        width: '800px',
-        height: '400px',
-        description: {
-          position: 'bottom',
-          overlay: false,
-          text: false,
-          counter: true
-        },
-        thumbnails: {
-          width: 120,
-          height: 90,
-          position: 'top'
-        }
-      }
-    }
-  ];
+  themes;
 
   animateOptions = [
     'fade',
@@ -59,19 +21,23 @@ export class GalleryOptionsComponent implements OnInit {
     'none'
   ];
 
-  constructor(private gallery: GalleryService, public dialog: MdDialog) {
+  constructor(public gallery: GalleryService, public dialog: MdDialog, public http: Http) {
 
   }
 
   ngOnInit() {
-    this.currTheme = Object.assign({}, this.themes[0]);
+    this.http.get('../../../assets/themes.json')
+      .subscribe(res => {
+        this.themes = res.json();
+        this.currTheme = Object.assign({}, this.themes[0]);
+      });
   }
 
   setTheme(theme) {
     this.gallery.config = Object.assign({}, this.gallery.config, theme.config);
   }
 
-  importConfig() {
+  exportConfig() {
     const dialogRef = this.dialog.open(ImportDialogComponent, {
       height: '400px',
       width: '600px',
@@ -80,7 +46,7 @@ export class GalleryOptionsComponent implements OnInit {
     dialogRef.componentInstance.config = this.gallery.config;
   }
 
-  exportConfig() {
+  importConfig() {
     const dialogRef = this.dialog.open(ImportDialogComponent, {
       height: '400px',
       width: '600px',

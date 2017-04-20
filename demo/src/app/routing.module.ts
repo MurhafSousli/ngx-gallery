@@ -7,13 +7,14 @@ import {BasicExampleComponent} from './pages/basic-example/basic-example.compone
 import {ModalExampleComponent} from './pages/modal-example/modal-example.component';
 import {AutoDetectExampleComponent} from './pages/auto-detect-example/auto-detect-example.component';
 import {DocumentationComponent} from './pages/documentation/documentation.component';
+import {HomeComponent} from './pages/home/home.component';
 
 const appRoutes: Routes = [
-  {path: '', component: DocumentationComponent},
+  {path: '', component: HomeComponent},
   {path: 'basic', component: BasicExampleComponent},
   {path: 'modal', component: ModalExampleComponent},
   {path: 'auto-detect', component: AutoDetectExampleComponent},
-  {path: 'documentation', component: DocumentationComponent}
+  {path: 'getting-started', component: DocumentationComponent}
 ];
 
 @NgModule({

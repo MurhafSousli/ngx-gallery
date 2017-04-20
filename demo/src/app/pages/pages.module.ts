@@ -6,13 +6,15 @@ import {AutoDetectExampleComponent} from './auto-detect-example/auto-detect-exam
 import {SharedModule} from '../shared/share.module';
 import {GalleryModule} from '../gallery/gallery.module';
 import { DocumentationComponent } from './documentation/documentation.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     ModalExampleComponent,
     AutoDetectExampleComponent,
     BasicExampleComponent,
-    DocumentationComponent
+    DocumentationComponent,
+    HomeComponent
   ],
   imports: [
     CommonModule,

@@ -9,8 +9,9 @@ import {NavigationEnd, Router} from '@angular/router';
 export class AppComponent implements OnInit {
 
   homePage;
+  gOptions;
 
-  constructor(private router: Router) {
+  constructor(public router: Router) {
   }
 
   ngOnInit() {
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit {
       .filter(event => event instanceof NavigationEnd)
       .subscribe((route: NavigationEnd) => {
         this.homePage = (route.url === '/');
+        this.gOptions = !(route.url === '/' || route.url === '/getting-started');
       });
   }
 

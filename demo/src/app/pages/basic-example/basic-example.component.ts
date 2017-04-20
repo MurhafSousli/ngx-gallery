@@ -9,7 +9,7 @@ import {SharedService} from '../../shared/service/shared.service';
 })
 export class BasicExampleComponent implements OnInit {
 
-  constructor(private gallery: GalleryService, private shared: SharedService) {
+  constructor(public gallery: GalleryService, public shared: SharedService) {
   }
 
   ngOnInit() {

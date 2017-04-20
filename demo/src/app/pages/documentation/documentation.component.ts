@@ -8,7 +8,7 @@ import {SharedService} from '../../shared/service/shared.service';
 export class DocumentationComponent {
 
 
-  constructor(private shared: SharedService) {
+  constructor(public shared: SharedService) {
   }
 
 }

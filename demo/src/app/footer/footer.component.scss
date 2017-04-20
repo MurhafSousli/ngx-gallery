@@ -1,9 +1,15 @@
+@import '../../assets/variables';
+
+
 :host {
-  background-color: rgba(lightgray, .2);
+  background-color: $demo-gray-color;
   padding: 1em 2em;
+  font-size: .9em;
+  font-weight: bold;
   font-family: "Roboto", "Helvetica Neue", sans-serif;
+  color: gray;
   a {
+    color: gray;
     margin-left: 1em;
   }
-  font-size: 1em;
 }

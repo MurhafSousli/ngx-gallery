@@ -1,11 +1,12 @@
 :host {
   flex: 1;
   position: relative;
-  overflow-y: auto;
   transition: all linear 0.3s;
+  display: flex;
+  flex-direction: column;
 }
 
 .main {
   padding: 0 1em;
-  //background-color: rgba(lavenderblush, 0.5);
+  overflow: hidden;
 }

@@ -1,0 +1,27 @@
+:host {
+  position: absolute;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.g-bullet {
+  transition: all ease 0.2s;
+  cursor: pointer;
+  display: flex;
+}
+
+.g-bullet-inner {
+  margin: 1em;
+  min-height: 4px;
+  min-width: 4px;
+  background-color: rgba(#fff, 0.5);
+  border-radius: 2px;
+  box-shadow: 0 0 6px rgba(#000, 0.8);
+}
+
+.g-bullet-curr .g-bullet-inner {
+  transform: scale(1.5);
+  background-color: white;
+}

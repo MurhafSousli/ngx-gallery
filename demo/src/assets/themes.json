@@ -1,0 +1,40 @@
+[
+  {
+    "name": "Config1",
+    "config": {
+      "animation": "fade",
+      "width": "900px",
+      "height": "500px",
+      "description": {
+        "position": "bottom",
+        "overlay": true,
+        "text": true,
+        "counter": true
+      },
+      "thumbnails": {
+        "width": 120,
+        "height": 90,
+        "position": "top"
+      },
+      "bullets": false
+    }
+  },
+  {
+    "name": "Config2",
+    "config": {
+      "animation": "slide",
+      "width": "700px",
+      "height": "500px",
+      "description": {
+        "position": "bottom",
+        "overlay": false,
+        "text": true,
+        "counter": true
+      },
+      "thumbnails": false,
+      "bullets": {
+        "position": "top"
+      }
+    }
+  }
+]

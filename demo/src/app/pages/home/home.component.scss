@@ -1,0 +1,33 @@
+@import '~@angular/material/theming';
+@import '../../../assets/variables';
+
+.showcase {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.showcase-item {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-text {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  opacity: 0.6;
+}
+
+.item-image {
+  width: 200px;
+  height: 200px;
+  opacity: 0.3;
+  img {
+    margin: 3em;
+  }
+
+}
+

@@ -14,6 +14,9 @@ import {
   MdButtonModule
 } from '@angular/material';
 import {ImportDialogComponent} from './import-dialog/import-dialog.component';
+import { BulletsOptionsComponent } from './bullets-options/bullets-options.component';
+import { PlayOptionsComponent } from './play-options/play-options.component';
+import { ServiceOptionsComponent } from './service-options/service-options.component';
 
 @NgModule({
   imports: [
@@ -31,7 +34,10 @@ import {ImportDialogComponent} from './import-dialog/import-dialog.component';
     ThumbOptionsComponent,
     GalleryOptionsComponent,
     LoaderOptionsComponent,
-    ImportDialogComponent
+    ImportDialogComponent,
+    BulletsOptionsComponent,
+    PlayOptionsComponent,
+    ServiceOptionsComponent
   ],
   entryComponents: [
     ImportDialogComponent

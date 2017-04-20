@@ -1,29 +1,21 @@
 {
-  "name": "ng-teximate",
-  "version": "0.6.0",
-  "description": "A simple module for CSS3 text animations.",
+  "name": "ng-gallery",
+  "version": "0.5.0",
+  "description": "Angular Image Gallery",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:MurhafSousli/ng-teximate.git"
+    "url": "git+ssh://git@github.com:MurhafSousli/ng-gallery.git"
   },
-  "homepage": "https://github.com/MurhafSousli/ng-teximate#readme",
+  "homepage": "https://github.com/MurhafSousli/ng-gallery#readme",
   "bugs": {
-    "url": "https://github.com/MurhafSousli/ng-teximate/issues"
+    "url": "https://github.com/MurhafSousli/ng-gallery/issues"
   },
   "keywords": [
     "angular",
-    "angular2",
-    "teximate",
-    "animate",
-    "animation",
-    "manipulation",
-    "text",
-    "char",
-    "letters",
-    "lettering",
-    "words",
-    "lines",
-    "css3"
+    "gallery",
+    "images",
+    "lightbox",
+    "modal"
   ],
   "author": "Murhaf Sousli <murhafsousi@gmail.com>",
   "license": "MIT",
@@ -35,6 +27,7 @@
   },
   "dependencies": {
     "@angular/common": "4.0.0",
+    "@angular/animations": "4.0.0",
     "@angular/core": "4.0.0",
     "rxjs": "5.1.0"
   },

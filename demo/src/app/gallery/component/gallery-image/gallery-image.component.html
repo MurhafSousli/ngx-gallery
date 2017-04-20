@@ -1,14 +1,10 @@
-<div class="gallery-image"
-    [@imgIn]="(imgLoad) ? 'notloading' : 'loading'"
-    [lazyImage]="getCurrImage()"
+<div class="g-image"
+    [@imgIn]="animate"
+    [lazyImage]="state.images[state.currIndex].src"
     (lazyLoad)="imageLoad($event)"></div>
 
-<div class="gallery-image gallery-image-prev"
-    [@imgOut]="(imgLoad) ? 'notloading' : 'loading'"
-    [style.backgroundImage]="'url(' + prevImg + ')'"></div>
+<div class="g-image g-image-prev"
+    [@imgOut]="animate"
+    [style.backgroundImage]="'url(' + state.images[state.prevIndex]?.src + ')'"></div>
 
-<gallery-loader *ngIf="!imgLoad"></gallery-loader>
-
-
-
-<!--[@imgIn]="(imgLoad) ? 'notloading' : 'loading'"-->
+<gallery-loader *ngIf="!loadDone"></gallery-loader>

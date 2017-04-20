@@ -2,22 +2,20 @@
   box-sizing: border-box;
 }
 
-:host{
-  display: block;
-}
-
-.gallery{
-  flex: 1;
+:host {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.gallery-container {
+.g-container {
   overflow: hidden;
   position: relative;
   z-index: 200;
-  //max-height: 94%;
+  width: 100%;
+  max-height: 100%;
+  flex: 1;
   background-color: black;
   display: flex;
   flex-direction: column;
@@ -27,12 +25,17 @@
   }
 }
 
-.gallery-current, .gallery-image-container {
+.g-current, .g-image-container {
   position: relative;
   display: flex;
   flex-direction: column;
   flex: 1;
   order: 1;
+}
+
+.g-progress {
+  height: 3px;
+  background-color: #cf15e3;
 }
 
 
