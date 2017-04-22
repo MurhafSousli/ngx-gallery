@@ -9,7 +9,7 @@
   left: 0;
   top: 0;
   display: flex;
-  //background-color: rgba(black, 0.8);
+  background-color: black;
 }
 
 .g-thumbs {
@@ -17,7 +17,7 @@
   top: 0;
   display: flex;
   align-items: center;
-  transition: margin ease-in 200ms;
+  transition: margin ease-in 300ms;
 }
 
 .g-thumb {

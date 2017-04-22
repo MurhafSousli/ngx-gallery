@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, OnDestroy, ViewChild} from '@angular/core';
 import { GalleryService } from '../../service/gallery.service';
-import { GalleryBaseComponent } from '../gallery-base/gallery-base.component';
+import {GalleryMainComponent} from '../gallery-main/gallery-main.component';
 
 @Component({
   selector: 'gallery-modal',
@@ -10,7 +10,7 @@ import { GalleryBaseComponent } from '../gallery-base/gallery-base.component';
 })
 export class GalleryModalComponent implements OnDestroy {
 
-  @ViewChild(GalleryBaseComponent, { read: ElementRef }) galleryBase: ElementRef;
+  @ViewChild(GalleryMainComponent, { read: ElementRef }) galleryBase: ElementRef;
   @Input() closeButton = true;
 
   /** Activate keyboard for navigation */
@@ -42,18 +42,18 @@ export class GalleryModalComponent implements OnDestroy {
   }
 
   /** positioning close button */
-  getCloseStyle() {
-
-    if (this.galleryBase) {
-      const left = this.galleryBase.nativeElement.offsetLeft + this.galleryBase.nativeElement.offsetWidth - 15;
-      const top = this.galleryBase.nativeElement.offsetTop - 15;
-
-      return {
-        top: `${top}px`,
-        left: `${left}px`,
-        visibility: 'visible'
-      };
-    }
-  }
+  // getCloseStyle() {
+  //
+  //   if (this.galleryBase) {
+  //     const left = this.galleryBase.nativeElement.offsetLeft + this.galleryBase.nativeElement.offsetWidth - 15;
+  //     const top = this.galleryBase.nativeElement.offsetTop - 15;
+  //
+  //     return {
+  //       top: `${top}px`,
+  //       left: `${left}px`,
+  //       visibility: 'visible'
+  //     };
+  //   }
+  // }
 
 }

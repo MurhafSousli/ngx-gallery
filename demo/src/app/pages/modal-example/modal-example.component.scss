@@ -13,11 +13,6 @@ button{
   padding: 0;
   width: 180px;
   height: 140px;
-  img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
 }
 .grid{
   display: flex;
@@ -25,4 +20,10 @@ button{
   align-items: center;
   flex-wrap: wrap;
   margin: 3em 0;
+}
+
+.grid-image{
+  width: 100%;
+  height: 100%;
+  background-size: cover;
 }

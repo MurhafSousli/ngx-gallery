@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {GalleryBulletConfig} from "../../gallery/service/gallery.config";
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {GalleryBulletConfig} from '../../gallery/service/gallery.config';
 
 @Component({
   selector: 'bullets-options',
   templateUrl: './bullets-options.component.html',
-  styleUrls: ['./bullets-options.component.scss']
+  styleUrls: ['./bullets-options.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BulletsOptionsComponent {
 
@@ -20,10 +21,6 @@ export class BulletsOptionsComponent {
     'right',
     'bottom'
   ];
-
-  constructor() {
-
-  }
 
   enabledChanged(e) {
     if (e) {

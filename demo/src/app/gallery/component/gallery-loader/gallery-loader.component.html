@@ -1,4 +1,3 @@
-<div class="g-loader" [ngStyle]="getStyle()">
-  <img [src]="getIcon()"
-       [style.width]="gallery.config.loader.width" [style.height]="gallery.config.loader.height">
+<div class="g-loader" [ngStyle]="styles">
+  <img [src]="icon" [style.width]="config.width" [style.height]="config.height"/>
 </div>

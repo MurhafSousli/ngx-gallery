@@ -8,12 +8,14 @@ import {ModalExampleComponent} from './pages/modal-example/modal-example.compone
 import {AutoDetectExampleComponent} from './pages/auto-detect-example/auto-detect-example.component';
 import {DocumentationComponent} from './pages/documentation/documentation.component';
 import {HomeComponent} from './pages/home/home.component';
+import {ReloadOptionsComponent} from './pages/reload-options/reload-options.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'basic', component: BasicExampleComponent},
   {path: 'modal', component: ModalExampleComponent},
   {path: 'auto-detect', component: AutoDetectExampleComponent},
+  {path: 'reload', component: ReloadOptionsComponent},
   {path: 'getting-started', component: DocumentationComponent}
 ];
 

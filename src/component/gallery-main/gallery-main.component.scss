@@ -2,22 +2,19 @@
   box-sizing: border-box;
 }
 
-:host{
-  display: block;
-}
-
-.gallery{
-  flex: 1;
+:host {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.gallery-container {
+.g-container {
   overflow: hidden;
   position: relative;
   z-index: 200;
-  //max-height: 94%;
+  max-height: 100%;
+  max-width: 100%;
   background-color: black;
   display: flex;
   flex-direction: column;
@@ -27,12 +24,21 @@
   }
 }
 
-.gallery-current, .gallery-image-container {
+.g-current, .g-image-container {
   position: relative;
   display: flex;
   flex-direction: column;
   flex: 1;
   order: 1;
+}
+
+.g-layer{
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 250;
 }
 
 

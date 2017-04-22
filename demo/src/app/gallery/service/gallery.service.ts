@@ -106,10 +106,15 @@ export class GalleryService {
     console.log('reset');
   }
 
-  /** Start slide show */
+  /** Play slide show */
   play(interval?) {
-    const delay = interval || this.config.player.speed || 2000;
-    this.player.next(delay);
+    const speed = interval || this.config.player.speed || 2000;
+    console.log('play', speed);
+
+    const state = this.state.getValue();
+    /** Open and play the gallery, 'active' opens gallery modal */
+    this.state.next(Object.assign({}, state, {play: true, active: true}));
+    this.player.next(speed);
   }
 
   /** End slide show */
@@ -118,19 +123,16 @@ export class GalleryService {
   }
 
   playerEngine(interval?) {
-    const state = this.state.getValue();
-
-    this.state.next(Object.assign({}, state, {play: true}));
 
     return Observable.interval(interval)
-      .takeWhile(() => !state.play)
+      .takeWhile(() => this.state.getValue().play)
       .do(() => {
-          console.log('playing');
-          this.next();
+        console.log(this.state.getValue());
+        this.next();
       })
       .finally(() => {
         console.log('stopped');
-        this.state.next(Object.assign({}, state, {play: false}));
+        this.state.next(Object.assign({}, this.state.getValue(), {play: false}));
       });
 
   }

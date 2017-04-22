@@ -1,19 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {GalleryService} from '../../gallery';
 
 @Component({
   selector: 'service-options',
   templateUrl: './service-options.component.html',
-  styleUrls: ['./service-options.component.scss']
+  styleUrls: ['./service-options.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ServiceOptionsComponent implements OnInit {
-
+export class ServiceOptionsComponent {
 
   constructor(public gallery: GalleryService) {
 
   }
-
-  ngOnInit() {
-  }
-
 }

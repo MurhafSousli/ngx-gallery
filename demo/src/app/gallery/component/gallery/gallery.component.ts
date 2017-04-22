@@ -3,7 +3,7 @@ import {GalleryService} from '../../service/gallery.service';
 
 @Component({
   selector: 'gallery',
-  template: '<gallery-base *ngIf="gallery.state | async as state" [state]="state"></gallery-base>',
+  template: '<gallery-main *ngIf="gallery.state | async as state" [state]="state" [config]="gallery.config"></gallery-main>',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GalleryComponent implements OnDestroy {

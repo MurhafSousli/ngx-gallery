@@ -5,7 +5,7 @@
 @import '~@angular/material/theming';
 @import 'assets/mixin.scss';
 
-$g-options-width: 326px;
+$g-options-width: 300px;
 
 * {
   box-sizing: border-box;
@@ -41,8 +41,12 @@ md-toolbar-row.mat-toolbar-row {
   height: 50px;
 }
 
-header md-toolbar-row {
-  justify-content: space-between;
+.toolbar-buttons{
+  justify-content: space-around;
+  margin-bottom: 0.5em;
+  button {
+    width: 70px;
+  }
 }
 
 .btn-icon {

@@ -2,18 +2,17 @@ import {
   Directive,
   ElementRef,
   Input,
-  OnDestroy,
   Output,
   EventEmitter,
   Renderer2
 } from '@angular/core';
-// import { Observable } from 'rxjs/Observable';
-// import 'rxjs/add/operator/delay';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/delay';
 
 @Directive({
   selector: '[lazyImage]'
 })
-export class LazyDirective implements OnDestroy {
+export class LazyDirective {
 
   // Image source
   @Input('lazyImage') set lazyImage(imagePath) {
@@ -24,7 +23,7 @@ export class LazyDirective implements OnDestroy {
 
   el: HTMLElement;
 
-  constructor(el: ElementRef, private renderer: Renderer2) {
+  constructor(el: ElementRef, public renderer: Renderer2) {
     this.el = el.nativeElement;
   }
 
@@ -42,11 +41,9 @@ export class LazyDirective implements OnDestroy {
 
     img.onerror = err => {
       console.error('[LazyImageDirective]:', err);
-      this.lazyLoad.emit(true);
+      this.lazyLoad.emit(err);
     };
   }
 
-  ngOnDestroy() {
-  }
 }
 

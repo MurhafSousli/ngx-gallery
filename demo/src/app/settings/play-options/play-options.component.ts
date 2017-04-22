@@ -1,14 +1,14 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {GalleryPlayConfig} from "../../gallery/service/gallery.config";
-import {GalleryService} from "../../gallery/service/gallery.service";
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
+import {GalleryPlayConfig} from '../../gallery/service/gallery.config';
+import {GalleryService} from '../../gallery/service/gallery.service';
 
 @Component({
   selector: 'play-options',
   templateUrl: './play-options.component.html',
-  styleUrls: ['./play-options.component.scss']
+  styleUrls: ['./play-options.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PlayOptionsComponent{
-
+export class PlayOptionsComponent {
 
   @Input() config: GalleryPlayConfig;
   @Output() value = new EventEmitter<GalleryPlayConfig>();
@@ -16,7 +16,6 @@ export class PlayOptionsComponent{
   prevConfig: GalleryPlayConfig = {};
 
   constructor(public gallery: GalleryService) {
-
   }
 
   enabledChanged(e) {

@@ -11,9 +11,13 @@ export const defaultState: GalleryState = {
 };
 
 export const defaultConfig: GalleryConfig = {
-  animation: 'none',
+  animation: 'fade',
   width: '900px',
   height: '500px',
+  style: {
+    width: '800px',
+    height: '600px'
+  },
   loader: {
     width: '50px',
     height: '50px',
@@ -26,10 +30,19 @@ export const defaultConfig: GalleryConfig = {
     text: true,
     counter: true
   },
+  bullets: {
+    width: 30,
+    height: 30,
+    position: 'top'
+  },
+  player: {
+    autoplay: false,
+    speed: 3000
+  },
   thumbnails: {
     width: 120,
     height: 90,
-    position: 'top'
+    position: 'left'
   }
 };
 

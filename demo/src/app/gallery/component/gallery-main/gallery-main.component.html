@@ -1,0 +1,27 @@
+<div class="g-container" [ngStyle]="styles">
+
+  <gallery-thumb *ngIf="config.thumbnails" [state]="state" [config]="config.thumbnails"></gallery-thumb>
+
+  <div class="g-current">
+
+    <div class="g-image-container">
+
+      <gallery-image [state]="state" [config]="config" (loading)="loading = $event"></gallery-image>
+
+      <gallery-nav [state]="state"></gallery-nav>
+
+      <gallery-loader *ngIf="loading" [config]="config.loader"></gallery-loader>
+
+      <div class="g-layer" *ngIf="state.images[state.currIndex].layer" [innerHtml]="state.images[state.currIndex].layer"></div>
+
+    </div>
+
+    <gallery-text *ngIf="config.description" [state]="state" [config]="config.description"></gallery-text>
+
+    <gallery-bullets *ngIf="config.bullets" [state]="state" [config]="config.bullets"></gallery-bullets>
+
+    <gallery-player *ngIf="config.player" [state]="state" [config]="config.player"></gallery-player>
+
+  </div>
+
+</div>

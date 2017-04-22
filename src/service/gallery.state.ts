@@ -1,5 +1,6 @@
 export interface GalleryState {
   active: boolean;
+  play?: boolean;
   images?: GalleryImage[];
   prevIndex?: number;
   currIndex?: number;

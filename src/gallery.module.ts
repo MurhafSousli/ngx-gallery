@@ -6,15 +6,17 @@ import { GalleryConfig } from './service/gallery.config';
 
 import { GalleryComponent } from './component/gallery/gallery.component';
 import { GalleryNavComponent } from './component/gallery-nav/gallery-nav.component';
-import { GalleryThumbnailsComponent } from './component/gallery-thumb/gallery-thumb.component';
+import { GalleryThumbComponent } from './component/gallery-thumb/gallery-thumb.component';
 import { GalleryTextComponent } from './component/gallery-text/gallery-text.component';
-
-import { GalleryDirective } from './directive/gallery.directive';
-import { LazyDirective } from './directive/lazy.directive';
 import { GalleryImageComponent } from './component/gallery-image/gallery-image.component';
 import { GalleryLoaderComponent } from './component/gallery-loader/gallery-loader.component';
 import { GalleryModalComponent } from './component/gallery-modal/gallery-modal.component';
-import { GalleryBaseComponent } from './component/gallery-base/gallery-base.component';
+import { GalleryBulletsComponent } from './component/gallery-bullets/gallery-bullets.component';
+
+import { GalleryDirective } from './directive/gallery.directive';
+import { LazyDirective } from './directive/lazy.directive';
+import { GalleryPlayerComponent } from './component/gallery-player/gallery-player.component';
+import { GalleryMainComponent } from './component/gallery-main/gallery-main.component';
 
 /** Initialize ConfigService with URL */
 export function galleryFactory(config: GalleryConfig) {
@@ -31,13 +33,15 @@ export const CONFIG = new InjectionToken<GalleryConfig>('config');
     GalleryComponent,
     GalleryNavComponent,
     LazyDirective,
-    GalleryThumbnailsComponent,
+    GalleryThumbComponent,
     GalleryDirective,
     GalleryTextComponent,
     GalleryImageComponent,
     GalleryLoaderComponent,
     GalleryModalComponent,
-    GalleryBaseComponent
+    GalleryBulletsComponent,
+    GalleryPlayerComponent,
+    GalleryMainComponent
   ],
   exports: [
     GalleryComponent,

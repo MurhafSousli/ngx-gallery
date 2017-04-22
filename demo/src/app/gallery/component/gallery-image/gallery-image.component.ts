@@ -1,6 +1,7 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import { GalleryService } from '../../service/gallery.service';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {animation} from './gallery-image.animation';
+import {GalleryState} from '../../service/gallery.state';
+import {GalleryConfig} from '../../service/gallery.config';
 
 @Component({
   selector: 'gallery-image',
@@ -11,29 +12,26 @@ import {animation} from './gallery-image.animation';
 })
 export class GalleryImageComponent {
 
-  @Input() state;
-  loadDone;
-  animate;
+  @Input() state: GalleryState;
+  @Input() config: GalleryConfig;
+  @Output() loading = new EventEmitter();
+  animate: string;
 
-  constructor(public gallery: GalleryService) {
+  constructor() {
   }
 
-  imageLoad(done) {
-    this.loadDone = done;
+  imageLoad(done: boolean) {
+    this.loading.emit(!done);
 
     if (done) {
       this.animate = 'none';
     } else {
-      switch (this.gallery.config.animation) {
+      switch (this.config.animation) {
         case 'fade':
           this.animate = 'fade';
           break;
         case 'slide':
-          if (this.state.currIndex > this.state.prevIndex) {
-            this.animate = 'slideLeft';
-          } else {
-            this.animate = 'slideRight';
-          }
+            this.animate = (this.state.currIndex > this.state.prevIndex) ? 'slideLeft' : 'slideRight';
           break;
         default:
           this.animate = 'none';

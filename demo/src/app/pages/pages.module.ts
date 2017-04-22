@@ -7,6 +7,7 @@ import {SharedModule} from '../shared/share.module';
 import {GalleryModule} from '../gallery/gallery.module';
 import { DocumentationComponent } from './documentation/documentation.component';
 import { HomeComponent } from './home/home.component';
+import { ReloadOptionsComponent } from './reload-options/reload-options.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { HomeComponent } from './home/home.component';
     AutoDetectExampleComponent,
     BasicExampleComponent,
     DocumentationComponent,
-    HomeComponent
+    HomeComponent,
+    ReloadOptionsComponent
   ],
   imports: [
     CommonModule,

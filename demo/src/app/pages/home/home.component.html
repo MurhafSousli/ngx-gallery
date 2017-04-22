@@ -25,19 +25,21 @@
   <div class="showcase">
     <div class="showcase-item">
       <div class="item-image">
-        <img src="assets/img/intro/customize.svg"/>
+        <div [style.backgroundImage]="'url(assets/img/intro/customize.svg)'"></div>
       </div>
-      <div class="item-text">Customizing made easy, enable/disable features, set custom size and position to the gallery parts using the configuration</div>
+      <div class="item-text">Customizing made easy, enable/disable features, set custom size and position to the gallery
+        parts using the configuration
+      </div>
     </div>
     <div class="showcase-item">
       <div class="item-image">
-        <img src="assets/img/intro/responsive.svg"/>
+        <div [style.backgroundImage]="'url(assets/img/intro/responsive.svg)'"></div>
       </div>
       <div class="item-text">Build responsive gallery that work on mobile, tablet and desktop devices.</div>
     </div>
     <div class="showcase-item">
-      <div class="item-image">
-        <img style="margin: 1.5em;" src="assets/img/intro/native.svg"/>
+      <div class="item-image" style="padding: 1.5em;">
+        <div [style.backgroundImage]="'url(assets/img/intro/native.svg)'"></div>
       </div>
       <div class="item-text">No dependencies, it was built to integrate seamlessly with Angular.</div>
     </div>

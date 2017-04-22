@@ -4,7 +4,7 @@
   <button md-raised-button md-ripple
           *ngFor="let image of shared.getImages(); let i = index"
           (click)="gallery.set(i)">
-    <img [src]="image.src"/>
+    <div class="grid-image" [style.backgroundImage]="'url(' + image.src + ')'"></div>
   </button>
 </div>
 

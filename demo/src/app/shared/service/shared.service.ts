@@ -8,12 +8,14 @@ export class SharedService {
   constructor() {
   }
 
+  tempUrl;
+
   htmlString = `
   <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-  <img src="assets/img/img2.jpg" alt="See Sunset View">
+  <img src="assets/img/img12.jpg" alt="Flowers">
   <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,</p>
-  <img src="assets/img/img3.jpg" alt="Spring">
-  <img src="assets/img/img4.jpg" alt="Fire">
+  <img src="assets/img/img14.jpg" alt="Frog">
+  <img src="assets/img/img15.jpg" alt="Flowers 2">
   <img src="assets/img/img5.jpg" alt="Peacock">
   <p>remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
   <img src="assets/img/img6.jpg" alt="Snow Mountains View">
@@ -133,6 +135,10 @@ export class SharedService {
         src: 'assets/img/img13.jpg',
         thumbnail: 'assets/img/thumb/img13.jpg',
         text: 'Beatiful bird'
+      }, {
+        src: 'assets/img/img14.jpg',
+        thumbnail: 'assets/img/thumb/img14.jpg',
+        text: 'Frog'
       }
     ];
   }

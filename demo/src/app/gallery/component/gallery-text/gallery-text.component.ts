@@ -1,6 +1,6 @@
-import {Component, Input, OnChanges, ElementRef, Renderer2, ChangeDetectionStrategy} from '@angular/core';
-import { GalleryService } from '../../service/gallery.service';
+import {Component, Input, OnInit, ElementRef, Renderer2, ChangeDetectionStrategy} from '@angular/core';
 import { GalleryState } from '../../service/gallery.state';
+import {GalleryDescriptionConfig} from '../../service/gallery.config';
 
 @Component({
   selector: 'gallery-text',
@@ -8,22 +8,21 @@ import { GalleryState } from '../../service/gallery.state';
   styleUrls: ['./gallery-text.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GalleryTextComponent implements OnChanges {
+export class GalleryTextComponent implements OnInit {
 
   @Input() state: GalleryState;
+  @Input() config: GalleryDescriptionConfig;
 
-  constructor(public gallery: GalleryService, private el: ElementRef, private renderer: Renderer2) {
+  constructor(private el: ElementRef, private renderer: Renderer2) {
   }
 
-  ngOnChanges() {
-    // text config shortcut
-    const config = this.gallery.config.description;
+  ngOnInit() {
 
     // text overlay
-    this.renderer.setStyle(this.el.nativeElement, 'position', (config.overlay) ? 'absolute' : 'relative');
+    this.renderer.setStyle(this.el.nativeElement, 'position', (this.config.overlay) ? 'absolute' : 'relative');
 
     // text position
-    if (config.position === 'top') {
+    if (this.config.position === 'top') {
       this.renderer.setStyle(this.el.nativeElement, 'order', 0);
       this.renderer.setStyle(this.el.nativeElement, 'top', 0);
       this.renderer.setStyle(this.el.nativeElement, 'bottom', 'unset');

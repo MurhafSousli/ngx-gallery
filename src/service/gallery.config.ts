@@ -7,9 +7,33 @@ export interface GalleryConfig {
   animation?: string;
   width?: string;
   height?: string;
+  style?;
   description?: GalleryDescriptionConfig;
   thumbnails?: GalleryThumbConfig;
   loader?: GalleryLoaderConfig;
+  navigation?: GalleryNavConfig;
+  bullets?: GalleryBulletConfig;
+  player?: GalleryPlayConfig;
+}
+
+export interface GalleryBulletConfig {
+  width?: number;
+  height?: number;
+  position?: string;
+}
+
+export interface GalleryPlayConfig {
+  progress?: boolean;
+  autoplay?: boolean;
+  speed?: number;
+}
+
+export interface GalleryNavConfig {
+  nextIcon?: string;
+  prevIcon?: string;
+  iconWidth?: string;
+  iconHeight?: string;
+  position?: string;
 }
 
 /**

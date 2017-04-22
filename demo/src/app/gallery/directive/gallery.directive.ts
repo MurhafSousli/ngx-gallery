@@ -4,6 +4,7 @@ import { GalleryImage } from '../service/gallery.state';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/observable/from';
 
 @Directive({
   selector: '[gallerize]'
@@ -17,11 +18,9 @@ export class GalleryDirective implements OnInit {
 
   ngOnInit() {
     /** Gallerize on InnerHtml changes */
-    console.log('dom changed');
     Observable.fromEvent(this.el.nativeElement, 'DOMSubtreeModified')
       .subscribe((e) => {
         if (this.el.nativeElement.innerHTML) {
-          console.log('loaded', e);
 
           const images: GalleryImage[] = [];
           const classes = (this.gallerize) ? this.gallerize.split(' ').map((className) => '.' + className) : '';
@@ -30,7 +29,7 @@ export class GalleryDirective implements OnInit {
           const imageElements = this.el.nativeElement.querySelectorAll(`img${classes}`);
 
           if (imageElements) {
-            imageElements.forEach((img: HTMLImageElement, i) => {
+            Observable.from(imageElements).map((img: HTMLImageElement, i) => {
               // add click event to open image in the lightbox
               this.renderer.setStyle(img, 'cursor', 'pointer');
               this.renderer.setProperty(img, 'onclick', () => {
@@ -42,16 +41,13 @@ export class GalleryDirective implements OnInit {
                 src: img.src,
                 text: img.alt
               });
-            });
+              this.gallery.load(images);
+            }).subscribe();
 
-            this.gallery.load(images);
           }
         }
       });
-
   }
-
-
 }
 
 

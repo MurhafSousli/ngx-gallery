@@ -1,6 +1,7 @@
-import { Component, Input, OnChanges, ChangeDetectionStrategy, ElementRef, Renderer2 } from '@angular/core';
-import { GalleryService } from '../../service/gallery.service';
-import { GalleryState } from '../../service/gallery.state';
+import {Component, Input, OnChanges, ChangeDetectionStrategy, ElementRef, Renderer2, OnInit} from '@angular/core';
+import {GalleryService} from '../../service/gallery.service';
+import {GalleryState} from '../../service/gallery.state';
+import {GalleryThumbConfig} from '../../service/gallery.config';
 
 @Component({
   selector: 'gallery-thumb',
@@ -8,18 +9,22 @@ import { GalleryState } from '../../service/gallery.state';
   styleUrls: ['./gallery-thumb.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GalleryThumbnailsComponent implements OnChanges {
+export class GalleryThumbComponent implements OnInit, OnChanges {
 
   rulerStyle;
   currThumbStyle;
 
   @Input() state: GalleryState;
+  @Input() config: GalleryThumbConfig;
 
-  constructor(private gallery: GalleryService, private el: ElementRef, private renderer: Renderer2) {
+  constructor(public gallery: GalleryService, private el: ElementRef, private renderer: Renderer2) {
+  }
+
+  ngOnInit() {
+
   }
 
   ngOnChanges() {
-    const config = this.gallery.config.thumbnails;
     // ruler variables
     let rulerX = 0, rulerY = 0, rulerCenterX = 0, rulerCenterY = 0, rulerDirection = 'row';
     // current thumbnail variables
@@ -29,38 +34,41 @@ export class GalleryThumbnailsComponent implements OnChanges {
     // temp variables
     let widthHalf, heightHalf;
 
+    const thumbWidth = this.config.width;
+    const thumbHeight = this.config.height;
 
-    switch (config.position) {
+
+    switch (this.config.position) {
       case 'top':
-        widthHalf = config.width / 2;
+        widthHalf = thumbWidth / 2;
         // ruler position
-        rulerX = this.state.currIndex * config.width + widthHalf;
+        rulerX = this.state.currIndex * thumbWidth + widthHalf;
         rulerCenterX = 50;
 
         // current thumbnail position
         thumbX = `calc(50% - ${widthHalf}px)`;
 
         // container position
-        contHeight = `${config.height}px`;
+        contHeight = `${thumbHeight}px`;
         break;
 
       case 'bottom':
-        widthHalf = config.width / 2;
+        widthHalf = thumbWidth / 2;
         // ruler position
-        rulerX = this.state.currIndex * config.width + widthHalf;
+        rulerX = this.state.currIndex * thumbWidth + widthHalf;
         rulerCenterX = 50;
 
         // current thumbnail position
         thumbX = `calc(50% - ${widthHalf}px)`;
 
         // container position
-        contHeight = `${config.height}px`;
+        contHeight = `${thumbHeight}px`;
         contOrder = 2;
         break;
       case 'left':
-        heightHalf = config.height / 2;
+        heightHalf = thumbHeight / 2;
         // ruler position
-        rulerY = this.state.currIndex * config.height + heightHalf;
+        rulerY = this.state.currIndex * thumbHeight + heightHalf;
         rulerCenterY = 50;
         rulerDirection = 'column';
 
@@ -68,13 +76,13 @@ export class GalleryThumbnailsComponent implements OnChanges {
         thumbY = `calc(50% - ${heightHalf}px)`;
 
         // container position
-        contWidth = `${config.width}px`;
+        contWidth = `${thumbWidth}px`;
         contDirection = 'row';
         break;
       case 'right':
-        heightHalf = config.height / 2;
+        heightHalf = thumbHeight / 2;
         // ruler position
-        rulerY = this.state.currIndex * config.height + heightHalf;
+        rulerY = this.state.currIndex * thumbHeight + heightHalf;
         rulerCenterY = 50;
         rulerDirection = 'column';
 
@@ -82,16 +90,15 @@ export class GalleryThumbnailsComponent implements OnChanges {
         thumbY = `calc(50% - ${heightHalf}px)`;
 
         // container position
-        contWidth = `${config.width}px`;
+        contWidth = `${thumbWidth}px`;
         contDirection = 'row';
         contOrder = 2;
         break;
       default:
-        break;
     }
 
     this.setRulerStyle(rulerX, rulerY, rulerCenterX, rulerCenterY, rulerDirection);
-    this.setCurrThumbStyle(thumbX, thumbY, config.width, config.height);
+    this.setCurrThumbStyle(thumbX, thumbY, thumbWidth, thumbHeight);
     this.setContainerStyle(contWidth, contHeight, contDirection, contOrder);
   }
 

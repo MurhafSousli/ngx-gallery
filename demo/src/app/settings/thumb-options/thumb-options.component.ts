@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {GalleryDescriptionConfig} from '../../gallery';
 
 @Component({
   selector: 'thumb-options',
   templateUrl: './thumb-options.component.html',
-  styleUrls: ['./thumb-options.component.scss']
+  styleUrls: ['./thumb-options.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ThumbOptionsComponent {
 
@@ -19,10 +20,6 @@ export class ThumbOptionsComponent {
     'right',
     'bottom'
   ];
-
-  constructor() {
-
-  }
 
   enabledChanged(e) {
     if (e) {

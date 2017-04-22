@@ -14,6 +14,10 @@ export const defaultConfig: GalleryConfig = {
   animation: 'fade',
   width: '900px',
   height: '500px',
+  style: {
+    width: '800px',
+    height: '600px'
+  },
   loader: {
     width: '50px',
     height: '50px',
@@ -32,14 +36,13 @@ export const defaultConfig: GalleryConfig = {
     position: 'top'
   },
   player: {
-    progress: false,
     autoplay: false,
-    speed: 1000
+    speed: 3000
   },
   thumbnails: {
     width: 120,
     height: 90,
-    position: 'top'
+    position: 'left'
   }
 };
 

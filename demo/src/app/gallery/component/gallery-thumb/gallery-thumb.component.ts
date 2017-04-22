@@ -1,6 +1,7 @@
-import {Component, Input, OnChanges, ChangeDetectionStrategy, ElementRef, Renderer2} from '@angular/core';
+import {Component, Input, OnChanges, ChangeDetectionStrategy, ElementRef, Renderer2, OnInit} from '@angular/core';
 import {GalleryService} from '../../service/gallery.service';
 import {GalleryState} from '../../service/gallery.state';
+import {GalleryThumbConfig} from '../../service/gallery.config';
 
 @Component({
   selector: 'gallery-thumb',
@@ -8,18 +9,22 @@ import {GalleryState} from '../../service/gallery.state';
   styleUrls: ['./gallery-thumb.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GalleryThumbComponent implements OnChanges {
+export class GalleryThumbComponent implements OnInit, OnChanges {
 
   rulerStyle;
   currThumbStyle;
 
   @Input() state: GalleryState;
+  @Input() config: GalleryThumbConfig;
 
   constructor(public gallery: GalleryService, private el: ElementRef, private renderer: Renderer2) {
   }
 
+  ngOnInit() {
+
+  }
+
   ngOnChanges() {
-    const config = this.gallery.config.thumbnails;
     // ruler variables
     let rulerX = 0, rulerY = 0, rulerCenterX = 0, rulerCenterY = 0, rulerDirection = 'row';
     // current thumbnail variables
@@ -29,11 +34,11 @@ export class GalleryThumbComponent implements OnChanges {
     // temp variables
     let widthHalf, heightHalf;
 
-    const thumbWidth = config.width;
-    const thumbHeight = config.height;
+    const thumbWidth = this.config.width;
+    const thumbHeight = this.config.height;
 
 
-    switch (config.position) {
+    switch (this.config.position) {
       case 'top':
         widthHalf = thumbWidth / 2;
         // ruler position

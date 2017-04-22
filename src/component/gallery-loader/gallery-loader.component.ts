@@ -1,18 +1,29 @@
-import { Component } from '@angular/core';
-import { GalleryService } from '../../service/gallery.service';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {GalleryService} from '../../service/gallery.service';
+import {GalleryLoaderConfig} from '../../service/gallery.config';
 
 @Component({
   selector: 'gallery-loader',
   templateUrl: './gallery-loader.component.html',
-  styleUrls: ['./gallery-loader.component.scss']
+  styleUrls: ['./gallery-loader.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GalleryLoaderComponent {
+export class GalleryLoaderComponent implements OnInit {
 
-  constructor(private gallery: GalleryService) {
+  @Input() config: GalleryLoaderConfig;
+  icon;
+  styles;
+
+  constructor(public gallery: GalleryService) {
+  }
+
+  ngOnInit() {
+    this.icon = this.getIcon();
+    this.styles = this.getStyle();
   }
 
   getIcon() {
-    switch (this.gallery.config.loader.icon) {
+    switch (this.config.icon) {
       case 'puff':
         return 'https://cdn.rawgit.com/SamHerbert/SVG-Loaders/75b65ef5/svg-loaders/puff.svg';
 
@@ -35,12 +46,12 @@ export class GalleryLoaderComponent {
         return 'https://cdn.rawgit.com/SamHerbert/SVG-Loaders/75b65ef5/svg-loaders/tail-spin.svg';
 
       default:
-        return 'https://cdn.rawgit.com/SamHerbert/SVG-Loaders/75b65ef5/svg-loaders/bars.svg';
+        return this.config.icon;
     }
   }
 
   getStyle() {
-    switch (this.gallery.config.loader.position) {
+    switch (this.config.position) {
       case 'topLeft':
         return {
           'align-items': 'flex-start',

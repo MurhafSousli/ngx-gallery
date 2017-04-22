@@ -1,17 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
+import {GalleryService} from "./gallery/service/gallery.service";
+import {SharedService} from "./shared/service/shared.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
 
   homePage;
   gOptions;
 
-  constructor(public router: Router) {
+  constructor(public router: Router, public gallery: GalleryService, public shared: SharedService) {
   }
 
   ngOnInit() {
@@ -24,4 +27,13 @@ export class AppComponent implements OnInit {
       });
   }
 
+  /** Currently we update the gallery with the new config by changing the route to ['/reload']
+   * and redirect back to the previous route */
+
+  reload(e) {
+    this.gallery.config = e;
+    // save current url for reload
+    this.shared.tempUrl = this.router.url;
+    this.router.navigate(['/reload']);
+  }
 }

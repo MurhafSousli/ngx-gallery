@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {GalleryDescriptionConfig} from '../../gallery';
 
 @Component({
   selector: 'desc-options',
   templateUrl: './desc-options.component.html',
-  styleUrls: ['./desc-options.component.scss']
+  styleUrls: ['./desc-options.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DescOptionsComponent {
 

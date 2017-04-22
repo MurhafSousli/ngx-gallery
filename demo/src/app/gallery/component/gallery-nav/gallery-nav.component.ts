@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import { GalleryService } from '../../service/gallery.service';
 
 @Component({
@@ -7,14 +7,11 @@ import { GalleryService } from '../../service/gallery.service';
   styleUrls: ['./gallery-nav.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GalleryNavComponent implements OnInit {
+export class GalleryNavComponent {
 
   @Input() state;
 
   constructor(public gallery: GalleryService) {
-  }
-
-  ngOnInit() {
   }
 
 }

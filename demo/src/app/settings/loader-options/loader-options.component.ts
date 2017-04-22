@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 import {GalleryLoaderConfig} from '../../gallery/service/gallery.config';
 
 @Component({
   selector: 'loader-options',
   templateUrl: './loader-options.component.html',
-  styleUrls: ['./loader-options.component.scss']
+  styleUrls: ['./loader-options.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoaderOptionsComponent {
 

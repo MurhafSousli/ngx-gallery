@@ -1,15 +1,16 @@
-<div class="gallery-thumbnail-placeholder" [ngStyle]="currThumbStyle"></div>
+<div class="g-thumb-placeholder" [ngStyle]="currThumbStyle"></div>
 
-<div class="gallery-ruler" [ngStyle]="rulerStyle">
+<div class="g-thumbs" [ngStyle]="rulerStyle">
 
-  <div class="gallery-thumbnail" *ngFor="let image of state.images; let i = index"
+  <div class="g-thumb" *ngFor="let image of state.images; let i = index"
        [class.gallery-thumbnail-current]="i === state.currIndex"
        [style.width.px]="gallery.config.thumbnails.width"
        [style.height.px]="gallery.config.thumbnails.height">
 
-    <div class="gallery-thumbnail" [style.backgroundImage]="getThumbImage(i)"
-         (click)="gallery.setCurrent(i)"></div>
-
+    <div class="g-thumb"
+         [style.backgroundImage]="getThumbImage(i)"
+         (click)="gallery.set(i)">
+    </div>
   </div>
 
 </div>

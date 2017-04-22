@@ -7,6 +7,7 @@ export interface GalleryConfig {
   animation?: string;
   width?: string;
   height?: string;
+  style?;
   description?: GalleryDescriptionConfig;
   thumbnails?: GalleryThumbConfig;
   loader?: GalleryLoaderConfig;

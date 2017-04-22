@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {MdDialogRef} from '@angular/material';
 
 @Component({
   selector: 'import-dialog',
   templateUrl: './import-dialog.component.html',
-  styleUrls: ['./import-dialog.component.scss']
+  styleUrls: ['./import-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ImportDialogComponent {
 

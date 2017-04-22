@@ -2,10 +2,6 @@
   box-sizing: border-box;
 }
 
-gallery-base{
-  //box-shadow: 0 6px 14px 2px rgba(black, 0.6);
-}
-
 .g-modal {
   position: fixed;
   left: 0;
@@ -33,8 +29,9 @@ gallery-base{
 
 .g-btn-close {
   position: absolute;
+  right: 1em;
+  top: 1em;
   z-index: 210;
-  visibility: hidden;
   cursor: pointer;
   width: 30px;
   height: 30px;

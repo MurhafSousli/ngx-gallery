@@ -7,7 +7,7 @@
     </md-select>
   </div>
 
-  <md-toolbar-row class="button-row">
+  <md-toolbar-row class="toolbar-buttons">
     <button md-raised-button (click)="importConfig()">IMPORT</button>
     <button md-raised-button (click)="exportConfig()">EXPORT</button>
   </md-toolbar-row>
@@ -19,29 +19,29 @@
 
   <div class="option-padding">
 
-    <md-select [(ngModel)]="gallery.config.animation" placeholder="animation">
+    <md-select [ngModel]="config.animation" (ngModelChange)="updateAnimate($event)" placeholder="animation">
       <md-option *ngFor="let p of animateOptions" [value]="p">{{p}}</md-option>
     </md-select>
 
     <md-input-container>
-      <input mdInput placeholder="width" [(ngModel)]="gallery.config.width">
+      <input mdInput placeholder="width" [ngModel]="config.width" (ngModelChange)="updateWidth($event)">
     </md-input-container>
 
     <md-input-container>
-      <input mdInput placeholder="height" [(ngModel)]="gallery.config.height">
+      <input mdInput placeholder="height" [ngModel]="config.height" (ngModelChange)="updateHeight($event)">
     </md-input-container>
   </div>
 
 
-  <desc-options [config]="gallery.config.description" (value)="gallery.config.description = $event"></desc-options>
+  <desc-options [config]="config.description" (value)="updateDesc($event)"></desc-options>
 
-  <loader-options [config]="gallery.config.loader" (value)="gallery.config.loader = $event"></loader-options>
+  <loader-options [config]="config.loader" (value)="updateLoader($event)"></loader-options>
 
-  <thumb-options [config]="gallery.config.thumbnails" (value)="gallery.config.thumbnails = $event"></thumb-options>
+  <thumb-options [config]="config.thumbnails" (value)="updateThumbs($event)"></thumb-options>
 
-  <bullets-options [config]="gallery.config.bullets" (value)="gallery.config.bullets = $event"></bullets-options>
+  <bullets-options [config]="config.bullets" (value)="updateBullets($event)"></bullets-options>
 
-  <play-options [config]="gallery.config.player" (value)="gallery.config.player = $event"></play-options>
+  <play-options [config]="config.player" (value)="updatePlayer($event)"></play-options>
 
   <service-options></service-options>
 </div>
