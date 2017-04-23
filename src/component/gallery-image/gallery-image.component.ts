@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {animation} from './gallery-image.animation';
-import {GalleryState} from '../../service/gallery.state';
-import {GalleryConfig} from '../../service/gallery.config';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { animation } from './gallery-image.animation';
+import { GalleryState } from '../../service/gallery.state';
+import { GalleryConfig } from '../../service/gallery.config';
 
 @Component({
   selector: 'gallery-image',
@@ -31,7 +31,7 @@ export class GalleryImageComponent {
           this.animate = 'fade';
           break;
         case 'slide':
-            this.animate = (this.state.currIndex > this.state.prevIndex) ? 'slideLeft' : 'slideRight';
+          this.animate = (this.state.currIndex > this.state.prevIndex) ? 'slideLeft' : 'slideRight';
           break;
         default:
           this.animate = 'none';

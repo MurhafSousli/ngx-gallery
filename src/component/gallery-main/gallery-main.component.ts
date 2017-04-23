@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {GalleryState} from '../../service/gallery.state';
-import {GalleryConfig} from '../../service/gallery.config';
-import {GalleryService} from '../../service/gallery.service';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { GalleryState } from '../../service/gallery.state';
+import { GalleryConfig } from '../../service/gallery.config';
+import { GalleryService } from '../../service/gallery.service';
 
 @Component({
   selector: 'gallery-main',

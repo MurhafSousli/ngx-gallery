@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {GalleryService} from '../../service/gallery.service';
-import {GalleryLoaderConfig} from '../../service/gallery.config';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { GalleryService } from '../../service/gallery.service';
+import { GalleryLoaderConfig } from '../../service/gallery.config';
 
 @Component({
   selector: 'gallery-loader',

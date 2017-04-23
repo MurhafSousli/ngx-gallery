@@ -17,8 +17,8 @@ const embedTemplates = require('gulp-inline-ng2-template');
 const tslint = require('gulp-tslint');
 
 /** Sass style */
-const postcss = require('gulp-postcss');
-const sass = require('gulp-sass');
+const postcss = require('postcss');
+const sass = require('node-sass');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const scss = require('postcss-scss');
@@ -109,25 +109,6 @@ gulp.task('clean:coverage', () => {
 
 gulp.task('clean', ['clean:dist', 'clean:coverage']);
 
-
-// Compile Sass to css
-gulp.task('styles', (cb) => {
-    /**
-     * Remove comments, autoprefixer, Minifier
-     */
-    const processors = [
-        stripInlineComments,
-        autoprefixer,
-        cssnano
-    ];
-    pump([
-        gulp.src(config.allSass),
-        sass().on('error', sass.logError),
-        postcss(processors, { syntax: scss }),
-        gulp.dest('src')
-    ], cb);
-});
-
 // TsLint the source files
 gulp.task('lint', (cb) => {
     pump([
@@ -137,17 +118,44 @@ gulp.task('lint', (cb) => {
     ], cb);
 });
 
+// Compile Sass to css and Inline templates and styles in ng2 components
+const styleProcessor = (stylePath, ext, styleFile, callback) => {
+    /**
+     * Remove comments, autoprefixer, Minifier
+     */
+    const processors = [
+        stripInlineComments,
+        autoprefixer,
+        cssnano
+    ];
+
+    if (/\.(scss|sass)$/.test(ext[0])) {
+        let sassObj = sass.renderSync({ file: stylePath });
+        if (sassObj && sassObj['css']) {
+            let css = sassObj.css.toString('utf8');
+            postcss(processors).process(css).then(function (result) {
+                result.warnings().forEach(function (warn) {
+                    gutil.warn(warn.toString());
+                });
+                styleFile = result.css;
+                callback(null, styleFile);
+            });
+        }
+    }
+};
+
 // Inline templates and styles in ng2 components
 gulp.task('inline-templates', (cb) => {
-    const defaults = {
+    const options = {
         base: '/src',
         target: 'es5',
+        styleProcessor: styleProcessor,
         useRelativePaths: true
     };
     pump(
         [
             gulp.src(config.allTs),
-            embedTemplates(defaults),
+            embedTemplates(options),
             gulp.dest(`${config.outputDir}/inlined`)
         ],
         cb);
@@ -158,7 +166,7 @@ gulp.task('ngc', (cb) => {
     const executable = path.join(__dirname, platformPath('/node_modules/.bin/ngc'));
     const ngc = exec(`${executable} -p ./tsconfig-aot.json`, (err) => {
         if (err) return cb(err); // return error
-        del(`${config.outputDir}/inlined`); //delete temporary *.ts files with inlined templates and styles 
+        del(`${config.outputDir}/inlined`); //delete temporary *.ts files with inlined templates and styles
         cb();
     }).stdout.on('data', (data) => console.log(data));
 });
@@ -229,10 +237,23 @@ gulp.task('bundle', () => {
         // Angular dependencies
         '@angular/core': 'ng.core',
         '@angular/common': 'ng.common',
+        '@angular/animations': 'ng.common',
 
         // Rxjs dependencies
         'rxjs/BehaviorSubject': 'Rx',
-        'rxjs/Observable': 'Rx'
+        'rxjs/Observable': 'Rx',
+        'rxjs/Subject': 'Rx',
+        'rxjs/add/observable/of': 'Rx.Observable',
+        'rxjs/add/observable/from': 'Rx.Observable',
+        'rxjs/add/observable/fromEvent': 'Rx.Observable',
+        'rxjs/add/observable/map': 'Rx.Observable.prototype',
+        'rxjs/add/operator/switchMap': 'Rx.Observable.prototype',
+        'rxjs/add/operator/repeat': 'Rx.Observable.prototype',
+        'rxjs/add/operator/finally': 'Rx.Observable.prototype',
+        'rxjs/add/operator/take': 'Rx.Observable.prototype',
+        'rxjs/add/operator/interval': 'Rx.Observable.prototype',
+        'rxjs/add/operator/do': 'Rx.Observable.prototype',
+        'rxjs/add/operator/switchMap': 'Rx.Observable.prototype',
     };
 
     const rollupOptions = {
@@ -283,7 +304,7 @@ gulp.task('coveralls', () => {
 
 // Lint, Sass to css, Inline templates & Styles and Compile
 gulp.task('compile', (cb) => {
-    runSequence('lint', 'styles', 'inline-templates', 'ngc', cb);
+    runSequence('lint', 'inline-templates', 'ngc', cb);
 });
 
 // Watch changes on (*.ts, *.sass, *.html) and Compile

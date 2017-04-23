@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, OnDestroy, ViewChild} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, OnDestroy, ViewChild } from '@angular/core';
 import { GalleryService } from '../../service/gallery.service';
-import {GalleryMainComponent} from '../gallery-main/gallery-main.component';
+import { GalleryMainComponent } from '../gallery-main/gallery-main.component';
 
 @Component({
   selector: 'gallery-modal',

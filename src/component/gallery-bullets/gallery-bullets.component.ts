@@ -1,7 +1,7 @@
-import {Component, ElementRef, Input, OnInit, Renderer2, ChangeDetectionStrategy} from '@angular/core';
-import {GalleryService} from '../../service/gallery.service';
-import {GalleryState} from '../../service/gallery.state';
-import {GalleryBulletConfig} from '../../service/gallery.config';
+import { Component, ElementRef, Input, OnInit, Renderer2, ChangeDetectionStrategy } from '@angular/core';
+import { GalleryService } from '../../service/gallery.service';
+import { GalleryState } from '../../service/gallery.state';
+import { GalleryBulletConfig } from '../../service/gallery.config';
 
 @Component({
   selector: 'gallery-bullets',

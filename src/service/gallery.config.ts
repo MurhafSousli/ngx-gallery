@@ -37,19 +37,6 @@ export interface GalleryNavConfig {
 }
 
 /**
- * Gallery animation
- * duration: numbers in (ms)
- * in: in animation class name
- * out: out animation class name
- * TODO: use angular animation
- */
-// export interface GalleryAnimation {
-//   in?: string | string[];
-//   out?: string | string[];
-//   duration?: number;
-// }
-
-/**
  * Gallery text config
  * width & height made as strings to allow percentage values (%)
  * position: top, bottom

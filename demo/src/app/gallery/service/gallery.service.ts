@@ -1,20 +1,20 @@
-import {Injectable, Optional} from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 
-import {GalleryState, GalleryImage} from './gallery.state';
-import {GalleryConfig} from './gallery.config';
-import {defaultState, defaultConfig} from './gallery.default';
+import { GalleryState, GalleryImage } from './gallery.state';
+import { GalleryConfig } from './gallery.config';
+import { defaultState, defaultConfig } from './gallery.default';
 
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
-import 'rxjs/add/observable/from';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+
+import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/interval';
+import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/finally';
-import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/repeat';
 import 'rxjs/add/operator/takeWhile';
-import 'rxjs/add/operator/concatMap';
+import 'rxjs/add/operator/do';
 
 @Injectable()
 export class GalleryService {
@@ -26,7 +26,7 @@ export class GalleryService {
   /** Gallery slide show player */
   player: Subject<number>;
 
-  constructor(@Optional() config: GalleryConfig) {
+  constructor( @Optional() config: GalleryConfig) {
 
     /** Initialize the state */
     this.state = new BehaviorSubject<GalleryState>(defaultState);
@@ -113,7 +113,7 @@ export class GalleryService {
 
     const state = this.state.getValue();
     /** Open and play the gallery, 'active' opens gallery modal */
-    this.state.next(Object.assign({}, state, {play: true, active: true}));
+    this.state.next(Object.assign({}, state, { play: true, active: true }));
     this.player.next(speed);
   }
 
@@ -127,12 +127,10 @@ export class GalleryService {
     return Observable.interval(interval)
       .takeWhile(() => this.state.getValue().play)
       .do(() => {
-        console.log(this.state.getValue());
         this.next();
       })
       .finally(() => {
-        console.log('stopped');
-        this.state.next(Object.assign({}, this.state.getValue(), {play: false}));
+        this.state.next(Object.assign({}, this.state.getValue(), { play: false }));
       });
 
   }

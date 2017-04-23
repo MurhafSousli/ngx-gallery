@@ -1,6 +1,6 @@
 {
   "name": "ng-gallery",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Angular Image Gallery",
   "repository": {
     "type": "git",
@@ -52,8 +52,6 @@
     "gulp-coveralls": "^0.1.4",
     "gulp-file": "^0.3.0",
     "gulp-inline-ng2-template": "^4.0.0",
-    "gulp-postcss": "^6.2.0",
-    "gulp-sass": "^3.1.0",
     "gulp-tslint": "^7.1.0",
     "gulp-util": "^3.0.7",
     "html-loader": "^0.4.4",
@@ -79,9 +77,12 @@
     "to-string-loader": "^1.1.5",
     "tslint": "^4.5.1",
     "typescript": "2.2.2",
-    "webpack": "2.2.0-rc.4",
-    "webpack-dev-middleware": "^1.6.1",
-    "webpack-dev-server": "2.2.0-rc.0",
-    "zone.js": "0.8.5"
+    "webpack": "~2.4.1",
+    "webpack-dev-middleware": "^1.10.2",
+    "webpack-dev-server": "~2.4.2",
+    "zone.js": "0.8.5",
+    "sass-loader": "^6.0.3",
+    "postcss": "^5.2.17",
+    "node-sass": "^4.5.2"
   }
 }

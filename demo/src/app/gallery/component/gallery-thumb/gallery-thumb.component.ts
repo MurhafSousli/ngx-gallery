@@ -1,7 +1,7 @@
-import {Component, Input, OnChanges, ChangeDetectionStrategy, ElementRef, Renderer2, OnInit} from '@angular/core';
-import {GalleryService} from '../../service/gallery.service';
-import {GalleryState} from '../../service/gallery.state';
-import {GalleryThumbConfig} from '../../service/gallery.config';
+import { Component, Input, OnChanges, ChangeDetectionStrategy, ElementRef, Renderer2, OnInit } from '@angular/core';
+import { GalleryService } from '../../service/gallery.service';
+import { GalleryState } from '../../service/gallery.state';
+import { GalleryThumbConfig } from '../../service/gallery.config';
 
 @Component({
   selector: 'gallery-thumb',

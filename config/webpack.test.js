@@ -1,6 +1,6 @@
 const helpers = require('./helpers');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
-const {CheckerPlugin} = require('awesome-typescript-loader');
+const { CheckerPlugin } = require('awesome-typescript-loader');
 
 const getConfig = (hasCoverage, isTddMode) => {
 
@@ -78,7 +78,11 @@ const getConfig = (hasCoverage, isTddMode) => {
                     test: /\.css$/,
                     loader: ['to-string-loader', 'css-loader']
                 },
-
+                {
+                    test: /\.(scss|sass)$/,
+                    use: ['to-string-loader', 'css-loader', 'sass-loader'],
+                    exclude: [helpers.root('src', 'scss')]
+                },
                 {
                     test: /\.html$/,
                     loader: 'raw-loader'

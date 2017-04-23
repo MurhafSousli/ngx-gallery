@@ -1,6 +1,6 @@
-import {Component, Input, OnInit, ElementRef, Renderer2, ChangeDetectionStrategy} from '@angular/core';
+import { Component, Input, OnInit, ElementRef, Renderer2, ChangeDetectionStrategy } from '@angular/core';
 import { GalleryState } from '../../service/gallery.state';
-import {GalleryDescriptionConfig} from '../../service/gallery.config';
+import { GalleryDescriptionConfig } from '../../service/gallery.config';
 
 @Component({
   selector: 'gallery-text',

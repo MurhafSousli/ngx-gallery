@@ -5,6 +5,7 @@ import { GalleryImage } from '../service/gallery.state';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/observable/from';
+import 'rxjs/add/operator/map';
 
 @Directive({
   selector: '[gallerize]'
