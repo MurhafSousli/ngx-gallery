@@ -23,11 +23,6 @@ export class GalleryBulletsComponent implements OnInit {
       let contDirection, conWidth, conHeight, contTop;
       let hostRight = 'unset', hostBottom = 'unset';
       switch (this.config.position) {
-        case 'top':
-          contDirection = 'row';
-          conHeight = 'auto';
-          conWidth = '100%';
-          break;
         case 'bottom':
           contDirection = 'row';
           conHeight = 'auto';
@@ -47,6 +42,10 @@ export class GalleryBulletsComponent implements OnInit {
           hostRight = '0';
           break;
         default:
+          // top
+          contDirection = 'row';
+          conHeight = 'auto';
+          conWidth = '100%';
           break;
       }
 

@@ -2,22 +2,17 @@
   <md-checkbox [ngModel]="config" (ngModelChange)="enabledChanged($event)">bullets</md-checkbox>
 </md-toolbar>
 
-<ul>
-  <li>
-    <md-input-container>
-      <input mdInput placeholder="width" [(ngModel)]="config.width" [disabled]="!config">
-    </md-input-container>
-  </li>
+<ul [class.section-closed]="!config">
 
   <li>
-    <md-input-container>
-      <input mdInput placeholder="height" [(ngModel)]="config.height" [disabled]="!config">
-    </md-input-container>
-  </li>
-
-  <li>
-    <md-select [(ngModel)]="config.position" placeholder="position" [disabled]="!config">
+    <md-select [ngModel]="config.position" (ngModelChange)="positionChanged($event)" placeholder="position"
+               [disabled]="!config">
       <md-option *ngFor="let p of positionOptions" [value]="p">{{p}}</md-option>
     </md-select>
+  </li>
+
+  <li>
+    <object-input placeholder="bullets" [data]="config.style" (value)="styleChanged($event)"
+                 [disabled]="!config"></object-input>
   </li>
 </ul>

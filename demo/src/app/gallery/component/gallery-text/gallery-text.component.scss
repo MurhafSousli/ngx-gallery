@@ -3,18 +3,21 @@
 }
 
 :host {
+  position: relative;
   left: 0;
-  width: 100%;
+  right: 0;
   z-index: 205;
-  background-clip: padding-box;
-  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.g-text-container {
+  padding: 1em 2em;
   color: #ccc;
   font-size: 13px;
-  -webkit-font-smoothing: antialiased;
   display: flex;
   flex-direction: row;
   align-content: center;
-  padding: 1em 2em;
+  background-clip: padding-box;
+  -webkit-font-smoothing: antialiased;
 }
 
 .g-text {

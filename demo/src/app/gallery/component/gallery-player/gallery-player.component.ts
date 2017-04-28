@@ -22,6 +22,8 @@ export class GalleryPlayerComponent implements OnInit {
     if (this.config.autoplay) {
       this.gallery.play();
     }
+
+    /** TODO: Display status bar */
   }
 
 }

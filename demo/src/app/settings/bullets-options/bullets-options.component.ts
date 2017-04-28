@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {GalleryBulletConfig} from '../../gallery/service/gallery.config';
+import {GalleryBulletConfig} from '../../gallery';
 
 @Component({
   selector: 'bullets-options',
@@ -8,7 +8,6 @@ import {GalleryBulletConfig} from '../../gallery/service/gallery.config';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BulletsOptionsComponent {
-
 
   @Input() config: GalleryBulletConfig;
   @Output() value = new EventEmitter<GalleryBulletConfig>();
@@ -32,4 +31,13 @@ export class BulletsOptionsComponent {
     }
   }
 
+  positionChanged(e) {
+    this.config.position = e;
+    this.value.emit(this.config);
+  }
+
+  styleChanged(e) {
+    this.config.style = e;
+    this.value.emit(this.config);
+  }
 }

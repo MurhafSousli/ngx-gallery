@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {MdDialogRef} from '@angular/material';
+import {tryParseJSON} from '../../shared/service/shared.service';
 
 @Component({
   selector: 'import-dialog',
@@ -33,15 +34,3 @@ export class ImportDialogComponent {
 
 }
 
-export const tryParseJSON = (jsonString) => {
-  try {
-    const o = JSON.parse(jsonString);
-
-    if (o && typeof o === 'object') {
-      return o;
-    }
-  } catch (e) {
-  }
-
-  return false;
-};

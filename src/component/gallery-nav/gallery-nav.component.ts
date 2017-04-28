@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { GalleryService } from '../../service/gallery.service';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {GalleryService} from '../../service/gallery.service';
 
 @Component({
   selector: 'gallery-nav',

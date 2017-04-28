@@ -6,8 +6,12 @@ import {
 } from './service/gallery.state';
 import {
   GalleryConfig,
-  GalleryDescriptionConfig,
-  GalleryThumbConfig
+  GalleryDescConfig,
+  GalleryThumbConfig,
+  GalleryNavConfig,
+  GalleryLoaderConfig,
+  GalleryPlayConfig,
+  GalleryBulletConfig,
 } from './service/gallery.config';
 
 export {
@@ -16,6 +20,10 @@ export {
   GalleryState,
   GalleryImage,
   GalleryConfig,
-  GalleryDescriptionConfig,
-  GalleryThumbConfig
+  GalleryDescConfig,
+  GalleryThumbConfig,
+  GalleryNavConfig,
+  GalleryLoaderConfig,
+  GalleryPlayConfig,
+  GalleryBulletConfig,
 };

@@ -43,8 +43,8 @@ import { GalleryModule } from 'ng-gallery';
 
 After that you will be able to use Gallery's components and there is two options:
  
- - `<gallery></gallery>` : to insert the gallery right in the template, see [basic example](https://murhafsousli.github.io/ng-gallery/basic)
- - `<gallery-modal></gallery-modal>` : to open the gallery in a modal, see [modal example](https://murhafsousli.github.io/ng-gallery/modal)
+ - `<gallery></gallery>` : to insert the gallery right in the template, see [basic example](https://murhafsousli.github.io/ng-gallery/#/basic)
+ - `<gallery-modal></gallery-modal>` : to open the gallery in a modal, see [modal example](https://murhafsousli.github.io/ng-gallery/#/modal)
 
 
  One final step is to fill the gallery with images and there is two options:
@@ -66,6 +66,22 @@ ngOnInit() {
     <img src="assets/img/img4.jpg" alt="Fire">
     <img src="assets/img/img5.jpg" alt="Peacock">
 </div>
+```
+
+### Gesture Support (optional)
+
+Gallery Module relies on HammerJS for gestures, make sure it is loaded into the application.
+
+*You can add HammerJS to your application via npm, a CDN (such as the Google CDN), or served directly from your app.*
+
+To install via npm, use the following command:
+
+`$ npm install --save hammer.js`
+
+After installing, import it on your app's root module
+
+```ts
+import 'hammerjs';
 ```
 
 ## Author

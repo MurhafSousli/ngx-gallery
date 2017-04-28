@@ -10,11 +10,14 @@ import {SharedService} from '../../shared/service/shared.service';
 })
 export class ModalExampleComponent implements OnInit {
 
+  images = [];
+
   constructor(public gallery: GalleryService, public shared: SharedService) {
   }
 
   ngOnInit() {
-    this.gallery.load(this.shared.getImages());
+    this.images = this.shared.getImages();
+    this.gallery.load(this.images);
   }
 
 }

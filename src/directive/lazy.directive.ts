@@ -6,8 +6,6 @@ import {
   EventEmitter,
   Renderer2
 } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/delay';
 
 @Directive({
   selector: '[lazyImage]'
@@ -21,10 +19,7 @@ export class LazyDirective {
 
   @Output() lazyLoad = new EventEmitter<boolean>(false);
 
-  el: HTMLElement;
-
-  constructor(el: ElementRef, public renderer: Renderer2) {
-    this.el = el.nativeElement;
+  constructor(private el: ElementRef, private renderer: Renderer2) {
   }
 
   getImage(imagePath) {
@@ -33,14 +28,12 @@ export class LazyDirective {
     img.src = imagePath;
 
     img.onload = () => {
-      // Observable.of(null).delay(600).subscribe(() => {
-      this.renderer.setStyle(this.el, 'backgroundImage', `url(${imagePath})`);
+      this.renderer.setProperty(this.el.nativeElement, 'src', imagePath);
       this.lazyLoad.emit(true);
-      // });
     };
 
     img.onerror = err => {
-      console.error('[LazyImageDirective]:', err);
+      console.error('[GalleryLazyDirective]:', err);
       this.lazyLoad.emit(err);
     };
   }

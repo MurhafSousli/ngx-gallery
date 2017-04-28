@@ -2,22 +2,26 @@
   <md-checkbox [ngModel]="config" (ngModelChange)="enabledChanged($event)">thumbnail</md-checkbox>
 </md-toolbar>
 
-<ul>
+<ul [class.section-closed]="!config">
   <li>
-    <md-input-container>
-      <input mdInput placeholder="width" [(ngModel)]="config.width" [disabled]="!config">
-    </md-input-container>
+    <reactive-input [placeholder]="'width'" [text]="config.width" (value)="widthChanged($event)"
+                    [disabled]="!config" ></reactive-input>
   </li>
 
   <li>
-    <md-input-container>
-      <input mdInput placeholder="height" [(ngModel)]="config.height" [disabled]="!config">
-    </md-input-container>
+    <reactive-input [placeholder]="'height'" [text]="config.height" (value)="heightChanged($event)"
+                    [disabled]="!config" ></reactive-input>
   </li>
 
   <li>
-    <md-select [(ngModel)]="config.position" placeholder="position" [disabled]="!config">
+    <md-select placeholder="position" [ngModel]="config.position" (ngModelChange)="positionChanged($event)"
+               [disabled]="!config">
       <md-option *ngFor="let p of positionOptions" [value]="p">{{p}}</md-option>
     </md-select>
+  </li>
+
+  <li>
+    <reactive-input [placeholder]="'space'" [text]="config.space" (value)="spaceChanged($event)"
+                    [disabled]="!config" ></reactive-input>
   </li>
 </ul>

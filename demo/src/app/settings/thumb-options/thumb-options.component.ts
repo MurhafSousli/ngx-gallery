@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {GalleryDescriptionConfig} from '../../gallery';
+import {GalleryThumbConfig} from '../../gallery';
 
 @Component({
   selector: 'thumb-options',
@@ -9,15 +9,13 @@ import {GalleryDescriptionConfig} from '../../gallery';
 })
 export class ThumbOptionsComponent {
 
-  @Input() config: GalleryDescriptionConfig;
-  @Output() value = new EventEmitter<GalleryDescriptionConfig>();
+  @Input() config: GalleryThumbConfig;
+  @Output() value = new EventEmitter<GalleryThumbConfig>();
 
-  prevConfig: GalleryDescriptionConfig = {};
+  prevConfig: GalleryThumbConfig = {};
 
   positionOptions = [
-    'left',
     'top',
-    'right',
     'bottom'
   ];
 
@@ -29,6 +27,26 @@ export class ThumbOptionsComponent {
       this.prevConfig = this.config;
       this.value.emit(false);
     }
+  }
+
+  spaceChanged(e) {
+    this.config.space = e;
+    this.value.emit(this.config);
+  }
+
+  positionChanged(e) {
+    this.config.position = e;
+    this.value.emit(this.config);
+  }
+
+  widthChanged(e) {
+    this.config.width = e;
+    this.value.emit(this.config);
+  }
+
+  heightChanged(e) {
+    this.config.height = e;
+    this.value.emit(this.config);
   }
 
 }

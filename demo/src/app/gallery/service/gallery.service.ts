@@ -96,14 +96,12 @@ export class GalleryService {
       play: false
     }));
     this.stop();
-    console.log('close');
   }
 
   /** Reset gallery with initial state */
   reset() {
     this.state.next(defaultState);
     this.stop();
-    console.log('reset');
   }
 
   /** Play slide show */

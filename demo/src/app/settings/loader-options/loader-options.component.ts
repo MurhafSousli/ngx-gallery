@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {GalleryLoaderConfig} from '../../gallery/service/gallery.config';
+import {GalleryLoaderConfig} from '../../gallery';
 
 @Component({
   selector: 'loader-options',
@@ -46,4 +46,23 @@ export class LoaderOptionsComponent {
     }
   }
 
+  heightChanged(e) {
+    this.config.height = e;
+    this.value.emit(this.config);
+  }
+
+  widthChanged(e) {
+    this.config.width = e;
+    this.value.emit(this.config);
+  }
+
+  positionChanged(e) {
+    this.config.position = e;
+    this.value.emit(this.config);
+  }
+
+  iconChanged(e) {
+    this.config.icon = e;
+    this.value.emit(this.config);
+  }
 }

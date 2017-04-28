@@ -1,7 +1,11 @@
-import { Component, Input, OnChanges, ChangeDetectionStrategy, ElementRef, Renderer2, OnInit } from '@angular/core';
-import { GalleryService } from '../../service/gallery.service';
-import { GalleryState } from '../../service/gallery.state';
-import { GalleryThumbConfig } from '../../service/gallery.config';
+import {
+  Component, Input, ChangeDetectionStrategy, ElementRef, Renderer2, OnInit
+} from '@angular/core';
+import {GalleryService} from '../../service/gallery.service';
+import {GalleryState} from '../../service/gallery.state';
+import {GalleryThumbConfig} from '../../service/gallery.config';
+
+declare const Hammer: any;
 
 @Component({
   selector: 'gallery-thumb',
@@ -9,125 +13,67 @@ import { GalleryThumbConfig } from '../../service/gallery.config';
   styleUrls: ['./gallery-thumb.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GalleryThumbComponent implements OnInit, OnChanges {
-
-  rulerStyle;
-  currThumbStyle;
+export class GalleryThumbComponent implements OnInit {
 
   @Input() state: GalleryState;
   @Input() config: GalleryThumbConfig;
 
+  contStyle;
+
   constructor(public gallery: GalleryService, private el: ElementRef, private renderer: Renderer2) {
+
   }
 
   ngOnInit() {
 
-  }
+    this.contStyle = this.getContainerStyle();
 
-  ngOnChanges() {
-    // ruler variables
-    let rulerX = 0, rulerY = 0, rulerCenterX = 0, rulerCenterY = 0, rulerDirection = 'row';
-    // current thumbnail variables
-    let thumbX = 'unset', thumbY = 'unset';
-    // container variables
-    let contWidth = '100%', contHeight = '100%', contDirection = 'column', contOrder = 0;
-    // temp variables
-    let widthHalf, heightHalf;
+    /** Enable gestures if hammer is loaded */
+    if (typeof Hammer !== 'undefined') {
 
-    const thumbWidth = this.config.width;
-    const thumbHeight = this.config.height;
+      const el = this.el.nativeElement;
+      const mc = new Hammer(el);
 
+      mc.on('panstart', () => {
+        this.renderer.removeClass(el, 'g-pan-reset');
+      });
+      mc.on('panend', () => {
+        this.renderer.addClass(el, 'g-pan-reset');
+      });
 
-    switch (this.config.position) {
-      case 'top':
-        widthHalf = thumbWidth / 2;
-        // ruler position
-        rulerX = this.state.currIndex * thumbWidth + widthHalf;
-        rulerCenterX = 50;
-
-        // current thumbnail position
-        thumbX = `calc(50% - ${widthHalf}px)`;
-
-        // container position
-        contHeight = `${thumbHeight}px`;
-        break;
-
-      case 'bottom':
-        widthHalf = thumbWidth / 2;
-        // ruler position
-        rulerX = this.state.currIndex * thumbWidth + widthHalf;
-        rulerCenterX = 50;
-
-        // current thumbnail position
-        thumbX = `calc(50% - ${widthHalf}px)`;
-
-        // container position
-        contHeight = `${thumbHeight}px`;
-        contOrder = 2;
-        break;
-      case 'left':
-        heightHalf = thumbHeight / 2;
-        // ruler position
-        rulerY = this.state.currIndex * thumbHeight + heightHalf;
-        rulerCenterY = 50;
-        rulerDirection = 'column';
-
-        // current thumbnail position
-        thumbY = `calc(50% - ${heightHalf}px)`;
-
-        // container position
-        contWidth = `${thumbWidth}px`;
-        contDirection = 'row';
-        break;
-      case 'right':
-        heightHalf = thumbHeight / 2;
-        // ruler position
-        rulerY = this.state.currIndex * thumbHeight + heightHalf;
-        rulerCenterY = 50;
-        rulerDirection = 'column';
-
-        // current thumbnail position
-        thumbY = `calc(50% - ${heightHalf}px)`;
-
-        // container position
-        contWidth = `${thumbWidth}px`;
-        contDirection = 'row';
-        contOrder = 2;
-        break;
-      default:
+      /** Pan left and right */
+      mc.on('pan', (e) => {
+        this.renderer.setStyle(el, 'transform', `translate3d(${e.deltaX}px, 0px, 0px)`);
+      });
+      /** Swipe next and prev */
+      mc.on('swipeleft', () => {
+        this.gallery.next();
+      });
+      mc.on('swiperight', () => {
+        this.gallery.prev();
+      });
     }
 
-    this.setRulerStyle(rulerX, rulerY, rulerCenterX, rulerCenterY, rulerDirection);
-    this.setCurrThumbStyle(thumbX, thumbY, thumbWidth, thumbHeight);
-    this.setContainerStyle(contWidth, contHeight, contDirection, contOrder);
   }
 
-  setRulerStyle(x, y, left, top, direction) {
-    this.rulerStyle = {
-      margin: `${-y}px 0 0 ${-x}px`,
-      left: `${left}%`,
-      top: `${top}%`,
-      flexDirection: direction
-    };
+  translateThumbs() {
+    const x = this.state.currIndex * this.config.width + this.config.width / 2;
+    return `translate3d(${-x}px, 0, 0)`;
   }
 
-  setCurrThumbStyle(left, top, width, height) {
-    this.currThumbStyle = {
-      left: left,
-      top: top,
-      width: `${width}px`,
-      height: `${height}px`
-    };
-  }
-
-  setContainerStyle(width, height, direction, order) {
-    this.renderer.setStyle(this.el.nativeElement, 'flexDirection', direction);
+  getContainerStyle() {
+    /** Set thumbnails position (top, bottom) */
+    const order = this.config.position === 'top' ? 0 : 2;
     this.renderer.setStyle(this.el.nativeElement, 'order', order);
-    this.renderer.setStyle(this.el.nativeElement, 'width', width);
-    this.renderer.setStyle(this.el.nativeElement, 'height', height);
+
+    return {
+      height: this.config.height + 'px',
+      margin: this.config.space + 'px'
+    };
   }
 
   getThumbImage(i) {
+    /** Use thumbnail if presented */
     return `url(${this.state.images[i].thumbnail || this.state.images[i].src})`;
   }
 

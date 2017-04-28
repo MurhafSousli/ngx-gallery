@@ -26,7 +26,6 @@ export class ReloadOptionsComponent implements OnInit {
 
     setTimeout(() => {
       // redirect to previous route
-      console.log(this.shared.tempUrl);
       this.router.navigate([this.shared.tempUrl]);
     }, 300);
   }

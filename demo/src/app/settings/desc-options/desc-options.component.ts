@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {GalleryDescriptionConfig} from '../../gallery';
+import {GalleryDescConfig} from '../../gallery';
 
 @Component({
   selector: 'desc-options',
@@ -9,10 +9,10 @@ import {GalleryDescriptionConfig} from '../../gallery';
 })
 export class DescOptionsComponent {
 
-  @Input() config: GalleryDescriptionConfig;
-  @Output() value = new EventEmitter<GalleryDescriptionConfig>();
+  @Input() config: GalleryDescConfig;
+  @Output() value = new EventEmitter<GalleryDescConfig>();
 
-  prevConfig: GalleryDescriptionConfig = {};
+  prevConfig: GalleryDescConfig = {};
 
   positionOptions = [
     'top',
@@ -29,4 +29,31 @@ export class DescOptionsComponent {
     }
   }
 
+  textChanged(e) {
+    this.config.text = e;
+    this.value.emit(this.config);
+  }
+
+  countChanged(e) {
+    this.config.counter = e;
+    this.value.emit(this.config);
+  }
+
+  positionChanged(e) {
+    this.config.position = e;
+    this.value.emit(this.config);
+  }
+
+  overlayChanged(e) {
+    this.config.overlay = e;
+    this.value.emit(this.config);
+  }
+
+  styleChanged(e) {
+    this.config.style = e;
+    this.value.emit(this.config);
+  }
+
 }
+
+

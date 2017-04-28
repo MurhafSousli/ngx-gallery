@@ -31,9 +31,11 @@ export class AppComponent implements OnInit {
    * and redirect back to the previous route */
 
   reload(e) {
+    if (this.router.url !== '/reload') {
+      // save current url for reload
+      this.shared.tempUrl = this.router.url;
+      this.router.navigate(['/reload']);
+    }
     this.gallery.config = e;
-    // save current url for reload
-    this.shared.tempUrl = this.router.url;
-    this.router.navigate(['/reload']);
   }
 }

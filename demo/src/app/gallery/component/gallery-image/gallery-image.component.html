@@ -1,7 +1,5 @@
-<div class="g-image" [@imgIn]="animate"
-    [lazyImage]="state.images[state.currIndex].src"
-    (lazyLoad)="imageLoad($event)"></div>
+<div [@imgAnimate]="animate" class="g-image">
+  <img [lazyImage]="state.images[state.currIndex].src" (lazyLoad)="imageLoad($event)">
+</div>
 
-<div class="g-image g-image-prev" [@imgOut]="animate"
-    [style.backgroundImage]="'url(' + state.images[state.prevIndex]?.src + ')'"></div>
-
+<gallery-loader *ngIf="loading" [config]="config.loader"></gallery-loader>

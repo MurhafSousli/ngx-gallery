@@ -1,7 +1,17 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { animation } from './gallery-image.animation';
-import { GalleryState } from '../../service/gallery.state';
-import { GalleryConfig } from '../../service/gallery.config';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  Input,
+  ElementRef,
+  Renderer2
+} from '@angular/core';
+import {GalleryState} from '../../service/gallery.state';
+import {GalleryConfig} from '../../service/gallery.config';
+import {GalleryService} from '../../service/gallery.service';
+import {animation} from './gallery-image.animation';
+
+declare const Hammer: any;
 
 @Component({
   selector: 'gallery-image',
@@ -10,35 +20,59 @@ import { GalleryConfig } from '../../service/gallery.config';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: animation
 })
-export class GalleryImageComponent {
+export class GalleryImageComponent implements OnInit {
 
   @Input() state: GalleryState;
   @Input() config: GalleryConfig;
-  @Output() loading = new EventEmitter();
+  loading: boolean;
   animate: string;
 
-  constructor() {
+  constructor(public gallery: GalleryService, private el: ElementRef, private renderer: Renderer2) {
+  }
+
+  ngOnInit() {
+    /** Enable hammer if loaded */
+    if (typeof Hammer !== 'undefined') {
+
+      const el = this.el.nativeElement;
+
+      const mc = new Hammer(el);
+      mc.on('panstart', () => {
+        this.renderer.removeClass(el, 'g-pan-reset');
+      });
+      mc.on('panend', () => {
+        this.renderer.addClass(el, 'g-pan-reset');
+      });
+      mc.on('pan', (e) => {
+        this.renderer.setStyle(el, 'transform', `translate3d(${e.deltaX}px, 0px, 0px)`);
+      });
+      /** Swipe next and prev */
+      mc.on('swipeleft', () => {
+        this.gallery.next();
+      });
+      mc.on('swiperight', () => {
+        this.gallery.prev();
+      });
+    }
   }
 
   imageLoad(done: boolean) {
-    this.loading.emit(!done);
+    this.loading = !done;
+    /** TODO: Add some animation */
 
-    if (done) {
-      this.animate = 'none';
-    } else {
-      switch (this.config.animation) {
-        case 'fade':
-          this.animate = 'fade';
-          break;
-        case 'slide':
-          this.animate = (this.state.currIndex > this.state.prevIndex) ? 'slideLeft' : 'slideRight';
-          break;
-        default:
-          this.animate = 'none';
-      }
-    }
-
+    this.animate = this.config.animation;
+    // if (done) {
+    //   this.animate = 'none';
+    // } else {
+    // switch (this.config.animation) {
+    //   case 'fade':
+    //     this.animate = 'fade';
+    //     break;
+    //   case 'slide':
+    //     this.animate = (this.state.currIndex > this.state.prevIndex) ? 'slideLeft' : 'slideRight';
+    //     break;
+    //   default:
+    //     this.animate = 'none';
   }
-
 
 }

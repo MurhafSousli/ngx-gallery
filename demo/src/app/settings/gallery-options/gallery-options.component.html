@@ -2,7 +2,7 @@
 
   <div class="options-title">
     <span>Gallery options</span>
-    <md-select *ngIf="themes" [ngModel]="currTheme.name" (ngModelChange)="setTheme($event)" placeholder="theme">
+    <md-select *ngIf="themes" [ngModel]="currTheme.name" (ngModelChange)="themeChanged($event)" placeholder="theme">
       <md-option *ngFor="let theme of themes" [value]="theme">{{theme.name}}</md-option>
     </md-select>
   </div>
@@ -17,31 +17,32 @@
 
 <div class="gallery-options">
 
-  <div class="option-padding">
+  <ul>
+    <li>
+      <md-select [ngModel]="config.animation" (ngModelChange)="animateChanged($event)" placeholder="animation">
+        <md-option *ngFor="let p of animateOptions" [value]="p">{{p}}</md-option>
+      </md-select>
+    </li>
+    <li>
+      <md-checkbox [(ngModel)]="config.gestures" (ngModelChange)="gesturesChanged($event)">gestures</md-checkbox>
+    </li>
+    <li>
+      <object-input placeholder="container" [data]="config.style" (value)="styleChanged($event)"></object-input>
+    </li>
+  </ul>
 
-    <md-select [ngModel]="config.animation" (ngModelChange)="updateAnimate($event)" placeholder="animation">
-      <md-option *ngFor="let p of animateOptions" [value]="p">{{p}}</md-option>
-    </md-select>
 
-    <md-input-container>
-      <input mdInput placeholder="width" [ngModel]="config.width" (ngModelChange)="updateWidth($event)">
-    </md-input-container>
+  <desc-options [config]="config.description" (value)="descChanged($event)"></desc-options>
 
-    <md-input-container>
-      <input mdInput placeholder="height" [ngModel]="config.height" (ngModelChange)="updateHeight($event)">
-    </md-input-container>
-  </div>
+  <thumb-options [config]="config.thumbnails" (value)="thumbsChanged($event)"></thumb-options>
 
+  <nav-options [config]="config.thumbnails" (value)="navChanged($event)"></nav-options>
 
-  <desc-options [config]="config.description" (value)="updateDesc($event)"></desc-options>
+  <bullets-options [config]="config.bullets" (value)="bulletsChanged($event)"></bullets-options>
 
-  <loader-options [config]="config.loader" (value)="updateLoader($event)"></loader-options>
+  <loader-options [config]="config.loader" (value)="loaderChanged($event)"></loader-options>
 
-  <thumb-options [config]="config.thumbnails" (value)="updateThumbs($event)"></thumb-options>
-
-  <bullets-options [config]="config.bullets" (value)="updateBullets($event)"></bullets-options>
-
-  <play-options [config]="config.player" (value)="updatePlayer($event)"></play-options>
+  <play-options [config]="config.player" (value)="playerChanged($event)"></play-options>
 
   <service-options></service-options>
 </div>

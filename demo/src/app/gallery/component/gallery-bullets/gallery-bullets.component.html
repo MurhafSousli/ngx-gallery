@@ -1,10 +1,8 @@
 <div class="g-bullet"
      *ngFor="let image of state.images; let i = index"
      [class.g-bullet-curr]="i === state.currIndex"
-     [style.width.px]="config.width"
-     [style.height.px]="config.height"
      (click)="gallery.set(i)">
 
-  <div class="g-bullet-inner"></div>
+  <div class="g-bullet-inner" [ngStyle]="config.style"></div>
 
 </div>
