@@ -17,6 +17,7 @@ import { GalleryDirective } from './directive/gallery.directive';
 import { LazyDirective } from './directive/lazy.directive';
 import { GalleryPlayerComponent } from './component/gallery-player/gallery-player.component';
 import { GalleryMainComponent } from './component/gallery-main/gallery-main.component';
+import { TapDirective } from './directive/tap.directive';
 
 /** Initialize ConfigService with URL */
 export function galleryFactory(config: GalleryConfig) {
@@ -41,7 +42,8 @@ export const CONFIG = new InjectionToken<GalleryConfig>('config');
     GalleryModalComponent,
     GalleryBulletsComponent,
     GalleryPlayerComponent,
-    GalleryMainComponent
+    GalleryMainComponent,
+    TapDirective
   ],
   exports: [
     GalleryComponent,

@@ -31,7 +31,7 @@ export class GalleryDirective implements OnInit {
 
           if (imageElements) {
             Observable.from(imageElements).map((img: HTMLImageElement, i) => {
-              // add click event to open image in the lightbox
+              // add click event to the images
               this.renderer.setStyle(img, 'cursor', 'pointer');
               this.renderer.setProperty(img, 'onclick', () => {
                 this.gallery.set(i);
@@ -50,44 +50,3 @@ export class GalleryDirective implements OnInit {
       });
   }
 }
-
-
-/**
-
- ngOnChanges(changes: SimpleChanges) {
-
-    if (changes['postContent'] && changes['postContent'].currentValue) {
-
-      let html = changes['postContent'].currentValue;
-
-      this.renderer.setProperty(this.el.nativeElement, 'innerHTML', html);
-
-      let classes = (this.gallerize) ? this.gallerize.split(' ').map((className) => '.' + className) : '';
-
-      // get all img elements from content
-      let images: GalleryImage[] = [];
-
-      let imageElements = this.el.nativeElement.querySelectorAll(`img${classes}`);
-
-      if (imageElements) {
-        imageElements.forEach((img: HTMLImageElement, i) => {
-          // add click event to open image in the lightbox
-
-          img.onclick = () => {
-            this.lightBoxService.setCurrent(i);
-          };
-
-          // create an image item
-          images.push({
-            src: img.src,
-            text: 'This is a test for image description'
-          });
-        });
-
-
-        this.lightBoxService.load(images);
-      }
-    }
-
-  }
- */

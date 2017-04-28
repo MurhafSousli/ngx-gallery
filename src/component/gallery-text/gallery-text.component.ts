@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, ElementRef, Renderer2, ChangeDetectionStrategy } from '@angular/core';
-import { GalleryState } from '../../service/gallery.state';
-import { GalleryDescriptionConfig } from '../../service/gallery.config';
+import {Component, Input, OnInit, ElementRef, Renderer2, ChangeDetectionStrategy} from '@angular/core';
+import {GalleryState} from '../../service/gallery.state';
+import {GalleryDescConfig} from '../../service/gallery.config';
 
 @Component({
   selector: 'gallery-text',
@@ -11,25 +11,27 @@ import { GalleryDescriptionConfig } from '../../service/gallery.config';
 export class GalleryTextComponent implements OnInit {
 
   @Input() state: GalleryState;
-  @Input() config: GalleryDescriptionConfig;
+  @Input() config: GalleryDescConfig;
 
   constructor(private el: ElementRef, private renderer: Renderer2) {
   }
 
   ngOnInit() {
-
+    const el = this.el.nativeElement;
     // text overlay
-    this.renderer.setStyle(this.el.nativeElement, 'position', (this.config.overlay) ? 'absolute' : 'relative');
+    if (this.config.overlay) {
+      this.renderer.setStyle(el, 'position', 'absolute');
+    }
 
     // text position
     if (this.config.position === 'top') {
-      this.renderer.setStyle(this.el.nativeElement, 'order', 0);
-      this.renderer.setStyle(this.el.nativeElement, 'top', 0);
-      this.renderer.setStyle(this.el.nativeElement, 'bottom', 'unset');
+      this.renderer.setStyle(el, 'order', 0);
+      this.renderer.setStyle(el, 'top', 0);
+      this.renderer.setStyle(el, 'bottom', 'unset');
     } else {
-      this.renderer.setStyle(this.el.nativeElement, 'order', 2);
-      this.renderer.setStyle(this.el.nativeElement, 'top', 'unset');
-      this.renderer.setStyle(this.el.nativeElement, 'bottom', 0);
+      this.renderer.setStyle(el, 'order', 2);
+      this.renderer.setStyle(el, 'top', 'unset');
+      this.renderer.setStyle(el, 'bottom', 0);
     }
   }
 }

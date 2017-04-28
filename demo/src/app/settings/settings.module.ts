@@ -17,11 +17,14 @@ import {ImportDialogComponent} from './import-dialog/import-dialog.component';
 import { BulletsOptionsComponent } from './bullets-options/bullets-options.component';
 import { PlayOptionsComponent } from './play-options/play-options.component';
 import { ServiceOptionsComponent } from './service-options/service-options.component';
+import {SharedModule} from '../shared/share.module';
+import { NavOptionsComponent } from './nav-options/nav-options.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    SharedModule,
     MdCheckboxModule,
     MdInputModule,
     MdSelectModule,
@@ -37,7 +40,8 @@ import { ServiceOptionsComponent } from './service-options/service-options.compo
     ImportDialogComponent,
     BulletsOptionsComponent,
     PlayOptionsComponent,
-    ServiceOptionsComponent
+    ServiceOptionsComponent,
+    NavOptionsComponent
   ],
   entryComponents: [
     ImportDialogComponent

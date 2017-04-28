@@ -1,12 +1,13 @@
-* {
-  box-sizing: border-box;
-}
-
-:host {
+gallery-main {
+  flex: 1;
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  * {
+    box-sizing: border-box;
+  }
 }
 
 .g-container {
@@ -15,24 +16,29 @@
   z-index: 200;
   max-height: 100%;
   max-width: 100%;
-  background-color: black;
   display: flex;
   flex-direction: column;
 
   @media (max-width: 480px) {
-    margin: 0.8em;
+    width: 100% !important;
+    flex: 1;
+    // force horizontal on mobile
+    flex-direction: column !important;
   }
 }
-
-.g-current, .g-image-container {
+.g-box{
+  height: 100%;
+}
+.g-box, .g-image-box {
   position: relative;
   display: flex;
   flex-direction: column;
   flex: 1;
   order: 1;
+  height: 100%;
 }
 
-.g-layer{
+.g-layer {
   position: absolute;
   left: 0;
   top: 0;
@@ -41,4 +47,7 @@
   z-index: 250;
 }
 
-
+.g-pan-reset {
+  transition: all linear 0.3s;
+  transform: translate3d(0px, 0px, 0px) !important;
+}

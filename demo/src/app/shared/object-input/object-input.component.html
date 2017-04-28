@@ -1,0 +1,22 @@
+<div class="input-placeholder">
+  <span class="input-title">style</span>
+  <span class="input-badge">{{placeholder}} ngStyle</span>
+</div>
+
+<div class="input-entries" *ngFor="let entry of data | keys">
+
+  <reactive-input [placeholder]="'key'" [disabled]="disabled" [text]="entry.key" (value)="keyChanged(entry, $event)"></reactive-input>
+  <reactive-input [placeholder]="'value'" [disabled]="disabled" [text]="entry.value" (value)="valueChanged(entry, $event)"></reactive-input>
+
+  <button class="input-button danger" (click)="removeEntry(entry.key)"><i class="fa fa-minus" aria-hidden="true"></i>
+  </button>
+</div>
+
+<div class="input-entries">
+
+  <reactive-input [placeholder]="'key'" [disabled]="disabled" [text]="newEntry.key" (value)="newEntry.key = $event"></reactive-input>
+  <reactive-input [placeholder]="'value'" [disabled]="disabled" [text]="newEntry.value" (value)="newEntry.value = $event"></reactive-input>
+
+  <button class="input-button success" [class.disabled]="disabled" [disabled]="disabled" (click)="addEntry()"><i
+    class="fa fa-plus" aria-hidden="true"></i></button>
+</div>

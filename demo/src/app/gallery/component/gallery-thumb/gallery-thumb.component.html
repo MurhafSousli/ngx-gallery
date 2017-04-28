@@ -1,16 +1,17 @@
-<div class="g-thumb-placeholder" [ngStyle]="currThumbStyle"></div>
+<div #container class="g-thumb-container" [ngStyle]="contStyle">
 
-<div class="g-thumbs" [ngStyle]="rulerStyle">
+  <div class="g-thumbs" [style.transform]="translateThumbs()">
 
-  <div class="g-thumb" *ngFor="let image of state.images; let i = index"
-       [class.gallery-thumbnail-current]="i === state.currIndex"
-       [style.width.px]="gallery.config.thumbnails.width"
-       [style.height.px]="gallery.config.thumbnails.height">
+    <div class="g-thumb" *ngFor="let image of state.images; let i = index"
+         [class.g-thumb-current]="i === state.currIndex"
+         [style.width.px]="gallery.config.thumbnails.width"
+         [style.height.px]="gallery.config.thumbnails.height">
 
-    <div class="g-thumb"
-         [style.backgroundImage]="getThumbImage(i)"
-         (click)="gallery.set(i)">
+      <div class="g-thumb-image" [style.backgroundImage]="getThumbImage(i)"
+           [tap] (tapClick)="gallery.set(i)">
+      </div>
     </div>
+
   </div>
 
 </div>

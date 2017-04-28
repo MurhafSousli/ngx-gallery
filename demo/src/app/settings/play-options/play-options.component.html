@@ -2,14 +2,14 @@
   <md-checkbox [ngModel]="config" (ngModelChange)="enabledChanged($event)">player</md-checkbox>
 </md-toolbar>
 
-<ul>
+<ul [class.section-closed]="!config">
   <li>
-    <md-checkbox [(ngModel)]="config.autoplay" [disabled]="!config">autoplay</md-checkbox>
+    <md-checkbox [ngModel]="config.autoplay" (ngModelChange)="autoplayChanged($event)" [disabled]="!config">autoplay
+    </md-checkbox>
   </li>
   <li>
-    <md-input-container>
-      <input mdInput placeholder="speed" [(ngModel)]="config.speed" [disabled]="!config">
-    </md-input-container>
+    <reactive-input [placeholder]="'speed'" [text]="config.speed" (value)="speedChanged($event)"
+                    [disabled]="!config" ></reactive-input>
   </li>
 
 </ul>

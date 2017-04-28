@@ -1,9 +1,8 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Http} from '@angular/http';
 import {MdDialog} from '@angular/material';
-import {GalleryService} from '../../gallery';
+import {GalleryService, GalleryConfig} from '../../gallery';
 import {ImportDialogComponent} from '../import-dialog/import-dialog.component';
-import {GalleryConfig} from "../../gallery/service/gallery.config";
 
 @Component({
   selector: 'gallery-options',
@@ -19,28 +18,28 @@ export class GalleryOptionsComponent implements OnInit {
   currTheme;
   themes;
 
+  // animateOptions = [
+  //   'fade',
+  //   'slide',
+  //   'none'
+  // ];
   animateOptions = [
     'fade',
-    'slide',
     'none'
   ];
 
-  constructor(public gallery: GalleryService, public dialog: MdDialog, public http: Http) {
+  constructor(public gallery: GalleryService, public dialog: MdDialog, public http: Http, public cd: ChangeDetectorRef) {
     this.config = gallery.config;
   }
 
   ngOnInit() {
     /** Get all pre-made themes */
-    this.http.get('../../../assets/themes.json')
+    this.http.get('assets/themes.json')
       .subscribe(res => {
         this.themes = res.json();
         this.currTheme = Object.assign({}, this.themes[0]);
+        this.cd.markForCheck();
       });
-  }
-
-  /** Update config with the selected theme */
-  setTheme(theme) {
-    this.gallery.config = Object.assign({}, this.gallery.config, theme.config);
   }
 
   /** Export config dialog */
@@ -64,48 +63,54 @@ export class GalleryOptionsComponent implements OnInit {
     });
   }
 
+  /** Update config with the selected theme */
+  themeChanged(theme) {
+    this.config = Object.assign({}, theme.config);
+    this.value.emit(this.config);
+  }
 
-  updateDesc(e) {
+  gesturesChanged(e) {
+    this.config.gestures = e;
+    this.value.emit(this.config);
+  }
+
+  descChanged(e) {
     this.config.description = e;
-    this.updateConfig();
+    this.value.emit(this.config);
   }
 
-  updateBullets(e) {
+  bulletsChanged(e) {
     this.config.bullets = e;
-    this.updateConfig();
+    this.value.emit(this.config);
   }
 
-  updateThumbs(e) {
+  thumbsChanged(e) {
     this.config.thumbnails = e;
-    this.updateConfig();
+    this.value.emit(this.config);
   }
 
-  updatePlayer(e) {
+  playerChanged(e) {
     this.config.player = e;
-    this.updateConfig();
+    this.value.emit(this.config);
   }
 
-  updateLoader(e) {
+  loaderChanged(e) {
     this.config.loader = e;
-    this.updateConfig();
+    this.value.emit(this.config);
   }
 
-  updateHeight(e) {
-    this.config.height = e;
-    this.updateConfig();
-  }
-
-  updateWidth(e) {
-    this.config.width = e;
-    this.updateConfig();
-  }
-
-  updateAnimate(e) {
+  animateChanged(e) {
     this.config.animation = e;
-    this.updateConfig();
+    this.value.emit(this.config);
   }
 
-  updateConfig() {
+  navChanged(e) {
+    this.config.navigation = e;
+    this.value.emit(this.config);
+  }
+
+  styleChanged(e) {
+    this.config.style = e;
     this.value.emit(this.config);
   }
 

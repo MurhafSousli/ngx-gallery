@@ -4,7 +4,6 @@ import {GalleryImage} from '../../gallery';
 @Injectable()
 export class SharedService {
 
-
   constructor() {
   }
 
@@ -24,6 +23,7 @@ export class SharedService {
 `;
 
   codes = {
+    importHammer: `import 'hammerjs';`,
     importModule: `
   import { GalleryModule } from 'ng-gallery';
   
@@ -114,27 +114,27 @@ export class SharedService {
       }, {
         src: 'assets/img/img8.jpg',
         thumbnail: 'assets/img/thumb/img8.jpg',
-        text: 'Beatiful bird'
+        text: 'Bird 1'
       }, {
         src: 'assets/img/img9.jpg',
         thumbnail: 'assets/img/thumb/img9.jpg',
-        text: 'Beatiful bird'
+        text: 'Bird 2'
       }, {
         src: 'assets/img/img10.jpg',
         thumbnail: 'assets/img/thumb/img10.jpg',
-        text: 'Beatiful bird'
+        text: 'Rock mountain'
       }, {
         src: 'assets/img/img11.jpg',
         thumbnail: 'assets/img/thumb/img11.jpg',
-        text: 'Beatiful bird'
+        text: 'Bird 3'
       }, {
         src: 'assets/img/img12.jpg',
         thumbnail: 'assets/img/thumb/img12.jpg',
-        text: 'Beatiful bird'
+        text: 'Flower'
       }, {
         src: 'assets/img/img13.jpg',
         thumbnail: 'assets/img/thumb/img13.jpg',
-        text: 'Beatiful bird'
+        text: 'Coffee'
       }, {
         src: 'assets/img/img14.jpg',
         thumbnail: 'assets/img/thumb/img14.jpg',
@@ -143,3 +143,16 @@ export class SharedService {
     ];
   }
 }
+
+export const tryParseJSON = (jsonString) => {
+  try {
+    const o = JSON.parse(jsonString);
+
+    if (o && typeof o === 'object') {
+      return o;
+    }
+  } catch (e) {
+  }
+
+  return false;
+};

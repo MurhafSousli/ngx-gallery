@@ -1,5 +1,8 @@
-<div *ngIf="config.text" class="g-text" [innerHtml]="state.images[state.currIndex]?.text">
+<div class="g-text-container" [ngStyle]="config.style">
+  <div *ngIf="config.text" class="g-text" [innerHtml]="state.images[state.currIndex]?.text">
+  </div>
+  <div *ngIf="config.counter" class="g-number">
+    {{(state.currIndex + 1) + '/' + state.images.length}}
+  </div>
 </div>
-<div *ngIf="config.counter" class="g-number">
-  {{(state.currIndex + 1) + '/' + state.images.length}}
-</div>
+

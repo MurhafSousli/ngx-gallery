@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {GalleryPlayConfig} from '../../gallery/service/gallery.config';
-import {GalleryService} from '../../gallery/service/gallery.service';
+import {GalleryService, GalleryPlayConfig} from '../../gallery';
 
 @Component({
   selector: 'play-options',
@@ -26,5 +25,14 @@ export class PlayOptionsComponent {
       this.prevConfig = this.config;
       this.value.emit(false);
     }
+  }
+  speedChanged(e){
+    this.config.speed = e;
+    this.value.emit(this.config);
+  }
+
+  autoplayChanged(e) {
+    this.config.autoplay = e;
+    this.value.emit(this.config);
   }
 }

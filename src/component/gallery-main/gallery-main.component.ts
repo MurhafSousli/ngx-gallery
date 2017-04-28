@@ -1,37 +1,31 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { GalleryState } from '../../service/gallery.state';
-import { GalleryConfig } from '../../service/gallery.config';
-import { GalleryService } from '../../service/gallery.service';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import {GalleryState} from '../../service/gallery.state';
+import {GalleryConfig} from '../../service/gallery.config';
+import {GalleryService} from '../../service/gallery.service';
+
+import 'rxjs/add/observable/fromEvent';
 
 @Component({
   selector: 'gallery-main',
   templateUrl: './gallery-main.component.html',
   styleUrls: ['./gallery-main.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class GalleryMainComponent implements OnInit {
 
   @Input() state: GalleryState;
   @Input() config: GalleryConfig;
   loading;
-  styles;
+  thumbDirection;
 
   constructor(public gallery: GalleryService) {
   }
 
   ngOnInit() {
-    this.styles = this.getContainerStyle();
-  }
-
-  getContainerStyle() {
     // shortcut for thumbnail config
     const thumbPos = this.config.thumbnails.position;
-
-    return {
-      flexDirection: (thumbPos === 'left' || thumbPos === 'right') ? 'row' : 'column',
-      width: this.config.width,
-      height: this.config.height
-    };
+    this.thumbDirection = (thumbPos === 'left' || thumbPos === 'right') ? 'row' : 'column';
   }
 
 }

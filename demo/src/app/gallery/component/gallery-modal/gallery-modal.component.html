@@ -2,11 +2,14 @@
 
   <div *ngIf="state.active" class="g-modal">
 
-    <gallery-main [state]="state" [config]="gallery.config"></gallery-main>
+    <div class="g-btn-close-container">
+      <div *ngIf="closeButton" class="g-btn-close" (click)="gallery.close()"></div>
+    </div>
+
+    <gallery-main [@popup] [state]="state" [config]="gallery.config"></gallery-main>
 
     <div class="g-overlay" (click)="gallery.close()"></div>
 
-    <div *ngIf="closeButton" class="g-btn-close" (click)="gallery.close()"></div>
   </div>
 
 </div>

@@ -18,6 +18,11 @@ html, body {
 body {
   font-family: 'Roboto Slab', serif;
   margin: 0;
+  color: #303030;
+}
+
+p {
+  font-size: 15px;
 }
 
 .container {
@@ -41,7 +46,7 @@ md-toolbar-row.mat-toolbar-row {
   height: 50px;
 }
 
-.toolbar-buttons{
+.toolbar-buttons {
   justify-content: space-around;
   margin-bottom: 0.5em;
   button {
@@ -198,4 +203,25 @@ gallery-options {
       background-position: 0% 90%
     }
   }
+}
+
+// For Gallery Options
+// .option-padding, ul {
+//   padding: 2em 1em;
+// }
+
+ul {
+  padding: 2em 1em;
+  margin: 0;
+  transition: all ease 0.3s;
+  overflow: hidden;
+}
+
+.section-closed {
+  height: 0;
+  padding: 0;
+}
+
+a {
+  color: #2196f3;
 }
