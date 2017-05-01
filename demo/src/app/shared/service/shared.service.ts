@@ -25,6 +25,7 @@ export class SharedService {
   codes = {
     importHammer: `import 'hammerjs';`,
     importModule: `
+  import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   import { GalleryModule } from 'ng-gallery';
   
   export const galleryConfig : GalleryConfig = {
@@ -34,6 +35,7 @@ export class SharedService {
   @NgModule({
    imports: [
       // ...
+      BrowserAnimationsModule,
       GalleryModule.forRoot(galleryConfig)
    ]
   })

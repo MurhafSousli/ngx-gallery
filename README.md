@@ -27,7 +27,8 @@ map: {
 Import `GalleryModule` and set the gallery configuration in your root module
 
 ```ts
-import { GalleryModule } from 'ng-gallery';
+  import { BrowserAnimationsModule } from  '@angular/platform-browser/animations';
+  import { GalleryModule } from 'ng-gallery';
   
   export const galleryConfig : GalleryConfig = {
     // ...
@@ -36,6 +37,7 @@ import { GalleryModule } from 'ng-gallery';
   @NgModule({
    imports: [
       // ...
+      BrowserAnimationsModule,
       GalleryModule.forRoot(galleryConfig)
    ]
   })
