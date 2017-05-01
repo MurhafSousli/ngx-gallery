@@ -10,6 +10,9 @@
   top: 0;
   bottom: 0;
   display: flex;
+  @media (max-width: 480px) {
+    display: none;
+  }
 }
 
 .g-nav {
@@ -20,9 +23,11 @@
   opacity: 0;
   transition: all linear 0.4s;
   cursor: pointer;
+
   &:hover {
     opacity: 1;
   }
+
   &-next, &-prev {
     display: flex;
     align-items: center;
@@ -37,9 +42,6 @@
 
     &:hover {
       opacity: 1;
-    }
-    @media (max-width: 480px) {
-      display: none;
     }
   }
   &-next {

@@ -6,10 +6,10 @@ import {
   ElementRef,
   Renderer2
 } from '@angular/core';
-import {GalleryState} from '../../service/gallery.state';
-import {GalleryConfig} from '../../service/gallery.config';
-import {GalleryService} from '../../service/gallery.service';
-import {animation} from './gallery-image.animation';
+import { GalleryState } from '../../service/gallery.state';
+import { GalleryConfig } from '../../service/gallery.config';
+import { GalleryService } from '../../service/gallery.service';
+import { animation } from './gallery-image.animation';
 
 declare const Hammer: any;
 
@@ -31,28 +31,33 @@ export class GalleryImageComponent implements OnInit {
   }
 
   ngOnInit() {
-    /** Enable hammer if loaded */
-    if (typeof Hammer !== 'undefined') {
+    /** Enable gestures */
+    if (this.config.gestures) {
+      if (typeof Hammer === 'undefined') {
+        
+        throw Error('[NgGallery]: HammerJS is undefined, make sure it is loaded');
+      } else {
 
-      const el = this.el.nativeElement;
+        const el = this.el.nativeElement;
+        const mc = new Hammer(el);
 
-      const mc = new Hammer(el);
-      mc.on('panstart', () => {
-        this.renderer.removeClass(el, 'g-pan-reset');
-      });
-      mc.on('panend', () => {
-        this.renderer.addClass(el, 'g-pan-reset');
-      });
-      mc.on('pan', (e) => {
-        this.renderer.setStyle(el, 'transform', `translate3d(${e.deltaX}px, 0px, 0px)`);
-      });
-      /** Swipe next and prev */
-      mc.on('swipeleft', () => {
-        this.gallery.next();
-      });
-      mc.on('swiperight', () => {
-        this.gallery.prev();
-      });
+        mc.on('panstart', () => {
+          this.renderer.removeClass(el, 'g-pan-reset');
+        });
+        mc.on('panend', () => {
+          this.renderer.addClass(el, 'g-pan-reset');
+        });
+        mc.on('pan', (e) => {
+          this.renderer.setStyle(el, 'transform', `translate3d(${e.deltaX}px, 0px, 0px)`);
+        });
+        /** Swipe next and prev */
+        mc.on('swipeleft', () => {
+          this.gallery.next();
+        });
+        mc.on('swiperight', () => {
+          this.gallery.prev();
+        });
+      }
     }
   }
 

@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdCheckboxModule, MdButtonModule, MdToolbarModule, MdIconModule, MdSidenavModule } from '@angular/material';
+
+import { SharedModule } from './shared';
 
 import { AppRoutingModule } from './routing.module';
 import { GalleryModule } from './gallery/gallery.module';
@@ -21,14 +22,10 @@ import { FooterComponent } from './footer/footer.component';
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    MdCheckboxModule,
-    MdToolbarModule,
-    MdButtonModule,
-    MdIconModule,
-    MdSidenavModule,
     AppRoutingModule,
     SettingsModule,
+    SharedModule,
+    BrowserAnimationsModule,
     GalleryModule.forRoot(
       {
         style: {
@@ -48,7 +45,9 @@ import { FooterComponent } from './footer/footer.component';
           position: 'top',
           space: 20
         },
-        bullets: false
+        bullets: false,
+        navigation: true,
+        gestures: true
       }
     )
   ],

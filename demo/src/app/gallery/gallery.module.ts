@@ -1,5 +1,6 @@
 import { NgModule, ModuleWithProviders, InjectionToken } from '@angular/core';
 import { CommonModule } from '@angular/common';
+// import { AnimationsModule } from '@angular/animations';
 
 import { GalleryService } from './service/gallery.service';
 import { GalleryConfig } from './service/gallery.config';
@@ -12,11 +13,11 @@ import { GalleryImageComponent } from './component/gallery-image/gallery-image.c
 import { GalleryLoaderComponent } from './component/gallery-loader/gallery-loader.component';
 import { GalleryModalComponent } from './component/gallery-modal/gallery-modal.component';
 import { GalleryBulletsComponent } from './component/gallery-bullets/gallery-bullets.component';
+import { GalleryPlayerComponent } from './component/gallery-player/gallery-player.component';
+import { GalleryMainComponent } from './component/gallery-main/gallery-main.component';
 
 import { GalleryDirective } from './directive/gallery.directive';
 import { LazyDirective } from './directive/lazy.directive';
-import { GalleryPlayerComponent } from './component/gallery-player/gallery-player.component';
-import { GalleryMainComponent } from './component/gallery-main/gallery-main.component';
 import { TapDirective } from './directive/tap.directive';
 
 /** Initialize ConfigService with URL */
@@ -33,7 +34,6 @@ export const CONFIG = new InjectionToken<GalleryConfig>('config');
   declarations: [
     GalleryComponent,
     GalleryNavComponent,
-    LazyDirective,
     GalleryThumbComponent,
     GalleryDirective,
     GalleryTextComponent,
@@ -43,7 +43,8 @@ export const CONFIG = new InjectionToken<GalleryConfig>('config');
     GalleryBulletsComponent,
     GalleryPlayerComponent,
     GalleryMainComponent,
-    TapDirective
+    TapDirective,
+    LazyDirective
   ],
   exports: [
     GalleryComponent,

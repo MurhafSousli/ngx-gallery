@@ -1,40 +1,54 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {RouterModule} from '@angular/router';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MdToolbarModule, MdCardModule, MdButtonModule, MdMenuModule, MdInputModule} from '@angular/material';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MdSelectModule, MdDialogModule, MdToolbarModule, MdCardModule, MdButtonModule, MdMenuModule, MdInputModule, MdCheckboxModule, MdIconModule, MdSidenavModule } from '@angular/material';
 
-import {HighlightModule} from './highlight/highlight.module';
-import {SharedService} from './service/shared.service';
-import {ObjectInputComponent} from './object-input/object-input.component';
-import {KeysPipe} from './keys.pipe';
-import {ReactiveInputComponent} from './reactive-input/reactive-input.component';
+import { HighlightModule } from './highlight/highlight.module';
+import { SharedService } from './service/shared.service';
+import { ObjectInputComponent } from './object-input/object-input.component';
+import { KeysPipe } from './keys.pipe';
+import { ReactiveInputComponent } from './reactive-input/reactive-input.component';
 
 @NgModule({
   providers: [
     SharedService
   ],
   imports: [
-    FormsModule,
-    MdInputModule,
-    MdCardModule,
-    MdButtonModule,
-    MdToolbarModule,
-    MdMenuModule,
     CommonModule,
-    RouterModule,
-    HighlightModule
-  ],
-  exports: [
-    MdCardModule,
+    FormsModule,
     RouterModule,
     HighlightModule,
+
+    MdInputModule,
+    MdCardModule,
+    MdMenuModule,
+    MdCheckboxModule,
+    MdToolbarModule,
     MdButtonModule,
-    ObjectInputComponent,
+    MdIconModule,
+    MdSidenavModule,
+    MdSelectModule,
+    MdDialogModule
+  ],
+  exports: [
     ReactiveFormsModule,
     FormsModule,
+    ReactiveInputComponent,
+    RouterModule,
+    HighlightModule,
+    ObjectInputComponent,
+    
     MdInputModule,
-    ReactiveInputComponent
+    MdCardModule,
+    MdMenuModule,
+    MdCheckboxModule,
+    MdToolbarModule,
+    MdButtonModule,
+    MdIconModule,
+    MdSidenavModule,
+    MdSelectModule,
+    MdDialogModule
   ],
   declarations: [ObjectInputComponent, KeysPipe, ReactiveInputComponent],
 })
