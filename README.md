@@ -74,7 +74,7 @@ ngOnInit() {
 
 Gallery Module relies on HammerJS for gestures, make sure it is loaded into the application.
 
-*You can add HammerJS to your application via npm, a CDN (such as the Google CDN), or served directly from your app.*
+*You can add HammerJS to your application via [npm](https://www.npmjs.com/package/hammerjs), a CDN (such as the [Google CDN](https://developers.google.com/speed/libraries/#hammerjs)), or served directly from your app.*
 
 To install via npm, use the following command:
 
