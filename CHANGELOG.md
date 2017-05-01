@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.2
+
+ - fix(gestures) remove navigation element on mobile which was blocking gestures events
+ - fix(gestures) enable/disable gestures using `config.gestures`
+ - refactor(config) interfaces
+
 ## 0.6.0 beta
 
  - Add popup animation for gallery modal
