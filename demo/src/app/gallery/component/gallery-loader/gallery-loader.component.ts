@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { GalleryService } from '../../service/gallery.service';
-import { GalleryLoaderConfig } from '../../config/gallery.config';
+import { GalleryLoaderConfig } from '../../config';
 
 @Component({
   selector: 'gallery-loader',

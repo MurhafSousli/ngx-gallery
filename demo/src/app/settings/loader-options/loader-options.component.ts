@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-// import {GalleryLoaderConfig} from '../../gallery';
-import { GalleryLoaderConfig } from 'ng-gallery';
+import {GalleryLoaderConfig} from '../../gallery';
+// import { GalleryLoaderConfig } from 'ng-gallery';
 
 @Component({
   selector: 'loader-options',

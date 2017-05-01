@@ -21,6 +21,7 @@
         "counter": true
       },
       "bullets": false,
+      "navigation": true,
       "player": {
         "autoplay": false,
         "speed": 3000
@@ -57,6 +58,7 @@
           "background": "rgba(0,0,0, 0.5)"
         }
       },
+      "navigation": true,
       "bullets": {
         "position": "top"
       },
@@ -94,6 +96,7 @@
         "text": false,
         "counter": true
       },
+      "navigation": true,
       "bullets": {
         "position": "bottom"
       },

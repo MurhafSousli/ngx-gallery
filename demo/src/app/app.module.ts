@@ -5,8 +5,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared';
 
 import { AppRoutingModule } from './routing.module';
-// import { GalleryModule } from './gallery/gallery.module';
-import { GalleryModule } from 'ng-gallery';
+import { GalleryModule } from './gallery';
+// import { GalleryModule } from 'ng-gallery';
 import { SettingsModule } from './settings/settings.module';
 
 import { AppComponent } from './app.component';

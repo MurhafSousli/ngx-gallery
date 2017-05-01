@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-// import {GalleryThumbConfig} from '../../gallery';
-import { GalleryThumbConfig } from 'ng-gallery';
+import {GalleryThumbConfig} from '../../gallery';
+// import { GalleryThumbConfig } from 'ng-gallery';
 
 @Component({
   selector: 'thumb-options',

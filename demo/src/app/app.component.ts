@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
-// import {GalleryService} from "./gallery/service/gallery.service";
-import { GalleryService } from 'ng-gallery';
-import {SharedService} from "./shared/service/shared.service";
+import {GalleryService} from './gallery';
+// import { GalleryService } from 'ng-gallery';
+import {SharedService} from './shared/service/shared.service';
 
 @Component({
   selector: 'app-root',

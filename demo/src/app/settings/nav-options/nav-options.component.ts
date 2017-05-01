@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-// import {GalleryNavConfig} from '../../gallery';
-import { GalleryNavConfig } from 'ng-gallery';
+import {GalleryNavConfig} from '../../gallery';
+// import { GalleryNavConfig } from 'ng-gallery';
 
 @Component({
   selector: 'nav-options',

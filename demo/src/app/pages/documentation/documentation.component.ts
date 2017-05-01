@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {SharedService} from '../../shared/service/shared.service';
+
 @Component({
   selector: 'documentation',
   templateUrl: './documentation.component.html',
@@ -7,7 +8,6 @@ import {SharedService} from '../../shared/service/shared.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DocumentationComponent {
-
 
   constructor(public shared: SharedService) {
   }

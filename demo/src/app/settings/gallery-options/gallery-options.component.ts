@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Http } from '@angular/http';
 import { MdDialog } from '@angular/material';
-// import {GalleryService, GalleryConfig} from '../../gallery';
-import { GalleryService, GalleryConfig } from 'ng-gallery';
+import {GalleryService, GalleryConfig} from '../../gallery';
+// import { GalleryService, GalleryConfig } from 'ng-gallery';
 import { ImportDialogComponent } from '../import-dialog/import-dialog.component';
 
 @Component({
