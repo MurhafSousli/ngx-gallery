@@ -1,5 +1,6 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {GalleryNavConfig} from '../../gallery';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+// import {GalleryNavConfig} from '../../gallery';
+import { GalleryNavConfig } from 'ng-gallery';
 
 @Component({
   selector: 'nav-options',
@@ -8,7 +9,7 @@ import {GalleryNavConfig} from '../../gallery';
 })
 export class NavOptionsComponent {
 
-  @Input() config: GalleryNavConfig;
+  @Input() config = <GalleryNavConfig>null;
   @Output() value = new EventEmitter<GalleryNavConfig>();
 
   enabledChanged(e) {

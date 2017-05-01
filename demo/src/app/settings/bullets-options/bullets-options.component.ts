@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {GalleryBulletConfig} from '../../gallery';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+// import {GalleryBulletConfig} from '../../gallery';
+import { GalleryBulletConfig } from 'ng-gallery';
 
 @Component({
   selector: 'bullets-options',
@@ -9,10 +10,10 @@ import {GalleryBulletConfig} from '../../gallery';
 })
 export class BulletsOptionsComponent {
 
-  @Input() config: GalleryBulletConfig;
+  @Input() config = <GalleryBulletConfig>null;
   @Output() value = new EventEmitter<GalleryBulletConfig>();
 
-  prevConfig: GalleryBulletConfig = {};
+  prevConfig = <GalleryBulletConfig>{};
 
   positionOptions = [
     'left',

@@ -1,9 +1,8 @@
 import { NgModule, ModuleWithProviders, InjectionToken } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// import { AnimationsModule } from '@angular/animations';
 
 import { GalleryService } from './service/gallery.service';
-import { GalleryConfig } from './service/gallery.config';
+import { GalleryConfig } from './config/gallery.config';
 
 import { GalleryComponent } from './component/gallery/gallery.component';
 import { GalleryNavComponent } from './component/gallery-nav/gallery-nav.component';

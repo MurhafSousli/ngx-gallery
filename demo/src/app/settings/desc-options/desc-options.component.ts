@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {GalleryDescConfig} from '../../gallery';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+// import {GalleryDescConfig} from '../../gallery';
+import { GalleryDescConfig } from 'ng-gallery';
 
 @Component({
   selector: 'desc-options',
@@ -9,10 +10,10 @@ import {GalleryDescConfig} from '../../gallery';
 })
 export class DescOptionsComponent {
 
-  @Input() config: GalleryDescConfig;
+  @Input() config = <GalleryDescConfig>null;
   @Output() value = new EventEmitter<GalleryDescConfig>();
 
-  prevConfig: GalleryDescConfig = {};
+  prevConfig = <GalleryDescConfig>{};
 
   positionOptions = [
     'top',

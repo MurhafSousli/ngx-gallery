@@ -7,7 +7,7 @@ import {
   Renderer2
 } from '@angular/core';
 import { GalleryState } from '../../service/gallery.state';
-import { GalleryConfig } from '../../service/gallery.config';
+import { GalleryConfig } from '../../config/gallery.config';
 import { GalleryService } from '../../service/gallery.service';
 import { animation } from './gallery-image.animation';
 
@@ -34,7 +34,7 @@ export class GalleryImageComponent implements OnInit {
     /** Enable gestures */
     if (this.config.gestures) {
       if (typeof Hammer === 'undefined') {
-        
+
         throw Error('[NgGallery]: HammerJS is undefined, make sure it is loaded');
       } else {
 
@@ -65,19 +65,23 @@ export class GalleryImageComponent implements OnInit {
     this.loading = !done;
     /** TODO: Add some animation */
 
-    this.animate = this.config.animation;
-    // if (done) {
-    //   this.animate = 'none';
-    // } else {
-    // switch (this.config.animation) {
-    //   case 'fade':
-    //     this.animate = 'fade';
-    //     break;
-    //   case 'slide':
-    //     this.animate = (this.state.currIndex > this.state.prevIndex) ? 'slideLeft' : 'slideRight';
-    //     break;
-    //   default:
-    //     this.animate = 'none';
-  }
+    if (done) {
+      this.animate = 'none';
+    } else {
+      switch (this.config.animation) {
+        case 'fade':
+          this.animate = 'fade';
+          break;
+        default:
+          this.animate = 'none';
+      }
+      //     this.animate = 'none';
+      //   case 'slide':
+      //     this.animate = (this.state.currIndex > this.state.prevIndex) ? 'slideLeft' : 'slideRight';
+      //     break;
+      //   default:
+      //     this.animate = 'none';
+    }
 
+  }
 }

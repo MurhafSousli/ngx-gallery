@@ -1,8 +1,8 @@
 import { Injectable, Optional } from '@angular/core';
 
 import { GalleryState, GalleryImage } from './gallery.state';
-import { GalleryConfig } from './gallery.config';
-import { defaultState, defaultConfig } from './gallery.default';
+import { GalleryConfig } from '../config/gallery.config';
+import { defaultState, defaultConfig } from '../config/gallery.default';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
