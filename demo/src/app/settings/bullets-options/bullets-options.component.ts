@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-// import {GalleryBulletConfig} from '../../gallery';
-import { GalleryBulletConfig } from 'ng-gallery';
+import {GalleryBulletConfig} from '../../gallery';
+// import { GalleryBulletConfig } from 'ng-gallery';
 
 @Component({
   selector: 'bullets-options',

@@ -1,6 +1,24 @@
 @import '~@angular/material/theming';
 @import '../../../assets/variables';
 
+.logo {
+  display: flex;
+  align-items: center;
+  margin-top: 2em;
+  margin-left: -2em;
+  .colorful {
+    margin: 0;
+  }
+  img {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+.description {
+  font-size: 1.2em;
+}
+
 .showcase {
   display: flex;
   flex-direction: column;
@@ -36,5 +54,21 @@
 
 ul {
   padding: 1em 2em;
+  list-style: none;
 }
 
+li {
+  margin-bottom: 0.5em;
+  &:before{ 
+      content: '\f00c';
+      font-family: 'FontAwesome';
+      width: 6px; 
+      height: 6px;
+      margin-right: 1em;
+      color: #4CC61E;
+  }
+}
+
+h3 {
+  margin-top: 2em;
+}

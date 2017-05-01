@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-// import {GalleryDescConfig} from '../../gallery';
-import { GalleryDescConfig } from 'ng-gallery';
+import {GalleryDescConfig} from '../../gallery';
+// import { GalleryDescConfig } from 'ng-gallery';
 
 @Component({
   selector: 'desc-options',

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-// import {GalleryService, GalleryPlayConfig} from '../../gallery';
-import { GalleryService, GalleryPlayConfig } from 'ng-gallery';
+import {GalleryService, GalleryPlayConfig} from '../../gallery';
+// import { GalleryService, GalleryPlayConfig } from 'ng-gallery';
 
 @Component({
   selector: 'play-options',

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/share.module';
-// import { GalleryModule } from '../gallery/gallery.module';
-import { GalleryModule } from 'ng-gallery';
+import { GalleryModule } from '../gallery';
+// import { GalleryModule } from 'ng-gallery';
 
 import { BasicExampleComponent } from './basic-example/basic-example.component';
 import { ModalExampleComponent } from './modal-example/modal-example.component';

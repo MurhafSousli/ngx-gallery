@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import {GalleryState} from '../../service/gallery.state';
-import {GalleryConfig} from '../../config/gallery.config';
+import {GalleryConfig} from '../../config';
 import {GalleryService} from '../../service/gallery.service';
 
 import 'rxjs/add/observable/fromEvent';
