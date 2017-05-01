@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {GalleryService, GalleryPlayConfig} from '../../gallery';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+// import {GalleryService, GalleryPlayConfig} from '../../gallery';
+import { GalleryService, GalleryPlayConfig } from 'ng-gallery';
 
 @Component({
   selector: 'play-options',
@@ -9,10 +10,10 @@ import {GalleryService, GalleryPlayConfig} from '../../gallery';
 })
 export class PlayOptionsComponent {
 
-  @Input() config: GalleryPlayConfig;
+  @Input() config = <GalleryPlayConfig>null;
   @Output() value = new EventEmitter<GalleryPlayConfig>();
 
-  prevConfig: GalleryPlayConfig = {};
+  prevConfig = <GalleryPlayConfig>{};
 
   constructor(public gallery: GalleryService) {
   }
@@ -26,7 +27,7 @@ export class PlayOptionsComponent {
       this.value.emit(false);
     }
   }
-  speedChanged(e){
+  speedChanged(e) {
     this.config.speed = e;
     this.value.emit(this.config);
   }

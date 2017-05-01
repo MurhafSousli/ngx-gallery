@@ -27,7 +27,8 @@ map: {
 Import `GalleryModule` and set the gallery configuration in your root module
 
 ```ts
-import { GalleryModule } from 'ng-gallery';
+  import { BrowserAnimationsModule } from  '@angular/platform-browser/animations';
+  import { GalleryModule } from 'ng-gallery';
   
   export const galleryConfig : GalleryConfig = {
     // ...
@@ -36,6 +37,7 @@ import { GalleryModule } from 'ng-gallery';
   @NgModule({
    imports: [
       // ...
+      BrowserAnimationsModule,
       GalleryModule.forRoot(galleryConfig)
    ]
   })
@@ -72,7 +74,7 @@ ngOnInit() {
 
 Gallery Module relies on HammerJS for gestures, make sure it is loaded into the application.
 
-*You can add HammerJS to your application via npm, a CDN (such as the Google CDN), or served directly from your app.*
+*You can add HammerJS to your application via [npm](https://www.npmjs.com/package/hammerjs), a CDN (such as the [Google CDN](https://developers.google.com/speed/libraries/#hammerjs)), or served directly from your app.*
 
 To install via npm, use the following command:
 

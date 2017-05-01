@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {GalleryThumbConfig} from '../../gallery';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+// import {GalleryThumbConfig} from '../../gallery';
+import { GalleryThumbConfig } from 'ng-gallery';
 
 @Component({
   selector: 'thumb-options',
@@ -9,10 +10,10 @@ import {GalleryThumbConfig} from '../../gallery';
 })
 export class ThumbOptionsComponent {
 
-  @Input() config: GalleryThumbConfig;
+  @Input() config = <GalleryThumbConfig>null;
   @Output() value = new EventEmitter<GalleryThumbConfig>();
 
-  prevConfig: GalleryThumbConfig = {};
+  prevConfig = <GalleryThumbConfig>{};
 
   positionOptions = [
     'top',

@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {GalleryService} from '../../gallery';
+// import {GalleryService} from '../../gallery';
+import {GalleryService} from 'ng-gallery';
 
 @Component({
   selector: 'service-options',

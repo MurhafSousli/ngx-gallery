@@ -1,6 +1,5 @@
-import { AnimationEntryMetadata } from '@angular/core';
 import { transition, state, trigger, style, animate } from '@angular/animations';
-export const animation: AnimationEntryMetadata = [
+export const animation: any = [
   trigger('imgAnimate', [
     state('none', style({ opacity: 1 })),
     transition('fade <=> *', [

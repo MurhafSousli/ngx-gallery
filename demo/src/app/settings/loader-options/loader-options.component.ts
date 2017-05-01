@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
-import {GalleryLoaderConfig} from '../../gallery';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+// import {GalleryLoaderConfig} from '../../gallery';
+import { GalleryLoaderConfig } from 'ng-gallery';
 
 @Component({
   selector: 'loader-options',
@@ -9,10 +10,10 @@ import {GalleryLoaderConfig} from '../../gallery';
 })
 export class LoaderOptionsComponent {
 
-  @Input() config: GalleryLoaderConfig;
+  @Input() config = <GalleryLoaderConfig>null;
   @Output() value = new EventEmitter<GalleryLoaderConfig>();
 
-  prevConfig: GalleryLoaderConfig = {};
+  prevConfig = <GalleryLoaderConfig>{};
 
   positionOptions = [
     'topLeft',

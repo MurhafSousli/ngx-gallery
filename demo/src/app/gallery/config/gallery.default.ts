@@ -1,5 +1,5 @@
-import {GalleryState} from './gallery.state';
-import {GalleryConfig} from './gallery.config';
+import { GalleryState } from '../service/gallery.state';
+import { GalleryConfig } from './gallery.config';
 
 export const defaultState: GalleryState = {
   images: undefined,

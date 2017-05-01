@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {MdDialogRef} from '@angular/material';
-import {tryParseJSON} from '../../shared/service/shared.service';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { MdDialogRef } from '@angular/material';
+import { tryParseJSON } from '../../shared/service/shared.service';
 
 @Component({
   selector: 'import-dialog',
