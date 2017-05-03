@@ -1,11 +1,13 @@
-[![npm](https://img.shields.io/npm/v/ng-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ng-gallery) [![Travis branch](https://travis-ci.org/MurhafSousli/ng-gallery.svg?branch=master)](https://travis-ci.org/MurhafSousli/ng-gallery) [![npm](https://img.shields.io/npm/dt/ng-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ng-gallery)
-     
+
 <p align="center">
-  <img height="200px" width="200px" src="https://rawgit.com/MurhafSousli/ng-gallery/master/assets/logo.svg" style="max-width:100%;">
+  <img height="300px" width="300px" src="https://rawgit.com/MurhafSousli/ng-gallery/master/assets/logo.svg" style="max-width:100%;">
 </p>
 <h1 align="center">Angular Image Gallery</h1>
 
 Angular Image Gallery | [live demo](https://murhafsousli.github.io/ng-gallery/)
+
+[![npm](https://img.shields.io/npm/v/ng-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ng-gallery) [![Travis branch](https://travis-ci.org/MurhafSousli/ng-gallery.svg?branch=master)](https://travis-ci.org/MurhafSousli/ng-gallery) [![npm](https://img.shields.io/npm/dt/ng-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ng-gallery)
+     
 
 <p align="center">
   <img src="assets/screenshot.png" style="max-width:100%;">
