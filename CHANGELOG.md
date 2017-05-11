@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.3
+
+ - fix umd bundle for systemjs, closes [#10](https://github.com/MurhafSousli/ng-gallery/issues/10)
+
 ## 0.6.2
 
  - fix(gestures) remove navigation element on mobile which was blocking gestures events
