@@ -1,5 +1,5 @@
 <p align="center">
-  <img height="200px" width="200px" src="assets/logo.svg" style="max-width:100%;">
+  <img height="300px" width="300px" src="https://rawgit.com/MurhafSousli/ng-gallery/master/assets/logo.svg" style="max-width:100%;">
 </p>
 <h1 align="center">Angular Image Gallery</h1>
 
@@ -108,3 +108,4 @@ import 'hammerjs';
 ## Issues
 
 If you identify any errors in this module, or have an idea for an improvement, please open an [issue](https://github.com/MurhafSousli/ng-gallery/issues). I am excited to see what the community thinks of this project, and I would love your input!
+
