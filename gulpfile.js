@@ -240,20 +240,21 @@ gulp.task('bundle', () => {
         '@angular/animations': 'ng.common',
 
         // Rxjs dependencies
-        'rxjs/BehaviorSubject': 'Rx',
-        'rxjs/Observable': 'Rx',
-        'rxjs/Subject': 'Rx',
         'rxjs/add/observable/of': 'Rx.Observable',
         'rxjs/add/observable/from': 'Rx.Observable',
         'rxjs/add/observable/fromEvent': 'Rx.Observable',
-        'rxjs/add/observable/map': 'Rx.Observable.prototype',
-        'rxjs/add/operator/switchMap': 'Rx.Observable.prototype',
-        'rxjs/add/operator/repeat': 'Rx.Observable.prototype',
-        'rxjs/add/operator/finally': 'Rx.Observable.prototype',
+        'rxjs/add/observable/interval': 'Rx.Observable',
+
         'rxjs/add/operator/take': 'Rx.Observable.prototype',
-        'rxjs/add/operator/interval': 'Rx.Observable.prototype',
-        'rxjs/add/operator/do': 'Rx.Observable.prototype',
+        'rxjs/add/operator/takeWhile': 'Rx.Observable.prototype',
+        'rxjs/add/operator/map': 'Rx.Observable.prototype',
         'rxjs/add/operator/switchMap': 'Rx.Observable.prototype',
+        'rxjs/add/operator/do': 'Rx.Observable.prototype',
+        'rxjs/add/operator/finally': 'Rx.Observable.prototype',
+
+        'rxjs/Observable': 'Rx',
+        'rxjs/BehaviorSubject': 'Rx',
+        'rxjs/Subject': 'Rx'
     };
 
     const rollupOptions = {

@@ -1,13 +1,15 @@
-
 <p align="center">
   <img height="300px" width="300px" src="https://rawgit.com/MurhafSousli/ng-gallery/master/assets/logo.svg" style="max-width:100%;">
 </p>
 <h1 align="center">Angular Image Gallery</h1>
 
-Angular image gallery simplifies the process of creating beautiful image gallery for the web and mobile devices. | [live demo](https://murhafsousli.github.io/ng-gallery/)
+Angular image gallery simplifies the process of creating beautiful image gallery for the web and mobile devices.
 
-[![npm](https://img.shields.io/npm/v/ng-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ng-gallery) [![Travis branch](https://travis-ci.org/MurhafSousli/ng-gallery.svg?branch=master)](https://travis-ci.org/MurhafSousli/ng-gallery) [![npm](https://img.shields.io/npm/dt/ng-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ng-gallery)
-     
+[![npm](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://murhafsousli.github.io/ng-gallery/)
+[![npm](https://img.shields.io/npm/v/ng-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ng-gallery)
+[![Travis branch](https://travis-ci.org/MurhafSousli/ng-gallery.svg?branch=master)](https://travis-ci.org/MurhafSousli/ng-gallery)
+[![npm](https://img.shields.io/npm/dt/ng-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ng-gallery)
+[![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](/LICENSE)
 
 <p align="center">
   <img src="assets/screenshot.png" style="max-width:100%;">
@@ -30,6 +32,7 @@ map: {
   'ng-gallery': 'node_modules/ng-gallery/bundles/ng-gallery.umd.js',
 }
 ```
+Here is a [live plunkr](https://plnkr.co/edit/ab3EKfuvfKBppl7T8kFL?p=preview)
 
 ## Usage
 
@@ -106,6 +109,3 @@ import 'hammerjs';
 
 If you identify any errors in this module, or have an idea for an improvement, please open an [issue](https://github.com/MurhafSousli/ng-gallery/issues). I am excited to see what the community thinks of this project, and I would love your input!
 
-## License
-
-[![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](/LICENSE)
