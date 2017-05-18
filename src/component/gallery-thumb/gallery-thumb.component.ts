@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import { GalleryService } from '../../service/gallery.service';
 import { GalleryState } from '../../service/gallery.state';
-import { GalleryThumbConfig } from '../../config/gallery.config';
+import { GalleryThumbConfig } from '../../config';
 
 declare const Hammer: any;
 

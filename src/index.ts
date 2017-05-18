@@ -12,7 +12,7 @@ import {
   GalleryLoaderConfig,
   GalleryPlayConfig,
   GalleryBulletConfig,
-} from './config/gallery.config';
+} from './config';
 
 export {
   GalleryModule,

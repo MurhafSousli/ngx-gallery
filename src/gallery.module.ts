@@ -19,18 +19,6 @@ import { GalleryDirective } from './directive/gallery.directive';
 import { LazyDirective } from './directive/lazy.directive';
 import { TapDirective } from './directive/tap.directive';
 
-import 'rxjs/add/observable/of';
-import 'rxjs/add/observable/from';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/observable/interval';
-
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/takeWhile';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/finally';
-
 /** Initialize ConfigService with URL */
 export function galleryFactory(config: GalleryConfig) {
   return new GalleryService(config);

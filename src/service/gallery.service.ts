@@ -4,9 +4,17 @@ import { GalleryState, GalleryImage } from './gallery.state';
 import { GalleryConfig } from '../config/gallery.config';
 import { defaultState, defaultConfig } from '../config/gallery.default';
 
-import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/finally';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/takeWhile';
+import 'rxjs/add/operator/do';
 
 @Injectable()
 export class GalleryService {
@@ -99,7 +107,6 @@ export class GalleryService {
   /** Play slide show */
   play(interval?) {
     const speed = interval || this.config.player.speed || 2000;
-    console.log('play', speed);
 
     const state = this.state.getValue();
     /** Open and play the gallery, 'active' opens gallery modal */
