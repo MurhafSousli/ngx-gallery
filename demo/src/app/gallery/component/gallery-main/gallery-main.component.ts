@@ -3,8 +3,6 @@ import {GalleryState} from '../../service/gallery.state';
 import {GalleryConfig} from '../../config';
 import {GalleryService} from '../../service/gallery.service';
 
-import 'rxjs/add/observable/fromEvent';
-
 @Component({
   selector: 'gallery-main',
   templateUrl: './gallery-main.component.html',

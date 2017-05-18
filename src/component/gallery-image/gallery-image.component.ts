@@ -7,7 +7,7 @@ import {
   Renderer2
 } from '@angular/core';
 import { GalleryState } from '../../service/gallery.state';
-import { GalleryConfig } from '../../config/gallery.config';
+import { GalleryConfig } from '../../config';
 import { GalleryService } from '../../service/gallery.service';
 import { animation } from './gallery-image.animation';
 
@@ -64,8 +64,8 @@ export class GalleryImageComponent implements OnInit {
   imageLoad(done: boolean) {
     this.loading = !done;
     /** TODO: Add some animation */
-
-    if (done) {
+    
+    if (!done) {
       this.animate = 'none';
     } else {
       switch (this.config.animation) {

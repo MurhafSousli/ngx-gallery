@@ -64,8 +64,8 @@ export class GalleryImageComponent implements OnInit {
   imageLoad(done: boolean) {
     this.loading = !done;
     /** TODO: Add some animation */
-
-    if (done) {
+    
+    if (!done) {
       this.animate = 'none';
     } else {
       switch (this.config.animation) {
