@@ -1,6 +1,6 @@
 {
   "name": "ng-gallery",
-  "version": "0.6.3",
+  "version": "0.7.1",
   "description": "Angular Image Gallery",
   "repository": {
     "type": "git",
@@ -15,7 +15,10 @@
     "gallery",
     "images",
     "lightbox",
-    "modal"
+    "modal",
+    "slider",
+    "slideshow",
+    "carousel"
   ],
   "author": "Murhaf Sousli <murhafsousi@gmail.com>",
   "license": "MIT",

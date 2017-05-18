@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.7.1
+
+ - General refactor
+ - fix(GalleryDirective) apply gallerize only once when content changes
+ - decode gallery nav icons and close button from base64 to decrease the size
+
+## 0.7.0
+
+ - feat(LazyLoad) emit only last selected image.
+ - fix(GalleryImage) fade animation is working properly with image load.
+ - refactor(GalleryConfig)
+
 ## 0.6.3
 
  - fix(GalleryModal) close button is hidden on mobile, closes [#9](https://github.com/MurhafSousli/ng-gallery/issues/9)
