@@ -107,7 +107,6 @@ export class GalleryService {
   /** Play slide show */
   play(interval?) {
     const speed = interval || this.config.player.speed || 2000;
-    console.log('play', speed);
 
     const state = this.state.getValue();
     /** Open and play the gallery, 'active' opens gallery modal */
