@@ -25,19 +25,19 @@ export class GalleryDirective implements OnInit {
 
     var target = this.gallerize ? this.el.nativeElement.querySelectorAll(this.gallerize) : this.el.nativeElement;
 
-    var updateGallery = function () {
+    var updateGallery =  () => {
       // skip if content is the same
-      if (this.content === this.target.innerText) {
+      if (this.content === target.innerText) {
         return;
       }
       else {
-        this.content = this.target.innerText;
+        this.content = target.innerText;
       }
 
       const images: GalleryImage[] = [];
 
       // get all img elements from content
-      const imageElements = this.target.querySelectorAll(`img`);
+      const imageElements = target.querySelectorAll(`img`);
 
       if (imageElements) {
         Observable.from(imageElements).map((img: HTMLImageElement, i) => {

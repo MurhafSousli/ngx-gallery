@@ -12,19 +12,19 @@ var GalleryDirective = (function () {
         this.gallery = gallery;
     }
     GalleryDirective.prototype.ngOnInit = function () {
+        var _this = this;
         var target = this.gallerize ? this.el.nativeElement.querySelectorAll(this.gallerize) : this.el.nativeElement;
         var updateGallery = function () {
-            var _this = this;
             // skip if content is the same
-            if (this.content === this.target.innerText) {
+            if (_this.content === target.innerText) {
                 return;
             }
             else {
-                this.content = this.target.innerText;
+                _this.content = target.innerText;
             }
             var images = [];
             // get all img elements from content
-            var imageElements = this.target.querySelectorAll("img");
+            var imageElements = target.querySelectorAll("img");
             if (imageElements) {
                 Observable.from(imageElements).map(function (img, i) {
                     // add click event to the images
