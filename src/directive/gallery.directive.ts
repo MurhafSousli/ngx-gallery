@@ -94,7 +94,7 @@ export class GalleryDirective implements OnInit {
     var observer = new MutationObserver(updateGallery);
 
     var config = { subtree: true, childList: true }
-    observer.observe(target, config);
+    observer.observe(this.el.nativeElement, config);
     updateGallery();
   }
 }

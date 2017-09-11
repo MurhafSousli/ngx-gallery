@@ -69,7 +69,7 @@ var GalleryDirective = (function () {
         // create an observer instance
         var observer = new MutationObserver(updateGallery);
         var config = { subtree: true, childList: true };
-        observer.observe(target, config);
+        observer.observe(this.el.nativeElement, config);
         updateGallery();
     };
     return GalleryDirective;
