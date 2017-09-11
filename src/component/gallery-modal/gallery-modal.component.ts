@@ -24,7 +24,7 @@ export class GalleryModalComponent implements OnDestroy {
   @Input() closeButton = true;
 
   /** Activate keyboard for navigation */
-  @HostListener('window:keydown', ['$event'])
+  @HostListener('body:keydown', ['$event'])
   keyboardInput(event: KeyboardEvent) {
     switch (event.keyCode) {
       case 37:  // prev

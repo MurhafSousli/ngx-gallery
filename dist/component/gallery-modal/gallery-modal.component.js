@@ -57,6 +57,6 @@ GalleryModalComponent.ctorParameters = function () { return [
 ]; };
 GalleryModalComponent.propDecorators = {
     'closeButton': [{ type: Input },],
-    'keyboardInput': [{ type: HostListener, args: ['window:keydown', ['$event'],] },],
+    'keyboardInput': [{ type: HostListener, args: ['body:keydown', ['$event'],] },],
 };
 //# sourceMappingURL=gallery-modal.component.js.map

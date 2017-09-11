@@ -53,7 +53,7 @@ var GalleryDirective = (function () {
                 Observable.from(imageElements).map(function (img, i) {
                     // add click event to the images
                     _this.renderer.setStyle(img, 'cursor', 'pointer');
-                    _this.renderer.setProperty(img, 'onclick', function () {
+                    _this.renderer.setProperty(img, 'onclick', function (e) {
                         _this.gallery.set(i);
                     });
                     // create an image item

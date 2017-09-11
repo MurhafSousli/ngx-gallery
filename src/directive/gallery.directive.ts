@@ -76,7 +76,7 @@ export class GalleryDirective implements OnInit {
         Observable.from(imageElements).map((img: HTMLImageElement, i) => {
           // add click event to the images
           this.renderer.setStyle(img, 'cursor', 'pointer');
-          this.renderer.setProperty(img, 'onclick', () => {
+          this.renderer.setProperty(img, 'onclick', (e) => {
             this.gallery.set(i);
           });
 
