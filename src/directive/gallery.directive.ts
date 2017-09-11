@@ -23,41 +23,41 @@ export class GalleryDirective implements OnInit {
 
   ngOnInit() {
 
-    var target = this.gallerize ? this.el.nativeElement : this.el.nativeElement.querySelectorAll(this.gallerize);
+    var target = this.gallerize ? this.el.nativeElement.querySelectorAll(this.gallerize) : this.el.nativeElement;
 
     // create an observer instance
     var observer = new MutationObserver(function (mutations) {
-         // skip if content is the same
-         if (this.content === this.target.innerText) {
-          return;
-        }
-        else {
-          this.content = this.target.innerText;
-        }
+      // skip if content is the same
+      if (this.content === this.target.innerText) {
+        return;
+      }
+      else {
+        this.content = this.target.innerText;
+      }
 
-        const images: GalleryImage[] = [];
+      const images: GalleryImage[] = [];
 
-        // get all img elements from content
-        const imageElements = this.target.querySelectorAll(`img`);
+      // get all img elements from content
+      const imageElements = this.target.querySelectorAll(`img`);
 
-        if (imageElements) {
-          Observable.from(imageElements).map((img: HTMLImageElement, i) => {
-            // add click event to the images
-            this.renderer.setStyle(img, 'cursor', 'pointer');
-            this.renderer.setProperty(img, 'onclick', () => {
-              this.gallery.set(i);
-            });
+      if (imageElements) {
+        Observable.from(imageElements).map((img: HTMLImageElement, i) => {
+          // add click event to the images
+          this.renderer.setStyle(img, 'cursor', 'pointer');
+          this.renderer.setProperty(img, 'onclick', () => {
+            this.gallery.set(i);
+          });
 
-            // create an image item
-            images.push({
-              src: img.src,
-              text: img.alt
-            });
-          })
-            .finally(() => this.gallery.load(images))
-            .subscribe();
+          // create an image item
+          images.push({
+            src: img.src,
+            text: img.alt
+          });
+        })
+          .finally(() => this.gallery.load(images))
+          .subscribe();
 
-        }
+      }
     });
 
     var config = { subtree: true, childList: true }
