@@ -47,11 +47,11 @@ export class GalleryDirective implements OnInit {
   }
 
   ngOnInit() {
-
+    let target = this.el.nativeElement;
 
 
     var updateGallery = () => {
-      let target = this.gallerize ? this.el.nativeElement.querySelectorAll(this.gallerize) : this.el.nativeElement;
+
       // skip if content is the same
       if (!target || (this.content && this.content === target.innerText)) {
         return;
@@ -63,7 +63,7 @@ export class GalleryDirective implements OnInit {
       const images: GalleryImage[] = [];
 
       // get all img elements from content
-      const imageElements = target.querySelectorAll(`img`);
+      const imageElements = this.gallerize ? target.querySelectorAll(this.gallerize) : target.querySelectorAll(`img`);
 
       if (imageElements && imageElements.length) {
         let srcs = this.pluck(imageElements, 'src');
@@ -95,7 +95,7 @@ export class GalleryDirective implements OnInit {
     var observer = new MutationObserver(updateGallery);
 
     var config = { subtree: true, childList: true }
-    observer.observe(this.el.nativeElement, config);
+    observer.observe(target, config);
     updateGallery();
   }
 }

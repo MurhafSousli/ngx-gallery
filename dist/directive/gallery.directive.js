@@ -32,8 +32,8 @@ var GalleryDirective = (function () {
     };
     GalleryDirective.prototype.ngOnInit = function () {
         var _this = this;
+        var target = this.el.nativeElement;
         var updateGallery = function () {
-            var target = _this.gallerize ? _this.el.nativeElement.querySelectorAll(_this.gallerize) : _this.el.nativeElement;
             // skip if content is the same
             if (!target || (_this.content && _this.content === target.innerText)) {
                 return;
@@ -43,7 +43,7 @@ var GalleryDirective = (function () {
             }
             var images = [];
             // get all img elements from content
-            var imageElements = target.querySelectorAll("img");
+            var imageElements = _this.gallerize ? target.querySelectorAll(_this.gallerize) : target.querySelectorAll("img");
             if (imageElements && imageElements.length) {
                 var srcs = _this.pluck(imageElements, 'src');
                 if (_this.isEqual(_this.srcList, srcs)) {
@@ -69,7 +69,7 @@ var GalleryDirective = (function () {
         // create an observer instance
         var observer = new MutationObserver(updateGallery);
         var config = { subtree: true, childList: true };
-        observer.observe(this.el.nativeElement, config);
+        observer.observe(target, config);
         updateGallery();
     };
     return GalleryDirective;
