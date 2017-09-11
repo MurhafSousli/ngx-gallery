@@ -1,0 +1,1 @@
+//# sourceMappingURL=gallery.config.js.map

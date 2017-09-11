@@ -1,0 +1,1 @@
+//# sourceMappingURL=gallery-thumb.config.js.map
