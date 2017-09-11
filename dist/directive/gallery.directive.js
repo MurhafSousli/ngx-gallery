@@ -32,10 +32,10 @@ var GalleryDirective = (function () {
     };
     GalleryDirective.prototype.ngOnInit = function () {
         var _this = this;
-        var target = this.gallerize ? this.el.nativeElement.querySelectorAll(this.gallerize) : this.el.nativeElement;
         var updateGallery = function () {
+            var target = _this.gallerize ? _this.el.nativeElement.querySelectorAll(_this.gallerize) : _this.el.nativeElement;
             // skip if content is the same
-            if (_this.content === target.innerText) {
+            if (!target || (_this.content && _this.content === target.innerText)) {
                 return;
             }
             else {

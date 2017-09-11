@@ -48,11 +48,12 @@ export class GalleryDirective implements OnInit {
 
   ngOnInit() {
 
-    var target = this.gallerize ? this.el.nativeElement.querySelectorAll(this.gallerize) : this.el.nativeElement;
+
 
     var updateGallery = () => {
+      let target = this.gallerize ? this.el.nativeElement.querySelectorAll(this.gallerize) : this.el.nativeElement;
       // skip if content is the same
-      if (this.content === target.innerText) {
+      if (!target || (this.content && this.content === target.innerText)) {
         return;
       }
       else {
