@@ -10,7 +10,26 @@ var GalleryDirective = (function () {
         this.el = el;
         this.renderer = renderer;
         this.gallery = gallery;
+        this.srcList = [];
     }
+    GalleryDirective.prototype.pluck = function (array, field) {
+        var s = [];
+        for (var i = array.length; i--;) {
+            s.push(array[i][field]);
+        }
+        return s.sort();
+    };
+    GalleryDirective.prototype.isEqual = function (array1, array2) {
+        if (array1.length !== array2.length) {
+            return false;
+        }
+        for (var i = array1.length; i--;) {
+            if (array1[i] !== array2[i]) {
+                return false;
+            }
+        }
+        return true;
+    };
     GalleryDirective.prototype.ngOnInit = function () {
         var _this = this;
         var target = this.gallerize ? this.el.nativeElement.querySelectorAll(this.gallerize) : this.el.nativeElement;
@@ -25,7 +44,12 @@ var GalleryDirective = (function () {
             var images = [];
             // get all img elements from content
             var imageElements = target.querySelectorAll("img");
-            if (imageElements) {
+            if (imageElements && imageElements.length) {
+                var srcs = _this.pluck(imageElements, 'src');
+                if (_this.isEqual(_this.srcList, srcs)) {
+                    return;
+                }
+                _this.srcList = srcs;
                 Observable.from(imageElements).map(function (img, i) {
                     // add click event to the images
                     _this.renderer.setStyle(img, 'cursor', 'pointer');
