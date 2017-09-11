@@ -12,7 +12,7 @@ var GalleryDirective = (function () {
         this.gallery = gallery;
     }
     GalleryDirective.prototype.ngOnInit = function () {
-        var target = this.gallerize ? this.el.nativeElement : this.el.nativeElement.querySelectorAll(this.gallerize);
+        var target = this.gallerize ? this.el.nativeElement.querySelectorAll(this.gallerize) : this.el.nativeElement;
         // create an observer instance
         var observer = new MutationObserver(function (mutations) {
             var _this = this;
@@ -44,7 +44,7 @@ var GalleryDirective = (function () {
             }
         });
         var config = { subtree: true, childList: true };
-        observer.observe(this.el.nativeElement, config);
+        observer.observe(target, config);
     };
     return GalleryDirective;
 }());
