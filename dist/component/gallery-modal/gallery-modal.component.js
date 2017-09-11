@@ -8,6 +8,7 @@ var GalleryModalComponent = (function () {
     }
     /** Activate keyboard for navigation */
     GalleryModalComponent.prototype.keyboardInput = function (event) {
+        event.stopPropagation();
         switch (event.keyCode) {
             case 37:
                 this.gallery.prev();
