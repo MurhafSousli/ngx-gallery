@@ -13,8 +13,7 @@ var GalleryDirective = (function () {
     }
     GalleryDirective.prototype.ngOnInit = function () {
         var target = this.gallerize ? this.el.nativeElement.querySelectorAll(this.gallerize) : this.el.nativeElement;
-        // create an observer instance
-        var observer = new MutationObserver(function (mutations) {
+        var updateGallery = function () {
             var _this = this;
             // skip if content is the same
             if (this.content === this.target.innerText) {
@@ -42,9 +41,12 @@ var GalleryDirective = (function () {
                     .finally(function () { return _this.gallery.load(images); })
                     .subscribe();
             }
-        });
+        };
+        // create an observer instance
+        var observer = new MutationObserver(updateGallery);
         var config = { subtree: true, childList: true };
         observer.observe(target, config);
+        updateGallery();
     };
     return GalleryDirective;
 }());

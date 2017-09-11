@@ -25,8 +25,7 @@ export class GalleryDirective implements OnInit {
 
     var target = this.gallerize ? this.el.nativeElement.querySelectorAll(this.gallerize) : this.el.nativeElement;
 
-    // create an observer instance
-    var observer = new MutationObserver(function (mutations) {
+    var updateGallery = function () {
       // skip if content is the same
       if (this.content === this.target.innerText) {
         return;
@@ -58,9 +57,12 @@ export class GalleryDirective implements OnInit {
           .subscribe();
 
       }
-    });
+    }
+    // create an observer instance
+    var observer = new MutationObserver(updateGallery);
 
     var config = { subtree: true, childList: true }
     observer.observe(target, config);
+    updateGallery();
   }
 }
