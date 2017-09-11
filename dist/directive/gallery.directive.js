@@ -44,7 +44,7 @@ var GalleryDirective = (function () {
             }
         });
         var config = { subtree: true, childList: true };
-        observer.observe(target, config);
+        observer.observe(this.el.nativeElement, config);
     };
     return GalleryDirective;
 }());
