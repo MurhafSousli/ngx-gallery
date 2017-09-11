@@ -12,21 +12,20 @@ var GalleryDirective = (function () {
         this.gallery = gallery;
     }
     GalleryDirective.prototype.ngOnInit = function () {
-        var _this = this;
-        /** Listen for InnerHtml changes */
-        Observable.fromEvent(this.el.nativeElement, 'DOMSubtreeModified')
-            .subscribe(function () {
+        var target = this.gallerize ? this.el.nativeElement : this.el.nativeElement.querySelectorAll(this.gallerize);
+        // create an observer instance
+        var observer = new MutationObserver(function (mutations) {
+            var _this = this;
             // skip if content is the same
-            if (_this.content === _this.el.nativeElement.innerText) {
+            if (this.content === this.target.innerText) {
                 return;
             }
             else {
-                _this.content = _this.el.nativeElement.innerText;
+                this.content = this.target.innerText;
             }
             var images = [];
-            var classes = (_this.gallerize) ? _this.gallerize.split(' ').map(function (className) { return '.' + className; }) : '';
             // get all img elements from content
-            var imageElements = _this.el.nativeElement.querySelectorAll("img" + classes);
+            var imageElements = this.target.querySelectorAll("img");
             if (imageElements) {
                 Observable.from(imageElements).map(function (img, i) {
                     // add click event to the images
@@ -44,6 +43,8 @@ var GalleryDirective = (function () {
                     .subscribe();
             }
         });
+        var config = { subtree: true, childList: true };
+        observer.observe(target, config);
     };
     return GalleryDirective;
 }());

@@ -9,7 +9,7 @@ export declare class GalleryDirective implements OnInit {
     renderer: Renderer2;
     gallery: GalleryService;
     content: any;
-    gallerize: any;
+    gallerize: string;
     constructor(el: ElementRef, renderer: Renderer2, gallery: GalleryService);
     ngOnInit(): void;
 }
