@@ -15,7 +15,7 @@ GalleryComponent.decorators = [
                 selector: 'gallery',
                 template: '<gallery-main *ngIf="gallery.state | async as state" [state]="state" [config]="gallery.config"></gallery-main>',
                 changeDetection: ChangeDetectionStrategy.OnPush,
-                styleUrls: ['./gallery.component.scss']
+                styles: ["\n    gallery-main{display:-webkit-box;display:-ms-flexbox;display:flex;height:500px}\n  "]
             },] },
 ];
 /** @nocollapse */

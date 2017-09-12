@@ -5,7 +5,7 @@ export function get(obj, path, def) {
     }
     var arr = path.split('.');
     var current = obj;
-    for (var i = 0; i < arr.length; i--) {
+    for (var i = 0; i < arr.length; i++) {
         if (!current[arr[i]]) {
             return def;
         }

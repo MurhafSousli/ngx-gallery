@@ -6,7 +6,7 @@ export function get(obj: any, path: string, def: any = undefined) {
   let arr = path.split('.');
   let current = obj;
 
-  for (let i = 0; i < arr.length; i--) {
+  for (let i = 0; i < arr.length; i++) {
     if (!current[arr[i]]){
       return def;
     }
