@@ -35,11 +35,11 @@
     "rxjs": "5.2.0"
   },
   "devDependencies": {
-    "@angular/compiler": "4.0.0",
-    "@angular/compiler-cli": "4.0.0",
-    "@angular/platform-browser": "4.0.0",
-    "@angular/platform-browser-dynamic": "4.0.0",
-    "@angular/platform-server": "4.0.0",
+    "@angular/compiler": "4.1.0",
+    "@angular/compiler-cli": "4.1.0",
+    "@angular/platform-browser": "4.1.0",
+    "@angular/platform-browser-dynamic": "4.1.0",
+    "@angular/platform-server": "4.1.0",
     "@types/jasmine": "2.5.41",
     "@types/node": "^6.0.58",
     "angular2-template-loader": "^0.6.0",
