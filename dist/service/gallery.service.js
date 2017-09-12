@@ -1,4 +1,4 @@
-import { Injectable, Optional } from '@angular/core';
+import { Optional } from '@angular/core';
 import { defaultState, defaultConfig } from '../config/gallery.default';
 import { get } from '../utils/get';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -103,9 +103,6 @@ var GalleryService = (function () {
     return GalleryService;
 }());
 export { GalleryService };
-GalleryService.decorators = [
-    { type: Injectable },
-];
 /** @nocollapse */
 GalleryService.ctorParameters = function () { return [
     { type: undefined, decorators: [{ type: Optional },] },

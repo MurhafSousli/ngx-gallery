@@ -18,7 +18,6 @@ import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/takeWhile';
 import 'rxjs/add/operator/do';
 
-@Injectable()
 export class GalleryService {
 
   /** Gallery state */
