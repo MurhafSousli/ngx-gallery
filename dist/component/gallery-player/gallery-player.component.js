@@ -17,8 +17,8 @@ export { GalleryPlayerComponent };
 GalleryPlayerComponent.decorators = [
     { type: Component, args: [{
                 selector: 'gallery-player',
-                template: "\n    <!--<div class=\"g-player-btns\">-->\n      <!--<div *ngIf=\"!state.play\" class=\"g-player-btn\" (click)=\"gallery.play()\">▶</div>-->\n      <!--<div *ngIf=\"state.play\" class=\"g-player-btn\" (click)=\"gallery.stop()\">⏸</div>-->\n    <!--</div>-->\n  ",
-                styles: ["\n    :host{position:absolute;z-index:1}.g-player-btns{display:-webkit-box;display:-ms-flexbox;display:flex;padding:.5em 1em}.g-player-btn{margin-right:.5em;color:#fff;cursor:pointer}\n  "],
+                templateUrl: './gallery-player.component.html',
+                styleUrls: ['./gallery-player.component.scss'],
                 changeDetection: ChangeDetectionStrategy.OnPush
             },] },
 ];

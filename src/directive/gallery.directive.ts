@@ -14,7 +14,7 @@ import 'rxjs/add/operator/finally';
 export class GalleryDirective implements OnInit {
 
   // A flag to check if content has changed
-  content;
+  content: string;
   srcList: string[] = [];
 
   @Input() gallerize: string;
@@ -22,7 +22,7 @@ export class GalleryDirective implements OnInit {
   constructor(public el: ElementRef, public renderer: Renderer2, public gallery: GalleryService) {
   }
 
-  pluck(array, field) {
+  pluck(array: any[], field: string) {
     let s = [];
     for (let i = array.length; i--;) {
       s.push(array[i][field]);
@@ -31,7 +31,7 @@ export class GalleryDirective implements OnInit {
     return s.sort();
   }
 
-  isEqual(array1, array2) {
+  isEqual(array1: string[], array2: string[]) {
     if (array1.length !== array2.length) {
       return false;
     }
@@ -76,7 +76,7 @@ export class GalleryDirective implements OnInit {
         Observable.from(imageElements).map((img: HTMLImageElement, i) => {
           // add click event to the images
           this.renderer.setStyle(img, 'cursor', 'pointer');
-          this.renderer.setProperty(img, 'onclick', (e) => {
+          this.renderer.setProperty(img, 'onclick', () => {
             this.gallery.set(i);
           });
 

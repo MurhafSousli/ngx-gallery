@@ -9,7 +9,7 @@ import {GalleryService} from '../../service/gallery.service';
 })
 export class GalleryNavComponent {
 
-  @Input() state;
+  @Input() state: any;
 
   constructor(public gallery: GalleryService) {
   }

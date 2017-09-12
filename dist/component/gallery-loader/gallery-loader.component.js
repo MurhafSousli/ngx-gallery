@@ -63,8 +63,8 @@ export { GalleryLoaderComponent };
 GalleryLoaderComponent.decorators = [
     { type: Component, args: [{
                 selector: 'gallery-loader',
-                template: "\n    <div class=\"g-loader\" [ngStyle]=\"styles\">\n      <img [src]=\"icon\" [style.width]=\"config.width\" [style.height]=\"config.height\"/>\n    </div>\n  ",
-                styles: ["\n    *{box-sizing:border-box}:host{z-index:1}.g-loader{z-index:2;position:absolute;width:100%;height:100%;display:-webkit-box;display:-ms-flexbox;display:flex;padding:1em}\n  "],
+                templateUrl: './gallery-loader.component.html',
+                styleUrls: ['./gallery-loader.component.scss'],
                 changeDetection: ChangeDetectionStrategy.OnPush
             },] },
 ];

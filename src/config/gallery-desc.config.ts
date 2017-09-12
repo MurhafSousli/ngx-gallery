@@ -5,5 +5,5 @@ export interface GalleryDescConfig {
     overlay?: boolean;
     text?: boolean;
     counter?: boolean;
-    style?;
+    style?: any;
 }

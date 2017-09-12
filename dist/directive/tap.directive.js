@@ -23,7 +23,7 @@ var TapDirective = (function () {
                 if (typeof Hammer !== 'undefined') {
                     var mc = new Hammer(this.el.nativeElement);
                     mc.on('tap', function () {
-                        _this.tapClick.emit(null);
+                        _this.tapClick.emit();
                     });
                 }
             }
@@ -31,7 +31,7 @@ var TapDirective = (function () {
         else {
             /** Use normal click event */
             this.renderer.setProperty(this.el.nativeElement, 'onclick', function () {
-                _this.tapClick.emit(null);
+                _this.tapClick.emit();
             });
         }
     };

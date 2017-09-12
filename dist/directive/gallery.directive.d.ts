@@ -8,11 +8,11 @@ export declare class GalleryDirective implements OnInit {
     el: ElementRef;
     renderer: Renderer2;
     gallery: GalleryService;
-    content: any;
+    content: string;
     srcList: string[];
     gallerize: string;
     constructor(el: ElementRef, renderer: Renderer2, gallery: GalleryService);
-    pluck(array: any, field: any): any[];
-    isEqual(array1: any, array2: any): boolean;
+    pluck(array: any[], field: string): any[];
+    isEqual(array1: string[], array2: string[]): boolean;
     ngOnInit(): void;
 }

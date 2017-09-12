@@ -1,6 +1,8 @@
 import {
   Component, Input, ChangeDetectionStrategy, ElementRef, Renderer2, OnInit
 } from '@angular/core';
+
+import { get } from '../../utils/get';
 import { GalleryService } from '../../service/gallery.service';
 import { GalleryState } from '../../service/gallery.state';
 import { GalleryThumbConfig } from '../../config';
@@ -18,7 +20,7 @@ export class GalleryThumbComponent implements OnInit {
   @Input() state: GalleryState;
   @Input() config: GalleryThumbConfig;
 
-  contStyle;
+  contStyle: any;
 
   constructor(public gallery: GalleryService, private el: ElementRef, private renderer: Renderer2) {
 
@@ -45,7 +47,7 @@ export class GalleryThumbComponent implements OnInit {
         });
 
         /** Pan left and right */
-        mc.on('pan', (e) => {
+        mc.on('pan', (e: any) => {
           this.renderer.setStyle(el, 'transform', `translate3d(${e.deltaX}px, 0px, 0px)`);
         });
         /** Swipe next and prev */
@@ -60,7 +62,7 @@ export class GalleryThumbComponent implements OnInit {
   }
 
   translateThumbs() {
-    const x = this.state.currIndex * this.config.width + this.config.width / 2;
+    const x = get(this.state, 'currIndex', 0) * get(this.config, 'width', 0) + get(this.config, 'width', 0) / 2;
     return `translate3d(${-x}px, 0, 0)`;
   }
 
@@ -75,9 +77,10 @@ export class GalleryThumbComponent implements OnInit {
     };
   }
 
-  getThumbImage(i) {
+  getThumbImage(i: number) {
     /** Use thumbnail if presented */
-    return `url(${this.state.images[i].thumbnail || this.state.images[i].src})`;
+    let image = get(this.state, 'images', [])[i] || {};
+    return `url(${image.thumbnail || image.src})`;
   }
 
 }

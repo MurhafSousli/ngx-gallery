@@ -3,10 +3,10 @@ import { Subject } from 'rxjs/Subject';
 export declare class LazyDirective {
     private el;
     private renderer;
-    lazyImage: any;
+    lazyImage: string;
     /** A subject to emit only last selected image */
-    lazyWorker: Subject<boolean>;
+    lazyWorker: Subject<string>;
     lazyLoad: EventEmitter<boolean>;
     constructor(el: ElementRef, renderer: Renderer2);
-    getImage(imagePath: any): void;
+    getImage(imagePath: string): void;
 }

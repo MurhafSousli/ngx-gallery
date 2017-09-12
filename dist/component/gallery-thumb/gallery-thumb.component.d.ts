@@ -16,5 +16,5 @@ export declare class GalleryThumbComponent implements OnInit {
         height: string;
         margin: string;
     };
-    getThumbImage(i: any): string;
+    getThumbImage(i: number): string;
 }

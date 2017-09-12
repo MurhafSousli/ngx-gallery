@@ -32,7 +32,7 @@ var LazyDirective = (function () {
     });
     LazyDirective.prototype.getImage = function (imagePath) {
         var _this = this;
-        this.lazyWorker.next(false);
+        this.lazyWorker.next('');
         var img = this.renderer.createElement('img');
         img.src = imagePath;
         img.onload = function () {
@@ -40,7 +40,7 @@ var LazyDirective = (function () {
         };
         img.onerror = function (err) {
             console.error('[GalleryLazyDirective]:', err);
-            _this.lazyWorker.next(false);
+            _this.lazyWorker.next('');
         };
     };
     return LazyDirective;

@@ -31,8 +31,8 @@ export declare class GalleryService {
     /** Reset gallery with initial state */
     reset(): void;
     /** Play slide show */
-    play(interval?: any): void;
+    play(interval?: number): void;
     /** End slide show */
     stop(): void;
-    playerEngine(interval?: any): Observable<number>;
+    playerEngine(interval?: number): Observable<number>;
 }

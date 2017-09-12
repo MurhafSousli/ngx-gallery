@@ -1,5 +1,6 @@
 import { Injectable, Optional } from '@angular/core';
 import { defaultState, defaultConfig } from '../config/gallery.default';
+import { get } from '../utils/get';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -39,7 +40,7 @@ var GalleryService = (function () {
         this.state.next(Object.assign({}, state, {
             prevIndex: state.currIndex,
             currIndex: index,
-            hasNext: index < state.images.length - 1,
+            hasNext: index < get(state, 'images.length', 0) - 1,
             hasPrev: index > 0,
             active: true
         }));
@@ -48,7 +49,7 @@ var GalleryService = (function () {
     GalleryService.prototype.next = function () {
         var state = this.state.getValue();
         if (state.hasNext) {
-            var index = state.currIndex + 1;
+            var index = (state.currIndex || 0) + 1;
             this.set(index);
         }
         else {
@@ -59,11 +60,11 @@ var GalleryService = (function () {
     GalleryService.prototype.prev = function () {
         var state = this.state.getValue();
         if (state.hasPrev) {
-            var index = state.currIndex - 1;
+            var index = (state.currIndex || 0) - 1;
             this.set(index);
         }
         else {
-            this.set(state.images.length - 1);
+            this.set(get(state, 'images.length', 0) - 1);
         }
     };
     /** Close gallery modal if open */
@@ -82,7 +83,7 @@ var GalleryService = (function () {
     };
     /** Play slide show */
     GalleryService.prototype.play = function (interval) {
-        var speed = interval || this.config.player.speed || 2000;
+        var speed = interval || get(this.config, 'player.speed', 0) || 2000;
         var state = this.state.getValue();
         /** Open and play the gallery, 'active' opens gallery modal */
         this.state.next(Object.assign({}, state, { play: true, active: true }));
@@ -95,13 +96,9 @@ var GalleryService = (function () {
     GalleryService.prototype.playerEngine = function (interval) {
         var _this = this;
         return Observable.interval(interval)
-            .takeWhile(function () { return _this.state.getValue().play; })
-            .do(function () {
-            _this.next();
-        })
-            .finally(function () {
-            _this.state.next(Object.assign({}, _this.state.getValue(), { play: false }));
-        });
+            .takeWhile(function () { return _this.state.getValue().play || false; })
+            .do(function () { return _this.next(); })
+            .finally(function () { return _this.state.next(Object.assign({}, _this.state.getValue(), { play: false })); });
     };
     return GalleryService;
 }());

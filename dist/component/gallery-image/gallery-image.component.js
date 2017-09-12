@@ -64,8 +64,8 @@ export { GalleryImageComponent };
 GalleryImageComponent.decorators = [
     { type: Component, args: [{
                 selector: 'gallery-image',
-                template: "\n    <div [@imgAnimate]=\"animate\" class=\"g-image\">\n      <img [lazyImage]=\"state.images[state.currIndex].src\" (lazyLoad)=\"imageLoad($event)\">\n    </div>\n\n    <gallery-loader *ngIf=\"loading\" [config]=\"config.loader\"></gallery-loader>\n  ",
-                styles: ["\n    :host{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1;-webkit-box-flex:1;-ms-flex:1;flex:1;flex-direction:column;-webkit-transform:translateZ(0);transform:translateZ(0)}.g-image,:host{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column}.g-image{position:absolute;left:0;right:0;top:0;bottom:0;background-repeat:no-repeat;background-size:contain;background-position:50%;z-index:1;flex-direction:column;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.g-image img{box-shadow:0 0 4px rgba(0,0,0,.3);pointer-events:none;display:block;max-width:100%;max-height:100%}\n  "],
+                templateUrl: './gallery-image.component.html',
+                styleUrls: ['./gallery-image.component.scss'],
                 changeDetection: ChangeDetectionStrategy.OnPush,
                 animations: animation
             },] },
