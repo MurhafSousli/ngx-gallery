@@ -44,27 +44,29 @@ var GalleryDirective = (function () {
             var images = [];
             // get all img elements from content
             var imageElements = _this.gallerize ? target.querySelectorAll(_this.gallerize) : target.querySelectorAll("img");
-            if (imageElements && imageElements.length) {
-                var srcs = _this.pluck(imageElements, 'src');
-                if (_this.isEqual(_this.srcList, srcs)) {
-                    return;
-                }
-                _this.srcList = srcs;
-                Observable.from(imageElements).map(function (img, i) {
-                    // add click event to the images
-                    _this.renderer.setStyle(img, 'cursor', 'pointer');
-                    _this.renderer.setProperty(img, 'onclick', function () {
-                        _this.gallery.set(i);
-                    });
-                    // create an image item
-                    images.push({
-                        src: img.src,
-                        text: img.alt
-                    });
-                })
-                    .finally(function () { return _this.gallery.load(images); })
-                    .subscribe();
+            if (!imageElements || !imageElements.length) {
+                _this.srcList = [];
+                return;
             }
+            var srcs = _this.pluck(imageElements, 'src');
+            if (_this.isEqual(_this.srcList, srcs)) {
+                return;
+            }
+            _this.srcList = srcs;
+            Observable.from(imageElements).map(function (img, i) {
+                // add click event to the images
+                _this.renderer.setStyle(img, 'cursor', 'pointer');
+                _this.renderer.setProperty(img, 'onclick', function () {
+                    _this.gallery.set(i);
+                });
+                // create an image item
+                images.push({
+                    src: img.src,
+                    text: img.alt
+                });
+            })
+                .finally(function () { return _this.gallery.load(images); })
+                .subscribe();
         };
         // create an observer instance
         var observer = new MutationObserver(updateGallery);
