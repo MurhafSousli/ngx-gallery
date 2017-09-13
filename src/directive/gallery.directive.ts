@@ -1,6 +1,7 @@
 import { Directive, ElementRef, Renderer2, Input, OnInit } from '@angular/core';
 import { GalleryService } from '../service/gallery.service';
 import { GalleryImage } from '../service/gallery.state';
+import { isEqual, pluck } from '../utils/index';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
@@ -18,32 +19,9 @@ export class GalleryDirective implements OnInit {
   srcList: string[] = [];
 
   @Input() gallerize: string;
+  @Input() subtree: string = '';
 
   constructor(public el: ElementRef, public renderer: Renderer2, public gallery: GalleryService) {
-  }
-
-  pluck(array: any[], field: string) {
-    let s = [];
-    for (let i = array.length; i--;) {
-      s.push(array[i][field]);
-    }
-
-    return s.sort();
-  }
-
-  isEqual(array1: string[], array2: string[]) {
-    if (array1.length !== array2.length) {
-      return false;
-    }
-
-    for (let i = array1.length; i--;) {
-      if (array1[i] !== array2[i]) {
-        return false;
-      }
-    }
-
-
-    return true;
   }
 
   ngOnInit() {
@@ -52,7 +30,7 @@ export class GalleryDirective implements OnInit {
 
     var updateGallery = () => {
 
-      // skip if content is the same
+      // skip if content is the same 
       if (!target || (this.content && this.content === target.innerText)) {
         return;
       }
@@ -61,17 +39,20 @@ export class GalleryDirective implements OnInit {
       }
 
       const images: GalleryImage[] = [];
+      const classes = (this.gallerize) ? this.gallerize.split(' ').map((className) => '.' + className) : '';
 
       // get all img elements from content
-      const imageElements = this.gallerize ? target.querySelectorAll(this.gallerize) : target.querySelectorAll(`img`);
+      const imageElements = target.querySelectorAll(this.subtree+` img${classes}`) 
 
       if (!imageElements || !imageElements.length) {
         this.srcList = [];
         return;
       }
       
-      let srcs = this.pluck(imageElements, 'src');
-      if (this.isEqual(this.srcList, srcs)) {
+      let srcs = pluck(imageElements, 'src');
+
+      // skip if urls same 
+      if (isEqual(this.srcList, srcs)) {
         return;
       }
 

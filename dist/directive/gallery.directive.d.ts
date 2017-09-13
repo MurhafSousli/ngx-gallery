@@ -11,8 +11,7 @@ export declare class GalleryDirective implements OnInit {
     content: string;
     srcList: string[];
     gallerize: string;
+    subtree: string;
     constructor(el: ElementRef, renderer: Renderer2, gallery: GalleryService);
-    pluck(array: any[], field: string): any[];
-    isEqual(array1: string[], array2: string[]): boolean;
     ngOnInit(): void;
 }
