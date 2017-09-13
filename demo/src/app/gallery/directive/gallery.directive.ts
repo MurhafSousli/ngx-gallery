@@ -16,29 +16,29 @@ export class GalleryDirective implements OnInit {
   // A flag to check if content has changed
   content;
 
-  @Input() gallerize: string;
+  @Input() gallerize;
 
   constructor(public el: ElementRef, public renderer: Renderer2, public gallery: GalleryService) {
   }
 
   ngOnInit() {
 
-    var target = this.gallerize ? this.el.nativeElement : this.el.nativeElement.querySelectorAll(this.gallerize);
-
-    // create an observer instance
-    var observer = new MutationObserver(function (mutations) {
-         // skip if content is the same
-         if (this.content === this.target.innerText) {
+    /** Listen for InnerHtml changes */
+    Observable.fromEvent(this.el.nativeElement, 'DOMSubtreeModified')
+      .subscribe(() => {
+        // skip if content is the same
+        if (this.content === this.el.nativeElement.innerText) {
           return;
         }
         else {
-          this.content = this.target.innerText;
+          this.content = this.el.nativeElement.innerText;
         }
 
         const images: GalleryImage[] = [];
+        const classes = (this.gallerize) ? this.gallerize.split(' ').map((className) => '.' + className) : '';
 
         // get all img elements from content
-        const imageElements = this.target.querySelectorAll(`img`);
+        const imageElements = this.el.nativeElement.querySelectorAll(`img${classes}`);
 
         if (imageElements) {
           Observable.from(imageElements).map((img: HTMLImageElement, i) => {
@@ -54,13 +54,10 @@ export class GalleryDirective implements OnInit {
               text: img.alt
             });
           })
-            .finally(() => this.gallery.load(images))
-            .subscribe();
+          .finally(() => this.gallery.load(images))
+          .subscribe();
 
         }
-    });
-
-    var config = { subtree: true, childList: true }
-    observer.observe(target, config);
+      });
   }
 }
