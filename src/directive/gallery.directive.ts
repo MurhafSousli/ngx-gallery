@@ -65,31 +65,35 @@ export class GalleryDirective implements OnInit {
       // get all img elements from content
       const imageElements = this.gallerize ? target.querySelectorAll(this.gallerize) : target.querySelectorAll(`img`);
 
-      if (imageElements && imageElements.length) {
-        let srcs = this.pluck(imageElements, 'src');
-        if (this.isEqual(this.srcList, srcs)) {
-          return;
-        }
-
-        this.srcList = srcs;
-
-        Observable.from(imageElements).map((img: HTMLImageElement, i) => {
-          // add click event to the images
-          this.renderer.setStyle(img, 'cursor', 'pointer');
-          this.renderer.setProperty(img, 'onclick', () => {
-            this.gallery.set(i);
-          });
-
-          // create an image item
-          images.push({
-            src: img.src,
-            text: img.alt
-          });
-        })
-          .finally(() => this.gallery.load(images))
-          .subscribe();
-
+      if (!imageElements || !imageElements.length) {
+        this.srcList = [];
+        return;
       }
+      
+      let srcs = this.pluck(imageElements, 'src');
+      if (this.isEqual(this.srcList, srcs)) {
+        return;
+      }
+
+      this.srcList = srcs;
+
+      Observable.from(imageElements).map((img: HTMLImageElement, i) => {
+        // add click event to the images
+        this.renderer.setStyle(img, 'cursor', 'pointer');
+        this.renderer.setProperty(img, 'onclick', () => {
+          this.gallery.set(i);
+        });
+
+        // create an image item
+        images.push({
+          src: img.src,
+          text: img.alt
+        });
+      })
+        .finally(() => this.gallery.load(images))
+        .subscribe();
+
+
     }
     // create an observer instance
     var observer = new MutationObserver(updateGallery);
