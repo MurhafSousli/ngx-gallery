@@ -1,4 +1,4 @@
 export interface GalleryBulletConfig {
-    style?;
+    style?: any;
     position?: string;
 }

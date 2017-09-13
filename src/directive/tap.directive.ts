@@ -10,7 +10,7 @@ declare const Hammer: any;
 })
 export class TapDirective implements OnInit {
 
-  @Input() tap;
+  @Input() tap: any;
   @Output() tapClick = new EventEmitter();
 
   constructor(private gallery: GalleryService, private el: ElementRef, private renderer: Renderer2) {
@@ -32,14 +32,14 @@ export class TapDirective implements OnInit {
         if (typeof Hammer !== 'undefined') {
           const mc = new Hammer(this.el.nativeElement);
           mc.on('tap', () => {
-            this.tapClick.emit(null);
+            this.tapClick.emit();
           });
         }
       }
     } else {
       /** Use normal click event */
       this.renderer.setProperty(this.el.nativeElement, 'onclick', () => {
-        this.tapClick.emit(null);
+        this.tapClick.emit();
       });
     }
 

@@ -17,12 +17,12 @@ import { Subject } from 'rxjs/Subject';
 export class LazyDirective {
 
   // Image source
-  @Input('lazyImage') set lazyImage(imagePath) {
+  @Input('lazyImage') set lazyImage(imagePath: string) {
     this.getImage(imagePath);
   }
 
   /** A subject to emit only last selected image */
-  lazyWorker = new Subject<boolean>();
+  lazyWorker = new Subject<string>();
 
   @Output() lazyLoad = new EventEmitter<boolean>(false);
 
@@ -40,8 +40,8 @@ export class LazyDirective {
       });
   }
 
-  getImage(imagePath) {
-    this.lazyWorker.next(false);
+  getImage(imagePath: string) {
+    this.lazyWorker.next('');
     const img = this.renderer.createElement('img');
     img.src = imagePath;
 
@@ -49,9 +49,9 @@ export class LazyDirective {
       this.lazyWorker.next(imagePath);
     };
 
-    img.onerror = err => {
+    img.onerror = (err:any) => {
       console.error('[GalleryLazyDirective]:', err);
-      this.lazyWorker.next(false);
+      this.lazyWorker.next('');
     };
   }
 

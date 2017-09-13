@@ -1,6 +1,7 @@
 import { Directive, ElementRef, Renderer2, Input, OnInit } from '@angular/core';
 import { GalleryService } from '../service/gallery.service';
 import { GalleryImage } from '../service/gallery.state';
+import { isEqual, pluck } from '../utils/index';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
@@ -14,50 +15,72 @@ import 'rxjs/add/operator/finally';
 export class GalleryDirective implements OnInit {
 
   // A flag to check if content has changed
-  content;
+  content: string;
+  srcList: string[] = [];
 
-  @Input() gallerize;
+  @Input() gallerize: string;
+  @Input() subtree: string = '';
 
   constructor(public el: ElementRef, public renderer: Renderer2, public gallery: GalleryService) {
   }
 
   ngOnInit() {
+    let target = this.el.nativeElement;
 
-    /** Listen for InnerHtml changes */
-    Observable.fromEvent(this.el.nativeElement, 'DOMSubtreeModified')
-      .subscribe(() => {
-        // skip if content is the same
-        if (this.content === this.el.nativeElement.innerText) {
-          return;
-        }
-        else {
-          this.content = this.el.nativeElement.innerText;
-        }
 
-        const images: GalleryImage[] = [];
-        const classes = (this.gallerize) ? this.gallerize.split(' ').map((className) => '.' + className) : '';
+    var updateGallery = () => {
 
-        // get all img elements from content
-        const imageElements = this.el.nativeElement.querySelectorAll(`img${classes}`);
+      // skip if content is the same 
+      if (!target || (this.content && this.content === target.innerText)) {
+        return;
+      }
+      else {
+        this.content = target.innerText;
+      }
 
-        if (imageElements) {
-          Observable.from(imageElements).map((img: HTMLImageElement, i) => {
-            // add click event to the images
-            this.renderer.setStyle(img, 'cursor', 'pointer');
-            this.renderer.setProperty(img, 'onclick', () => {
-              this.gallery.set(i);
-            });
+      const images: GalleryImage[] = [];
+      const classes = (this.gallerize) ? this.gallerize.split(' ').map((className) => '.' + className) : '';
 
-            // create an image item
-            images.push({
-              src: img.src,
-              text: img.alt
-            });
-          })
-          .finally(() => this.gallery.load(images))
-          .subscribe();
+      // get all img elements from content
+      const imageElements = target.querySelectorAll(this.subtree+` img${classes}`) 
 
-        }
-      });
+      if (!imageElements || !imageElements.length) {
+        this.srcList = [];
+        return;
+      }
+      
+      let srcs = pluck(imageElements, 'src');
+
+      // skip if urls same 
+      if (isEqual(this.srcList, srcs)) {
+        return;
+      }
+
+      this.srcList = srcs;
+
+      Observable.from(imageElements).map((img: HTMLImageElement, i) => {
+        // add click event to the images
+        this.renderer.setStyle(img, 'cursor', 'pointer');
+        this.renderer.setProperty(img, 'onclick', () => {
+          this.gallery.set(i);
+        });
+
+        // create an image item
+        images.push({
+          src: img.src,
+          text: img.alt
+        });
+      })
+        .finally(() => this.gallery.load(images))
+        .subscribe();
+
+
+    }
+    // create an observer instance
+    var observer = new MutationObserver(updateGallery);
+
+    var config = { subtree: true, childList: true }
+    observer.observe(target, config);
+    updateGallery();
   }
 }

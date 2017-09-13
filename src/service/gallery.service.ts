@@ -4,6 +4,8 @@ import { GalleryState, GalleryImage } from './gallery.state';
 import { GalleryConfig } from '../config/gallery.config';
 import { defaultState, defaultConfig } from '../config/gallery.default';
 
+import { get } from '../utils/get';
+
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -16,7 +18,6 @@ import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/takeWhile';
 import 'rxjs/add/operator/do';
 
-@Injectable()
 export class GalleryService {
 
   /** Gallery state */
@@ -57,7 +58,7 @@ export class GalleryService {
     this.state.next(Object.assign({}, state, {
       prevIndex: state.currIndex,
       currIndex: index,
-      hasNext: index < state.images.length - 1,
+      hasNext: index < get(state, 'images.length', 0) - 1,
       hasPrev: index > 0,
       active: true
     }));
@@ -68,7 +69,7 @@ export class GalleryService {
     const state = this.state.getValue();
 
     if (state.hasNext) {
-      const index = state.currIndex + 1;
+      const index = (state.currIndex || 0) + 1;
       this.set(index);
     } else {
       this.set(0);
@@ -80,10 +81,10 @@ export class GalleryService {
     const state = this.state.getValue();
 
     if (state.hasPrev) {
-      const index = state.currIndex - 1;
+      const index = (state.currIndex || 0) - 1;
       this.set(index);
     } else {
-      this.set(state.images.length - 1);
+      this.set(get(state, 'images.length', 0) - 1);
     }
   }
 
@@ -105,8 +106,8 @@ export class GalleryService {
   }
 
   /** Play slide show */
-  play(interval?) {
-    const speed = interval || this.config.player.speed || 2000;
+  play(interval?: number) {
+    const speed = interval || get(this.config, 'player.speed', 0) || 2000;
 
     const state = this.state.getValue();
     /** Open and play the gallery, 'active' opens gallery modal */
@@ -119,16 +120,12 @@ export class GalleryService {
     this.player.next(0);
   }
 
-  playerEngine(interval?) {
+  playerEngine(interval?: number) {
 
     return Observable.interval(interval)
-      .takeWhile(() => this.state.getValue().play)
-      .do(() => {
-        this.next();
-      })
-      .finally(() => {
-        this.state.next(Object.assign({}, this.state.getValue(), { play: false }));
-      });
+      .takeWhile(() => this.state.getValue().play || false)
+      .do(() => this.next())
+      .finally(() => this.state.next(Object.assign({}, this.state.getValue(), { play: false })));
 
   }
 

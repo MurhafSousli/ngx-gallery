@@ -47,7 +47,7 @@ export class GalleryImageComponent implements OnInit {
         mc.on('panend', () => {
           this.renderer.addClass(el, 'g-pan-reset');
         });
-        mc.on('pan', (e) => {
+        mc.on('pan', (e: any) => {
           this.renderer.setStyle(el, 'transform', `translate3d(${e.deltaX}px, 0px, 0px)`);
         });
         /** Swipe next and prev */

@@ -8,7 +8,7 @@ import { GalleryLoaderConfig } from './gallery-loader.config';
 export interface GalleryConfig {
   animation?: string;
   gestures?: boolean;
-  style?;
+  style?: any;
   description?: GalleryDescConfig;
   thumbnails?: GalleryThumbConfig;
   loader?: GalleryLoaderConfig;
