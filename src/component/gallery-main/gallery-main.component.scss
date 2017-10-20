@@ -48,6 +48,10 @@ gallery-main {
 }
 
 .g-pan-reset {
-  transition: all linear 0.3s;
+  transition: none;
   transform: translate3d(0px, 0px, 0px) !important;
+}
+
+.g-swipe-invis .g-image img {
+  opacity: 0;
 }

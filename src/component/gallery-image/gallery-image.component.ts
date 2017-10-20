@@ -52,9 +52,11 @@ export class GalleryImageComponent implements OnInit {
         });
         /** Swipe next and prev */
         mc.on('swipeleft', () => {
+          this.renderer.addClass(el, 'g-swipe-invis');
           this.gallery.next();
         });
         mc.on('swiperight', () => {
+          this.renderer.addClass(el, 'g-swipe-invis');
           this.gallery.prev();
         });
       }
@@ -63,11 +65,13 @@ export class GalleryImageComponent implements OnInit {
 
   imageLoad(done: boolean) {
     this.loading = !done;
+    const el = this.el.nativeElement;
     /** TODO: Add some animation */
     
     if (!done) {
       this.animate = 'none';
     } else {
+      this.renderer.removeClass(el, 'g-swipe-invis');
       switch (this.config.animation) {
         case 'fade':
           this.animate = 'fade';
