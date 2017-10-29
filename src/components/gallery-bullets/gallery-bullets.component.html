@@ -1,0 +1,10 @@
+<div class="g-bullets-container" [ngStyle]="containerStyle">
+  <div class="g-bullet"
+       *ngFor="let item of state.items; let i = index"
+       [class.g-bullet-curr]="i === state.currIndex"
+       (tapClick)="gallery.set(i)">
+
+    <div class="g-bullet-inner" [ngStyle]="config.style"></div>
+
+  </div>
+</div>

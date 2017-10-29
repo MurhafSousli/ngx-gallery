@@ -1,58 +1,30 @@
-import { BrowserModule } from '@angular/platform-browser';
+
 import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 
-import { SharedModule } from './shared';
-
-import { AppRoutingModule } from './routing.module';
-import { GalleryModule } from './gallery';
-// import { GalleryModule } from 'ng-gallery';
-import { SettingsModule } from './settings/settings.module';
-
+import { AppRoutingModule } from './app-routing.module';
+import { AppSharedModule } from './shared/shared.module';
+import { HomeModule } from './home/home.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { MainComponent } from './main/main.component';
-import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    MainComponent,
-    FooterComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    SettingsModule,
-    SharedModule,
-    BrowserAnimationsModule,
-    GalleryModule.forRoot(
-      {
-        style: {
-          background: "#121519",
-          width: "900px",
-          height: "600px"
-        },
-        description: {
-          position: 'bottom',
-          overlay: false,
-          text: true,
-          counter: true
-        },
-        thumbnails: {
-          width: 120,
-          height: 90,
-          position: 'top',
-          space: 20
-        },
-        bullets: false,
-        navigation: true,
-        gestures: true
-      }
-    )
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        // Add .withServerTransition() to support Universal rendering.
+        // The application ID can be any identifier which is unique on
+        // the page.
+        BrowserModule.withServerTransition({appId: 'ng-gallery-demo-id'}),
+        FormsModule,
+        HttpModule,
+        AppRoutingModule,
+        AppSharedModule,
+        HomeModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }

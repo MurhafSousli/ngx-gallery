@@ -1,0 +1,45 @@
+gallery-thumb {
+  display: block;
+  z-index: 1;
+}
+
+.g-thumb-container {
+  position: relative;
+  z-index: 206;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: flex;
+}
+
+.g-thumbs {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  transition: transform ease-in 300ms;
+  transform: translate3d(0, 0, 0);
+}
+
+.g-thumb {
+  padding: 8px;
+  opacity: 0.5;
+  transition: all linear 0.2s;
+}
+
+.g-thumb-image {
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  background-position: center center;
+  background-size: cover;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.g-thumb-current {
+  opacity: 1;
+  padding: 2px;
+}
+

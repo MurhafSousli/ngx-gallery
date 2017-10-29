@@ -1,54 +1,63 @@
-import { NgModule, ModuleWithProviders, InjectionToken } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { OverlayModule, Overlay } from '@angular/cdk/overlay';
+import { ViewportRuler } from '@angular/cdk/scrolling';
 
-import { GalleryService } from './service/gallery.service';
-import { GalleryConfig } from './config/gallery.config';
+import { Gallery } from './services/gallery.service';
+import { GalleryConfig } from './models';
 
-import { GalleryComponent } from './component/gallery/gallery.component';
-import { GalleryNavComponent } from './component/gallery-nav/gallery-nav.component';
-import { GalleryThumbComponent } from './component/gallery-thumb/gallery-thumb.component';
-import { GalleryTextComponent } from './component/gallery-text/gallery-text.component';
-import { GalleryImageComponent } from './component/gallery-image/gallery-image.component';
-import { GalleryLoaderComponent } from './component/gallery-loader/gallery-loader.component';
-import { GalleryModalComponent } from './component/gallery-modal/gallery-modal.component';
-import { GalleryBulletsComponent } from './component/gallery-bullets/gallery-bullets.component';
-import { GalleryPlayerComponent } from './component/gallery-player/gallery-player.component';
-import { GalleryMainComponent } from './component/gallery-main/gallery-main.component';
+import { GalleryComponent } from './components/gallery/gallery.component';
+import { GalleryNavComponent } from './components/gallery-nav/gallery-nav.component';
+import { GalleryThumbComponent } from './components/gallery-thumb/gallery-thumb.component';
+import { GalleryTextComponent } from './components/gallery-text/gallery-text.component';
+import { GalleryItemsComponent } from './components/gallery-items/gallery-items.component';
+import { GalleryLoaderComponent } from './components/gallery-loader/gallery-loader.component';
+import { GalleryBulletsComponent } from './components/gallery-bullets/gallery-bullets.component';
+import { GalleryPlayerComponent } from './components/gallery-player/gallery-player.component';
+import { GalleryMainComponent } from './components/gallery-main/gallery-main.component';
+import { GallerySliderComponent } from './components/gallery-slider/gallery-slider.component';
+import { GalleryOverlayComponent } from './components/gallery-overlay/gallery-overlay.component';
 
-import { GalleryDirective } from './directive/gallery.directive';
-import { LazyDirective } from './directive/lazy.directive';
-import { TapDirective } from './directive/tap.directive';
+import { GallerizeDirective } from './directives/gallerize.directive';
+import { TapDirective } from './directives/tap.directive';
+import { CONFIG } from './services/gallery.token';
 
-/** Initialize ConfigService with URL */
-export function galleryFactory(config: GalleryConfig) {
-  return new GalleryService(config);
+
+/** Initialize Gallery with custom config
+ * @param {GalleryConfig} config
+ * @param {Overlay} overlay Required for the gallery dialog
+ * @param {ViewportRuler} viewportRuler Required for the gallery dialog
+ **/
+export function galleryFactory(config: GalleryConfig, overlay: Overlay, viewportRuler: ViewportRuler) {
+  return new Gallery(config, overlay, viewportRuler);
 }
-
-export const CONFIG = new InjectionToken<GalleryConfig>('config');
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    OverlayModule,
   ],
   declarations: [
     GalleryComponent,
     GalleryNavComponent,
     GalleryThumbComponent,
-    GalleryDirective,
     GalleryTextComponent,
-    GalleryImageComponent,
+    GalleryItemsComponent,
     GalleryLoaderComponent,
-    GalleryModalComponent,
     GalleryBulletsComponent,
     GalleryPlayerComponent,
     GalleryMainComponent,
-    TapDirective,
-    LazyDirective
+    GallerySliderComponent,
+    GalleryOverlayComponent,
+    GallerizeDirective,
+    TapDirective
   ],
   exports: [
     GalleryComponent,
-    GalleryDirective,
-    GalleryModalComponent
+    GallerizeDirective
+  ],
+  entryComponents: [
+    GalleryOverlayComponent
   ]
 })
 export class GalleryModule {
@@ -57,14 +66,13 @@ export class GalleryModule {
     return {
       ngModule: GalleryModule,
       providers: [
-        { provide: CONFIG, useValue: config },
+        {provide: CONFIG, useValue: config},
         {
-          provide: GalleryService,
+          provide: Gallery,
           useFactory: galleryFactory,
-          deps: [CONFIG]
+          deps: [CONFIG, Overlay, ViewportRuler]
         }
       ]
     };
   }
 }
-

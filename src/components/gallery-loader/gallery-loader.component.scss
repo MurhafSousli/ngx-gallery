@@ -1,0 +1,14 @@
+gallery-loader {
+  z-index: 2040;
+}
+
+.g-loader {
+  z-index: 2050;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+}

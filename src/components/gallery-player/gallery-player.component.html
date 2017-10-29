@@ -1,0 +1,7 @@
+<div *ngIf="config.autoplay && config.progress" class="g-progress-bar">
+  <div class="g-progress"
+       [ngClass]="getClasses(progress | async)"
+       [style.transitionDuration]="config.interval + 'ms'">
+
+  </div>
+</div>

@@ -1,5 +1,5 @@
 <p align="center">
-  <img height="300px" width="300px" src="https://rawgit.com/MurhafSousli/ng-gallery/master/assets/logo.svg" style="max-width:100%;">
+  <img height="150px" width="150px" src="https://rawgit.com/MurhafSousli/ng-gallery/master/assets/logo.svg" style="max-width:100%;">
 </p>
 <h1 align="center">Angular Image Gallery</h1>
 

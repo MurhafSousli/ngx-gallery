@@ -1,0 +1,41 @@
+gallery-player {
+  position: absolute;
+  z-index: 20;
+  left: 0;
+  right: 0;
+}
+
+.g-progress-bar {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.g-progress {
+  width: 100%;
+  height: 3px;
+  transform: translate3d(-100%, 0, 0);
+  z-index: 100;
+}
+
+.g-progress-initial {
+  transition-duration: 0ms !important;
+}
+
+.g-progress-done {
+  transition-property: transform;
+  transition-timing-function: linear;
+  background-color: #BCC8CE;
+  transform: translate3d(0, 0, 0);
+}
+
+//.g-player-btns {
+//  display: flex;
+//  padding: 0.5em 1em;
+//}
+//
+//.g-player-btn {
+//  margin-right: 0.5em;
+//  color: #ffffff;
+//  cursor: pointer;
+//}

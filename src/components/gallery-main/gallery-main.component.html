@@ -1,0 +1,23 @@
+<div class="g-container" *ngIf="state.items?.length; else empty" [ngStyle]="config.style">
+
+  <gallery-thumb *ngIf="config.thumbnails" [state]="state" [config]="config.thumbnails"></gallery-thumb>
+
+  <div class="g-box">
+
+    <gallery-slider [state]="state" [config]="config"></gallery-slider>
+
+    <gallery-bullets *ngIf="config.bullets" [state]="state" [config]="config.bullets"></gallery-bullets>
+
+  </div>
+
+  <gallery-player *ngIf="config.player" [config]="config.player"></gallery-player>
+
+  <gallery-text *ngIf="config.description" [state]="state" [config]="config.description"></gallery-text>
+
+  <div *ngIf="isOverlay" class="g-btn-close" (tapClick)="gallery.closeDialog()"></div>
+
+</div>
+
+<ng-template #empty>
+  <div class="empty">empty</div>
+</ng-template>

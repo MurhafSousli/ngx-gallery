@@ -1,10 +1,10 @@
-import { DemoPage } from './app.po';
+import { NgGalleryDemoPage } from './app.po';
 
-describe('demo App', () => {
-  let page: DemoPage;
+describe('ng-gallery-demo App', () => {
+  let page: NgGalleryDemoPage;
 
   beforeEach(() => {
-    page = new DemoPage();
+    page = new NgGalleryDemoPage ();
   });
 
   it('should display message saying app works', () => {

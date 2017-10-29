@@ -1,0 +1,16 @@
+<div *ngFor="let item of state.items;let i=index"
+     class="g-item"
+     [class.g-active]="i === state.currIndex">
+
+  <img *ngIf="i === state.currIndex"
+       class="lazyload"
+       data-sizes="auto"
+       [src]="item.thumbnail"
+       [attr.data-src]="item.src"
+       [attr.data-srcset]="item.srcset"
+       [alt]="item?.text"
+       (lazyloaded)="onLazyLoaded($event)">
+
+</div>
+
+<gallery-loader *ngIf="loading" [config]="config.loader"></gallery-loader>

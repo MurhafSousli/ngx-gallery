@@ -1,5 +1,0 @@
-<textarea [disabled]="readOnly" placeholder="Paste config here" [ngModel]="config | json"
-          (ngModelChange)="validateConfig($event)">
-  </textarea>
-<button *ngIf="!readOnly" md-raised-button (click)="closeAndImport()">Import</button>
-<p *ngIf="error">The text you entered cannot be parsed to gallery config</p>
