@@ -44,7 +44,7 @@ export class Gallery {
 
   /** Gallery state */
   state: GalleryState = this.initialState;
-  state$ = new BehaviorSubject<GalleryState>(this.initialState);
+  state$ = new BehaviorSubject<any>(this.initialState);
 
   /** Gallery config */
   config: GalleryConfig = defaultConfig;

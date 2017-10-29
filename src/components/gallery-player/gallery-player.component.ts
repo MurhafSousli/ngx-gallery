@@ -16,8 +16,8 @@ import 'rxjs/add/observable/timer';
 })
 export class GalleryPlayerComponent implements OnInit {
 
+  progress: Observable<boolean>;
   @Input() config: GalleryPlayConfig;
-  progress;
 
   constructor(public gallery: Gallery) {
   }

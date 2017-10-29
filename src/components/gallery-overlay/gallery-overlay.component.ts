@@ -1,5 +1,9 @@
 import {
-  Component, ChangeDetectionStrategy, HostListener, EventEmitter, Output,
+  Component,
+  ChangeDetectionStrategy,
+  HostListener,
+  EventEmitter,
+  Output,
   ViewEncapsulation
 } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
