@@ -3,9 +3,7 @@ import { GalleryConfig } from '../models';
 export const defaultConfig: GalleryConfig = {
   gestures: true,
   style: {
-    background: '#121519',
-    width: '900px',
-    height: '500px',
+    background: '#121519'
   },
   navigation: {
 

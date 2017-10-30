@@ -1,15 +1,10 @@
-<div *ngFor="let item of state.items;let i=index"
+<div *ngIf="state.items[state.currIndex]; let curr"
      class="g-item"
-     [class.g-active]="i === state.currIndex">
+     [class.g-lazyloaded]="!loading">
 
-  <img *ngIf="i === state.currIndex"
-       class="lazyload"
-       data-sizes="auto"
-       [src]="item.thumbnail"
-       [attr.data-src]="item.src"
-       [attr.data-srcset]="item.srcset"
-       [alt]="item?.text"
-       (lazyloaded)="onLazyLoaded($event)">
+  <img [lazyImage]="curr.src"
+       [alt]="curr.text"
+       (loading)="loading = $event">
 
 </div>
 

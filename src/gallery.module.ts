@@ -5,6 +5,7 @@ import { ViewportRuler } from '@angular/cdk/scrolling';
 
 import { Gallery } from './services/gallery.service';
 import { GalleryConfig } from './models';
+import { CONFIG } from './services/gallery.token';
 
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { GalleryNavComponent } from './components/gallery-nav/gallery-nav.component';
@@ -20,7 +21,7 @@ import { GalleryOverlayComponent } from './components/gallery-overlay/gallery-ov
 
 import { GallerizeDirective } from './directives/gallerize.directive';
 import { TapDirective } from './directives/tap.directive';
-import { CONFIG } from './services/gallery.token';
+import { LazyDirective } from './directives/lazy.directive';
 
 
 /** Initialize Gallery with custom config
@@ -35,7 +36,7 @@ export function galleryFactory(config: GalleryConfig, overlay: Overlay, viewport
 @NgModule({
   imports: [
     CommonModule,
-    OverlayModule,
+    OverlayModule
   ],
   declarations: [
     GalleryComponent,
@@ -50,7 +51,8 @@ export function galleryFactory(config: GalleryConfig, overlay: Overlay, viewport
     GallerySliderComponent,
     GalleryOverlayComponent,
     GallerizeDirective,
-    TapDirective
+    TapDirective,
+    LazyDirective
   ],
   exports: [
     GalleryComponent,

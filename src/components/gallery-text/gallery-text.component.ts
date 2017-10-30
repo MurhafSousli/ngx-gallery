@@ -1,10 +1,5 @@
 import {
-  Component,
-  Input,
-  OnInit,
-  ElementRef,
-  Renderer2,
-  ChangeDetectionStrategy,
+  Component, Input, OnInit, ElementRef, Renderer2, ChangeDetectionStrategy,
   ViewEncapsulation
 } from '@angular/core';
 import { GalleryState, GalleryDescConfig } from '../../models';

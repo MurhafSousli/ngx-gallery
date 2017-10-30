@@ -14,10 +14,12 @@
 
   <gallery-text *ngIf="config.description" [state]="state" [config]="config.description"></gallery-text>
 
-  <div *ngIf="isOverlay" class="g-btn-close" (tapClick)="gallery.closeDialog()"></div>
+  <div *ngIf="isOverlay" class="g-btn-close" (tapClick)="gallery.close()"></div>
 
 </div>
 
 <ng-template #empty>
-  <div class="empty">empty</div>
+  <div class="empty">
+    <ng-content></ng-content>
+  </div>
 </ng-template>

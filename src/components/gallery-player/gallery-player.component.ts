@@ -4,6 +4,7 @@ import { GalleryState, GalleryPlayConfig } from '../../models';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/observable/timer';
 
@@ -16,7 +17,7 @@ import 'rxjs/add/observable/timer';
 })
 export class GalleryPlayerComponent implements OnInit {
 
-  progress: Observable<boolean>;
+  progress$: Observable<boolean>;
   @Input() config: GalleryPlayConfig;
 
   constructor(public gallery: Gallery) {
@@ -28,7 +29,7 @@ export class GalleryPlayerComponent implements OnInit {
       this.gallery.play();
     }
 
-    this.progress = this.gallery.state$
+    this.progress$ = this.gallery.state$
       .map((state: GalleryState) => state.currIndex)
       .distinctUntilChanged()
       .mergeMap(() => Observable.timer(0, 100).take(2).map(v => !!v));

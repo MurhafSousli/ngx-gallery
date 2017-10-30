@@ -41,7 +41,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
 
                 /** Add click event to the image */
                 this.renderer.setStyle(img, 'cursor', 'pointer');
-                this.renderer.setProperty(img, 'onclick', () => this.gallery.openDialog(i));
+                this.renderer.setProperty(img, 'onclick', () => this.gallery.open(i));
 
                 /** Create image item for the gallery */
                 images.push({

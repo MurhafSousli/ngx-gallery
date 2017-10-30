@@ -3,6 +3,7 @@ gallery {
   height: 100%;
   margin-bottom: 2em;
   overflow: hidden;
+  z-index: 1;
   * {
     box-sizing: border-box;
   }

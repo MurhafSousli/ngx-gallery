@@ -1,16 +1,7 @@
 import { ComponentRef, Inject, Injectable } from '@angular/core';
 import { ENTER, ESCAPE, RIGHT_ARROW, LEFT_ARROW } from '@angular/cdk/keycodes';
 import { ViewportRuler } from '@angular/cdk/scrolling';
-import {
-  BlockScrollStrategy,
-  CloseScrollStrategy,
-  ConnectedPositionStrategy,
-  GlobalPositionStrategy,
-  NoopScrollStrategy,
-  Overlay,
-  OverlayConfig,
-  OverlayRef
-} from '@angular/cdk/overlay';
+import { BlockScrollStrategy, GlobalPositionStrategy, Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -44,10 +35,11 @@ export class Gallery {
 
   /** Gallery state */
   state: GalleryState = this.initialState;
-  state$ = new BehaviorSubject<any>(this.initialState);
+  state$ = new BehaviorSubject<GalleryState>(this.initialState);
 
   /** Gallery config */
   config: GalleryConfig = defaultConfig;
+  config$ = new BehaviorSubject<GalleryConfig>(this.config);
 
   /** Gallery overlay config */
   overlayConfig: OverlayConfig;
@@ -57,45 +49,13 @@ export class Gallery {
 
   constructor(@Inject(CONFIG) config: GalleryConfig, private overlay: Overlay, private viewportRuler: ViewportRuler) {
 
-    this.setConfig(config);
+    /** Start config worker */
+    this.configWorker().subscribe();
 
     /** Start player worker */
     this.playerWorker().subscribe();
 
-  }
-
-  /** Set gallery config */
-  setConfig(config: GalleryConfig) {
-    // if (config.overlay) {
-    //   /** Set overlay config */
-    //   if (config.overlay.positionStrategy === 'GlobalPositionStrategy') {
-    //     this.config.overlay.positionStrategy = new GlobalPositionStrategy().centerHorizontally();
-    //   } else {
-    //     // ConnectedPositionStrategy
-    //     this.config.overlay.positionStrategy = new GlobalPositionStrategy().centerHorizontally();
-    //   }
-    //
-    //   if (config.overlay.scrollStrategy === 'BlockScrollStrategy') {
-    //     this.config.overlay.scrollStrategy = new BlockScrollStrategy(this.viewportRuler);
-    //   } else if (config.overlay.scrollStrategy === 'NoopScrollStrategy') {
-    //     this.config.overlay.scrollStrategy = new NoopScrollStrategy();
-    //   } else {
-    //     /** TODO: Check if CloseScrollStrategy useful for gallery */
-    //     // CloseScrollStrategy
-    //     // this.config.overlay.scrollStrategy = new CloseScrollStrategy();
-    //   }
-    // }
-
-    this.config = mergeDeep(this.config, config);
-
-    /** set overlay config */
-    this.overlayConfig = {
-      backdropClass: this.config.overlay.backdropClass || 'g-backdrop',
-      panelClass: this.config.overlay.panelClass || 'g-dialog',
-      hasBackdrop: this.config.overlay.hasBackdrop || true,
-      positionStrategy: new GlobalPositionStrategy().centerHorizontally(),
-      scrollStrategy: new BlockScrollStrategy(this.viewportRuler)
-    };
+    this.setConfig(config);
   }
 
   /** Load items and reset the state */
@@ -154,6 +114,43 @@ export class Gallery {
     this.state$.next(this.state);
   }
 
+
+  /** Set gallery config
+   * @param {GalleryConfig} config
+   **/
+  setConfig(config: GalleryConfig) {
+    // if (config.overlay) {
+    //   /** Set overlay config */
+    //   if (config.overlay.positionStrategy === 'GlobalPositionStrategy') {
+    //     this.config.overlay.positionStrategy = new GlobalPositionStrategy().centerHorizontally();
+    //   } else {
+    //     // ConnectedPositionStrategy
+    //     this.config.overlay.positionStrategy = new GlobalPositionStrategy().centerHorizontally();
+    //   }
+    //
+    //   if (config.overlay.scrollStrategy === 'BlockScrollStrategy') {
+    //     this.config.overlay.scrollStrategy = new BlockScrollStrategy(this.viewportRuler);
+    //   } else if (config.overlay.scrollStrategy === 'NoopScrollStrategy') {
+    //     this.config.overlay.scrollStrategy = new NoopScrollStrategy();
+    //   } else {
+    //     /** TODO: Check if CloseScrollStrategy useful for gallery */
+    //     // CloseScrollStrategy
+    //     // this.config.overlay.scrollStrategy = new CloseScrollStrategy();
+    //   }
+    // }
+
+    this.config = mergeDeep(this.config, config);
+
+    /** set overlay config */
+    this.overlayConfig = {
+      backdropClass: this.config.overlay.backdropClass,
+      panelClass: this.config.overlay.panelClass,
+      hasBackdrop: this.config.overlay.hasBackdrop || true,
+      positionStrategy: new GlobalPositionStrategy().centerHorizontally(),
+      scrollStrategy: new BlockScrollStrategy(this.viewportRuler)
+    };
+  }
+
   /** Start slide show
    * @param {number} interval Time in ms before setting the next item
    **/
@@ -170,32 +167,32 @@ export class Gallery {
     });
   }
 
-  /** Open gallery dialog
+  /** Open gallery in an overlay
    * @param {number} i Image index
    **/
-  openDialog(i = 0) {
+  open(i = 0) {
     this.set(i);
     this.overlayRef = this.overlay.create(this.overlayConfig);
     const compRef: ComponentRef<GalleryOverlayComponent> = this.overlayRef.attach(this.galleryPortal);
 
-    /** Close dialog on backdropClick */
-    this.overlayRef.backdropClick().subscribe(() => this.closeDialog());
+    /** Close overlay on backdropClick */
+    this.overlayRef.backdropClick().subscribe(() => this.close());
 
-    /** Activate keyboard shortcuts on dialog */
+    /** Activate keyboard listener */
     compRef.instance.keyDown.subscribe((ev) => this.handleKeydown(ev));
   }
 
-  /** Close gallery dialog */
-  closeDialog() {
+  /** Close gallery overlay */
+  close() {
     /** Stop player if started */
     this.stop();
-    /** If dialog is already opened */
+    /** If overlay is already opened */
     if (this.overlayRef.hasAttached()) {
       this.overlayRef.dispose();
     }
   }
 
-  /** Handles global key presses while there are open dialogs.
+  /** Handles global key presses while gallery overlay is opened
    * @param {KeyboardEvent} event
    **/
   handleKeydown(event: KeyboardEvent) {
@@ -208,18 +205,23 @@ export class Gallery {
         this.next();
         break;
       case ESCAPE:
-        this.closeDialog();
+        this.close();
         break;
       default:
         return;
     }
   }
 
-  /** Activate player according to gallery state */
+  /** Start player according to the state */
   playerWorker() {
     return this.state$.filter(state => state.play)
       .switchMap(() => Observable.interval(this.config.player.interval)
         .takeWhile(() => this.state.play)
         .do(() => this.next()));
+  }
+
+  /** Set config async */
+  configWorker() {
+    return this.config$.do((config: GalleryConfig) => this.setConfig(config));
   }
 }
