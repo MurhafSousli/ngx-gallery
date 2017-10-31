@@ -50,7 +50,6 @@ export class LazyDirective implements OnDestroy {
 
           /** Image load error */
           img.onerror = err => {
-            console.error('[GalleryLazyDirective]:', err);
             this.loading.emit(false);
           };
         })

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Title }     from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
+import { Gallery } from 'ng-gallery';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,8 @@ import { Title }     from '@angular/platform-browser';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private titleService:Title) { }
+  constructor(private titleService: Title, public gallery: Gallery) {
+  }
 
   ngOnInit() {
     this.titleService.setTitle('Home | ng-gallery');

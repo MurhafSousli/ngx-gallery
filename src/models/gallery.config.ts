@@ -7,7 +7,7 @@ export interface GalleryConfig {
   navigation?: GalleryNavConfig;
   bullets?: GalleryBulletConfig;
   player?: GalleryPlayConfig;
-  overlay?: GalleryOverlayConfig;
+  overlay?: GalleryLightboxConfig;
 }
 
 export interface GalleryBulletConfig {
@@ -52,10 +52,10 @@ export interface GalleryThumbConfig {
   space?: number;
 }
 
-export interface GalleryOverlayConfig {
-  backdropClass: string;
-  panelClass: string;
-  hasBackdrop: boolean;
-  positionStrategy: any;
-  scrollStrategy: any;
+export interface GalleryLightboxConfig {
+  backdropClass?: string;
+  panelClass?: string;
+  hasBackdrop?: boolean;
+  positionStrategy?: any;
+  scrollStrategy?: any;
 }

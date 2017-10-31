@@ -9,9 +9,9 @@ import {
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
-  selector: 'gallery-overlay',
+  selector: 'gallery-lightbox',
   template: `<gallery [@slideGalleryIn] [isOverlay]="true"></gallery>`,
-  styleUrls: ['./gallery-overlay.component.scss'],
+  styleUrls: ['./gallery-lightbox.component.scss'],
   animations: [
     trigger('slideGalleryIn', [
       state('void', style({transform: 'translateY(25%) scale(0.9)', opacity: 0})),
@@ -23,7 +23,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class GalleryOverlayComponent {
+export class GalleryLightboxComponent {
 
   @Output() keyDown = new EventEmitter<KeyboardEvent>();
 

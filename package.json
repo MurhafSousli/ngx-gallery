@@ -1,7 +1,7 @@
 {
   "name": "ng-gallery",
-  "description": "Angular library built with ❤ using ngx-library yeoman generator.",
-  "version": "1.0.0",
+  "description": "Angular image gallery simplifies the process of creating beautiful image gallery for the web and mobile devices.",
+  "version": "1.0.0-beta.3",
   "filename": "./src/ng-gallery.js",
   "homepage": "http://github.com/murhafsousli/ng-gallery",
   "author": {
@@ -14,9 +14,16 @@
   },
   "license": "MIT",
   "keywords": [
-    "ng",
     "angular",
-    "library"
+    "gallery",
+    "images",
+    "lightbox",
+    "modal",
+    "slider",
+    "overlay",
+    "slideshow",
+    "carousel",
+    "lazy"
   ],
   "bugs": {
     "url": "http://github.com/murhafsousli/ng-gallery/issues"
@@ -31,18 +38,17 @@
     "check-travis": " travis-status --repo=murhafsousli/ng-gallery --branch=master --fail-pending || echo 'Not yet passing'"
   },
   "dependencies": {
-    "@angular/animations": "4.0.0",
-    "@angular/cdk": "^2.0.0-beta.12",
-    "@angular/common": "4.0.0",
-    "@angular/core": "4.0.0",
-    "lazysizes": "^4.0.1"
+    "@angular/animations": "4.4.4",
+    "@angular/cdk": "2.0.0-beta.12",
+    "@angular/common": "4.4.4",
+    "@angular/core": "4.4.4"
   },
   "devDependencies": {
-    "@angular/compiler": "4.0.0",
-    "@angular/compiler-cli": "4.0.0",
-    "@angular/platform-browser": "4.0.0",
-    "@angular/platform-browser-dynamic": "4.0.0",
-    "@angular/platform-server": "4.0.0",
+    "@angular/compiler": "4.4.4",
+    "@angular/compiler-cli": "4.4.4",
+    "@angular/platform-browser": "4.4.4",
+    "@angular/platform-browser-dynamic": "4.4.4",
+    "@angular/platform-server": "4.4.4",
     "@types/jasmine": "2.5.41",
     "@types/node": "8.0.44",
     "angular-cli-ghpages": "0.5.1",

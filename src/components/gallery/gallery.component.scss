@@ -2,9 +2,10 @@ gallery {
   display: flex;
   height: 100%;
   margin-bottom: 2em;
-  overflow: hidden;
   z-index: 1;
+  overflow: hidden;
   * {
     box-sizing: border-box;
+    overflow: hidden;
   }
 }

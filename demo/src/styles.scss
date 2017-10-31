@@ -6,6 +6,7 @@
 @import "~include-media/dist/include-media";
 // 'include-media' plugging into Bootstrap 4's Grid Breakpoints map
 
+
 $breakpoints: $grid-breakpoints;
 @include media("<md") {
     .jumbotron {

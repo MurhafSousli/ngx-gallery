@@ -1,5 +1,5 @@
 /** This directive enable tap if HammerJS is loaded, otherwise it falls back to normal click event */
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, OnInit, Output, Renderer2 } from '@angular/core';
 import { Gallery } from '../services/gallery.service';
 
 declare const Hammer: any;

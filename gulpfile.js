@@ -330,37 +330,34 @@ gulp.task('rollup-bundle', (cb) => {
     const es5Input = path.join(es5OutputFolder, `${config.unscopedLibraryName}.js`);
     const es2015Input = path.join(es2015OutputFolder, `${config.unscopedLibraryName}.js`);
     const globals = {
-      // Angular dependencies 
+      // Angular dependencies
       '@angular/core': 'ng.core',
       '@angular/common': 'ng.common',
       '@angular/animations': 'ng.animations',
 
       // Rxjs dependencies
       'rxjs/Subject': 'Rx',
+      'rxjs/BehaviorSubject': 'Rx',
       'rxjs/Observable': 'Rx',
+      'rxjs/add/observable/from': 'Rx.Observable',
       'rxjs/add/observable/fromEvent': 'Rx.Observable',
-      'rxjs/add/observable/forkJoin': 'Rx.Observable',
       'rxjs/add/observable/of': 'Rx.Observable',
-      'rxjs/add/observable/merge': 'Rx.Observable',
-      'rxjs/add/observable/throw': 'Rx.Observable',
-      'rxjs/add/operator/auditTime': 'Rx.Observable.prototype',
-      'rxjs/add/operator/toPromise': 'Rx.Observable.prototype',
+      'rxjs/add/observable/interval': 'Rx.Observable',
+      'rxjs/add/observable/timer': 'Rx.Observable',
+      'rxjs/add/operator/mergeMap': 'Rx.Observable',
       'rxjs/add/operator/map': 'Rx.Observable.prototype',
+      'rxjs/add/operator/take': 'Rx.Observable.prototype',
+      'rxjs/add/operator/takeWhile': 'Rx.Observable.prototype',
       'rxjs/add/operator/filter': 'Rx.Observable.prototype',
       'rxjs/add/operator/do': 'Rx.Observable.prototype',
-      'rxjs/add/operator/share': 'Rx.Observable.prototype',
       'rxjs/add/operator/finally': 'Rx.Observable.prototype',
-      'rxjs/add/operator/catch': 'Rx.Observable.prototype',
-      'rxjs/add/observable/empty': 'Rx.Observable.prototype',
-      'rxjs/add/operator/first': 'Rx.Observable.prototype',
-      'rxjs/add/operator/startWith': 'Rx.Observable.prototype',
       'rxjs/add/operator/switchMap': 'Rx.Observable.prototype',
+      'rxjs/add/operator/distinctUntilChanged ': 'Rx.Observable.prototype',
 
       // ATTENTION:
       // Add any other dependency or peer dependency of your library here
       // This is required for UMD bundle users.
-      '@angular/cdk': '@angular/cdk',
-      'lazysizes': 'lazysizes'
+      '@angular/cdk': '@angular/cdk'
     };
     const rollupBaseConfig = {
       name: _.camelCase(config.libraryName),

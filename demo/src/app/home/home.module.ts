@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {  LibModule  } from 'ng-gallery';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 
+import { GalleryModule } from 'ng-gallery';
+
 @NgModule({
-    imports: [
-        CommonModule,
-        LibModule.forRoot(),
-        HomeRoutingModule,
-    ],
-    declarations: [HomeComponent],
+  imports: [
+    CommonModule,
+    HomeRoutingModule,
+    GalleryModule
+  ],
+  declarations: [HomeComponent],
 })
-export class HomeModule { }
+export class HomeModule {
+}

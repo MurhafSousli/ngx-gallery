@@ -2,7 +2,7 @@
 
 ## 1.0.0 (beta)
 
- - 
+ - Will be added soon
 
 ## 0.7.1
 

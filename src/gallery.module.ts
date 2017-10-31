@@ -17,7 +17,7 @@ import { GalleryBulletsComponent } from './components/gallery-bullets/gallery-bu
 import { GalleryPlayerComponent } from './components/gallery-player/gallery-player.component';
 import { GalleryMainComponent } from './components/gallery-main/gallery-main.component';
 import { GallerySliderComponent } from './components/gallery-slider/gallery-slider.component';
-import { GalleryOverlayComponent } from './components/gallery-overlay/gallery-overlay.component';
+import { GalleryLightboxComponent } from './components/gallery-lightbox/gallery-lightbox.component';
 
 import { GallerizeDirective } from './directives/gallerize.directive';
 import { TapDirective } from './directives/tap.directive';
@@ -49,7 +49,7 @@ export function galleryFactory(config: GalleryConfig, overlay: Overlay, viewport
     GalleryPlayerComponent,
     GalleryMainComponent,
     GallerySliderComponent,
-    GalleryOverlayComponent,
+    GalleryLightboxComponent,
     GallerizeDirective,
     TapDirective,
     LazyDirective
@@ -59,7 +59,7 @@ export function galleryFactory(config: GalleryConfig, overlay: Overlay, viewport
     GallerizeDirective
   ],
   entryComponents: [
-    GalleryOverlayComponent
+    GalleryLightboxComponent
   ]
 })
 export class GalleryModule {

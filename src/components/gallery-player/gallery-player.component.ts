@@ -31,7 +31,6 @@ export class GalleryPlayerComponent implements OnInit {
 
     this.progress$ = this.gallery.state$
       .map((state: GalleryState) => state.currIndex)
-      .distinctUntilChanged()
       .mergeMap(() => Observable.timer(0, 100).take(2).map(v => !!v));
 
   }

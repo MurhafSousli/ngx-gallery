@@ -14,7 +14,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
 
 import { CONFIG } from './gallery.token';
-import { GalleryOverlayComponent } from '../components/gallery-overlay/gallery-overlay.component';
+import { GalleryLightboxComponent } from '../components/gallery-lightbox/gallery-lightbox.component';
 import { GalleryState, GalleryConfig, GalleryItem } from '../models';
 import { defaultConfig } from './gallery.default';
 import { mergeDeep } from '../utils/merge-deep';
@@ -23,7 +23,7 @@ import { mergeDeep } from '../utils/merge-deep';
 export class Gallery {
 
   /** Gallery portal for dialog usage */
-  private galleryPortal = new ComponentPortal(GalleryOverlayComponent);
+  private galleryPortal = new ComponentPortal(GalleryLightboxComponent);
 
   /** Initial state */
   private initialState: GalleryState = {
@@ -145,7 +145,7 @@ export class Gallery {
     this.overlayConfig = {
       backdropClass: this.config.overlay.backdropClass,
       panelClass: this.config.overlay.panelClass,
-      hasBackdrop: this.config.overlay.hasBackdrop || true,
+      hasBackdrop: this.config.overlay.hasBackdrop,
       positionStrategy: new GlobalPositionStrategy().centerHorizontally(),
       scrollStrategy: new BlockScrollStrategy(this.viewportRuler)
     };
@@ -173,7 +173,7 @@ export class Gallery {
   open(i = 0) {
     this.set(i);
     this.overlayRef = this.overlay.create(this.overlayConfig);
-    const compRef: ComponentRef<GalleryOverlayComponent> = this.overlayRef.attach(this.galleryPortal);
+    const compRef: ComponentRef<GalleryLightboxComponent> = this.overlayRef.attach(this.galleryPortal);
 
     /** Close overlay on backdropClick */
     this.overlayRef.backdropClick().subscribe(() => this.close());
