@@ -23,7 +23,7 @@ import { mergeDeep } from '../utils/merge-deep';
 export class Gallery {
 
   /** Gallery portal for dialog usage */
-  private galleryPortal = new ComponentPortal(GalleryLightboxComponent);
+  galleryPortal = new ComponentPortal(GalleryLightboxComponent);
 
   /** Initial state */
   private initialState: GalleryState = {

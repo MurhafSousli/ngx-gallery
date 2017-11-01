@@ -334,6 +334,7 @@ gulp.task('rollup-bundle', (cb) => {
       '@angular/core': 'ng.core',
       '@angular/common': 'ng.common',
       '@angular/animations': 'ng.animations',
+      '@angular/cdk': 'ng.cdk',
 
       // Rxjs dependencies
       'rxjs/Subject': 'Rx',
@@ -352,12 +353,7 @@ gulp.task('rollup-bundle', (cb) => {
       'rxjs/add/operator/do': 'Rx.Observable.prototype',
       'rxjs/add/operator/finally': 'Rx.Observable.prototype',
       'rxjs/add/operator/switchMap': 'Rx.Observable.prototype',
-      'rxjs/add/operator/distinctUntilChanged ': 'Rx.Observable.prototype',
-
-      // ATTENTION:
-      // Add any other dependency or peer dependency of your library here
-      // This is required for UMD bundle users.
-      '@angular/cdk': '@angular/cdk'
+      'rxjs/add/operator/distinctUntilChanged ': 'Rx.Observable.prototype'
     };
     const rollupBaseConfig = {
       name: _.camelCase(config.libraryName),

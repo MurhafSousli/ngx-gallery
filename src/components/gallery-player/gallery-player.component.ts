@@ -29,17 +29,17 @@ export class GalleryPlayerComponent implements OnInit {
       this.gallery.play();
     }
 
-    this.progress$ = this.gallery.state$
-      .map((state: GalleryState) => state.currIndex)
-      .mergeMap(() => Observable.timer(0, 100).take(2).map(v => !!v));
+    // this.progress$ = this.gallery.state$
+    //   .map((state: GalleryState) => state.currIndex)
+    //   .mergeMap(() => Observable.timer(0, 100).take(2).map(v => !!v));
 
   }
 
-  getClasses(e) {
-    return {
-      'g-progress-initial': !e,
-      'g-progress-done': e
-    };
-  }
+  // getClasses(e) {
+  //   return {
+  //     'g-progress-initial': !e,
+  //     'g-progress-done': e
+  //   };
+  // }
 
 }

@@ -8,7 +8,10 @@ export {
   GalleryLoaderConfig,
   GalleryPlayConfig,
   GalleryBulletConfig,
-  GalleryState,
-  GalleryItem,
   GalleryLightboxConfig
-} from './models';
+} from './models/gallery.config';
+
+export {
+  GalleryState,
+  GalleryItem
+} from './models/gallery.models';

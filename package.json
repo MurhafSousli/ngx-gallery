@@ -1,7 +1,7 @@
 {
   "name": "ng-gallery",
   "description": "Angular image gallery simplifies the process of creating beautiful image gallery for the web and mobile devices.",
-  "version": "1.0.0-beta.8",
+  "version": "1.0.0",
   "filename": "./src/ng-gallery.js",
   "homepage": "http://github.com/murhafsousli/ng-gallery",
   "author": {
@@ -12,9 +12,10 @@
     "type": "git",
     "url": "git://github.com/murhafsousli/ng-gallery.git"
   },
-  "license": "MIT",
+  "license": "GPL-3.0",
   "keywords": [
     "angular",
+    "ionic",
     "gallery",
     "images",
     "lightbox",
@@ -23,7 +24,7 @@
     "overlay",
     "slideshow",
     "carousel",
-    "lazy"
+    "lazyload"
   ],
   "bugs": {
     "url": "http://github.com/murhafsousli/ng-gallery/issues"

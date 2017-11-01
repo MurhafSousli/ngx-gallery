@@ -41,4 +41,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Documentation Demo
 /demo-docs/
