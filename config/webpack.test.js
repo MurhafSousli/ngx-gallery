@@ -1,6 +1,7 @@
 const helpers = require('./helpers');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
-const { CheckerPlugin } = require('awesome-typescript-loader');
+const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin');
+const {CheckerPlugin} = require('awesome-typescript-loader');
 
 const getConfig = (hasCoverage, isTddMode) => {
 
@@ -22,23 +23,17 @@ const getConfig = (hasCoverage, isTddMode) => {
 
     let extraPlugins = [];
     if (isTddMode) {
-        extraPlugins.push(new CheckerPlugin());//to speed up compilation during TDD
+        extraPlugins.push(new CheckerPlugin());// to speed up compilation during TDD
     }
 
     return {
-
         devtool: 'inline-source-map',
-
         resolve: {
             extensions: ['.ts', '.js'],
             modules: [helpers.root('src'), 'node_modules']
-
         },
-
         module: {
-
             rules: [
-
                 {
                     enforce: 'pre',
                     test: /\.js$/,
@@ -49,13 +44,13 @@ const getConfig = (hasCoverage, isTddMode) => {
                         helpers.root('node_modules/@angular')
                     ]
                 },
-
                 {
                     test: /\.ts$/,
                     use: [
                         {
                             loader: 'awesome-typescript-loader',
-                            query: {
+                            options: {
+                                configFileName: helpers.root('src','tsconfig.spec.json'),
                                 // use inline sourcemaps for "karma-remap-coverage" reporter (if coverage is activated)
                                 sourceMap: !hasCoverage,
                                 inlineSourceMap: hasCoverage,
@@ -64,7 +59,6 @@ const getConfig = (hasCoverage, isTddMode) => {
                                     // Remove TypeScript helpers to be injected
                                     // below by DefinePlugin
                                     removeComments: true
-
                                 }
                             },
                         },
@@ -72,16 +66,14 @@ const getConfig = (hasCoverage, isTddMode) => {
                     ],
                     exclude: [/\.e2e\.ts$/]
                 },
-
-
                 {
                     test: /\.css$/,
                     loader: ['to-string-loader', 'css-loader']
                 },
                 {
-                    test: /\.(scss|sass)$/,
-                    use: ['to-string-loader', 'css-loader', 'sass-loader'],
-                    exclude: [helpers.root('src', 'scss')]
+                  test: /\.(scss|sass)$/,
+                  use: ['to-string-loader', 'css-loader', 'sass-loader'],
+                  exclude: [helpers.root('src', 'scss')]
                 },
                 {
                     test: /\.html$/,
@@ -97,13 +89,19 @@ const getConfig = (hasCoverage, isTddMode) => {
                 options: {
                     // legacy options go here
                 }
-            })
+            }),
+            // Fixes linker warnings (see https://github.com/angular/angular/issues/11580)
+            new ContextReplacementPlugin(
+              // The (\\|\/) piece accounts for path separators in *nix and Windows
+              /angular(\\|\/)core(\\|\/)@angular/,
+              helpers.root('src'), // location of your src
+              {} // a map of your routes
+            ),
         ].concat(extraPlugins),
 
         performance: {
             hints: false
         },
-
         node: {
             global: true,
             process: false,

@@ -1,227 +1,42 @@
-@import '~prismjs/themes/prism';
-@import '~animate.css';
-@import '~font-awesome/css/font-awesome.css';
-@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,700');
-@import '~@angular/material/theming';
-@import 'assets/mixin.scss';
+/* You can add global styles to this file, and also import other style files */
 
-$g-options-width: 300px;
+@import 'variables';
+@import '~bootstrap/scss/bootstrap';
+@import '~font-awesome/scss/font-awesome';
+@import "~include-media/dist/include-media";
+// 'include-media' plugging into Bootstrap 4's Grid Breakpoints map
 
-* {
-  box-sizing: border-box;
-}
 
-html, body {
-  min-height: 100%;
-}
+$breakpoints: $grid-breakpoints;
+@include media("<md") {
+    .jumbotron {
+        //margin-top: 3.4rem;
+        margin-bottom: 0rem;
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.4rem;
+        }
+        p {
+            font-size: 1.2rem;
+        }
 
-body {
-  font-family: 'Roboto Slab', serif;
-  margin: 0;
-  color: #303030;
-}
+        .btn{
+            margin: .5rem;
+        }
 
-p {
-  font-size: 15px;
-}
-
-.container {
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-md-toolbar {
-  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12);
-
-  .mat-button {
-    text-transform: uppercase;
-  }
-}
-
-md-toolbar.mat-toolbar {
-  min-height: 50px;
-}
-
-md-toolbar-row.mat-toolbar-row {
-  height: 50px;
-}
-
-.toolbar-buttons {
-  justify-content: space-around;
-  margin-bottom: 0.5em;
-  button {
-    width: 70px;
-  }
-}
-
-.btn-icon {
-  display: flex;
-  align-items: center;
-  i {
-    font-size: 1.7em;
-    margin-right: 0.4em;
-  }
-}
-
-code[highlight] {
-  font-size: .8em;
-}
-
-highlight, code[highlight] {
-  border-radius: .2em;
-  background-color: rgba(lightgray, .2) !important;
-}
-
-.content {
-  margin: 3em 0;
-  display: block;
-  width: 100%;
-  section {
-    margin-bottom: 3em;
-  }
-
-  .config-scheme {
-    p {
-      padding: 1em;
-      background-color: rgba(lightgray, 0.2);
     }
-    p, li {
-      display: flex;
-      align-items: center;
-    }
-    li {
-      padding: 1em;
-    }
-    ul {
-      list-style: circle;
-      padding-left: 1em;
-      background-color: rgba(lavenderblush, 0.8);
-    }
-    span {
-      font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-      font-size: 0.8em;
-      //color: rgba(black, 0.6);
-      text-align: right;
-      flex: 1;
-    }
-  }
-
 }
 
-.g-modal {
-  right: $g-options-width !important;
-  @include mobile() {
-    right: 0 !important;
-  }
-}
-
-.g-options-padding {
-  padding-right: $g-options-width;
-  @include mobile() {
-    padding-right: 0;
-  }
-}
-
-gallery-options.g-options {
-  width: $g-options-width;
-
-  @include mobile() {
-    display: none;
-  }
-}
-
-auto-detect-example {
-  img {
-    max-height: 130px;
-  }
-}
-
-h1 {
-  margin-top: 2em;
-}
-
-.gallery-options {
-  ul {
-    padding-left: 2em;
-    list-style: none;
-  }
-  md-select {
-    margin: 1em 0;
-  }
-}
-
-gallery-options {
-
-  background-color: #e8e8e8;
-  > md-toolbar {
-    z-index: 1000;
-  }
-}
-
-.colorful {
-
-  color: #4e005f;
-
-  background: linear-gradient(0deg, #4e005f, #cf15e3, #e35f15, #100cb0);
-  background-size: 800% 800%;
-
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
-
-  animation: ColorTransition 44s ease infinite;
-
-  @-webkit-keyframes ColorTransition {
-    0% {
-      background-position: 0% 90%
+@include media(">=md") {
+    .jumbotron {
+       // margin-top: 3.4rem;
+        margin-bottom: 0rem;
+        h1 {
+            font-size: 3.6rem;
+            margin-bottom: 1.8rem;
+        }
+        p {
+            font-size: 1.4rem;
+        }
     }
-    50% {
-      background-position: 100% 11%
-    }
-    100% {
-      background-position: 0% 90%
-    }
-  }
-  @-moz-keyframes ColorTransition {
-    0% {
-      background-position: 0% 90%
-    }
-    50% {
-      background-position: 100% 11%
-    }
-    100% {
-      background-position: 0% 90%
-    }
-  }
-  @keyframes ColorTransition {
-    0% {
-      background-position: 0% 90%
-    }
-    50% {
-      background-position: 100% 11%
-    }
-    100% {
-      background-position: 0% 90%
-    }
-  }
-}
-
-// For Gallery Options
-// .option-padding, ul {
-//   padding: 2em 1em;
-// }
-
-ul {
-  padding: 2em 1em;
-  margin: 0;
-  transition: all ease 0.3s;
-  overflow: hidden;
-}
-
-.section-closed {
-  height: 0;
-  padding: 0;
-}
-
-a {
-  color: #2196f3;
 }

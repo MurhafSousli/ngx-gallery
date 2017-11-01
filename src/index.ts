@@ -1,10 +1,6 @@
-import {GalleryModule} from './gallery.module';
-import {GalleryService} from './service/gallery.service';
-import {
-  GalleryState,
-  GalleryImage,
-} from './service/gallery.state';
-import {
+export { GalleryModule } from './gallery.module';
+export { Gallery } from './services/gallery.service';
+export {
   GalleryConfig,
   GalleryDescConfig,
   GalleryThumbConfig,
@@ -12,18 +8,10 @@ import {
   GalleryLoaderConfig,
   GalleryPlayConfig,
   GalleryBulletConfig,
-} from './config';
+  GalleryLightboxConfig
+} from './models/gallery.config';
 
 export {
-  GalleryModule,
-  GalleryService,
   GalleryState,
-  GalleryImage,
-  GalleryConfig,
-  GalleryDescConfig,
-  GalleryThumbConfig,
-  GalleryNavConfig,
-  GalleryLoaderConfig,
-  GalleryPlayConfig,
-  GalleryBulletConfig,
-};
+  GalleryItem
+} from './models/gallery.models';

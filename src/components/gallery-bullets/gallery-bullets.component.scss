@@ -1,0 +1,28 @@
+.g-bullets-container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.g-bullet {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  z-index: 20;
+}
+
+.g-bullet-inner {
+  margin: 1em;
+  height: 4px;
+  width: 4px;
+  background-color: rgba(#fff, 0.5);
+  border-radius: 2px;
+  box-shadow: 0 0 6px rgba(#000, 0.8);
+  transition: all ease 0.2s;
+}
+
+.g-bullet-curr .g-bullet-inner {
+  transform: scale(1.5);
+  background-color: white;
+}

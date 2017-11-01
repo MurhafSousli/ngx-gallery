@@ -1,0 +1,11 @@
+gallery {
+  display: flex;
+  height: 100%;
+  margin-bottom: 2em;
+  z-index: 1;
+  overflow: hidden;
+  * {
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+}

@@ -1,9 +1,0 @@
-@import '~@angular/material/theming';
-
-$demo-primary: mat-palette($mat-orange);
-$demo-accent: mat-palette($mat-blue-grey, 500, 400, 600);
-$demo-warn: mat-palette($mat-red);
-
-$demo-light-theme: mat-light-theme($demo-primary, $demo-accent, $demo-warn);
-
-$demo-gray-color: #efefef;

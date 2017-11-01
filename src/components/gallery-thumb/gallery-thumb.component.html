@@ -1,0 +1,20 @@
+<div class="g-thumb-container"
+     [style.height.px]="config.height"
+     [style.margin.px]="config.space">
+
+  <div class="g-thumbs" [style.transform]="translateThumbs()">
+
+    <div class="g-thumb" *ngFor="let image of state.items; let i = index"
+         [class.g-thumb-current]="i === state.currIndex"
+         [style.width.px]="gallery.config.thumbnails.width"
+         [style.height.px]="gallery.config.thumbnails.height">
+
+      <div class="g-thumb-image"
+           [style.backgroundImage]="getThumbImage(i)"
+           (tapClick)="gallery.set(i)">
+      </div>
+    </div>
+
+  </div>
+
+</div>

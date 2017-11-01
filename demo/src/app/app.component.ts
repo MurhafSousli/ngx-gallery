@@ -1,42 +1,48 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
-import {GalleryService} from './gallery';
-// import { GalleryService } from 'ng-gallery';
-import {SharedService} from './shared/service/shared.service';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
+import 'rxjs/add/operator/filter';
+import { Gallery } from 'ng-gallery';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
 
-  homePage;
-  gOptions;
+  constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: Object, public gallery: Gallery) {
 
-  constructor(public router: Router, public gallery: GalleryService, public shared: SharedService) {
+    this.router.events.filter(event => event instanceof NavigationEnd).subscribe(event => {
+      if (isPlatformBrowser(this.platformId)) {
+        window.scroll(0, 0);
+      }
+    });
   }
 
   ngOnInit() {
-    /** When router changes */
-    this.router.events
-      .filter(event => event instanceof NavigationEnd)
-      .subscribe((route: NavigationEnd) => {
-        this.homePage = (route.url === '/');
-        this.gOptions = !(route.url === '/' || route.url === '/getting-started');
-      });
-  }
 
-  /** Currently we update the gallery with the new config by changing the route to ['/reload']
-   * and redirect back to the previous route */
-
-  reload(e) {
-    if (this.router.url !== '/reload') {
-      // save current url for reload
-      this.shared.tempUrl = this.router.url;
-      this.router.navigate(['/reload']);
-    }
-    this.gallery.config = e;
+    this.gallery.load([
+      {
+        src: 'assets/clouds.jpg',
+        thumbnail: 'assets/clouds.jpg',
+        text: 'Coulds'
+      },
+      {
+        src: 'assets/img8.jpg',
+        thumbnail: 'assets/img8.jpg',
+        text: 'See Sunset View'
+      },
+      {
+        src: 'assets/img7.jpg',
+        thumbnail: 'assets/img7.jpg',
+        text: 'Spring'
+      },
+      {
+        src: 'assets/img12.jpg',
+        thumbnail: 'assets/img12.jpg',
+        text: 'Spring'
+      }
+    ]);
   }
 }

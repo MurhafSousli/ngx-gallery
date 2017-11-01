@@ -1,36 +1,19 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
-    "lib": [
-      "es6",
-      "dom"
-    ],
+    "module": "es2015",
     "moduleResolution": "node",
-    "declaration": true,
-    "emitDecoratorMetadata": true,
-    "noImplicitAny": false,
-    "experimentalDecorators": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
     "sourceMap": true,
-    "noEmitOnError": false,
-    "typeRoots": [
-      "node_modules/@types"
+    "inlineSources": true,
+    "declaration": true,
+    "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "skipLibCheck": true,
+    "stripInternal": true,
+    "lib": [
+      "es2015",
+      "dom"
     ]
-  },
-  "files": [
-    "./src/index.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "demo",
-    "coverage",
-    "config",
-    "src/**/*.spec.ts"
-  ],
-  "awesomeTypescriptLoaderOptions": {
-    "useWebpackText": true
   }
 }

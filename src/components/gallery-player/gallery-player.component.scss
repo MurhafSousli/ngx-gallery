@@ -1,0 +1,31 @@
+gallery-player {
+  position: absolute;
+  z-index: 70;
+  left: 0;
+  right: 0;
+  overflow: unset;
+}
+
+.g-progress-bar {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.g-progress {
+  width: 100%;
+  height: 3px;
+  transform: translate3d(-100%, 0, 0);
+  z-index: 60;
+}
+
+.g-progress-initial {
+  transition-duration: 0ms !important;
+}
+
+.g-progress-done {
+  transition-property: transform;
+  transition-timing-function: linear;
+  background-color: #BCC8CE;
+  transform: translate3d(0, 0, 0);
+}
