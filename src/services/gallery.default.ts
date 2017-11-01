@@ -30,7 +30,7 @@ export const defaultConfig: GalleryConfig = {
     position: 'top',
     space: 30
   },
-  overlay: {
+  lightbox: {
     backdropClass: 'g-backdrop',
     panelClass: 'g-overlay',
     hasBackdrop: true,

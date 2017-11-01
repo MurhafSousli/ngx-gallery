@@ -25,6 +25,10 @@ import { GalleryModule } from 'ng-gallery';
       style: {
         height: '500px',
         width: '700px'
+      },
+      player: {
+        progress: true,
+        autoplay: true
       }
     })
   ],

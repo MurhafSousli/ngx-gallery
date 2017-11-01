@@ -7,7 +7,7 @@ export interface GalleryConfig {
   navigation?: GalleryNavConfig;
   bullets?: GalleryBulletConfig;
   player?: GalleryPlayConfig;
-  overlay?: GalleryLightboxConfig;
+  lightbox?: GalleryLightboxConfig;
 }
 
 export interface GalleryBulletConfig {

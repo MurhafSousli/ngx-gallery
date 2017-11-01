@@ -1,8 +1,16 @@
 # Changelog
 
-## 1.0.0 (beta)
+## 1.0.0
 
- - Will be added soon
+ - fix(keyboard listener in lightbox) closes [#24](https://github.com/MurhafSousli/ng-gallery/issues/24), [#33](https://github.com/MurhafSousli/ng-gallery/issues/33).
+ - refactor(Gallerize directive) Use MutationObserver instead of DOMSubtreeModified, closes [#26](https://github.com/MurhafSousli/ng-gallery/issues/26).
+ - fix(Universal support), closes [#9](https://github.com/MurhafSousli/ng-gallery/issues/9).
+ - fix Angular 5 warning, closes [#21](https://github.com/MurhafSousli/ng-gallery/issues/21).
+ - Improve gallery lightbox, closes [#20](https://github.com/MurhafSousli/ng-gallery/issues/20).
+ - Improve gallery lightbox slide animation, closes [#8](https://github.com/MurhafSousli/ng-gallery/issues/8).
+ - Use Angular CDK for the gallery lightbox.
+ - refactor(GalleryConfig)
+ - Remove image transition animation option because it was not implemented properly.
 
 ## 0.7.1
 

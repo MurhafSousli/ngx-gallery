@@ -8,7 +8,6 @@ export interface GalleryState {
 
 export interface GalleryItem {
   src?: string;
-  srcset?: any;
   thumbnail?: string;
   text?: string;
 }

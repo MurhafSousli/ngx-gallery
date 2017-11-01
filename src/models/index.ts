@@ -6,6 +6,7 @@ export {
   GalleryLoaderConfig,
   GalleryPlayConfig,
   GalleryBulletConfig,
+  GalleryLightboxConfig
 } from './gallery.config';
 
 export {

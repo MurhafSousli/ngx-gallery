@@ -143,9 +143,9 @@ export class Gallery {
 
     /** set overlay config */
     this.overlayConfig = {
-      backdropClass: this.config.overlay.backdropClass,
-      panelClass: this.config.overlay.panelClass,
-      hasBackdrop: this.config.overlay.hasBackdrop,
+      backdropClass: this.config.lightbox.backdropClass,
+      panelClass: this.config.lightbox.panelClass,
+      hasBackdrop: this.config.lightbox.hasBackdrop,
       positionStrategy: new GlobalPositionStrategy().centerHorizontally(),
       scrollStrategy: new BlockScrollStrategy(this.viewportRuler)
     };

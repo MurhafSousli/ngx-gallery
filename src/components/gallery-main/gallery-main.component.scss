@@ -6,9 +6,6 @@ gallery-main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  * {
-    box-sizing: border-box;
-  }
 }
 
 .g-container {
@@ -61,7 +58,7 @@ gallery-items {
   position: absolute;
   right: 0.73em;
   top: 0.73em;
-  z-index: 9999;
+  z-index: 60;
   cursor: pointer;
   width: 30px;
   height: 30px;

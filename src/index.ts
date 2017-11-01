@@ -9,5 +9,6 @@ export {
   GalleryPlayConfig,
   GalleryBulletConfig,
   GalleryState,
-  GalleryItem
+  GalleryItem,
+  GalleryLightboxConfig
 } from './models';

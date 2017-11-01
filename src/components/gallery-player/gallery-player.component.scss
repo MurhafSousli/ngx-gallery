@@ -1,8 +1,9 @@
 gallery-player {
   position: absolute;
-  z-index: 20;
+  z-index: 70;
   left: 0;
   right: 0;
+  overflow: unset;
 }
 
 .g-progress-bar {
@@ -15,7 +16,7 @@ gallery-player {
   width: 100%;
   height: 3px;
   transform: translate3d(-100%, 0, 0);
-  z-index: 100;
+  z-index: 60;
 }
 
 .g-progress-initial {
@@ -28,14 +29,3 @@ gallery-player {
   background-color: #BCC8CE;
   transform: translate3d(0, 0, 0);
 }
-
-//.g-player-btns {
-//  display: flex;
-//  padding: 0.5em 1em;
-//}
-//
-//.g-player-btn {
-//  margin-right: 0.5em;
-//  color: #ffffff;
-//  cursor: pointer;
-//}

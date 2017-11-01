@@ -20,7 +20,11 @@ Angular image gallery simplifies the process of creating beautiful image gallery
 
 Install it with npm
 
-`npm install --save ng-gallery`
+`$ npm install --save @angular/cdk ngx-gallery`
+
+
+This plugin depends on Angular CDK for the lightbox feature, you don't need to import anything from the CDK, just make sure that it is installed in the project.
+
 
 ### SystemJS
 
@@ -33,8 +37,11 @@ map: {
   'ng-gallery': 'node_modules/ng-gallery/bundles/ng-gallery.umd.js',
 }
 ```
+Here is a [stackblitz](https://stackblitz.com/edit/angular-material2-issue-d3efjs)
 
 ## Usage
+
+1. Import `GalleryModule.forRoot(...)` in the root module
 
 Import `GalleryModule` and set the gallery configuration in your root module
 
@@ -55,34 +62,35 @@ Import `GalleryModule` and set the gallery configuration in your root module
   })
 ```
 
- ### Basic
+2. Load images into the gallery
 
- Add gallery in the template using the component `<gallery></gallery>`, see [basic example](https://murhafsousli.github.io/ng-gallery/#/basic)
+ Add images into the gallery by using the service `Gallery.load(...)`, see [basic example](https://murhafsousli.github.io/ng-gallery/#/basic).
 
- ### Lightbox
-
- if you want to open the gallery in an overlay, use the service `Gallery.open()`, see [gallery lightbox example](https://murhafsousli.github.io/ng-gallery/#/lightbox)
+ Alternatively, you can automatically add images using the directive `[gallerize]`, see [auto-detect example](https://murhafsousli.github.io/ng-gallery/#/auto-detect).
 
 
-Finally, load the images and there are two options:
+ After that use will be able to use `<gallery></gallery>` component to display the gallery in the template.
+
+ Or if you want to open the gallery in an overlay, use the service `Gallery.open()`, see [gallery lightbox example](https://murhafsousli.github.io/ng-gallery/#/lightbox).
+ 
  
  ### Load image
  
  Use the service `Gallery` to load images
 
-```ts
-import { Gallery } from 'ng-gallery';
+```js
+import { Gallery, GalleryItem } from 'ng-gallery';
 
 export class AppComponent implements OnInit {
   
   constructor(public gallery: Gallery) { }
   
   ngOnInit() {
-    const images = [
+    const images: GalleryItem[] = [
       {
         src: 'assets/clouds.jpg',
         thumbnail: 'assets/clouds.jpg',
-        text: 'Coulds'
+        text: 'Sky & Clouds'
       },
       // ...
     ];
@@ -94,21 +102,24 @@ export class AppComponent implements OnInit {
 
 ### Auto-detect
 
-Alternatively, you can load them automatically using `[gallerize]` directive, see [auto-detect example](https://murhafsousli.github.io/ng-gallery/#/auto-detect)
+
+The directive `[gallerize]` will automatically detect all images inside the host element and hook them with the gallery lightbox
 
 ```html
 <div gallerize>
-  <img src='assets/img/img3.jpg' alt='Spring'>
-  <img src='assets/img/img4.jpg' alt='Fire'>
-  <img src='assets/img/img5.jpg' alt='Peacock'>
+  <img src="assets/img/img3.jpg" alt="Spring">
+  <img src="assets/img/img4.jpg" alt="Fire">
+  <img src="assets/img/img5.jpg" alt="Peacock">
 </div>
 ```
-Load images with specific class name
+
+You can also detect images using their class, `[gallerize]="'class-name'"`
+
 ```html
-<div gallerize='cars'>
-  <img class='cars' src='assets/img/img3.jpg' alt='BMW'>
-  <img class='cars' src='assets/img/img4.jpg' alt='Toyota'>
-  <img class='bikes' src='assets/img/img5.jpg' alt='S800'>
+<div gallerize="cars">
+  <img class="cars" src="assets/img/img3.jpg" alt="BMW">
+  <img class="cars" src="assets/img/img4.jpg" alt="Toyota">
+  <img class="bikes" src="assets/img/img5.jpg" alt="S800">
 </div>
 ```
 
