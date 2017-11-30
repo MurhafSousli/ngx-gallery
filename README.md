@@ -38,8 +38,6 @@ Here is a [stackblitz](https://stackblitz.com/edit/ng-gallery)
 
 1. Import `GalleryModule.forRoot(...)` in the root module
 
-Import `GalleryModule` and set the gallery configuration in your root module
-
 ```ts
   import { BrowserAnimationsModule } from  '@angular/platform-browser/animations';
   import { GalleryModule } from 'ng-gallery';
