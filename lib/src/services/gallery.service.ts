@@ -200,9 +200,8 @@ export class Gallery {
 
   /** Gallery Events */
 
-
   /**
-   * Emits gallery is initialized/reset
+   * Emits when gallery is initialized/reset
    * @returns {Observable<GalleryState>}
    */
   initialized() {

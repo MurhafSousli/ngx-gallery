@@ -22,9 +22,7 @@ Install it with npm
 
 `$ npm install --save @angular/cdk ngx-gallery`
 
-
 This plugin depends on Angular CDK for the lightbox feature, you don't need to import anything from the CDK, just make sure that it is installed in the project.
-
 
 ### SystemJS
 
@@ -37,6 +35,7 @@ map: {
   'ng-gallery': 'node_modules/ng-gallery/bundles/ng-gallery.umd.js',
 }
 ```
+
 Here is a [stackblitz](https://stackblitz.com/edit/ng-gallery)
 
 ## Usage
@@ -48,11 +47,11 @@ Import `GalleryModule` and set the gallery configuration in your root module
 ```ts
   import { BrowserAnimationsModule } from  '@angular/platform-browser/animations';
   import { GalleryModule } from 'ng-gallery';
-  
+
   export const config : GalleryConfig = {
     // ...
   }
-  
+
   @NgModule({
    imports: [
       // ...
@@ -72,19 +71,18 @@ Import `GalleryModule` and set the gallery configuration in your root module
  After that use will be able to use `<gallery></gallery>` component to display the gallery in the template.
 
  Or if you want to open the gallery in an overlay, use the service `Gallery.open()`, see [gallery lightbox example](https://murhafsousli.github.io/ng-gallery/#/lightbox).
- 
- 
- ### Load image
- 
+
+### Load image
+
  Use the service `Gallery` to load images
 
-```js
+```ts
 import { Gallery, GalleryItem } from 'ng-gallery';
 
 export class AppComponent implements OnInit {
-  
+
   constructor(public gallery: Gallery) { }
-  
+
   ngOnInit() {
     const images: GalleryItem[] = [
       {
@@ -94,7 +92,7 @@ export class AppComponent implements OnInit {
       },
       // ...
     ];
-    
+
     this.gallery.load(images);
   }
 }
@@ -102,16 +100,19 @@ export class AppComponent implements OnInit {
 
 ### Auto-detect
 
+The directive `[gallerize]` will automatically detect all images inside the host element and hook them with the gallery lightbox.
 
-The directive `[gallerize]` will automatically detect all images inside the host element and hook them with the gallery lightbox
+This feature is useful in case you get the images as HTML string such as WordPress API
 
 ```html
 <div gallerize>
-  <img src="assets/img/img3.jpg" alt="Spring">
-  <img src="assets/img/img4.jpg" alt="Fire">
-  <img src="assets/img/img5.jpg" alt="Peacock">
+  <img src="assets/img/thumb/img3.jpg" src-full="assets/img/img3.jpg" alt="Spring">
+  <img src="assets/img/thumb/img4.jpg" src-full="assets/img/img3.jpg" alt="Fire">
+  <img src="assets/img/thumb/img5.jpg" src-full="assets/img/img3.jpg" alt="Peacock">
 </div>
 ```
+
+If `src-full` attribute is not defined, `src` will beused for the full size.
 
 You can also detect images using their class, `[gallerize]="'class-name'"`
 
@@ -123,46 +124,36 @@ You can also detect images using their class, `[gallerize]="'class-name'"`
 </div>
 ```
 
-### Listeners
+### Gallery Functions
 
-You can listen to gallery actions using the state
+| Function Name         | Description                                         |
+| --------------------- | --------------------------------------------------- |
+| **setConfig(config)** | Set gallery config                                  |
+| **load(items)**       | Load new items and reset the state                  |
+| **set(index)**        | Set active item                                     |
+| **next()**            | Set next item                                       |
+| **prev()**            | Set prev item                                       |
+| **play()**            | Start slide show                                    |
+| **stop()**            | End slide show                                      |
+| **open(index?)**      | Open gallery lightbox                               |
+| **close()**           | Close gallery lightbox                              |
+| **reset()**           | Reset gallery to initial state                      |
 
-```ts
-import { Gallery, GalleryAction } from 'ng-gallery';
+### Gallery Events
 
-export class AppComponent implements OnInit {
-
-  constructor(public gallery: Gallery) {
-  }
-
-  ngOnInit() {
-  
-    this.gallery.state$
-      .filter(state => state.action === GalleryAction.CLOSED)
-      .subscribe(state => {
-      
-        // do something when lightbox is closed
-        
-      });
-  }
-```
-
-#### Available events
-
- - **INIT** : On state init/reset
- - **LOAD** : When gallery is loaded with images
- - **NEXT** :  Next image
- - **PREV** :  Prev image
- - **PLAYING** : slide-show started
- - **STOPPED** : slide-show stopped
- - **OPENED** :  Lightbox opened
- - **CLOSED** : Lightbox closed
- - **LOADING_START** : On image lazy load started
- - **LOADING_END** : On image lazy load finished
- - **BULLET_CLICK** : On bullet click
- - **THUMB_CLICK** : On thumbnail click
- - **OTHER** : When action is not defined
-
+| Event Name            | Description                                         |
+| --------------------- | --------------------------------------------------- |
+| **initialized()**     | Emits when gallery is initialized/reset             |
+| **loaded()**          | Emits when images is loaded into the gallery        |
+| **imageChanged()**    | Emits when image is changed                         |
+| **imageLoading()**    | Emits when image lazy loading is started/completed  |
+| **navigationClick()** | Emits when navigation is clicked                    |
+| **thumbnailClick()**  | Emits when thumbnail is clicked                     |
+| **bulletClick()**     | Emits when bullet is clicked                        |
+| **opened()**          | Emits when lightbox is opened                       |
+| **closed()**          | Emits when lightbox is closed                       |
+| **playing()**         | Emits when slide show is started                    |
+| **stopped()**         | Emits when slide show is stopped                    |
 
 ### Gesture Support (optional)
 
@@ -184,15 +175,13 @@ import 'hammerjs';
 
 [![npm](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=5594898)
 
-
 ## Issues
 
 If you identify any errors in this module, or have an idea for an improvement, please open an [issue](https://github.com/MurhafSousli/ng-gallery/issues). I am excited to see what the community thinks of this project, and I would love your input!
-
 
 ## Author
 
  **[Murhaf Sousli](http://murhafsousli.com)**
 
- - [github/murhafsousli](https://github.com/MurhafSousli)
- - [twitter/murhafsousli](https://twitter.com/MurhafSousli)
+- [github/murhafsousli](https://github.com/MurhafSousli)
+- [twitter/murhafsousli](https://twitter.com/MurhafSousli)
