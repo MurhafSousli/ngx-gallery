@@ -12,10 +12,6 @@ Angular image gallery simplifies the process of creating beautiful image gallery
 [![npm](https://img.shields.io/npm/dt/ng-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ng-gallery)
 [![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](/LICENSE)
 
-<p align="center">
-  <img src="assets/screenshot.png" style="max-width:100%;">
-</p>
-
 ## Installation
 
 Install it with npm
@@ -124,38 +120,39 @@ You can also detect images using their class, `[gallerize]="'class-name'"`
 </div>
 ```
 
-### Gallery Functions
+## Gallery Functions
 
-| Function Name         | Description                                         |
-| --------------------- | --------------------------------------------------- |
-| **setConfig(config)** | Set gallery config                                  |
-| **load(items)**       | Load new items and reset the state                  |
-| **set(index)**        | Set active item                                     |
-| **next()**            | Set next item                                       |
-| **prev()**            | Set prev item                                       |
-| **play()**            | Start slide show                                    |
-| **stop()**            | End slide show                                      |
-| **open(index?)**      | Open gallery lightbox                               |
-| **close()**           | Close gallery lightbox                              |
-| **reset()**           | Reset gallery to initial state                      |
+| Function Name               | Description                                         |
+| --------------------------- | --------------------------------------------------- |
+| **setConfig(config)**       | Set gallery config                                  |
+| **load(items)**             | Load new items and reset the state                  |
+| **set(index)**              | Set active item                                     |
+| **next()**                  | Set next item                                       |
+| **prev()**                  | Set prev item                                       |
+| **play()**                  | Start slide show                                    |
+| **stop()**                  | End slide show                                      |
+| **open(index?)**            | Open gallery lightbox                               |
+| **close()**                 | Close gallery lightbox                              |
+| **reset()**                 | Reset gallery to initial state                      |
 
-### Gallery Events
+## Gallery Events
 
-| Event Name            | Description                                         |
-| --------------------- | --------------------------------------------------- |
-| **initialized()**     | Emits when gallery is initialized/reset             |
-| **loaded()**          | Emits when images is loaded into the gallery        |
-| **imageChanged()**    | Emits when image is changed                         |
-| **imageLoading()**    | Emits when image lazy loading is started/completed  |
-| **navigationClick()** | Emits when navigation is clicked                    |
-| **thumbnailClick()**  | Emits when thumbnail is clicked                     |
-| **bulletClick()**     | Emits when bullet is clicked                        |
-| **opened()**          | Emits when lightbox is opened                       |
-| **closed()**          | Emits when lightbox is closed                       |
-| **playing()**         | Emits when slide show is started                    |
-| **stopped()**         | Emits when slide show is stopped                    |
+| Event Name                  | Description                                         |
+| --------------------------- | --------------------------------------------------- |
+| **initialized()**           | Emits when gallery is initialized/reset             |
+| **loaded()**                | Emits when images is loaded into the gallery        |
+| **imageChanged()**          | Emits when image is changed                         |
+| **imageLoading()**          | Emits when image lazy loading is started/completed  |
+| **navigationClick()**       | Emits when navigation is clicked                    |
+| **thumbnailClick()**        | Emits when thumbnail is clicked                     |
+| **bulletClick()**           | Emits when bullet is clicked                        |
+| **opened()**                | Emits when lightbox is opened                       |
+| **closed()**                | Emits when lightbox is closed                       |
+| **playing()**               | Emits when slide show is started                    |
+| **stopped()**               | Emits when slide show is stopped                    |
 
-### Gesture Support (optional)
+
+## Gesture Support (optional)
 
 Gallery Module relies on HammerJS for gestures, make sure it is loaded into the application.
 
