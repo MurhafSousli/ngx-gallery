@@ -140,7 +140,7 @@ You can also detect images using their class, `[gallerize]="'class-name'"`
 | Event Name                  | Description                                         |
 | --------------------------- | --------------------------------------------------- |
 | **initialized()**           | Emits when gallery is initialized/reset             |
-| **loaded()**                | Emits when images is loaded into the gallery        |
+| **loaded()**                | Emits when images are loaded into the gallery       |
 | **imageChanged()**          | Emits when image is changed                         |
 | **imageLoading()**          | Emits when image lazy loading is started/completed  |
 | **navigationClick()**       | Emits when navigation is clicked                    |
