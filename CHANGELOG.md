@@ -5,15 +5,15 @@
 **Fixes:**
 
 - fix(GalleryNav): Hide navigation on panning.
-- fix(GalleryPlayer): Wait until image is loaded before starting a timer.
+- fix(GalleryPlayer): Wait until image is loaded before starting the timer.
 
- **Added features:** 
+ **Added features:**
 - feature(GalleryPlayer): Add progressbar color option.
 - feature(GalleryPlayer): Add progressbar thickness option.
 - feature(GalleryPlayer): Add position option `top` and `bottom`.
-- feature(GalleryActions): Add events to gallery: `INIT`, `LOAD`, `NEXT`, `PREV`,`OTHER`, `PLAYING`, `STOPPED`, `OPENED`, `CLOSED`, `LOADING_START`, `LOADING_END`, `BULLET_CLICK`, `THUMB_CLICK`
+- feature(GalleryActions): Add gallery events
 - feature(GalleryNav): Add `prevClass` and `nextClass` options to customize navigation icons
-- feature(GalleryThumbnail) Add `className` option
+- feature(classNames) Add `className` option to container, thumbnails, bullets
 
 **Performance Improvements:**
 
