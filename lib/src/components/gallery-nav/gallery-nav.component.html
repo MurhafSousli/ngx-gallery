@@ -1,0 +1,15 @@
+<div *ngIf="state.items.length" class="g-nav">
+
+  <div class="g-nav-prev {{config.nextClass}}"
+       (tapClick)="gallery.prev()">
+
+    <i class="prev-arrow-ico"></i>
+  </div>
+
+  <div class="g-nav-next {{config.prevClass}}"
+       (tapClick)="gallery.next()">
+
+    <i class="next-arrow-ico"></i>
+  </div>
+
+</div>

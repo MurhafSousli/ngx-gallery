@@ -1,0 +1,8 @@
+<div *ngIf="progress$ | async; let style"
+     class="g-progress-bar"
+     [class.-bottom]="config.position === 'bottom'">
+
+  <div *ngIf="config.progress"
+       class="g-progress"
+       [ngStyle]="style"></div>
+</div>
