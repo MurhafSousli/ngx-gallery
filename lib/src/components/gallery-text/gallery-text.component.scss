@@ -1,0 +1,24 @@
+gallery-text {
+  position: relative;
+  left: 0;
+  right: 0;
+  z-index: 25;
+}
+
+.g-text-container {
+  padding: 1em 2em;
+  color: #ccc;
+  font-size: 13px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  background-clip: padding-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+.g-text {
+  flex: 1;
+  a{
+    color: #00b0e8;
+  }
+}
