@@ -20,7 +20,7 @@ Angular image gallery simplifies the process of creating beautiful image gallery
 
 Install it with npm
 
-`$ npm install --save @angular/cdk ngx-gallery`
+`$ npm install --save @angular/cdk ng-gallery`
 
 
 This plugin depends on Angular CDK for the lightbox feature, you don't need to import anything from the CDK, just make sure that it is installed in the project.
