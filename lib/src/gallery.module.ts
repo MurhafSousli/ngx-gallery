@@ -24,9 +24,8 @@ import { LazyDirective } from './directives/lazy.directive';
 
 /**
  * Initialize Gallery with custom config
- * @param {GalleryConfig} config
- * @param {Overlay} overlay
- * @returns {Gallery}
+ * @param config
+ * @param overlay
  */
 export function galleryFactory(config: GalleryConfig, overlay: Overlay) {
   return new Gallery(config, overlay);
