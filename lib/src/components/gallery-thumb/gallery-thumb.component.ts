@@ -42,6 +42,7 @@ export class GalleryThumbComponent implements OnInit {
 
     this.state$ = this.gallery.state$.pipe(
       switchMap((state: GalleryState) => of({
+        currIndex: state.currIndex,
         position: this.translateThumbnails(state.currIndex),
         items: this.thumbnailsFactory(state)
       }))
@@ -50,15 +51,12 @@ export class GalleryThumbComponent implements OnInit {
 
   /**
    * Centralize active thumbnail
-   * @param {number} i - Current index
-   * @returns any
+   * @param i - Current index
    */
   translateThumbnails(i: number) {
     const x = (i * this.config.width) + (this.config.width / 2);
     const position = `translate3d(${-x}px, 0, 0)`;
     return {
-      mozTransform: position,
-      oTransform: position,
       msTransform: position,
       webkitTransform: position,
       transform: position
@@ -67,8 +65,7 @@ export class GalleryThumbComponent implements OnInit {
 
   /**
    * Prepare thumbnails for rendering
-   * @param {GalleryState} state
-   * @returns any
+   * @param state
    */
   thumbnailsFactory(state: GalleryState) {
     return state.items.map((item: GalleryItem, i) => ({
@@ -80,10 +77,13 @@ export class GalleryThumbComponent implements OnInit {
 
   /**
    * Set current gallery item
-   * @param {number} i - Item index
+   * @param i - Item index
+   * @param currIndex - current index
    */
-  setCurrentItem(i: number) {
-    this.gallery.set(i, GalleryAction.THUMB_CLICK);
+  setCurrentItem(i: number, currIndex: number) {
+    if (i !== currIndex) {
+      this.gallery.set(i, GalleryAction.THUMB_CLICK);
+    }
   }
 
   ngOnInit() {

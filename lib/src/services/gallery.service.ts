@@ -47,7 +47,7 @@ export class Gallery {
   }
 
   /** Handles global key presses while the lightbox is opened
-   * @param {KeyboardEvent} event
+   * @param event
    */
   private handleKeydown(event: KeyboardEvent) {
     switch (event.keyCode) {
@@ -68,7 +68,7 @@ export class Gallery {
 
   /**
    * Set gallery state
-   * @param {GalleryState} state
+   * @param state
    */
   setState(state: GalleryState) {
     this.state = {...this.state, ...state};
@@ -77,7 +77,7 @@ export class Gallery {
 
   /**
    * Set gallery config
-   * @param {GalleryConfig} config
+   * @param config
    */
   setConfig(config: GalleryConfig) {
     this.config = mergeDeep(defaultConfig, config);
@@ -96,7 +96,7 @@ export class Gallery {
 
   /**
    * Load items and reset the state
-   * @param {GalleryItem[]} items - Gallery images data
+   * @param items - Gallery images data
    */
   load(items: GalleryItem[]) {
 
@@ -109,8 +109,8 @@ export class Gallery {
 
   /**
    * Set active item
-   * @param {number} i - Active Index
-   * @param {GalleryAction} action - Action type
+   * @param i - Active Index
+   * @param action - Action type
    */
   set(i: number, action?: GalleryAction) {
 
@@ -166,7 +166,7 @@ export class Gallery {
 
   /**
    * Open gallery lightbox
-   * @param {number} i - Image index
+   * @param i - Image index
    */
   open(i = 0) {
     this.set(i, GalleryAction.OPENED);
@@ -201,24 +201,21 @@ export class Gallery {
   /** Gallery Events */
 
   /**
-   * Emits when gallery is initialized/reset
-   * @returns {Observable<GalleryState>}
+   * Stream that emits when gallery is initialized/reset
    */
   initialized() {
     return this.state$.pipe(filter((state: GalleryState) => state.action === GalleryAction.INIT));
   }
 
   /**
-   * Emits when images is loaded into the gallery
-   * @returns {Observable<GalleryState>}
+   * Stream that emits when images is loaded into the gallery
    */
   loaded() {
     return this.state$.pipe(filter((state: GalleryState) => state.action === GalleryAction.LOAD));
   }
 
   /**
-   * Emits when image is changed
-   * @returns {Observable<GalleryState>}
+   * Stream that emits when image is changed
    */
   imageChanged() {
     return this.state$.pipe(filter((state: GalleryState) =>
@@ -227,64 +224,56 @@ export class Gallery {
   }
 
   /**
-   * Emits when image lazy loading is started/completed
-   * @returns {Observable<GalleryState>}
+   * Stream that emits when image lazy loading is started/completed
    */
   imageLoading() {
     return this.state$.pipe(filter((state: GalleryState) => state.action === (GalleryAction.LOADING_START || GalleryAction.LOADING_END)));
   }
 
   /**
-   * Emits when navigation is clicked
-   * @returns {Observable<GalleryState>}
+   * Stream that emits when navigation is clicked
    */
   navigationClick() {
     return this.state$.pipe(filter((state: GalleryState) => state.action === (GalleryAction.NEXT || GalleryAction.PREV)));
   }
 
   /**
-   * Emits when thumbnail is clicked
-   * @returns {Observable<GalleryState>}
+   * Stream that emits when thumbnail is clicked
    */
   thumbnailClick() {
     return this.state$.pipe(filter((state: GalleryState) => state.action === GalleryAction.THUMB_CLICK));
   }
 
   /**
-   * Emits when bullet is clicked
-   * @returns {Observable<GalleryState>}
+   * Stream that emits when bullet is clicked
    */
   bulletClick() {
     return this.state$.pipe(filter((state: GalleryState) => state.action === GalleryAction.BULLET_CLICK));
   }
 
   /**
-   * Emits when lightbox is opened
-   * @returns {Observable<GalleryState>}
+   * Stream that emits when lightbox is opened
    */
   opened() {
     return this.state$.pipe(filter((state: GalleryState) => state.action === GalleryAction.OPENED));
   }
 
   /**
-   * Emits when lightbox is closed
-   * @returns {Observable<GalleryState>}
+   * Stream that emits when lightbox is closed
    */
   closed() {
     return this.state$.pipe(filter((state: GalleryState) => state.action === GalleryAction.CLOSED));
   }
 
   /**
-   * Emits when slide show is started
-   * @returns {Observable<GalleryState>}
+   * Stream that emits when slide show is started
    */
   playing() {
     return this.state$.pipe(filter((state: GalleryState) => state.action === GalleryAction.PLAYING));
   }
 
   /**
-   * Emits when slide show is stopped
-   * @returns {Observable<GalleryState>}
+   * Stream that emits when slide show is stopped
    */
   stopped() {
     return this.state$.pipe(filter((state: GalleryState) => state.action === GalleryAction.STOPPED));

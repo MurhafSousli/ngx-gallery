@@ -24,15 +24,23 @@ This plugin depends on Angular CDK for the lightbox feature, you don't need to i
 
 If you are using SystemJS, you should also adjust your configuration to point to the UMD bundle.
 
-In your systemjs config file, `map` needs to tell the System loader where to look for `ng-gallery`:
+In your systemjs config file, `map` needs to tell the System loader where to look for `cdk` and `ng-gallery`:
 
 ```js
 map: {
+  '@angular/cdk': 'node_modules/@angular/cdk/bundles/cdk.umd.js',
+  '@angular/cdk/bidi': 'node_modules/@angular/cdk/bundles/cdk-bidi.umd.js',
+  '@angular/cdk/coercion': 'node_modules/@angular/cdk/bundles/cdk-coercion.umd.js',
+  '@angular/cdk/keycodes': 'node_modules/@angular/cdk/bundles/cdk-keycodes.umd.js',
+  '@angular/cdk/platform': 'node_modules/@angular/cdk/bundles/cdk-platform.umd.js',
+  '@angular/cdk/portal': 'node_modules/@angular/cdk/bundles/cdk-portal.umd.js',
+  '@angular/cdk/overlay': 'node_modules/@angular/cdk/bundles/cdk-overlay.umd.js',
+  '@angular/cdk/scrolling': 'node_modules/@angular/cdk/bundles/cdk-scrolling.umd.js',
   'ng-gallery': 'node_modules/ng-gallery/bundles/ng-gallery.umd.js',
 }
 ```
 
-Here is a [stackblitz](https://stackblitz.com/edit/ng-gallery)
+Here is a [plunkr](https://plnkr.co/edit/D2bR0SQ5eI63e5BLbIrz?p=preview)/[stackblitz](https://stackblitz.com/edit/ng-gallery)
 
 ## Usage
 

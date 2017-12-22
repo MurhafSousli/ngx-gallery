@@ -11,7 +11,7 @@
 
       <div class="g-thumb-image"
            [style.backgroundImage]="item.thumbnail"
-           (tapClick)="setCurrentItem(item.index)">
+           (tapClick)="setCurrentItem(item.index, state.currIndex)">
       </div>
     </div>
 
