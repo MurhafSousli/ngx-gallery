@@ -1,7 +1,7 @@
 {
-  "name": "ng-gallery",
+  "name": "ng-gallery-demo",
   "description": "Angular image gallery simplifies the process of creating beautiful image gallery for the web and mobile devices.",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "filename": "./src/ng-gallery.js",
   "homepage": "http://github.com/murhafsousli/ng-gallery",
   "author": {
