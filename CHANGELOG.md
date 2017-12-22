@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- fix double click on thumbnails and bullets, closes [#45](https://github.com/MurhafSousli/ng-gallery/issues/45).
+
 ## 1.0.0
 
 **Fixes:**
