@@ -7,7 +7,8 @@ import {
   OnChanges,
   ChangeDetectionStrategy,
   ElementRef,
-  EventEmitter
+  EventEmitter,
+  NgZone
 } from '@angular/core';
 import { GalleryState, GalleryConfig } from '../models';
 
@@ -43,9 +44,11 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   stateStream$ = new BehaviorSubject({value: 0, active: false});
   @Input() state: GalleryState;
   @Input() config: GalleryConfig;
+  @Input() width: number;
+  @Input() height: number;
   @Output() indexChange = new EventEmitter<string | number>();
 
-  constructor(private el: ElementRef) {
+  constructor(private _el: ElementRef, private _ngZone: NgZone) {
     this.sliderState$ = this.stateStream$.pipe(map(
       (state: any) => ({
         style: this.sliderStyle(state.value),
@@ -61,15 +64,15 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     switch (this.config.slidingDirection) {
       case 'horizontal':
         return {
-          transform: `translate3d(${-(this.state.currIndex * this.el.nativeElement.offsetWidth) + delta}px, 0, 0)`,
-          width: `calc(${this.state.items.length} * 100%)`,
+          transform: `translate3d(${-(this.state.currIndex * this._el.nativeElement.offsetWidth) + delta}px, 0, 0)`,
+          width: this._el.nativeElement.offsetWidth * this.state.items.length + 'px',
           height: '100%'
         };
       case 'vertical':
         return {
-          transform: `translate3d(0, ${-(this.state.currIndex * this.el.nativeElement.offsetHeight) + delta}px, 0)`,
+          transform: `translate3d(0, ${-(this.state.currIndex * this._el.nativeElement.offsetHeight) + delta}px, 0)`,
           width: '100%',
-          height: `calc(${this.state.items.length} * 100%)`,
+          height: this._el.nativeElement.offsetHeight * this.state.items.length + 'px',
         };
     }
   }
@@ -79,32 +82,39 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
+    this._ngZone.runOutsideAngular(() => {
 
-    if (this.config.gestures && Hammer) {
+      if (this.config.gestures && Hammer) {
 
-      this.mc = new Hammer(this.el.nativeElement);
-      this.mc.get('pan').set({direction: Hammer.DIRECTION_ALL});
+        this.mc = new Hammer(this._el.nativeElement);
+        this.mc.get('pan').set({direction: Hammer.DIRECTION_ALL});
 
-      // Slides thumbnails
-      this.mc.on('pan', (e) => {
+        // Slides thumbnails
+        this.mc.on('pan', (e) => {
 
-        switch (this.config.slidingDirection) {
-          case 'horizontal':
-            this.stateStream$.next({value: e.deltaX, active: true});
-            if (e.isFinal) {
-              this.stateStream$.next({value: 0, active: false});
-              this.horizontalPan(e);
-            }
-            break;
-          case 'vertical':
-            this.stateStream$.next({value: e.deltaY, active: true});
-            if (e.isFinal) {
-              this.stateStream$.next({value: 0, active: false});
-              this.verticalPan(e);
-            }
-        }
-      });
-    }
+          switch (this.config.slidingDirection) {
+            case 'horizontal':
+              this.stateStream$.next({value: e.deltaX, active: true});
+              if (e.isFinal) {
+                this.stateStream$.next({value: 0, active: false});
+                this.horizontalPan(e);
+              }
+              break;
+            case 'vertical':
+              this.stateStream$.next({value: e.deltaY, active: true});
+              if (e.isFinal) {
+                this.stateStream$.next({value: 0, active: false});
+                this.verticalPan(e);
+              }
+          }
+        });
+      }
+    });
+
+    // Fix wrong slider width on init
+    setTimeout(() => {
+      this.stateStream$.next({value: 0, active: false});
+    }, 300);
   }
 
   ngOnDestroy() {
@@ -119,9 +129,9 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     } else if (e.velocityY < -0.3) {
       this.indexChange.emit('next');
     } else {
-      if (e.deltaY / 2 <= -this.el.nativeElement.offsetHeight * this.state.items.length / this.config.panSensitivity) {
+      if (e.deltaY / 2 <= -this._el.nativeElement.offsetHeight * this.state.items.length / this.config.panSensitivity) {
         this.indexChange.emit('next');
-      } else if (e.deltaY / 2 >= this.el.nativeElement.offsetHeight * this.state.items.length / this.config.panSensitivity) {
+      } else if (e.deltaY / 2 >= this._el.nativeElement.offsetHeight * this.state.items.length / this.config.panSensitivity) {
         this.indexChange.emit('prev');
       } else {
         this.indexChange.emit(this.state.currIndex);
@@ -135,9 +145,9 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     } else if (e.velocityX < -0.3) {
       this.indexChange.emit('next');
     } else {
-      if (e.deltaX / 2 <= -this.el.nativeElement.offsetWidth * this.state.items.length / this.config.panSensitivity) {
+      if (e.deltaX / 2 <= -this._el.nativeElement.offsetWidth * this.state.items.length / this.config.panSensitivity) {
         this.indexChange.emit('next');
-      } else if (e.deltaX / 2 >= this.el.nativeElement.offsetWidth * this.state.items.length / this.config.panSensitivity) {
+      } else if (e.deltaX / 2 >= this._el.nativeElement.offsetWidth * this.state.items.length / this.config.panSensitivity) {
         this.indexChange.emit('prev');
       } else {
         this.indexChange.emit(this.state.currIndex);

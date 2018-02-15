@@ -65,14 +65,7 @@ h3 {
     .slide {
       margin: 0 1.5em;
     }
-    .g-counter {
-      font-size: 12px;
-    }
-    .g-counter{
-      background: none;
-      color: mat-color($demo-primary);
-    }
-    image-item > div{
+    image-item > div {
       box-shadow: 0 8px 30px grey;
       background-color: black;
     }
@@ -96,4 +89,8 @@ h3 {
   a {
     margin-bottom: 4em;
   }
+}
+
+.docs-button {
+  color: mat-color($demo-primary);
 }

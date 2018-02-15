@@ -2,7 +2,7 @@
 
 @include mat-core();
 
-$demo-primary: mat-palette($mat-indigo);
+$demo-primary: mat-palette($mat-deep-purple); //$mat-indigo
 $demo-accent: mat-palette($mat-pink, A200);
 $demo-warn: mat-palette($mat-red);
 $bg: mat-color(mat-palette($mat-indigo, 50));

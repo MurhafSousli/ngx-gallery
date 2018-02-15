@@ -41,7 +41,8 @@ export class LightboxExampleComponent implements OnInit, OnDestroy {
 
 const code = {
   ex: `import { Component, OnInit } from '@angular/core';
-import { Gallery, Lightbox, GalleryItem } from 'ng-gallery';
+import { Gallery, GalleryItem } from '@ngx-gallery/core';
+import { Lightbox } from '@ngx-gallery/lightbox';
 
 @Component({
   template: \`

@@ -1,7 +1,5 @@
-import { Directive, ElementRef, Renderer2, Input, OnInit, OnDestroy } from '@angular/core';
+import { Directive, ElementRef, Renderer2, Input, OnInit, OnDestroy, AfterContentChecked } from '@angular/core';
 
-// import { Gallery, GalleryItem, ImageItem } from '@ngx-gallery/core';
-// import { Lightbox } from '@ngx-gallery/lightbox';
 import { Gallery, GalleryItem, ImageItem } from '../core';
 import { Lightbox } from '../lightbox';
 
@@ -12,18 +10,17 @@ import { map } from 'rxjs/operators/map';
 import { tap } from 'rxjs/operators/tap';
 import { switchMap } from 'rxjs/operators/switchMap';
 import { debounceTime } from 'rxjs/operators/debounceTime';
-import { finalize } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators/finalize';
 
 @Directive({
   selector: '[gallerize]'
 })
-export class GallerizeDirective implements OnInit, OnDestroy {
+export class GallerizeDirective implements OnInit, OnDestroy, AfterContentChecked {
 
-  worker$ = new Subject();
+  gallerizer$ = new Subject();
   /** Add images with specific classes to the gallery */
   @Input() gallerize = 'root';
   @Input() forClass: string;
-  observer: MutationObserver;
 
   constructor(private _el: ElementRef,
               private _renderer: Renderer2,
@@ -39,7 +36,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
     /** Serialize img classes */
     const classes = (this.forClass) ? this.forClass.split(' ').map((className) => '.' + className) : '';
 
-    this.worker$.pipe(
+    this.gallerizer$.pipe(
       debounceTime(300),
       switchMap(() => {
 
@@ -65,27 +62,13 @@ export class GallerizeDirective implements OnInit, OnDestroy {
         }
       })
     ).subscribe();
+  }
 
-    /** Observe content changes */
-    if (typeof MutationObserver !== 'undefined') {
-      this.observer = new MutationObserver((mutations: MutationRecord[]) => {
-        mutations.forEach((mutation: MutationRecord) => {
-          this.worker$.next();
-        });
-      });
-
-      const config: MutationObserverInit = {
-        attributes: true,
-        childList: true,
-        characterData: true
-      };
-
-      this.observer.observe(this._el.nativeElement, config);
-    }
+  ngAfterContentChecked() {
+    this.gallerizer$.next();
   }
 
   ngOnDestroy() {
-    this.worker$.unsubscribe();
-    this.observer.disconnect();
+    this.gallerizer$.complete();
   }
 }
