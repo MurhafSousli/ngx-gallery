@@ -8,7 +8,8 @@ import {
   ChangeDetectionStrategy,
   ElementRef,
   EventEmitter,
-  HostBinding
+  HostBinding,
+  NgZone
 } from '@angular/core';
 import { GalleryConfig, GalleryState } from '../models';
 
@@ -50,7 +51,7 @@ export class GalleryThumbComponent implements OnInit, OnChanges, OnDestroy {
   @HostBinding('style.height') height;
   @HostBinding('style.width') width;
 
-  constructor(private el: ElementRef) {
+  constructor(private _el: ElementRef, private _ngZone: NgZone) {
     this.thumbState$ = this.stateStream$.pipe(
       map((state: any) => ({
         style: this.thumbsStyle(state.value),
@@ -64,32 +65,34 @@ export class GalleryThumbComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
 
-    if (this.config.gestures && !this.config.disableThumb && Hammer) {
+    this._ngZone.runOutsideAngular(() => {
+      if (this.config.gestures && !this.config.disableThumb && Hammer) {
 
-      this.mc = new Hammer(this.el.nativeElement);
-      this.mc.get('pan').set({direction: Hammer.DIRECTION_ALL});
+        this.mc = new Hammer(this._el.nativeElement);
+        this.mc.get('pan').set({direction: Hammer.DIRECTION_ALL});
 
-      // Slides thumbnails
-      this.mc.on('pan', (e) => {
-        switch (this.config.thumbPosition) {
-          case 'right':
-          case 'left':
-            this.stateStream$.next({value: e.deltaY, active: true});
-            if (e.isFinal) {
-              this.stateStream$.next({value: 0, active: false});
-              this.verticalPan(e);
-            }
-            break;
-          case 'top':
-          case 'bottom':
-            this.stateStream$.next({value: e.deltaX, active: true});
-            if (e.isFinal) {
-              this.stateStream$.next({value: 0, active: false});
-              this.horizontalPan(e);
-            }
-        }
-      });
-    }
+        // Slides thumbnails
+        this.mc.on('pan', (e) => {
+          switch (this.config.thumbPosition) {
+            case 'right':
+            case 'left':
+              this.stateStream$.next({value: e.deltaY, active: true});
+              if (e.isFinal) {
+                this.stateStream$.next({value: 0, active: false});
+                this.verticalPan(e);
+              }
+              break;
+            case 'top':
+            case 'bottom':
+              this.stateStream$.next({value: e.deltaX, active: true});
+              if (e.isFinal) {
+                this.stateStream$.next({value: 0, active: false});
+                this.horizontalPan(e);
+              }
+          }
+        });
+      }
+    });
   }
 
   ngOnDestroy() {
