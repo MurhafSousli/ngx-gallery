@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Gallery, GalleryItem } from 'ng-gallery';
+import { Gallery, GalleryItem, ImageItem } from '@ngx-gallery/core';
+import { Lightbox } from '@ngx-gallery/lightbox';
 
 @Component({
   selector: 'app-root',
@@ -7,39 +8,37 @@ import { Gallery, GalleryItem } from 'ng-gallery';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'app';
 
-  constructor(public gallery: Gallery) {
+  items: GalleryItem[];
+  images = imageData;
 
-  }
-
-  open() {
-    this.gallery.open();
+  constructor(public gallery: Gallery, public lightbox: Lightbox) {
   }
 
   ngOnInit() {
-    setTimeout(() => {
-
-      const images: GalleryItem[] = [
-        {
-          src: 'assets/img1.jpg',
-          thumbnail: 'assets/img1.jpg'
-        },
-        {
-          src: 'assets/img2.jpg',
-          thumbnail: 'assets/img2.jpg'
-        },
-        {
-          src: 'assets/img3.jpg',
-          thumbnail: 'assets/img3.jpg'
-        },
-        {
-          src: 'assets/img4.jpg',
-          thumbnail: 'assets/img4.jpg'
-        }
-      ];
-
-      this.gallery.load(images);
-    }, 1000);
+    this.items = imageData.map(item => {
+      return new ImageItem(item.srcUrl, item.previewUrl);
+    });
   }
 }
+
+
+const imageData = [
+  {
+    srcUrl: 'https://preview.ibb.co/jrsA6R/img12.jpg',
+    previewUrl: 'https://preview.ibb.co/jrsA6R/img12.jpg'
+  },
+  {
+    srcUrl: 'https://preview.ibb.co/kPE1D6/clouds.jpg',
+    previewUrl: 'https://preview.ibb.co/kPE1D6/clouds.jpg'
+  },
+  {
+    srcUrl: 'https://preview.ibb.co/mwsA6R/img7.jpg',
+    previewUrl: 'https://preview.ibb.co/mwsA6R/img7.jpg'
+  },
+  {
+    srcUrl: 'https://preview.ibb.co/kZGsLm/img8.jpg',
+    previewUrl: 'https://preview.ibb.co/kZGsLm/img8.jpg'
+  }
+];
+

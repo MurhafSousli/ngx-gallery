@@ -3,9 +3,10 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-import { GalleryModule } from 'ng-gallery';
+import { GalleryModule } from '@ngx-gallery/core';
+import { LightboxModule } from '@ngx-gallery/lightbox';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { GallerizeModule } from '@ngx-gallery/gallerize';
 
 @NgModule({
   declarations: [
@@ -14,9 +15,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    GalleryModule.forRoot()
+    GalleryModule.forRoot({
+      thumbPosition: 'left'
+    }),
+    LightboxModule.forRoot(),
+    GallerizeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
