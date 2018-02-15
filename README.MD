@@ -13,8 +13,8 @@
 [![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](/LICENSE)
 
 
-- For version 2.x: See the [WIKI](https://github.com/MurhafSousli/ngx-gallery/wiki)
-- For version 1.x: see this [DOCS](/README_V1.md)
+- **For version 2.x**, see the [WIKI](https://github.com/MurhafSousli/ngx-gallery/wiki)
+- **For version 1.x**, see this [DOCS](/README_V1.md)
 
 ## Support
 
@@ -22,7 +22,7 @@
 
 ## Issues
 
-If you identify any errors in this module, or have an idea for an improvement, please open an [issue](https://github.com/MurhafSousli/@ngx-gallery/core/issues). I am excited to see what the community thinks of this project, and I would love your input!
+If you identify any errors in this module, or have an idea for an improvement, please open an [issue](https://github.com/MurhafSousli/@ngx-gallery/core/issues).
 
 ## Author
 
