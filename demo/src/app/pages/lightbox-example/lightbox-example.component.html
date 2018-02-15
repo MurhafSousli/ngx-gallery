@@ -1,0 +1,22 @@
+<div class="page-title">
+  <h1>Lightbox Example</h1>
+</div>
+<div class="page-content">
+  <div class="grid">
+    <button mat-raised-button mat-ripple
+            *ngFor="let item of space$ | async; let i = index"
+            (click)="lightbox.open(i)">
+      <span class="grid-image" [lazyImage]="item.data.thumbSrc"></span>
+    </button>
+  </div>
+  <pre>
+    <code highlight [code]="code.ex"></code>
+  </pre>
+  <p>You can also set custom config directly</p>
+  <pre>
+    <code highlight [code]="code.alt">
+    </code>
+  </pre>
+</div>
+
+<footer></footer>

@@ -6,10 +6,9 @@
 Angular gallery simplifies the process of creating beautiful image gallery for the web and mobile devices.
 
 
-[![npm](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://murhafsousli.github.io/ng-gallery/)
-[![npm](https://img.shields.io/npm/v/ng-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ng-gallery)
-[![Travis branch](https://travis-ci.org/MurhafSousli/ng-gallery.svg?branch=master)](https://travis-ci.org/MurhafSousli/ng-gallery)
-[![npm](https://img.shields.io/npm/dt/ng-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ng-gallery)
+[![npm](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://murhafsousli.github.io/ngx-gallery/)
+[![npm](https://img.shields.io/npm/v/ngx-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-gallery)
+[![npm](https://img.shields.io/npm/dt/ngx-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ngx-gallery)
 [![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](/LICENSE)
 
 

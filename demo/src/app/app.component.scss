@@ -1,0 +1,60 @@
+@import '../assets/variables';
+@import '../assets/theme';
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+h3 {
+  text-align: center;
+}
+
+.main-wrapper {
+  height: 100%;
+  position: relative;
+  transition: all linear 0.3s;
+  display: flex;
+  flex-direction: column;
+  background-color: $bg;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  margin: 1em 0;
+  img {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+main {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 -3px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toolbar-logo {
+  display: flex;
+  align-items: center;
+  h1 {
+    text-align: center;
+    font-size: 16px;
+    font-family: $font-family;
+  }
+  span {
+    flex: 1;
+  }
+  a {
+    width: 40px;
+    height: 40px;
+    margin-right: 0.5em;
+    img {
+      width: 44px;
+      filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, .5));
+    }
+  }
+}

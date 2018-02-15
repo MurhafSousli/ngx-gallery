@@ -1,0 +1,13 @@
+@import '../../assets/variables';
+
+:host {
+  margin-top: 5em;
+  padding: 1em 2em;
+  font-size: .9em;
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
+  text-align: right;
+  color: gray;
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
