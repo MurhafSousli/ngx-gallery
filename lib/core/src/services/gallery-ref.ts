@@ -134,8 +134,8 @@ export class GalleryRef {
    * Destroy GalleryRef (for internal use only)
    */
   destroy() {
-    this.state$.unsubscribe();
-    this.config$.unsubscribe();
+    this.state$.complete();
+    this.config$.complete();
   }
 
   /** Gallery Events */
