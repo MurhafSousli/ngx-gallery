@@ -1,0 +1,27 @@
+gallery {
+  display: block;
+  margin-top: 3em;
+  height: 500px;
+}
+
+code {
+  margin: 0;
+}
+
+.mat-chip {
+  margin-right: 1em;
+}
+
+::ng-deep {
+  #ex1 {
+    .g-thumb {
+      padding: 5px 10px;
+    }
+  }
+  #ex2 {
+    .g-thumb {
+      padding: 0;
+      opacity: 0.3;
+    }
+  }
+}

@@ -1,0 +1,34 @@
+@import "../../assets/mixin";
+@import "../../assets/variables";
+
+:host {
+  margin: 0;
+}
+
+a {
+  width: 220px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  i {
+    font-size: 18px;
+  }
+}
+
+.menu-toolbar {
+  flex-direction: row;
+  a {
+    width: unset;
+  }
+  @include mobile() {
+    display: none;
+  }
+}
+
+.mat-button {
+  font-family: $font-family;
+  height: $header-height;
+  line-height: $header-height;
+}

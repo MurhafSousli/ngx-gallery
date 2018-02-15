@@ -1,9 +1,0 @@
-<div class="g-text-container {{config.className}}" [ngStyle]="config.style">
-
-  <div *ngIf="config.text" class="g-text" [innerHtml]="state.items[state.currIndex]?.text"></div>
-
-  <div *ngIf="config.counter" class="g-counter">
-    {{(state.currIndex + 1) + '/' + state.items.length}}
-  </div>
-</div>
-

@@ -1,0 +1,23 @@
+<div class="page-title">
+  <h1>Advanced Example</h1>
+</div>
+
+<div class="page-content">
+  <gallery id="slides"
+           [thumbPosition]="'top'"
+           [thumbWidth]="200"
+           [items]="slides"
+           [gestures]="false"
+           [nav]="false"
+           [counter]="false"
+           [disableThumb]="true">
+  </gallery>
+  <pre>
+    <code highlight [code]="code"></code>
+  </pre>
+
+  <div style="height: 600px">
+    <gallery id="advanced" thumbPosition="top" thumbWidth="150" [items]="images$ | async"></gallery>
+  </div>
+</div>
+<footer></footer>

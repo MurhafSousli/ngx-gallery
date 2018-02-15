@@ -1,0 +1,67 @@
+<div class="page-title">
+  <h1>Angular Gallery</h1>
+  <sub>Simplifies the process of creating beautiful galleries for Angular and Ionic.</sub>
+  <a mat-raised-button class="docs-button" routerLink="/getting-started">Get Started</a>
+</div>
+
+<div class="jumbo">
+  <gallery id="home" thumbPosition="top" thumbWidth="160" thumbHeight="120" zoomOut="7" [counter]="false"
+           [items]="images$ | async"></gallery>
+</div>
+
+<div class="page-content">
+
+  <badges></badges>
+
+  <section>
+    <h3 class="colorful">Features</h3>
+
+    <div class="row">
+      <div class="column">
+        <div *ngFor="let feature of features | slice:0:4">
+          <button mat-icon-button color="accent">
+            <mat-icon class="md-24">done</mat-icon>
+          </button>
+          <span>{{ feature }}</span>
+        </div>
+      </div>
+      <div class="column">
+        <div *ngFor="let feature of features | slice:4:8">
+          <button mat-icon-button color="accent">
+            <mat-icon class="md-24">done</mat-icon>
+          </button>
+          <span>{{ feature }}</span>
+        </div>
+      </div>
+      <div class="column">
+        <div *ngFor="let feature of features | slice:8">
+          <button mat-icon-button color="accent">
+            <mat-icon class="md-24">done</mat-icon>
+          </button>
+          <span>{{ feature }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3 class="colorful">Support</h3>
+    <a href="https://www.patreon.com/bePatron?u=5594898">
+      <img
+        src="https://camo.githubusercontent.com/3d9b27bdf72d7e5407fbad6f9240f6cadc98a7a5/68747470733a2f2f63352e70617472656f6e2e636f6d2f65787465726e616c2f6c6f676f2f6265636f6d655f615f706174726f6e5f627574746f6e2e706e67"
+        alt="npm" data-canonical-src="https://c5.patreon.com/external/logo/become_a_patron_button.png"
+        style="max-width:100%;">
+    </a>
+
+  </section>
+
+  <section>
+    <h3 class="colorful">Issues</h3>
+
+    <p>If you identify any errors in this module, or have an idea for an improvement, please open an
+      <a href="https://github.com/MurhafSousli/ng-gallery/issues">issue</a>.
+      I am excited to see what the community thinks of this project, and I would love your input!</p>
+  </section>
+</div>
+
+<footer></footer>

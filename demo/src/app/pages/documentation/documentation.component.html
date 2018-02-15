@@ -1,0 +1,41 @@
+<div class="page-title">
+  <h1>Getting Started</h1>
+</div>
+
+<div class="page-content">
+
+  <div fxLayout fxLayoutGap="15px">
+    <div class="doc-menu-container">
+      <ul class="doc-menu">
+        <li><a routerLink="./core">@ngx-gallery/core</a></li>
+        <li><a routerLink="./lightbox">@ngx-gallery/lightbox</a></li>
+        <li><a routerLink="./gallerize">@ngx-gallery/gallerize</a></li>
+      </ul>
+    </div>
+    <div>
+      <section>
+        <h2 class="colorful">Overview</h2>
+        <div class="usage-title">
+          <span class="section-number">★</span>
+          <p>This library consists of 3 packages:</p>
+        </div>
+
+        <div fxLayout>
+          <div fxLayout="column" fxLayoutAlign="center center" style="width: 30px">
+            <div class="separator"></div>
+          </div>
+          <div fxFlex style="margin-left: 1.6em">
+            <p><span class="colored">@ngx-gallery/core </span> provides gallery component and service.</p>
+            <p><span class="colored">@ngx-gallery/lightbox </span> provides a lightbox service that opens the gallery in an overlay.</p>
+            <p><span class="colored">@ngx-gallery/gallerize </span> provides <code class="hljs">[gallerize]</code> directive that automatically hooks img elements to the lightbox.</p>
+          </div>
+        </div>
+      </section>
+
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+<footer></footer>
+
+

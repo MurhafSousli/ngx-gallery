@@ -1,0 +1,21 @@
+<div class="page-title">
+  <h1>Auto detect Example</h1>
+</div>
+<div class="page-content">
+  <div class="row" gallerize="auto">
+    <div class="column">
+      <img *ngFor="let item of images$ | async | slice:0:6" src="{{item.data.src}}">
+    </div>
+    <div class="column">
+      <img *ngFor="let item of images$ | async | slice:6:12" src="{{item.data.src}}">
+    </div>
+    <div class="column">
+      <img *ngFor="let item of images$ | async | slice:12" src="{{item.data.src}}">
+    </div>
+  </div>
+  <pre>
+    <code highlight [code]="code"></code>
+  </pre>
+</div>
+
+<footer></footer>
