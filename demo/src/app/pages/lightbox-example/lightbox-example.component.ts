@@ -47,7 +47,7 @@ import { Lightbox } from '@ngx-gallery/lightbox';
 @Component({
   template: \`
     <div class="grid">
-      <div class="grid-item" *ngFor="let item of items; let i = index" (click)="gallery.open(i)">
+      <div class="grid-item" *ngFor="let item of items; let i = index" (click)="lightbox.open(i)">
         <img [src]="item.data.thumbnail">
       </div>
     </div>
@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
 
   items: GalleryItem[];
 
-  constructor(public gallery: Gallery) { }
+  constructor(public gallery: Gallery, public lightbox: Lightbox) { }
 
   ngOnInit() {
     this.gallery.ref('lightbox').load(items);
