@@ -30,7 +30,7 @@ export class Lightbox {
    * Set Lightbox Config
    * @param config - LightboxConfig
    */
-  setLightboxConfig(config: LightboxConfig) {
+  setConfig(config: LightboxConfig) {
     this.config = {...this.config, ...config};
   }
 

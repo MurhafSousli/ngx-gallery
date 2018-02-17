@@ -1,7 +1,7 @@
 {
   "name": "@ngx-gallery/demo",
   "description": "Angular image gallery simplifies the process of creating beautiful image gallery for the web and mobile devices.",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.2",
   "homepage": "http://github.com/murhafsousli/ng-gallery",
   "author": {
     "name": "Murhaf Sousli",

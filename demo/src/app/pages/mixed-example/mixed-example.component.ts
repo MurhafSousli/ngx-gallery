@@ -61,7 +61,7 @@ export class MixedComponent implements OnInit {
       }
     };
     this.arr.map(item => {
-      this.galleryRef.addItem(switchItem(item));
+      this.galleryRef.add(switchItem(item));
     });
   }
 
@@ -98,7 +98,7 @@ export class AppComponent implements OnInit {
       }
     };
     data.map(item => {
-      this.galleryRef.addItem(switchItem(item));
+      this.galleryRef.add(switchItem(item));
     });
   }
 }`,

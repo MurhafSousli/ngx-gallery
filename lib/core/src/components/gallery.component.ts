@@ -46,8 +46,8 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Output() indexChange = new EventEmitter<GalleryState>();
   @Output() itemsChange = new EventEmitter<GalleryState>();
 
-  _itemChange$: Subscription;
-  _indexChange$: Subscription;
+  private _itemChange$: Subscription;
+  private _indexChange$: Subscription;
 
   constructor(private _gallery: Gallery) {
   }
@@ -85,7 +85,10 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges() {
     if (this.galleryRef instanceof GalleryRef) {
       this.galleryRef.setConfig(this.getConfig());
-      this.galleryRef.load(this.items);
+
+      if (this.items !== this.galleryRef.state.items) {
+        this.load(this.items);
+      }
     }
   }
 
@@ -93,7 +96,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     // Get gallery instance by id
     this.galleryRef = this._gallery.ref(this.id);
     this.galleryRef.setConfig(this.getConfig());
-    this.galleryRef.load(this.items);
+    this.load(this.items);
 
     /** Subscribes to indexChange and itemsChange events when user bind them */
     if (this.indexChange.observers.length) {
@@ -114,5 +117,33 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     if (this.destroyRef) {
       this.galleryRef.reset();
     }
+  }
+
+  load(items: GalleryItem[]) {
+    this.galleryRef.load(items);
+  }
+
+  add(item: GalleryItem, active?: boolean) {
+    this.galleryRef.add(item, active);
+  }
+
+  remove(i: number) {
+    this.galleryRef.remove(i);
+  }
+
+  next() {
+    this.galleryRef.next();
+  }
+
+  prev() {
+    this.galleryRef.prev();
+  }
+
+  set(i: number) {
+    this.galleryRef.set(i);
+  }
+
+  reset() {
+    this.galleryRef.reset();
   }
 }

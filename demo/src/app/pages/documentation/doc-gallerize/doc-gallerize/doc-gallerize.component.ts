@@ -18,7 +18,7 @@ import { GallerizeModule } from  '@ngx-gallery/gallerize';
     BrowserAnimationsModule,
     GalleryModule.forRoot(galleryConfig?),
     GalleryLightbox.forRoot(lightboxConfig?),
-    GallerizeLightbox
+    GallerizeModule
  ]
 })`;
 

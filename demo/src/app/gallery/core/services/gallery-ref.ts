@@ -44,7 +44,7 @@ export class GalleryRef {
    * @param item - Gallery item object
    * @param active - Set the new item as current slide
    */
-  addItem(item: GalleryItem, active?: boolean) {
+  add(item: GalleryItem, active?: boolean) {
     const items = [...this.state.items, item];
     this.setState({
       action: GalleryAction.ITEMS_CHANGED,
@@ -57,7 +57,7 @@ export class GalleryRef {
   /** Remove gallery item
    * @param i - Item index
    */
-  removeItem(i: number) {
+  remove(i: number) {
     const items = [
       ...this.state.items.slice(0, i),
       ...this.state.items.slice(i + 1, this.state.items.length)
@@ -134,8 +134,8 @@ export class GalleryRef {
    * Destroy GalleryRef (for internal use only)
    */
   destroy() {
-    this.state$.unsubscribe();
-    this.config$.unsubscribe();
+    this.state$.complete();
+    this.config$.complete();
   }
 
   /** Gallery Events */
