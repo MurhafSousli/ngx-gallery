@@ -19,14 +19,6 @@ export class Gallery {
   }
 
   /**
-   * Set Gallery Config
-   * @param config - GalleryConfig
-   */
-  setConfig(config: GalleryConfig) {
-    this.config = {...this.config, ...config};
-  }
-
-  /**
    * Returns Gallery by ID
    */
   ref(id = 'root', config?: GalleryConfig) {
