@@ -46,8 +46,8 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Output() indexChange = new EventEmitter<GalleryState>();
   @Output() itemsChange = new EventEmitter<GalleryState>();
 
-  _itemChange$: Subscription;
-  _indexChange$: Subscription;
+  private _itemChange$: Subscription;
+  private _indexChange$: Subscription;
 
   constructor(private _gallery: Gallery) {
   }
