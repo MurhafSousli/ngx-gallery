@@ -85,7 +85,10 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges() {
     if (this.galleryRef instanceof GalleryRef) {
       this.galleryRef.setConfig(this.getConfig());
-      this.galleryRef.load(this.items);
+
+      if (this.items !== this.galleryRef.state.items) {
+        this.load(this.items);
+      }
     }
   }
 
@@ -93,7 +96,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     // Get gallery instance by id
     this.galleryRef = this._gallery.ref(this.id);
     this.galleryRef.setConfig(this.getConfig());
-    this.galleryRef.load(this.items);
+    this.load(this.items);
 
     /** Subscribes to indexChange and itemsChange events when user bind them */
     if (this.indexChange.observers.length) {
