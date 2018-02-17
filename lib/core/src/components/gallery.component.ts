@@ -115,4 +115,32 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       this.galleryRef.reset();
     }
   }
+
+  load(items: GalleryItem[]) {
+    this.galleryRef.load(items);
+  }
+
+  add(item: GalleryItem, active?: boolean) {
+    this.galleryRef.add(item, active);
+  }
+
+  remove(i: number) {
+    this.galleryRef.remove(i);
+  }
+
+  next() {
+    this.galleryRef.next();
+  }
+
+  prev() {
+    this.galleryRef.prev();
+  }
+
+  set(i: number) {
+    this.galleryRef.set(i);
+  }
+
+  reset() {
+    this.galleryRef.reset();
+  }
 }
