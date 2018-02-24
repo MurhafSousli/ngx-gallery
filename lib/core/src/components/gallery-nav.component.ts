@@ -6,8 +6,8 @@ import { GalleryState, GalleryConfig } from '../models';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
   template: `
-    <i *ngIf="config.loop || state.hasPrev" class="g-nav-prev" (click)="indexChange.emit('prev')"></i>
-    <i *ngIf="config.loop || state.hasNext" class="g-nav-next" (click)="indexChange.emit('next')"></i>
+    <i *ngIf="config.loop || state.hasPrev" class="g-nav-prev" (tapClick)="indexChange.emit('prev')"></i>
+    <i *ngIf="config.loop || state.hasNext" class="g-nav-next" (tapClick)="indexChange.emit('next')"></i>
   `
 })
 export class GalleryNavComponent {
