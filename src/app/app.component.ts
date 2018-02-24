@@ -20,6 +20,10 @@ export class AppComponent implements OnInit {
       return new ImageItem(item.srcUrl, item.previewUrl);
     });
   }
+
+  alert(msg) {
+    alert(msg);
+  }
 }
 
 
