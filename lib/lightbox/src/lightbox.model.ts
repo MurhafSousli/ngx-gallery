@@ -3,5 +3,4 @@ export interface LightboxConfig {
   panelClass?: string;
   hasBackdrop?: boolean;
   keyboardShortcuts?: boolean;
-  fullScreen?: boolean;
 }

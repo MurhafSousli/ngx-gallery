@@ -1,5 +1,28 @@
 # Changelog
 
+## 2.0.0-beta.4
+
+- feat(LightboxConfig): Adds fullscreen option to the lightbox, closes [#43](https://github.com/MurhafSousli/ngx-gallery/issues/43).
+
+By default fullscreen is obtained on small screen (mobile) but now you can make it as default for all screens
+
+```ts
+GalleryModule.forRoot()
+LightboxModule.forRoot({
+  panelClass: 'fullscreen'
+})
+```
+
+- feat(Lightbox): Ability to define lightbox config using `lightbox.open()` method
+
+```ts
+openLightbox() {
+  this.lightbox.open(0, 'lightbox', {
+    panelClass: 'fullscreen'
+  });
+}
+```
+
 ## 2.0.0-beta.3
 
 - Prevents native click event bubbling, closes [#57](https://github.com/MurhafSousli/ngx-gallery/issues/57)
