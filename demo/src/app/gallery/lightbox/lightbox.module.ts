@@ -1,8 +1,7 @@
 import { InjectionToken, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Overlay, OverlayModule } from '@angular/cdk/overlay';
-// import { Gallery, GalleryModule } from '@ngx-gallery/core';
-import { Gallery, GalleryModule } from '../core';
+import { Gallery, GalleryModule } from '../../gallery/core';
 
 import { LightboxConfig } from './lightbox.model';
 import { Lightbox } from './lightbox.service';

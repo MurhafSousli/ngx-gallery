@@ -7,8 +7,7 @@ import {
   OnChanges,
   ChangeDetectionStrategy,
   ElementRef,
-  EventEmitter,
-  NgZone
+  EventEmitter
 } from '@angular/core';
 import { GalleryState, GalleryConfig } from '../models';
 
@@ -48,7 +47,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   @Input() height: number;
   @Output() indexChange = new EventEmitter<string | number>();
 
-  constructor(private _el: ElementRef, private _ngZone: NgZone) {
+  constructor(private _el: ElementRef) {
     this.sliderState$ = this.stateStream$.pipe(map(
       (state: any) => ({
         style: this.sliderStyle(state.value),
@@ -82,34 +81,31 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
-    this._ngZone.runOutsideAngular(() => {
+    if (this.config.gestures && Hammer) {
 
-      if (this.config.gestures && Hammer) {
+      this.mc = new Hammer(this._el.nativeElement);
+      this.mc.get('pan').set({direction: Hammer.DIRECTION_ALL});
 
-        this.mc = new Hammer(this._el.nativeElement);
-        this.mc.get('pan').set({direction: Hammer.DIRECTION_ALL});
+      // Slides thumbnails
+      this.mc.on('pan', (e) => {
 
-        // Slides thumbnails
-        this.mc.on('pan', (e) => {
-
-          switch (this.config.slidingDirection) {
-            case 'horizontal':
-              this.stateStream$.next({value: e.deltaX, active: true});
-              if (e.isFinal) {
-                this.stateStream$.next({value: 0, active: false});
-                this.horizontalPan(e);
-              }
-              break;
-            case 'vertical':
-              this.stateStream$.next({value: e.deltaY, active: true});
-              if (e.isFinal) {
-                this.stateStream$.next({value: 0, active: false});
-                this.verticalPan(e);
-              }
-          }
-        });
-      }
-    });
+        switch (this.config.slidingDirection) {
+          case 'horizontal':
+            this.stateStream$.next({value: e.deltaX, active: true});
+            if (e.isFinal) {
+              this.stateStream$.next({value: 0, active: false});
+              this.horizontalPan(e);
+            }
+            break;
+          case 'vertical':
+            this.stateStream$.next({value: e.deltaY, active: true});
+            if (e.isFinal) {
+              this.stateStream$.next({value: 0, active: false});
+              this.verticalPan(e);
+            }
+        }
+      });
+    }
 
     // Fix wrong slider width on init
     setTimeout(() => {

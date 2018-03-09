@@ -3,13 +3,13 @@
 </div>
 <div class="page-content">
 
-  <gallery id="ex1" [items]="lions$ | async" thumbPosition="left"></gallery>
+  <gallery id="ex1" [items]="lions$ | async" [thumbPosition]="(media$ | async) === 'sm' ? 'top' : 'left'"></gallery>
 
   <pre>
     <code highlight [code]="code.ex1"></code>
   </pre>
 
-  <gallery id="ex2" [items]="tigers$ | async" thumbPosition="right" slidingDirection="vertical"></gallery>
+  <gallery id="ex2" [items]="tigers$ | async" [thumbPosition]="(media$ | async) === 'sm' ? 'bottom' : 'right'" slidingDirection="vertical"></gallery>
 
   <pre>
     <code highlight [code]="code.ex2"></code>

@@ -1,6 +1,5 @@
 import { ComponentRef, Inject, Injectable } from '@angular/core';
-import { Gallery } from '../core';
-// import { Gallery } from '@ngx-gallery/core';
+import { Gallery } from '../../gallery/core';
 import { LIGHTBOX_CONFIG } from './lightbox.module';
 import { LightboxConfig } from './lightbox.model';
 import { defaultConfig } from './lightbox.default';
@@ -38,12 +37,16 @@ export class Lightbox {
    * Open Lightbox Overlay
    * @param i - Current Index
    * @param id - Gallery ID
+   * @param config - Lightbox Config
    */
-  open(i = 0, id = 'lightbox') {
+  open(i = 0, id = 'lightbox', config?: LightboxConfig) {
+
+    const _config = config ? { ...this.config, ...config } : this.config;
+
     const overlayConfig: OverlayConfig = {
-      backdropClass: this.config.backdropClass,
-      panelClass: this.config.panelClass,
-      hasBackdrop: this.config.hasBackdrop,
+      backdropClass: _config.backdropClass,
+      panelClass: _config.panelClass,
+      hasBackdrop: _config.hasBackdrop,
       positionStrategy: this._overlay.position().global().centerHorizontally().centerVertically(),
       scrollStrategy: this._overlay.scrollStrategies.block()
     };
@@ -60,11 +63,11 @@ export class Lightbox {
     compRef.instance.id = id;
     compRef.instance.close = () => this.close();
 
-    if (this.config.hasBackdrop) {
+    if (_config.hasBackdrop) {
       this._overlayRef.backdropClick().subscribe(() => this.close());
     }
 
-    if (this.config.keyboardShortcuts) {
+    if (_config.keyboardShortcuts) {
       this._overlayRef.keydownEvents().subscribe((event) => {
         switch (event.keyCode) {
           case LEFT_ARROW:
