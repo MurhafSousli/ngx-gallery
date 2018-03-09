@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~@ngx-gallery/core/styles/gallery';
+@import 'app/gallery/core/styles/gallery';
+@import 'app/gallery/core/styles/lightbox';
 
 body {
   margin: 0;

@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ObservableMedia} from '@angular/flex-layout';
 import { SharedService } from '../../service/shared.service';
+import { map } from 'rxjs/operators/map';
 
 @Component({
   selector: 'basic-example',
@@ -13,8 +15,13 @@ export class BasicComponent {
   lions$ = this.shared.getImages('lion');
   tigers$ = this.shared.getImages('tiger');
 
-  constructor(public shared: SharedService) {
+  media$;
+
+  constructor(public shared: SharedService, public media: ObservableMedia) {
     this.code = code;
+    this.media$ = media.asObservable().pipe(
+      map((res: any) => res.mqAlias)
+    );
   }
 
 }

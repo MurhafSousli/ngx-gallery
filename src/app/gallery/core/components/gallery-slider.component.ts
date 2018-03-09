@@ -7,7 +7,8 @@ import {
   OnChanges,
   ChangeDetectionStrategy,
   ElementRef,
-  EventEmitter
+  EventEmitter,
+  NgZone
 } from '@angular/core';
 import { GalleryState, GalleryConfig } from '../models';
 
@@ -47,7 +48,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   @Input() height: number;
   @Output() indexChange = new EventEmitter<string | number>();
 
-  constructor(private _el: ElementRef) {
+  constructor(private _el: ElementRef, private _ngZone: NgZone) {
     this.sliderState$ = this.stateStream$.pipe(map(
       (state: any) => ({
         style: this.sliderStyle(state.value),
