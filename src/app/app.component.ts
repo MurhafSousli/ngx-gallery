@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Gallery, GalleryItem, ImageItem } from '@ngx-gallery/core';
-import { Lightbox } from '@ngx-gallery/lightbox';
+import { Gallery, GalleryItem, ImageItem } from './gallery/core';
+import { Lightbox } from './gallery/lightbox';
 
 @Component({
   selector: 'app-root',
@@ -19,10 +19,14 @@ export class AppComponent implements OnInit {
     this.items = imageData.map(item => {
       return new ImageItem(item.srcUrl, item.previewUrl);
     });
+
+    this.gallery.ref('lightbox').load(this.items);
   }
 
-  alert(msg) {
-    alert(msg);
+  openLightbox() {
+    this.lightbox.open(0, 'lightbox', {
+      panelClass: 'fullscreen'
+    });
   }
 }
 

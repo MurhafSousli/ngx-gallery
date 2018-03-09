@@ -1,12 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
-
 import { AppComponent } from './app.component';
-import { GalleryModule } from '@ngx-gallery/core';
-import { LightboxModule } from '@ngx-gallery/lightbox';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { GallerizeModule } from '@ngx-gallery/gallerize';
+import { GalleryModule } from './gallery/core';
+import { LightboxModule } from './gallery/lightbox';
 
 @NgModule({
   declarations: [
@@ -15,11 +13,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    GalleryModule.forRoot({
-      thumbPosition: 'left'
-    }),
-    LightboxModule.forRoot(),
-    // GallerizeModule
+    GalleryModule.forRoot(),
+    LightboxModule.forRoot({
+      panelClass: 'fullscreen'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
