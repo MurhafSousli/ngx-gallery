@@ -1,7 +1,7 @@
 {
   "name": "@ngx-gallery/demo",
   "description": "Angular image gallery simplifies the process of creating beautiful image gallery for the web and mobile devices.",
-  "version": "2.0.0-beta.4",
+  "version": "2.0.0",
   "homepage": "http://github.com/murhafsousli/ng-gallery",
   "author": {
     "name": "Murhaf Sousli",
@@ -61,7 +61,7 @@
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
-    "@angular/cli": "^1.6.8",
+    "@angular/cli": "^1.7.3",
     "@angular/compiler-cli": "5.2.0",
     "@angular/language-service": "5.2.0",
     "@types/jasmine": "~2.5.53",
@@ -80,7 +80,7 @@
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
     "mkdirp": "^0.5.1",
-    "ng-packagr": "2.0.0",
+    "ng-packagr": "^2.2.0",
     "node-sass": "^4.6.1",
     "postcss": "^6.0.17",
     "postcss-strip-inline-comments": "^0.1.5",
