@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0
+
+- fix(Swiping): Remove ngZone, closes [#64](https://github.com/MurhafSousli/ngx-gallery/issues/64).
+
 ## 2.0.0-beta.4
 
 - feat(LightboxConfig): Adds fullscreen option to the lightbox, closes [#43](https://github.com/MurhafSousli/ngx-gallery/issues/43).
