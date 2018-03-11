@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- feat(GallerySlider): Rearrange slider on window resize, closes [#67](https://github.com/MurhafSousli/ngx-gallery/issues/67).
+
 ## 2.0.0
 
 - fix(Swiping): Remove ngZone, closes [#64](https://github.com/MurhafSousli/ngx-gallery/issues/64).
