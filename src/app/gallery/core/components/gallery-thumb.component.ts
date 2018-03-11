@@ -8,8 +8,7 @@ import {
   ChangeDetectionStrategy,
   ElementRef,
   EventEmitter,
-  HostBinding,
-  NgZone
+  HostBinding
 } from '@angular/core';
 import { GalleryConfig, GalleryState } from '../models';
 
@@ -51,7 +50,7 @@ export class GalleryThumbComponent implements OnInit, OnChanges, OnDestroy {
   @HostBinding('style.height') height;
   @HostBinding('style.width') width;
 
-  constructor(private _el: ElementRef, private _ngZone: NgZone) {
+  constructor(private _el: ElementRef) {
     this.thumbState$ = this.stateStream$.pipe(
       map((state: any) => ({
         style: this.thumbsStyle(state.value),

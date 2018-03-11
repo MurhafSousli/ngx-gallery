@@ -8,13 +8,19 @@ import {
   ChangeDetectionStrategy,
   ElementRef,
   EventEmitter,
-  NgZone
+  Inject,
+  PLATFORM_ID
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { GalleryState, GalleryConfig } from '../models';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { map } from 'rxjs/operators/map';
+import { fromEvent } from 'rxjs/observable/fromEvent';
+import { debounceTime } from 'rxjs/operators/debounceTime';
+import { tap } from 'rxjs/operators/tap';
 
 declare const Hammer: any;
 
@@ -40,6 +46,7 @@ declare const Hammer: any;
 export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   mc: any;
+  resizeSub$: Subscription;
   sliderState$: Observable<any>;
   stateStream$ = new BehaviorSubject({value: 0, active: false});
   @Input() state: GalleryState;
@@ -48,7 +55,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   @Input() height: number;
   @Output() indexChange = new EventEmitter<string | number>();
 
-  constructor(private _el: ElementRef, private _ngZone: NgZone) {
+  constructor(private _el: ElementRef, @Inject(PLATFORM_ID) private platform: Object) {
     this.sliderState$ = this.stateStream$.pipe(map(
       (state: any) => ({
         style: this.sliderStyle(state.value),
@@ -108,6 +115,14 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
       });
     }
 
+    // Rearrange slider on window resize
+    if (isPlatformBrowser(this.platform)) {
+      this.resizeSub$ = fromEvent(window, 'resize').pipe(
+        debounceTime(200),
+        tap(() => this.stateStream$.next(this.stateStream$.getValue()))
+      ).subscribe();
+    }
+
     // Fix wrong slider width on init
     setTimeout(() => {
       this.stateStream$.next({value: 0, active: false});
@@ -117,6 +132,9 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy() {
     if (this.mc) {
       this.mc.destroy();
+    }
+    if (this.resizeSub$) {
+      this.resizeSub$.unsubscribe();
     }
   }
 
