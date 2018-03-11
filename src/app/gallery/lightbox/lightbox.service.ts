@@ -1,5 +1,5 @@
 import { ComponentRef, Inject, Injectable } from '@angular/core';
-import { Gallery } from '@ngx-gallery/core';
+import { Gallery } from '../../gallery/core';
 import { LIGHTBOX_CONFIG } from './lightbox.module';
 import { LightboxConfig } from './lightbox.model';
 import { defaultConfig } from './lightbox.default';
