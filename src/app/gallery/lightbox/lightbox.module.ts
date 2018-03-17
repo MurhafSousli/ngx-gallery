@@ -4,10 +4,9 @@ import { Overlay, OverlayModule } from '@angular/cdk/overlay';
 import { Gallery, GalleryModule } from '../../gallery/core';
 
 import { LightboxConfig } from './lightbox.model';
+import { LIGHTBOX_CONFIG } from './lightbox.token';
 import { Lightbox } from './lightbox.service';
 import { LightboxComponent } from './lightbox.component';
-
-export const LIGHTBOX_CONFIG = new InjectionToken<LightboxConfig>('lightboxConfig');
 
 export function lightboxFactory(config: LightboxConfig, gallery: Gallery, overlay: Overlay) {
   return new Lightbox(config, gallery, overlay);
