@@ -1,6 +1,6 @@
 import { ComponentRef, Inject, Injectable } from '@angular/core';
 import { Gallery } from '@ngx-gallery/core';
-import { LIGHTBOX_CONFIG } from './lightbox.module';
+import { LIGHTBOX_CONFIG } from './lightbox.token';
 import { LightboxConfig } from './lightbox.model';
 import { defaultConfig } from './lightbox.default';
 import { Overlay } from '@angular/cdk/overlay';

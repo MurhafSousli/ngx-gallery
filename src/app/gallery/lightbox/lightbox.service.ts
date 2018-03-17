@@ -1,8 +1,11 @@
 import { ComponentRef, Inject, Injectable } from '@angular/core';
+
 import { Gallery } from '../../gallery/core';
-import { LIGHTBOX_CONFIG } from './lightbox.module';
+import { LIGHTBOX_CONFIG } from './lightbox.token';
 import { LightboxConfig } from './lightbox.model';
 import { defaultConfig } from './lightbox.default';
+import { LightboxComponent } from './lightbox.component';
+
 import { Overlay } from '@angular/cdk/overlay';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { OverlayConfig } from '@angular/cdk/overlay';
@@ -10,7 +13,6 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { LEFT_ARROW } from '@angular/cdk/keycodes';
 import { RIGHT_ARROW } from '@angular/cdk/keycodes';
 import { ESCAPE } from '@angular/cdk/keycodes';
-import { LightboxComponent } from './lightbox.component';
 
 @Injectable()
 export class Lightbox {

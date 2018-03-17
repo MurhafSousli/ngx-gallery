@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Renderer2, Input, OnInit, OnDestroy, AfterContentChecked } from '@angular/core';
+import { Directive, ElementRef, Renderer2, Input, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 
 import { Gallery, GalleryItem, ImageItem } from '../core';
 import { Lightbox } from '../lightbox';
@@ -11,12 +11,14 @@ import { tap } from 'rxjs/operators/tap';
 import { switchMap } from 'rxjs/operators/switchMap';
 import { debounceTime } from 'rxjs/operators/debounceTime';
 import { finalize } from 'rxjs/operators/finalize';
+import { isPlatformBrowser } from '@angular/common';
 
 @Directive({
   selector: '[gallerize]'
 })
-export class GallerizeDirective implements OnInit, OnDestroy, AfterContentChecked {
+export class GallerizeDirective implements OnInit, OnDestroy {
 
+  observer;
   gallerizer$ = new Subject();
   /** Add images with specific classes to the gallery */
   @Input() gallerize = 'root';
@@ -25,7 +27,8 @@ export class GallerizeDirective implements OnInit, OnDestroy, AfterContentChecke
   constructor(private _el: ElementRef,
               private _renderer: Renderer2,
               private _lightbox: Lightbox,
-              private _gallery: Gallery) {
+              private _gallery: Gallery,
+              @Inject(PLATFORM_ID) private platform: Object) {
   }
 
   ngOnInit() {
@@ -39,7 +42,6 @@ export class GallerizeDirective implements OnInit, OnDestroy, AfterContentChecke
     this.gallerizer$.pipe(
       debounceTime(300),
       switchMap(() => {
-
         /** get all img elements from content */
         const imageElements = this._el.nativeElement.querySelectorAll('img' + classes);
 
@@ -62,13 +64,18 @@ export class GallerizeDirective implements OnInit, OnDestroy, AfterContentChecke
         }
       })
     ).subscribe();
-  }
 
-  ngAfterContentChecked() {
-    this.gallerizer$.next();
+    // Observe content changes
+    if (isPlatformBrowser(this.platform)) {
+      this.observer = new MutationObserver(() => this.gallerizer$.next());
+      this.observer.observe(this._el.nativeElement, { childList: true, subtree: true });
+    }
   }
 
   ngOnDestroy() {
     this.gallerizer$.complete();
+    if (this.observer) {
+      this.observer.disconnect();
+    }
   }
 }

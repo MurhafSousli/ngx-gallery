@@ -1,2 +1,20 @@
-<gallery id="gallery1" [items]="items"></gallery>
-<button (click)="openLightbox()">Open</button>
+<mat-toolbar color="primary">
+	@ngx-gallery
+</mat-toolbar>
+
+<div class="basic-container">
+	<h2>Basic Example</h2>
+		<gallery id="basic-test" [items]="items"></gallery>
+</div>
+
+<div class="lightbox-example">
+	<h2>Lightbox Example</h2>
+	<button mat-button (click)="lightbox.open(0, 'lightbox')">Open Lightbox</button>
+</div>
+
+<div class="gallerize-example">
+	<h2>Gallerize Example</h2>
+	<p class="container" gallerize>
+		<img *ngFor="let img of imageData" [src]="img.srcUrl">
+	</p>
+</div>
