@@ -15,7 +15,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   ],
   template: `
     <gallery [@slideGalleryIn] [id]="id" [destroyRef]="false">
-      <div class="g-btn-close" (tapClick)="close()"></div>
+      <button class="g-btn-close" (click)="close()"></button>
     </gallery>
   `
 })
