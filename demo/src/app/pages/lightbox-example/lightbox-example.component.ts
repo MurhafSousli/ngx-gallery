@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { SharedService } from '../../service/shared.service';
-// import { Gallery, GalleryItem } from '@ngx-gallery/core';
-// import { Lightbox } from '@ngx-gallery/lightbox';
 import { Gallery, GalleryItem } from '../../gallery/core';
 import { Lightbox } from '../../gallery/lightbox';
 
@@ -10,7 +8,8 @@ import { Lightbox } from '../../gallery/lightbox';
   selector: 'lightbox-example',
   templateUrl: './lightbox-example.component.html',
   styleUrls: ['./lightbox-example.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  preserveWhitespaces: false
 })
 export class LightboxExampleComponent implements OnInit, OnDestroy {
 

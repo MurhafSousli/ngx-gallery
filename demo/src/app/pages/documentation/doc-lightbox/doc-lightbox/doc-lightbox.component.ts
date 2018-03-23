@@ -4,7 +4,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'app-doc-lightbox',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './doc-lightbox.component.html',
-  styleUrls: ['./doc-lightbox.component.scss']
+  styleUrls: ['./doc-lightbox.component.scss'],
+  preserveWhitespaces: false
 })
 export class DocLightboxComponent {
 

@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
 
 import { GalleryRef } from './gallery-ref';
-import { GALLERY_CONFIG } from '../gallery.module';
 import { defaultConfig } from '../utils/gallery.default';
 import { GalleryConfig } from '../models';
+import { GALLERY_CONFIG } from '../utils/gallery.token';
 
 @Injectable()
 export class Gallery {

@@ -3,21 +3,34 @@
 </div>
 
 <div class="page-content">
-  <gallery id="slides"
-           [thumbPosition]="'top'"
-           [thumbWidth]="200"
-           [items]="slides"
-           [gestures]="false"
-           [nav]="false"
-           [counter]="false"
-           [disableThumb]="true">
-  </gallery>
-  <pre>
-    <code highlight [code]="code"></code>
-  </pre>
+  <p>Each gallery item has a slide component and a thumbnail component, you can override them with your own components,
+    This is useful if you want to create custom layout, styles and functionality, then the gallery can act as a slider</p>
+  <section>
+    <h3 class="colorful">Stepper Example</h3>
 
-  <div style="height: 600px">
-    <gallery id="advanced" thumbPosition="top" thumbWidth="150" [items]="images$ | async"></gallery>
-  </div>
+    <gallery id="slides"
+             [thumbPosition]="'top'"
+             [thumbWidth]="200"
+             [items]="slides"
+             [gestures]="false"
+             [nav]="false"
+             [counter]="false"
+             [disableThumb]="true">
+    </gallery>
+    <pre>
+      <code highlight [code]="code"></code>
+    </pre>
+
+  </section>
+
+  <section>
+    <h3 class="colorful">Rich Gallery Example</h3>
+    <p>Here is another example that adds extra information to the thumbnails and custom buttons to the slides.</p>
+
+    <div style="height: 600px">
+      <gallery id="advanced" thumbPosition="top" thumbWidth="150" [items]="images$ | async"></gallery>
+    </div>
+  </section>
 </div>
+
 <footer></footer>

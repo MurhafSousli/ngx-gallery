@@ -34,8 +34,7 @@ export class TapClickDirective implements OnInit, OnDestroy {
       });
     } else {
       // Use normal click event
-      this.clickListener = this.renderer.listen(this.el.nativeElement, 'click', (e) => {
-        e.stopPropagation();
+      this.clickListener = this.renderer.listen(this.el.nativeElement, 'onclick', () => {
         if (!this.tapClickDisabled) {
           this.tapClick.emit(null);
         }

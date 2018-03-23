@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-// import { Gallery, GalleryRef, ImageItem, VideoItem, YoutubeItem } from '@ngx-gallery/core';
 import { Gallery, GalleryRef, ImageItem, VideoItem, YoutubeItem } from '../../gallery/core';
 
 @Component({
   selector: 'mixed-example',
   templateUrl: './mixed-example.component.html',
   styleUrls: ['./mixed-example.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  preserveWhitespaces: false
 })
 export class MixedComponent implements OnInit {
 

@@ -6,6 +6,7 @@ import { Gallery, GalleryRef } from '../../../gallery/core';
 @Component({
   selector: 'slide-one',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  preserveWhitespaces: false,
   template: `
     <div class="slide" fxLayout="column" fxLayoutAlign="start center">
       <h2>Big Winner is Ready for a Vacation!</h2>

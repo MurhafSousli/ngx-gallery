@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { Gallery } from './services/gallery.service';
 import { GalleryConfig } from './models';
+import { GALLERY_CONFIG } from './utils/gallery.token';
 
 import { GalleryComponent } from './components/gallery.component';
 import { GalleryCoreComponent } from './components/gallery-core.component';
@@ -19,8 +20,6 @@ import { ImageItemComponent } from './templates/image-item.component';
 import { VideoItemComponent } from './templates/video-item.component';
 import { IframeItemComponent } from './templates/iframe-item.component';
 import { ThumbnailItemComponent } from './templates/thumbnail-item.component';
-
-export const GALLERY_CONFIG = new InjectionToken<GalleryConfig>('galleryConfig');
 
 export function galleryFactory(galleryConfig: GalleryConfig) {
   return new Gallery(galleryConfig);
