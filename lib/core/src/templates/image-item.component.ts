@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { GalleryItemComponent } from '../models';
+import { Gallery } from '../services/gallery.service';
 
 @Component({
   selector: 'image-item',
@@ -7,7 +9,7 @@ import { GalleryItemComponent } from '../models';
   preserveWhitespaces: false,
   template: `
     <div [lazyImage]="data?.src" (loading)="loading = $event"></div>
-    <i class="g-loading" *ngIf="loading"></i>
+    <i class="g-loading" *ngIf="loading" [innerHTML]="sanitizer.bypassSecurityTrustHtml(gallery.config.loadingIcon)"></i>
   `,
   styles: [`
     :host {
@@ -27,4 +29,7 @@ import { GalleryItemComponent } from '../models';
 export class ImageItemComponent implements GalleryItemComponent {
   loading: boolean;
   @Input() data: any;
+
+  constructor(public gallery: Gallery, public sanitizer: DomSanitizer) {
+  }
 }

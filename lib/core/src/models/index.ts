@@ -36,6 +36,7 @@ export interface GalleryConfig {
   disableThumb?: boolean;
   zoomOut?: number;
   slidingDirection?: 'horizontal' | 'vertical';
+  loadingIcon?: string;
 }
 
 export interface GalleryItemComponent {
