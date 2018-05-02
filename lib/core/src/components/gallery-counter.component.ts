@@ -5,7 +5,7 @@ import { GalleryState } from '../models';
   selector: 'gallery-counter',
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
-  template: `<div class="g-counter">{{(state.currIndex + 1) + '/' + state.items.length}}</div>`
+  template: `<div *ngIf="state" class="g-counter">{{(state.currIndex + 1) + '/' + state.items.length}}</div>`
 })
 export class GalleryCounterComponent {
   @Input() state: GalleryState;
