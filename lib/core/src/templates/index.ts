@@ -10,10 +10,7 @@ export class ImageItem implements GalleryItem {
   public data: any;
 
   constructor(src: string, thumb?: string) {
-    this.data = {
-      src: src,
-      thumbSrc: thumb
-    };
+    this.data = {src, thumb};
   }
 }
 
@@ -22,11 +19,8 @@ export class VideoItem implements GalleryItem {
   public thumbComponent = ThumbnailItemComponent;
   public data: any;
 
-  constructor(src: string, thumb?: string) {
-    this.data = {
-      src: src,
-      thumbSrc: thumb
-    };
+  constructor(src: string, thumb?: string, poster?: string) {
+    this.data = {src, thumb, poster};
   }
 }
 
@@ -36,10 +30,7 @@ export class IframeItem implements GalleryItem {
   public data: any;
 
   constructor(src: string, thumb?: string) {
-    this.data = {
-      src: src,
-      thumbSrc: thumb
-    };
+    this.data = {src, thumb};
   }
 }
 
@@ -47,10 +38,11 @@ export class YoutubeItem implements GalleryItem {
   public component = IframeItemComponent;
   public thumbComponent = ThumbnailItemComponent;
   public data: any;
-  constructor(src: string, thumbSrc?: string) {
+
+  constructor(src: string, thumb?: string) {
     this.data = {
       src: `//youtube.com/embed/${src}?wmode=transparent`,
-      thumbSrc: thumbSrc ? thumbSrc : `//img.youtube.com/vi/${src}/default.jpg`
+      thumb: thumb ? thumb : `//img.youtube.com/vi/${src}/default.jpg`
     };
   }
 }
