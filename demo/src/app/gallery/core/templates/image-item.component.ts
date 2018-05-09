@@ -9,8 +9,7 @@ import { Gallery } from '../services/gallery.service';
   preserveWhitespaces: false,
   template: `
     <div [lazyImage]="data?.src" (loading)="loading = $event"></div>
-    <i class="g-loading" *ngIf="loading" [innerHTML]="sanitizer.bypassSecurityTrustHtml(gallery.config.loadingSvg)"></i>
-
+    <i class="g-loading" *ngIf="loading" [innerHTML]="sanitizer.bypassSecurityTrustHtml(gallery.config.loadingIcon)"></i>
   `,
   styles: [`
     :host {
@@ -19,7 +18,6 @@ import { Gallery } from '../services/gallery.service';
       width: 100%;
       height: 100%;
     }
-
     div {
       background-position: center center;
       background-size: cover;
@@ -29,6 +27,7 @@ import { Gallery } from '../services/gallery.service';
   `],
 })
 export class ImageItemComponent implements GalleryItemComponent {
+
   loading: boolean;
   @Input() data: any;
 

@@ -7,7 +7,7 @@ import { GalleryItemComponent } from '../gallery/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
   template: `
-    <div class="thumb-pro-pic" [lazyImage]="data.thumbSrc"></div>
+    <div class="thumb-pro-pic" [lazyImage]="data.thumb"></div>
     <div class="thumb-pro-body">
       <div fxLayout="column" fxLayoutAlign="space-around start">
         <div fxLayout fxLayoutAlign="start center">

@@ -35,7 +35,7 @@ export class SharedService {
               username: item.user,
               userImage: item.userImageURL,
               src: item.webformatURL.replace('640', '960'),
-              thumbSrc: item.previewURL
+              thumb: item.previewURL
             }
           };
         });
@@ -57,7 +57,7 @@ export class SharedService {
               username: item.user,
               userImage: item.userImageURL,
               src: item.largeImageURL,
-              thumbSrc: item.previewURL
+              thumb: item.previewURL
             }
           };
         });

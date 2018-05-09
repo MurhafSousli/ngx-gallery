@@ -27,7 +27,6 @@ import { OverlayRef } from '@angular/cdk/overlay';
   `
 })
 export class LightboxComponent {
-
   id: string;
   overlayRef: OverlayRef;
 

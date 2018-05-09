@@ -4,19 +4,21 @@
 <div class="page-content">
   <div class="grid">
     <button mat-raised-button mat-ripple
+            class="grid-item"
             *ngFor="let item of space$ | async; let i = index"
             (click)="lightbox.open(i)">
-      <span class="grid-image" [lazyImage]="item.data.thumbSrc"></span>
+      <span class="grid-image" [lazyImage]="item.data.thumb"></span>
     </button>
   </div>
   <pre>
     <code highlight [code]="code.ex"></code>
   </pre>
-  <p>You can also set custom config directly</p>
+  <p>To open the lightbox in full screen mode</p>
   <pre>
     <code highlight [code]="code.alt">
     </code>
   </pre>
+  <button mat-raised-button color="primary" (click)="lightbox.open(0, 'lightbox', {panelClass: 'fullscreen'})">Try it in fullscreen</button>
 </div>
 
 <footer></footer>

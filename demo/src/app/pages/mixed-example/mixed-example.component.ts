@@ -17,17 +17,17 @@ export class MixedComponent implements OnInit {
     {
       type: 'image',
       src: 'assets/img/img13.jpg',
-      thumbSrc: 'assets/img/thumb/img13.jpg'
+      thumb: 'assets/img/thumb/img13.jpg'
     },
     {
       type: 'image',
       src: 'assets/img/img11.jpg',
-      thumbSrc: 'assets/img/thumb/img11.jpg'
+      thumb: 'assets/img/thumb/img11.jpg'
     },
     {
       type: 'video',
       src: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
-      thumbSrc: 'assets/img1.jpg'
+      thumb: 'assets/img1.jpg'
     },
     {
       type: 'youtube',
@@ -36,12 +36,12 @@ export class MixedComponent implements OnInit {
     {
       type: 'image',
       src: 'assets/img/img3.jpg',
-      thumbSrc: 'assets/img/thumb/img3.jpg'
+      thumb: 'assets/img/thumb/img3.jpg'
     },
     {
       type: 'image',
       src: 'assets/img/img4.jpg',
-      thumbSrc: 'assets/img/thumb/img4.jpg'
+      thumb: 'assets/img/thumb/img4.jpg'
     }
   ];
 
@@ -53,9 +53,9 @@ export class MixedComponent implements OnInit {
     const switchItem = (item) => {
       switch (item.type) {
         case 'image':
-          return new ImageItem(item.src, item.thumbSrc);
+          return new ImageItem(item.src, item.thumb);
         case 'video':
-          return new VideoItem(item.src, item.thumbSrc);
+          return new VideoItem(item.src, item.thumb);
         case 'youtube':
           return new YoutubeItem(item.src);
       }
@@ -90,9 +90,9 @@ export class AppComponent implements OnInit {
     const switchItem = (item) => {
       switch (item.type) {
         case 'image':
-          return new ImageItem(item.src, item.thumbSrc);
+          return new ImageItem(item.src, item.thumb);
         case 'video':
-          return new VideoItem(item.src, item.thumbSrc);
+          return new VideoItem(item.src, item.thumb);
         case 'youtube':
           return new YoutubeItem(item.src);
       }
@@ -106,12 +106,12 @@ export class AppComponent implements OnInit {
   {
     type: 'image',
     src: 'assets/img/img1.jpg',
-    thumbSrc: 'assets/img/thumb/img1.jpg'
+    thumb: 'assets/img/thumb/img1.jpg'
   },
   {
     type: 'video',
     src:  'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
-    thumbSrc: 'assets/img1.jpg'
+    thumb: 'assets/img1.jpg'
   },
   {
     type: 'youtube',

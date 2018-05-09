@@ -22,7 +22,7 @@ export const defaultConfig: GalleryConfig = {
   disableThumb: false,
   slidingDirection: 'horizontal',
   zoomOut: 0,
-  loadingSvg: `<?xml version="1.0" encoding="UTF-8"?>
+  loadingIcon: `<?xml version="1.0" encoding="UTF-8"?>
 <svg stroke="#fff" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
 <g fill="none" fill-rule="evenodd" stroke-width="2">
 <circle cx="22" cy="22" r="1">

@@ -21,27 +21,25 @@ lightbox {
   background-color: rgba(0, 0, 0, 0.9);
 }
 
-.g-overlay {
-  margin: auto;
-
-  @media only screen and (max-width: 480px) {
-    width: 100%;
-    lightbox {
-      width: 100%;
-      height: 100vh;
-      max-width: unset;
-      max-height: unset;
-    }
-  }
-}
-
-.fullscreen {
+@mixin fullscreen() {
   width: 100%;
   lightbox {
     width: 100%;
     height: 100vh;
     max-width: unset;
     max-height: unset;
+  }
+}
+
+.fullscreen {
+  @include fullscreen();
+}
+
+.g-overlay {
+  margin: auto;
+
+  @media only screen and (max-width: 480px) {
+    @include fullscreen();
   }
 }
 

@@ -62,8 +62,7 @@ export class AppComponent implements OnInit {
     this.gallery.ref('lightbox').load(items);
   }
 }`,
-  alt: `this.gallery.ref('lightbox', {
-  thumbPosition: 'bottom',
-  dots: true
-}).load(items);`
+  alt: `this.lightbox.open(0, 'lightbox', {
+  panelClass: 'fullscreen'
+});`
 };
