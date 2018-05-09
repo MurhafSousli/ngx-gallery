@@ -27,6 +27,7 @@ import { Gallery } from '../services/gallery.service';
   `],
 })
 export class ImageItemComponent implements GalleryItemComponent {
+
   loading: boolean;
   @Input() data: any;
 
