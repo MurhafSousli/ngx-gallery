@@ -6,12 +6,12 @@ import { GalleryConfig, GalleryState } from '../models';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
   template: `
-    <gallery-thumb *ngIf="config.thumb"
+    <gallery-thumb *ngIf="state && config.thumb"
                   [state]="state"
                   [config]="config"
                   (indexChange)="indexChange.emit($event)">
     </gallery-thumb>
-    <div class="g-box">
+    <div class="g-box" *ngIf="state && config && indexChange">
       <gallery-slider [state]="state"
                       [config]="config"
                       (indexChange)="indexChange.emit($event)">
