@@ -20,7 +20,8 @@ import { GalleryItemComponent } from '../models';
   `]
 })
 export class IframeItemComponent implements GalleryItemComponent {
-  @Input() data;
+
+  @Input() data: any;
 
   constructor(public sanitizer: DomSanitizer) {
   }

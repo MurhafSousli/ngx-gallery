@@ -44,5 +44,9 @@ export class AppComponent implements OnInit {
     // This is for Lightbox example
     this.gallery.ref('lightbox').load(this.items);
   }
+
+  openLightbox() {
+    this.lightbox.open(0, 'lightbox');
+  }
 }
 

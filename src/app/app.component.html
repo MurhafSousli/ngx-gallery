@@ -4,12 +4,12 @@
 
 <div class="basic-container">
 	<h2>Basic Example</h2>
-		<gallery id="basic-test" [items]="items"></gallery>
+		<gallery id="basic-test" [style.height.px]="500" [items]="items"></gallery>
 </div>
 
 <div class="lightbox-example">
 	<h2>Lightbox Example</h2>
-	<button mat-button (click)="lightbox.open(0, 'lightbox')">Open Lightbox</button>
+	<button mat-button (click)="openLightbox()">Open Lightbox</button>
 </div>
 
 <div class="gallerize-example">
