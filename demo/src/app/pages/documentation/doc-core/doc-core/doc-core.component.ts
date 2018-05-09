@@ -4,7 +4,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'app-doc-core',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './doc-core.component.html',
-  styleUrls: ['./doc-core.component.scss']
+  styleUrls: ['./doc-core.component.scss'],
+  preserveWhitespaces: false
 })
 export class DocCoreComponent {
 

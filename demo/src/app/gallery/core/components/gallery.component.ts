@@ -72,13 +72,13 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   onIndexChange(i) {
     switch (i) {
       case 'next':
-        this.galleryRef.next();
+        this.next();
         break;
       case 'prev':
-        this.galleryRef.prev();
+        this.prev();
         break;
       default:
-        this.galleryRef.set(i);
+        this.set(i);
     }
   }
 

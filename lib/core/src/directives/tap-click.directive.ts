@@ -1,4 +1,6 @@
-/** This directive enable tap if HammerJS is loaded, otherwise it falls back to normal click event */
+/**
+ * This directive enable tap if HammerJS is loaded, otherwise it falls back to normal click event 
+ */
 import { Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
 
 declare const Hammer: any;

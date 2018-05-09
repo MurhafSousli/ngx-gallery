@@ -13,6 +13,7 @@ import { filter } from 'rxjs/operators/filter';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeAnimation],
+  preserveWhitespaces: false
 })
 export class AppComponent implements OnInit {
 

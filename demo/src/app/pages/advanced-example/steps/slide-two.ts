@@ -4,6 +4,7 @@ import { Gallery, GalleryRef } from '../../../gallery/core';
 
 @Component({
   selector: 'slide-two',
+  preserveWhitespaces: false,
   template: `
     <div class="slide" fxLayout="column" fxLayoutAlign="start center">
       <h2>Select your vacation type:</h2>

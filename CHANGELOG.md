@@ -1,5 +1,59 @@
 # Changelog
 
+## 2.1.1
+
+- refactor(Lightbox Style): Clean up.
+- fix(HammerJS): Don't throw an error if hammer is not defined, just fallback to default.
+- feat(VideoItem): add a 3rd parameter to `VideoItem` to set custom poster.
+
+```ts
+const viewItem = new VideoItem(video.src, video.thumb, video.poster);
+```
+
+- refactor(Gallery templates): rename `thumbSrc` to `thumb`.
+
+### Breaking Changes
+
+This won't effect the usage, but you might need to update 
+
+`GalleryItem` data object has changed the name of the thumbnail source property from `thumbSrc` to `thumb`
+
+This would only effect your app if you display the thumbnails list of your gallery items
+
+Before
+
+```html
+<div class="grid">
+  <div  class="grid-item"
+        *ngFor="let item of galleryItems$ | async; let i = index"
+        (click)="lightbox.open(i)">
+    <img class="grid-image" [src]="item.data.thumbSrc">
+  </div>
+</div>
+```
+
+After
+
+```html
+<div class="grid">
+  <div  class="grid-item"
+        *ngFor="let item of galleryItems$ | async; let i = index"
+        (click)="lightbox.open(i)">
+    <img class="grid-image" [src]="item.data.thumb">
+  </div>
+</div>
+```
+
+## 2.0.4
+
+- feat(GalleryConfig): add `loadingIcon` to GalleryConfig that accepts inline image.
+
+## 2.0.3
+
+- fix(Lightbox): Exit animation, closes [#73](https://github.com/MurhafSousli/ngx-gallery/issues/73).
+- fix(Lightbox): close button is clicking behind, closes [#54](https://github.com/MurhafSousli/ngx-gallery/issues/54).
+- refactor(Lightbox): Use the button tag instead of div for close button.
+
 ## 2.0.2
 
 - enhancement(Gallerize): Use `MutationObserver` instead of `ngAfterContentChecked` to prevent infinite loop in default change detection strategy, closes [#70](https://github.com/MurhafSousli/ngx-gallery/issues/70).

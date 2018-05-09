@@ -6,13 +6,9 @@ import { LightboxConfig } from './lightbox.model';
 import { defaultConfig } from './lightbox.default';
 import { LightboxComponent } from './lightbox.component';
 
-import { Overlay } from '@angular/cdk/overlay';
-import { OverlayRef } from '@angular/cdk/overlay';
-import { OverlayConfig } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef, OverlayConfig } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { LEFT_ARROW } from '@angular/cdk/keycodes';
-import { RIGHT_ARROW } from '@angular/cdk/keycodes';
-import { ESCAPE } from '@angular/cdk/keycodes';
+import { LEFT_ARROW, RIGHT_ARROW, ESCAPE } from '@angular/cdk/keycodes';
 
 @Injectable()
 export class Lightbox {
@@ -21,10 +17,10 @@ export class Lightbox {
   private _overlayRef: OverlayRef;
 
   /** Global config */
-  private config: LightboxConfig;
+  private _config: LightboxConfig;
 
   constructor(@Inject(LIGHTBOX_CONFIG) config: LightboxConfig, private _gallery: Gallery, private _overlay: Overlay) {
-    this.config = {...defaultConfig, ...config};
+    this._config = {...defaultConfig, ...config};
   }
 
   /**
@@ -32,7 +28,7 @@ export class Lightbox {
    * @param config - LightboxConfig
    */
   setConfig(config: LightboxConfig) {
-    this.config = {...this.config, ...config};
+    this._config = {...this._config, ...config};
   }
 
   /**
@@ -43,7 +39,7 @@ export class Lightbox {
    */
   open(i = 0, id = 'lightbox', config?: LightboxConfig) {
 
-    const _config = config ? { ...this.config, ...config } : this.config;
+    const _config = config ? {...this._config, ...config} : this._config;
 
     const overlayConfig: OverlayConfig = {
       backdropClass: _config.backdropClass,
@@ -60,10 +56,10 @@ export class Lightbox {
 
     /** Attach gallery to the overlay */
     const galleryPortal = new ComponentPortal(LightboxComponent);
-    const compRef: ComponentRef<LightboxComponent> = this._overlayRef.attach(galleryPortal);
+    const lightboxRef: ComponentRef<LightboxComponent> = this._overlayRef.attach(galleryPortal);
 
-    compRef.instance.id = id;
-    compRef.instance.close = () => this.close();
+    lightboxRef.instance.id = id;
+    lightboxRef.instance.overlayRef = this._overlayRef;
 
     if (_config.hasBackdrop) {
       this._overlayRef.backdropClick().subscribe(() => this.close());
@@ -90,7 +86,7 @@ export class Lightbox {
    */
   close() {
     if (this._overlayRef.hasAttached()) {
-      this._overlayRef.dispose();
+      this._overlayRef.detach();
     }
   }
 }

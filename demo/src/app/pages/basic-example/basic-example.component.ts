@@ -7,7 +7,8 @@ import { map } from 'rxjs/operators/map';
   selector: 'basic-example',
   templateUrl: './basic-example.component.html',
   styleUrls: ['./basic-example.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  preserveWhitespaces: false
 })
 export class BasicComponent {
 

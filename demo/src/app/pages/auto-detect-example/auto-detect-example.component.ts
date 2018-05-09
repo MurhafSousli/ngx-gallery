@@ -5,7 +5,8 @@ import { SharedService } from '../../service/shared.service';
   selector: 'auto-detect-example',
   templateUrl: './auto-detect-example.component.html',
   styleUrls: ['./auto-detect-example.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  preserveWhitespaces: false
 })
 export class AutoDetectExampleComponent {
 

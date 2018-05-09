@@ -6,7 +6,7 @@ import { GalleryItemComponent } from '../models';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
   template: `
-    <div [lazyImage]="data.thumbSrc"></div>
+    <div [lazyImage]="data.thumb"></div>
   `,
   styles: [`
     :host {

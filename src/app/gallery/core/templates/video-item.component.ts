@@ -6,7 +6,11 @@ import { GalleryItemComponent } from '../models';
   selector: 'video-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
-  template: '<video controls [src]="sanitizer.bypassSecurityTrustResourceUrl(data?.src)"></video>',
+  template: `
+    <video controls
+           [src]="sanitizer.bypassSecurityTrustResourceUrl(data?.src)"
+           [poster]="sanitizer.bypassSecurityTrustResourceUrl(data?.poster)"></video>
+  `,
   styles: [`
     video {
       position: absolute;
@@ -17,7 +21,7 @@ import { GalleryItemComponent } from '../models';
 })
 export class VideoItemComponent implements GalleryItemComponent {
 
-  @Input() data;
+  @Input() data: any;
 
   constructor(public sanitizer: DomSanitizer) {
   }

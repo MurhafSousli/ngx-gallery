@@ -5,7 +5,8 @@ import { Title } from '@angular/platform-browser';
   selector: 'not-found',
   templateUrl: './not-found.component.html',
   styleUrls: ['./not-found.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  preserveWhitespaces: false
 })
 export class NotFoundComponent implements OnInit {
 

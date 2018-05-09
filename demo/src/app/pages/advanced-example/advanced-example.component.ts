@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { SharedService } from '../../service/shared.service';
 import { GalleryItem } from '../../gallery/core';
-// import { GalleryItem } from '@ngx-gallery/core';
 
 import { SlideOneComponent } from './steps/slide-one';
 import { SlideTwoComponent } from './steps/slide-two';
@@ -12,7 +11,8 @@ import { TabComponent } from './steps/tab';
   selector: 'advanced-example',
   templateUrl: './advanced-example.component.html',
   styleUrls: ['./advanced-example.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  preserveWhitespaces: false
 })
 export class AdvancedExampleComponent implements OnInit {
 

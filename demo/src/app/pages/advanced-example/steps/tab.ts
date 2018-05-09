@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 @Component({
   selector: 'tab',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  preserveWhitespaces: false,
   template: `
     <div class="tab" fxLayout fxLayoutAlign="space-between center">
       <div fxLayout fxLayoutAlign="center center" class="tab-number">{{data.index}}</div>

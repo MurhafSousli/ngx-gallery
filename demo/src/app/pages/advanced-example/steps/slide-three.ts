@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'slide-three',
+  preserveWhitespaces: false,
   template: `
     <div class="slide" fxLayout="column" fxLayoutAlign="start center">
       <h2>Good luck!</h2>

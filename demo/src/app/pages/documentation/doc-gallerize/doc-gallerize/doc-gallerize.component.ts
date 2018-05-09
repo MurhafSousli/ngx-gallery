@@ -4,7 +4,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'app-doc-gallerize',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './doc-gallerize.component.html',
-  styleUrls: ['./doc-gallerize.component.scss']
+  styleUrls: ['./doc-gallerize.component.scss'],
+  preserveWhitespaces: false
 })
 export class DocGallerizeComponent {
 
