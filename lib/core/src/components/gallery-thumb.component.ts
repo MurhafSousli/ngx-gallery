@@ -63,7 +63,7 @@ export class GalleryThumbComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
-    if (this.config.gestures && !this.config.disableThumb && Hammer) {
+    if (this.config.gestures && !this.config.disableThumb && typeof Hammer !== 'undefined') {
 
       this.mc = new Hammer(this._el.nativeElement);
       this.mc.get('pan').set({direction: Hammer.DIRECTION_ALL});
