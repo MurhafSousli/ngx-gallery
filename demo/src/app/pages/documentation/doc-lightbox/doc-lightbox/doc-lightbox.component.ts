@@ -11,13 +11,13 @@ export class DocLightboxComponent {
 
   docs = `import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GalleryModule } from  '@ngx-gallery/core';
-import { GalleryLightbox } from  '@ngx-gallery/lightbox';
+import { LightboxModule } from  '@ngx-gallery/lightbox';
 
 @NgModule({
  imports: [
     BrowserAnimationsModule,
     GalleryModule.forRoot(galleryConfig?),
-    GalleryLightbox.forRoot(lightboxConfig?)
+    LightboxModule.forRoot(lightboxConfig?)
  ]
 })`;
 
