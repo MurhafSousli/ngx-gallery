@@ -20,50 +20,50 @@ import { fromEvent } from 'rxjs/observable/fromEvent';
 })
 export class LazyDirective implements OnDestroy {
 
-  /** Lazy load worker */
-  worker$ = new Subject();
+  // Lazy load worker
+  private _worker$ = new Subject();
 
   @Input('lazyImage')
   set lazyImage(imagePath) {
-    this.getImage(imagePath);
+    this.loadImage(imagePath);
   }
 
   @Output() loading = new EventEmitter<boolean>();
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {
-    const img = this.renderer.createElement('img');
+  constructor(private _el: ElementRef, private _renderer: Renderer2) {
+    const img = new Image();
 
-    this.worker$.pipe(
+    this._worker$.pipe(
       switchMap((imageSrc: string) => {
 
-        /** Image is loading */
+        // Image is loading
         this.loading.emit(true);
 
-        /** Stop previously loading */
+        // Stop previously loading
         img.src = imageSrc;
 
-        /** Image load success */
-        const imageSuccess = fromEvent(img, 'load').pipe(
+        // Image load success
+        const loadSuccess = fromEvent(img, 'load').pipe(
           tap(() => {
-            this.renderer.setStyle(this.el.nativeElement, 'backgroundImage', `url(${imageSrc})`);
+            this._renderer.setStyle(this._el.nativeElement, 'backgroundImage', `url(${imageSrc})`);
             this.loading.emit(false);
           })
         );
 
-        /** Image load error */
-        const imageError = fromEvent(img, 'error').pipe(tap(() => this.loading.emit(false)));
+        // Image load error
+        const loadError = fromEvent(img, 'error').pipe(tap(() => this.loading.emit(false)));
 
-        return zip(imageSuccess, imageError);
+        return zip(loadSuccess, loadError);
       })
     ).subscribe();
   }
 
-  getImage(imagePath) {
-    this.worker$.next(imagePath);
+  loadImage(imagePath) {
+    this._worker$.next(imagePath);
   }
 
   ngOnDestroy() {
-    this.worker$.unsubscribe();
+    this._worker$.complete();
   }
 
 }
