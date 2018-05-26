@@ -9,15 +9,22 @@ import { LightboxComponent } from './lightbox.component';
 import { Overlay, OverlayRef, OverlayConfig } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { LEFT_ARROW, RIGHT_ARROW, ESCAPE } from '@angular/cdk/keycodes';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class Lightbox {
 
-  /** Gallery overlay ref */
+  // Lightbox overlay ref
   private _overlayRef: OverlayRef;
 
-  /** Global config */
+  // Global config
   private _config: LightboxConfig;
+
+  // Stream that emits when lightbox is opened
+  opened = new Subject<string>();
+
+  // Stream that emits when lightbox is closed
+  closed = new Subject<string>();
 
   constructor(@Inject(LIGHTBOX_CONFIG) config: LightboxConfig, private _gallery: Gallery, private _overlay: Overlay) {
     this._config = {...defaultConfig, ...config};
@@ -54,7 +61,13 @@ export class Lightbox {
 
     this._overlayRef = this._overlay.create(overlayConfig);
 
-    /** Attach gallery to the overlay */
+    // overlay opened event
+    this._overlayRef.attachments().subscribe(() => this.opened.next(id));
+
+    // overlay closed event
+    this._overlayRef.detachments().subscribe(() => this.closed.next(id));
+
+    // Attach gallery to the overlay
     const galleryPortal = new ComponentPortal(LightboxComponent);
     const lightboxRef: ComponentRef<LightboxComponent> = this._overlayRef.attach(galleryPortal);
 
