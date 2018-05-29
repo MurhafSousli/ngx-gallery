@@ -4,9 +4,9 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule,  MatToolbarModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
-import { GalleryModule } from './gallery/core';
-import { LightboxModule } from './gallery/lightbox';
-import { GallerizeModule } from './gallery/gallerize';
+import { GalleryModule } from '@ngx-gallery/core';
+import { LightboxModule } from '@ngx-gallery/lightbox';
+import { GallerizeModule } from '@ngx-gallery/gallerize';
 
 @NgModule({
   declarations: [

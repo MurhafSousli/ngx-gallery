@@ -1,10 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-@import 'app/gallery/core/styles/gallery';
-@import 'app/gallery/core/styles/lightbox';
+@import '~@ngx-gallery/core/styles/gallery';
+@import '~@ngx-gallery/core/styles/lightbox';
 
 
-body { 
+body {
   font-family: Roboto, Arial, sans-serif;
   margin: 0;
 }

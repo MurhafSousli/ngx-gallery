@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Gallery, GalleryItem, ImageItem } from './gallery/core';
-import { Lightbox } from './gallery/lightbox';
+import { Gallery, GalleryItem, ImageItem } from '@ngx-gallery/core';
+import { Lightbox } from '@ngx-gallery/lightbox';
 
 @Component({
   selector: 'app-root',
@@ -43,6 +43,10 @@ export class AppComponent implements OnInit {
 
     // This is for Lightbox example
     this.gallery.ref('lightbox').load(this.items);
+
+    this.lightbox.opened.subscribe(res => console.log('opened', res));
+
+    this.lightbox.closed.subscribe(res => console.log('closed', res));
   }
 
   openLightbox() {
