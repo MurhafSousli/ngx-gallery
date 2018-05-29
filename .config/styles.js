@@ -1,91 +1,51 @@
-const sass = require('node-sass');
-const fs = require('fs');
-const path = require('path');
-const mkdirp = require('mkdirp');
-const cssnano = require('cssnano');
-const postcss = require('postcss');
-const autoprefixer = require('autoprefixer');
-const stripInlineComments = require('postcss-strip-inline-comments');
-
-const gulpUtil = require('gulp-util');
-
-const processors = [
-  stripInlineComments,
-  autoprefixer,
-  cssnano
-];
-
-const srcDir = 'lib/core/src/styles/';
-const distButtonDir = 'build/core/styles/';
-
-function writeStyleFile(file) {
-
-  console.log(file);
-  /** Create dir if not exists */
-  if (!fs.existsSync(path.dirname(file.path))) {
-    mkdirp.sync(path.dirname(file.path), function (err) {
-      if (err) gulpUtil.log('[mkdirp]:', err)
-    });
-  }
-
-  /** Write css files to build dir */
-  fs.writeFileSync(file.path, file.contents, function (err) {
-    if (!err) {
-      gulpUtil.log('[writeFileSync]:', err);
-    }
-  });
-}
-
-
-function start(startPath, filter, callback) {
-
-  if (!fs.existsSync(startPath)) {
-    console.log("no dir ", startPath);
-    return;
-  }
-
-  const files = fs.readdirSync(startPath);
-  for (var i = 0; i < files.length; i++) {
-    var filename = path.join(startPath, files[i]);
-    var stat = fs.lstatSync(filename);
-    if (stat.isDirectory()) {
-      start(filename, filter, callback); //recurse
-    }
-    else if (filter.test(filename)) callback(filename);
-  }
-}
-
-function sassTask(filePath) {
-
-  const theme = path.relative(srcDir, filePath);
-
-  /** Compile scss to css */
-  const sassObj = sass.renderSync({
-    file: filePath
-  });
-
-  if (sassObj && sassObj.css) {
-    const css = sassObj.css.toString('utf8');
-    postcss(processors).process(css).then(function (result) {
-
-      /** Log warnings if any exists */
-      result.warnings().forEach(function (warn) {
-        gulpUtil.log(warn.toString());
-      });
-
-      /** Create css file object */
-      const file = {};
-      file.contents = new Buffer(result.css);
-
-      /** Write css files to button dir */
-      file.path = gulpUtil.replaceExtension(distButtonDir + theme, '.css');
-
-      writeStyleFile(file);
-      fs.createReadStream(filePath).pipe(fs.createWriteStream(distButtonDir + theme));
-    });
-  }
-}
-
-start(srcDir, /\.scss$/, function (filename) {
-  sassTask(filename);
+"use strict";
+exports.__esModule = true;
+var node_sass_1 = require("node-sass");
+var postcss = require("postcss");
+var cssnano = require("cssnano");
+var autoprefixer = require("autoprefixer");
+var stripInlineComments = require("postcss-strip-inline-comments");
+var fs_1 = require("fs");
+var Subject_1 = require("rxjs/Subject");
+var bindNodeCallback_1 = require("rxjs/observable/bindNodeCallback");
+var fromPromise_1 = require("rxjs/observable/fromPromise");
+var operators_1 = require("rxjs/operators");
+var utils_1 = require("./utils");
+/** Compile SCSS to CSS */
+var compileScssFile = operators_1.mergeMap(function (file) {
+    var compileSass$ = bindNodeCallback_1.bindNodeCallback(node_sass_1.render);
+    return compileSass$({ file: file.src }).pipe(operators_1.mergeMap(function (res) { return processCss(res.css); }), operators_1.mergeMap(function (result) { return createCssFile(file.distCss, result.css); }), operators_1.tap(function () { return utils_1.logSuccess(file); }));
 });
+/** Process CSS file */
+function processCss(cssData) {
+    var CSS_PROCESSORS = [stripInlineComments, autoprefixer, cssnano];
+    var process$ = postcss(CSS_PROCESSORS).process(cssData.toString('utf8'));
+    return fromPromise_1.fromPromise(process$);
+}
+/** Create css file and save it to dist */
+function createCssFile(target, cssContent) {
+    var cssData = new Buffer(cssContent);
+    var writeFile$ = bindNodeCallback_1.bindNodeCallback(fs_1.writeFile);
+    // Write css file to dist
+    return writeFile$(target, cssData);
+}
+function sendFileToWorker(target) {
+    worker$.next(new utils_1.WorkFile(target, SRC_DIR, DIST_DIR));
+}
+function startTask() {
+    // check if SRC_DIR exists
+    if (!fs_1.existsSync(SRC_DIR)) {
+        utils_1.logError(SRC_DIR + " does not exist!");
+        return;
+    }
+    utils_1.readFiles(SRC_DIR, '.scss', sendFileToWorker);
+}
+var worker$ = new Subject_1.Subject();
+worker$.pipe(utils_1.makeDirectory, utils_1.copyFile, compileScssFile).subscribe();
+/** Read arguments from process */
+var SRC_DIR = process.argv[2];
+var DIST_DIR = process.argv[3];
+if (!SRC_DIR || !DIST_DIR) {
+    throw new Error('Base dir has not been set!');
+}
+startTask();
