@@ -42,10 +42,15 @@ lightbox {
 .fullscreen {
   width: 100%;
   lightbox {
-    width: 100%;
-    height: 100vh;
     max-width: unset;
     max-height: unset;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
   }
 }
 
