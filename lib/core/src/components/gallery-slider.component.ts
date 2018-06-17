@@ -35,7 +35,9 @@ declare const Hammer: any;
       <div class="slides"
            [class.-no-transition]="sliderState.active"
            [ngStyle]="sliderState.style">
-        <div *ngFor="let item of state.items" class="slide">
+        <div *ngFor="let item of state.items; let i = index"
+             class="slide"
+             (click)="itemClick.emit(i)">
           <ng-container [item]="item"></ng-container>
         </div>
       </div>
@@ -54,6 +56,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   @Input() width: number;
   @Input() height: number;
   @Output() indexChange = new EventEmitter<string | number>();
+  @Output() itemClick = new EventEmitter<number>();
 
   constructor(private _el: ElementRef, @Inject(PLATFORM_ID) private platform: Object) {
     this.sliderState$ = this.stateStream$.pipe(map(

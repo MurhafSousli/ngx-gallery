@@ -18,7 +18,8 @@ import { GalleryConfig, GalleryState } from '../models';
         <gallery-nav *ngIf="config.nav && state.items.length > 1"
                     [state]="state"
                     [config]="config"
-                    (indexChange)="indexChange.emit($event)">
+                    (indexChange)="indexChange.emit($event)"
+                    (itemClick)="itemClick.emit($event)">
         </gallery-nav>
       </gallery-slider>
       <gallery-dots *ngIf="config.dots"
@@ -36,6 +37,7 @@ export class GalleryCoreComponent {
   @Input() state: GalleryState;
   @Input() config: GalleryConfig;
   @Output() indexChange = new EventEmitter<string | number>();
+  @Output() itemClick = new EventEmitter<number>();
 
   /** Set thumbnails position ('top' | 'left' | 'right' | 'bottom') */
   @HostBinding('attr.thumbPosition') get thumbPosition() {
