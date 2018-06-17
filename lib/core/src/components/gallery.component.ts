@@ -20,7 +20,8 @@ import { Subscription } from 'rxjs/Subscription';
   template: `
     <gallery-core [state]="galleryRef.state$ | async"
                   [config]="galleryRef.config$ | async"
-                  (indexChange)="onIndexChange($event)"></gallery-core>
+                  (indexChange)="onIndexChange($event)"
+                  (itemClick)="itemClick.emit($event)"></gallery-core>
     <ng-content></ng-content>
   `
 })
@@ -45,6 +46,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
 
   @Output() indexChange = new EventEmitter<GalleryState>();
   @Output() itemsChange = new EventEmitter<GalleryState>();
+  @Output() itemClick = new EventEmitter<number>();
 
   private _itemChange$: Subscription;
   private _indexChange$: Subscription;
