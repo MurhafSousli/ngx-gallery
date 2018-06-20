@@ -5,9 +5,7 @@ import * as autoprefixer from 'autoprefixer';
 import * as stripInlineComments from 'postcss-strip-inline-comments';
 
 import { existsSync, writeFile } from 'fs';
-import { Subject } from 'rxjs/Subject';
-import { bindNodeCallback } from 'rxjs/observable/bindNodeCallback';
-import { fromPromise } from 'rxjs/observable/fromPromise';
+import { Subject, bindNodeCallback, from } from 'rxjs';
 import { mergeMap, tap } from 'rxjs/operators';
 
 import { WorkFile, copyFile, makeDirectory, logSuccess, logError, readFiles } from './utils';
@@ -26,7 +24,7 @@ const compileScssFile = mergeMap((file: WorkFile) => {
 function processCss(cssData: Buffer) {
   const CSS_PROCESSORS = [stripInlineComments, autoprefixer, cssnano];
   const process$ = postcss(CSS_PROCESSORS).process(cssData.toString('utf8'));
-  return fromPromise(process$);
+  return from(process$);
 }
 
 /** Create css file and save it to dist */

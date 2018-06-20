@@ -8,12 +8,10 @@ const {
   existsSync
 } = require('fs');
 
-const { exec } = require('child_process');
-
 const getPackages = p =>
-  readdirSync(p).filter(f => statSync(join(p, f)).isDirectory());
+readdirSync(p).filter(f => statSync(join(p, f)).isDirectory());
 
-const packages = getPackages('lib');
+const packages = getPackages('projects');
 
 console.log(
   'Updating packages version to',
@@ -24,10 +22,9 @@ console.log(
 // Get the root from the main package.json
 const version = JSON.parse(readFileSync('package.json', 'utf8')).version;
 
-// Updates `VERSION` in package.json for all packages
+  // Updates `VERSION` in package.json for all packages
 packages.map(package => {
-  const packagePath = `build/${package}/package.json`;
-
+  const packagePath = `dist/${package}/package.json`;
   // Check if package directory exists
   if (existsSync(packagePath)) {
     console.log(c.magenta(`${package}@${version}`), c.green(c.symbols.check));

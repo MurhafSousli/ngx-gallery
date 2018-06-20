@@ -4,9 +4,9 @@ const { readdirSync, statSync } = require('fs');
 const { join } = require('path');
 
 const getPackages = p =>
-  readdirSync(p).filter(f => statSync(join(p, f)).isDirectory());
+readdirSync(p).filter(f => statSync(join(p, f)).isDirectory());
 
-const packages = getPackages('lib');
+const packages = getPackages('projects');
 
 console.log(
   'Publishing packages',
@@ -15,7 +15,7 @@ console.log(
 );
 
 packages.map(function(package) {
-  const packagePath = `${__dirname}/../build/${package}`;
+  const packagePath = `${__dirname}/../dist/${package}`;
   execSync(`cd ${packagePath} && npm publish`);
   console.log(c.magenta(package), 'has been published', c.green(c.symbols.check));
 });
