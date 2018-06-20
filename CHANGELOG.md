@@ -1,14 +1,5 @@
 # Changelog
 
-## 2.2.1
-
-- fix(Lightbox): fix full screen mode on Mobile, closes [#99](https://github.com/MurhafSousli/ngx-gallery/issues/99), [#86](https://github.com/MurhafSousli/ngx-gallery/issues/86) in [843e2bf](https://github.com/MurhafSousli/ngx-gallery/commit/843e2bfedf3c33446dbdedffe27d53643aafa13d)
-
-## 2.2.0
-
-- feat(Lightbox): Add opened and closed Event on Lightbox, closes [#92](https://github.com/MurhafSousli/ngx-gallery/issues/92) in [6fa7304](https://github.com/MurhafSousli/ngx-gallery/commit/6fa7304c2e692d0511ccf88c15c15f9e6ec32eac).
-- refactor(core): refactor lazy load image directive, closes [#90](https://github.com/MurhafSousli/ngx-gallery/issues/90) in [9276988](https://github.com/MurhafSousli/ngx-gallery/commit/9276988c3aa45838dd1d9f064f5d7f9c4ade6ae7).
-
 ## 2.1.1
 
 - refactor(Lightbox Style): Clean up.
