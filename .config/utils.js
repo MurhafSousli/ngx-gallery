@@ -56,7 +56,7 @@ exports.copyFile = operators_1.map(function (file) {
     return file;
 });
 function logError(err) {
-    console.log(c.bgRedBright('[Error]:'), c.red(err));
+    console.log(c.bgred('[Error]:'), c.red(err));
 }
 exports.logError = logError;
 function logSuccess(file) {

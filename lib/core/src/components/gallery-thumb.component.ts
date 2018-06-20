@@ -12,9 +12,8 @@ import {
 } from '@angular/core';
 import { GalleryConfig, GalleryState } from '../models';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { map } from 'rxjs/operators/map';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 declare const Hammer: any;
 

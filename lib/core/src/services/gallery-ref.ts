@@ -1,6 +1,5 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { filter } from 'rxjs/operators/filter';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { defaultConfig, defaultState } from '../utils/gallery.default';
 import {
   GalleryState,
