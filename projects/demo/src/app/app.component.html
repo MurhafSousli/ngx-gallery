@@ -1,0 +1,39 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav>
+    <div class="logo">
+      <mat-icon svgIcon="logo"></mat-icon>
+    </div>
+    <h3>@ngx-gallery</h3>
+    <menu [toolbar]="false"></menu>
+  </mat-sidenav>
+
+  <div fxLayout="column" class="main-wrapper">
+
+    <!-- MAIN TOOLBAR -->
+
+    <mat-toolbar color="primary">
+      <a mat-button class="toggle-button" (click)="sidenav.open()">
+        <mat-icon>menu</mat-icon>
+      </a>
+
+      <div class="toolbar-logo">
+        <a routerLink=".">
+          <mat-icon svgIcon="logo"></mat-icon>
+        </a>
+        <h1>Angular Gallery</h1>
+      </div>
+
+      <span fxFlex></span>
+      <menu></menu>
+    </mat-toolbar>
+
+    <!-- ROUTER OUTLET -->
+
+    <main fxFlex [@sideAnimation]="getState(o)">
+      <router-outlet #o="outlet"></router-outlet>
+    </main>
+  </div>
+
+</mat-sidenav-container>
+
+

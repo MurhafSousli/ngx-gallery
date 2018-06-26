@@ -1,0 +1,69 @@
+<div class="page-title">
+  <h1>Basic Example</h1>
+</div>
+<div class="page-content">
+
+  <mat-tab-group>
+
+    <mat-tab label="Overview">
+      <!--<ng-template matTabContent>-->
+
+        <mat-tab-group>
+
+          <mat-tab label="Basic">
+            <ng-template matTabContent>
+              <p>The most basic usage is to set gallery items using an array <code class="hljs">GalleryItem[]</code></p>
+              <p>Add gallery items using template binding</p>
+              <hl-code [code]="code.galleryItems" [height]="400"></hl-code>
+            </ng-template>
+          </mat-tab>
+
+          <mat-tab label="Http request">
+            <ng-template matTabContent>
+              <p>Map the data to gallery items from a http request</p>
+              <p>We will use <code class="hljs">async</code> pipe to subscribe.</p>
+              <hl-code [code]="code.galleryHttp" [height]="400"></hl-code>
+            </ng-template>
+          </mat-tab>
+
+          <mat-tab label="GalleryComponent">
+            <ng-template matTabContent>
+              <p>Alternatively, you can use gallery's component functions.</p>
+              <p>Add gallery items using <code class="hljs">GalleryComponent</code>:</p>
+              <hl-code [code]="code.galleryCmp" [height]="400"></hl-code>
+            </ng-template>
+          </mat-tab>
+
+          <mat-tab label="GalleryRef">
+            <ng-template matTabContent>
+              <p>Access the gallery from anywhere in your app</p>
+              <p>Add gallery items using <code class="hljs">GalleryRef</code>:</p>
+              <hl-code [code]="code.galleryRef" [height]="400"></hl-code>
+            </ng-template>
+          </mat-tab>
+
+        </mat-tab-group>
+
+      <p>There are many options that you can adjust, See the complete list of options in <a
+        href="https://github.com/MurhafSousli/ngx-gallery/wiki/Gallery-API">Gallery API</a>.</p>
+      <p>Beside these options, you can also use CSS to change gallery's style.</p>
+
+      <!--</ng-template>-->
+    </mat-tab>
+
+    <mat-tab label="Example">
+
+      <ng-template matTabContent>
+
+        <gallery id="ex1" [items]="lions$ | async"
+                 [thumbPosition]="(media$ | async) === 'sm' ? 'top' : 'left'"></gallery>
+
+        <hl-code [code]="code.ex1"></hl-code>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+
+
+</div>
+<footer></footer>
+

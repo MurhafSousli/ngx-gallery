@@ -1,0 +1,28 @@
+<div class="page-title">
+  <h1>Lightbox Example</h1>
+</div>
+<div class="page-content">
+  <div class="grid">
+    <button mat-raised-button mat-ripple
+            class="grid-item"
+            *ngFor="let item of space$ | async; let i = index"
+            (click)="lightbox.open(i)">
+      <span class="grid-image" [lazyImage]="item.data.thumb"></span>
+    </button>
+  </div>
+
+  <hl-code [code]="code.ex"></hl-code>
+
+  <p>To open the lightbox in full screen mode</p>
+
+  <hl-code [code]="code.alt"></hl-code>
+  <button mat-raised-button color="primary" (click)="lightbox.open(0, 'lightbox', {panelClass: 'fullscreen'})">Try it in fullscreen</button>
+
+  <section>
+    <section-title>Gallery and lightbox using <code class="hljs">Gallerize</code> directive</section-title>
+  </section>
+
+  <gallery gallerize [style.height.px]="500" [items]="space$ | async"></gallery>
+</div>
+
+<footer></footer>

@@ -1,0 +1,37 @@
+<div class="page-title">
+  <h1>Advanced Example</h1>
+</div>
+
+<div class="page-content">
+
+  <mat-tab-group>
+    <mat-tab label="Stepper">
+      <p>Each gallery item has a slide component and a thumbnail component, you can override them with your own components,
+        This is useful if you want to create custom layout, styles and functionality, then the gallery can act as a slider</p>
+
+        <gallery id="slides"
+                 [style.height.px]="500"
+                 [thumbPosition]="'top'"
+                 [thumbWidth]="200"
+                 [items]="slides"
+                 [gestures]="false"
+                 [nav]="false"
+                 [counter]="false"
+                 [disableThumb]="true">
+        </gallery>
+
+        <hl-code [code]="code" [height]="500"></hl-code>
+    </mat-tab>
+
+    <mat-tab label="Rich Gallery">
+      <p>Here is another example that adds extra information to the thumbnails and custom buttons to the slides.</p>
+
+      <gallery id="advanced" thumbPosition="top" thumbWidth="150" [style.height.px]="500" [items]="images$ | async"></gallery>
+
+      <hl-code [code]="code" [height]="500"></hl-code>
+    </mat-tab>
+  </mat-tab-group>
+
+</div>
+
+<footer></footer>

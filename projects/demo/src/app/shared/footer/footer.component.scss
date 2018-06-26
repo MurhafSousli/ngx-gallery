@@ -1,0 +1,33 @@
+@import '../../../assets/variables';
+
+:host {
+  box-shadow: inset 0 15px 14px -15px rgba(black, 0.7);
+  background-color: $primary-color;
+  background-image: $colorful-bg;
+
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+
+  padding: 5em 2em;
+  font-size: .9em;
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
+  color: gray;
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  h3 {
+    color: #fff;
+    text-align: center;
+  }
+}
+
+a {
+  color: gold;
+}
+
+fa-icon {
+  color: gold;
+  margin: 0 0.3em;
+}

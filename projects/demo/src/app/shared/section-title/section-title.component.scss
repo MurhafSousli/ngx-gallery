@@ -1,0 +1,24 @@
+@import '../../../assets/variables';
+
+:host {
+  width: 100%;
+}
+h2 {
+  flex: 1;
+  margin: 1em 0;
+  color: $primary-color;
+  &:after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 100%;
+    opacity: 0.2;
+    background-color: rgba($primary-color, 0.8);
+    margin-top: 1em;
+  }
+}
+
+fa-icon {
+  color: $accent-color;
+  margin-right: 10px;
+}

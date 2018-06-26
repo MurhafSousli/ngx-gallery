@@ -1,0 +1,45 @@
+@import '../../../assets/variables';
+
+.jumbo {
+  margin-top: 44px;
+  height: calc(100vh - 44px);
+}
+
+h3 {
+  margin-top: 2em;
+}
+
+section {
+  padding-top: 2em;
+}
+
+p {
+  margin-bottom: 2em;
+  font-size: 18px;
+}
+
+::ng-deep {
+  #advanced {
+    gallery-core {
+      background-color: black;
+    }
+    .g-thumb {
+      border-right: 1px solid white;
+      padding: 10px;
+    }
+    .g-counter {
+      top: 0;
+      bottom: unset;
+      font-size: 12px;
+      border-radius: 0 0 4px 4px;
+    }
+  }
+  #slides {
+    .g-thumb-container {
+      box-shadow: 0 1px 1px rgba(#0048ab, 0.1);
+    }
+    gallery-core {
+      background: white;
+    }
+  }
+}

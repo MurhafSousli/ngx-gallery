@@ -1,0 +1,61 @@
+@import '../../../assets/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-width: 100%;
+  margin-top: 2em;
+  margin-bottom: 3em;
+}
+
+pre {
+  min-height: 100%;
+  min-width: 100%;
+  margin: 0;
+  display: inline-flex;
+  word-wrap: normal;
+  code {
+    display: inline-block;
+    height: 100%;
+    padding: 1.7em 2em !important;
+    border-radius: 0;
+    flex: 1;
+    margin: 0;
+    box-shadow: none;
+    overflow: hidden;
+  }
+}
+
+ng-scrollbar {
+  border-radius: .5em;
+  margin-bottom: 0;
+}
+
+button {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+}
+
+.copy-message {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  border-radius: 0.2em;
+  color: $primary-color;
+}
+
+span {
+  margin-left: 10px;
+}
+
+pre {
+  min-height: 100%;
+}
