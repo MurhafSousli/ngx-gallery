@@ -4,7 +4,7 @@ const { readdirSync, statSync } = require('fs');
 const { join } = require('path');
 
 const getPackages = p =>
-readdirSync(p).filter(f => statSync(join(p, f)).isDirectory());
+readdirSync(p).filter(f => statSync(join(p, f)).isDirectory()).filter(f => f !== 'demo');
 
 const packages = getPackages('projects');
 
