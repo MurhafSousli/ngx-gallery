@@ -4,25 +4,37 @@ about: Create a report to help us improve
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
-
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
-
-**Try to reproduce the bug with the [ngx-gallery stackblitz](https://stackblitz.com/edit/ngx-gallery)**
-
-**Expected behavior**
-A clear and concise description of what you expected to happen.
-
-**Which version are using? (please complete the following information):**
- - Package version [e.g. v2.2.0]
- - Angular version [e.g. v6.0.0]
+<!-- 
+1. Please make sure that you have searched in the older issues before submitting a new one!
+2. Please fill out all the required information!
+ -->
 
 
-**Mention any other details that might be useful**
-Add any other context about the problem here.
+#### What is the expected behavior?
+
+
+#### What is the current behavior?
+
+
+#### What are the steps to reproduce?
+
+<!-- 
+Providing a StackBlitz reproduction is the *best* way to share your issue. <br/>
+StackBlitz starter: https://stackblitz.com/edit/ngx-gallery<br/>
+-->
+
+
+#### What is the use-case or motivation for changing an existing behavior?
+
+
+
+#### Which versions are you using for the following packages?
+
+Angular:
+Angular CDK:
+Angular CLI:
+Typescript:
+Gallery: 
+
+
+#### Is there anything else we should know?

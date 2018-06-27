@@ -4,14 +4,37 @@ about: Suggest an idea for this project
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+<!-- 
+1. Please make sure that you have searched in the older issues before submitting a new one!
+2. Please fill out all the required information!
+ -->
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+#### What is the expected behavior?
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+
+#### What is the current behavior?
+
+
+#### What are the steps to reproduce?
+
+<!-- 
+Providing a StackBlitz reproduction is the *best* way to share your issue. <br/>
+StackBlitz starter: https://stackblitz.com/edit/ngx-gallery<br/>
+-->
+
+
+#### What is the use-case or motivation for changing an existing behavior?
+
+
+
+#### Which versions are you using for the following packages?
+
+Angular:
+Angular CDK:
+Angular CLI:
+Typescript:
+Gallery: 
+
+
+#### Is there anything else we should know?
