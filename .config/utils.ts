@@ -57,9 +57,10 @@ export const copyFile = map((file: WorkFile): WorkFile => {
 });
 
 export function logError(err: any) {
-  console.log(c.bgRedBright('[Error]:'), c.red(err));
+  console.log(c.bgred('[Error]:'), c.red(err));
 }
 
 export function logSuccess(file: WorkFile) {
-  console.log(c.magenta(basename(file.distScss)), c.green(c.symbols.check));
+  console.log(c.magenta(basename(file.distScss)), c.green((c as any).symbols.check as any));
+
 }

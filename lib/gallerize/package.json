@@ -28,7 +28,7 @@
   ],
   "private": false,
   "peerDependencies": {
-    "@angular/common": ">=5.0.0",
+    "@angular/common": ">=6.0.0",
     "@ngx-gallery/core": ">=2.0.0",
     "@ngx-gallery/lightbox": ">=2.0.0"
   }

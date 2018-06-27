@@ -14,13 +14,8 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 import { GalleryState, GalleryConfig } from '../models';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { map } from 'rxjs/operators/map';
-import { tap } from 'rxjs/operators/tap';
-import { fromEvent } from 'rxjs/observable/fromEvent';
-import { debounceTime } from 'rxjs/operators/debounceTime';
+import { BehaviorSubject, Observable, fromEvent as observableFromEvent, Subscription } from 'rxjs';
+import { map, tap, debounceTime } from 'rxjs/operators';
 
 declare const Hammer: any;
 
@@ -48,7 +43,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   mc: any;
   resizeSub$: Subscription;
   sliderState$: Observable<any>;
-  stateStream$ = new BehaviorSubject({value: 0, active: false});
+  stateStream$ = new BehaviorSubject({ value: 0, active: false });
   @Input() state: GalleryState;
   @Input() config: GalleryConfig;
   @Input() width: number;
@@ -64,7 +59,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   viewDepth() {
-    return {transform: `perspective(50px) translate3d(0, 0, ${-this.config.zoomOut}px)`};
+    return { transform: `perspective(50px) translate3d(0, 0, ${-this.config.zoomOut}px)` };
   }
 
   sliderStyle(delta: number) {
@@ -85,30 +80,30 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges() {
-    this.stateStream$.next({value: 0, active: false});
+    this.stateStream$.next({ value: 0, active: false });
   }
 
   ngOnInit() {
     if (this.config.gestures && typeof Hammer !== 'undefined') {
 
       this.mc = new Hammer(this._el.nativeElement);
-      this.mc.get('pan').set({direction: Hammer.DIRECTION_ALL});
+      this.mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
 
       // Slides thumbnails
       this.mc.on('pan', (e) => {
 
         switch (this.config.slidingDirection) {
           case 'horizontal':
-            this.stateStream$.next({value: e.deltaX, active: true});
+            this.stateStream$.next({ value: e.deltaX, active: true });
             if (e.isFinal) {
-              this.stateStream$.next({value: 0, active: false});
+              this.stateStream$.next({ value: 0, active: false });
               this.horizontalPan(e);
             }
             break;
           case 'vertical':
-            this.stateStream$.next({value: e.deltaY, active: true});
+            this.stateStream$.next({ value: e.deltaY, active: true });
             if (e.isFinal) {
-              this.stateStream$.next({value: 0, active: false});
+              this.stateStream$.next({ value: 0, active: false });
               this.verticalPan(e);
             }
         }
@@ -117,7 +112,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
     // Rearrange slider on window resize
     if (isPlatformBrowser(this.platform)) {
-      this.resizeSub$ = fromEvent(window, 'resize').pipe(
+      this.resizeSub$ = observableFromEvent(window, 'resize').pipe(
         debounceTime(200),
         tap(() => this.stateStream$.next(this.stateStream$.getValue()))
       ).subscribe();
@@ -125,7 +120,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
     // Fix wrong slider width on init
     setTimeout(() => {
-      this.stateStream$.next({value: 0, active: false});
+      this.stateStream$.next({ value: 0, active: false });
     }, 300);
   }
 

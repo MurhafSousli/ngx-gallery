@@ -4,14 +4,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { Gallery, GalleryItem, ImageItem } from '@ngx-gallery/core';
 import { Lightbox } from '@ngx-gallery/lightbox';
 
-import { Subject } from 'rxjs/Subject';
-import { from } from 'rxjs/observable/from';
-import { empty } from 'rxjs/observable/empty';
-import { map } from 'rxjs/operators/map';
-import { tap } from 'rxjs/operators/tap';
-import { switchMap } from 'rxjs/operators/switchMap';
-import { debounceTime } from 'rxjs/operators/debounceTime';
-import { finalize } from 'rxjs/operators';
+import { Subject, from as observableFrom, EMPTY } from 'rxjs';
+import { finalize, debounceTime, switchMap, tap, map } from 'rxjs/operators';
 
 @Directive({
   selector: '[gallerize]'
@@ -50,7 +44,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
 
           const images: GalleryItem[] = [];
 
-          return from(imageElements).pipe(
+          return observableFrom(imageElements).pipe(
             map((img: HTMLImageElement, i) => {
               // Add click event to the image
               this._renderer.setStyle(img, 'cursor', 'pointer');
@@ -61,7 +55,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
             finalize(() => galleryRef.load(images))
           );
         } else {
-          return empty();
+          return EMPTY;
         }
       })
     ).subscribe();

@@ -5,9 +5,7 @@ import * as autoprefixer from 'autoprefixer';
 import * as stripInlineComments from 'postcss-strip-inline-comments';
 
 import { existsSync, writeFile } from 'fs';
-import { Subject } from 'rxjs/Subject';
-import { bindNodeCallback } from 'rxjs/observable/bindNodeCallback';
-import { fromPromise } from 'rxjs/observable/fromPromise';
+import { Subject, bindNodeCallback, from as observableFrom } from 'rxjs';
 import { mergeMap, tap } from 'rxjs/operators';
 
 import { WorkFile, copyFile, makeDirectory, logSuccess, logError, readFiles } from './utils';
@@ -15,7 +13,7 @@ import { WorkFile, copyFile, makeDirectory, logSuccess, logError, readFiles } fr
 /** Compile SCSS to CSS */
 const compileScssFile = mergeMap((file: WorkFile) => {
   const compileSass$: any = bindNodeCallback(renderSass);
-  return compileSass$({file: file.src}).pipe(
+  return compileSass$({ file: file.src }).pipe(
     mergeMap((res: Result) => processCss(res.css)),
     mergeMap((result: any) => createCssFile(file.distCss, result.css)),
     tap(() => logSuccess(file))
@@ -26,7 +24,7 @@ const compileScssFile = mergeMap((file: WorkFile) => {
 function processCss(cssData: Buffer) {
   const CSS_PROCESSORS = [stripInlineComments, autoprefixer, cssnano];
   const process$ = postcss(CSS_PROCESSORS).process(cssData.toString('utf8'));
-  return fromPromise(process$);
+  return observableFrom(process$);
 }
 
 /** Create css file and save it to dist */
@@ -44,7 +42,7 @@ function sendFileToWorker(target: string) {
 function startTask() {
   // check if SRC_DIR exists
   if (!existsSync(SRC_DIR)) {
-    logError( `${SRC_DIR} does not exist!`);
+    logError(`${SRC_DIR} does not exist!`);
     return;
   }
   readFiles(SRC_DIR, '.scss', sendFileToWorker);

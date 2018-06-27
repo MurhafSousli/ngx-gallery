@@ -8,12 +8,8 @@ import {
   OnDestroy
 } from '@angular/core';
 
-import { Subject } from 'rxjs/Subject';
-
-import { switchMap } from 'rxjs/operators/switchMap';
-import { tap } from 'rxjs/operators/tap';
-import { zip } from 'rxjs/observable/zip';
-import { fromEvent } from 'rxjs/observable/fromEvent';
+import { Subject, zip as observableZip, fromEvent as observableFromEvent } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 
 @Directive({
   selector: '[lazyImage]'
@@ -43,7 +39,7 @@ export class LazyDirective implements OnDestroy {
         img.src = imageSrc;
 
         // Image load success
-        const loadSuccess = fromEvent(img, 'load').pipe(
+        const loadSuccess = observableFromEvent(img, 'load').pipe(
           tap(() => {
             this._renderer.setStyle(this._el.nativeElement, 'backgroundImage', `url(${imageSrc})`);
             this.loading.emit(false);
@@ -51,9 +47,9 @@ export class LazyDirective implements OnDestroy {
         );
 
         // Image load error
-        const loadError = fromEvent(img, 'error').pipe(tap(() => this.loading.emit(false)));
+        const loadError = observableFromEvent(img, 'error').pipe(tap(() => this.loading.emit(false)));
 
-        return zip(loadSuccess, loadError);
+        return observableZip(loadSuccess, loadError);
       })
     ).subscribe();
   }
