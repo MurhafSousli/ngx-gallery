@@ -1,5 +1,4 @@
-@import '../../../assets/variables';
-@import '../../../assets/theme';
+@import "../../../assets/mixin";
 
 .logo {
   display: flex;
@@ -12,8 +11,18 @@
   }
 }
 
-.jumbo {
-  height: calc(100vh - 44px);
+section {
+  margin: 2em 0 3em;
+}
+
+.row {
+  margin-top: 2em;
+}
+
+@include mobile() {
+  .column div {
+    width: 100%;
+  }
 }
 
 .description {
@@ -38,23 +47,6 @@
   display: flex;
   align-items: center;
   opacity: 0.6;
-}
-
-.item-image {
-  width: 150px;
-  height: 150px;
-  opacity: 0.3;
-  overflow: hidden;
-  padding: 3em 0;
-  > div {
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
-  }
-}
-
-h3 {
-  margin-top: 2em;
 }
 
 ::ng-deep {
@@ -89,8 +81,4 @@ h3 {
   a {
     margin-bottom: 4em;
   }
-}
-
-.docs-button {
-  color: mat-color($demo-primary);
 }

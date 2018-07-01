@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub';
 
 @Component({
   selector: 'menu',
@@ -8,6 +7,5 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MenuComponent {
-  githubIcon = faGithub;
   @Input() toolbar = true;
 }

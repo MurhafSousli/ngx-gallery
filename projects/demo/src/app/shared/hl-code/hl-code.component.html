@@ -6,9 +6,15 @@
 
     <ng-container *ngIf="!state.copied; else copiedMessage">
 
+      <pre *ngIf="disabled; else enabled">
+        <code #codeEL class="hljs" [innerHTML]="code"></code>
+      </pre>
+
+      <ng-template #enabled>
         <pre>
           <code #codeEL highlight [code]="code"></code>
         </pre>
+      </ng-template>
 
     </ng-container>
 

@@ -1,0 +1,10 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/lightbox",
+  "lib": {
+    "entryFile": "src/public_api.ts",
+    "externals": {
+      "@ngx-gallery/core": "@ngx-gallery/core"
+    }
+  }
+}

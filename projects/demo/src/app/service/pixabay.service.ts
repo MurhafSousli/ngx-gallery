@@ -5,7 +5,6 @@ import { map, publishReplay, refCount } from 'rxjs/operators';
 
 import { ImageItem, GalleryItem } from '@ngx-gallery/core';
 
-import { ImageProItem } from '../extra-templates/extra-templates';
 import { Hit, Hit2, PixabayHDModel, PixabayModel } from './pixabay.model';
 
 @Injectable()
@@ -16,24 +15,21 @@ export class Pixabay {
   constructor(private _http: HttpClient) {
   }
 
-  getImages(key: string, pro?: boolean): Observable<GalleryItem[]> {
+  getImages(key: string): Observable<GalleryItem[]> {
     const URL = `https://pixabay.com/api/?key=${this.API_KEY}&q=${encodeURIComponent(key)}&editors_choice=true&per_page=18`;
     return this._http.get(URL).pipe(
       map((res: PixabayModel) => {
         return res.hits.map((item: Hit) => {
-          const src = item.webformatURL.replace('640', '960');
-          const thumb = item.previewURL;
-          if (pro) {
-            const extraData = {
-              favorites: item.favorites,
-              likes: item.likes,
-              views: item.views,
-              username: item.user,
-              userImage: item.userImageURL
-            };
-            return new ImageProItem(src, thumb, extraData);
-          }
-          return new ImageItem(src, thumb);
+          const data = {
+            src: item.webformatURL.replace('640', '960'),
+            thumb: item.previewURL,
+            favorites: item.favorites,
+            likes: item.likes,
+            views: item.views,
+            username: item.user,
+            userImage: item.userImageURL
+          };
+          return new ImageItem(data);
         });
       }),
       publishReplay(1),
@@ -45,7 +41,7 @@ export class Pixabay {
     const URL = `https://pixabay.com/api/?key=${this.API_KEY}&q=${encodeURIComponent(key)}&response_group=high_resolution&editors_choice=true&per_page=18`;
     return this._http.get(URL).pipe(
       map((res: PixabayHDModel) => {
-        return res.hits.map((item: Hit2) => new ImageItem(item.largeImageURL, item.previewURL));
+        return res.hits.map((item: Hit2) => new ImageItem({src: item.largeImageURL, thumb: item.previewURL}));
       }),
       publishReplay(1),
       refCount()

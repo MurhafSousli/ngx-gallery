@@ -15,13 +15,14 @@ export class LightboxExampleComponent implements OnInit, OnDestroy {
 
   code: any;
   space$: Observable<GalleryItem[]>;
+  images: string[] = [];
 
   constructor(public gallery: Gallery, public lightbox: Lightbox, public _pixabay: Pixabay) {
     this.code = code;
   }
 
   ngOnInit() {
-    this.space$ = this._pixabay.getImages('space').pipe(
+    this.space$ = this._pixabay.getHDImages('sea').pipe(
       map((items: GalleryItem[]) => {
         // Load items manually into the lightbox gallery ref
         this.gallery.ref('lightbox', {

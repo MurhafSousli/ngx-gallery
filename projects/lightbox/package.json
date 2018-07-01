@@ -1,0 +1,36 @@
+{
+  "name": "@ngx-gallery/lightbox",
+  "version": "VERSION",
+  "description": "Angular gallery directive that hooks the lightbox with the images automatically.",
+  "homepage": "http://github.com/murhafsousli/ngx-gallery",
+  "author": {
+    "name": "Murhaf Sousli",
+    "url": "http://github.com/murhafsousli"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/murhafsousli/ngx-gallery.git"
+  },
+  "bugs": {
+    "url": "http://github.com/murhafsousli/ngx-gallery/issues"
+  },
+  "license": "MIT",
+  "keywords": [
+    "angular",
+    "ionic",
+    "gallery",
+    "images",
+    "lightbox",
+    "modal",
+    "slider",
+    "overlay",
+    "carousel"
+  ],
+  "private": false,
+  "peerDependencies": {
+    "@angular/common": "^6.0.0",
+    "@angular/core": "^6.0.0",
+    "@angular/cdk": "^6.0.0",
+    "@ngx-gallery/core": "VERSION"
+  }
+}

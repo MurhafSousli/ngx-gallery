@@ -4,12 +4,12 @@
 
   <div class="install">
     <b>NPM</b>
-    <hl-code [code]="'npm i -S @ngx-gallery/core'"></hl-code>
+    <hl-code [code]="'npm i -S @ngx-gallery/core'" [disabled]="true"></hl-code>
   </div>
 
   <div class="install">
     <b>YARN</b>
-    <hl-code [code]="'yarn add @ngx-gallery/core'"></hl-code>
+    <hl-code [code]="'yarn add @ngx-gallery/core'" [disabled]="true"></hl-code>
   </div>
 </section>
 
@@ -38,17 +38,10 @@
 
   <div class="usage-title">
     <span class="section-number">3</span>
-    <p>Load images into the gallery</p>
-  </div>
-  <div fxLayout>
-    <div fxLayout="column" fxLayoutAlign="center center" style="width: 30px">
-      <div class="separator"></div>
-    </div>
-    <div fxFlex style="margin-left: 1.6em">
-      <p>See <a routerLink="/basic">Basic Example</a></p>
-      <p>See <a routerLink="/mixed">Mixed Content Example</a></p>
-      <p>See <a routerLink="/advanced">Advanced Example</a></p>
-    </div>
+    <p>See <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent" routerLink="/gallery">Gallery
+      Example</a> and <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent"
+                         routerLink="/advanced">Advanced Example</a>
+    </p>
   </div>
 
 </section>
@@ -66,12 +59,12 @@
 
   <div class="install">
     <b>NPM</b>
-    <hl-code code="npm i -S hammerjs"></hl-code>
+    <hl-code code="npm i -S hammerjs" [disabled]="true"></hl-code>
   </div>
 
   <div class="install">
     <b>YARN</b>
-    <hl-code code="yarn add hammerjs"></hl-code>
+    <hl-code code="yarn add hammerjs" [disabled]="true"></hl-code>
   </div>
 
   <p>After installing, import HammerJS into <code class="hljs">src/polyfills.ts</code></p>

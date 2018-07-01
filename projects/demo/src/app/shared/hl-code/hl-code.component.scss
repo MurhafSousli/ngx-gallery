@@ -7,6 +7,10 @@
   min-width: 100%;
   margin-top: 2em;
   margin-bottom: 3em;
+  border: 2px solid $code-color;
+  overflow: hidden;
+  border-radius: 0.5em;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
 pre {
@@ -16,6 +20,7 @@ pre {
   display: inline-flex;
   word-wrap: normal;
   code {
+    background-color: $code-bg-color;
     display: inline-block;
     height: 100%;
     padding: 1.7em 2em !important;
@@ -24,12 +29,36 @@ pre {
     margin: 0;
     box-shadow: none;
     overflow: hidden;
+    border: none;
   }
 }
 
 ng-scrollbar {
-  border-radius: .5em;
   margin-bottom: 0;
+  ::ng-deep {
+    .code-scrollbar-thumb {
+      background-color: $scrollbar-color;
+      opacity: 0.3;
+      &:active {
+        opacity: 0.5;
+      }
+    }
+    .-vertical, .-horizontal {
+      transition: all 100ms ease;
+    }
+    .-vertical {
+      width: 6px;
+      &:hover, &:active {
+        width: 10px;
+      }
+    }
+    .-horizontal {
+      height: 6px;
+      &:hover, &:active {
+        height: 10px;
+      }
+    }
+  }
 }
 
 button {
@@ -39,6 +68,8 @@ button {
 }
 
 .copy-message {
+  color: $code-color;
+  background-color: $code-bg-color;
   position: absolute;
   left: 0;
   right: 0;
@@ -49,7 +80,6 @@ button {
   align-items: center;
   font-weight: bold;
   border-radius: 0.2em;
-  color: $primary-color;
 }
 
 span {

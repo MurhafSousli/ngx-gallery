@@ -19,11 +19,13 @@ import { FooterComponent } from './footer/footer.component';
 import { HlCodeComponent } from './hl-code/hl-code.component';
 import { MenuComponent } from './menu/menu.component';
 import { SectionTitleComponent } from './section-title/section-title.component';
+import { NoteComponent } from './note/note.component';
 
 @NgModule({
   declarations: [
     SectionTitleComponent,
     BadgesComponent,
+    NoteComponent,
     MenuComponent,
     FooterComponent,
     HlCodeComponent,
@@ -58,7 +60,8 @@ import { SectionTitleComponent } from './section-title/section-title.component';
     HlCodeComponent,
     MenuComponent,
     FooterComponent,
-    BadgesComponent
+    BadgesComponent,
+    NoteComponent
   ]
 })
 export class SharedModule {

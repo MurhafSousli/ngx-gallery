@@ -8,12 +8,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class DocCoreComponent {
 
-  importStyle = `@import '~@ngx-gallery/core/styles/gallery/';`;
+  importStyle = `@import '~@ngx-gallery/core/styles/gallery';`;
   docs = `import { GalleryModule } from  '@ngx-gallery/core';
 
 @NgModule({
  imports: [
-    GalleryModule.forRoot(config?)
+    GalleryModule.forRoot(config)
  ]
 })`;
 

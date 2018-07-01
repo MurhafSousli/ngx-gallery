@@ -15,27 +15,16 @@ import { MaterialModule } from './material.module';
 import { AppComponent } from './app.component';
 
 import { Pixabay } from './service/pixabay.service';
-import { ImageItemProComponent } from './extra-templates/image-item-pro.component';
-import { ThumbnailItemProComponent } from './extra-templates/thumb-item-pro.component';
-import { NFormatterPipe } from './shared/pipes/n-formatter.pipe';
 import { GalleryMockDialog } from './shared/gallery-mock-dialog';
 import { SharedModule } from './shared/shared.module';
-// import { ImageItemComponent } from '../../../core/src/lib/templates/image-item.component';
-// import { VideoItemComponent } from '../../../core/src/lib/templates/video-item.component';
-// import { IframeItemComponent } from '../../../core/src/lib/templates/iframe-item.component';
-// import { ThumbnailItemComponent } from '../../../core/src/lib/templates/thumbnail-item.component';
+import { NgProgressModule } from '@ngx-progressbar/core';
+import { NgProgressHttpModule } from '@ngx-progressbar/http';
+import { NgProgressRouterModule } from '@ngx-progressbar/router';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ThumbnailItemProComponent,
-    ImageItemProComponent,
-    GalleryMockDialog,
-    NFormatterPipe,
-    // ImageItemComponent,
-    // VideoItemComponent,
-    // IframeItemComponent,
-    // ThumbnailItemComponent,
+    GalleryMockDialog
   ],
   imports: [
     BrowserModule,
@@ -45,6 +34,9 @@ import { SharedModule } from './shared/shared.module';
     MaterialModule,
     FlexLayoutModule,
     SharedModule,
+    NgProgressModule.forRoot(),
+    NgProgressHttpModule,
+    NgProgressRouterModule,
     HighlightModule.forRoot({theme: 'tomorrow'}),
     GalleryModule.forRoot(),
     LightboxModule.forRoot()
@@ -53,12 +45,6 @@ import { SharedModule } from './shared/shared.module';
     Pixabay
   ],
   entryComponents: [
-    // ImageItemComponent,
-    // VideoItemComponent,
-    // IframeItemComponent,
-    // ThumbnailItemComponent,
-    ImageItemProComponent,
-    ThumbnailItemProComponent,
     GalleryMockDialog
   ],
   bootstrap: [AppComponent]

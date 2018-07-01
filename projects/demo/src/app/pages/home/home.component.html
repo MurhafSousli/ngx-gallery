@@ -1,71 +1,68 @@
-<div class="page-title">
-  <h1>Angular Gallery</h1>
+<ng-scrollbar>
+  <div class="page-title">
+    <h1>Angular Gallery</h1>
 
-  <badges></badges>
+    <badges></badges>
 
-  <sub>Simplifies the process of creating beautiful galleries.</sub>
+    <sub>Simplifies the process of creating beautiful galleries.</sub>
 
-  <a mat-raised-button class="docs-button" routerLink="/getting-started">Get Started</a>
-</div>
+    <a mat-raised-button class="docs-button" routerLink="/getting-started">Get Started</a>
+  </div>
 
-<div class="jumbo">
-  <gallery id="home" thumbPosition="top" thumbWidth="160" thumbHeight="120" zoomOut="7" [counter]="false"
-           loadingStrategy="preload" [items]="images$ | async"></gallery>
-</div>
+  <div class="page-content">
 
-<div class="page-content">
+    <section>
+      <section-title>Features</section-title>
 
-  <section>
-    <section-title>Features</section-title>
-
-    <div class="row">
-      <div class="column">
-        <div *ngFor="let feature of features | slice:0:4">
-          <button mat-icon-button color="accent">
-            <mat-icon class="md-24">done</mat-icon>
-          </button>
-          <span>{{ feature }}</span>
+      <div class="row">
+        <div class="column">
+          <div>
+            <div *ngFor="let feature of features | slice:0:4">
+              <button mat-icon-button color="accent">
+                <mat-icon class="md-24">done</mat-icon>
+              </button>
+              <span>{{ feature }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div>
+            <div *ngFor="let feature of features | slice:4:8">
+              <button mat-icon-button color="accent">
+                <mat-icon class="md-24">done</mat-icon>
+              </button>
+              <span>{{ feature }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <div>
+            <div *ngFor="let feature of features | slice:8">
+              <button mat-icon-button color="accent">
+                <mat-icon class="md-24">done</mat-icon>
+              </button>
+              <span>{{ feature }}</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="column">
-        <div *ngFor="let feature of features | slice:4:8">
-          <button mat-icon-button color="accent">
-            <mat-icon class="md-24">done</mat-icon>
-          </button>
-          <span>{{ feature }}</span>
-        </div>
-      </div>
-      <div class="column">
-        <div *ngFor="let feature of features | slice:8">
-          <button mat-icon-button color="accent">
-            <mat-icon class="md-24">done</mat-icon>
-          </button>
-          <span>{{ feature }}</span>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <section-title>Support</section-title>
+    <section>
+      <section-title>Issues</section-title>
 
-    <a href="https://www.patreon.com/bePatron?u=5594898">
-      <img
-        src="https://camo.githubusercontent.com/3d9b27bdf72d7e5407fbad6f9240f6cadc98a7a5/68747470733a2f2f63352e70617472656f6e2e636f6d2f65787465726e616c2f6c6f676f2f6265636f6d655f615f706174726f6e5f627574746f6e2e706e67"
-        alt="npm" data-canonical-src="https://c5.patreon.com/external/logo/become_a_patron_button.png"
-        style="max-width:100%;">
-    </a>
+      <p>If you identify any errors in this module, or have an idea for an improvement, please open an
+        <a href="https://github.com/MurhafSousli/ng-gallery/issues">issue</a>.</p>
 
-  </section>
+      <p>Here is a
+        <a mat-button class="inline-button" color="primary"
+           href="https://stackblitz.com/edit/ngx-gallery">
+          <fa-icon icon="external-link-alt"></fa-icon>
+          Stackblitz
+        </a> template.
+      </p>
+    </section>
+  </div>
 
-  <section>
-    <section-title>Issues</section-title>
-
-    <p>If you identify any errors in this module, or have an idea for an improvement, please open an
-      <a href="https://github.com/MurhafSousli/ng-gallery/issues">issue</a>.</p>
-
-    <p>Here is a <a href="https://stackblitz.com/edit/ngx-gallery">stackblitz</a> template.</p>
-  </section>
-</div>
-
-<footer></footer>
+  <footer></footer>
+</ng-scrollbar>

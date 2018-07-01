@@ -6,6 +6,10 @@ import { Component } from '@angular/core';
   styles: [`
     :host {
       margin-bottom: 2em;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 1em;
+      justify-content: center;
     }
     a {
       text-decoration: none;

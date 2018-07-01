@@ -2,6 +2,7 @@ gallery {
   display: block;
   margin-top: 3em;
   height: 500px;
+  width: 100%;
 }
 
 code {
@@ -13,15 +14,7 @@ code {
 }
 
 ::ng-deep {
-  #ex1 {
-    .g-thumb {
-      padding: 5px 10px;
-    }
-  }
-  #ex2 {
-    .g-thumb {
-      padding: 0;
-      opacity: 0.3;
-    }
+  .no-margin-bottom h2 {
+    margin-bottom: 0 !important;
   }
 }

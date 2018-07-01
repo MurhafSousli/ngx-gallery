@@ -25,11 +25,4 @@ import { GallerizeModule } from  '@ngx-gallery/gallerize';
   importStyle = `@import '~@ngx-gallery/core/styles/gallery';
 @import '~@ngx-gallery/core/styles/lightbox';`;
 
-
-  example = `<div class="grid" gallerize innerHtml="{{htmlThatHasImages}}"></div>
-<!-- OR -->
-<div class="grid" gallerize="galleryId" forClass="lightbox-img">
-  <img class="lightbox-img" *ngFor="let item of items" src="{{item.src}}">
-</div>`;
-
 }

@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Pixabay } from '../../service/pixabay.service';
 
 @Component({
   selector: 'home',
@@ -9,24 +8,18 @@ import { Pixabay } from '../../service/pixabay.service';
 })
 export class HomeComponent {
 
-  images$ = this._pixabay.getHDImages('see');
-
   features = [
-    'Custom components',
-    'Images',
-    'Videos',
-    'Iframes',
+    'Easy to use',
+    'Massively customizable',
+    'Images, videos and iframes',
     'Thumbnails',
     'Dots',
     'Navigation',
     'Auto-detect',
     'Lightbox',
-    'Multiple instances',
+    'Multiple instances support',
     'Gestures support',
     'Universal support'
   ];
-
-  constructor(private _pixabay: Pixabay) {
-  }
 
 }

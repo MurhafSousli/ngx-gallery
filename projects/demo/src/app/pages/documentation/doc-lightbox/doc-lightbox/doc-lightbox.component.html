@@ -4,12 +4,12 @@
 
   <div class="install">
     <b>NPM</b>
-    <hl-code code="npm i -S @ngx-gallery/core @ngx-gallery/lightbox @angular/cdk"></hl-code>
+    <hl-code code="npm i -S @ngx-gallery/core @ngx-gallery/lightbox @angular/cdk" [disabled]="true"></hl-code>
   </div>
 
   <div class="install">
     <b>YARN</b>
-    <hl-code code="yarn add @ngx-gallery/core @ngx-gallery/lightbox @angular/cdk"></hl-code>
+    <hl-code code="yarn add @ngx-gallery/core @ngx-gallery/lightbox @angular/cdk" [disabled]="true"></hl-code>
   </div>
 </section>
 
@@ -18,7 +18,7 @@
 
   <div class="usage-title">
     <span class="section-number">1</span>
-    <p>Import <b>GalleryModule</b> in the root module</p>
+    <p>Import <b>GalleryModule</b> and <b>LightboxModule</b> in the root module</p>
   </div>
 
   <hl-code [code]="docs"></hl-code>
@@ -28,7 +28,7 @@
 
   <div class="usage-title">
     <span class="section-number">2</span>
-    <p>Import gallery styles <code class="hljs">src/styles.scss</code></p>
+    <p>Import gallery and lightbox styles <code class="hljs">src/styles.scss</code></p>
   </div>
 
   <hl-code [code]="importStyle"></hl-code>
@@ -38,7 +38,9 @@
 
   <div class="usage-title">
     <span class="section-number">3</span>
-    <p>See <a routerLink="/lightbox">Lightbox Example</a></p>
+    <p>See <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent" routerLink="/lightbox">Lightbox
+      Example</a>
+    </p>
   </div>
 
 </section>

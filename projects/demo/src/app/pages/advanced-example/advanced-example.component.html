@@ -1,37 +1,58 @@
-<div class="page-title">
-  <h1>Advanced Example</h1>
-</div>
+<ng-scrollbar>
+  <div class="page-title">
+    <h1>Advanced</h1>
+  </div>
+  <div class="page-content">
+    <section>
+      <section-title>Overview</section-title>
 
-<div class="page-content">
+      <p>The gallery supports the ability for items and thumbnails to extend their templates. To do so, you have to
+        define your custom template, then the content can be provided as an <code class="hljs"
+                                                                                  [textContent]="'<ng-template>'"></code>
+      </p>
+      <p>Use <code class="hljs">[itemTemplate]</code> for items and <code class="hljs">[thumbTemplate]</code> for
+        thumbnails.</p>
 
-  <mat-tab-group>
-    <mat-tab label="Stepper">
-      <p>Each gallery item has a slide component and a thumbnail component, you can override them with your own components,
-        This is useful if you want to create custom layout, styles and functionality, then the gallery can act as a slider</p>
+      <h3>Passing in data to custom template</h3>
 
-        <gallery id="slides"
-                 [style.height.px]="500"
-                 [thumbPosition]="'top'"
-                 [thumbWidth]="200"
-                 [items]="slides"
-                 [gestures]="false"
-                 [nav]="false"
-                 [counter]="false"
-                 [disableThumb]="true">
-        </gallery>
+      <p>When using a custom template, additional context data can be used to render the data as needed.</p>
 
-        <hl-code [code]="code" [height]="500"></hl-code>
-    </mat-tab>
+      <p><b>Available data:</b> <code class="hljs">let-index="index"</code>, <code class="hljs">let-type="type"</code>, <code
+        class="hljs">let-data="data"</code> and <code class="hljs">let-currIndex="currIndex"</code></p>
 
-    <mat-tab label="Rich Gallery">
-      <p>Here is another example that adds extra information to the thumbnails and custom buttons to the slides.</p>
+      <h3>Example</h3>
 
-      <gallery id="advanced" thumbPosition="top" thumbWidth="150" [style.height.px]="500" [items]="images$ | async"></gallery>
+      <gallery id="mixed"
+               [dots]="true"
+               [thumbPosition]="(media$ | async) === 'sm' ? 'top' : 'right'"
+               [itemTemplate]="itemTemplate"
+               [thumbTemplate]="thumbTemplate"></gallery>
 
-      <hl-code [code]="code" [height]="500"></hl-code>
-    </mat-tab>
-  </mat-tab-group>
+      <h3>Template</h3>
 
-</div>
+      <hl-code [code]="code.template" [height]="400"></hl-code>
 
-<footer></footer>
+      <h3>Code</h3>
+
+      <hl-code [code]="code.component" [height]="400"></hl-code>
+
+    </section>
+  </div>
+
+  <footer></footer>
+</ng-scrollbar>
+
+<ng-template #thumbTemplate let-type="type">
+  <span *ngIf="type === 'youtube'" class="item-type">
+    <fa-icon [icon]="youtubeIcon" size="lg"></fa-icon>
+  </span>
+  <span *ngIf="type === 'video'" class="item-type">
+    <fa-icon [icon]="videoIcon" size="lg"></fa-icon>
+  </span>
+</ng-template>
+
+<ng-template #itemTemplate let-index="index" let-type="type" let-data="data" let-currIndex="currIndex">
+  <span *ngIf="type === 'image' && index === currIndex" [@slideAnimation] class="item-text">
+    {{data?.title}}
+  </span>
+</ng-template>

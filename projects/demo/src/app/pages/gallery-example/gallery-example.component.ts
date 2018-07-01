@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
+import { GalleryItem } from '@ngx-gallery/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Pixabay } from '../../service/pixabay.service';
-import { GalleryItem } from '../../../../../core/src/lib/models/index';
 
 @Component({
   selector: 'gallery-example',
@@ -14,24 +14,20 @@ import { GalleryItem } from '../../../../../core/src/lib/models/index';
 })
 export class GalleryExampleComponent {
 
-  readonly code: any;
-  readonly lions$: Observable<GalleryItem[]>;
-  readonly tigers$: Observable<GalleryItem[]>;
+  readonly code = code;
+  readonly fruits$: Observable<GalleryItem[]>;
   readonly media$: Observable<string>;
 
   constructor(pixabay: Pixabay, media: ObservableMedia) {
-    this.code = code;
-    this.lions$ = pixabay.getImages('lion');
-    this.tigers$ = pixabay.getImages('tiger');
+    this.fruits$ = pixabay.getImages('fruit');
     this.media$ = media.asObservable().pipe(map((res: MediaChange) => res.mqAlias));
   }
 
 }
 
 const code = {
-  ex1: '<gallery id="ex1" [items]="items" thumbPosition="left"></gallery>',
-  ex2: '<gallery id="ex2" [items]="items" thumbPosition="right" slidingDirection="vertical"></gallery>',
-  galleryItems: `import { Component, OnInit } from '@angular/core';
+  example: '<gallery [items]="items" thumbPosition="left"></gallery>',
+  basic: `import { Component, OnInit } from '@angular/core';
 import { GalleryItem, ImageItem } from '@ngx-gallery/core';
 
 @Component({
@@ -46,12 +42,12 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     // Set gallery items array
     this.images = [
-      new ImageItem('IMAGE_SRC_URL', '(OPTIONAL)IMAGE_THUMBNAIL_URL')),
-      // ...
+      new ImageItem({ src: 'IMAGE_SRC_URL', thumb: 'IMAGE_THUMBNAIL_URL' })),
+      // ... more items
     ];
   }
 }`,
-  galleryHttp: `import { Component, OnInit } from '@angular/core';
+  stream: `import { Component, OnInit } from '@angular/core';
 import { GalleryItem, ImageItem } from '@ngx-gallery/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -70,12 +66,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.images$ = this._http.get('REQUEST_URL').pipe(
-      map(res => new ImageItem(res.srcUrl, res.thumbUrl))
+      map(res => new ImageItem({ src: res.srcUrl, thumb: res.thumbUrl }))
     );
   }
 }`,
   galleryCmp: `import { Component, OnInit } from '@angular/core';
-import { ImageItem, VideoItem, YoutubeItem, IframeItem } from '@ngx-gallery/core';
+import { GalleryComponent, ImageItem } from '@ngx-gallery/core';
 
 @Component({
   template: \`
@@ -88,11 +84,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     // Add items individually
-    this.gallery.add(new ImageItem('IMAGE_SRC_URL', '(OPTIONAL)IMAGE_THUMBNAIL_URL'));
+    this.gallery.addImage({ src: 'IMAGE_SRC_URL', thumb: 'IMAGE_THUMBNAIL_URL' });
 
-    // Or add an array items at once
+    // Or load a new set of items
     this.gallery.load([
-      new ImageItem('IMAGE_SRC_URL', '(OPTIONAL)IMAGE_THUMBNAIL_URL'))
+      new ImageItem({ src: 'IMAGE_SRC_URL', thumb: 'IMAGE_THUMBNAIL_URL' }),
+      // ... more items
     ]);
   }
 }`,
@@ -114,11 +111,12 @@ export class AppComponent implements OnInit {
     const galleryRef = gallery.ref('myGallery');
 
     // Add items individually
-    this.galleryRef.add(new ImageItem('IMAGE_SRC_URL', '(OPTIONAL)IMAGE_THUMBNAIL_URL'));
+    this.galleryRef.addImage({ src: 'IMAGE_SRC_URL', thumb: 'IMAGE_THUMBNAIL_URL' });
 
-    // Or add an array items at once
+    // Or load a new set of items
     this.galleryRef.load([
-      new ImageItem('IMAGE_SRC_URL', '(OPTIONAL)IMAGE_THUMBNAIL_URL'))
+      new ImageItem({ src: 'IMAGE_SRC_URL', thumb: 'IMAGE_THUMBNAIL_URL' })
+      // ... more items
     ]);
   }
 }`

@@ -4,12 +4,14 @@
 
   <div class="install">
     <b>NPM</b>
-    <hl-code code="npm i -S @ngx-gallery/core @ngx-gallery/lightbox @ngx-gallery/gallerize @angular/cdk"></hl-code>
+    <hl-code code="npm i -S @ngx-gallery/core @ngx-gallery/lightbox @ngx-gallery/gallerize @angular/cdk"
+             [disabled]="true"></hl-code>
   </div>
 
   <div class="install">
     <b>YARN</b>
-    <hl-code code="yarn add @ngx-gallery/core @ngx-gallery/lightbox @ngx-gallery/gallerize @angular/cdk"></hl-code>
+    <hl-code code="yarn add @ngx-gallery/core @ngx-gallery/lightbox @ngx-gallery/gallerize @angular/cdk"
+             [disabled]="true"></hl-code>
   </div>
 </section>
 
@@ -18,7 +20,7 @@
 
   <div class="usage-title">
     <span class="section-number">1</span>
-    <p>Import <b>GalleryModule</b> in the root module</p>
+    <p>Import <b>GalleryModule</b>, <b>LightboxModule</b> and <b>GallerizeModule</b> in the root module</p>
   </div>
 
   <hl-code [code]="docs"></hl-code>
@@ -38,11 +40,8 @@
 
   <div class="usage-title">
     <span class="section-number">3</span>
-    <p>Add <code class="hljs">[gallerize]</code> on images container</p>
-  </div>
-
-  <div>
-    <hl-code [code]="example"></hl-code>
-    <p>See <a routerLink="/auto-detect">Auto-detect Example</a></p>
+    <p>See <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent" routerLink="/gallerize">Gallerize
+      Example</a>
+    </p>
   </div>
 </section>

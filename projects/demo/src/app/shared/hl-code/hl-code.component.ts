@@ -17,6 +17,7 @@ export class HlCodeComponent implements AfterViewInit {
   });
   @Input() code: string;
   @Input() height: number;
+  @Input() disabled: boolean;
 
   @ViewChild('codeEL', {read: ElementRef}) codeEl: ElementRef;
   @ViewChild(ScrollbarComponent) scrollbars: ScrollbarComponent;

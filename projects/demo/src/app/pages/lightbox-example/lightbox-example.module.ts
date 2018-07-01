@@ -9,10 +9,7 @@ import { SharedModule } from '../../shared/shared.module';
     SharedModule,
     RouterModule.forChild([
       {
-        path: '', component: LightboxExampleComponent,
-        data: {
-          title: 'Lightbox Example'
-        }
+        path: '', component: LightboxExampleComponent
       }
     ])
   ]

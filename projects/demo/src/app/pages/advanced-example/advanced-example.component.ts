@@ -1,114 +1,148 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { GalleryItem } from '@ngx-gallery/core';
-
-import { Pixabay } from '../../service/pixabay.service';
-import { SlideOneComponent } from './steps/slide-one';
-import { SlideTwoComponent } from './steps/slide-two';
-import { SlideThreeComponent } from './steps/slide-three';
-import { TabComponent } from './steps/tab';
+import { Component, OnInit } from '@angular/core';
+import { Gallery, GalleryItemType } from '@ngx-gallery/core';
+import { faYoutube } from '@fortawesome/free-brands-svg-icons/faYoutube';
+import { faVideo } from '@fortawesome/free-solid-svg-icons/faVideo';
+import { slideInAnimation } from './slide-text.animation';
+import { MediaChange, ObservableMedia } from '@angular/flex-layout';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'advanced-example',
   templateUrl: './advanced-example.component.html',
   styleUrls: ['./advanced-example.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  animations: [slideInAnimation]
 })
 export class AdvancedExampleComponent implements OnInit {
 
-  images$ = this._pixabay.getImages('island', true);
-  slides: GalleryItem[];
-  code: string;
+  readonly arr = data;
+  readonly code = code;
+  readonly media$: Observable<string>;
+  readonly youtubeIcon = faYoutube;
+  readonly videoIcon = faVideo;
 
-  constructor(public _pixabay: Pixabay) {
-    this.code = code;
+  constructor(private _gallery: Gallery,  media: ObservableMedia) {
+    this.media$ = media.asObservable().pipe(map((res: MediaChange) => res.mqAlias));
   }
 
   ngOnInit() {
-    this.slides = [
-      {
-        component: SlideOneComponent,
-        thumbComponent: TabComponent,
-        data: {
-          index: 1,
-          title: 'Identity',
-          subtitle: 'Personal info!',
-          galleryId: 'slides'
-        }
-      },
-      {
-        component: SlideTwoComponent,
-        thumbComponent: TabComponent,
-        data: {
-          index: 2,
-          title: 'Travel',
-          subtitle: 'Which Suits You Best?',
-          galleryId: 'slides'
-        }
-      },
-      {
-        component: SlideThreeComponent,
-        thumbComponent: TabComponent,
-        data: {
-          index: 3,
-          title: 'Summary',
-          subtitle: 'Get lottery code!',
-          galleryId: 'slides'
-        }
+    const galleryRef = this._gallery.ref('mixed');
+    this.arr.map(item => {
+      switch (item.type) {
+        case GalleryItemType.Image:
+          galleryRef.addImage({src: item.src, thumb: item.thumb, title: item.title});
+          break;
+        case GalleryItemType.Video:
+          galleryRef.addVideo({src: item.src, thumb: item.thumb, poster: item.poster});
+          break;
+        case GalleryItemType.Youtube:
+          galleryRef.addYoutube({src: item.src});
+          break;
+        default:
+          galleryRef.addIframe({src: item.src, thumb: item.thumb});
       }
-    ];
+    });
   }
-
 }
 
-const code = `import { Component, OnInit } from '@angular/core';
-import { GalleryItem } from '@ngx-gallery/core';
+const data = [
+  {
+    type: 'image',
+    src: 'assets/img/img13.jpg',
+    thumb: 'assets/img/thumb/img13.jpg',
+    title: 'Scelerisque dapibus fringilla consequat scelerisque torquent senectus porttitor, placerat fames convallis molestie lobortis diam aliquam'
+  },
+  {
+    type: 'image',
+    src: 'assets/img/img11.jpg',
+    thumb: 'assets/img/thumb/img11.jpg',
+    title: 'Lorem ipsum curabitur auctor netus facilisis inceptos vivamus fusce inceptos, ullamcorper ipsum id pharetra curabitur leo curabitur.'
+  },
+  {
+    type: 'image',
+    src: 'assets/img/img3.jpg',
+    thumb: 'assets/img/thumb/img3.jpg',
+    title: 'Iaculis eros leo interdum erat tellus primis pharetra pulvinar, elit risus blandit tempus praesent himenaeos porta, neque elit neque ullamcorper ipsum curabitur at tempus aliquet quam fringilla.'
+  },
+  {
+    type: 'image',
+    src: 'assets/img/img4.jpg',
+    thumb: 'assets/img/thumb/img4.jpg',
+    title: 'Morbi etiam interdum velit lacinia platea magna libero curae auctor'
+  },
+  {
+    type: 'video',
+    src: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
+    thumb: 'http://laza.jalbum.net/Testing%20Base%20as%20site/Media/slides/big_buck_bunny.jpg',
+    poster: 'http://laza.jalbum.net/Testing%20Base%20as%20site/Media/slides/big_buck_bunny.jpg'
+  },
+  {
+    type: 'youtube',
+    src: '-OvvpsfU3NQ'
+  },
+  {
+    type: 'iframe',
+    src: 'https://material.angular.io/',
+    thumb: 'https://vignette.wikia.nocookie.net/random-ness/images/5/5f/TEH_POOTIS_MAN.jpg/revision/latest?cb=20130508152055'
+  }
+];
 
-import { SlideOneComponent } from './steps/slide-one';
-import { SlideTwoComponent } from './steps/slide-two';
-import { SlideThreeComponent } from './steps/slide-three';
-import { TabComponent } from './steps/tab';
+const code = {
+  template: `<gallery id="mixedExample" [thumbTemplate]="thumbTemplate" [itemTemplate]="itemTemplate"></gallery>
 
-@Component({
-  template: \`
-    <gallery id="slides" [items]="slides" [disableThumb]="true"
-             [thumbPosition]="'top'" [thumbWidth]="200"
-             [gestures]="false" [nav]="false" [counter]="false">
-    </gallery>
-  \`
-})
+<!-- Add custom template to thumbnails -->
+<ng-template #thumbTemplate let-type="type">
+  <span *ngIf="type === 'youtube'" class="item-type">
+    <fa-icon [icon]="youtubeIcon" size="lg"></fa-icon>
+  </span>
+  <span *ngIf="type === 'video'" class="item-type">
+    <fa-icon [icon]="videoIcon" size="lg"></fa-icon>
+  </span>
+</ng-template>
 
-export class AdvancedExampleComponent implements OnInit {
+<!-- Add custom template to image items -->
+<ng-template #itemTemplate
+             let-index="index"
+             let-type="type"
+             let-data="data"
+             let-currIndex="currIndex">
+  <span *ngIf="type === 'image' && index === currIndex" [@slideAnimation] class="item-text">
+    {{data?.title}}
+  </span>
+</ng-template>`,
+  component: `import { Component, OnInit } from '@angular/core';
+import { Gallery, GalleryRef } from '@ngx-gallery/core';
 
-  slides: GalleryItem[];
+@Component({...})
+export class AppComponent implements OnInit {
+
+  galleryId = 'mixedExample';
+
+  constructor(private gallery: Gallery) { }
 
   ngOnInit() {
-    this.slides = [
-      {
-        component: SlideOneComponent,
-        thumbComponent: TabComponent,
-        data: {
-          index: 1,
-          title: 'Identity',
-          subtitle: 'Personal info!'
-        }
-      },
-      {
-        component: SlideTwoComponent,
-        thumbComponent: TabComponent,
-        data: {
-          index: 2,
-          title: 'Travel',
-          subtitle: 'Which Suits You Best?'
-        }
-      },
-      {
-        component: SlideThreeComponent,
-        thumbComponent: TabComponent,
-        data: {
-          index: 3,
-          title: 'Summary',
-          subtitle: 'Get lottery code!'
-        }
-      }
-    ];
-  }`;
+    const galleryRef: GalleryRef = this.gallery.ref(this.galleryId);
+
+    galleryRef.addImage({
+      src: 'IMAGE_URL',
+      thumb: '(OPTIONAL)IMAGE_THUMBNAIL_URL',
+      title: 'Some title'
+    });
+
+    galleryRef.addVideo({
+      src: 'VIDEO_URL',
+      thumb: '(OPTIONAL)VIDEO_THUMBNAIL_URL',
+      poster: '(OPTIONAL)VIDEO_POSTER_URL'
+    });
+
+    galleryRef.addYoutube({
+      src: 'VIDEO_ID'
+    });
+
+    galleryRef.addIframe({
+      src: 'IFRAME_URL',
+      thumb: '(OPTIONAL)IMAGE_THUMBNAIL_URL'
+    });
+  }
+}`
+};
