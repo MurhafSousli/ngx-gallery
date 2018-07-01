@@ -42,7 +42,6 @@ export class AppComponent implements OnInit {
     // This is for Basic example
     const galleryRef: GalleryRef = this.gallery.ref('basic-test');
 
-    galleryRef.state$.subscribe(res => console.log(res));
     // this.items = this.imageData.map(item => {
     this.imageData.map(item => {
       // return new ImageItem(item.srcUrl, item.previewUrl);
