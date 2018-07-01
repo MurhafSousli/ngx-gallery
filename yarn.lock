@@ -217,11 +217,11 @@
   dependencies:
     tslib "^1.9.0"
 
-"@fortawesome/angular-fontawesome@^0.1.0-10":
-  version "0.1.0-10"
-  resolved "https://registry.yarnpkg.com/@fortawesome/angular-fontawesome/-/angular-fontawesome-0.1.0-10.tgz#27684efffde1ab7bd67ec479f5597712da273ad7"
+"@fortawesome/angular-fontawesome@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@fortawesome/angular-fontawesome/-/angular-fontawesome-0.1.1.tgz#18270a06553b93f357cd0a54cabe5fa1cf633ca5"
   dependencies:
-    tslib "^1.7.1"
+    tslib "^1.9.0"
 
 "@fortawesome/fontawesome-common-types@^0.2.0":
   version "0.2.0"
@@ -256,6 +256,24 @@
     "@angular-devkit/core" "0.6.0"
     tree-kill "^1.0.0"
     webpack-sources "^1.1.0"
+
+"@ngx-progressbar/core@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@ngx-progressbar/core/-/core-5.0.1.tgz#a8566384638512b7e53945a3995ccbd79ce21c31"
+  dependencies:
+    tslib "^1.9.0"
+
+"@ngx-progressbar/http@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@ngx-progressbar/http/-/http-5.0.1.tgz#f8072fe56c3d36619de04ab650bf191e00f275f9"
+  dependencies:
+    tslib "^1.9.0"
+
+"@ngx-progressbar/router@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@ngx-progressbar/router/-/router-5.0.1.tgz#9547b3e6fd2dd81d441818799831c22820faaec6"
+  dependencies:
+    tslib "^1.9.0"
 
 "@schematics/angular@0.6.8":
   version "0.6.8"
