@@ -1,0 +1,47 @@
+<ng-scrollbar>
+  <div class="page-title">
+    <h1>Getting Started</h1>
+  </div>
+
+  <div class="page-content">
+
+    <div fxLayout fxLayout.lt-md="column" fxLayoutGap="15px">
+      <div class="doc-menu-container">
+        <ul class="doc-menu">
+          <li><a routerLink="./core" routerLinkActive="active-link">Gallery installation</a></li>
+          <li><a routerLink="./lightbox" routerLinkActive="active-link">Lightbox installation</a></li>
+          <li><a routerLink="./gallerize" routerLinkActive="active-link">Gallerize installation</a></li>
+        </ul>
+      </div>
+
+      <div style="width: 100%">
+        <section>
+          <section-title>Overview</section-title>
+
+          <div class="usage-title">
+          <span class="section-number">
+            <mat-icon>star</mat-icon>
+          </span>
+            <p>This library consists of 3 packages:</p>
+          </div>
+
+          <div fxLayout>
+            <div fxHide.lt-md="true" fxLayout="column" fxLayoutAlign="center center" style="width: 30px">
+              <div class="separator"></div>
+            </div>
+            <div fxFlex style="margin-left: 1.6em">
+              <p><b>@ngx-gallery/core</b> provides <code class="hljs" [textContent]="'<gallery>'"></code> component and <code class="hljs">Gallery</code> service.</p>
+              <p><b>@ngx-gallery/lightbox</b> provides <code class="hljs">Lightbox</code> service that opens the gallery in an overlay.</p>
+              <p><b>@ngx-gallery/gallerize</b> provides <code class="hljs">[gallerize]</code> directive that
+                automatically add images to the lightbox.</p>
+            </div>
+          </div>
+        </section>
+
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+  <footer></footer>
+</ng-scrollbar>
+

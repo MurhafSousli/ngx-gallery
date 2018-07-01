@@ -1,0 +1,63 @@
+<ng-scrollbar>
+  <div class="page-title">
+    <h1>Lightbox</h1>
+  </div>
+  <div class="page-content">
+
+    <section>
+      <section-title>Overview</section-title>
+      <p><code class="hljs">Lightbox</code> is a service that opens the gallery in an overlay.</p>
+    </section>
+
+    <section>
+      <section-title>Usage</section-title>
+
+      <p>First we need to display the thumbnails in the template, then we add a click event to open the lightbox.</p>
+
+      <hl-code [code]="code.ex" [height]="400"></hl-code>
+
+      <h3>Example</h3>
+
+      <div class="grid">
+        <button mat-raised-button mat-ripple
+                class="grid-item"
+                *ngFor="let item of space$ | async; let i = index"
+                (click)="lightbox.open(i)">
+
+          <span class="grid-image" [style.backgroundImage]="'url(' + item.data.thumb + ')'"></span>
+
+        </button>
+      </div>
+
+      <p>Lightbox config can be set globally in <code class="hljs">LightboxModule.forRoot(config)</code> or directly
+        with the open function.</p>
+
+      <note>
+        <p>By default, the lightbox uses full screen style on small screens like on mobile phones, but you can force a
+          full screen style on large screens too.</p>
+      </note>
+
+      <p>For example, open the lightbox in
+        <button mat-button class="inline-button" color="accent"
+                (click)="lightbox.open(0, 'lightbox', {panelClass: 'fullscreen'})">
+          Full Screen
+        </button>
+        mode
+      </p>
+
+      <hl-code [code]="code.alt"></hl-code>
+
+      <p>List of lightbox options is available in the
+        <a mat-button class="inline-button" color="primary"
+           href="https://github.com/MurhafSousli/ngx-gallery/wiki/Lightbox-API">
+          <fa-icon icon="external-link-alt"></fa-icon>
+          Lightbox API
+        </a>
+      </p>
+
+    </section>
+
+  </div>
+
+  <footer></footer>
+</ng-scrollbar>

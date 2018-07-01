@@ -1,0 +1,32 @@
+gallery-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.g-dot {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  z-index: 20;
+}
+
+.g-dot-active .g-dot-inner {
+  opacity: 1;
+  transform: scale(1.6);
+}
+
+.g-dot-inner {
+  background-color: white;
+  margin: 20px 15px;
+  opacity: 0.6;
+  width: 10px;
+  height: 5px;
+  border-radius: 1px;
+  box-shadow: 0 0 1px black;
+  transition: all ease 0.2s;
+}
+

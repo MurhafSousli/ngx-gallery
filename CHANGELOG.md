@@ -1,13 +1,75 @@
 # Changelog
 
-## 2.2.1
+## 3.0.0
 
-- fix(Lightbox): fix full screen mode on Mobile, closes [#99](https://github.com/MurhafSousli/ngx-gallery/issues/99), [#86](https://github.com/MurhafSousli/ngx-gallery/issues/86) in [843e2bf](https://github.com/MurhafSousli/ngx-gallery/commit/843e2bfedf3c33446dbdedffe27d53643aafa13d)
+### Features:
 
-## 2.2.0
+- Support Angular 6 and RxJS 6, closes [#91](https://github.com/MurhafSousli/ngx-gallery/issues/91).
+- feat(Gallery): Add helper functions to add different gallery items on `<gallery>` and `GalleryRef`.
+- feat(Gallery): Add `fluid` option to gallery for full width size.
+- feat(Gallery): Add `navIcon` option to gallery config to set a custom nav icon.
+- feat(Gallery): Add`loadingStrategy` option to gallery which accepts one of the following: 'preload', 'lazy' or 'default', closes [#87](https://github.com/MurhafSousli/ngx-gallery/issues/87).
+- feat(Gallery): Add `itemClick` output which emits when an item is clicked, closes [#106](https://github.com/MurhafSousli/ngx-gallery/pull/106/files).
+- feat(Gallery): Support custom template inside the default item templates, add `itemTemplate` and `thumbTemplate` to gallery options.
+- feat(Gallery): Multiple video sources support.
+- feat(Gallery): Pause Video and Youtube items when active item changes.
+- feat(Gallerize): Add support to detect Gallery component.
+- feat(Gallerize): Add support to detect DOM background images.
 
-- feat(Lightbox): Add opened and closed Event on Lightbox, closes [#92](https://github.com/MurhafSousli/ngx-gallery/issues/92) in [6fa7304](https://github.com/MurhafSousli/ngx-gallery/commit/6fa7304c2e692d0511ccf88c15c15f9e6ec32eac).
-- refactor(core): refactor lazy load image directive, closes [#90](https://github.com/MurhafSousli/ngx-gallery/issues/90) in [9276988](https://github.com/MurhafSousli/ngx-gallery/commit/9276988c3aa45838dd1d9f064f5d7f9c4ade6ae7).
+### Bug fixes:
+
+- fix(Gallery): Skip re-setting the config from `<gallery>` input in lightbox mode, closes [#104](https://github.com/MurhafSousli/ngx-gallery/issues/104).
+- fix(Gallery): Fix wrong thumbnail position when `[thumbPosition]` is changed.
+
+### Improvements:
+
+- refactor(Gallery): Improve icon rendering, use svg element instead of background-image to render the nav icon in `<gallery-nav>`.
+- refactor(Gallery): Add `.g-active-item` on current item and `.g-active-thumb` on current thumbnail.
+- refactor(Gallery): Add `.g-image-loaded` class on `<gallery-image>` to indicates that the image has been loaded.
+- refactor(Gallery): Replace `loading` output with `loaded`, which emits the image path after it loads.
+- refactor(Gallery): Set an initial height of `500px`.
+- refactor(Gallery): Replace `ImageItem` `VideoItem` `YoutubeItem` and `IframeItem` constructor parameters with a single data parameter.
+- refactor(Gallery, Lightbox): Set `aria-label` on all buttons.
+- refactor(Gallerize): Remove `forClass` input and replace it for `selector` input.
+- refactor(Gallerize): Remove `CommonModule` as it is not needed.
+- refactor(Styles): Add a prefix to all classes used in the plugin.
+- refactor(Styles): Add a transition for animate the opacity on current item and thumbnail.
+
+
+### Breaking changes:
+
+#### Gallery
+
+- Before, To Create an image item, we pass src and thumbnail separately.
+
+```ts
+const item: GalleryItem = new ImageItem('IMAGE_SRC', 'THUMB_SRC');
+```
+
+- After, The parameters are replace with a single data object.
+
+```ts
+const item: GalleryItem = new ImageItem({ src: 'IMAGE_SRC', thumb: 'THUMB_SRC' });
+```
+
+#### Gallerize
+
+- Before, Limiting auto-detection to a specific class used be to be done as in the following code:
+ 
+```html
+<div class="grid" gallerize forClass="my-img-class">
+  <img class="my-img-class" src="{{item.src}}">
+</div>
+```
+
+- After, Now `forClass` input has been replaced with `selector` input.
+
+```html
+<div class="grid" gallerize selector=".my-img-class">
+  <img class="my-img-class" src="{{imgSource1}}">
+  <div class="my-img-class" [style.background]="'url(' + imgSource2 + ')'">
+</div>
+```
 
 ## 2.1.1
 

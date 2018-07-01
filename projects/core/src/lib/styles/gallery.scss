@@ -1,0 +1,55 @@
+@import 'dots';
+@import 'navigations';
+@import 'slider';
+@import 'thumbnails';
+@import 'counter';
+@import 'templates';
+
+gallery {
+  z-index: 1;
+  overflow: hidden;
+  display: block;
+  height: 500px;
+  background-color: black;
+  * {
+    box-sizing: border-box;
+  }
+}
+
+gallery, gallery-core {
+  position: relative;
+  overflow: hidden;
+}
+
+gallery-core {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.g-fluid {
+  width: 100vw !important;
+  transform: translateX(-50vw);
+  position: relative;
+  left: 50%;
+}
+
+.g-no-transition {
+  transition: unset !important;
+}
+
+.g-box {
+  height: 100%;
+  width: 100%;
+}
+
+.g-box, gallery-slider {
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  order: 1;
+  height: 100%;
+}
+

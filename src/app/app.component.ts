@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Gallery, GalleryItem, ImageItem } from '@ngx-gallery/core';
+// import { Gallery, GalleryItem, GalleryRef, ImageItem } from './core/public_api';
+import { Gallery, GalleryItem, GalleryRef, ImageItem } from '@ngx-gallery/core';
 import { Lightbox } from '@ngx-gallery/lightbox';
 
 @Component({
@@ -31,22 +32,24 @@ export class AppComponent implements OnInit {
     }
   ];
 
-  constructor(public gallery: Gallery, public lightbox: Lightbox) {
+  constructor(public gallery: Gallery
+    , public lightbox: Lightbox
+  ) {
 
   }
 
   ngOnInit() {
     // This is for Basic example
-    this.items = this.imageData.map(item => {
-      return new ImageItem(item.srcUrl, item.previewUrl);
+    const galleryRef: GalleryRef = this.gallery.ref('basic-test');
+
+    // this.items = this.imageData.map(item => {
+    this.imageData.map(item => {
+      // return new ImageItem(item.srcUrl, item.previewUrl);
+      galleryRef.addImage(item.srcUrl, item.previewUrl);
     });
 
     // This is for Lightbox example
-    this.gallery.ref('lightbox').load(this.items);
-
-    this.lightbox.opened.subscribe(res => console.log('opened', res));
-
-    this.lightbox.closed.subscribe(res => console.log('closed', res));
+    this.gallery.ref('lightbox').load(galleryRef.state.items);
   }
 
   openLightbox() {

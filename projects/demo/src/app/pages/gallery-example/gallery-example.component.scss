@@ -1,0 +1,20 @@
+gallery {
+  display: block;
+  margin-top: 3em;
+  height: 500px;
+  width: 100%;
+}
+
+code {
+  margin: 0;
+}
+
+.mat-chip {
+  margin-right: 1em;
+}
+
+::ng-deep {
+  .no-margin-bottom h2 {
+    margin-bottom: 0 !important;
+  }
+}
