@@ -1,11 +1,19 @@
 @import '~@angular/material/theming';
 
+$primary-color: mat-color(mat-palette($mat-blue));
+$accent-color: mat-color(mat-palette($mat-pink));
+$danger-color: mat-color(mat-palette($mat-yellow, 300));
+
+$bg: mat-color(mat-palette($mat-indigo, 50));
+$note-bg: mat-color(mat-palette($mat-amber, 100));
+$note-color: mat-color(mat-palette($mat-amber, 600));
+
+$code-color: mat-color(mat-palette($mat-blue));
+$code-bg-color: mat-color(mat-palette($mat-blue, 50));
+
+$scrollbar-color: mat-color(mat-palette($mat-blue, 700));
+
 $demo-gray-color: #E8EAF6;
 $header-height: 44px;
 $font-family: 'Roboto', serif;
 $g-options-width: 300px;
-$base-color: mat-color(mat-palette($mat-deep-purple, 900));
-$primary-color: mat-color(mat-palette($mat-deep-purple));
-$accent-color: mat-color(mat-palette($mat-pink));
-$bg: mat-color(mat-palette($mat-indigo, 50));
-$colorful-bg: radial-gradient(circle farthest-side at 395px 483px, #2200cf 0, #ac00d7 74.2%, #8206ff 83.3%);

@@ -2,9 +2,10 @@
 
 @include mat-core();
 
-$demo-primary: mat-palette($mat-deep-purple); //$mat-indigo
-$demo-accent: mat-palette($mat-pink, A200);
-$demo-warn: mat-palette($mat-red);
+//$demo-primary: mat-palette($mat-deep-purple, 900); //$mat-indigo
+$demo-primary: mat-palette($mat-blue);
+$demo-accent: mat-palette($mat-pink, 400);
+$demo-warn: mat-palette($mat-amber, 300);
 
 $demo-theme: mat-light-theme($demo-primary, $demo-accent, $demo-warn);
 
