@@ -3,15 +3,15 @@ const { join } = require('path');
 const {
   readdirSync,
   statSync,
+  existsSync,
   readFileSync,
-  writeFileSync,
-  existsSync
+  writeFileSync
 } = require('fs');
 
 const getPackages = p =>
-readdirSync(p).filter(f => statSync(join(p, f)).isDirectory()).filter(f => f !== 'demo');
+readdirSync(p).filter(f => statSync(join(p, f)).isDirectory());
 
-const packages = getPackages('projects');
+const packages = getPackages('dist');
 
 console.log(
   'Updating packages version to',
