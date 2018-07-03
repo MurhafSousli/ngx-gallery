@@ -35,6 +35,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() items: GalleryItem [];
   @Input() nav: boolean = this._gallery.config.nav;
   @Input() dots: boolean = this._gallery.config.dots;
+  @Input() loop: boolean = this._gallery.config.loop;
   @Input() fluid: boolean = this._gallery.config.fluid;
   @Input() thumb: boolean = this._gallery.config.thumb;
   @Input() zoomOut: number = this._gallery.config.zoomOut;
@@ -80,6 +81,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     return {
       nav: this.nav,
       dots: this.dots,
+      loop: this.loop,
       fluid: this.fluid,
       thumb: this.thumb,
       zoomOut: this.zoomOut,
