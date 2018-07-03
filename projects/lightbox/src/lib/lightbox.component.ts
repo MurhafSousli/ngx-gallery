@@ -1,6 +1,8 @@
 import { Component, HostBinding, HostListener, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router, RouterEvent, NavigationStart } from '@angular/router';
 import { OverlayRef } from '@angular/cdk/overlay';
+import { filter, tap, take } from 'rxjs/operators';
 import { lightboxAnimations } from './lightbox.animation';
 
 @Component({
@@ -35,7 +37,13 @@ export class LightboxComponent {
     }
   }
 
-  constructor(public sanitizer: DomSanitizer) {
+  constructor(public sanitizer: DomSanitizer, router: Router) {
+    // Close the lightbox if the current route has changed
+    router.events.pipe(
+      filter((event: RouterEvent) => event instanceof NavigationStart),
+      tap(() => this.overlayRef.detach()),
+      take(1)
+    ).subscribe();
   }
 
 }
