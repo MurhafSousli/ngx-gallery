@@ -467,7 +467,7 @@ Apache License
 MIT
 MIT
 
-@ngx-gallery/lightbox@3.0.0-beta.0
+@ngx-gallery/lightbox@3.0.0
 MIT
 MIT
 
@@ -531,6 +531,6 @@ MIT
 MIT
 MIT
 
-@ngx-gallery/core@3.0.0-beta.0
+@ngx-gallery/core@3.0.0
 MIT
 MIT
