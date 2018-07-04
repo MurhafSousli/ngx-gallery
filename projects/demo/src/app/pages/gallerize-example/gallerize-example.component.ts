@@ -18,6 +18,9 @@ export class GallerizeExampleComponent {
     gallery.ref('lightbox').setConfig({
       thumbPosition: 'bottom'
     });
+    gallery.ref('auto-detect').setConfig({
+      dots: true
+    });
   }
 
 }

@@ -53,8 +53,13 @@
 
       <h3>Example</h3>
 
-      <gallery id="basic" [items]="fruits$ | async"
-               [thumbPosition]="(media$ | async) === 'sm' ? 'top' : 'left'"></gallery>
+      <gallery id="basic"
+               *ngIf="media$ | async; let config"
+               [items]="fruits$ | async"
+               [thumbWidth]="config.thumbWidth"
+               [thumbHeight]="config.thumbHeight"
+               [thumbPosition]="config.thumbPosition"></gallery>
+
 
       <hl-code [code]="code.example"></hl-code>
 
