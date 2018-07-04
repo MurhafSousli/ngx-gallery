@@ -13,7 +13,7 @@
       <p>Use <code class="hljs">[itemTemplate]</code> for items and <code class="hljs">[thumbTemplate]</code> for
         thumbnails.</p>
 
-      <h3>Passing in data to custom template</h3>
+      <h3>Passing in data to a custom template</h3>
 
       <p>When using a custom template, additional context data can be used to render the data as needed.</p>
 
@@ -23,8 +23,9 @@
       <h3>Example</h3>
 
       <gallery id="mixed"
-               [dots]="true"
-               [thumbPosition]="(media$ | async) === 'sm' ? 'top' : 'right'"
+               *ngIf="media$ | async; let config"
+               [thumbWidth]="config.thumbWidth"
+               [thumbHeight]="config.thumbHeight"
                [itemTemplate]="itemTemplate"
                [thumbTemplate]="thumbTemplate"></gallery>
 

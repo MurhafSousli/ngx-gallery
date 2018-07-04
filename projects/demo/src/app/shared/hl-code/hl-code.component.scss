@@ -1,4 +1,5 @@
 @import '../../../assets/variables';
+@import '../../../assets/mixin';
 
 :host {
   display: flex;
@@ -30,6 +31,7 @@ pre {
     box-shadow: none;
     overflow: hidden;
     border: none;
+    min-height: 100%;
   }
 }
 

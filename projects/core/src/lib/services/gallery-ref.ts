@@ -2,7 +2,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { defaultConfig, defaultState } from '../utils/gallery.default';
 import { GalleryState, GalleryConfig, GalleryAction, GalleryItem } from '../models';
-import { ImageItem, VideoItem, IframeItem, YoutubeItem } from '../components/templates/index';
+import { ImageItem, VideoItem, IframeItem, YoutubeItem } from '../components/templates';
 
 export class GalleryRef {
 

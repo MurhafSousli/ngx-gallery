@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Gallery, GalleryItemType } from '@ngx-gallery/core';
+import { Gallery, GalleryConfig, GalleryItemType } from '@ngx-gallery/core';
+import { MediaChange, ObservableMedia } from '@angular/flex-layout';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import { faYoutube } from '@fortawesome/free-brands-svg-icons/faYoutube';
 import { faVideo } from '@fortawesome/free-solid-svg-icons/faVideo';
 import { slideInAnimation } from './slide-text.animation';
-import { MediaChange, ObservableMedia } from '@angular/flex-layout';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'advanced-example',
@@ -17,12 +18,25 @@ export class AdvancedExampleComponent implements OnInit {
 
   readonly arr = data;
   readonly code = code;
-  readonly media$: Observable<string>;
+  readonly media$: Observable<GalleryConfig>;
   readonly youtubeIcon = faYoutube;
   readonly videoIcon = faVideo;
 
   constructor(private _gallery: Gallery,  media: ObservableMedia) {
-    this.media$ = media.asObservable().pipe(map((res: MediaChange) => res.mqAlias));
+    this.media$ = media.asObservable().pipe(
+      map((res: MediaChange) => {
+        if (res.mqAlias === 'sm' || res.mqAlias === 'xs') {
+          return {
+            thumbWidth: 80,
+            thumbHeight: 80
+          };
+        }
+        return {
+          thumbWidth: 120,
+          thumbHeight: 90
+        };
+      })
+    );
   }
 
   ngOnInit() {

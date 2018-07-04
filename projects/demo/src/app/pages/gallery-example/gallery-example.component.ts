@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
-import { GalleryItem } from '@ngx-gallery/core';
+import { GalleryItem, GalleryConfig, ThumbnailPosition } from '@ngx-gallery/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -16,11 +16,26 @@ export class GalleryExampleComponent {
 
   readonly code = code;
   readonly fruits$: Observable<GalleryItem[]>;
-  readonly media$: Observable<string>;
+  readonly media$: Observable<GalleryConfig>;
 
   constructor(pixabay: Pixabay, media: ObservableMedia) {
     this.fruits$ = pixabay.getImages('fruit');
-    this.media$ = media.asObservable().pipe(map((res: MediaChange) => res.mqAlias));
+    this.media$ = media.asObservable().pipe(
+      map((res: MediaChange) => {
+        if (res.mqAlias === 'sm' || res.mqAlias === 'xs') {
+          return {
+            thumbPosition: ThumbnailPosition.Top,
+            thumbWidth: 80,
+            thumbHeight: 80
+          };
+        }
+        return {
+          thumbPosition: ThumbnailPosition.Left,
+          thumbWidth: 120,
+          thumbHeight: 90
+        };
+      })
+    );
   }
 
 }

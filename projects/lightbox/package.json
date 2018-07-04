@@ -30,6 +30,7 @@
   "peerDependencies": {
     "@angular/common": "^6.0.0",
     "@angular/core": "^6.0.0",
+    "@angular/router": "^6.0.0",
     "@angular/cdk": "^6.0.0",
     "@ngx-gallery/core": "VERSION"
   }
