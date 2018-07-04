@@ -13,7 +13,8 @@
 [![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](/LICENSE)
 
 
-- **For version 2.x**, see the [WIKI](https://github.com/MurhafSousli/ngx-gallery/wiki)
+- **For version 3.x**, see the [WIKI](https://github.com/MurhafSousli/ngx-gallery/wiki)
+- **For version 2.x**, see the [WIKI](https://github.com/MurhafSousli/ngx-gallery/wiki) and check the [changelog](/CHANGELOG.md) for the changes
 - **For version 1.x**, see this [DOCS](/README_V1.md)
 
 ## Support
