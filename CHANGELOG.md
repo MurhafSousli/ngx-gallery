@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.1
+
+- feat(Gallery): Allow using custom gallery item with custom template, closes [#125](https://github.com/MurhafSousli/ngx-gallery/issues/125) in [7e4c302](https://github.com/MurhafSousli/ngx-gallery/commit/7e4c3025276dd222f8592bc56694f5d278c8a6d6).
+
 ## 3.0.0
 
 - fix(Lightbox): Close the lightbox when the active route is changed [#108](https://github.com/MurhafSousli/ngx-gallery/issues/108) in [d099abd](https://github.com/MurhafSousli/ngx-gallery/commit/d099abdf3b6a888c78dd3aa348c8b706ce43c8de).
@@ -48,13 +52,13 @@
 
 #### Gallery
 
-- Before, To Create an image item, we pass src and thumbnail separately.
+- Before, To Create an image item, we used to pass the src and the thumbnail separate parameters.
 
 ```ts
 const item: GalleryItem = new ImageItem('IMAGE_SRC', 'THUMB_SRC');
 ```
 
-- After, The parameters are replace with a single data object.
+- After, The parameters are replaced with a single data object.
 
 ```ts
 const item: GalleryItem = new ImageItem({ src: 'IMAGE_SRC', thumb: 'THUMB_SRC' });
@@ -62,7 +66,7 @@ const item: GalleryItem = new ImageItem({ src: 'IMAGE_SRC', thumb: 'THUMB_SRC' }
 
 #### Gallerize
 
-- Before, Limiting auto-detection to a specific class used be to be done as in the following code:
+- Before, Limiting auto-detection to a specific class used to be done as in the following code:
  
 ```html
 <div class="grid" gallerize forClass="my-img-class">
