@@ -4,8 +4,7 @@
 
 <div class="basic-container" gallerize selector="image-item div">
 	<h2>Basic Example</h2>
-		<!--<gallery id="basic-test" [style.height.px]="500" [items]="items"></gallery>-->
-		<gallery id="basic-test" [style.height.px]="500"></gallery>
+		<gallery id="basic-test" [items]="items"></gallery>
 </div>
 
 <div class="lightbox-example">
@@ -19,3 +18,7 @@
 		<img *ngFor="let img of imageData" [src]="img.srcUrl">
 	</p>
 </div>
+
+<!--<ng-template #itemTemplate let-data=data>-->
+  <!--<img [src]="data.src | async" width="100%" height="100%">-->
+<!--</ng-template>-->
