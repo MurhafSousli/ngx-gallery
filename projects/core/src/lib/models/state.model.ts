@@ -1,4 +1,4 @@
-import { GalleryAction, GalleryItemType } from './constants';
+import { GalleryAction } from './constants';
 
 export interface GalleryState {
   action?: GalleryAction;
@@ -10,5 +10,5 @@ export interface GalleryState {
 
 export interface GalleryItem {
   data?: any;
-  type?: GalleryItemType;
+  type?: string;
 }
