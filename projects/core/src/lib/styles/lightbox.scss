@@ -129,27 +129,15 @@ $backdrop-animation-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !default;
 
 .g-btn-close {
   position: absolute;
-  right: 0.73em;
-  top: 0.73em;
+  right: 0.9em;
+  top: 0.9em;
   z-index: 60;
-  border: none;
-  background-color: transparent;
   cursor: pointer;
-  width: 30px;
-  height: 30px;
-  transition: all linear 0.2s;
-  opacity: 0.7;
-  &:active,
-  &:focus {
-    outline: none;
-  }
-  &:hover {
-    opacity: 1;
-  }
-  svg {
-    width: 100%;
-    height: 100%;
-    filter: drop-shadow(0px 0px 1px black);
+  width: 20px;
+  height: 20px;
+  @media only screen and (max-width: 480px) {
+    right: 0.7em;
+    top: 0.7em;
   }
 }
 
