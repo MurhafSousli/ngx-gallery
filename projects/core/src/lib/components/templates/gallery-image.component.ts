@@ -12,7 +12,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     </ng-container>
 
     <ng-template #loading>
-      <i class="g-loading" [innerHTML]="loadingSvg"></i>
+      <i *ngIf="loadingSvg" class="g-loading" [innerHTML]="loadingSvg"></i>
     </ng-template>
   `
 })
