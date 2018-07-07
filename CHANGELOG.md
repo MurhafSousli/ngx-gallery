@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.2
+
+- refactor(Lightbox): fix the close button small size on iphone browser.
+- refactor(Lightbox): use `<i>` tag instead of `<button>` tag for the close button.
+- fix(Gallery): Check if loadingIcon is defined in `<gallery-image>`, closes [#133](https://github.com/MurhafSousli/ngx-gallery/issues/133) and [#132](https://github.com/MurhafSousli/ngx-gallery/issues/132) in [24e6e26](https://github.com/MurhafSousli/ngx-gallery/commit/24e6e26fb2123b2db26e471f608efde86da553ff).
+
 ## 3.0.1
 
 - feat(Gallery): Allow using custom gallery item with custom template, closes [#125](https://github.com/MurhafSousli/ngx-gallery/issues/125) in [7e4c302](https://github.com/MurhafSousli/ngx-gallery/commit/7e4c3025276dd222f8592bc56694f5d278c8a6d6).
