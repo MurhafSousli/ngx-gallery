@@ -55,11 +55,11 @@ export class GallerizeDirective implements OnInit, OnDestroy {
               private _gallery: Gallery,
               private _lightbox: Lightbox,
               private _renderer: Renderer2,
-              @Inject(PLATFORM_ID) private platform: Object,
+              @Inject(PLATFORM_ID) platform: Object,
               @Host() @Self() @Optional() private _galleryCmp: GalleryComponent) {
 
     // Set gallerize mode
-    if (isPlatformBrowser(this.platform)) {
+    if (isPlatformBrowser(platform)) {
       this._mode = _galleryCmp ? GallerizeMode.Gallery : GallerizeMode.Detector;
     }
   }
