@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">Angular Gallery</h1>
 
-<p align="center">Simplifies the process of creating beautiful image gallery for the web and mobile devices.</p>
+<p align="center">Simplifies the process of creating beautiful image galleries for the web and mobile devices.</p>
 
 
 [![npm](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://murhafsousli.github.io/ngx-gallery/)
