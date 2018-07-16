@@ -57,22 +57,23 @@ export class GallerizeDirective implements OnInit, OnDestroy {
               private _renderer: Renderer2,
               @Inject(PLATFORM_ID) private platform: Object,
               @Host() @Self() @Optional() private _galleryCmp: GalleryComponent) {
-    // If host is a type of 'GalleryComponent' then set the gallery mode
-    this._mode = _galleryCmp ? GallerizeMode.Gallery : GallerizeMode.Detector;
+
+    // Set gallerize mode
+    if (isPlatformBrowser(this.platform)) {
+      this._mode = _galleryCmp ? GallerizeMode.Gallery : GallerizeMode.Detector;
+    }
   }
 
   ngOnInit() {
     this._galleryId = this.gallerize || this._galleryId;
     const ref = this._gallery.ref(this._galleryId);
 
-    if (isPlatformBrowser(this.platform)) {
-      switch (this._mode) {
-        case GallerizeMode.Detector:
-          this.detectorMode(ref);
-          break;
-        case GallerizeMode.Gallery:
-          this.galleryMode(ref);
-      }
+    switch (this._mode) {
+      case GallerizeMode.Detector:
+        this.detectorMode(ref);
+        break;
+      case GallerizeMode.Gallery:
+        this.galleryMode(ref);
     }
   }
 
