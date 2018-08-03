@@ -70,6 +70,9 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
   /** Host width */
   @HostBinding('style.width') width;
 
+  private currentOffsetX = 0;
+  private currentOffsetY = 0;
+
   constructor(private _el: ElementRef) {
 
     // Activate sliding worker
@@ -83,6 +86,8 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges() {
     // Refresh the slider
     this.updateSlider({value: 0, active: false});
+    this.currentOffsetX = 0;
+    this.currentOffsetY = 0;
   }
 
   ngOnInit() {
@@ -93,31 +98,74 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
       this._hammer.get('pan').set({direction: Hammer.DIRECTION_ALL});
 
       // Move the slider
-      this._hammer.on('pan', (e) => {
-        switch (this.config.thumbPosition) {
-          case ThumbnailPosition.Right:
-          case ThumbnailPosition.Left:
-            this.updateSlider({value: e.deltaY, active: true});
-            if (e.isFinal) {
-              this.updateSlider({value: 0, active: false});
-              this.verticalPan(e);
-            }
-            break;
-          case ThumbnailPosition.Top:
-          case ThumbnailPosition.Bottom:
-            this.updateSlider({value: e.deltaX, active: true});
-            if (e.isFinal) {
-              this.updateSlider({value: 0, active: false});
-              this.horizontalPan(e);
-            }
-        }
-      });
+      if (this.config.thumbFreeScroll) {
+        this._hammer.on('pan', this.freeScrollPanCallback.bind(this));
+      } else {
+        this._hammer.on('pan', this.panCallback.bind(this));
+      }
     }
   }
 
   ngOnDestroy() {
     if (this._hammer) {
       this._hammer.destroy();
+    }
+  }
+
+  private panCallback(e) {
+    switch (this.config.thumbPosition) {
+      case ThumbnailPosition.Right:
+      case ThumbnailPosition.Left:
+        this.updateSlider({ value: e.deltaY, active: true });
+        if (e.isFinal) {
+          this.updateSlider({ value: 0, active: false });
+          this.verticalPan(e);
+        }
+        break;
+      case ThumbnailPosition.Top:
+      case ThumbnailPosition.Bottom:
+        this.updateSlider({ value: e.deltaX, active: true });
+        if (e.isFinal) {
+          this.updateSlider({ value: 0, active: false });
+          this.horizontalPan(e);
+        }
+    }
+  }
+
+  private freeScrollPanCallback(e) {
+    switch (this.config.thumbPosition) {
+      case ThumbnailPosition.Right:
+      case ThumbnailPosition.Left:
+        this.updateSlider({ value: this.currentOffsetY + e.deltaY, active: true });
+        if (e.isFinal) {
+          if (this.isScrolledTooDown(e)) {
+            this.currentOffsetY = -(this.state.items.length - 1 - this.state.currIndex) * this.config.thumbHeight;
+            this.updateSlider({ value: this.currentOffsetY, active: false });
+          } else if (this.isScrolledTooUp(e)) {
+            this.currentOffsetY = this.state.currIndex * this.config.thumbHeight;
+            this.updateSlider({ value: this.currentOffsetY, active: false });
+          } else {
+            this.currentOffsetY += e.deltaY;
+            this.updateSlider({ value: this.currentOffsetY, active: false });
+          }
+        }
+        break;
+      case ThumbnailPosition.Top:
+      case ThumbnailPosition.Bottom:
+        this.updateSlider({ value: this.currentOffsetX + e.deltaX, active: true });
+        if (e.isFinal) {
+          if (this.isScrolledTooLeft(e)) {
+            this.currentOffsetX = -(this.state.items.length - 1 - this.state.currIndex) * this.config.thumbWidth;
+            this.updateSlider({ value: this.currentOffsetX, active: false });
+          } else if (this.isScrolledTooRight(e)) {
+            this.currentOffsetX = this.state.currIndex * this.config.thumbWidth;
+            this.updateSlider({ value: this.currentOffsetX, active: false });
+          } else {
+            this.currentOffsetX += e.deltaX;
+            this.updateSlider({ value: this.currentOffsetX, active: false });
+          }
+        }
+        break;
     }
   }
 
@@ -185,6 +233,24 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
 
   private prev() {
     this.action.emit('prev');
+  }
+
+  private isScrolledTooDown(e) {
+    return -(this.currentOffsetY + e.deltaY - this.config.thumbWidth / 2)
+      > ((this.state.items.length - this.state.currIndex) * this.config.thumbHeight);
+  }
+
+  private isScrolledTooLeft(e) {
+    return -(this.currentOffsetX + e.deltaX - this.config.thumbHeight / 2)
+      > ((this.state.items.length - this.state.currIndex) * this.config.thumbWidth);
+  }
+
+  private isScrolledTooUp(e) {
+    return this.currentOffsetY + e.deltaY > (this.state.currIndex * this.config.thumbHeight + this.config.thumbWidth / 2);
+  }
+
+  private isScrolledTooRight(e) {
+    return this.currentOffsetX + e.deltaX > (this.state.currIndex * this.config.thumbWidth + this.config.thumbHeight / 2);
   }
 
   private updateSlider(state: any) {

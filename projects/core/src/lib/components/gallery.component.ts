@@ -45,6 +45,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() thumbHeight: number = this._gallery.config.thumbHeight;
   @Input() disableThumb: boolean = this._gallery.config.disableThumb;
   @Input() panSensitivity: number = this._gallery.config.panSensitivity;
+  @Input() thumbFreeScroll: boolean = this._gallery.config.thumbFreeScroll;
   @Input() itemTemplate: TemplateRef<any> = this._gallery.config.itemTemplate;
   @Input() thumbTemplate: TemplateRef<any> = this._gallery.config.thumbTemplate;
   @Input() slidingDirection: 'horizontal' | 'vertical' = this._gallery.config.slidingDirection;
@@ -95,6 +96,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       thumbPosition: this.thumbPosition,
       panSensitivity: this.panSensitivity,
       loadingStrategy: this.loadingStrategy,
+      thumbFreeScroll: this.thumbFreeScroll,
       slidingDirection: this.slidingDirection,
     };
   }

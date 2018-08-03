@@ -15,6 +15,7 @@ export interface GalleryConfig {
   loadingIcon?: string;
   disableThumb?: boolean;
   panSensitivity?: number;
+  thumbFreeScroll?: boolean;
   itemTemplate?: TemplateRef<any>;
   thumbTemplate?: TemplateRef<any>;
   slidingDirection?: 'horizontal' | 'vertical';
