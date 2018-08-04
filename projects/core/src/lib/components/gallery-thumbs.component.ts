@@ -10,7 +10,7 @@ import {
   EventEmitter,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { GalleryConfig, GalleryState, ThumbnailPosition } from '../models';
+import { GalleryConfig, GalleryState, ThumbnailPosition, ThumbailsMode } from '../models';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -49,6 +49,9 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
   /** HammerJS instance */
   private _hammer: any;
 
+  /** Current slider position in free sliding mode */
+  private _freeModeCurrentOffset = 0;
+
   /** Stream that emits sliding state */
   slider$: Observable<{ style: any, active: boolean }>;
 
@@ -65,13 +68,10 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
   @Output() thumbClick = new EventEmitter<number>();
 
   /** Host height */
-  @HostBinding('style.height') height;
+  @HostBinding('style.height') height: string;
 
   /** Host width */
-  @HostBinding('style.width') width;
-
-  private currentOffsetX = 0;
-  private currentOffsetY = 0;
+  @HostBinding('style.width') width: string;
 
   constructor(private _el: ElementRef) {
 
@@ -86,8 +86,7 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges() {
     // Refresh the slider
     this.updateSlider({value: 0, active: false});
-    this.currentOffsetX = 0;
-    this.currentOffsetY = 0;
+    this._freeModeCurrentOffset = 0;
   }
 
   ngOnInit() {
@@ -98,10 +97,12 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
       this._hammer.get('pan').set({direction: Hammer.DIRECTION_ALL});
 
       // Move the slider
-      if (this.config.thumbFreeScroll) {
-        this._hammer.on('pan', this.freeScrollPanCallback.bind(this));
-      } else {
-        this._hammer.on('pan', this.panCallback.bind(this));
+      switch (this.config.thumbMode) {
+        case ThumbailsMode.Strict:
+          this._hammer.on('pan', (e) => this.strictMode(e));
+          break;
+        case ThumbailsMode.Free:
+          this._hammer.on('pan', (e) => this.freeMode(e));
       }
     }
   }
@@ -112,7 +113,10 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  private panCallback(e) {
+  /**
+   * Sliding strict mode
+   */
+  private strictMode(e) {
     switch (this.config.thumbPosition) {
       case ThumbnailPosition.Right:
       case ThumbnailPosition.Left:
@@ -132,43 +136,58 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  private freeScrollPanCallback(e) {
+  /**
+   * Sliding free mode
+   */
+  private freeMode(e) {
     switch (this.config.thumbPosition) {
       case ThumbnailPosition.Right:
       case ThumbnailPosition.Left:
-        this.updateSlider({ value: this.currentOffsetY + e.deltaY, active: true });
+        this.updateSlider({ value: this._freeModeCurrentOffset + e.deltaY, active: true });
         if (e.isFinal) {
-          if (this.isScrolledTooDown(e)) {
-            this.currentOffsetY = -(this.state.items.length - 1 - this.state.currIndex) * this.config.thumbHeight;
-            this.updateSlider({ value: this.currentOffsetY, active: false });
-          } else if (this.isScrolledTooUp(e)) {
-            this.currentOffsetY = this.state.currIndex * this.config.thumbHeight;
-            this.updateSlider({ value: this.currentOffsetY, active: false });
+          if (this.minFreeScrollExceeded(e.deltaY, this.config.thumbWidth, this.config.thumbHeight)) {
+            this._freeModeCurrentOffset = -(this.state.items.length - 1 - this.state.currIndex) * this.config.thumbHeight;
+          } else if (this.maxFreeScrollExceeded(e.deltaY, this.config.thumbHeight, this.config.thumbWidth)) {
+            this._freeModeCurrentOffset = this.state.currIndex * this.config.thumbHeight;
           } else {
-            this.currentOffsetY += e.deltaY;
-            this.updateSlider({ value: this.currentOffsetY, active: false });
+            this._freeModeCurrentOffset += e.deltaY;
           }
+          this.updateSlider({ value: this._freeModeCurrentOffset, active: false });
         }
         break;
       case ThumbnailPosition.Top:
       case ThumbnailPosition.Bottom:
-        this.updateSlider({ value: this.currentOffsetX + e.deltaX, active: true });
+        this.updateSlider({ value: this._freeModeCurrentOffset + e.deltaX, active: true });
         if (e.isFinal) {
-          if (this.isScrolledTooLeft(e)) {
-            this.currentOffsetX = -(this.state.items.length - 1 - this.state.currIndex) * this.config.thumbWidth;
-            this.updateSlider({ value: this.currentOffsetX, active: false });
-          } else if (this.isScrolledTooRight(e)) {
-            this.currentOffsetX = this.state.currIndex * this.config.thumbWidth;
-            this.updateSlider({ value: this.currentOffsetX, active: false });
+          if (this.minFreeScrollExceeded(e.deltaX, this.config.thumbHeight, this.config.thumbWidth)) {
+            this._freeModeCurrentOffset = -(this.state.items.length - 1 - this.state.currIndex) * this.config.thumbWidth;
+          } else if (this.maxFreeScrollExceeded(e.deltaX, this.config.thumbWidth, this.config.thumbHeight)) {
+            this._freeModeCurrentOffset = this.state.currIndex * this.config.thumbWidth;
           } else {
-            this.currentOffsetX += e.deltaX;
-            this.updateSlider({ value: this.currentOffsetX, active: false });
+            this._freeModeCurrentOffset += e.deltaX;
           }
+          this.updateSlider({ value: this._freeModeCurrentOffset, active: false });
         }
-        break;
     }
   }
 
+  /**
+   * Check if the minimum free scroll is exceeded (used in Bottom, Left directions)
+   */
+  private minFreeScrollExceeded(delta: number, width: number, height: number): boolean {
+    return -(this._freeModeCurrentOffset + delta - width / 2) > (this.state.items.length - this.state.currIndex) * height;
+  }
+
+  /**
+   * Check if the maximum free scroll is exceeded (used in Top, Right directions)
+   */
+  private maxFreeScrollExceeded(delta: number, width: number, height: number): boolean {
+    return this._freeModeCurrentOffset + delta > (this.state.currIndex * width) + (height / 2);
+  }
+
+  /**
+   * Convert sliding state to styles
+   */
   private thumbsStyle(delta: number) {
     let value: number;
     switch (this.config.thumbPosition) {
@@ -233,24 +252,6 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
 
   private prev() {
     this.action.emit('prev');
-  }
-
-  private isScrolledTooDown(e) {
-    return -(this.currentOffsetY + e.deltaY - this.config.thumbWidth / 2)
-      > ((this.state.items.length - this.state.currIndex) * this.config.thumbHeight);
-  }
-
-  private isScrolledTooLeft(e) {
-    return -(this.currentOffsetX + e.deltaX - this.config.thumbHeight / 2)
-      > ((this.state.items.length - this.state.currIndex) * this.config.thumbWidth);
-  }
-
-  private isScrolledTooUp(e) {
-    return this.currentOffsetY + e.deltaY > (this.state.currIndex * this.config.thumbHeight + this.config.thumbWidth / 2);
-  }
-
-  private isScrolledTooRight(e) {
-    return this.currentOffsetX + e.deltaX > (this.state.currIndex * this.config.thumbWidth + this.config.thumbHeight / 2);
   }
 
   private updateSlider(state: any) {
