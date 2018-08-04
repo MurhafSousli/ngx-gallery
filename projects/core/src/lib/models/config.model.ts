@@ -10,6 +10,7 @@ export interface GalleryConfig {
   navIcon?: string;
   counter?: boolean;
   gestures?: boolean;
+  thumbMode?: string;
   thumbWidth?: number;
   thumbHeight?: number;
   loadingIcon?: string;

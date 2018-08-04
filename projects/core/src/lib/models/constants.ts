@@ -1,4 +1,3 @@
-
 export enum GalleryAction {
   INITIALIZED = 'initialized',
   ITEMS_CHANGED = 'itemsChanged',
@@ -16,6 +15,11 @@ export enum ThumbnailPosition {
   Left = 'left',
   Right = 'right',
   Bottom = 'bottom'
+}
+
+export enum ThumbailsMode {
+  Free = 'free',
+  Strict = 'strict'
 }
 
 export enum SlidingDirection {
