@@ -10,7 +10,6 @@ export interface GalleryConfig {
   navIcon?: string;
   counter?: boolean;
   gestures?: boolean;
-  thumbMode?: string;
   thumbWidth?: number;
   thumbHeight?: number;
   loadingIcon?: string;
@@ -18,6 +17,7 @@ export interface GalleryConfig {
   panSensitivity?: number;
   itemTemplate?: TemplateRef<any>;
   thumbTemplate?: TemplateRef<any>;
+  thumbMode?: 'strict' | 'free';
   slidingDirection?: 'horizontal' | 'vertical';
   loadingStrategy?: 'preload' | 'lazy' | 'default';
   thumbPosition?: 'top' | 'left' | 'right' | 'bottom';

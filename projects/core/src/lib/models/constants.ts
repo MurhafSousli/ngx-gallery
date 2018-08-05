@@ -10,14 +10,14 @@ export enum LoadingStrategy {
   Default = 'default'
 }
 
-export enum ThumbnailPosition {
+export enum ThumbnailsPosition {
   Top = 'top',
   Left = 'left',
   Right = 'right',
   Bottom = 'bottom'
 }
 
-export enum ThumbailsMode {
+export enum ThumbnailsMode {
   Free = 'free',
   Strict = 'strict'
 }
