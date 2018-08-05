@@ -41,13 +41,13 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() zoomOut: number = this._gallery.config.zoomOut;
   @Input() counter: boolean = this._gallery.config.counter;
   @Input() gestures: boolean = this._gallery.config.gestures;
-  @Input() thumbMode: string = this._gallery.config.thumbMode;
   @Input() thumbWidth: number = this._gallery.config.thumbWidth;
   @Input() thumbHeight: number = this._gallery.config.thumbHeight;
   @Input() disableThumb: boolean = this._gallery.config.disableThumb;
   @Input() panSensitivity: number = this._gallery.config.panSensitivity;
   @Input() itemTemplate: TemplateRef<any> = this._gallery.config.itemTemplate;
   @Input() thumbTemplate: TemplateRef<any> = this._gallery.config.thumbTemplate;
+  @Input() thumbMode: 'strict' | 'free' = this._gallery.config.thumbMode;
   @Input() slidingDirection: 'horizontal' | 'vertical' = this._gallery.config.slidingDirection;
   @Input() loadingStrategy: 'preload' | 'lazy' | 'default' = this._gallery.config.loadingStrategy;
   @Input() thumbPosition: 'top' | 'left' | 'right' | 'bottom' = this._gallery.config.thumbPosition;

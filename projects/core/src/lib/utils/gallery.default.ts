@@ -1,4 +1,4 @@
-import { GalleryAction, GalleryConfig, GalleryState, LoadingStrategy, SlidingDirection, ThumbnailPosition, ThumbailsMode } from '../models';
+import { GalleryAction, GalleryConfig, GalleryState, LoadingStrategy, SlidingDirection, ThumbnailsPosition, ThumbnailsMode } from '../models';
 
 /** Initial state */
 export const defaultState: GalleryState = {
@@ -19,8 +19,8 @@ export const defaultConfig: GalleryConfig = {
   thumbWidth: 120,
   thumbHeight: 90,
   disableThumb: false,
-  thumbMode: ThumbailsMode.Strict,
-  thumbPosition: ThumbnailPosition.Bottom,
+  thumbMode: ThumbnailsMode.Strict,
+  thumbPosition: ThumbnailsPosition.Bottom,
   slidingDirection: SlidingDirection.Horizontal,
   loadingStrategy: LoadingStrategy.Default,
   zoomOut: 0,
