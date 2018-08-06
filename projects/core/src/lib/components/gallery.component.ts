@@ -137,10 +137,10 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
 
     // Subscribes to indexChange and itemsChange events when user bind them
     if (this.indexChange.observers.length) {
-      this._indexChange$ = this.galleryRef.indexChanged.subscribe((e: GalleryState) => this.indexChange.next(e));
+      this._indexChange$ = this.galleryRef.indexChanged.subscribe((state: GalleryState) => this.indexChange.next(state));
     }
     if (this.itemsChange.observers.length) {
-      this._itemChange$ = this.galleryRef.itemsChanged.subscribe((e: GalleryState) => this.itemsChange.next(e));
+      this._itemChange$ = this.galleryRef.itemsChanged.subscribe((state: GalleryState) => this.itemsChange.next(state));
     }
   }
 

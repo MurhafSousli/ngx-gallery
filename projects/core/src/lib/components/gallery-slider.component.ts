@@ -6,16 +6,18 @@ import {
   OnInit,
   OnChanges,
   Inject,
+  NgZone,
   ElementRef,
   EventEmitter,
   ChangeDetectionStrategy,
   PLATFORM_ID
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { GalleryState, GalleryConfig, SlidingDirection } from '../models';
-
 import { BehaviorSubject, Observable, Subscription, fromEvent } from 'rxjs';
 import { map, tap, debounceTime } from 'rxjs/operators';
+import { GalleryState, GalleryConfig, SlidingDirection } from '../models';
+import { SliderState, WorkerState } from '../models/slider.model';
+import { Gallery } from '../services/gallery.service';
 
 declare const Hammer: any;
 
@@ -24,11 +26,11 @@ declare const Hammer: any;
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
   template: `
-    <div *ngIf="slider$ | async; let sliderState"
+    <div *ngIf="sliderState$ | async; let sliderState"
          class="g-items-container"
          [ngStyle]="zoom">
 
-      <div class="g-items-slider"
+      <div class="g-slider"
            [class.g-no-transition]="sliderState.active"
            [ngStyle]="sliderState.style">
 
@@ -49,7 +51,7 @@ declare const Hammer: any;
 export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   /** Sliding worker */
-  private readonly _slidingWorker$ = new BehaviorSubject({value: 0, active: false});
+  private readonly _slidingWorker$ = new BehaviorSubject<WorkerState>({value: 0, active: false});
 
   /** HammerJS instance */
   private _hammer: any;
@@ -58,7 +60,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   private _resizeSub$: Subscription;
 
   /** Stream that emits sliding state */
-  slider$: Observable<{ style: any, active: boolean }>;
+  sliderState$: Observable<SliderState>;
 
   /** Gallery state */
   @Input() state: GalleryState;
@@ -80,14 +82,13 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     return {transform: `perspective(50px) translate3d(0, 0, ${-this.config.zoomOut}px)`};
   }
 
-  constructor(private _el: ElementRef, @Inject(PLATFORM_ID) private platform: Object) {
+  constructor(private gallery: Gallery, private _el: ElementRef, private _zone: NgZone, @Inject(PLATFORM_ID) private platform: Object) {
 
     // Activate sliding worker
-    this.slider$ = this._slidingWorker$.pipe(map(
-      (state: any) => ({
-        style: this.sliderStyle(state.value),
-        active: state.active
-      })));
+    this.sliderState$ = this._slidingWorker$.pipe(map((state: WorkerState) => ({
+      style: this.getSliderState(state),
+      active: state.active
+    })));
   }
 
   ngOnChanges() {
@@ -102,24 +103,26 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
       this._hammer = new Hammer(this._el.nativeElement);
       this._hammer.get('pan').set({direction: Hammer.DIRECTION_ALL});
 
-      // Move the slider
-      this._hammer.on('pan', (e) => {
+      this._zone.runOutsideAngular(() => {
+        // Move the slider
+        this._hammer.on('pan', (e) => {
 
-        switch (this.config.slidingDirection) {
-          case SlidingDirection.Horizontal:
-            this.updateSlider({value: e.deltaX, active: true});
-            if (e.isFinal) {
-              this.updateSlider({value: 0, active: false});
-              this.horizontalPan(e);
-            }
-            break;
-          case SlidingDirection.Vertical:
-            this.updateSlider({value: e.deltaY, active: true});
-            if (e.isFinal) {
-              this.updateSlider({value: 0, active: false});
-              this.verticalPan(e);
-            }
-        }
+          switch (this.config.slidingDirection) {
+            case SlidingDirection.Horizontal:
+              this.updateSlider({value: e.deltaX, active: true});
+              if (e.isFinal) {
+                this.updateSlider({value: 0, active: false});
+                this.horizontalPan(e);
+              }
+              break;
+            case SlidingDirection.Vertical:
+              this.updateSlider({value: e.deltaY, active: true});
+              if (e.isFinal) {
+                this.updateSlider({value: 0, active: false});
+                this.verticalPan(e);
+              }
+          }
+        });
       });
     }
 
@@ -131,10 +134,12 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
       ).subscribe();
     }
 
-    // Fix wrong slider width on init
+    // This component width is set to 100%, therefore its width gives 0 at the beginning
+    // TODO: find a cleaner way to refresh the gallery once slider width is available
+    // Current workaround: wait 500ms then refresh the slider to fix gallery items' width
     setTimeout(() => {
       this.updateSlider({value: 0, active: false});
-    }, 300);
+    }, 500);
   }
 
   ngOnDestroy() {
@@ -147,19 +152,22 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     this._slidingWorker$.complete();
   }
 
-  private sliderStyle(delta: number) {
+  /**
+   * Convert sliding state to styles
+   */
+  private getSliderState(state: WorkerState): any {
     switch (this.config.slidingDirection) {
       case SlidingDirection.Horizontal:
         return {
-          transform: `translate3d(${-(this.state.currIndex * this._el.nativeElement.offsetWidth) + delta}px, 0, 0)`,
+          transform: `translate3d(${-(this.state.currIndex * this._el.nativeElement.offsetWidth) + state.value}px, 0, 0)`,
           width: this._el.nativeElement.offsetWidth * this.state.items.length + 'px',
           height: '100%'
         };
       case SlidingDirection.Vertical:
         return {
-          transform: `translate3d(0, ${-(this.state.currIndex * this._el.nativeElement.offsetHeight) + delta}px, 0)`,
+          transform: `translate3d(0, ${-(this.state.currIndex * this._el.nativeElement.offsetHeight) + state.value}px, 0)`,
           width: '100%',
-          height: this._el.nativeElement.offsetHeight * this.state.items.length + 'px',
+          height: this._el.nativeElement.offsetHeight * this.state.items.length + 'px'
         };
     }
   }
@@ -204,7 +212,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     this.action.emit('prev');
   }
 
-  private updateSlider(state: any) {
-    this._slidingWorker$.next({...this._slidingWorker$, ...state});
+  private updateSlider(state: WorkerState) {
+    this._slidingWorker$.next({...this._slidingWorker$.value, ...state});
   }
 }

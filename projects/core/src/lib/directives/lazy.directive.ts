@@ -11,7 +11,7 @@ export class LazyDirective implements OnDestroy {
   private _worker$ = new Subject();
 
   @Input('lazyImage')
-  set lazyImage(imagePath) {
+  set lazyImage(imagePath: string) {
     this.loadImage(imagePath);
   }
 
@@ -47,7 +47,7 @@ export class LazyDirective implements OnDestroy {
     ).subscribe();
   }
 
-  loadImage(imagePath) {
+  loadImage(imagePath: string) {
     this._worker$.next(imagePath);
   }
 

@@ -6,14 +6,15 @@ import {
   OnInit,
   OnChanges,
   HostBinding,
+  NgZone,
   ElementRef,
   EventEmitter,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { GalleryConfig, GalleryState, ThumbnailsPosition, ThumbnailsMode } from '../models';
-
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { GalleryConfig, GalleryState, ThumbnailsPosition, ThumbnailsMode } from '../models';
+import { SliderState, WorkerState } from '../models/slider.model';
 
 declare const Hammer: any;
 
@@ -22,11 +23,11 @@ declare const Hammer: any;
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
   template: `
-    <div *ngIf="slider$ | async; let slider"
+    <div *ngIf="sliderState$ | async; let sliderState"
          class="g-thumbs-container">
-      <div class="g-thumbs-slider"
-           [class.g-no-transition]="slider.active"
-           [ngStyle]="slider.style">
+      <div class="g-slider"
+           [class.g-no-transition]="sliderState.active"
+           [ngStyle]="sliderState.style">
 
         <gallery-thumb *ngFor="let item of state.items;let i = index"
                        [type]="item.type"
@@ -43,7 +44,7 @@ declare const Hammer: any;
 export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
 
   /** Sliding worker */
-  private readonly _slidingWorker$ = new BehaviorSubject({value: 0, active: false});
+  private readonly _slidingWorker$ = new BehaviorSubject<WorkerState>({value: 0, active: false});
 
   /** HammerJS instance */
   private _hammer: any;
@@ -52,7 +53,7 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
   private _freeModeCurrentOffset = 0;
 
   /** Stream that emits sliding state */
-  slider$: Observable<{ style: any, active: boolean }>;
+  sliderState$: Observable<SliderState>;
 
   /** Gallery state */
   @Input() state: GalleryState;
@@ -72,14 +73,13 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
   /** Host width */
   @HostBinding('style.width') width: string;
 
-  constructor(private _el: ElementRef) {
+  constructor(private _el: ElementRef, private _zone: NgZone) {
 
     // Activate sliding worker
-    this.slider$ = this._slidingWorker$.pipe(
-      map((state: any) => ({
-        style: this.thumbsStyle(state.value),
-        active: state.active
-      })));
+    this.sliderState$ = this._slidingWorker$.pipe(map((state: WorkerState) => ({
+      style: this.getSliderState(state),
+      active: state.active
+    })));
   }
 
   ngOnChanges() {
@@ -95,14 +95,16 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
       this._hammer = new Hammer(this._el.nativeElement);
       this._hammer.get('pan').set({direction: Hammer.DIRECTION_ALL});
 
-      // Move the slider
-      switch (this.config.thumbMode) {
-        case ThumbnailsMode.Strict:
-          this._hammer.on('pan', (e) => this.strictMode(e));
-          break;
-        case ThumbnailsMode.Free:
-          this._hammer.on('pan', (e) => this.freeMode(e));
-      }
+      this._zone.runOutsideAngular(() => {
+        // Move the slider
+        switch (this.config.thumbMode) {
+          case ThumbnailsMode.Strict:
+            this._hammer.on('pan', (e) => this.strictMode(e));
+            break;
+          case ThumbnailsMode.Free:
+            this._hammer.on('pan', (e) => this.freeMode(e));
+        }
+      });
     }
   }
 
@@ -187,14 +189,14 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
   /**
    * Convert sliding state to styles
    */
-  private thumbsStyle(delta: number) {
+  private getSliderState(state: WorkerState): any {
     let value: number;
     switch (this.config.thumbPosition) {
       case ThumbnailsPosition.Top:
       case ThumbnailsPosition.Bottom:
         this.width = '100%';
         this.height = this.config.thumbHeight + 'px';
-        value = -(this.state.currIndex * this.config.thumbWidth) - (this.config.thumbWidth / 2 - delta);
+        value = -(this.state.currIndex * this.config.thumbWidth) - (this.config.thumbWidth / 2 - state.value);
         return {
           transform: `translate3d(${value}px, 0, 0)`,
           width: this.state.items.length * this.config.thumbWidth + 'px',
@@ -204,16 +206,16 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
       case ThumbnailsPosition.Right:
         this.width = this.config.thumbWidth + 'px';
         this.height = '100%';
-        value = -(this.state.currIndex * this.config.thumbHeight) - (this.config.thumbHeight / 2 - delta);
+        value = -(this.state.currIndex * this.config.thumbHeight) - (this.config.thumbHeight / 2 - state.value);
         return {
           transform: `translate3d(0, ${value}px, 0)`,
           width: '100%',
-          height: this.state.items.length * this.config.thumbHeight + 'px',
+          height: this.state.items.length * this.config.thumbHeight + 'px'
         };
     }
   }
 
-  private verticalPan(e) {
+  private verticalPan(e: any) {
     if (e.velocityY > 0.3) {
       this.prev();
     } else if (e.velocityY < -0.3) {
@@ -229,7 +231,7 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  private horizontalPan(e) {
+  private horizontalPan(e: any) {
     if (e.velocityX > 0.3) {
       this.prev();
     } else if (e.velocityX < -0.3) {
@@ -253,7 +255,7 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
     this.action.emit('prev');
   }
 
-  private updateSlider(state: any) {
-    this._slidingWorker$.next({...this._slidingWorker$, ...state});
+  private updateSlider(state: WorkerState) {
+    this._slidingWorker$.next({...this._slidingWorker$.value, ...state});
   }
 }
