@@ -24,7 +24,7 @@ import { IframeItem, ImageItem, VideoItem, YoutubeItem } from './templates';
                   [config]="galleryRef.config$ | async"
                   (action)="onAction($event)"
                   (itemClick)="onItemClick($event)"
-                  (thumbClick)="onItemClick($event)"></gallery-core>
+                  (thumbClick)="onThumbClick($event)"></gallery-core>
     <ng-content></ng-content>
   `
 })
@@ -167,7 +167,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     this.galleryRef.itemClick.next(i);
   }
 
-  onthumbClick(i: number) {
+  onThumbClick(i: number) {
     this.thumbClick.emit(i);
     this.galleryRef.thumbClick.next(i);
   }
