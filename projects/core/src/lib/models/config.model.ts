@@ -10,11 +10,13 @@ export interface GalleryConfig {
   navIcon?: string;
   counter?: boolean;
   gestures?: boolean;
+  autoPlay?: boolean;
   thumbWidth?: number;
   thumbHeight?: number;
   loadingIcon?: string;
   disableThumb?: boolean;
   panSensitivity?: number;
+  playerInterval?: number;
   itemTemplate?: TemplateRef<any>;
   thumbTemplate?: TemplateRef<any>;
   thumbMode?: 'strict' | 'free';

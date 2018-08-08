@@ -1,7 +1,9 @@
 export enum GalleryAction {
   INITIALIZED = 'initialized',
   ITEMS_CHANGED = 'itemsChanged',
-  INDEX_CHANGED = 'indexChanged'
+  INDEX_CHANGED = 'indexChanged',
+  PLAY = 'play',
+  STOP = 'stop'
 }
 
 export enum LoadingStrategy {
