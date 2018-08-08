@@ -74,6 +74,10 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   private _indexChange$: Subscription;
   private _itemClick$: Subscription;
   private _thumbClick$: Subscription;
+  private _itemClick$: SubscriptionLike = Subscription.EMPTY;
+  private _thumbClick$: SubscriptionLike = Subscription.EMPTY;
+  private _itemChange$: SubscriptionLike = Subscription.EMPTY;
+  private _indexChange$: SubscriptionLike = Subscription.EMPTY;
 
   constructor(private _gallery: Gallery) {
   }
@@ -157,6 +161,11 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     if (this._thumbClick$) {
       this._thumbClick$.unsubscribe();
     }
+    this._player$.unsubscribe();
+    this._itemClick$.unsubscribe();
+    this._thumbClick$.unsubscribe();
+    this._itemChange$.unsubscribe();
+    this._indexChange$.unsubscribe();
     if (this.destroyRef) {
       this.galleryRef.reset();
     }
