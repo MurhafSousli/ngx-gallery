@@ -1,8 +1,8 @@
-import { Component, HostBinding, HostListener, ChangeDetectionStrategy } from '@angular/core';
+import { Component, HostBinding, HostListener, Optional, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Router, RouterEvent, NavigationStart } from '@angular/router';
+import { Location } from '@angular/common';
+import { Subscription, SubscriptionLike } from 'rxjs';
 import { OverlayRef } from '@angular/cdk/overlay';
-import { filter, tap, take } from 'rxjs/operators';
 import { lightboxAnimations } from './lightbox.animation';
 
 @Component({
@@ -12,11 +12,11 @@ import { lightboxAnimations } from './lightbox.animation';
   template: `
     <gallery [id]="id" [destroyRef]="false" [skipInitConfig]="true">
       <i class="g-btn-close" aria-label="Close" (click)="overlayRef.detach()"
-              [innerHTML]="sanitizer.bypassSecurityTrustHtml(closeIcon)"></i>
+         [innerHTML]="sanitizer.bypassSecurityTrustHtml(closeIcon)"></i>
     </gallery>
   `
 })
-export class LightboxComponent {
+export class LightboxComponent implements OnDestroy {
 
   /** Gallery ref id */
   id: string;
@@ -26,6 +26,9 @@ export class LightboxComponent {
 
   /** close button svg data */
   closeIcon: string;
+
+  /** Subscription to changes in the user's location. */
+  private _locationChanges: SubscriptionLike = Subscription.EMPTY;
 
   /** Use slide animation on opening and closing the lightbox */
   @HostBinding('@slideLightbox') slideAnimation;
@@ -37,13 +40,13 @@ export class LightboxComponent {
     }
   }
 
-  constructor(public sanitizer: DomSanitizer, router: Router) {
-    // Close the lightbox if the current route has changed
-    router.events.pipe(
-      filter((event: RouterEvent) => event instanceof NavigationStart),
-      tap(() => this.overlayRef.detach()),
-      take(1)
-    ).subscribe();
+  constructor(public sanitizer: DomSanitizer, @Optional() location: Location) {
+    // Close the Lightbox when the location changes
+    this._locationChanges = location.subscribe(() => this.overlayRef.detach());
+  }
+
+  ngOnDestroy() {
+    this._locationChanges.unsubscribe();
   }
 
 }

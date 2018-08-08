@@ -1,5 +1,4 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { Overlay, OverlayModule } from '@angular/cdk/overlay';
 import { Gallery, GalleryModule } from '@ngx-gallery/core';
 
@@ -14,7 +13,6 @@ export function lightboxFactory(config: LightboxConfig, gallery: Gallery, overla
 
 @NgModule({
   imports: [
-    RouterModule,
     OverlayModule,
     GalleryModule
   ],
