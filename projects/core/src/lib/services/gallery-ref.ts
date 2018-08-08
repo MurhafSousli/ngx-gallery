@@ -1,8 +1,12 @@
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { BehaviorSubject, Subject, Observable, of, EMPTY} from 'rxjs';
+import { delay, filter, switchMap, tap } from 'rxjs/operators';
 import { defaultConfig, defaultState } from '../utils/gallery.default';
-import { GalleryState, GalleryConfig, GalleryAction, GalleryItem } from '../models';
-import { ImageItem, VideoItem, IframeItem, YoutubeItem } from '../components/templates';
+import { GalleryAction, GalleryConfig, GalleryItem, GalleryState } from '../models';
+import { IframeItem, ImageItem, VideoItem, YoutubeItem } from '../components/templates';
+
+const filterActions = (actions: string[]) => {
+  return filter((state: GalleryState) => actions.indexOf(state.action) > -1);
+};
 
 export class GalleryRef {
 
@@ -12,10 +16,10 @@ export class GalleryRef {
   /** Stream that emits gallery config */
   private readonly _config$: BehaviorSubject<GalleryConfig>;
 
-  /** Stream that emits item click */
+  /** Stream that emits on item click */
   readonly itemClick = new Subject<number>();
 
-  /** Stream that emits thumbnail click */
+  /** Stream that emits on thumbnail click */
   readonly thumbClick = new Subject<number>();
 
   /** Gallery Events */
@@ -32,23 +36,47 @@ export class GalleryRef {
 
   /** Stream that emits when gallery is initialized/reset */
   get initialized(): Observable<GalleryState> {
-    return this.state$.pipe(filter((state: GalleryState) => state.action === GalleryAction.INITIALIZED));
+    return this.state$.pipe(filterActions([GalleryAction.INITIALIZED]));
   }
 
   /** Stream that emits when items is changed (items loaded, item added, item removed) */
   get itemsChanged(): Observable<GalleryState> {
-    return this.state$.pipe(filter((state: GalleryState) => state.action === GalleryAction.ITEMS_CHANGED));
+    return this.state$.pipe(filterActions([GalleryAction.ITEMS_CHANGED]));
   }
 
   /** Stream that emits when current item is changed */
   get indexChanged(): Observable<GalleryState> {
-    return this.state$.pipe(filter((state: GalleryState) => state.action === GalleryAction.INDEX_CHANGED));
+    return this.state$.pipe(filterActions([GalleryAction.INDEX_CHANGED]));
+  }
+
+  /** Stream that emits when the player should start or stop */
+  get player(): Observable<GalleryState> {
+    return this.state$.pipe(filterActions([GalleryAction.PLAY, GalleryAction.STOP]));
+  }
+
+  /** Stream that emits when the player should start or stop */
+  private get playerActions(): Observable<GalleryState> {
+    return this.state$.pipe(filterActions([GalleryAction.PLAY, GalleryAction.STOP, GalleryAction.INDEX_CHANGED]));
   }
 
   constructor(public config: GalleryConfig = defaultConfig, public state: GalleryState = defaultState) {
     this._state$ = new BehaviorSubject<GalleryState>(state);
     this._config$ = new BehaviorSubject<GalleryConfig>(defaultConfig);
     this.setConfig(config);
+  }
+
+  /**
+   * Activate player actions listener
+   */
+  activatePlayer(): Observable<GalleryState> {
+    return this.playerActions.pipe(
+      switchMap((e: GalleryState) =>
+        e.isPlaying ? of({}).pipe(
+          delay(this._config$.value.playerInterval),
+          tap(() => this.next())
+        ) : EMPTY
+      )
+    );
   }
 
   /**
@@ -84,18 +112,38 @@ export class GalleryRef {
     });
   }
 
+  /**
+   * Add image item
+   * @param data
+   * @param active
+   */
   addImage(data: any, active?: boolean) {
     this.add(new ImageItem(data), active);
   }
 
+  /**
+   * Add video item
+   * @param data
+   * @param active
+   */
   addVideo(data: any, active?: boolean) {
     this.add(new VideoItem(data), active);
   }
 
+  /**
+   * Add iframe item
+   * @param data
+   * @param active
+   */
   addIframe(data: any, active?: boolean) {
     this.add(new IframeItem(data), active);
   }
 
+  /**
+   * Add youtube item
+   * @param data
+   * @param active
+   */
   addYoutube(data: any, active?: boolean) {
     this.add(new YoutubeItem(data), active);
   }
@@ -134,7 +182,6 @@ export class GalleryRef {
   /**
    * Set active item
    * @param i - Active Index
-   * @param action - Action type
    */
   set(i: number) {
     if (i !== this.state.currIndex) {
@@ -167,6 +214,23 @@ export class GalleryRef {
     } else if (this.config.loop) {
       this.set(this.state.items.length - 1);
     }
+  }
+
+  /**
+   * Start gallery player
+   */
+  play(playerInterval?: number) {
+    if (playerInterval) {
+      this.setConfig({playerInterval});
+    }
+    this.setState({action: GalleryAction.PLAY, isPlaying: true});
+  }
+
+  /**
+   * Stop gallery player
+   */
+  stop() {
+    this.setState({action: GalleryAction.STOP, isPlaying: false});
   }
 
   /**

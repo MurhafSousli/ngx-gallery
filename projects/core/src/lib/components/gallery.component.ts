@@ -10,7 +10,7 @@ import {
   EventEmitter,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, SubscriptionLike } from 'rxjs';
 import { Gallery } from '../services/gallery.service';
 import { GalleryRef } from '../services/gallery-ref';
 import { GalleryItem, GalleryState } from '../models';
@@ -40,11 +40,13 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() thumb: boolean = this._gallery.config.thumb;
   @Input() zoomOut: number = this._gallery.config.zoomOut;
   @Input() counter: boolean = this._gallery.config.counter;
+  @Input() autoPlay: boolean = this._gallery.config.autoPlay;
   @Input() gestures: boolean = this._gallery.config.gestures;
   @Input() thumbWidth: number = this._gallery.config.thumbWidth;
   @Input() thumbHeight: number = this._gallery.config.thumbHeight;
   @Input() disableThumb: boolean = this._gallery.config.disableThumb;
   @Input() panSensitivity: number = this._gallery.config.panSensitivity;
+  @Input() playerInterval: number = this._gallery.config.playerInterval;
   @Input() itemTemplate: TemplateRef<any> = this._gallery.config.itemTemplate;
   @Input() thumbTemplate: TemplateRef<any> = this._gallery.config.thumbTemplate;
   @Input() thumbMode: 'strict' | 'free' = this._gallery.config.thumbMode;
@@ -60,24 +62,23 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   /** Skip initializing the config with components inputs (Lightbox mode) */
   @Input() skipInitConfig = false;
 
-  @Output() indexChange = new EventEmitter<GalleryState>();
-  @Output() itemsChange = new EventEmitter<GalleryState>();
   @Output() itemClick = new EventEmitter<number>();
   @Output() thumbClick = new EventEmitter<number>();
+  @Output() player = new EventEmitter<GalleryState>();
+  @Output() indexChange = new EventEmitter<GalleryState>();
+  @Output() itemsChange = new EventEmitter<GalleryState>();
 
   /** Set thumbnails position */
   @HostBinding('class.g-fluid') get gallerySize() {
     return this.galleryRef.config.fluid;
   }
 
-  private _itemChange$: Subscription;
-  private _indexChange$: Subscription;
-  private _itemClick$: Subscription;
-  private _thumbClick$: Subscription;
+  private _player$: SubscriptionLike = Subscription.EMPTY;
   private _itemClick$: SubscriptionLike = Subscription.EMPTY;
   private _thumbClick$: SubscriptionLike = Subscription.EMPTY;
   private _itemChange$: SubscriptionLike = Subscription.EMPTY;
   private _indexChange$: SubscriptionLike = Subscription.EMPTY;
+  private _playerListener$: SubscriptionLike = Subscription.EMPTY;
 
   constructor(private _gallery: Gallery) {
   }
@@ -91,6 +92,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       thumb: this.thumb,
       zoomOut: this.zoomOut,
       counter: this.counter,
+      autoPlay: this.autoPlay,
       gestures: this.gestures,
       thumbMode: this.thumbMode,
       thumbWidth: this.thumbWidth,
@@ -100,6 +102,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       thumbTemplate: this.thumbTemplate,
       thumbPosition: this.thumbPosition,
       panSensitivity: this.panSensitivity,
+      playerInterval: this.playerInterval,
       loadingStrategy: this.loadingStrategy,
       slidingDirection: this.slidingDirection,
     };
@@ -136,36 +139,32 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       this.galleryRef = this._gallery.ref(this.id, this.getConfig());
     }
 
+    this.galleryRef.state$.subscribe(e => console.log(e));
     // Load gallery items
     this.load(this.items);
 
-    // Subscribes to indexChange and itemsChange events when user bind them
+    // Activate player listener
+    this._playerListener$ = this.galleryRef.activatePlayer().subscribe();
+
+    // Subscribes to events on demand
     if (this.indexChange.observers.length) {
-      this._indexChange$ = this.galleryRef.indexChanged.subscribe((state: GalleryState) => this.indexChange.next(state));
+      this._indexChange$ = this.galleryRef.indexChanged.subscribe((state: GalleryState) => this.indexChange.emit(state));
     }
     if (this.itemsChange.observers.length) {
-      this._itemChange$ = this.galleryRef.itemsChanged.subscribe((state: GalleryState) => this.itemsChange.next(state));
+      this._itemChange$ = this.galleryRef.itemsChanged.subscribe((state: GalleryState) => this.itemsChange.emit(state));
+    }
+    if (this.player.observers.length) {
+      this._player$ = this.galleryRef.player.subscribe((state: GalleryState) => this.player.emit(state));
     }
   }
 
   ngOnDestroy() {
-    if (this._indexChange$) {
-      this._indexChange$.unsubscribe();
-    }
-    if (this._itemChange$) {
-      this._itemChange$.unsubscribe();
-    }
-    if (this._itemClick$) {
-      this._itemClick$.unsubscribe();
-    }
-    if (this._thumbClick$) {
-      this._thumbClick$.unsubscribe();
-    }
     this._player$.unsubscribe();
     this._itemClick$.unsubscribe();
     this._thumbClick$.unsubscribe();
     this._itemChange$.unsubscribe();
     this._indexChange$.unsubscribe();
+    this._playerListener$.unsubscribe();
     if (this.destroyRef) {
       this.galleryRef.reset();
     }
@@ -223,5 +222,13 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
 
   reset() {
     this.galleryRef.reset();
+  }
+
+  play() {
+    this.galleryRef.play();
+  }
+
+  stop() {
+    this.galleryRef.stop();
   }
 }
