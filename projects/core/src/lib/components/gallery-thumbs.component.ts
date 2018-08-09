@@ -77,7 +77,6 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
 
     // Activate sliding worker
     this.sliderState$ = this._slidingWorker$.pipe(map((state: WorkerState) => ({
-      style: this.getSliderState(state),
       style: this.getSliderStyles(state),
       active: state.active
     })));
@@ -190,7 +189,6 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
   /**
    * Convert sliding state to styles
    */
-  private getSliderState(state: WorkerState): any {
   private getSliderStyles(state: WorkerState): any {
     let value: number;
     switch (this.config.thumbPosition) {
