@@ -2,8 +2,6 @@ gallery-thumbs {
   display: block;
   z-index: 1;
   overflow: unset;
-  width: 100%;
-  height: 100%;
 }
 
 .g-thumbs-container {
@@ -57,4 +55,37 @@ gallery-core[thumbPosition='right'] {
 
 gallery-core[thumbPosition='bottom'] {
   flex-direction: column-reverse;
+}
+
+$loading-color: #fff !default;
+$placeholder-ng: #ced4da !default;
+
+.g-thumb-loading {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  background-color: $placeholder-ng;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 50%;
+    z-index: 1;
+    width: 500%;
+    margin-left: -250%;
+    animation: phAnimation .8s linear infinite;
+    background: linear-gradient(to right, rgba($loading-color, 0) 46%, rgba($loading-color, .35) 50%, rgba($loading-color, 0) 54%) 50% 50%;
+  }
+}
+
+@keyframes phAnimation {
+  0% {
+    transform: translate3d(-30%, 0, 0);
+  }
+  100% {
+    transform: translate3d(30%, 0, 0);
+  }
 }

@@ -129,6 +129,8 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
         tap(() => this.updateSlider(this._slidingWorker$.value))
       ).subscribe();
     }
+
+    setTimeout(() => this.updateSlider({value: 0, active: false}));
   }
 
   ngOnDestroy() {
