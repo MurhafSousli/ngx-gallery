@@ -1,5 +1,89 @@
 # Changelog
 
+## 3.1.0-beta.0
+
+#### Gallery
+
+- feat(Gallery): Add `thumbMode` option on thumbnails' slider (free scroll thumbnails), closes [#135](https://github.com/MurhafSousli/ngx-gallery/issues/135) in [8c6c99d](https://github.com/MurhafSousli/ngx-gallery/pull/159/commits/8c6c99db551a3ee31f5ab203babba6464acc7b83)
+- feat(Gallery): Add player and auto-play option closes [#152](https://github.com/MurhafSousli/ngx-gallery/issues/152) in [a331f46](https://github.com/MurhafSousli/ngx-gallery/pull/165/commits/a331f466ad4a2834a8de7f908d5e63fe1d3d5b41).
+- enhance(Gallery): Ability to Import gallery styles individually [#144](https://github.com/MurhafSousli/ngx-gallery/issues/144) in [ebb6667](https://github.com/MurhafSousli/ngx-gallery/pull/162/commits/ebb6667955299df1f41690a4f4b587a9196bb4bf).
+- enhance(Gallery): Run HammerJS gestures outside angular zone [6fabf6c](https://github.com/MurhafSousli/ngx-gallery/commit/6fabf6ca2d421ea1cc478c1f6cd9a3b432ddd0da).
+- enhance(Gallery): Put SCSS and CSS each in its own folder, close [#153](https://github.com/MurhafSousli/ngx-gallery/issues/153) in [9783fc3](https://github.com/MurhafSousli/ngx-gallery/pull/170/commits/9783fc3a614e2258c9363d316ea042fce8c86913).
+- enhance(Gallery): Check if loadingSvg is defined before embedding it, close [#150](https://github.com/MurhafSousli/ngx-gallery/issues/150) in [5286640](https://github.com/MurhafSousli/ngx-gallery/pull/171/commits/5286640de7ac3a5326d2d2c3d352a085b6dbc308).
+- fix(Gallery): fix wrong `(thumbClick)` emitter.
+- fix(Gallery): fix gallery slider width which is set to 0 at the beginning, closes [#151](https://github.com/MurhafSousli/ngx-gallery/issues/151) in [c26a286](https://github.com/MurhafSousli/ngx-gallery/commit/c26a286551aef4f0313295822f5a381a31479bcb).
+- refactor(Gallery): Set `loop` option to **true** by default.
+- refactor(Gallery): Remove `fluid` option from gallery config and use it as an attribute instead. fixed in [ecf3f88](https://github.com/MurhafSousli/ngx-gallery/pull/169/commits/ecf3f88f59ee0c2eaae68ebf1b93e580fc869a3a).
+
+#### Lightbox
+
+- feat(Lightbox): Close the lightbox when the location is changed, closes [#108](https://github.com/MurhafSousli/ngx-gallery/issues/108) in [1543374](https://github.com/MurhafSousli/ngx-gallery/commit/1543374c99b8d539f4e5df381ba9a7a60f3ccfa7).
+
+
+### Breaking changes:
+
+#### Gallery
+
+- Fluid option is now used as an attribute, not as an input. 
+
+**Before:**
+
+```html
+<gallery [fluid]="true"></gallery>
+```
+
+**After:**
+
+```html
+<gallery fluid></gallery>
+```
+
+- Scss and css styles are put each in its own folder
+
+**Before:**
+
+```scss
+@import '~@ngx-gallery/core/styles/gallery';
+```
+
+**After:**
+
+```scss
+@import '~@ngx-gallery/core/styles/scss/gallery';
+// or for css
+@import '~@ngx-gallery/core/styles/css/gallery';
+```
+
+
+#### Lightbox
+
+The Lightbox now closes on route changes, therefore the `RouterModule.forRoot(...)` must be imported
+
+**Before:**
+
+```ts
+@NgModule({
+  imports: [
+    // ...
+    GalleryModule.forRoot(),
+    LightboxModule.forRoot()
+  ]
+})
+```
+
+**After:**
+
+```ts
+@NgModule({
+  imports: [
+    // ...
+    RouterModule.forRoot([]),
+    GalleryModule.forRoot(),
+    LightboxModule.forRoot()
+  ]
+})
+```
+
 ## 3.0.2
 
 - refactor(Lightbox): fix the close button small size on iphone browser.
@@ -197,13 +281,13 @@ openLightbox() {
 - fix(GalleryNav): Hide navigation on panning.
 - fix(GalleryPlayer): Wait until image is loaded before starting the timer.
 
- **Added features:**
-- feature(GalleryPlayer): Add progressbar color option.
-- feature(GalleryPlayer): Add progressbar thickness option.
-- feature(GalleryPlayer): Add position option `top` and `bottom`.
-- feature(GalleryActions): Add gallery events
-- feature(GalleryNav): Add `prevClass` and `nextClass` options to customize navigation icons
-- feature(classNames) Add `className` option to container, thumbnails, bullets
+ **Features:**
+- feat(GalleryPlayer): Add progressbar color option.
+- feat(GalleryPlayer): Add progressbar thickness option.
+- feat(GalleryPlayer): Add position option `top` and `bottom`.
+- feat(GalleryActions): Add gallery events
+- feat(GalleryNav): Add `prevClass` and `nextClass` options to customize navigation icons
+- feat(classNames) Add `className` option to container, thumbnails, bullets
 
 **Performance Improvements:**
 
