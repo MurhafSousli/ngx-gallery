@@ -5,7 +5,6 @@ import {
   OnInit,
   OnChanges,
   OnDestroy,
-  HostBinding,
   TemplateRef,
   EventEmitter,
   ChangeDetectionStrategy
@@ -36,7 +35,6 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() nav: boolean = this._gallery.config.nav;
   @Input() dots: boolean = this._gallery.config.dots;
   @Input() loop: boolean = this._gallery.config.loop;
-  @Input() fluid: boolean = this._gallery.config.fluid;
   @Input() thumb: boolean = this._gallery.config.thumb;
   @Input() zoomOut: number = this._gallery.config.zoomOut;
   @Input() counter: boolean = this._gallery.config.counter;
@@ -69,11 +67,6 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Output() indexChange = new EventEmitter<GalleryState>();
   @Output() itemsChange = new EventEmitter<GalleryState>();
 
-  /** Set thumbnails position */
-  @HostBinding('class.g-fluid') get gallerySize() {
-    return this.galleryRef.config.fluid;
-  }
-
   private _player$: SubscriptionLike = Subscription.EMPTY;
   private _itemClick$: SubscriptionLike = Subscription.EMPTY;
   private _thumbClick$: SubscriptionLike = Subscription.EMPTY;
@@ -89,7 +82,6 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       nav: this.nav,
       dots: this.dots,
       loop: this.loop,
-      fluid: this.fluid,
       thumb: this.thumb,
       zoomOut: this.zoomOut,
       counter: this.counter,
@@ -141,7 +133,6 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       this.galleryRef = this._gallery.ref(this.id, this.getConfig());
     }
 
-    this.galleryRef.state$.subscribe(e => console.log(e));
     // Load gallery items
     this.load(this.items);
 

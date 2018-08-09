@@ -20,7 +20,7 @@ gallery-core, .g-box, .g-slider {
   width: 100%;
 }
 
-.g-fluid {
+gallery[fluid] {
   width: 100vw !important;
   transform: translateX(-50vw);
   position: relative;
