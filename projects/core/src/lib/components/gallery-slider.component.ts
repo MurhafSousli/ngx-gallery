@@ -17,7 +17,6 @@ import { BehaviorSubject, Observable, Subscription, fromEvent } from 'rxjs';
 import { map, tap, debounceTime } from 'rxjs/operators';
 import { GalleryState, GalleryConfig, SlidingDirection } from '../models';
 import { SliderState, WorkerState } from '../models/slider.model';
-import { Gallery } from '../services/gallery.service';
 
 declare const Hammer: any;
 
@@ -68,9 +67,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   /** Gallery config */
   @Input() config: GalleryConfig;
 
-  @Input() width: number;
   @Input() height: number;
-
   /** Stream that emits when the active item should change */
   @Output() action = new EventEmitter<string | number>();
 
@@ -83,6 +80,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   constructor(private gallery: Gallery, private _el: ElementRef, private _zone: NgZone, @Inject(PLATFORM_ID) private platform: Object) {
+  constructor(private _el: ElementRef, private _zone: NgZone, @Inject(PLATFORM_ID) private platform: Object) {
 
     // Activate sliding worker
     this.sliderState$ = this._slidingWorker$.pipe(map((state: WorkerState) => ({
