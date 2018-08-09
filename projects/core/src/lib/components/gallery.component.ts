@@ -42,6 +42,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() counter: boolean = this._gallery.config.counter;
   @Input() autoPlay: boolean = this._gallery.config.autoPlay;
   @Input() gestures: boolean = this._gallery.config.gestures;
+  @Input() imageSize: boolean = this._gallery.config.imageSize;
   @Input() thumbWidth: number = this._gallery.config.thumbWidth;
   @Input() thumbHeight: number = this._gallery.config.thumbHeight;
   @Input() disableThumb: boolean = this._gallery.config.disableThumb;
@@ -94,6 +95,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       counter: this.counter,
       autoPlay: this.autoPlay,
       gestures: this.gestures,
+      imageSize: this.imageSize,
       thumbMode: this.thumbMode,
       thumbWidth: this.thumbWidth,
       thumbHeight: this.thumbHeight,

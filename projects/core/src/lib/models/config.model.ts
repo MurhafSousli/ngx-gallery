@@ -11,6 +11,7 @@ export interface GalleryConfig {
   counter?: boolean;
   gestures?: boolean;
   autoPlay?: boolean;
+  imageSize?: boolean;
   thumbWidth?: number;
   thumbHeight?: number;
   loadingIcon?: string;
