@@ -10,9 +10,16 @@ var WorkFile = /** @class */ (function () {
         this.src = src;
         // Subtract src dir from file path
         var relativePath = path_1.relative(srcDir, src);
+        var dirName = path_1.dirname(relativePath);
+        var fileName = path_1.basename(relativePath);
+        // Put sass files in scss folder
+        var scssPath = path_1.join(dirName, 'scss', fileName);
+        // Put css files in css folder
+        var cssPath = path_1.join(dirName, 'css', replaceExt(fileName, '.css'));
+        console.log(scssPath, cssPath);
         // Add baseDist + relativePath
-        this.distScss = path_1.join(distDir, relativePath);
-        this.distCss = replaceExt(this.distScss, '.css');
+        this.distScss = path_1.join(distDir, scssPath);
+        this.distCss = path_1.join(distDir, cssPath);
     }
     return WorkFile;
 }());
@@ -48,6 +55,7 @@ exports.dirMaker = dirMaker;
 /** Make directory for the work file */
 exports.makeDirectory = operators_1.map(function (file) {
     dirMaker(path_1.dirname(file.distScss));
+    dirMaker(path_1.dirname(file.distCss));
     return file;
 });
 /** Copy file from src to dist */

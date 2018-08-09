@@ -11,9 +11,15 @@ export class WorkFile {
   constructor(public src: string, srcDir: string, distDir: string) {
     // Subtract src dir from file path
     const relativePath = relative(srcDir, src);
+    const dirName = dirname(relativePath);
+    const fileName = basename(relativePath);
+    // Put sass files in scss folder
+    const scssPath = join(dirName, 'scss', fileName);
+    // Put css files in css folder
+    const cssPath = join(dirName, 'css', replaceExt(fileName, '.css'));
     // Add baseDist + relativePath
-    this.distScss = join(distDir, relativePath);
-    this.distCss = replaceExt(this.distScss, '.css');
+    this.distScss = join(distDir, scssPath);
+    this.distCss = join(distDir, cssPath);
   }
 }
 
@@ -47,6 +53,7 @@ export function dirMaker(target: string) {
 /** Make directory for the work file */
 export const makeDirectory = map((file: WorkFile): WorkFile => {
   dirMaker(dirname(file.distScss));
+  dirMaker(dirname(file.distCss));
   return file;
 });
 
