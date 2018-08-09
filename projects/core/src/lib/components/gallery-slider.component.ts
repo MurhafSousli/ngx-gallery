@@ -17,7 +17,6 @@ import { BehaviorSubject, Observable, Subscription, fromEvent } from 'rxjs';
 import { map, tap, debounceTime } from 'rxjs/operators';
 import { GalleryState, GalleryConfig, SlidingDirection } from '../models';
 import { SliderState, WorkerState } from '../models/slider.model';
-import { Gallery } from '../services/gallery.service';
 
 declare const Hammer: any;
 
@@ -68,9 +67,6 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   /** Gallery config */
   @Input() config: GalleryConfig;
 
-  @Input() width: number;
-  @Input() height: number;
-
   /** Stream that emits when the active item should change */
   @Output() action = new EventEmitter<string | number>();
 
@@ -82,11 +78,11 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     return {transform: `perspective(50px) translate3d(0, 0, ${-this.config.zoomOut}px)`};
   }
 
-  constructor(private gallery: Gallery, private _el: ElementRef, private _zone: NgZone, @Inject(PLATFORM_ID) private platform: Object) {
+  constructor(private _el: ElementRef, private _zone: NgZone, @Inject(PLATFORM_ID) private platform: Object) {
 
     // Activate sliding worker
     this.sliderState$ = this._slidingWorker$.pipe(map((state: WorkerState) => ({
-      style: this.getSliderState(state),
+      style: this.getSliderStyles(state),
       active: state.active
     })));
   }
@@ -155,7 +151,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   /**
    * Convert sliding state to styles
    */
-  private getSliderState(state: WorkerState): any {
+  private getSliderStyles(state: WorkerState): any {
     switch (this.config.slidingDirection) {
       case SlidingDirection.Horizontal:
         return {

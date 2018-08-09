@@ -7,10 +7,10 @@ import { GalleryConfig, GalleryState } from '../models';
   preserveWhitespaces: false,
   template: `
     <gallery-thumbs *ngIf="config.thumb"
-                   [state]="state"
-                   [config]="config"
-                   (action)="action.emit($event)"
-                   (thumbClick)="thumbClick.emit($event)">
+                    [state]="state"
+                    [config]="config"
+                    (action)="action.emit($event)"
+                    (thumbClick)="thumbClick.emit($event)">
     </gallery-thumbs>
     <div class="g-box">
       <gallery-slider [state]="state"
