@@ -16,7 +16,6 @@ var WorkFile = /** @class */ (function () {
         var scssPath = path_1.join(dirName, 'scss', fileName);
         // Put css files in css folder
         var cssPath = path_1.join(dirName, 'css', replaceExt(fileName, '.css'));
-        console.log(scssPath, cssPath);
         // Add baseDist + relativePath
         this.distScss = path_1.join(distDir, scssPath);
         this.distCss = path_1.join(distDir, cssPath);
