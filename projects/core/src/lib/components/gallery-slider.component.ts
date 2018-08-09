@@ -129,13 +129,6 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
         tap(() => this.updateSlider(this._slidingWorker$.value))
       ).subscribe();
     }
-
-    // This component width is set to 100%, therefore its width gives 0 at the beginning
-    // TODO: find a cleaner way to refresh the gallery once slider width is available
-    // Current workaround: wait 500ms then refresh the slider to fix gallery items' width
-    setTimeout(() => {
-      this.updateSlider({value: 0, active: false});
-    }, 500);
   }
 
   ngOnDestroy() {
@@ -156,14 +149,14 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
       case SlidingDirection.Horizontal:
         return {
           transform: `translate3d(${-(this.state.currIndex * this._el.nativeElement.offsetWidth) + state.value}px, 0, 0)`,
-          width: this._el.nativeElement.offsetWidth * this.state.items.length + 'px',
+          width: `calc(100% * ${this.state.items.length})`,
           height: '100%'
         };
       case SlidingDirection.Vertical:
         return {
           transform: `translate3d(0, ${-(this.state.currIndex * this._el.nativeElement.offsetHeight) + state.value}px, 0)`,
           width: '100%',
-          height: this._el.nativeElement.offsetHeight * this.state.items.length + 'px'
+          height: `calc(100% * ${this.state.items.length})`,
         };
     }
   }
