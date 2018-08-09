@@ -12,7 +12,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
     </ng-container>
 
     <ng-template #loading>
-      <i *ngIf="loadingSvg" class="g-loading" [innerHTML]="loadingSvg"></i>
+      <i *ngIf="loadingSvg; else thumbLoading" class="g-loading" [innerHTML]="loadingSvg"></i>
+      <ng-template #thumbLoading>
+        <div class="g-thumb-loading"></div>
+      </ng-template>
     </ng-template>
   `
 })
@@ -32,7 +35,9 @@ export class GalleryImageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadingSvg = this._sanitizer.bypassSecurityTrustHtml(this.loadingIcon);
+    if (this.loadingIcon) {
+      this.loadingSvg = this._sanitizer.bypassSecurityTrustHtml(this.loadingIcon);
+    }
   }
 
 }
