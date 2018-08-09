@@ -54,36 +54,6 @@
 @import '~@ngx-gallery/core/styles/css/gallery';
 ```
 
-
-#### Lightbox
-
-The Lightbox now closes on route changes, therefore the `RouterModule.forRoot(...)` must be imported
-
-**Before:**
-
-```ts
-@NgModule({
-  imports: [
-    // ...
-    GalleryModule.forRoot(),
-    LightboxModule.forRoot()
-  ]
-})
-```
-
-**After:**
-
-```ts
-@NgModule({
-  imports: [
-    // ...
-    RouterModule.forRoot([]),
-    GalleryModule.forRoot(),
-    LightboxModule.forRoot()
-  ]
-})
-```
-
 ## 3.0.2
 
 - refactor(Lightbox): fix the close button small size on iphone browser.
