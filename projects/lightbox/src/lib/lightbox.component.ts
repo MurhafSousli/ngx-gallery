@@ -28,7 +28,7 @@ export class LightboxComponent implements OnDestroy {
   closeIcon: string;
 
   /** Subscription to changes in the user's location. */
-  private _locationChanges: SubscriptionLike = Subscription.EMPTY;
+  private _locationChange$: SubscriptionLike = Subscription.EMPTY;
 
   /** Use slide animation on opening and closing the lightbox */
   @HostBinding('@slideLightbox') slideAnimation;
@@ -42,11 +42,11 @@ export class LightboxComponent implements OnDestroy {
 
   constructor(public sanitizer: DomSanitizer, @Optional() location: Location) {
     // Close the Lightbox when the location changes
-    this._locationChanges = location.subscribe(() => this.overlayRef.detach());
+    this._locationChange$ = location.subscribe(() => this.overlayRef.detach());
   }
 
   ngOnDestroy() {
-    this._locationChanges.unsubscribe();
+    this._locationChange$.unsubscribe();
   }
 
 }
