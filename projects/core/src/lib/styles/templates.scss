@@ -67,3 +67,7 @@ gallery-thumb {
   width: 80px;
   height: 80px;
 }
+
+gallery[imageSize='contain'] gallery-slider .g-image-item {
+  background-size: contain;
+}
