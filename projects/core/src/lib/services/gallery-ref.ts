@@ -1,7 +1,7 @@
 import { BehaviorSubject, Subject, Observable, of, EMPTY} from 'rxjs';
 import { delay, filter, switchMap, tap } from 'rxjs/operators';
 import { defaultConfig, defaultState } from '../utils/gallery.default';
-import { GalleryAction, GalleryConfig, GalleryItem, GalleryState } from '../models';
+import { GalleryAction, GalleryConfig, GalleryError, GalleryItem, GalleryState } from '../models';
 import { IframeItem, ImageItem, VideoItem, YoutubeItem } from '../components/templates';
 
 const filterActions = (actions: string[]) => {
@@ -21,6 +21,9 @@ export class GalleryRef {
 
   /** Stream that emits on thumbnail click */
   readonly thumbClick = new Subject<number>();
+
+  /** Stream that emits on an error occurs */
+  readonly error = new Subject<GalleryError>();
 
   /** Gallery Events */
 

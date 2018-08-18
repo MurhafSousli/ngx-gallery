@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { GalleryConfig, GalleryState, ThumbnailsPosition, ThumbnailsMode } from '../models';
+import { GalleryConfig, GalleryState, ThumbnailsPosition, ThumbnailsMode, GalleryError } from '../models';
 import { SliderState, WorkerState } from '../models/slider.model';
 
 declare const Hammer: any;
@@ -35,8 +35,9 @@ declare const Hammer: any;
                        [data]="item.data"
                        [currIndex]="state.currIndex"
                        [index]="i"
+                       [tapClickDisabled]="config.disableThumb"
                        (tapClick)="action.emit(i)"
-                       [tapClickDisabled]="config.disableThumb"></gallery-thumb>
+                       (error)="error.emit({itemIndex: i, error: $event})"></gallery-thumb>
       </div>
     </div>
   `
@@ -66,6 +67,9 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
 
   /** Stream that emits when thumb is clicked */
   @Output() thumbClick = new EventEmitter<number>();
+
+  /** Stream that emits when an error occurs */
+  @Output() error = new EventEmitter<GalleryError>();
 
   /** Host height */
   @HostBinding('style.height') height: string;

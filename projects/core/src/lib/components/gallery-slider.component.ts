@@ -15,7 +15,7 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable, Subscription, fromEvent } from 'rxjs';
 import { map, tap, debounceTime } from 'rxjs/operators';
-import { GalleryState, GalleryConfig, SlidingDirection } from '../models';
+import { GalleryState, GalleryConfig, SlidingDirection, GalleryError } from '../models';
 import { SliderState, WorkerState } from '../models/slider.model';
 
 declare const Hammer: any;
@@ -39,7 +39,8 @@ declare const Hammer: any;
                       [data]="item.data"
                       [currIndex]="state.currIndex"
                       [index]="i"
-                      (tapClick)="itemClick.emit(i)">
+                      (tapClick)="itemClick.emit(i)"
+                      (error)="error.emit({itemIndex: i, error: $event})">
         </gallery-item>
 
       </div>
@@ -72,6 +73,9 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   /** Stream that emits when item is clicked */
   @Output() itemClick = new EventEmitter<number>();
+
+  /** Stream that emits when an error occurs */
+  @Output() error = new EventEmitter<GalleryError>();
 
   /** Item zoom */
   get zoom() {

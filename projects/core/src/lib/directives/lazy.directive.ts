@@ -16,6 +16,7 @@ export class LazyDirective implements OnDestroy {
   }
 
   @Output() loaded = new EventEmitter<string>();
+  @Output() error = new EventEmitter<Error>();
 
   constructor() {
     const img = new Image();
@@ -36,11 +37,13 @@ export class LazyDirective implements OnDestroy {
           })
         );
 
-        // Image load error
-        const loadError = fromEvent(img, 'error').pipe(tap((err: Error) => {
-          console.warn('Gallery: Lazy image could not load!', err);
-          this.loaded.emit(null);
-        }));
+        // Image load failed
+        const loadError = fromEvent(img, 'error').pipe(
+          tap((err: Error) => {
+            this.error.emit(err);
+            this.loaded.emit(null);
+          })
+        );
 
         return zip(loadSuccess, loadError);
       })

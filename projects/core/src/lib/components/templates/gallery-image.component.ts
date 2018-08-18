@@ -1,11 +1,11 @@
-import { Component, Input, HostBinding, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, Input, HostBinding, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'gallery-image',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <ng-container [lazyImage]="src" (loaded)="loadedImage = $event">
+    <ng-container [lazyImage]="src" (loaded)="loadedImage = $event" (error)="error.emit($event)">
       <div *ngIf="loadedImage; else loading"
            class="g-image-item"
            [style.backgroundImage]="loadedImage"></div>
@@ -26,6 +26,9 @@ export class GalleryImageComponent implements OnInit {
 
   @Input() src: string;
   @Input() loadingIcon: string;
+
+  /** Stream that emits when an error occurs */
+  @Output() error = new EventEmitter<Error>();
 
   @HostBinding('class.g-image-loaded') get imageLoaded() {
     return !!this.loadedImage;

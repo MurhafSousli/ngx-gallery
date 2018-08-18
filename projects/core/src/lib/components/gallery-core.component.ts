@@ -1,5 +1,5 @@
 import { Component, Input, HostBinding, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
-import { GalleryConfig, GalleryState } from '../models';
+import { GalleryConfig, GalleryError, GalleryState } from '../models';
 
 @Component({
   selector: 'gallery-core',
@@ -16,7 +16,8 @@ import { GalleryConfig, GalleryState } from '../models';
       <gallery-slider [state]="state"
                       [config]="config"
                       (action)="action.emit($event)"
-                      (itemClick)="itemClick.emit($event)">
+                      (itemClick)="itemClick.emit($event)"
+                      (error)="error.emit($event)">
 
         <gallery-nav *ngIf="config.nav && state.items.length > 1"
                      [state]="state"
@@ -44,6 +45,7 @@ export class GalleryCoreComponent {
   @Output() action = new EventEmitter<string | number>();
   @Output() itemClick = new EventEmitter<number>();
   @Output() thumbClick = new EventEmitter<number>();
+  @Output() error = new EventEmitter<GalleryError>();
 
   /** Set thumbnails position */
   @HostBinding('attr.thumbPosition') get thumbPosition(): 'top' | 'left' | 'right' | 'bottom' {
