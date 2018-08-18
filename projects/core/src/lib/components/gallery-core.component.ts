@@ -57,4 +57,9 @@ export class GalleryCoreComponent {
     return this.config.slidingDirection;
   }
 
+  /** Disable thumbnails clicks */
+  @HostBinding('attr.disableThumb') get disableThumb(): boolean {
+    return this.config.disableThumb;
+  }
+
 }
