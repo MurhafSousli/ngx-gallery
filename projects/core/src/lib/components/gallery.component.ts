@@ -151,6 +151,11 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     if (this.player.observers.length) {
       this._player$ = this.galleryRef.player.subscribe((state: GalleryState) => this.player.emit(state));
     }
+
+    // Start playing if auto-play is set to true
+    if (this.autoPlay) {
+      this.play();
+    }
   }
 
   ngOnDestroy() {
