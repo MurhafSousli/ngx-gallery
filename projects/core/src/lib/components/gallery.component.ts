@@ -224,7 +224,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     this.galleryRef.reset();
   }
 
-  play(interval?) {
+  play(interval?: number) {
     this.galleryRef.play(interval);
   }
 

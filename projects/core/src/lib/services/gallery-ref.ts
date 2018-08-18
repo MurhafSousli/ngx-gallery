@@ -222,9 +222,9 @@ export class GalleryRef {
   /**
    * Start gallery player
    */
-  play(playerInterval?: number) {
-    if (playerInterval) {
-      this.setConfig({playerInterval});
+  play(interval?: number) {
+    if (interval) {
+      this.setConfig({playerInterval: interval});
     }
     this.setState({action: GalleryAction.PLAY, isPlaying: true});
   }

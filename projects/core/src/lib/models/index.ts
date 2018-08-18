@@ -1,3 +1,3 @@
 export * from './config.model';
-export * from './state.model';
+export * from './gallery.model';
 export * from './constants';
