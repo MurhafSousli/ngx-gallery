@@ -1,4 +1,5 @@
 gallery {
+  position: relative;
   z-index: 1;
   overflow: hidden;
   display: block;
@@ -21,10 +22,14 @@ gallery-core, .g-box, .g-slider {
 }
 
 gallery[fluid] {
-  width: 100vw !important;
   transform: translateX(-50vw);
-  position: relative;
+  width: 100vw;
   left: 50%;
+  &[fluid='false'] {
+    transform: none;
+    width: initial;
+    left: initial;
+  }
 }
 
 .g-no-transition {
