@@ -11,11 +11,6 @@ import { GalleryConfig, LoadingStrategy, GalleryItemType } from '../models';
 
         <gallery-image [src]="data.src" [loadingIcon]="config.loadingIcon"></gallery-image>
 
-        <div class="g-template g-item-template">
-          <ng-container *ngTemplateOutlet="config.itemTemplate;
-          context: { index: this.index, currIndex: this.currIndex, type: this.type, data: this.data }">
-          </ng-container>
-        </div>
 
       </ng-container>
 
