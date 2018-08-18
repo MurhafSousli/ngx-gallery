@@ -12,7 +12,7 @@ import {
 import { Subscription, SubscriptionLike } from 'rxjs';
 import { Gallery } from '../services/gallery.service';
 import { GalleryRef } from '../services/gallery-ref';
-import { GalleryItem, GalleryState } from '../models';
+import { GalleryError, GalleryItem, GalleryState } from '../models';
 import { IframeItem, ImageItem, VideoItem, YoutubeItem } from './templates';
 
 @Component({
@@ -23,7 +23,8 @@ import { IframeItem, ImageItem, VideoItem, YoutubeItem } from './templates';
                   [config]="galleryRef.config$ | async"
                   (action)="onAction($event)"
                   (itemClick)="onItemClick($event)"
-                  (thumbClick)="onThumbClick($event)"></gallery-core>
+                  (thumbClick)="onThumbClick($event)"
+                  (error)="onError($event)"></gallery-core>
     <ng-content></ng-content>
   `
 })
@@ -66,6 +67,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Output() player = new EventEmitter<GalleryState>();
   @Output() indexChange = new EventEmitter<GalleryState>();
   @Output() itemsChange = new EventEmitter<GalleryState>();
+  @Output() error = new EventEmitter<GalleryError>();
 
   private _player$: SubscriptionLike = Subscription.EMPTY;
   private _itemClick$: SubscriptionLike = Subscription.EMPTY;
@@ -173,6 +175,11 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     this.galleryRef.thumbClick.next(i);
   }
 
+  onError(err: GalleryError) {
+    this.error.emit(err);
+    this.galleryRef.error.next(err);
+  }
+
   load(items: GalleryItem[]) {
     this.galleryRef.load(items);
   }
@@ -217,8 +224,8 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     this.galleryRef.reset();
   }
 
-  play() {
-    this.galleryRef.play();
+  play(interval?) {
+    this.galleryRef.play(interval);
   }
 
   stop() {

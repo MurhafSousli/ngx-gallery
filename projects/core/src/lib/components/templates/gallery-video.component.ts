@@ -1,10 +1,10 @@
-import { Component, Input, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'gallery-video',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <video #video controls poster="{{poster}}">
+    <video #video controls poster="{{poster}}" (error)="error.emit($event)">
       <source *ngFor="let source of videoSources" src="{{source}}"/>
     </video>
   `
@@ -22,6 +22,9 @@ export class GalleryVideoComponent implements OnInit {
       video.pause();
     }
   }
+
+  /** Stream that emits when an error occurs */
+  @Output() error = new EventEmitter<Error>();
 
   @ViewChild('video') video: ElementRef;
 

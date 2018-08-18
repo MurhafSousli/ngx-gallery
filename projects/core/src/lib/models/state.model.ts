@@ -13,3 +13,8 @@ export interface GalleryItem {
   data?: any;
   type?: string;
 }
+
+export interface GalleryError {
+  itemIndex: number;
+  error: Error;
+}

@@ -1,11 +1,11 @@
-import { Component, Input, ChangeDetectionStrategy, HostBinding } from '@angular/core';
-import { GalleryConfig } from '../models';
+import { Component, Input, ChangeDetectionStrategy, HostBinding, Output, EventEmitter } from '@angular/core';
+import { GalleryConfig, GalleryError } from '../models';
 
 @Component({
   selector: 'gallery-thumb',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <gallery-image [src]="data.thumb"></gallery-image>
+    <gallery-image [src]="data.thumb" (error)="error.emit($event)"></gallery-image>
 
     <div *ngIf="config.thumbTemplate" class="g-template g-thumb-template">
       <ng-container
@@ -29,6 +29,8 @@ export class GalleryThumbComponent {
 
   /** Item's data, this object contains the data required to display the content (e.g. src path) */
   @Input() data: any;
+
+  @Output() error = new EventEmitter<Error>();
 
   @HostBinding('class.g-active-thumb') get isActive() {
     return this.index === this.currIndex;
