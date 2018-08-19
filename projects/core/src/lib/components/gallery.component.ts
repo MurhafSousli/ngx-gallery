@@ -63,16 +63,16 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
 
   @Output() itemClick = new EventEmitter<number>();
   @Output() thumbClick = new EventEmitter<number>();
-  @Output() player = new EventEmitter<GalleryState>();
+  @Output() playingChange = new EventEmitter<GalleryState>();
   @Output() indexChange = new EventEmitter<GalleryState>();
   @Output() itemsChange = new EventEmitter<GalleryState>();
   @Output() error = new EventEmitter<GalleryError>();
 
-  private _player$: SubscriptionLike = Subscription.EMPTY;
   private _itemClick$: SubscriptionLike = Subscription.EMPTY;
   private _thumbClick$: SubscriptionLike = Subscription.EMPTY;
   private _itemChange$: SubscriptionLike = Subscription.EMPTY;
   private _indexChange$: SubscriptionLike = Subscription.EMPTY;
+  private _playingChange$: SubscriptionLike = Subscription.EMPTY;
   private _playerListener$: SubscriptionLike = Subscription.EMPTY;
 
   constructor(private _gallery: Gallery) {
@@ -146,8 +146,8 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     if (this.itemsChange.observers.length) {
       this._itemChange$ = this.galleryRef.itemsChanged.subscribe((state: GalleryState) => this.itemsChange.emit(state));
     }
-    if (this.player.observers.length) {
-      this._player$ = this.galleryRef.player.subscribe((state: GalleryState) => this.player.emit(state));
+    if (this.playingChange.observers.length) {
+      this._playingChange$ = this.galleryRef.playingChanged.subscribe((state: GalleryState) => this.playingChange.emit(state));
     }
 
     // Start playing if auto-play is set to true
@@ -157,11 +157,11 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy() {
-    this._player$.unsubscribe();
     this._itemClick$.unsubscribe();
     this._thumbClick$.unsubscribe();
     this._itemChange$.unsubscribe();
     this._indexChange$.unsubscribe();
+    this._playingChange$.unsubscribe();
     this._playerListener$.unsubscribe();
     if (this.destroyRef) {
       this.galleryRef.reset();

@@ -53,7 +53,7 @@ export class GalleryRef {
   }
 
   /** Stream that emits when the player should start or stop */
-  get player(): Observable<GalleryState> {
+  get playingChanged(): Observable<GalleryState> {
     return this.state$.pipe(filterActions([GalleryAction.PLAY, GalleryAction.STOP]));
   }
 
