@@ -7,10 +7,19 @@ import { GalleryConfig, LoadingStrategy, GalleryItemType } from '../models';
   template: `
     <ng-container *ngIf="load" [ngSwitch]="type">
 
-      <gallery-image *ngSwitchCase="Types.Image"
-                     [src]="data.src"
-                     [loadingIcon]="config.loadingIcon"
-                     (error)="error.emit($event)"></gallery-image>
+      <ng-container *ngSwitchCase="Types.Image">
+
+        <gallery-image [src]="data.src"
+                       [loadingIcon]="config.loadingIcon"
+                       (error)="error.emit($event)"></gallery-image>
+
+        <div class="g-template g-item-template">
+          <ng-container *ngTemplateOutlet="config.itemTemplate;
+          context: { index: this.index, currIndex: this.currIndex, type: this.type, data: this.data }">
+          </ng-container>
+        </div>
+
+      </ng-container>
 
       <gallery-video *ngSwitchCase="Types.Video"
                      [src]="data.src"
