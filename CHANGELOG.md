@@ -6,8 +6,9 @@
 - feat(Gallery): Add support for error handling, closes [#154](https://github.com/MurhafSousli/ngx-gallery/issues/154) in [12f6e5e](https://github.com/MurhafSousli/ngx-gallery/pull/177/commits/12f6e5eddd5a9c7607778b5af1f77ef782327930).
 - refactor(Gallery): Remove opacity transition from `gallery-item`, in [a5b227e](https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/a5b227eb72f9531d1884c07329b65b3c95fc0228).
 - refactor(Gallery): Use `imageSize` as an attribute, in [96c5c07](https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/96c5c075bf41d765b7c4667abcb374c7a6f80f1a).
-- fix(Gallery): fix vertical sliding direction, in [cba5d59](https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/cba5d59074fbd37be9ee22abbef2f181364d2267).
 - enhance(Gallery): Use default cursor when thumbnails are disabled, in [3582e95](https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/3582e95b0f3458c451f76580adda12f72220affb).
+- fix(Gallery): fix vertical sliding direction, in [cba5d59](https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/cba5d59074fbd37be9ee22abbef2f181364d2267).
+- fix(Gallery): fix thumbClick Output, in [a730116](https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/a730116e5d2154910d9a16c6a464e58b59f2e7dd).
 
 ## 3.1.0-beta.0
 
