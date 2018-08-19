@@ -2,10 +2,10 @@ import {
   GalleryState,
   GalleryConfig,
   GalleryAction,
+  ThumbnailsMode,
   LoadingStrategy,
   SlidingDirection,
-  ThumbnailsPosition,
-  ThumbnailsMode
+  ThumbnailsPosition
 } from '../models';
 
 /** Initial state */
