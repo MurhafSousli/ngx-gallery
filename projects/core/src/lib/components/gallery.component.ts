@@ -174,6 +174,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onThumbClick(i: number) {
+    this.galleryRef.set(i);
     this.thumbClick.emit(i);
     this.galleryRef.thumbClick.next(i);
   }

@@ -36,7 +36,7 @@ declare const Hammer: any;
                        [currIndex]="state.currIndex"
                        [index]="i"
                        [tapClickDisabled]="config.disableThumb"
-                       (tapClick)="action.emit(i)"
+                       (tapClick)="thumbClick.emit(i)"
                        (error)="error.emit({itemIndex: i, error: $event})"></gallery-thumb>
       </div>
     </div>
