@@ -15,6 +15,12 @@ gallery-thumbs {
   overflow: unset;
 }
 
+gallery-core[disableThumb='true'] {
+  gallery-thumb {
+    cursor: default;
+  }
+}
+
 gallery-core[thumbPosition='top'],
 gallery-core[thumbPosition='bottom'] {
   gallery-thumbs .g-slider {

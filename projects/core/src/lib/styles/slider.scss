@@ -8,13 +8,13 @@
 }
 
 gallery-core[slidingDirection='horizontal'] {
-  .g-slides {
+  .g-slider {
     flex-direction: row;
   }
 }
 
 gallery-core[slidingDirection='vertical'] {
-  .g-slides {
+  .g-slider {
     flex-direction: column;
   }
 }

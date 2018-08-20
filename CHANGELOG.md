@@ -1,11 +1,22 @@
 # Changelog
 
+## 3.1.0
+
+- feat(Gallery): Add auto-play option, in [e7fc03f](https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/e7fc03f3abc8c516634231ff42750806d54d22f0).
+- feat(Gallery): Add support for error handling, closes [#154](https://github.com/MurhafSousli/ngx-gallery/issues/154) in [12f6e5e](https://github.com/MurhafSousli/ngx-gallery/pull/177/commits/12f6e5eddd5a9c7607778b5af1f77ef782327930).
+- refactor(Gallery): Remove opacity transition from `gallery-item`, in [a5b227e](https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/a5b227eb72f9531d1884c07329b65b3c95fc0228).
+- refactor(Gallery): Use `imageSize` as an attribute, in [96c5c07](https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/96c5c075bf41d765b7c4667abcb374c7a6f80f1a).
+- refactor(Gallery): Rename `(player)` output to `(playingChange)`, in [e209493](https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/e2094937c4303fcc00f223155f2ad3d9cee29e17).
+- enhance(Gallery): Use default cursor when thumbnails are disabled, in [3582e95](https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/3582e95b0f3458c451f76580adda12f72220affb).
+- fix(Gallery): fix vertical sliding direction, in [cba5d59](https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/cba5d59074fbd37be9ee22abbef2f181364d2267).
+- fix(Gallery): fix thumbClick Output, in [a730116](https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/a730116e5d2154910d9a16c6a464e58b59f2e7dd).
+
 ## 3.1.0-beta.0
 
 #### Gallery
 
-- feat(Gallery): Add `thumbMode` option on thumbnails' slider (free scroll thumbnails), closes [#135](https://github.com/MurhafSousli/ngx-gallery/issues/135) in [8c6c99d](https://github.com/MurhafSousli/ngx-gallery/pull/159/commits/8c6c99db551a3ee31f5ab203babba6464acc7b83)
-- feat(Gallery): Add player and auto-play option closes [#152](https://github.com/MurhafSousli/ngx-gallery/issues/152) in [a331f46](https://github.com/MurhafSousli/ngx-gallery/pull/165/commits/a331f466ad4a2834a8de7f908d5e63fe1d3d5b41).
+- feat(Gallery): Add `thumbMode` option on thumbnails' slider (free scroll thumbnails), closes [#135](https://github.com/MurhafSousli/ngx-gallery/issues/135) in [8c6c99d](https://github.com/MurhafSousli/ngx-gallery/pull/159/commits/8c6c99db551a3ee31f5ab203babba6464acc7b83).
+- feat(Gallery): Add slide show player option, closes [#152](https://github.com/MurhafSousli/ngx-gallery/issues/152) in [a331f46](https://github.com/MurhafSousli/ngx-gallery/pull/165/commits/a331f466ad4a2834a8de7f908d5e63fe1d3d5b41).
 - enhance(Gallery): Ability to Import gallery styles individually [#144](https://github.com/MurhafSousli/ngx-gallery/issues/144) in [ebb6667](https://github.com/MurhafSousli/ngx-gallery/pull/162/commits/ebb6667955299df1f41690a4f4b587a9196bb4bf).
 - enhance(Gallery): Run HammerJS gestures outside angular zone [6fabf6c](https://github.com/MurhafSousli/ngx-gallery/commit/6fabf6ca2d421ea1cc478c1f6cd9a3b432ddd0da).
 - enhance(Gallery): Put SCSS and CSS each in its own folder, close [#153](https://github.com/MurhafSousli/ngx-gallery/issues/153) in [9783fc3](https://github.com/MurhafSousli/ngx-gallery/pull/170/commits/9783fc3a614e2258c9363d316ea042fce8c86913).
