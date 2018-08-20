@@ -1,14 +1,14 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Gallery, GalleryRef, ImageItem, GalleryItem } from '@ngx-gallery/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Gallery, GalleryItem, ImageItem } from '@ngx-gallery/core';
 import { Lightbox } from '@ngx-gallery/lightbox';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: 'app-lazy',
+  templateUrl: './lazy.component.html',
+  styleUrls: ['./lazy.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit {
+export class LazyComponent implements OnInit {
 
   items: GalleryItem[];
 
@@ -35,15 +35,13 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    // This is for Basic example
-    const galleryRef: GalleryRef = this.gallery.ref('basic-test');
 
     this.items = this.imageData.map(item => {
-      return new ImageItem({ src: item.srcUrl, thumb: item.previewUrl});
+      return new ImageItem({src: item.srcUrl, thumb: item.previewUrl});
     });
 
     // This is for Lightbox example
-    this.gallery.ref('lightbox').load(galleryRef.state.items);
+    this.gallery.ref('lightbox').load(this.items);
   }
 
   openLightbox() {

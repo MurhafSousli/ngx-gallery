@@ -1,0 +1,11 @@
+<div class="lightbox-example">
+  <h2>Lightbox Example</h2>
+  <button mat-button (click)="openLightbox()">Open Lightbox</button>
+</div>
+
+<div class="gallerize-example">
+  <h2>Gallerize Example</h2>
+  <p class="container" gallerize>
+    <img *ngFor="let img of items" [src]="img?.data?.thumb">
+  </p>
+</div>
