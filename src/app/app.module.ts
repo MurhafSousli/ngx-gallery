@@ -3,19 +3,28 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { MatButtonModule, MatToolbarModule } from '@angular/material';
 
+import { AppRoutingModule } from './app-routing';
 import { AppComponent } from './app.component';
-// import { GalleryModule } from './core/public_api';
+
 import { GalleryModule } from '@ngx-gallery/core';
 import { LightboxModule } from '@ngx-gallery/lightbox';
 import { GallerizeModule } from '@ngx-gallery/gallerize';
+import { HomeComponent } from './home/home.component';
+import { LazyComponent } from './lazy/lazy.component';
+
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    LazyComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatToolbarModule,
+    AppRoutingModule,
     GalleryModule.forRoot(),
     LightboxModule.forRoot(),
     GallerizeModule
@@ -23,4 +32,5 @@ import { GallerizeModule } from '@ngx-gallery/gallerize';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}

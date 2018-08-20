@@ -4,8 +4,8 @@
 @import 'assets/theme';
 @import 'assets/mixin';
 @import 'assets/variables';
-@import '~@ngx-gallery/core/styles/gallery';
-@import '~@ngx-gallery/core/styles/lightbox';
+@import '~@ngx-gallery/core/styles/scss/gallery';
+@import '~@ngx-gallery/core/styles/scss/lightbox';
 
 * {
   box-sizing: border-box;
@@ -46,6 +46,7 @@ gallery-example,
 lightbox-example,
 gallerize-example,
 advanced-example,
+lab,
 not-found {
   position: absolute;
   left: 0;

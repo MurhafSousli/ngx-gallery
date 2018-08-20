@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
-import { GalleryItem, GalleryConfig, ThumbnailPosition } from '@ngx-gallery/core';
+import { GalleryItem, GalleryConfig, ThumbnailsPosition } from '@ngx-gallery/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -24,13 +24,13 @@ export class GalleryExampleComponent {
       map((res: MediaChange) => {
         if (res.mqAlias === 'sm' || res.mqAlias === 'xs') {
           return {
-            thumbPosition: ThumbnailPosition.Top,
+            thumbPosition: ThumbnailsPosition.Top,
             thumbWidth: 80,
             thumbHeight: 80
           };
         }
         return {
-          thumbPosition: ThumbnailPosition.Left,
+          thumbPosition: ThumbnailsPosition.Left,
           thumbWidth: 120,
           thumbHeight: 90
         };
