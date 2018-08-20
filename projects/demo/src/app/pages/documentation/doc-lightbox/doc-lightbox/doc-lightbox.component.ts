@@ -20,7 +20,7 @@ import { GalleryLightbox } from  '@ngx-gallery/lightbox';
  ]
 })`;
 
-  importStyle = `@import '~@ngx-gallery/core/styles/gallery';
-@import '~@ngx-gallery/core/styles/lightbox';`;
+  importStyle = `@import '~@ngx-gallery/core/styles/scss/gallery';
+@import '~@ngx-gallery/core/styles/scss/lightbox';`;
 
 }

@@ -17,9 +17,10 @@ export class HomeComponent {
     'Navigation',
     'Auto-detect',
     'Lightbox',
-    'Multiple instances support',
+    'Auto player',
+    'Error handling support',
     'Gestures support',
-    'Universal support'
+    'Universal support',
   ];
 
 }

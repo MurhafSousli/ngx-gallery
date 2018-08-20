@@ -8,6 +8,7 @@ const appRoutes: Routes = [
   {path: 'lightbox', loadChildren: './pages/lightbox-example/lightbox-example.module#LightboxExampleModule'},
   {path: 'gallerize', loadChildren: './pages/gallerize-example/gallerize-example.module#GallerizeExampleModule'},
   {path: 'advanced', loadChildren: './pages/advanced-example/advanced-example.module#AdvancedExampleModule'},
+  {path: 'lab', loadChildren: './pages/lab/lab.module#LabModule'},
   {path: '**', loadChildren: './pages/not-found/not-found.module#NotFoundPageModule'}
 ];
 
