@@ -15,13 +15,13 @@ import { GallerySliderComponent } from './components/gallery-slider.component';
 import { GalleryCounterComponent } from './components/gallery-counter.component';
 
 import { GalleryItemComponent } from './components/gallery-item.component';
+import { GalleryThumbComponent } from './components/gallery-thumb.component';
 import { GalleryImageComponent } from './components/templates/gallery-image.component';
 import { GalleryVideoComponent } from './components/templates/gallery-video.component';
 import { GalleryIframeComponent } from './components/templates/gallery-iframe.component';
 
 import { LazyDirective } from './directives/lazy.directive';
 import { TapClickDirective } from './directives/tap-click.directive';
-import { GalleryThumbComponent } from './components/gallery-thumb.component';
 
 export function galleryFactory(galleryConfig: GalleryConfig) {
   return new Gallery(galleryConfig);
