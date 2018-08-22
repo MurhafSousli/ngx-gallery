@@ -5,9 +5,7 @@ import { GALLERY_CONFIG } from '../utils/gallery.token';
 import { defaultConfig } from '../utils/gallery.default';
 import { GalleryConfig } from '../models';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class Gallery {
 
   /** Stores GalleryRef instances */
