@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.1.1
+
+- refactor(Gallery): Convert `imageSize` attribute to an input + add it to gallery config, this makes it possible to use it in lightbox mode, closes [#183](https://github.com/MurhafSousli/ngx-gallery/issues/183) in [1fc70c4](https://github.com/MurhafSousli/ngx-gallery/pull/184/commits/1fc70c4e12c06199e2ae4395f2d182b771561acd).
+- refactor(Gallery): Make `contain` as the default value for `imageSize` option, in [c7b3d39](https://github.com/MurhafSousli/ngx-gallery/pull/185/commits/c7b3d39bfc257500c133cc954c8e72bc1d2ed672).
+
 ## 3.1.0
 
 - feat(Gallery): Add auto-play option, in [e7fc03f](https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/e7fc03f3abc8c516634231ff42750806d54d22f0).
