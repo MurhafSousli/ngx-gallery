@@ -1,4 +1,5 @@
 import {
+  ImageSize,
   GalleryState,
   GalleryConfig,
   GalleryAction,
@@ -32,6 +33,7 @@ export const defaultConfig: GalleryConfig = {
   panSensitivity: 25,
   disableThumb: false,
   playerInterval: 3000,
+  imageSize: ImageSize.Contain,
   thumbMode: ThumbnailsMode.Strict,
   thumbPosition: ThumbnailsPosition.Bottom,
   loadingStrategy: LoadingStrategy.Default,
