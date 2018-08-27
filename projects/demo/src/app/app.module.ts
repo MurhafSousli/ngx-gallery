@@ -38,7 +38,7 @@ import { NgProgressRouterModule } from '@ngx-progressbar/router';
     NgProgressHttpModule,
     NgProgressRouterModule,
     HighlightModule.forRoot({theme: 'tomorrow'}),
-    GalleryModule.forRoot(),
+    GalleryModule.forRoot({imageSize: 'cover'}),
     LightboxModule.forRoot()
   ],
   providers: [
