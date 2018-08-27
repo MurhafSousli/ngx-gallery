@@ -6,6 +6,11 @@ export enum GalleryAction {
   STOP = 'stop'
 }
 
+export enum ImageSize {
+  Cover = 'cover',
+  Contain = 'contain'
+}
+
 export enum LoadingStrategy {
   Preload = 'preload',
   Lazy = 'lazy',

@@ -49,6 +49,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() itemTemplate: TemplateRef<any> = this._gallery.config.itemTemplate;
   @Input() thumbTemplate: TemplateRef<any> = this._gallery.config.thumbTemplate;
   @Input() thumbMode: 'strict' | 'free' = this._gallery.config.thumbMode;
+  @Input() imageSize: 'cover' | 'contain' = this._gallery.config.imageSize;
   @Input() slidingDirection: 'horizontal' | 'vertical' = this._gallery.config.slidingDirection;
   @Input() loadingStrategy: 'preload' | 'lazy' | 'default' = this._gallery.config.loadingStrategy;
   @Input() thumbPosition: 'top' | 'left' | 'right' | 'bottom' = this._gallery.config.thumbPosition;
@@ -88,6 +89,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       counter: this.counter,
       autoPlay: this.autoPlay,
       gestures: this.gestures,
+      imageSize: this.imageSize,
       thumbMode: this.thumbMode,
       thumbWidth: this.thumbWidth,
       thumbHeight: this.thumbHeight,

@@ -19,6 +19,7 @@ export interface GalleryConfig {
   itemTemplate?: TemplateRef<any>;
   thumbTemplate?: TemplateRef<any>;
   thumbMode?: 'strict' | 'free';
+  imageSize?: 'cover' | 'contain';
   slidingDirection?: 'horizontal' | 'vertical';
   loadingStrategy?: 'preload' | 'lazy' | 'default';
   thumbPosition?: 'top' | 'left' | 'right' | 'bottom';

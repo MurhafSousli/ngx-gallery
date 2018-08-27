@@ -52,7 +52,7 @@ export class GalleryCoreComponent {
     return this.config.thumbPosition;
   }
 
-  /** Set thumbnails position */
+  /** Set sliding direction */
   @HostBinding('attr.slidingDirection') get slidingDirection(): 'horizontal' | 'vertical' {
     return this.config.slidingDirection;
   }
@@ -60,6 +60,11 @@ export class GalleryCoreComponent {
   /** Disable thumbnails clicks */
   @HostBinding('attr.disableThumb') get disableThumb(): boolean {
     return this.config.disableThumb;
+  }
+
+  /** Set gallery image size */
+  @HostBinding('attr.imageSize') get imageSize(): 'cover' | 'contain' {
+    return this.config.imageSize;
   }
 
 }
