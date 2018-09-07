@@ -1,6 +1,6 @@
 {
   "name": "ngx-gallery",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "description": "Angular gallery directive that hooks the lightbox with the images automatically.",
   "homepage": "http://github.com/murhafsousli/ngx-gallery",
   "author": {
@@ -28,10 +28,10 @@
     "sass-ts": "tsc .config/styles.ts --lib es7 && node .config/styles.js projects/core/src/lib dist/core",
     "sass": "node .config/styles.js projects/core/src/lib dist/core",
     "init-build": "npm run build-core && npm run version && npm run link-core && npm run build-lightbox && npm run version && npm run link-lightbox && npm run build-gallerize && npm run version && npm run link-gallerize && npm run sass && npm run version",
-    "build-all": "npm run build-core && npm run build-lightbox && npm run build-gallerize && npm run sass && npm run version",
-    "build-core": "ng build core --prod",
-    "build-lightbox": "ng build lightbox --prod",
-    "build-gallerize": "ng build gallerize --prod",
+    "build-all": "ng build core --prod && ng build lightbox --prod && ng build gallerize --prod && npm run sass && npm run version",
+    "build-core": "ng build core",
+    "build-lightbox": "ng build lightbox",
+    "build-gallerize": "ng build gallerize",
     "link-core": "npm link dist/core && npm link @ngx-gallery/core",
     "link-lightbox": "npm link dist/lightbox && npm link @ngx-gallery/lightbox",
     "link-gallerize": "npm link dist/gallerize && npm link @ngx-gallery/gallerize",
