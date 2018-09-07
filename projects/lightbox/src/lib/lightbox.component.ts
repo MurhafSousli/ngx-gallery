@@ -42,7 +42,9 @@ export class LightboxComponent implements OnDestroy {
 
   constructor(public sanitizer: DomSanitizer, @Optional() location: Location) {
     // Close the Lightbox when the location changes
-    this._locationChange$ = location.subscribe(() => this.overlayRef.detach());
+    if (location) {
+      this._locationChange$ = location.subscribe(() => this.overlayRef.detach());
+    }
   }
 
   ngOnDestroy() {
