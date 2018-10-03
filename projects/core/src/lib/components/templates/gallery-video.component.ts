@@ -5,15 +5,15 @@ import { Component, Input, OnInit, ViewChild, ElementRef, ChangeDetectionStrateg
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <video #video controls poster="{{poster}}" (error)="error.emit($event)">
-      <source *ngFor="let source of videoSources" src="{{source}}"/>
+      <source *ngFor="let src of videoSources" src="{{src?.url}}" type="{{src?.type}}"/>
     </video>
   `
 })
 export class GalleryVideoComponent implements OnInit {
 
-  videoSources: string[];
+  videoSources: {url: string, type?: string}[];
 
-  @Input() src: string | string[];
+  @Input() src: string | {url: string, type?: string}[];
   @Input() poster: string;
 
   @Input('pause') set pauseVideo(shouldPause: boolean) {
@@ -33,7 +33,7 @@ export class GalleryVideoComponent implements OnInit {
       // If video has multiple sources
       this.videoSources = [...this.src];
     } else {
-      this.videoSources = [this.src];
+      this.videoSources = [{ url: this.src }];
     }
   }
 }
