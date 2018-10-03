@@ -13,6 +13,17 @@
     <section>
       <section-title class="no-margin-bottom">Usage</section-title>
 
+      <note class="info" style="margin: -3em 0 -1em">
+        <p>If you haven't installed and imported the module in step <span class="section-number inline-number">1</span>,
+          see the <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent" [routerLink]="['/getting-started/gallery']">Getting
+            Started Guide</a></p>
+      </note>
+
+      <div class="usage-title">
+        <span class="section-number">2</span>
+        <p>Create a gallery items array to load it in the gallery</p>
+      </div>
+
       <mat-tab-group>
 
         <mat-tab label="Basic">
@@ -53,20 +64,15 @@
 
       <h3>Example</h3>
 
-      <gallery id="basic"
-               *ngIf="media$ | async; let config"
-               [items]="fruits$ | async"
-               [thumbWidth]="config.thumbWidth"
-               [thumbHeight]="config.thumbHeight"
-               [thumbPosition]="config.thumbPosition"></gallery>
+      <gallery id="basic" *ngIf="media$ | async; let config" [items]="fruits$ | async" [thumbWidth]="config.thumbWidth"
+        [thumbHeight]="config.thumbHeight" [thumbPosition]="config.thumbPosition"></gallery>
 
 
       <hl-code [code]="code.example"></hl-code>
 
       <note>
         <p>The gallery has many options that you can adjust, check all available options in
-          <a mat-button class="inline-button" color="primary"
-             href="https://github.com/MurhafSousli/ngx-gallery/wiki/Gallery-API">
+          <a mat-button class="inline-button" color="primary" href="https://github.com/MurhafSousli/ngx-gallery/wiki/Gallery-API">
             <fa-icon icon="external-link-alt"></fa-icon>
             Gallery API
           </a>
@@ -85,4 +91,3 @@
   </div>
   <footer></footer>
 </ng-scrollbar>
-

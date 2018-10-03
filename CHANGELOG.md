@@ -1,5 +1,40 @@
 # Changelog
 
+## 3.2.0
+
+- **feature(Gallery):** Do not require importing global styles, closes [#197](https://github.com/MurhafSousli/ngx-gallery/issues/197) in [ea041a5](https://github.com/MurhafSousli/ngx-gallery/commit/ea041a5930e1ecf184028d9444b2d7fa3faf80ae).
+- **feature(Gallery):** Set the video type attribute on videos items, closes [#199](https://github.com/MurhafSousli/ngx-gallery/issues/199) in [06b3601](https://github.com/MurhafSousli/ngx-gallery/commit/06b3601d382bd51cfdae3470921bc6a74aff0af9).
+- **feature(lightbox):** Add a lightbox directive, closes [#200](https://github.com/MurhafSousli/ngx-gallery/issues/200) in [ad2255b](https://github.com/MurhafSousli/ngx-gallery/commit/ad2255be4abf44fb692bf2f90e29e5737cdf9ef1).
+- **fix(gallery):** fix LazyImage error event, closes [#205](https://github.com/MurhafSousli/ngx-gallery/issues/205) in [db231aa](https://github.com/MurhafSousli/ngx-gallery/commit/db231aa9b1b95da2971ed35b500edd3ae6c2f8e0)
+
+### Breaking changes
+
+- No need to manually import the styles anymore, they are imported internally with the components.
+- Adding a video item with multiple url sources
+  
+  **Before:**
+
+```ts
+galleryRef.addVideo({
+  src: ['MP4_URL', 'OGG_URL'],
+  thumb: '(OPTIONAL)VIDEO_THUMBNAIL_URL',
+  poster: '(OPTIONAL)VIDEO_POSTER_URL'
+});
+```
+
+**After:**
+
+```ts
+galleryRef.addVideo({
+  src: [
+    { url: 'MP4_URL', type: 'video/mp4' },
+    { url: 'OGG_URL', type: 'video/ogg' }
+  ],
+  thumb: '(OPTIONAL)VIDEO_THUMBNAIL_URL',
+  poster: '(OPTIONAL)VIDEO_POSTER_URL'
+});
+```
+
 ## 3.1.2
 
 - **fix(Lightbox):** Check if location is defined before subscribing, closes [#189](https://github.com/MurhafSousli/ngx-gallery/issues/189) in [169b813](https://github.com/MurhafSousli/ngx-gallery/pull/190/commits/169b813bf1483e963b930666cbae902b83f24ef4).

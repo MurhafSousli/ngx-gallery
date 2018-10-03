@@ -2,6 +2,15 @@
 
 :host {
   display: block;
+  &.info {
+    section {
+      border: 2px solid $primary-color;
+      background-color: $code-bg-color;
+    }
+    .note-icon {
+      background-color: $primary-color;
+    }
+  }
 }
 
 .note-icon {

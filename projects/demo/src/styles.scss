@@ -4,8 +4,6 @@
 @import 'assets/theme';
 @import 'assets/mixin';
 @import 'assets/variables';
-@import '~@ngx-gallery/core/styles/scss/gallery';
-@import '~@ngx-gallery/core/styles/scss/lightbox';
 
 * {
   box-sizing: border-box;
@@ -110,13 +108,17 @@ a {
 
 .usage-title {
   display: flex;
-  align-items: center;
+  p {
+    margin: 0;
+  }
 }
 
 .section-number {
+  flex: 0 0 auto;
+  border: 2px solid $primary-color;
   border-radius: 50%;
-  background-color: $primary-color;
-  color: $danger-color;
+  background-color: $code-bg-color;
+  color: $primary-color;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   width: 30px;
   height: 30px;
@@ -124,6 +126,11 @@ a {
   justify-content: center;
   align-items: center;
   margin-right: 1em;
+}
+
+.inline-number {
+  display: inline-flex;
+  margin: 0 0.2em;
 }
 
 .page-title {

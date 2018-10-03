@@ -30,6 +30,7 @@
   "peerDependencies": {
     "@angular/common": "^6.0.0",
     "@angular/core": "^6.0.0",
+    "rxjs": "^6.0.0",
     "@ngx-gallery/core": "VERSION",
     "@ngx-gallery/lightbox": "VERSION"
   }

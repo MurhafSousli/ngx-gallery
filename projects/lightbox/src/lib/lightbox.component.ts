@@ -9,6 +9,7 @@ import { lightboxAnimations } from './lightbox.animation';
   selector: 'lightbox',
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [lightboxAnimations.slideLightbox],
+  styleUrls: ['./lightbox.component.scss'],
   template: `
     <gallery [id]="id" [destroyRef]="false" [skipInitConfig]="true">
       <i class="g-btn-close" aria-label="Close" (click)="overlayRef.detach()"
