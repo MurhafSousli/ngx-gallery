@@ -1,20 +1,22 @@
-.g-items-container {
-  height: 100%;
-}
-
-.g-slider {
-  position: absolute;
-  transition: transform 400ms cubic-bezier(0.5, 0, 0.5, 1);
-}
-
-gallery-core[slidingDirection='horizontal'] {
-  .g-slider {
-    flex-direction: row;
+::ng-deep {
+  .g-items-container {
+    height: 100%;
   }
-}
 
-gallery-core[slidingDirection='vertical'] {
   .g-slider {
-    flex-direction: column;
+    position: absolute;
+    transition: transform 400ms cubic-bezier(0.5, 0, 0.5, 1);
+  }
+
+  gallery-core[slidingDirection='horizontal'] {
+    .g-slider {
+      flex-direction: row;
+    }
+  }
+
+  gallery-core[slidingDirection='vertical'] {
+    .g-slider {
+      flex-direction: column;
+    }
   }
 }
