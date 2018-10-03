@@ -10,6 +10,30 @@
 ### Breaking changes
 
 - No need to manually import the styles anymore, they are imported internally with the components.
+- Adding a video item with multiple url sources
+  
+  **Before:**
+
+```ts
+galleryRef.addVideo({
+  src: ['MP4_URL', 'OGG_URL'],
+  thumb: '(OPTIONAL)VIDEO_THUMBNAIL_URL',
+  poster: '(OPTIONAL)VIDEO_POSTER_URL'
+});
+```
+
+**After:**
+
+```ts
+galleryRef.addVideo({
+  src: [
+    { url: 'MP4_URL', type: 'video/mp4' },
+    { url: 'OGG_URL', type: 'video/ogg' }
+  ],
+  thumb: '(OPTIONAL)VIDEO_THUMBNAIL_URL',
+  poster: '(OPTIONAL)VIDEO_POSTER_URL'
+});
+```
 
 ## 3.1.2
 
