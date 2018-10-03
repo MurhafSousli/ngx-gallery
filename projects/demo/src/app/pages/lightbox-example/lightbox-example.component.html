@@ -6,23 +6,47 @@
 
     <section>
       <section-title>Overview</section-title>
-      <p><code class="hljs">Lightbox</code> is a service that opens the gallery in an overlay.</p>
+      <p>Use the directive <code class="hljs">[lightbox]</code> to open the lightbox on elements clicks</p>
+      <p>Alternatively, you can use the <code class="hljs">Lightbox</code> service to the lightbox programmatically.</p>
     </section>
 
     <section>
       <section-title>Usage</section-title>
 
-      <p>First we need to display the thumbnails in the template, then we add a click event to open the lightbox.</p>
+      <note class="info" style="margin-top: -4em">
+        <p>If you haven't installed and imported the module in step <span class="section-number inline-number">1</span>,
+          see the <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent" [routerLink]="['/getting-started/lightbox']">Getting
+            Started Guide</a></p>
+      </note>
 
-      <hl-code [code]="code.ex" [height]="400"></hl-code>
+      <div class="usage-title">
+        <span class="section-number">2</span>
+        <p>Create a gallery items array to load it in the gallery</p>
+      </div>
 
-      <h3>Example</h3>
+      <hl-code [code]="code.loadItems"></hl-code>
+
+      <div class="usage-title">
+        <span class="section-number">3</span>
+        <p>Now that you have gallery items, display their thumbnails in the template and add the directive <code
+            class="hljs">[lightbox]</code>
+          on each item so the clicks open the lightbox.</p>
+      </div>
+
+      <h4>Example</h4>
+      <hl-code [code]="code.template"></hl-code>
+
+      <p>If you are using multiple galleries in your app, then each gallery should have an id.</p>
+
+      <h4>Full Example</h4>
+
+      <hl-code [code]="code.ex"></hl-code>
+
+      <h3>Demo</h3>
 
       <div class="grid">
-        <button mat-raised-button mat-ripple
-                class="grid-item"
-                *ngFor="let item of space$ | async; let i = index"
-                (click)="lightbox.open(i)">
+        <button mat-raised-button mat-ripple class="grid-item" *ngFor="let item of space$ | async; let i = index"
+          [lightbox]="i" gallery="lightbox">
 
           <span class="grid-image" [style.backgroundImage]="'url(' + item.data.thumb + ')'"></span>
 
@@ -38,8 +62,7 @@
       </note>
 
       <p>For example, open the lightbox in
-        <button mat-button class="inline-button" color="accent"
-                (click)="lightbox.open(0, 'lightbox', {panelClass: 'fullscreen'})">
+        <button mat-button class="inline-button" color="accent" (click)="lightbox.open(0, 'lightbox', {panelClass: 'fullscreen'})">
           Full Screen
         </button>
         mode
@@ -48,8 +71,7 @@
       <hl-code [code]="code.alt"></hl-code>
 
       <p>List of lightbox options is available in the
-        <a mat-button class="inline-button" color="primary"
-           href="https://github.com/MurhafSousli/ngx-gallery/wiki/Lightbox-API">
+        <a mat-button class="inline-button" color="primary" href="https://github.com/MurhafSousli/ngx-gallery/wiki/Lightbox-API">
           <fa-icon icon="external-link-alt"></fa-icon>
           Lightbox API
         </a>

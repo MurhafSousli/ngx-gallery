@@ -41,14 +41,24 @@ export class LightboxExampleComponent implements OnInit, OnDestroy {
 }
 
 const code = {
+  loadItems: `items: GalleryItem[] = [...];
+const galleryRef = this.gallery.ref();
+galleryRef.load(items)`,
+  template: `<div class="grid-item"
+  *ngFor="let item of items; let i = index"
+  [lightbox]="i">
+  <img [src]="item.data.thumbnail">
+</div>`,
   ex: `import { Component, OnInit } from '@angular/core';
 import { Gallery, GalleryItem } from '@ngx-gallery/core';
-import { Lightbox } from '@ngx-gallery/lightbox';
 
 @Component({
   template: \`
     <div class="grid">
-      <div class="grid-item" *ngFor="let item of items; let i = index" (click)="lightbox.open(i)">
+      <div class="grid-item"
+        *ngFor="let item of space$ | async; let i = index"
+        [lightbox]="i"
+        [gallery]="'lightbox'">
         <img [src]="item.data.thumbnail">
       </div>
     </div>
@@ -56,15 +66,38 @@ import { Lightbox } from '@ngx-gallery/lightbox';
 })
 export class AppComponent implements OnInit {
 
+  galleryId = 'myLightbox';
   items: GalleryItem[];
 
-  constructor(public gallery: Gallery, public lightbox: Lightbox) { }
+  constructor(public gallery: Gallery) { }
 
   ngOnInit() {
-    this.gallery.ref('lightbox').load(items);
+    // Load items into gallery
+    const galleryRef = this.gallery.ref(this.galleryId);
+    galleryRef.load(this.items);
   }
 }`,
-  alt: `this.lightbox.open(0, 'lightbox', {
-  panelClass: 'fullscreen'
-});`
+  alt: `import { Component, OnInit } from '@angular/core';
+import { Gallery, GalleryItem } from '@ngx-gallery/core';
+import { Lightbox } from '@ngx-gallery/lightbox';
+
+export class AppComponent implements OnInit {
+
+  galleryId = 'myLightbox';
+  items: GalleryItem[];
+
+  constructor(public gallery: Gallery, private lightbox: Lightbox) { }
+
+  ngOnInit() {
+    // Load items into gallery
+    const galleryRef = this.gallery.ref(this.galleryId);
+    galleryRef.load(this.items);
+  }
+
+  openInFullScreen(index: number) {
+    this.lightbox.open(index, this.galleryId, {
+      panelClass: 'fullscreen'
+    });
+  }
+}`
 };

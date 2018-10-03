@@ -9,9 +9,6 @@ code {
 .mat-chip {
   margin-right: 1em;
 }
-
-::ng-deep {
-  .no-margin-bottom h2 {
-    margin-bottom: 0 !important;
-  }
+.usage-title {
+  margin-bottom: 2em;
 }
