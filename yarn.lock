@@ -9,12 +9,12 @@
     "@angular-devkit/core" "0.6.0"
     rxjs "^6.0.0"
 
-"@angular-devkit/architect@0.6.8":
-  version "0.6.8"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.6.8.tgz#977acc605aba45d21b95ca704cc99492e14299dd"
+"@angular-devkit/architect@0.8.4":
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.8.4.tgz#095b382908d7dfaa2f64edfe93555dfac42957aa"
   dependencies:
-    "@angular-devkit/core" "0.6.8"
-    rxjs "^6.0.0"
+    "@angular-devkit/core" "0.8.4"
+    rxjs "~6.2.0"
 
 "@angular-devkit/build-angular@~0.6.0":
   version "0.6.0"
@@ -99,21 +99,21 @@
     rxjs "^6.0.0"
     source-map "^0.5.6"
 
-"@angular-devkit/core@0.6.8":
-  version "0.6.8"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-0.6.8.tgz#3b09d97bd2588f0091df11921f7ed772431806aa"
+"@angular-devkit/core@0.8.4":
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-0.8.4.tgz#ccc73308990c7bc912e2f2759bf29e069eabf42f"
   dependencies:
     ajv "~6.4.0"
     chokidar "^2.0.3"
-    rxjs "^6.0.0"
+    rxjs "~6.2.0"
     source-map "^0.5.6"
 
-"@angular-devkit/schematics@0.6.8":
-  version "0.6.8"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-0.6.8.tgz#6360a0271f1f422862bf932a03b3741e76ac5ff0"
+"@angular-devkit/schematics@0.8.4":
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-0.8.4.tgz#e19f6fc8b1e88277d921a286914dc9d01f139738"
   dependencies:
-    "@angular-devkit/core" "0.6.8"
-    rxjs "^6.0.0"
+    "@angular-devkit/core" "0.8.4"
+    rxjs "~6.2.0"
 
 "@angular/animations@^6.0.6":
   version "6.0.6"
@@ -127,20 +127,19 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/cli@^6.0.6":
-  version "6.0.8"
-  resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-6.0.8.tgz#65070958b944be30053232c51f8449b7ddd4d92a"
+"@angular/cli@^6.2.4":
+  version "6.2.4"
+  resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-6.2.4.tgz#e292a5e4d3184a40caec0337d8bc3cd597c5f292"
   dependencies:
-    "@angular-devkit/architect" "0.6.8"
-    "@angular-devkit/core" "0.6.8"
-    "@angular-devkit/schematics" "0.6.8"
-    "@schematics/angular" "0.6.8"
-    "@schematics/update" "0.6.8"
-    opn "~5.3.0"
-    resolve "^1.1.7"
-    rxjs "^6.0.0"
+    "@angular-devkit/architect" "0.8.4"
+    "@angular-devkit/core" "0.8.4"
+    "@angular-devkit/schematics" "0.8.4"
+    "@schematics/angular" "0.8.4"
+    "@schematics/update" "0.8.4"
+    json-schema-traverse "^0.4.1"
+    opn "^5.3.0"
+    rxjs "~6.2.0"
     semver "^5.1.0"
-    silent-error "^1.0.0"
     symbol-observable "^1.2.0"
     yargs-parser "^10.0.0"
 
@@ -275,22 +274,22 @@
   dependencies:
     tslib "^1.9.0"
 
-"@schematics/angular@0.6.8":
-  version "0.6.8"
-  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.6.8.tgz#a8d1afc33e77160296b0a8b3d02f0ee4dfe9d1d2"
+"@schematics/angular@0.8.4":
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.8.4.tgz#ee3c8535476d7b49b1a5676f4a5eee3fc158506f"
   dependencies:
-    "@angular-devkit/core" "0.6.8"
-    "@angular-devkit/schematics" "0.6.8"
-    typescript ">=2.6.2 <2.8"
+    "@angular-devkit/core" "0.8.4"
+    "@angular-devkit/schematics" "0.8.4"
+    typescript ">=2.6.2 <2.10"
 
-"@schematics/update@0.6.8":
-  version "0.6.8"
-  resolved "https://registry.yarnpkg.com/@schematics/update/-/update-0.6.8.tgz#3b4f897dd3b28335acc53a49d9f0dc10ebd934a7"
+"@schematics/update@0.8.4":
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/@schematics/update/-/update-0.8.4.tgz#dddd0f278a21db8d97be102f42ced8b37ba9be7b"
   dependencies:
-    "@angular-devkit/core" "0.6.8"
-    "@angular-devkit/schematics" "0.6.8"
+    "@angular-devkit/core" "0.8.4"
+    "@angular-devkit/schematics" "0.8.4"
     npm-registry-client "^8.5.1"
-    rxjs "^6.0.0"
+    rxjs "~6.2.0"
     semver "^5.3.0"
     semver-intersect "^1.1.2"
 
@@ -3774,6 +3773,10 @@ json-schema-traverse@^0.3.0:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/json-schema-traverse/-/json-schema-traverse-0.3.1.tgz#349a6d44c53a51de89b40805c5d5e59b417d3340"
 
+json-schema-traverse@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz#69f6a87d9513ab8bb8fe63bdb0979c448e684660"
+
 json-schema@0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.2.3.tgz#b480c892e59a2f05954ce727bd3f2a4e882f9e13"
@@ -4753,9 +4756,15 @@ once@1.x, once@^1.3.0, once@^1.3.1, once@^1.3.3, once@^1.4.0:
   dependencies:
     wrappy "1"
 
-opn@^5.1.0, opn@~5.3.0:
+opn@^5.1.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/opn/-/opn-5.3.0.tgz#64871565c863875f052cfdf53d3e3cb5adb53b1c"
+  dependencies:
+    is-wsl "^1.1.0"
+
+opn@^5.3.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/opn/-/opn-5.4.0.tgz#cb545e7aab78562beb11aa3bfabc7042e1761035"
   dependencies:
     is-wsl "^1.1.0"
 
@@ -5909,6 +5918,12 @@ rxjs@^6.2.1:
   dependencies:
     tslib "^1.9.0"
 
+rxjs@~6.2.0:
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.2.2.tgz#eb75fa3c186ff5289907d06483a77884586e1cf9"
+  dependencies:
+    tslib "^1.9.0"
+
 safe-buffer@5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
@@ -6166,7 +6181,7 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
-silent-error@^1.0.0, silent-error@^1.1.0:
+silent-error@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/silent-error/-/silent-error-1.1.0.tgz#2209706f1c850a9f1d10d0d840918b46f26e1bc9"
   dependencies:
@@ -6857,7 +6872,11 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-"typescript@>=2.6.2 <2.8", typescript@~2.7.2:
+"typescript@>=2.6.2 <2.10":
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
+
+typescript@~2.7.2:
   version "2.7.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.2.tgz#2d615a1ef4aee4f574425cdff7026edf81919836"
 
