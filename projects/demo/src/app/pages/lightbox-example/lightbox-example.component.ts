@@ -58,7 +58,7 @@ import { Gallery, GalleryItem } from '@ngx-gallery/core';
       <div class="grid-item"
         *ngFor="let item of space$ | async; let i = index"
         [lightbox]="i"
-        [gallery]="'lightbox'">
+        [gallery]="galleryId">
         <img [src]="item.data.thumbnail">
       </div>
     </div>

@@ -149,6 +149,16 @@ export class AppComponent implements OnInit {
       poster: '(OPTIONAL)VIDEO_POSTER_URL'
     });
 
+    // Add a video item with multiple url sources
+    galleryRef.addVideo({
+      src: [
+        { url: 'MP4_URL', type: 'video/mp4' },
+        { url: 'OGG_URL', type: 'video/ogg' }
+      ],
+      thumb: '(OPTIONAL)VIDEO_THUMBNAIL_URL',
+      poster: '(OPTIONAL)VIDEO_POSTER_URL'
+    });
+
     galleryRef.addYoutube({
       src: 'VIDEO_ID'
     });
