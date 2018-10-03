@@ -1,6 +1,7 @@
 {
     "extends": "../../tslint.json",
     "rules": {
+        "no-input-rename": false,
         "directive-selector": [
             true,
             "attribute",
