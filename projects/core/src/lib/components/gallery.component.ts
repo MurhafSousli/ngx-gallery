@@ -18,6 +18,7 @@ import { IframeItem, ImageItem, VideoItem, YoutubeItem } from './templates';
 @Component({
   selector: 'gallery',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['../styles/gallery.scss'],
   template: `
     <gallery-core [state]="galleryRef.state$ | async"
                   [config]="galleryRef.config$ | async"
