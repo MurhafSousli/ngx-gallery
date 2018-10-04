@@ -1,6 +1,6 @@
 import { BehaviorSubject, Subject, Observable, of, EMPTY} from 'rxjs';
 import { delay, filter, switchMap, tap } from 'rxjs/operators';
-import { defaultConfig, defaultState } from '../utils/gallery.default';
+import { defaultState } from '../utils/gallery.default';
 import { GalleryAction, GalleryConfig, GalleryError, GalleryItem, GalleryState } from '../models';
 import { IframeItem, ImageItem, VideoItem, YoutubeItem } from '../components/templates';
 
@@ -58,12 +58,11 @@ export class GalleryRef {
     return this.state.pipe(filterActions([GalleryAction.PLAY, GalleryAction.STOP, GalleryAction.INDEX_CHANGED]));
   }
 
-  constructor(config: GalleryConfig = defaultConfig, private deleteInstance: Function) {
+  constructor(config: GalleryConfig, private deleteInstance: Function) {
     this._state = new BehaviorSubject<GalleryState>(defaultState);
-    this._config = new BehaviorSubject<GalleryConfig>(defaultConfig);
+    this._config = new BehaviorSubject<GalleryConfig>(config);
     this.state = this._state.asObservable();
     this.config = this._config.asObservable();
-    this.setConfig(config);
   }
 
   /**
