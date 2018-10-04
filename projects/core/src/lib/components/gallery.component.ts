@@ -7,6 +7,7 @@ import {
   OnDestroy,
   TemplateRef,
   EventEmitter,
+  SimpleChanges,
   ChangeDetectionStrategy
 } from '@angular/core';
 import { Subscription, SubscriptionLike } from 'rxjs';
@@ -20,8 +21,8 @@ import { IframeItem, ImageItem, VideoItem, YoutubeItem } from './templates';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['../styles/gallery.scss'],
   template: `
-    <gallery-core [state]="galleryRef.state$ | async"
-                  [config]="galleryRef.config$ | async"
+    <gallery-core [state]="galleryRef.state | async"
+                  [config]="galleryRef.config | async"
                   (action)="onAction($event)"
                   (itemClick)="onItemClick($event)"
                   (thumbClick)="onThumbClick($event)"
@@ -118,11 +119,11 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges) {
     if (this.galleryRef) {
       this.galleryRef.setConfig(this.getConfig());
 
-      if (this.items !== this.galleryRef.state.items) {
+      if (changes.items && changes.items.currentValue !== changes.items.previousValue) {
         this.load(this.items);
       }
     }
@@ -167,7 +168,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     this._playingChange$.unsubscribe();
     this._playerListener$.unsubscribe();
     if (this.destroyRef) {
-      this.galleryRef.reset();
+      this.galleryRef.destroy();
     }
   }
 

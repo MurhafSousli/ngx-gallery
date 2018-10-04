@@ -11,10 +11,10 @@ const filterActions = (actions: string[]) => {
 export class GalleryRef {
 
   /** Stream that emits gallery state */
-  private readonly _state$: BehaviorSubject<GalleryState>;
+  private readonly _state: BehaviorSubject<GalleryState>;
 
   /** Stream that emits gallery config */
-  private readonly _config$: BehaviorSubject<GalleryConfig>;
+  private readonly _config: BehaviorSubject<GalleryConfig>;
 
   /** Stream that emits on item click */
   readonly itemClick = new Subject<number>();
@@ -28,43 +28,41 @@ export class GalleryRef {
   /** Gallery Events */
 
   /** Stream that emits gallery state */
-  get state$(): Observable<GalleryState> {
-    return this._state$.asObservable();
-  }
+  readonly state: Observable<GalleryState>;
 
   /** Stream that emits gallery config */
-  get config$(): Observable<GalleryConfig> {
-    return this._config$.asObservable();
-  }
+  readonly config: Observable<GalleryConfig>;
 
   /** Stream that emits when gallery is initialized/reset */
   get initialized(): Observable<GalleryState> {
-    return this.state$.pipe(filterActions([GalleryAction.INITIALIZED]));
+    return this.state.pipe(filterActions([GalleryAction.INITIALIZED]));
   }
 
   /** Stream that emits when items is changed (items loaded, item added, item removed) */
   get itemsChanged(): Observable<GalleryState> {
-    return this.state$.pipe(filterActions([GalleryAction.ITEMS_CHANGED]));
+    return this.state.pipe(filterActions([GalleryAction.ITEMS_CHANGED]));
   }
 
   /** Stream that emits when current item is changed */
   get indexChanged(): Observable<GalleryState> {
-    return this.state$.pipe(filterActions([GalleryAction.INDEX_CHANGED]));
+    return this.state.pipe(filterActions([GalleryAction.INDEX_CHANGED]));
   }
 
   /** Stream that emits when the player should start or stop */
   get playingChanged(): Observable<GalleryState> {
-    return this.state$.pipe(filterActions([GalleryAction.PLAY, GalleryAction.STOP]));
+    return this.state.pipe(filterActions([GalleryAction.PLAY, GalleryAction.STOP]));
   }
 
   /** Stream that emits when the player should start or stop */
   private get playerActions(): Observable<GalleryState> {
-    return this.state$.pipe(filterActions([GalleryAction.PLAY, GalleryAction.STOP, GalleryAction.INDEX_CHANGED]));
+    return this.state.pipe(filterActions([GalleryAction.PLAY, GalleryAction.STOP, GalleryAction.INDEX_CHANGED]));
   }
 
-  constructor(public config: GalleryConfig = defaultConfig, public state: GalleryState = defaultState) {
-    this._state$ = new BehaviorSubject<GalleryState>(state);
-    this._config$ = new BehaviorSubject<GalleryConfig>(defaultConfig);
+  constructor(config: GalleryConfig = defaultConfig, private deleteInstance: Function) {
+    this._state = new BehaviorSubject<GalleryState>(defaultState);
+    this._config = new BehaviorSubject<GalleryConfig>(defaultConfig);
+    this.state = this._state.asObservable();
+    this.config = this._config.asObservable();
     this.setConfig(config);
   }
 
@@ -75,7 +73,7 @@ export class GalleryRef {
     return this.playerActions.pipe(
       switchMap((e: GalleryState) =>
         e.isPlaying ? of({}).pipe(
-          delay(this._config$.value.playerInterval),
+          delay(this._config.value.playerInterval),
           tap(() => this.next())
         ) : EMPTY
       )
@@ -87,8 +85,7 @@ export class GalleryRef {
    * @param state
    */
   private setState(state: GalleryState) {
-    this.state = {...this.state, ...state};
-    this._state$.next(this.state);
+    this._state.next({...this._state.value, ...state});
   }
 
   /**
@@ -96,8 +93,7 @@ export class GalleryRef {
    * @param config
    */
   setConfig(config: GalleryConfig) {
-    this.config = {...defaultConfig, ...this.config, ...config};
-    this._config$.next(this.config);
+    this._config.next({...this._config.value, ...config});
   }
 
   /** Add gallery item
@@ -106,12 +102,12 @@ export class GalleryRef {
    */
   add(item: GalleryItem, active?: boolean) {
 
-    const items = [...this.state.items, item];
+    const items = [...this._state.value.items, item];
     this.setState({
       action: GalleryAction.ITEMS_CHANGED,
       items: items,
       hasNext: items.length > 1,
-      currIndex: active ? items.length - 1 : this.state.currIndex
+      currIndex: active ? items.length - 1 : this._state.value.currIndex
     });
   }
 
@@ -156,8 +152,8 @@ export class GalleryRef {
    */
   remove(i: number) {
     const items = [
-      ...this.state.items.slice(0, i),
-      ...this.state.items.slice(i + 1, this.state.items.length)
+      ...this._state.value.items.slice(0, i),
+      ...this._state.value.items.slice(i + 1, this._state.value.items.length)
     ];
     this.setState({
       action: GalleryAction.ITEMS_CHANGED,
@@ -187,11 +183,11 @@ export class GalleryRef {
    * @param i - Active Index
    */
   set(i: number) {
-    if (i !== this.state.currIndex) {
+    if (i !== this._state.value.currIndex) {
       this.setState({
         action: GalleryAction.INDEX_CHANGED,
         currIndex: i,
-        hasNext: i < this.state.items.length - 1,
+        hasNext: i < this._state.value.items.length - 1,
         hasPrev: i > 0
       });
     }
@@ -201,9 +197,9 @@ export class GalleryRef {
    * Next item
    */
   next() {
-    if (this.state.hasNext) {
-      this.set(this.state.currIndex + 1);
-    } else if (this.config.loop) {
+    if (this._state.value.hasNext) {
+      this.set(this._state.value.currIndex + 1);
+    } else if (this._config.value.loop) {
       this.set(0);
     }
   }
@@ -212,15 +208,16 @@ export class GalleryRef {
    * Prev item
    */
   prev() {
-    if (this.state.hasPrev) {
-      this.set(this.state.currIndex - 1);
-    } else if (this.config.loop) {
-      this.set(this.state.items.length - 1);
+    if (this._state.value.hasPrev) {
+      this.set(this._state.value.currIndex - 1);
+    } else if (this._config.value.loop) {
+      this.set(this._state.value.items.length - 1);
     }
   }
 
   /**
    * Start gallery player
+   * @param interval
    */
   play(interval?: number) {
     if (interval) {
@@ -244,13 +241,14 @@ export class GalleryRef {
   }
 
   /**
-   * Destroy GalleryRef (for internal use only)
+   * Destroy gallery
    */
   destroy() {
-    this._state$.complete();
-    this._config$.complete();
+    this._state.complete();
+    this._config.complete();
     this.itemClick.complete();
     this.thumbClick.complete();
+    this.deleteInstance();
   }
 
 }

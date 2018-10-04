@@ -8,8 +8,8 @@ import { GalleryConfig } from '../models';
 @Injectable()
 export class Gallery {
 
-  /** Stores GalleryRef instances */
-  private readonly _instances = {};
+  /** Store gallery instances */
+  private readonly _instances = new Map<string, GalleryRef>();
 
   /** Global config */
   config: GalleryConfig;
@@ -18,45 +18,47 @@ export class Gallery {
     this.config = {...defaultConfig, ...config};
   }
 
-  /** Checks if gallery exists */
-  hasRef(id = 'root'): boolean {
-    return this._instances[id] instanceof GalleryRef;
-  }
-
-  /** Returns Gallery by ID */
+  /**
+   * Get or create gallery by ID
+   * @param id
+   * @param config
+   */
   ref(id = 'root', config?: GalleryConfig): GalleryRef {
-    if (this.hasRef(id)) {
+    if (this._instances.has(id)) {
+      const galleryRef = this._instances.get(id);
       if (config) {
-        this._instances[id].setConfig({...this.config, ...config});
+        galleryRef.setConfig({...this.config, ...config});
       }
-      return this._instances[id];
+      return galleryRef;
     } else {
-      return this._instances[id] = new GalleryRef({...this.config, ...config});
+      return this._instances.set(id, new GalleryRef({...this.config, ...config}, this.deleteInstance(id))).get(id);
     }
   }
 
-  /** Destroy a gallery instance */
-  destroy(id = 'root') {
-    if (this.hasRef(id)) {
-      this._instances[id].destroy();
-      this._instances[id] = null;
-    }
-  }
-
-  /** Destroy all gallery instances */
+  /**
+   * Destroy all gallery instances
+   */
   destroyAll() {
-    Object.keys(this._instances)
-      .map((key) => {
-        this._instances[key].destory();
-        this._instances[key] = null;
-      });
+    this._instances.forEach((ref: GalleryRef, id: string) => {
+      ref.destroy();
+      this._instances.delete(id);
+    });
   }
 
-  /** Reset all gallery instances */
+  /**
+   * Reset all gallery instances
+   */
   resetAll() {
-    Object.keys(this._instances)
-      .map((id = 'root') => this._instances[id].gallery)
-      .map((gallery: GalleryRef) => gallery.reset());
+    this._instances.forEach((ref: GalleryRef) => ref.reset());
+  }
+
+  /**
+   * A destroyer function for each gallery instance
+   */
+  private deleteInstance(id: string) {
+    return () => {
+      this._instances.delete(id);
+    };
   }
 
 }
