@@ -7,6 +7,7 @@ import {
   OnDestroy,
   TemplateRef,
   EventEmitter,
+  SimpleChanges,
   ChangeDetectionStrategy
 } from '@angular/core';
 import { Subscription, SubscriptionLike } from 'rxjs';
@@ -118,11 +119,11 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges) {
     if (this.galleryRef) {
       this.galleryRef.setConfig(this.getConfig());
 
-      if (this.items !== this.galleryRef.state.items) {
+      if (changes.items && changes.items.currentValue !== changes.items.previousValue) {
         this.load(this.items);
       }
     }
