@@ -12,6 +12,7 @@ export class GalleryRef {
 
   /** Stream that emits gallery state */
   private readonly _state$: BehaviorSubject<GalleryState>;
+  state: GalleryState = defaultState;
 
   /** Stream that emits gallery config */
   private readonly _config$: BehaviorSubject<GalleryConfig>;
@@ -62,8 +63,8 @@ export class GalleryRef {
     return this.state$.pipe(filterActions([GalleryAction.PLAY, GalleryAction.STOP, GalleryAction.INDEX_CHANGED]));
   }
 
-  constructor(public config: GalleryConfig = defaultConfig, public state: GalleryState = defaultState) {
-    this._state$ = new BehaviorSubject<GalleryState>(state);
+  constructor(public config: GalleryConfig = defaultConfig, private deleteInstance: Function) {
+    this._state$ = new BehaviorSubject<GalleryState>(this.state);
     this._config$ = new BehaviorSubject<GalleryConfig>(defaultConfig);
     this.setConfig(config);
   }
@@ -221,6 +222,7 @@ export class GalleryRef {
 
   /**
    * Start gallery player
+   * @param interval
    */
   play(interval?: number) {
     if (interval) {
@@ -244,13 +246,14 @@ export class GalleryRef {
   }
 
   /**
-   * Destroy GalleryRef (for internal use only)
+   * Destroy gallery
    */
   destroy() {
     this._state$.complete();
     this._config$.complete();
     this.itemClick.complete();
     this.thumbClick.complete();
+    this.deleteInstance();
   }
 
 }

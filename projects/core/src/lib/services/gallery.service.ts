@@ -8,7 +8,7 @@ import { GalleryConfig } from '../models';
 @Injectable()
 export class Gallery {
 
-  /** Stores GalleryRef instances */
+  /** Store gallery instances */
   private readonly _instances = new Map<string, GalleryRef>();
 
   /** Global config */
@@ -18,7 +18,11 @@ export class Gallery {
     this.config = {...defaultConfig, ...config};
   }
 
-  /** Returns Gallery by ID */
+  /**
+   * Get or create gallery by ID
+   * @param id
+   * @param config
+   */
   ref(id = 'root', config?: GalleryConfig): GalleryRef {
     if (this._instances.has(id)) {
       const galleryRef = this._instances.get(id);
@@ -27,19 +31,13 @@ export class Gallery {
       }
       return galleryRef;
     } else {
-      return this._instances.set(id, new GalleryRef({...this.config, ...config})).get(id);
+      return this._instances.set(id, new GalleryRef({...this.config, ...config}, this.deleteInstance(id))).get(id);
     }
   }
 
-  /** Destroy a gallery instance */
-  destroy(id = 'root') {
-    if (this._instances.has(id)) {
-      this._instances.get(id).destroy();
-      this._instances.delete(id);
-    }
-  }
-
-  /** Destroy all gallery instances */
+  /**
+   * Destroy all gallery instances
+   */
   destroyAll() {
     this._instances.forEach((ref: GalleryRef, id: string) => {
       ref.destroy();
@@ -47,9 +45,20 @@ export class Gallery {
     });
   }
 
-  /** Reset all gallery instances */
+  /**
+   * Reset all gallery instances
+   */
   resetAll() {
     this._instances.forEach((ref: GalleryRef) => ref.reset());
+  }
+
+  /**
+   * A destroyer function for each gallery instance
+   */
+  private deleteInstance(id: string) {
+    return () => {
+      this._instances.delete(id);
+    };
   }
 
 }
