@@ -28,41 +28,41 @@ export class GalleryRef {
   /** Gallery Events */
 
   /** Stream that emits gallery state */
-  readonly state$: Observable<GalleryState>;
+  readonly state: Observable<GalleryState>;
 
   /** Stream that emits gallery config */
-  readonly config$: Observable<GalleryConfig>;
+  readonly config: Observable<GalleryConfig>;
 
   /** Stream that emits when gallery is initialized/reset */
   get initialized(): Observable<GalleryState> {
-    return this.state$.pipe(filterActions([GalleryAction.INITIALIZED]));
+    return this.state.pipe(filterActions([GalleryAction.INITIALIZED]));
   }
 
   /** Stream that emits when items is changed (items loaded, item added, item removed) */
   get itemsChanged(): Observable<GalleryState> {
-    return this.state$.pipe(filterActions([GalleryAction.ITEMS_CHANGED]));
+    return this.state.pipe(filterActions([GalleryAction.ITEMS_CHANGED]));
   }
 
   /** Stream that emits when current item is changed */
   get indexChanged(): Observable<GalleryState> {
-    return this.state$.pipe(filterActions([GalleryAction.INDEX_CHANGED]));
+    return this.state.pipe(filterActions([GalleryAction.INDEX_CHANGED]));
   }
 
   /** Stream that emits when the player should start or stop */
   get playingChanged(): Observable<GalleryState> {
-    return this.state$.pipe(filterActions([GalleryAction.PLAY, GalleryAction.STOP]));
+    return this.state.pipe(filterActions([GalleryAction.PLAY, GalleryAction.STOP]));
   }
 
   /** Stream that emits when the player should start or stop */
   private get playerActions(): Observable<GalleryState> {
-    return this.state$.pipe(filterActions([GalleryAction.PLAY, GalleryAction.STOP, GalleryAction.INDEX_CHANGED]));
+    return this.state.pipe(filterActions([GalleryAction.PLAY, GalleryAction.STOP, GalleryAction.INDEX_CHANGED]));
   }
 
   constructor(config: GalleryConfig = defaultConfig, private deleteInstance: Function) {
     this._state = new BehaviorSubject<GalleryState>(defaultState);
     this._config = new BehaviorSubject<GalleryConfig>(defaultConfig);
-    this.state$ = this._state.asObservable();
-    this.config$ = this._config.asObservable();
+    this.state = this._state.asObservable();
+    this.config = this._config.asObservable();
     this.setConfig(config);
   }
 

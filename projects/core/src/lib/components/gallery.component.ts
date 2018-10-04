@@ -21,8 +21,8 @@ import { IframeItem, ImageItem, VideoItem, YoutubeItem } from './templates';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['../styles/gallery.scss'],
   template: `
-    <gallery-core [state]="galleryRef.state$ | async"
-                  [config]="galleryRef.config$ | async"
+    <gallery-core [state]="galleryRef.state | async"
+                  [config]="galleryRef.config | async"
                   (action)="onAction($event)"
                   (itemClick)="onItemClick($event)"
                   (thumbClick)="onThumbClick($event)"
