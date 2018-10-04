@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.3.0
+
+- **refactor(Gallery):** Use `Map<string, GalleryRef>` for instances holder type instead of untyped object in [ac08077](https://github.com/MurhafSousli/ngx-gallery/commit/ac080772d7d05dd395811848cef174f31eaa622d).
+- **refactor(Gallery):** Rename gallery `state$` and `config$` to `state` and `config` in [8de515b](https://github.com/MurhafSousli/ngx-gallery/commit/8de515be8a254125c0a551f25bc6ad790b1e0703) and [1e4fd06](https://github.com/MurhafSousli/ngx-gallery/commit/1e4fd069dad4dd8b8edfac8a1a9dd97db72b770e).
+- **enhance(Gallery):** Improve instance destroyer, gallery delete its instance on component destroy in [65f3358](https://github.com/MurhafSousli/ngx-gallery/commit/65f3358c035907039bf5d8199f9c14ec0e13de15).
+
+### Breaking Changes
+
+- Gallery can now be destroyed using its instance `galleryRef.destroy()`.
+- In `Gallery` service the function `destroy()` has been removed.
+
 ## 3.2.0
 
 - **feature(Gallery):** Do not require importing global styles, closes [#197](https://github.com/MurhafSousli/ngx-gallery/issues/197) in [ea041a5](https://github.com/MurhafSousli/ngx-gallery/commit/ea041a5930e1ecf184028d9444b2d7fa3faf80ae).
