@@ -54,7 +54,9 @@ export class Gallery {
    */
   private deleteInstance(id: string) {
     return () => {
-      this._instances.delete(id);
+      if (this._instances.has(id)) {
+        this._instances.delete(id);
+      }
     };
   }
 
