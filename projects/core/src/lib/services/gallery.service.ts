@@ -39,10 +39,7 @@ export class Gallery {
    * Destroy all gallery instances
    */
   destroyAll() {
-    this._instances.forEach((ref: GalleryRef, id: string) => {
-      ref.destroy();
-      this._instances.delete(id);
-    });
+    this._instances.forEach((ref: GalleryRef) => ref.destroy());
   }
 
   /**
