@@ -35,7 +35,7 @@ export class LightboxExampleComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.gallery.destroy('lightbox');
+    this.gallery.ref('lightbox').destroy();
   }
 
 }
