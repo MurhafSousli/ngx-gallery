@@ -6,16 +6,13 @@ import { GalleryItem, ImageItem } from '@ngx-gallery/core';
   template: `
     <div class="basic-container">
       <h2>Basic Example</h2>
-      <div *ngIf="show">
 
-        <gallery #gallery id="basic-test" fluid [items]="items" thumbPosition="top" thumbMode="free" (error)="onError($event)">
-        </gallery>
+      <gallery #gallery id="basic-test" fluid [items]="items" thumbPosition="top" thumbMode="free" (error)="onError($event)">
+      </gallery>
 
-        <button mat-button (click)="gallery.play()">Play</button>
-        <button mat-button (click)="gallery.stop()">Stop</button>
-      </div>
+      <button mat-button (click)="gallery.play()">Play</button>
+      <button mat-button (click)="gallery.stop()">Stop</button>
     </div>
-    <button (click)="show= true">show</button>
   `,
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

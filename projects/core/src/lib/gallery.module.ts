@@ -1,9 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PortalModule } from '@angular/cdk/portal';
 
 import { GalleryConfig } from './models';
-import { Gallery } from './services/gallery.service';
 import { GALLERY_CONFIG } from './utils/gallery.token';
 
 import { GalleryComponent } from './components/gallery.component';
@@ -23,14 +21,9 @@ import { GalleryIframeComponent } from './components/templates/gallery-iframe.co
 import { LazyDirective } from './directives/lazy.directive';
 import { TapClickDirective } from './directives/tap-click.directive';
 
-export function galleryFactory(galleryConfig: GalleryConfig) {
-  return new Gallery(galleryConfig);
-}
-
 @NgModule({
   imports: [
-    CommonModule,
-    PortalModule
+    CommonModule
   ],
   declarations: [
     GalleryComponent,
@@ -63,11 +56,6 @@ export class GalleryModule {
         {
           provide: GALLERY_CONFIG,
           useValue: config
-        },
-        {
-          provide: Gallery,
-          useFactory: galleryFactory,
-          deps: [GALLERY_CONFIG]
         }
       ]
     };
