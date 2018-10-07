@@ -6,7 +6,9 @@
 - **fix(core):** Check galleryRef exists before deleting, in [a2b32e2](https://github.com/MurhafSousli/ngx-gallery/pull/214/commits/a2b32e23ccffb77c50c1067f1abea2977c2f1286)
 - **fix(core):** Remove duplicate config set, in [834c001](https://github.com/MurhafSousli/ngx-gallery/pull/213/commits/834c001a6cccee9955e6e9504e0a0d4cb5691d57)
 - **fix(core):** Remove unnecessary `PortalModule` import from `GalleryModule`, in [46ef735](https://github.com/MurhafSousli/ngx-gallery/pull/215/commits/46ef735cf43aa51ae026a1898b02e67b5909e520)
+- **fix(core):** Remove unnecessary `PortalModule` import from `GalleryModule`, in [46ef735](https://github.com/MurhafSousli/ngx-gallery/pull/215/commits/46ef735cf43aa51ae026a1898b02e67b5909e520)
 - **refactor(core):** Use `povidedIn: 'root'` for the `Gallery` service, in [86eeaa7](https://github.com/MurhafSousli/ngx-gallery/pull/215/commits/86eeaa71203341a324c06a3555489a5c82b8eee9)
+- **fix(core, lightbox):** Fix peer dependencies, in [236e540](https://github.com/MurhafSousli/ngx-gallery/pull/215/commits/236e540ceaaa906aec65af0fdb99f866b5374c8f).
 
 ## 3.3.0
 
