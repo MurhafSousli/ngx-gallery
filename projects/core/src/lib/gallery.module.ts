@@ -1,6 +1,5 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PortalModule } from '@angular/cdk/portal';
 
 import { GalleryConfig } from './models';
 import { Gallery } from './services/gallery.service';
@@ -29,8 +28,7 @@ export function galleryFactory(galleryConfig: GalleryConfig) {
 
 @NgModule({
   imports: [
-    CommonModule,
-    PortalModule
+    CommonModule
   ],
   declarations: [
     GalleryComponent,
