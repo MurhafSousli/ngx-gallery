@@ -35,7 +35,7 @@ export class LightboxComponent implements OnDestroy {
   @HostBinding('@slideLightbox') slideAnimation;
 
   /** Dispose the overlay when exit animation is done */
-  @HostListener('@slideLightbox.done', ['$event']) onMouseLeave(e) {
+  @HostListener('@slideLightbox.done', ['$event']) onExitAnimationDone(e) {
     if (e.toState === 'void') {
       this.overlayRef.dispose();
     }
