@@ -21,7 +21,7 @@ import { DomSanitizer, SafeHtml, SafeStyle } from '@angular/platform-browser';
 })
 export class GalleryImageComponent implements OnInit {
 
-  loadedImage: string;
+  loadedImage: SafeStyle;
   loadingSvg: SafeHtml;
 
   @Input() src: string;
