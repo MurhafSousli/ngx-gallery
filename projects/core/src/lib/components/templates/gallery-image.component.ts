@@ -1,11 +1,11 @@
 import { Component, Input, HostBinding, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml, SafeStyle } from '@angular/platform-browser';
 
 @Component({
   selector: 'gallery-image',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <ng-container [lazyImage]="src" (loaded)="loadedImage = $event" (error)="error.emit($event)">
+    <ng-container [lazyImage]="src" (loaded)="loadedImage = trustCss($event)" (error)="error.emit($event)">
       <div *ngIf="loadedImage; else loading"
            class="g-image-item"
            [style.backgroundImage]="loadedImage"></div>
@@ -21,7 +21,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 })
 export class GalleryImageComponent implements OnInit {
 
-  loadedImage: string;
+  loadedImage: SafeStyle;
   loadingSvg: SafeHtml;
 
   @Input() src: string;
@@ -41,6 +41,10 @@ export class GalleryImageComponent implements OnInit {
     if (this.loadingIcon) {
       this.loadingSvg = this._sanitizer.bypassSecurityTrustHtml(this.loadingIcon);
     }
+  }
+
+  trustCss(imageUrl: string): SafeStyle {
+    return this._sanitizer.bypassSecurityTrustStyle(imageUrl);
   }
 
 }
