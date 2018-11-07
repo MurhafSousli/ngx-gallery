@@ -6,7 +6,7 @@ import { Gallery } from '@ngx-gallery/core';
 import { Subject } from 'rxjs';
 
 import { LIGHTBOX_CONFIG } from './lightbox.token';
-import { LightboxConfig } from './lightbox.model';
+import { LightboxConfig, PartialLightboxConfig } from './lightbox.model';
 import { defaultConfig } from './lightbox.default';
 import { LightboxComponent } from './lightbox.component';
 
@@ -25,7 +25,7 @@ export class Lightbox {
   /** Stream that emits when lightbox is closed */
   closed = new Subject<string>();
 
-  constructor(@Inject(LIGHTBOX_CONFIG) config: LightboxConfig, private _gallery: Gallery, private _overlay: Overlay) {
+  constructor(@Inject(LIGHTBOX_CONFIG) config: PartialLightboxConfig, private _gallery: Gallery, private _overlay: Overlay) {
     this._config = {...defaultConfig, ...config};
   }
 
@@ -33,7 +33,7 @@ export class Lightbox {
    * Set Lightbox Config
    * @param config - LightboxConfig
    */
-  setConfig(config: LightboxConfig) {
+  setConfig(config: Partial<LightboxConfig>) {
     this._config = {...this._config, ...config};
   }
 

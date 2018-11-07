@@ -5,3 +5,6 @@ export interface LightboxConfig {
   keyboardShortcuts: boolean;
   closeIcon: string;
 }
+
+export type PartialLightboxConfig = Partial<LightboxConfig>;
+

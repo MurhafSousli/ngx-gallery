@@ -48,7 +48,7 @@ import { TapClickDirective } from './directives/tap-click.directive';
   ]
 })
 export class GalleryModule {
-  static forRoot(config?: GalleryConfig): ModuleWithProviders {
+  static forRoot(config?: Partial<GalleryConfig>): ModuleWithProviders {
 
     return {
       ngModule: GalleryModule,

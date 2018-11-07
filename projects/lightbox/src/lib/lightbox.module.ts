@@ -8,7 +8,7 @@ import { LightboxDirective } from './lightbox.directive';
 import { LightboxConfig } from './lightbox.model';
 import { LIGHTBOX_CONFIG } from './lightbox.token';
 
-export function lightboxFactory(config: LightboxConfig, gallery: Gallery, overlay: Overlay) {
+export function lightboxFactory(config: Partial<LightboxConfig>, gallery: Gallery, overlay: Overlay) {
   return new Lightbox(config, gallery, overlay);
 }
 
@@ -29,7 +29,7 @@ export function lightboxFactory(config: LightboxConfig, gallery: Gallery, overla
   ]
 })
 export class LightboxModule {
-  static forRoot(config?: LightboxConfig): ModuleWithProviders {
+  static forRoot(config?: Partial<LightboxConfig>): ModuleWithProviders {
 
     return {
       ngModule: LightboxModule,
