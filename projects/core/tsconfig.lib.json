@@ -15,8 +15,7 @@
     "lib": [
       "dom",
       "es2017"
-    ],
-    "strictNullChecks": true
+    ]
   },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
