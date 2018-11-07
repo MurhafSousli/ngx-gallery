@@ -13,7 +13,7 @@ export class TapClickDirective implements OnInit, OnDestroy {
   mc: any;
   clickListener: any;
   @Input() tapClickDisabled: boolean;
-  @Output() tapClick = new EventEmitter();
+  @Output() tapClick = new EventEmitter<null>();
 
   constructor(private el: ElementRef, private renderer: Renderer2) {
   }

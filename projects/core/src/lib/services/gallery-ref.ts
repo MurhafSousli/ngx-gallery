@@ -68,7 +68,7 @@ export class GalleryRef {
   /**
    * Activate player actions listener
    */
-  activatePlayer(): Observable<GalleryState> {
+  activatePlayer(): Observable<GalleryState | {}> {
     return this.playerActions.pipe(
       switchMap((e: GalleryState) =>
         e.isPlaying ? of({}).pipe(
@@ -83,7 +83,7 @@ export class GalleryRef {
    * Set gallery state
    * @param state
    */
-  private setState(state: GalleryState) {
+  private setState(state: Partial<GalleryState>) {
     this._state.next({...this._state.value, ...state});
   }
 
@@ -91,7 +91,7 @@ export class GalleryRef {
    * Set gallery config
    * @param config
    */
-  setConfig(config: GalleryConfig) {
+  setConfig(config: Partial<GalleryConfig>) {
     this._config.next({...this._config.value, ...config});
   }
 

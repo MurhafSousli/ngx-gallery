@@ -43,7 +43,7 @@ export class Lightbox {
    * @param id - Gallery ID
    * @param config - Lightbox Config
    */
-  open(i = 0, id = 'lightbox', config?: LightboxConfig) {
+  open(i = 0, id = 'lightbox', config?: Partial<LightboxConfig>) {
 
     const _config = config ? {...this._config, ...config} : this._config;
 

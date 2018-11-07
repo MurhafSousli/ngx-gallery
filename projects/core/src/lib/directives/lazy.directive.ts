@@ -15,7 +15,7 @@ export class LazyDirective implements OnDestroy {
     this.loadImage(imagePath);
   }
 
-  @Output() loaded = new EventEmitter<string>();
+  @Output() loaded = new EventEmitter<string | null>();
   @Output() error = new EventEmitter<Error>();
 
   constructor() {
