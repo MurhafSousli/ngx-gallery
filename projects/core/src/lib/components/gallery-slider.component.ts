@@ -99,9 +99,13 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     if (this.config.gestures && typeof Hammer !== 'undefined') {
 
+      const direction = this.config.slidingDirection === SlidingDirection.Horizontal
+        ? Hammer.DIRECTION_HORIZONTAL
+        : Hammer.DIRECTION_VERTICAL;
+
       // Activate gestures
       this._hammer = new Hammer(this._el.nativeElement);
-      this._hammer.get('pan').set({direction: Hammer.DIRECTION_ALL});
+      this._hammer.get('pan').set({ direction });
 
       this._zone.runOutsideAngular(() => {
         // Move the slider
@@ -168,6 +172,9 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private verticalPan(e) {
+    if (!(e.direction & Hammer.DIRECTION_UP && e.offsetDirection & Hammer.DIRECTION_VERTICAL)) {
+      return;
+    }
     if (e.velocityY > 0.3) {
       this.prev();
     } else if (e.velocityY < -0.3) {
@@ -184,6 +191,9 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private horizontalPan(e) {
+    if (!(e.direction & Hammer.DIRECTION_HORIZONTAL && e.offsetDirection & Hammer.DIRECTION_HORIZONTAL)) {
+      return;
+    }
     if (e.velocityX > 0.3) {
       this.prev();
     } else if (e.velocityX < -0.3) {
