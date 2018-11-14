@@ -3,7 +3,7 @@
 After you clone the repo and install the project dependencies, you should prepare the build setup by running the following command only for the first time:
 
 ```bash
-npm run prepare-build
+npm run init-build
 ```
 
 *This will build and link all the packages.*
