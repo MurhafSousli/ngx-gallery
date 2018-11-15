@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { animationFrameScheduler, BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { GalleryConfig, GalleryState, ThumbnailsPosition, ThumbnailsMode, GalleryError, SlidingDirection } from '../models';
+import { GalleryConfig, GalleryState, ThumbnailsPosition, ThumbnailsMode, GalleryError } from '../models';
 import { SliderState, WorkerState } from '../models/slider.model';
 
 declare const Hammer: any;
@@ -21,7 +21,6 @@ declare const Hammer: any;
 @Component({
   selector: 'gallery-thumbs',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
   template: `
     <div *ngIf="sliderState$ | async; let sliderState"
          class="g-thumbs-container">

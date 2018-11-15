@@ -4,7 +4,6 @@ import { GalleryConfig, GalleryError, GalleryState } from '../models';
 @Component({
   selector: 'gallery-core',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
   template: `
     <gallery-thumbs *ngIf="config.thumb"
                     [state]="state"

@@ -4,7 +4,6 @@ import { GalleryState } from '../models';
 @Component({
   selector: 'gallery-dots',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
   template: `
     <div class="g-dot"
          *ngFor="let item of state.items; let i = index"

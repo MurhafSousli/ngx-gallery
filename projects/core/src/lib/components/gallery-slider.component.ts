@@ -23,7 +23,6 @@ declare const Hammer: any;
 @Component({
   selector: 'gallery-slider',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
   template: `
     <div *ngIf="sliderState$ | async; let sliderState"
          class="g-items-container"

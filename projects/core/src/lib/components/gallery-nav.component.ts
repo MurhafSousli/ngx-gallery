@@ -1,11 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { GalleryState, GalleryConfig } from '../models';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { GalleryState, GalleryConfig } from '../models';
 
 @Component({
   selector: 'gallery-nav',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
   template: `
     <i *ngIf="config.loop || state.hasPrev"
        class="g-nav-prev"

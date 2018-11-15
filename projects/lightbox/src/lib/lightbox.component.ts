@@ -1,8 +1,8 @@
 import { Component, HostBinding, HostListener, Optional, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Location } from '@angular/common';
-import { Subscription, SubscriptionLike } from 'rxjs';
 import { OverlayRef } from '@angular/cdk/overlay';
+import { Subscription, SubscriptionLike } from 'rxjs';
 import { lightboxAnimations } from './lightbox.animation';
 
 @Component({
