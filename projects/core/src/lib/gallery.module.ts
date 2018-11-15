@@ -18,7 +18,7 @@ import { GalleryImageComponent } from './components/templates/gallery-image.comp
 import { GalleryVideoComponent } from './components/templates/gallery-video.component';
 import { GalleryIframeComponent } from './components/templates/gallery-iframe.component';
 
-import { LazyDirective } from './directives/lazy.directive';
+import { LazyImage } from './directives/lazy-image';
 import { TapClick } from './directives/tap-click';
 
 @NgModule({
@@ -38,12 +38,12 @@ import { TapClick } from './directives/tap-click';
     GalleryImageComponent,
     GalleryVideoComponent,
     GalleryIframeComponent,
-    LazyDirective,
+    LazyImage,
     TapClick
   ],
   exports: [
     GalleryComponent,
-    LazyDirective,
+    LazyImage,
     TapClick,
   ]
 })

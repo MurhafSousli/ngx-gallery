@@ -5,9 +5,8 @@ import { tap, switchMap } from 'rxjs/operators';
 @Directive({
   selector: '[lazyImage]'
 })
-export class LazyDirective implements OnDestroy {
+export class LazyImage implements OnDestroy {
 
-  // Lazy load worker
   private _worker$ = new Subject();
 
   @Input('lazyImage')
