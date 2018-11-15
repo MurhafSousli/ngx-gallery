@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { GalleryConfig, GalleryState, ThumbnailsPosition, ThumbnailsMode, GalleryError } from '../models';
+import { GalleryConfig, GalleryState, ThumbnailsPosition, ThumbnailsMode, GalleryError, SlidingDirection } from '../models';
 import { SliderState, WorkerState } from '../models/slider.model';
 
 declare const Hammer: any;
@@ -95,9 +95,22 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     if (this.config.gestures && !this.config.disableThumb && typeof Hammer !== 'undefined') {
 
+      let direction: number;
+
+      switch (this.config.thumbPosition) {
+        case ThumbnailsPosition.Right:
+        case ThumbnailsPosition.Left:
+          direction = Hammer.DIRECTION_VERTICAL;
+          break;
+        case ThumbnailsPosition.Top:
+        case ThumbnailsPosition.Bottom:
+          direction = Hammer.DIRECTION_HORIZONTAL;
+          break;
+      }
+
       // Activate gestures
       this._hammer = new Hammer(this._el.nativeElement);
-      this._hammer.get('pan').set({direction: Hammer.DIRECTION_ALL});
+      this._hammer.get('pan').set({ direction });
 
       this._zone.runOutsideAngular(() => {
         // Move the slider
@@ -220,6 +233,9 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private verticalPan(e: any) {
+    if (!(e.direction & Hammer.DIRECTION_UP && e.offsetDirection & Hammer.DIRECTION_VERTICAL)) {
+      return;
+    }
     if (e.velocityY > 0.3) {
       this.prev();
     } else if (e.velocityY < -0.3) {
@@ -236,6 +252,9 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private horizontalPan(e: any) {
+    if (!(e.direction & Hammer.DIRECTION_HORIZONTAL && e.offsetDirection & Hammer.DIRECTION_HORIZONTAL)) {
+      return;
+    }
     if (e.velocityX > 0.3) {
       this.prev();
     } else if (e.velocityX < -0.3) {

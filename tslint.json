@@ -44,7 +44,6 @@
       }
     ],
     "no-arg": true,
-    "no-bitwise": true,
     "no-console": [
       true,
       "debug",
@@ -53,6 +52,7 @@
       "timeEnd",
       "trace"
     ],
+    "no-bitwise": false,
     "no-construct": true,
     "no-debugger": true,
     "no-duplicate-super": true,
