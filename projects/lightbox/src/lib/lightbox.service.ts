@@ -74,6 +74,10 @@ export class Lightbox {
     lightboxRef.instance.id = id;
     lightboxRef.instance.overlayRef = this._overlayRef;
     lightboxRef.instance.closeIcon = this._config.closeIcon;
+    lightboxRef.instance.role = this._config.role;
+    lightboxRef.instance.ariaLabel = this._config.ariaLabel;
+    lightboxRef.instance.ariaLabelledBy = this._config.ariaLabelledBy;
+    lightboxRef.instance.ariaDescribedBy = this._config.ariaDescribedBy;
 
     if (_config.hasBackdrop) {
       this._overlayRef.backdropClick().subscribe(() => this.close());
