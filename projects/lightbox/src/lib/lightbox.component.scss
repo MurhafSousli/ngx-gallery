@@ -13,6 +13,7 @@
       right: 0;
       height: 100%;
       width: 100%;
+      border-radius: 0;
     }
   }
 }
@@ -25,19 +26,23 @@
     height: 800px;
     max-width: 94vw;
     max-height: 90vh;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 11px 15px -7px rgba(0,0,0,.2), 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12);
+    &:focus {
+      outline: none;
+    }
     gallery {
       overflow: hidden;
       margin: 0;
       display: block;
       width: 100%;
       height: 100%;
-      box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.2),
-        0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12);
     }
   }
-  
+
   .g-backdrop {
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, .32);
   }
 
   .fullscreen {
