@@ -2,7 +2,7 @@ import { Component, HostBinding, HostListener, Optional, OnDestroy, ChangeDetect
 import { DomSanitizer } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { OverlayRef } from '@angular/cdk/overlay';
-import { Subscription, SubscriptionLike } from 'rxjs';
+import { FocusTrap, FocusTrapFactory } from '@angular/cdk/a11y';
 import { lightboxAnimations } from './lightbox.animation';
 
 @Component({
@@ -51,22 +51,59 @@ export class LightboxComponent implements OnDestroy {
   /** ID of the element that describes the lightbox. */
   ariaDescribedBy: string;
 
-  /** Dispose the overlay when exit animation is done */
-  @HostListener('@slideLightbox.done', ['$event']) onExitAnimationDone(e) {
-    if (e.toState === 'void') {
+  /** The class that traps and manages focus within the lightbox. */
+  private _focusTrap: FocusTrap;
+
+  /** Element that was focused before the lightbox was opened. Save this to restore upon close. */
+  private _elementFocusedBeforeDialogWasOpened: HTMLElement;
+
+  constructor(@Optional() @Inject(DOCUMENT) private _document: any,
+              private _focusTrapFactory: FocusTrapFactory,
+              private _elementRef: ElementRef,
+              public sanitizer: DomSanitizer) {
+    this._savePreviouslyFocusedElement();
+  }
       this.overlayRef.dispose();
     }
   }
 
-  constructor(public sanitizer: DomSanitizer, @Optional() location: Location) {
-    // Close the Lightbox when the location changes
-    if (location) {
-      this._locationChange$ = location.subscribe(() => this.overlayRef.detach());
+  /** Moves the focus inside the focus trap. */
+  private _trapFocus() {
+    if (!this._focusTrap) {
+      this._focusTrap = this._focusTrapFactory.create(this._elementRef.nativeElement);
+    }
+    // If were to attempt to focus immediately, then the content of the lightbox would not yet be
+    // ready in instances where change detection has to run first. To deal with this, we simply
+    // wait for the microtask queue to be empty.
+    this._focusTrap.focusInitialElementWhenReady();
+  }
+
+  /** Saves a reference to the element that was focused before the lightbox was opened. */
+  private _savePreviouslyFocusedElement() {
+    if (this._document) {
+      this._elementFocusedBeforeDialogWasOpened = this._document.activeElement as HTMLElement;
+
+      // Note that there is no focus method when rendering on the server.
+      if (this._elementRef.nativeElement.focus) {
+        // Move focus onto the lightbox immediately in order to prevent the user from accidentally
+        // opening multiple dialogs at the same time. Needs to be async, because the element
+        // may not be focusable immediately.
+        Promise.resolve().then(() => this._elementRef.nativeElement.focus());
+      }
     }
   }
 
-  ngOnDestroy() {
-    this._locationChange$.unsubscribe();
-  }
+  /** Restores focus to the element that was focused before the lightbox opened. */
+  private _restoreFocus() {
+    const toFocus = this._elementFocusedBeforeDialogWasOpened;
 
+    // We need the extra check, because IE can set the `activeElement` to null in some cases.
+    if (toFocus && typeof toFocus.focus === 'function') {
+      toFocus.focus();
+    }
+
+    if (this._focusTrap) {
+      this._focusTrap.destroy();
+    }
+  }
 }

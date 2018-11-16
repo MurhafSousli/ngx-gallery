@@ -1,6 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { Overlay, OverlayModule } from '@angular/cdk/overlay';
-import { Gallery, GalleryModule } from '@ngx-gallery/core';
+import { A11yModule } from '@angular/cdk/a11y';
 
 import { Lightbox } from './lightbox.service';
 import { LightboxComponent } from './lightbox.component';
@@ -15,7 +15,8 @@ export function lightboxFactory(config: LightboxConfig, gallery: Gallery, overla
 @NgModule({
   imports: [
     OverlayModule,
-    GalleryModule
+    GalleryModule,
+    A11yModule
   ],
   declarations: [
     LightboxComponent,
