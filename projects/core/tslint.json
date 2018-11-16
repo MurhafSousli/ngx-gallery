@@ -4,9 +4,7 @@
         "no-input-rename": false,
         "directive-selector": [
             true,
-            "attribute",
-            "lib",
-            "camelCase"
+            "attribute"
         ],
         "component-selector": [
             true,
