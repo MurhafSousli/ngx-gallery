@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy, HostBinding, Output, EventEmitter } from '@angular/core';
-import { GalleryConfig, GalleryError } from '../models';
+import { GalleryConfig } from '../models/config.model';
 
 @Component({
   selector: 'gallery-thumb',

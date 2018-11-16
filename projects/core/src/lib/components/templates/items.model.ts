@@ -1,7 +1,8 @@
-import { GalleryItem, GalleryItemType } from '../../models';
+import { GalleryItem } from '../../models/gallery.model';
+import { GalleryItemType } from '../../models/constants';
 
 export class ImageItem implements GalleryItem {
-  readonly type = GalleryItemType.Image;
+  readonly type = 'image'; //GalleryItemType.Image;
   readonly data: any;
 
   constructor(data: any) {
@@ -10,7 +11,7 @@ export class ImageItem implements GalleryItem {
 }
 
 export class VideoItem implements GalleryItem {
-  readonly type = GalleryItemType.Video;
+  readonly type = 'video'; // GalleryItemType.Video;
   readonly data: any;
 
   constructor(data: any) {
@@ -19,7 +20,7 @@ export class VideoItem implements GalleryItem {
 }
 
 export class IframeItem implements GalleryItem {
-  readonly type = GalleryItemType.Iframe;
+  readonly type = 'iframe'; // GalleryItemType.Iframe;
   readonly data: any;
 
   constructor(data: any) {
@@ -28,7 +29,7 @@ export class IframeItem implements GalleryItem {
 }
 
 export class YoutubeItem implements GalleryItem {
-  readonly type = GalleryItemType.Youtube;
+  readonly type = 'youtube'; // GalleryItemType.Youtube;
   readonly data: any;
 
   constructor(data: any) {

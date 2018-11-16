@@ -1,7 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { GalleryConfig } from './models';
+import { GalleryConfig } from './models/config.model';
 import { GALLERY_CONFIG } from './utils/gallery.token';
 
 import { GalleryComponent } from './components/gallery.component';

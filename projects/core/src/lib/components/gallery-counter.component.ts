@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { GalleryState } from '../models';
+import { GalleryState } from '../models/gallery.model';
 
 @Component({
   selector: 'gallery-counter',

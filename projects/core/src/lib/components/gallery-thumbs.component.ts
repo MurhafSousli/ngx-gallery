@@ -13,7 +13,9 @@ import {
 } from '@angular/core';
 import { animationFrameScheduler, BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { GalleryConfig, GalleryState, ThumbnailsPosition, ThumbnailsMode, GalleryError } from '../models';
+import { GalleryConfig } from '../models/config.model';
+import { GalleryState, GalleryError } from '../models/gallery.model';
+import { ThumbnailsPosition, ThumbnailsMode } from '../models/constants';
 import { SliderState, WorkerState } from '../models/slider.model';
 
 declare const Hammer: any;

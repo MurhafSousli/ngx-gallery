@@ -15,7 +15,9 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable, Subscription, fromEvent, animationFrameScheduler } from 'rxjs';
 import { map, tap, debounceTime } from 'rxjs/operators';
-import { GalleryState, GalleryConfig, SlidingDirection, GalleryError } from '../models';
+import { GalleryState, GalleryError } from '../models/gallery.model';
+import { GalleryConfig } from '../models/config.model';
+import { SlidingDirection } from '../models/constants';
 import { SliderState, WorkerState } from '../models/slider.model';
 
 declare const Hammer: any;

@@ -1,5 +1,6 @@
 import { Component, Input, HostBinding, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
-import { GalleryConfig, GalleryError, GalleryState } from '../models';
+import { GalleryError, GalleryState } from '../models/gallery.model';
+import { GalleryConfig } from '../models/config.model';
 
 @Component({
   selector: 'gallery-core',

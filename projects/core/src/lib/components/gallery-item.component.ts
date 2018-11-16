@@ -1,5 +1,6 @@
 import { Component, Input, ChangeDetectionStrategy, HostBinding, Output, EventEmitter } from '@angular/core';
-import { GalleryConfig, LoadingStrategy, GalleryItemType } from '../models';
+import { GalleryConfig } from '../models/config.model';
+import { LoadingStrategy, GalleryItemType } from '../models/constants';
 
 @Component({
   selector: 'gallery-item',

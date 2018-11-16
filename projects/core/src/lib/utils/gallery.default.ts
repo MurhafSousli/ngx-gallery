@@ -1,13 +1,6 @@
-import {
-  ImageSize,
-  GalleryState,
-  GalleryConfig,
-  GalleryAction,
-  ThumbnailsMode,
-  LoadingStrategy,
-  SlidingDirection,
-  ThumbnailsPosition
-} from '../models';
+import { ImageSize, GalleryAction, ThumbnailsMode, LoadingStrategy, SlidingDirection, ThumbnailsPosition } from '../models/constants';
+import { GalleryState } from '../models/gallery.model';
+import { GalleryConfig } from '../models/config.model';
 
 /** Initial state */
 export const defaultState: GalleryState = {

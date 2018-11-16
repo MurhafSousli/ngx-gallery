@@ -1,5 +1,5 @@
 import { Component, Input, Output, ChangeDetectionStrategy, EventEmitter } from '@angular/core';
-import { GalleryState } from '../models';
+import { GalleryState } from '../models/gallery.model';
 
 @Component({
   selector: 'gallery-dots',
