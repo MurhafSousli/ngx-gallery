@@ -1,14 +1,15 @@
-import { Component, HostBinding, HostListener, Optional, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Optional, ChangeDetectionStrategy, ElementRef, Inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Location } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
+import { AnimationEvent } from '@angular/animations';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { FocusTrap, FocusTrapFactory } from '@angular/cdk/a11y';
-import { lightboxAnimations } from './lightbox.animation';
+import { lightboxAnimation } from './lightbox.animation';
 
 @Component({
   selector: 'lightbox',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [lightboxAnimations.slideLightbox],
+  animations: [lightboxAnimation],
   styleUrls: ['./lightbox.component.scss'],
   template: `
     <gallery [id]="id" [destroyRef]="false" [skipInitConfig]="true">
@@ -24,8 +25,11 @@ import { lightboxAnimations } from './lightbox.animation';
     '[attr.aria-labelledby]': 'ariaLabel ? null : ariaLabelledBy',
     '[attr.aria-label]': 'ariaLabel',
     '[attr.aria-describedby]': 'ariaDescribedBy || null',
+    '[@lightbox]': 'state',
+    '(@lightbox.done)': 'onAnimationDone($event)',
+  }
 })
-export class LightboxComponent implements OnDestroy {
+export class LightboxComponent {
 
   /** Gallery ref id */
   id: string;
@@ -33,11 +37,11 @@ export class LightboxComponent implements OnDestroy {
   /** Overlay ref to close the lightbox */
   overlayRef: OverlayRef;
 
-  /** close button svg data */
+  /** Close button svg data */
   closeIcon: string;
 
-  /** Subscription to changes in the user's location. */
-  private _locationChange$: SubscriptionLike = Subscription.EMPTY;
+  /** State of the lightbox animation. */
+  state: 'void' | 'enter' | 'exit' = 'enter';
 
   /** The ARIA role of the lightbox element. */
   role: string;
@@ -63,7 +67,14 @@ export class LightboxComponent implements OnDestroy {
               public sanitizer: DomSanitizer) {
     this._savePreviouslyFocusedElement();
   }
+
+  /** Callback, invoked whenever an animation on the host completes. */
+  onAnimationDone(event: AnimationEvent) {
+    if (event.toState === 'enter') {
+      this._trapFocus();
+    } else {
       this.overlayRef.dispose();
+      this._restoreFocus();
     }
   }
 
