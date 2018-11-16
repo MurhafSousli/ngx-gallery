@@ -52,7 +52,8 @@ export class Lightbox {
       panelClass: _config.panelClass,
       hasBackdrop: _config.hasBackdrop,
       positionStrategy: this._overlay.position().global().centerHorizontally().centerVertically(),
-      scrollStrategy: this._overlay.scrollStrategies.block()
+      scrollStrategy: this._overlay.scrollStrategies.block(),
+      disposeOnNavigation: true
     };
 
     const galleryRef = this._gallery.ref(id);
