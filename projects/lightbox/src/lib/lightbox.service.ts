@@ -10,7 +10,9 @@ import { LightboxConfig } from './lightbox.model';
 import { defaultConfig } from './lightbox.default';
 import { LightboxComponent } from './lightbox.component';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class Lightbox {
 
   /** Gallery overlay ref */
