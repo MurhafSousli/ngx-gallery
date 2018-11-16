@@ -11,7 +11,7 @@ export class LazyImage implements OnDestroy {
 
   @Input('lazyImage')
   set lazyImage(imagePath: string) {
-    this.loadImage(encodeURIComponent(imagePath));
+    this.loadImage(imagePath);
   }
 
   @Output() loaded = new EventEmitter<string>();
