@@ -15,7 +15,15 @@ import { lightboxAnimations } from './lightbox.animation';
       <i class="g-btn-close" aria-label="Close" (click)="overlayRef.detach()"
          [innerHTML]="sanitizer.bypassSecurityTrustHtml(closeIcon)"></i>
     </gallery>
-  `
+  `,
+  host: {
+    'tabindex': '-1',
+    'aria-modal': 'true',
+    '[attr.id]': '"lightbox-" + id',
+    '[attr.role]': 'role',
+    '[attr.aria-labelledby]': 'ariaLabel ? null : ariaLabelledBy',
+    '[attr.aria-label]': 'ariaLabel',
+    '[attr.aria-describedby]': 'ariaDescribedBy || null',
 })
 export class LightboxComponent implements OnDestroy {
 
@@ -31,8 +39,17 @@ export class LightboxComponent implements OnDestroy {
   /** Subscription to changes in the user's location. */
   private _locationChange$: SubscriptionLike = Subscription.EMPTY;
 
-  /** Use slide animation on opening and closing the lightbox */
-  @HostBinding('@slideLightbox') slideAnimation;
+  /** The ARIA role of the lightbox element. */
+  role: string;
+
+  /** Aria label to assign to the lightbox element */
+  ariaLabel: string;
+
+  /** ID of the element that should be considered as the lightbox's label. */
+  ariaLabelledBy: string;
+
+  /** ID of the element that describes the lightbox. */
+  ariaDescribedBy: string;
 
   /** Dispose the overlay when exit animation is done */
   @HostListener('@slideLightbox.done', ['$event']) onExitAnimationDone(e) {
