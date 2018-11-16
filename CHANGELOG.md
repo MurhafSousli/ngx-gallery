@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.4.0
+
+- **update(core, lightbox, gallerize)**: Update peer dependencies, closes [#228](https://github.com/MurhafSousli/ngx-gallery/issues/228) in [bd8cdd3](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/bd8cdd302c55e285dc32a195e1d5f70b4312ac46).
+- **fix(core):** Fix vertical scroll is not working on gallery on touch device, closes [#161](https://github.com/MurhafSousli/ngx-gallery/issues/161) in [a239c29](https://github.com/MurhafSousli/ngx-gallery/pull/230/commits/a239c294248e1028a79a9f99a60462131d3729fc). **(kudos goes to [@harm-less](https://github.com/harm-less))**
+- **enhance(core):** Use `animationFrameScheduler` for smoother sliding animation, in [38b0aa6](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/38b0aa67fd1b73cd69e85daab3d2b1ec69da2696).
+- **feat(lightbox):** Set the focus back on the previously focused element when the lightbox is closed, in [266eddb](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/266eddb5afdfe51bec533a857431ac8dca395a0f).
+- **feat(lightbox):** Add `role`, `ariaLabel`, `ariaLabelledBy` and `ariaDescribedBy` attributes to the lightbox config `LightboxConfig`, in [a11d20d](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/a11d20d5d4fa1fd2dbe46c88a7aa26aab58b3d04), [5b550e7](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/5b550e7ccb6dc6515e5b6284c69e0448bf181c91).
+- **enhance(lightbox):** Import overlay default styles from `@angular/cdk/overlay`, in [54c5d88](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/54c5d88b6a3639f2066fdb7e1e7f74d307f823b6).
+- **refactor(lightbox):** Use `disposeOnNavigation` instead of `Location` service, in [2262164](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/22621648db640905482a58480a54b693b7894272).
+- **enhance(lightbox):** Update lightbox overlay animation, closes [#224](https://github.com/MurhafSousli/ngx-gallery/issues/224) in []().
+
 ## 3.3.1
 
 - **fix(core):** Remove duplicate delete execution in the destroyer function, in [ae541ca](https://github.com/MurhafSousli/ngx-gallery/pull/214/commits/ae541cafb22e6d5c976950eca2c7779a39693b77)
