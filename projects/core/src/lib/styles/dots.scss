@@ -1,4 +1,10 @@
 ::ng-deep {
+  gallery-core[dotsPosition='top'] gallery-dots {
+    top: 0;
+  }
+  gallery-core[dotsPosition='bottom'] gallery-dots {
+    bottom: 0;
+  }
   gallery-dots {
     display: flex;
     justify-content: center;

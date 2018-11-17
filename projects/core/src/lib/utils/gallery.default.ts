@@ -27,6 +27,7 @@ export const defaultConfig: GalleryConfig = {
   panSensitivity: 25,
   disableThumb: false,
   playerInterval: 3000,
+  dotsPosition: 'bottom',
   imageSize: ImageSize.Contain,
   thumbMode: ThumbnailsMode.Strict,
   thumbPosition: ThumbnailsPosition.Bottom,

@@ -21,6 +21,7 @@ export interface GalleryConfig {
   thumbTemplate?: TemplateRef<any>;
   thumbMode?: 'strict' | 'free';
   imageSize?: 'cover' | 'contain';
+  dotsPosition?: 'top' | 'bottom';
   slidingDirection?: 'horizontal' | 'vertical';
   loadingStrategy?: 'preload' | 'lazy' | 'default';
   thumbPosition?: 'top' | 'left' | 'right' | 'bottom';

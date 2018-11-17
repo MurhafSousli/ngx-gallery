@@ -68,4 +68,7 @@ export class GalleryCoreComponent {
     return this.config.imageSize;
   }
 
-}
+  /** Set gallery dots position */
+  @HostBinding('attr.dotsPosition') get dotsPosition(): 'top' | 'bottom' {
+    return this.config.dotsPosition;
+  }
