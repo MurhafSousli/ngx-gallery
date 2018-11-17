@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
+import { Component, Input, Output, HostBinding, ChangeDetectionStrategy, EventEmitter } from '@angular/core';
 import { GalleryError, GalleryState } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
 

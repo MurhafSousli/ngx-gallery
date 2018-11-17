@@ -5,9 +5,9 @@ import {
   OnInit,
   OnChanges,
   OnDestroy,
+  SimpleChanges,
   TemplateRef,
   EventEmitter,
-  SimpleChanges,
   ChangeDetectionStrategy
 } from '@angular/core';
 import { Subscription, SubscriptionLike } from 'rxjs';
