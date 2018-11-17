@@ -8,6 +8,7 @@ export interface GalleryConfig {
   zoomOut?: number;
   navIcon?: string;
   counter?: boolean;
+  dotsSize?: number;
   gestures?: boolean;
   autoPlay?: boolean;
   thumbWidth?: number;

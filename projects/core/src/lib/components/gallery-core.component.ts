@@ -29,6 +29,7 @@ import { GalleryConfig } from '../models/config.model';
 
       <gallery-dots *ngIf="config.dots"
                     [state]="state"
+                    [config]="config"
                     (action)="action.emit($event)">
       </gallery-dots>
 

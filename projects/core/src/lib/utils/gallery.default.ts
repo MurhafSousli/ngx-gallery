@@ -18,6 +18,7 @@ export const defaultConfig: GalleryConfig = {
   zoomOut: 0,
   dots: false,
   thumb: true,
+  dotsSize: 30,
   counter: true,
   gestures: true,
   autoPlay: false,
