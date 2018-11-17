@@ -1,5 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { GalleryConfig } from './models/config.model';
 import { GALLERY_CONFIG } from './utils/gallery.token';
@@ -20,10 +21,17 @@ import { GalleryIframeComponent } from './components/templates/gallery-iframe.co
 
 import { LazyImage } from './directives/lazy-image';
 import { TapClick } from './directives/tap-click';
+import { CachingInterceptor } from './services/cache.interceptor';
+import { RequestCache, RequestCacheWithMap } from './services/cache.service';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    HttpClientModule
+  ],
+  providers: [
+    {provide: RequestCache, useClass: RequestCacheWithMap},
+    {provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true}
   ],
   declarations: [
     GalleryComponent,
