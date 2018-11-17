@@ -28,6 +28,7 @@ export const defaultConfig: GalleryConfig = {
   disableThumb: false,
   playerInterval: 3000,
   dotsPosition: 'bottom',
+  counterPosition: 'top',
   imageSize: ImageSize.Contain,
   thumbMode: ThumbnailsMode.Strict,
   thumbPosition: ThumbnailsPosition.Bottom,

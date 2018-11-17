@@ -72,3 +72,10 @@ export class GalleryCoreComponent {
   @HostBinding('attr.dotsPosition') get dotsPosition(): 'top' | 'bottom' {
     return this.config.dotsPosition;
   }
+
+  /** Set gallery counter position */
+  @HostBinding('attr.counterPosition') get counterPosition(): 'top' | 'bottom' {
+    return this.config.counterPosition;
+  }
+
+}
