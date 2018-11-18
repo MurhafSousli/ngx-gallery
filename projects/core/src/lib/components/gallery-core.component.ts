@@ -1,10 +1,10 @@
-import { Component, Input, HostBinding, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
-import { GalleryConfig, GalleryError, GalleryState } from '../models';
+import { Component, Input, Output, HostBinding, ChangeDetectionStrategy, EventEmitter } from '@angular/core';
+import { GalleryError, GalleryState } from '../models/gallery.model';
+import { GalleryConfig } from '../models/config.model';
 
 @Component({
   selector: 'gallery-core',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
   template: `
     <gallery-thumbs *ngIf="config.thumb"
                     [state]="state"
@@ -29,6 +29,7 @@ import { GalleryConfig, GalleryError, GalleryState } from '../models';
 
       <gallery-dots *ngIf="config.dots"
                     [state]="state"
+                    [config]="config"
                     (action)="action.emit($event)">
       </gallery-dots>
 
@@ -65,6 +66,16 @@ export class GalleryCoreComponent {
   /** Set gallery image size */
   @HostBinding('attr.imageSize') get imageSize(): 'cover' | 'contain' {
     return this.config.imageSize;
+  }
+
+  /** Set gallery dots position */
+  @HostBinding('attr.dotsPosition') get dotsPosition(): 'top' | 'bottom' {
+    return this.config.dotsPosition;
+  }
+
+  /** Set gallery counter position */
+  @HostBinding('attr.counterPosition') get counterPosition(): 'top' | 'bottom' {
+    return this.config.counterPosition;
   }
 
 }

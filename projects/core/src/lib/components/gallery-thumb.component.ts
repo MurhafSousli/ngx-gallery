@@ -1,17 +1,18 @@
 import { Component, Input, ChangeDetectionStrategy, HostBinding, Output, EventEmitter } from '@angular/core';
-import { GalleryConfig, GalleryError } from '../models';
+import { GalleryConfig } from '../models/config.model';
 
 @Component({
   selector: 'gallery-thumb',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <gallery-image [src]="data.thumb" (error)="error.emit($event)"></gallery-image>
-
-    <div *ngIf="config.thumbTemplate" class="g-template g-thumb-template">
+    <div *ngIf="config.thumbTemplate; else default" class="g-template g-thumb-template">
       <ng-container
         *ngTemplateOutlet="config.thumbTemplate; context: { index: this.index, type: this.type, data: this.data }">
       </ng-container>
     </div>
+    <ng-template #default>
+      <gallery-image [src]="data.thumb" [isThumbnail]="true" (error)="error.emit($event)"></gallery-image>
+    </ng-template>
   `
 })
 export class GalleryThumbComponent {

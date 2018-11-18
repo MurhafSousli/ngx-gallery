@@ -1,7 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
-import { GalleryConfig } from './models';
+import { GalleryConfig } from './models/config.model';
 import { GALLERY_CONFIG } from './utils/gallery.token';
 
 import { GalleryComponent } from './components/gallery.component';
@@ -17,13 +18,21 @@ import { GalleryThumbComponent } from './components/gallery-thumb.component';
 import { GalleryImageComponent } from './components/templates/gallery-image.component';
 import { GalleryVideoComponent } from './components/templates/gallery-video.component';
 import { GalleryIframeComponent } from './components/templates/gallery-iframe.component';
+import { RadialProgressComponent } from './components/templates/radial-progress.component';
 
-import { LazyDirective } from './directives/lazy.directive';
-import { TapClickDirective } from './directives/tap-click.directive';
+import { LazyImage } from './directives/lazy-image';
+import { TapClick } from './directives/tap-click';
+import { CachingInterceptor } from './services/cache.interceptor';
+import { RequestCache, RequestCacheWithMap } from './services/cache.service';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    HttpClientModule
+  ],
+  providers: [
+    {provide: RequestCache, useClass: RequestCacheWithMap},
+    {provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true}
   ],
   declarations: [
     GalleryComponent,
@@ -38,13 +47,14 @@ import { TapClickDirective } from './directives/tap-click.directive';
     GalleryImageComponent,
     GalleryVideoComponent,
     GalleryIframeComponent,
-    LazyDirective,
-    TapClickDirective
+    RadialProgressComponent,
+    LazyImage,
+    TapClick
   ],
   exports: [
     GalleryComponent,
-    LazyDirective,
-    TapClickDirective,
+    LazyImage,
+    TapClick,
   ]
 })
 export class GalleryModule {

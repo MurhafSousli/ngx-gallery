@@ -10,7 +10,9 @@ import { LightboxConfig } from './lightbox.model';
 import { defaultConfig } from './lightbox.default';
 import { LightboxComponent } from './lightbox.component';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class Lightbox {
 
   /** Gallery overlay ref */
@@ -52,7 +54,8 @@ export class Lightbox {
       panelClass: _config.panelClass,
       hasBackdrop: _config.hasBackdrop,
       positionStrategy: this._overlay.position().global().centerHorizontally().centerVertically(),
-      scrollStrategy: this._overlay.scrollStrategies.block()
+      scrollStrategy: this._overlay.scrollStrategies.block(),
+      disposeOnNavigation: true
     };
 
     const galleryRef = this._gallery.ref(id);
@@ -73,6 +76,10 @@ export class Lightbox {
     lightboxRef.instance.id = id;
     lightboxRef.instance.overlayRef = this._overlayRef;
     lightboxRef.instance.closeIcon = this._config.closeIcon;
+    lightboxRef.instance.role = this._config.role;
+    lightboxRef.instance.ariaLabel = this._config.ariaLabel;
+    lightboxRef.instance.ariaLabelledBy = this._config.ariaLabelledBy;
+    lightboxRef.instance.ariaDescribedBy = this._config.ariaDescribedBy;
 
     if (_config.hasBackdrop) {
       this._overlayRef.backdropClick().subscribe(() => this.close());

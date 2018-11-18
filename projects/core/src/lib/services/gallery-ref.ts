@@ -1,8 +1,10 @@
 import { BehaviorSubject, Subject, Observable, of, EMPTY} from 'rxjs';
 import { delay, filter, switchMap, tap } from 'rxjs/operators';
 import { defaultState } from '../utils/gallery.default';
-import { GalleryAction, GalleryConfig, GalleryError, GalleryItem, GalleryState } from '../models';
-import { IframeItem, ImageItem, VideoItem, YoutubeItem } from '../components/templates';
+import { GalleryError, GalleryItem, GalleryState } from '../models/gallery.model';
+import { GalleryConfig } from '../models/config.model';
+import { GalleryAction } from '../models/constants';
+import { IframeItem, ImageItem, VideoItem, YoutubeItem } from '../components/templates/items.model';
 
 const filterActions = (actions: string[]) => {
   return filter((state: GalleryState) => actions.indexOf(state.action) > -1);

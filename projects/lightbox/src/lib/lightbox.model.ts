@@ -4,4 +4,8 @@ export interface LightboxConfig {
   hasBackdrop?: boolean;
   keyboardShortcuts?: boolean;
   closeIcon?: string;
+  role?: string;
+  ariaLabelledBy?: string;
+  ariaLabel?: string;
+  ariaDescribedBy?: string;
 }

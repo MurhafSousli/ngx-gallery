@@ -8,11 +8,13 @@ export interface GalleryConfig {
   zoomOut?: number;
   navIcon?: string;
   counter?: boolean;
+  dotsSize?: number;
   gestures?: boolean;
   autoPlay?: boolean;
   thumbWidth?: number;
   thumbHeight?: number;
   loadingIcon?: string;
+  loadingError?: string;
   disableThumb?: boolean;
   panSensitivity?: number;
   playerInterval?: number;
@@ -20,6 +22,8 @@ export interface GalleryConfig {
   thumbTemplate?: TemplateRef<any>;
   thumbMode?: 'strict' | 'free';
   imageSize?: 'cover' | 'contain';
+  dotsPosition?: 'top' | 'bottom';
+  counterPosition?: 'top' | 'bottom';
   slidingDirection?: 'horizontal' | 'vertical';
   loadingStrategy?: 'preload' | 'lazy' | 'default';
   thumbPosition?: 'top' | 'left' | 'right' | 'bottom';

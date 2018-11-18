@@ -11,9 +11,11 @@ import {
   EventEmitter,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { animationFrameScheduler, BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { GalleryConfig, GalleryState, ThumbnailsPosition, ThumbnailsMode, GalleryError, SlidingDirection } from '../models';
+import { GalleryConfig } from '../models/config.model';
+import { GalleryState, GalleryError } from '../models/gallery.model';
+import { ThumbnailsPosition, ThumbnailsMode } from '../models/constants';
 import { SliderState, WorkerState } from '../models/slider.model';
 
 declare const Hammer: any;
@@ -21,7 +23,6 @@ declare const Hammer: any;
 @Component({
   selector: 'gallery-thumbs',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
   template: `
     <div *ngIf="sliderState$ | async; let sliderState"
          class="g-thumbs-container">
@@ -279,6 +280,7 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private updateSlider(state: WorkerState) {
-    this._slidingWorker$.next({...this._slidingWorker$.value, ...state});
+    const newState = {...this._slidingWorker$.value, ...state};
+    animationFrameScheduler.schedule(() => this._slidingWorker$.next(newState));
   }
 }

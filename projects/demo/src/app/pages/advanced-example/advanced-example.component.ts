@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { faYoutube } from '@fortawesome/free-brands-svg-icons/faYoutube';
 import { faVideo } from '@fortawesome/free-solid-svg-icons/faVideo';
 import { slideInAnimation } from './slide-text.animation';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'advanced-example',
@@ -22,7 +23,7 @@ export class AdvancedExampleComponent implements OnInit {
   readonly youtubeIcon = faYoutube;
   readonly videoIcon = faVideo;
 
-  constructor(private _gallery: Gallery,  media: ObservableMedia) {
+  constructor(private _gallery: Gallery,  media: ObservableMedia, private _title: Title) {
     this.media$ = media.asObservable().pipe(
       map((res: MediaChange) => {
         if (res.mqAlias === 'sm' || res.mqAlias === 'xs') {
@@ -40,6 +41,7 @@ export class AdvancedExampleComponent implements OnInit {
   }
 
   ngOnInit() {
+    this._title.setTitle('Advanced | ngx-gallery');
     const galleryRef = this._gallery.ref('mixed');
     this.arr.map(item => {
       switch (item.type) {

@@ -7,18 +7,20 @@ import { GalleryItem, ImageItem } from '@ngx-gallery/core';
     <div class="basic-container">
       <h2>Basic Example</h2>
 
-      <gallery #gallery id="basic-test" fluid [items]="items" thumbPosition="top" thumbMode="free" (error)="onError($event)">
+      <gallery *ngIf="show" #gallery id="basic-test" fluid
+               loadingStrategy="lazy" [items]="items" thumbPosition="top" thumbMode="free" (error)="onError($event)">
       </gallery>
 
-      <button mat-button (click)="gallery.play()">Play</button>
-      <button mat-button (click)="gallery.stop()">Stop</button>
+      <button mat-button (click)="show = !show">Toggle</button>
+      <!--<button mat-button (click)="gallery.play()">Play</button>-->
+      <!--<button mat-button (click)="gallery.stop()">Stop</button>-->
     </div>
   `,
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
-
+  show = false;
   items: GalleryItem[];
 
   imageData = [

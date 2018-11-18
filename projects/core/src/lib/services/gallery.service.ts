@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { GalleryRef } from './gallery-ref';
 import { GALLERY_CONFIG } from '../utils/gallery.token';
 import { defaultConfig } from '../utils/gallery.default';
-import { GalleryConfig } from '../models';
+import { GalleryConfig } from '../models/config.model';
 
 @Injectable({
   providedIn: 'root'

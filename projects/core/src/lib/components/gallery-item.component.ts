@@ -1,5 +1,6 @@
 import { Component, Input, ChangeDetectionStrategy, HostBinding, Output, EventEmitter } from '@angular/core';
-import { GalleryConfig, LoadingStrategy, GalleryItemType } from '../models';
+import { GalleryConfig } from '../models/config.model';
+import { LoadingStrategy, GalleryItemType } from '../models/constants';
 
 @Component({
   selector: 'gallery-item',
@@ -11,6 +12,7 @@ import { GalleryConfig, LoadingStrategy, GalleryItemType } from '../models';
 
         <gallery-image [src]="data.src"
                        [loadingIcon]="config.loadingIcon"
+                       [loadingError]="config.loadingError"
                        (error)="error.emit($event)"></gallery-image>
 
         <div class="g-template g-item-template">

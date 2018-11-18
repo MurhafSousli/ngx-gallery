@@ -58,20 +58,30 @@ not-found {
 }
 
 ng-scrollbar {
-  .ng-scrollbar-thumb {
+  .ng-scrollbar {
     border-radius: 0;
+    background-color: $primary-color;
+    opacity: 0.5;
   }
-  .-vertical, .-horizontal {
+  .ng-scrollbar-thumb {
+    height: 8px;
+    background-color: #e3f2fd;// $accent-color;
+    border-radius: 0;
+    &:hover, &:active {
+      background-color: #fff176; // $accent-color;
+    }
+  }
+  .ng-scrollbar-vertical {
+    width: 12px;
+    top: 0;
     right: 0;
     bottom: 0;
   }
-  .-vertical {
-    width: 16px;
-    top: 0;
-  }
-  .-horizontal {
-    height: 16px;
+  .ng-scrollbar-horizontal {
+    height: 12px;
     left: 0;
+    right: 0;
+    bottom: 0;
   }
 }
 

@@ -1,8 +1,12 @@
 ::ng-deep {
+  gallery-core[dotsPosition='top'] gallery-dots {
+    top: 0;
+  }
+  gallery-core[dotsPosition='bottom'] gallery-dots {
+    bottom: 0;
+  }
   gallery-dots {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 7px;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -10,24 +14,32 @@
 
   .g-dot {
     cursor: pointer;
-    display: flex;
-    justify-content: center;
     z-index: 20;
+    &:hover .g-dot-inner {
+      opacity: 1;
+    }
   }
 
   .g-dot-active .g-dot-inner {
     opacity: 1;
-    transform: scale(1.6);
+    transform: scale(1.5) !important;
   }
 
   .g-dot-inner {
     background-color: white;
-    margin: 20px 15px;
     opacity: 0.6;
-    width: 10px;
-    height: 5px;
-    border-radius: 1px;
+    width: 30%;
+    height: 30%;
+    border-radius: 50%;
     box-shadow: 0 0 1px black;
     transition: all ease 0.2s;
+  }
+
+  gallery-dots,
+  .g-dot,
+  .g-dot-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

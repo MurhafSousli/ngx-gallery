@@ -13,9 +13,11 @@ import {
   PLATFORM_ID
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject, Observable, Subscription, fromEvent } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, fromEvent, animationFrameScheduler } from 'rxjs';
 import { map, tap, debounceTime } from 'rxjs/operators';
-import { GalleryState, GalleryConfig, SlidingDirection, GalleryError } from '../models';
+import { GalleryState, GalleryError } from '../models/gallery.model';
+import { GalleryConfig } from '../models/config.model';
+import { SlidingDirection } from '../models/constants';
 import { SliderState, WorkerState } from '../models/slider.model';
 
 declare const Hammer: any;
@@ -23,7 +25,6 @@ declare const Hammer: any;
 @Component({
   selector: 'gallery-slider',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
   template: `
     <div *ngIf="sliderState$ | async; let sliderState"
          class="g-items-container"
@@ -218,6 +219,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private updateSlider(state: WorkerState) {
-    this._slidingWorker$.next({...this._slidingWorker$.value, ...state});
+    const newState = {...this._slidingWorker$.value, ...state};
+    animationFrameScheduler.schedule(() => this._slidingWorker$.next(newState));
   }
 }

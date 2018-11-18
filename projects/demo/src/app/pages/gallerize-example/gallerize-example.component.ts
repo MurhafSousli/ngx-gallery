@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Gallery } from '@ngx-gallery/core';
 import { Pixabay } from '../../service/pixabay.service';
 
@@ -8,19 +9,24 @@ import { Pixabay } from '../../service/pixabay.service';
   styleUrls: ['./gallerize-example.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GallerizeExampleComponent {
+export class GallerizeExampleComponent implements OnInit {
 
   readonly code: any;
   readonly images$ = this._pixabay.getImages('camera');
 
-  constructor(private _pixabay: Pixabay, gallery: Gallery) {
+  constructor(private _pixabay: Pixabay, gallery: Gallery, private _title: Title) {
     this.code = code;
     gallery.ref('lightbox').setConfig({
       thumbPosition: 'bottom'
     });
     gallery.ref('auto-detect').setConfig({
-      dots: true
+      dots: true,
+      thumbPosition: 'top'
     });
+  }
+
+  ngOnInit() {
+    this._title.setTitle('Gallerize | ngx-gallery');
   }
 
 }

@@ -29,7 +29,6 @@ import { LazyComponent } from './lazy/lazy.component';
     LightboxModule.forRoot(),
     GallerizeModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

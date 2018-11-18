@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { delay, finalize, map, take } from 'rxjs/operators';
+import { Component, Input, ViewChild, AfterViewInit, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Platform } from '@angular/cdk/platform';
 import { BehaviorSubject, of } from 'rxjs';
-import { ScrollbarComponent } from 'ngx-scrollbar';
+import { delay, finalize, map, take } from 'rxjs/operators';
 
 @Component({
   selector: 'hl-code',
@@ -20,9 +20,8 @@ export class HlCodeComponent implements AfterViewInit {
   @Input() disabled: boolean;
 
   @ViewChild('codeEL', {read: ElementRef}) codeEl: ElementRef;
-  @ViewChild(ScrollbarComponent) scrollbars: ScrollbarComponent;
 
-  constructor(private cd: ChangeDetectorRef) {
+  constructor(private cd: ChangeDetectorRef, private platform: Platform) {
   }
 
   ngAfterViewInit() {
@@ -43,17 +42,16 @@ export class HlCodeComponent implements AfterViewInit {
   }
 
   copy() {
-    const browser = getOS();
     of(this.code).pipe(
       map((text: string) => {
 
         // Create a hidden textarea element
-        const textArea = document.createElement('textarea');
+        const textArea: HTMLTextAreaElement = document.createElement('textarea') as HTMLTextAreaElement;
         textArea.value = text;
         document.body.appendChild(textArea);
 
         // highlight textarea to copy the text
-        if (browser === 'ios') {
+        if (this.platform.IOS) {
           const range = document.createRange();
           range.selectNodeContents(textArea);
           const selection = window.getSelection();
@@ -76,17 +74,4 @@ export class HlCodeComponent implements AfterViewInit {
 
 }
 
-/** Detect operating system 'ios', 'android', or 'desktop' */
-export function getOS() {
-  const userAgent = navigator.userAgent || navigator.vendor || (<any>window).opera;
-
-  if (/android/i.test(userAgent)) {
-    return 'android';
-  }
-
-  if (/iPad|iPhone|iPod/.test(userAgent) && !(<any>window).MSStream) {
-    return 'ios';
-  }
-  return 'desktop';
-}
 
