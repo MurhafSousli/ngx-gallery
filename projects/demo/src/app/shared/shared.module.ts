@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ObserversModule } from '@angular/cdk/observers';
+import { PlatformModule } from '@angular/cdk/platform';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HighlightModule } from 'ngx-highlightjs';
-import { ScrollbarModule } from 'ngx-scrollbar';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MaterialModule } from '../material.module';
 
@@ -37,11 +38,12 @@ import { NoteComponent } from './note/note.component';
     ObserversModule,
     MaterialModule,
     HighlightModule,
+    PlatformModule,
     FlexLayoutModule,
     GalleryModule,
     LightboxModule,
     GallerizeModule,
-    ScrollbarModule,
+    NgScrollbarModule,
     FontAwesomeModule
   ],
   exports: [
@@ -54,7 +56,7 @@ import { NoteComponent } from './note/note.component';
     GalleryModule,
     LightboxModule,
     GallerizeModule,
-    ScrollbarModule,
+    NgScrollbarModule,
     FontAwesomeModule,
     SectionTitleComponent,
     HlCodeComponent,

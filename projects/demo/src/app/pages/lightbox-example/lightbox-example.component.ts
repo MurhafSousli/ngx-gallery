@@ -4,6 +4,7 @@ import { Lightbox } from '@ngx-gallery/lightbox';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Pixabay } from '../../service/pixabay.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'lightbox-example',
@@ -17,11 +18,12 @@ export class LightboxExampleComponent implements OnInit, OnDestroy {
   space$: Observable<GalleryItem[]>;
   images: string[] = [];
 
-  constructor(public gallery: Gallery, public lightbox: Lightbox, public _pixabay: Pixabay) {
+  constructor(public gallery: Gallery, public lightbox: Lightbox, public _pixabay: Pixabay, private _title: Title) {
     this.code = code;
   }
 
   ngOnInit() {
+    this._title.setTitle('Lightbox | ngx-gallery');
     this.space$ = this._pixabay.getHDImages('sea').pipe(
       map((items: GalleryItem[]) => {
         // Load items manually into the lightbox gallery ref

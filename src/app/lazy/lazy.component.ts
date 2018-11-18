@@ -41,7 +41,7 @@ export class LazyComponent implements OnInit {
     });
 
     // This is for Lightbox example
-    this.gallery.ref('lightbox').load(this.items);
+    this.gallery.ref('lightbox', {imageSize: 'cover', loadingStrategy: 'lazy', thumbPosition: 'top'}).load(this.items);
   }
 
   openLightbox() {

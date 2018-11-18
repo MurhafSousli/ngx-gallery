@@ -1,6 +1,8 @@
 <ng-container *ngIf="state$ | async; let state">
-  <ng-scrollbar [trackX]="true"
+  <ng-scrollbar [overlay]="true"
+                [trackX]="true"
                 [style.height]="state.height"
+                barClass="code-scrollbar"
                 thumbClass="code-scrollbar-thumb"
                 (cdkObserveContent)="updateHeight()">
 

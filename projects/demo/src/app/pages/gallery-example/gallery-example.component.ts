@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
 import { GalleryItem, GalleryConfig, ThumbnailsPosition } from '@ngx-gallery/core';
 import { Observable } from 'rxjs';
@@ -12,13 +13,13 @@ import { Pixabay } from '../../service/pixabay.service';
   styleUrls: ['./gallery-example.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GalleryExampleComponent {
+export class GalleryExampleComponent implements OnInit {
 
   readonly code = code;
   readonly fruits$: Observable<GalleryItem[]>;
   readonly media$: Observable<GalleryConfig>;
 
-  constructor(pixabay: Pixabay, media: ObservableMedia) {
+  constructor(pixabay: Pixabay, media: ObservableMedia, private _title: Title) {
     this.fruits$ = pixabay.getImages('fruit');
     this.media$ = media.asObservable().pipe(
       map((res: MediaChange) => {
@@ -36,6 +37,10 @@ export class GalleryExampleComponent {
         };
       })
     );
+  }
+
+  ngOnInit() {
+    this._title.setTitle('Gallery | ngx-gallery');
   }
 
 }

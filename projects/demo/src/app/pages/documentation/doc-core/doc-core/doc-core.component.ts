@@ -11,9 +11,9 @@ export class DocCoreComponent {
   docs = `import { GalleryModule } from  '@ngx-gallery/core';
 
 @NgModule({
- imports: [
+  imports: [
     GalleryModule.forRoot(config)
- ]
+  ]
 })`;
 
 }

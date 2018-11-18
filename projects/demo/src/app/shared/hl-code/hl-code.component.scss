@@ -12,6 +12,33 @@
   overflow: hidden;
   border-radius: 0.5em;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+
+  ng-scrollbar {
+    ::ng-deep {
+      .code-scrollbar-thumb {
+        border-radius: 4px;
+        opacity: 0.7;
+        &:active {
+          opacity: 1;
+        }
+      }
+      .ng-scrollbar-vertical {
+        width: 6px;
+        &:hover, &:active {
+          width: 10px;
+        }
+      }
+      .ng-scrollbar-horizontal {
+        height: 6px;
+        &:hover, &:active {
+          height: 10px;
+        }
+      }
+      .code-scrollbar {
+        transition: all 100ms ease;
+      }
+    }
+  }
 }
 
 pre {
@@ -32,34 +59,6 @@ pre {
     overflow: hidden;
     border: none;
     min-height: 100%;
-  }
-}
-
-ng-scrollbar {
-  margin-bottom: 0;
-  ::ng-deep {
-    .code-scrollbar-thumb {
-      background-color: $scrollbar-color;
-      opacity: 0.3;
-      &:active {
-        opacity: 0.5;
-      }
-    }
-    .-vertical, .-horizontal {
-      transition: all 100ms ease;
-    }
-    .-vertical {
-      width: 6px;
-      &:hover, &:active {
-        width: 10px;
-      }
-    }
-    .-horizontal {
-      height: 6px;
-      &:hover, &:active {
-        height: 10px;
-      }
-    }
   }
 }
 

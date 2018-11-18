@@ -9,11 +9,11 @@ import { Title } from '@angular/platform-browser';
 })
 export class NotFoundComponent implements OnInit {
 
-  constructor(private titleService: Title) {
+  constructor(private _title: Title) {
   }
 
   ngOnInit() {
-    this.titleService.setTitle('404 | ngx-sharebuttons');
+    this._title.setTitle('404 | ngx-gallery');
   }
 
 }

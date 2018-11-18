@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { GalleryItem, GalleryConfig, LoadingStrategy, SlidingDirection, ThumbnailsMode, ThumbnailsPosition } from '@ngx-gallery/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Pixabay } from '../../service/pixabay.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'lab',
@@ -26,11 +27,12 @@ export class LabComponent implements OnInit {
   thumbClick$ = new BehaviorSubject<any>({active: false});
   indexChange$ = new BehaviorSubject<any>({active: false});
 
-  constructor(pixabay: Pixabay) {
+  constructor(pixabay: Pixabay, private _title: Title) {
     this.photos$ = pixabay.getImages('cars');
   }
 
   ngOnInit() {
+    this._title.setTitle('Lab | ngx-gallery');
     this.config = {
       nav: true,
       loop: true,

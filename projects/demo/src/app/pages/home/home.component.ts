@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'home',
@@ -6,7 +7,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   features = [
     'Easy to use',
@@ -23,4 +24,10 @@ export class HomeComponent {
     'Universal support',
   ];
 
+  constructor(private _title: Title) {
+  }
+
+  ngOnInit() {
+    this._title.setTitle('Home | ngx-gallery');
+  }
 }
