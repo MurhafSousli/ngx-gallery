@@ -70,6 +70,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
               private _lightbox: Lightbox,
               private _renderer: Renderer2,
               @Inject(PLATFORM_ID) platform: Object,
+              @Inject(DOCUMENT) private _document: any,
               @Host() @Self() @Optional() private _galleryCmp: GalleryComponent) {
 
     // Set gallerize mode
@@ -105,14 +106,16 @@ export class GallerizeDirective implements OnInit, OnDestroy {
     }
   }
 
-  /** Adds a click event to each gallery items to make it opens in in lightbox */
+  /** Gallery mode: means `gallerize` directive is used on `<gallery>` component
+   * Adds a click event to each gallery item to make it opens in in lightbox */
   private galleryMode(galleryRef: GalleryRef) {
     // Clone its items to the new gallery instance
     this._itemClick$ = this._galleryCmp.galleryRef.itemClick.subscribe((i: number) => this._lightbox.open(i, this._galleryId));
     this._itemChange$ = this._galleryCmp.galleryRef.itemsChanged.subscribe((state: GalleryState) => galleryRef.load(state.items));
   }
 
-  /** Detects images and adds a click event to each image to make it opens in the lightbox */
+  /** Detector mode: means `gallerize` directive is used on a normal HTMLElement
+   *  Detects images and adds a click event to each image to make it opens in the lightbox */
   private detectorMode(galleryRef: GalleryRef) {
     this._detector$ = new Subject();
     // Query image elements
@@ -141,7 +144,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
                 };
               } else {
                 // Otherwise, use element background-image url
-                const elStyle = el.currentStyle || window.getComputedStyle(el, null);
+                const elStyle = el.currentStyle || this._document.defaultView.getComputedStyle(el, null);
                 const background = elStyle.backgroundImage.slice(4, -1).replace(/"/g, '');
                 return {
                   src: background,
