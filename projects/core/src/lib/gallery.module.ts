@@ -18,6 +18,7 @@ import { GalleryThumbComponent } from './components/gallery-thumb.component';
 import { GalleryImageComponent } from './components/templates/gallery-image.component';
 import { GalleryVideoComponent } from './components/templates/gallery-video.component';
 import { GalleryIframeComponent } from './components/templates/gallery-iframe.component';
+import { RadialProgressComponent } from './components/templates/radial-progress.component';
 
 import { LazyImage } from './directives/lazy-image';
 import { TapClick } from './directives/tap-click';
@@ -46,6 +47,7 @@ import { RequestCache, RequestCacheWithMap } from './services/cache.service';
     GalleryImageComponent,
     GalleryVideoComponent,
     GalleryIframeComponent,
+    RadialProgressComponent,
     LazyImage,
     TapClick
   ],
