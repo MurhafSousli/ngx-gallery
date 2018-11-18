@@ -134,7 +134,9 @@ export class GallerizeDirective implements OnInit, OnDestroy {
             map((el: any, i) => {
               // Add click event to the image
               this._renderer.setStyle(el, 'cursor', 'pointer');
-              this._renderer.setProperty(el, 'onclick', () => this._lightbox.open(i, this._galleryId));
+              this._renderer.setProperty(el, 'onclick', () =>
+                this._zone.run(() => this._lightbox.open(i, this._galleryId))
+              );
 
               if (el instanceof HTMLImageElement) {
                 // If element is type of img use the src property
