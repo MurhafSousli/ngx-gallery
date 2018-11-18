@@ -1,5 +1,18 @@
-import { Directive, Input, OnInit, OnDestroy, Inject, Optional, Self, Host, ElementRef, Renderer2, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import {
+  Directive,
+  Input,
+  OnInit,
+  OnDestroy,
+  Inject,
+  Optional,
+  Self,
+  Host,
+  NgZone,
+  ElementRef,
+  Renderer2,
+  PLATFORM_ID
+} from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 import { Gallery, GalleryRef, ImageItem, GalleryComponent, GalleryState, GalleryItem } from '@ngx-gallery/core';
 import { Lightbox } from '@ngx-gallery/lightbox';
@@ -51,7 +64,8 @@ export class GallerizeDirective implements OnInit, OnDestroy {
   /** The selector used to query images elements */
   @Input() selector = 'img';
 
-  constructor(private _el: ElementRef,
+  constructor(private _zone: NgZone,
+              private _el: ElementRef,
               private _gallery: Gallery,
               private _lightbox: Lightbox,
               private _renderer: Renderer2,
@@ -65,16 +79,18 @@ export class GallerizeDirective implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._galleryId = this.gallerize || this._galleryId;
-    const ref = this._gallery.ref(this._galleryId);
+    this._zone.runOutsideAngular(() => {
+      this._galleryId = this.gallerize || this._galleryId;
+      const ref = this._gallery.ref(this._galleryId);
 
-    switch (this._mode) {
-      case GallerizeMode.Detector:
-        this.detectorMode(ref);
-        break;
-      case GallerizeMode.Gallery:
-        this.galleryMode(ref);
-    }
+      switch (this._mode) {
+        case GallerizeMode.Detector:
+          this.detectorMode(ref);
+          break;
+        case GallerizeMode.Gallery:
+          this.galleryMode(ref);
+      }
+    });
   }
 
   ngOnDestroy() {
