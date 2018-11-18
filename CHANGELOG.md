@@ -1,22 +1,32 @@
 # Changelog
 
-## 3.4.0
+## 4.0.0-beta.0
 
 - **update(core, lightbox, gallerize)**: Update peer dependencies, closes [#228](https://github.com/MurhafSousli/ngx-gallery/issues/228) in [bd8cdd3](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/bd8cdd302c55e285dc32a195e1d5f70b4312ac46).
-- **fix(core):** Fix vertical scroll is not working on gallery on touch device, closes [#161](https://github.com/MurhafSousli/ngx-gallery/issues/161) in [a239c29](https://github.com/MurhafSousli/ngx-gallery/pull/230/commits/a239c294248e1028a79a9f99a60462131d3729fc). **(kudos goes to [@harm-less](https://github.com/harm-less))**
+- **feat(core):** Add `dotsPosition` option, closes [#211](https://github.com/MurhafSousli/ngx-gallery/issues/211) in [263d297](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/263d297ccc27692fc9fd9702f775dcf2b753d5de).
+- **feat(core):** Add `dotsSize` option, in [e2e58b6](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/e2e58b62e4eb3cbcf5dd6f17417830bfc956f7eb).
+- **feat(core):** Add `counterPosition` option, closes in [ce7a8ad](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/ce7a8ad62816b3ba344a22e6e459cfdb06ad18ab).
+- **feat(core):** Use `HttpClient` to load and cache images in `[lazyImage]` directive, in [15c3e88](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/15c3e88d89434eb4860eabf3959a08ce746298e7).
+- **feat(core):** Replace icon loader with a new radial progress component to report image loading progress while keeping the svg loading icon as an option, in [a1028e8](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/a1028e84ae08d1e93c599f19aab32873d3dfea41).
+- **feat(core):** Add default error template to `<gallery-image>` in case if loading failed and add `loadingError` option for custom error template, in [cd258f5](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/cd258f5481a01eb8065fbbc931505ca71c421cd5) and [9dbf6c4](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/9dbf6c43e78f91dbb8b2ccbe21f4575a255cd55a).
+- **enhance(core):** Enhance gallery dots styles, in [de8d22b](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/de8d22bd6296d9c6a138152223ce6bffb91b6d63).
+- **enhance(core):** Allow gallery image to use unsafe URLs, closes [#218](https://github.com/MurhafSousli/ngx-gallery/issues/218) in [da1ace1](https://github.com/MurhafSousli/ngx-gallery/commit/da1ace1bd18dca476110da06627afbaaf9ec6a21).
 - **enhance(core):** Use `animationFrameScheduler` for smoother sliding animation, in [38b0aa6](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/38b0aa67fd1b73cd69e85daab3d2b1ec69da2696).
+- **fix(core):** Fix vertical scroll when using the gallery on touch devices, closes [#161](https://github.com/MurhafSousli/ngx-gallery/issues/161) in [a239c29](https://github.com/MurhafSousli/ngx-gallery/pull/230/commits/a239c294248e1028a79a9f99a60462131d3729fc). **(kudos goes to [@harm-less](https://github.com/harm-less))**
+- **refactor(core):** `[lazyImage]` directive => `(loaded)` event no longer emits on error.
+
 - **feat(lightbox):** Set the focus back on the previously focused element when the lightbox is closed, in [266eddb](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/266eddb5afdfe51bec533a857431ac8dca395a0f).
 - **feat(lightbox):** Add `role`, `ariaLabel`, `ariaLabelledBy` and `ariaDescribedBy` attributes to the lightbox config `LightboxConfig`, in [a11d20d](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/a11d20d5d4fa1fd2dbe46c88a7aa26aab58b3d04), [5b550e7](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/5b550e7ccb6dc6515e5b6284c69e0448bf181c91).
 - **enhance(lightbox):** Import overlay default styles from `@angular/cdk/overlay`, in [54c5d88](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/54c5d88b6a3639f2066fdb7e1e7f74d307f823b6).
+- **enhance(lightbox):** Improve lightbox styles, in [4a52161](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/4a521618c8969edeb903b182de0b5ff235efe8cd).
+- **enhance(lightbox):** Update lightbox overlay animation, closes [#224](https://github.com/MurhafSousli/ngx-gallery/issues/224) in [bec077f](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/bec077f2335d47e65d6423a8eeda782dfb485f05).
 - **refactor(lightbox):** Use `disposeOnNavigation` instead of `Location` service, in [2262164](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/22621648db640905482a58480a54b693b7894272).
-- **enhance(lightbox):** Update lightbox overlay animation, closes [#224](https://github.com/MurhafSousli/ngx-gallery/issues/224) in []().
 
 ## 3.3.1
 
 - **fix(core):** Remove duplicate delete execution in the destroyer function, in [ae541ca](https://github.com/MurhafSousli/ngx-gallery/pull/214/commits/ae541cafb22e6d5c976950eca2c7779a39693b77)
 - **fix(core):** Check galleryRef exists before deleting, in [a2b32e2](https://github.com/MurhafSousli/ngx-gallery/pull/214/commits/a2b32e23ccffb77c50c1067f1abea2977c2f1286)
 - **fix(core):** Remove duplicate config set, in [834c001](https://github.com/MurhafSousli/ngx-gallery/pull/213/commits/834c001a6cccee9955e6e9504e0a0d4cb5691d57)
-- **fix(core):** Remove unnecessary `PortalModule` import from `GalleryModule`, in [46ef735](https://github.com/MurhafSousli/ngx-gallery/pull/215/commits/46ef735cf43aa51ae026a1898b02e67b5909e520)
 - **fix(core):** Remove unnecessary `PortalModule` import from `GalleryModule`, in [46ef735](https://github.com/MurhafSousli/ngx-gallery/pull/215/commits/46ef735cf43aa51ae026a1898b02e67b5909e520)
 - **refactor(core):** Use `povidedIn: 'root'` for the `Gallery` service, in [86eeaa7](https://github.com/MurhafSousli/ngx-gallery/pull/215/commits/86eeaa71203341a324c06a3555489a5c82b8eee9)
 - **fix(core, lightbox):** Fix peer dependencies, in [236e540](https://github.com/MurhafSousli/ngx-gallery/pull/215/commits/236e540ceaaa906aec65af0fdb99f866b5374c8f).
