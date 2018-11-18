@@ -12,6 +12,7 @@ import { LoadingStrategy, GalleryItemType } from '../models/constants';
 
         <gallery-image [src]="data.src"
                        [loadingIcon]="config.loadingIcon"
+                       [loadingError]="config.loadingError"
                        (error)="error.emit($event)"></gallery-image>
 
         <div class="g-template g-item-template">
