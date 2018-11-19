@@ -26,7 +26,7 @@ import { LIGHTBOX_CONFIG } from './lightbox.token';
   ]
 })
 export class LightboxModule {
-  static forRoot(config?: LightboxConfig): ModuleWithProviders {
+  static withConfig(config: LightboxConfig): ModuleWithProviders {
     return {
       ngModule: LightboxModule,
       providers: [
