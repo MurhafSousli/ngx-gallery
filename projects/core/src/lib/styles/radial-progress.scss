@@ -1,0 +1,57 @@
+$pi: 3.14159265;
+$stroke-rotate-duration: 10 * 700ms !default;
+$stroke-rotate-ease: cubic-bezier(0.87, 0.03, 0.33, 1) !default;
+$default-radius: 30px;
+$circumference: $pi * $default-radius * 2;
+$iterations: 4;
+
+@keyframes stroke-rotate {
+  @for $i from 0 through $iterations {
+    $percent: 100 / $iterations * $i;
+    $offset: 360 / $iterations;
+    #{$percent}% {
+      transform: rotate(#{$i * (360 * 3 + $offset)}deg);
+    }
+  }
+}
+::ng-deep {
+  radial-progress {
+    display: block;
+    position: relative;
+
+    svg {
+      position: absolute;
+      transform: rotate(-90deg);
+      top: 0;
+      left: 0;
+      transform-origin: center;
+      overflow: visible;
+    }
+
+    circle {
+      transform-origin: center;
+      stroke: white;
+    }
+
+    .radial-progress-meter,
+    .radial-progress-value {
+      fill: none;
+    }
+
+    .radial-progress-meter {
+      opacity: 0.3;
+    }
+
+    .radial-progress-value {
+      transition: all linear 200ms;
+      stroke-linecap: round;
+    }
+
+    &[mode='indeterminate'] {
+      svg {
+        animation: stroke-rotate $stroke-rotate-duration $stroke-rotate-ease infinite;
+      }
+    }
+  }
+}
+
