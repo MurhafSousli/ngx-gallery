@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Gallery, GalleryItem } from '@ngx-gallery/core';
 import { Lightbox } from '@ngx-gallery/lightbox';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Pixabay } from '../../service/pixabay.service';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'lightbox-example',
