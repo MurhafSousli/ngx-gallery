@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.0.0-beta.1
+
+- **feat(core):** Add indeterminate option to the radial progress, in [df682c4](https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/df682c4353f3795dd3f45f53dfa488b428fdb99f).
+- **enhance(core):** Enhance thumbnails loading styles, in [f34f90a](https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/f34f90a542aa437fa12b996dc77f6b7dd9fd819c).
+- **fix(core):** Expose `[dotSize]`, `[dotsPosition]` and `[counterPosition]` options as inputs, in [946a856](https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/946a85618acdc91692183f8f65765bbd137815cc).
+- **fix(core):** Add `[loadingMode]` option to gallery images which accepts `determinate` or `indeterminate` , in [e8bdfb2](https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/e8bdfb2a28d485e3d89290dda1edb595ae3efecf).
+- **regression(core):** Fix undisplayed thumb image when a custom thumb template is used, in [34f2cc6](https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/34f2cc6f7f5316a929a1efc2ceb6bde8d42d0551).
+- **enhance(gallerize):** Run gallerize detector outside angular zone, makes opening the lightbox smoother, in [284925d](https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/284925dd53a67e6a2a2d0b208a30623783db37bc) and [98901b9](https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/98901b9136b4405a5d549fed08a36ec654279a26).
+
 ## 4.0.0-beta.0
 
 - **update(core, lightbox, gallerize)**: Update peer dependencies, closes [#228](https://github.com/MurhafSousli/ngx-gallery/issues/228) in [bd8cdd3](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/bd8cdd302c55e285dc32a195e1d5f70b4312ac46).
