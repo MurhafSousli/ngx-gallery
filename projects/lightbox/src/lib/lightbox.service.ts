@@ -1,4 +1,4 @@
-import { ComponentRef, Inject, Injectable } from '@angular/core';
+import { ComponentRef, Inject, Injectable, Optional } from '@angular/core';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Overlay, OverlayRef, OverlayConfig } from '@angular/cdk/overlay';
 import { LEFT_ARROW, RIGHT_ARROW, ESCAPE } from '@angular/cdk/keycodes';
@@ -27,7 +27,7 @@ export class Lightbox {
   /** Stream that emits when lightbox is closed */
   closed = new Subject<string>();
 
-  constructor(@Inject(LIGHTBOX_CONFIG) config: LightboxConfig, private _gallery: Gallery, private _overlay: Overlay) {
+  constructor(@Optional() @Inject(LIGHTBOX_CONFIG) config: LightboxConfig, private _gallery: Gallery, private _overlay: Overlay) {
     this._config = {...defaultConfig, ...config};
   }
 

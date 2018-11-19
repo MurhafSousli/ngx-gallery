@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
 
 import { GalleryRef } from './gallery-ref';
 import { GALLERY_CONFIG } from '../utils/gallery.token';
@@ -16,7 +16,7 @@ export class Gallery {
   /** Global config */
   config: GalleryConfig;
 
-  constructor(@Inject(GALLERY_CONFIG) config: GalleryConfig) {
+  constructor(@Optional() @Inject(GALLERY_CONFIG) config: GalleryConfig) {
     this.config = {...defaultConfig, ...config};
   }
 
