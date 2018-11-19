@@ -65,7 +65,13 @@
   }
 
   $loading-color: #fff !default;
-  $placeholder-ng: #ced4da !default;
+  $placeholder-ng: #262626 !default;
+
+  gallery-thumb.g-active-thumb {
+    .g-thumb-loading {
+      background-color: #464646;
+    }
+  }
 
   .g-thumb-loading {
     position: relative;
