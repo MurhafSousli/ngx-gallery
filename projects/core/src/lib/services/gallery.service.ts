@@ -17,7 +17,7 @@ export class Gallery {
   config: GalleryConfig;
 
   constructor(@Optional() @Inject(GALLERY_CONFIG) config: GalleryConfig) {
-    this.config = {...defaultConfig, ...config};
+    this.config = config ? {...defaultConfig, ...config} : defaultConfig;
   }
 
   /**

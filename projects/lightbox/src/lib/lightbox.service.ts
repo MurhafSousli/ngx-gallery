@@ -28,7 +28,7 @@ export class Lightbox {
   closed = new Subject<string>();
 
   constructor(@Optional() @Inject(LIGHTBOX_CONFIG) config: LightboxConfig, private _gallery: Gallery, private _overlay: Overlay) {
-    this._config = {...defaultConfig, ...config};
+    this._config = config ? {...defaultConfig, ...config} : defaultConfig;
   }
 
   /**
