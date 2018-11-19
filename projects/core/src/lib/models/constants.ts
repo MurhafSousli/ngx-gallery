@@ -24,6 +24,16 @@ export enum ThumbnailsPosition {
   Bottom = 'bottom'
 }
 
+export enum DotsPosition {
+  Top = 'top',
+  Bottom = 'bottom'
+}
+
+export enum CounterPosition {
+  Top = 'top',
+  Bottom = 'bottom'
+}
+
 export enum ThumbnailsMode {
   Free = 'free',
   Strict = 'strict'

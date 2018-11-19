@@ -41,6 +41,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() thumb: boolean = this._gallery.config.thumb;
   @Input() zoomOut: number = this._gallery.config.zoomOut;
   @Input() counter: boolean = this._gallery.config.counter;
+  @Input() dotsSize: number = this._gallery.config.dotsSize;
   @Input() autoPlay: boolean = this._gallery.config.autoPlay;
   @Input() gestures: boolean = this._gallery.config.gestures;
   @Input() thumbWidth: number = this._gallery.config.thumbWidth;
@@ -52,9 +53,12 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() thumbTemplate: TemplateRef<any> = this._gallery.config.thumbTemplate;
   @Input() thumbMode: 'strict' | 'free' = this._gallery.config.thumbMode;
   @Input() imageSize: 'cover' | 'contain' = this._gallery.config.imageSize;
+  @Input() dotsPosition: 'top' | 'bottom' = this._gallery.config.dotsPosition;
+  @Input() counterPosition: 'top' | 'bottom' = this._gallery.config.counterPosition;
   @Input() slidingDirection: 'horizontal' | 'vertical' = this._gallery.config.slidingDirection;
   @Input() loadingStrategy: 'preload' | 'lazy' | 'default' = this._gallery.config.loadingStrategy;
   @Input() thumbPosition: 'top' | 'left' | 'right' | 'bottom' = this._gallery.config.thumbPosition;
+  @Input() imageLoaderMode: 'determinate' | 'indeterminate' = this._gallery.config.imageLoaderMode;
 
   // Inputs used by the lightbox
 
@@ -91,18 +95,22 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       counter: this.counter,
       autoPlay: this.autoPlay,
       gestures: this.gestures,
+      dotsSize: this.dotsSize,
       imageSize: this.imageSize,
       thumbMode: this.thumbMode,
       thumbWidth: this.thumbWidth,
       thumbHeight: this.thumbHeight,
       disableThumb: this.disableThumb,
+      dotsPosition: this.dotsPosition,
       itemTemplate: this.itemTemplate,
       thumbTemplate: this.thumbTemplate,
       thumbPosition: this.thumbPosition,
       panSensitivity: this.panSensitivity,
       playerInterval: this.playerInterval,
+      counterPosition: this.counterPosition,
+      imageLoaderMode: this.imageLoaderMode,
       loadingStrategy: this.loadingStrategy,
-      slidingDirection: this.slidingDirection,
+      slidingDirection: this.slidingDirection
     };
   }
 

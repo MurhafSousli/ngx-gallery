@@ -1,4 +1,13 @@
-import { ImageSize, GalleryAction, ThumbnailsMode, LoadingStrategy, SlidingDirection, ThumbnailsPosition } from '../models/constants';
+import {
+  ImageSize,
+  GalleryAction,
+  ThumbnailsMode,
+  LoadingStrategy,
+  SlidingDirection,
+  ThumbnailsPosition,
+  DotsPosition,
+  CounterPosition
+} from '../models/constants';
 import { GalleryState } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
 
@@ -27,10 +36,10 @@ export const defaultConfig: GalleryConfig = {
   panSensitivity: 25,
   disableThumb: false,
   playerInterval: 3000,
-  dotsPosition: 'bottom',
-  counterPosition: 'top',
   imageSize: ImageSize.Contain,
   thumbMode: ThumbnailsMode.Strict,
+  dotsPosition: DotsPosition.Bottom,
+  counterPosition: CounterPosition.Top,
   thumbPosition: ThumbnailsPosition.Bottom,
   loadingStrategy: LoadingStrategy.Default,
   slidingDirection: SlidingDirection.Horizontal,
