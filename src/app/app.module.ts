@@ -25,8 +25,8 @@ import { LazyComponent } from './lazy/lazy.component';
     MatButtonModule,
     MatToolbarModule,
     AppRoutingModule,
-    GalleryModule.forRoot(),
-    LightboxModule.forRoot(),
+    GalleryModule,
+    LightboxModule,
     GallerizeModule
   ],
   bootstrap: [AppComponent]

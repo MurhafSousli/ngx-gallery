@@ -40,7 +40,7 @@ import { NoteComponent } from './note/note.component';
     HighlightModule,
     PlatformModule,
     FlexLayoutModule,
-    GalleryModule,
+    GalleryModule.withConfig({imageSize: 'cover'}),
     LightboxModule,
     GallerizeModule,
     NgScrollbarModule,

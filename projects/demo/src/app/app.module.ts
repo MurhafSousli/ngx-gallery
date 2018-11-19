@@ -5,10 +5,6 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HighlightModule } from 'ngx-highlightjs';
 
-// Gallery modules
-import { GalleryModule } from '@ngx-gallery/core';
-import { LightboxModule } from '@ngx-gallery/lightbox';
-
 import { AppRoutingModule } from './routing.module';
 import { MaterialModule } from './material.module';
 
@@ -37,9 +33,7 @@ import { NgProgressRouterModule } from '@ngx-progressbar/router';
     NgProgressModule.forRoot(),
     NgProgressHttpModule,
     NgProgressRouterModule,
-    HighlightModule.forRoot({theme: 'tomorrow'}),
-    GalleryModule.forRoot({imageSize: 'cover'}),
-    LightboxModule.forRoot()
+    HighlightModule.forRoot({theme: 'tomorrow'})
   ],
   providers: [
     Pixabay
