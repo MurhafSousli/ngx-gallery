@@ -16,6 +16,7 @@ import { animationFrameScheduler, BehaviorSubject } from 'rxjs';
   ],
   template: `
     <ng-container [lazyImage]="src"
+                  [mode]="mode"
                   (progress)="onProgress($event)"
                   (loaded)="onLoaded($event)"
                   (error)="onError($event)"
@@ -34,7 +35,7 @@ import { animationFrameScheduler, BehaviorSubject } from 'rxjs';
         <ng-template #defaultError>
           <ng-container *ngIf="!isThumbnail; else isLarge">
             <h2>⚠</h2>
-            <p *ngIf="!isThumbnail">Unable to load the image!</p>
+            <p>Unable to load the image!</p>
           </ng-container>
           <ng-template #isLarge>
             <h4>⚠</h4>
@@ -50,7 +51,7 @@ import { animationFrameScheduler, BehaviorSubject } from 'rxjs';
                [innerHTML]="loaderTemplate"></i>
           </div>
           <ng-template #progressLoader>
-            <radial-progress [value]="progress"></radial-progress>
+            <radial-progress [value]="progress" [mode]="mode"></radial-progress>
           </ng-template>
         </ng-template>
       </ng-container>
@@ -64,7 +65,10 @@ export class GalleryImageComponent implements OnInit {
   readonly state = new BehaviorSubject<'loading' | 'success' | 'failed'>('loading');
 
   /** Progress value */
-  progress: number;
+  progress = 0;
+
+  /** Image loader mode */
+  @Input() mode: 'determinate' | 'indeterminate' = 'determinate';
 
   /** Is thumbnail */
   @Input() isThumbnail: boolean;

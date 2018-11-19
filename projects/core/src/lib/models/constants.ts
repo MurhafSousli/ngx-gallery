@@ -24,6 +24,21 @@ export enum ThumbnailsPosition {
   Bottom = 'bottom'
 }
 
+export enum ImageLoaderMode {
+  Determinate= 'determinate',
+  Indeterminate= 'indeterminate'
+}
+
+export enum DotsPosition {
+  Top = 'top',
+  Bottom = 'bottom'
+}
+
+export enum CounterPosition {
+  Top = 'top',
+  Bottom = 'bottom'
+}
+
 export enum ThumbnailsMode {
   Free = 'free',
   Strict = 'strict'

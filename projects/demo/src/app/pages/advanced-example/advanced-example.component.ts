@@ -43,7 +43,7 @@ export class AdvancedExampleComponent implements OnInit {
   ngOnInit() {
     this._title.setTitle('Advanced | ngx-gallery');
     const galleryRef = this._gallery.ref('mixed');
-    this.arr.map(item => {
+    this.arr.map((item: any) => {
       switch (item.type) {
         case GalleryItemType.Image:
           galleryRef.addImage({src: item.src, thumb: item.thumb, title: item.title});

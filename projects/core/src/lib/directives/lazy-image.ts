@@ -1,30 +1,50 @@
-import { Directive, Input, Output, OnDestroy, EventEmitter } from '@angular/core';
+import { Directive, Input, Output, OnDestroy, SimpleChanges, OnChanges, EventEmitter } from '@angular/core';
 import { HttpClient, HttpEventType, HttpRequest, HttpEvent } from '@angular/common/http';
-import { Subject, Observable, EMPTY } from 'rxjs';
+import { Subject, Observable, Subscription, SubscriptionLike, zip, fromEvent, EMPTY } from 'rxjs';
 import { tap, switchMap, catchError } from 'rxjs/operators';
 
 @Directive({
   selector: '[lazyImage]'
 })
-export class LazyImage implements OnDestroy {
+export class LazyImage implements OnChanges, OnDestroy {
 
-  private readonly _imageLoader$ = new Subject();
+  private _imageLoader$ = new Subject<string>();
+  private _loaderSub$: SubscriptionLike = Subscription.EMPTY;
 
-  @Input('lazyImage') set lazyImage(imagePath: string) {
-    this.loadImage(imagePath);
-  }
+  @Input('lazyImage') src: string;
+
+  @Input() mode: 'determinate' | 'indeterminate';
 
   @Output() progress = new EventEmitter<{ loaded: number, total: number }>();
   @Output() loaded = new EventEmitter<string>();
   @Output() error = new EventEmitter<Error>();
 
   constructor(private http: HttpClient) {
-    this._imageLoader$.pipe(
-      switchMap((imageSrc: string) => this.fetchImage(imageSrc))
+    this._loaderSub$ = this._imageLoader$.pipe(
+      switchMap((imageSrc: string) => this.mode === 'determinate' ? this.progressiveLoader(imageSrc) : this.nativeLoader(imageSrc))
     ).subscribe();
   }
 
-  fetchImage(url: string): Observable<any> {
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['src'] && changes['src'].previousValue !== changes['src'].currentValue) {
+      this.loadImage(this.src);
+    }
+  }
+
+  ngOnDestroy() {
+    this._loaderSub$.unsubscribe();
+    this._imageLoader$.complete();
+  }
+
+  loadImage(imagePath: string) {
+    this._imageLoader$.next(imagePath);
+  }
+
+  /**
+   * Load image using HttpClient, This requires XHR access to the URL
+   * @param url
+   */
+  progressiveLoader(url: string): Observable<any> {
     const downloadImage = new HttpRequest('GET', url, {
       reportProgress: true,
       responseType: 'blob'
@@ -48,12 +68,23 @@ export class LazyImage implements OnDestroy {
     );
   }
 
-  loadImage(imagePath: string) {
-    this._imageLoader$.next(imagePath);
-  }
-
-  ngOnDestroy() {
-    this._imageLoader$.complete();
+  /**
+   * Native image loader, does not emit progress
+   * @param url
+   */
+  nativeLoader(url: string): Observable<any> {
+    const img = new Image();
+    // Stop previously loading
+    img.src = url;
+    // Image load success
+    const loadSuccess = fromEvent(img, 'load').pipe(
+      tap(() => this.loaded.emit(url))
+    );
+    // Image load failed
+    const loadError = fromEvent(img, 'error').pipe(
+      tap(() => this.error.emit(new Error(`[lazyImage]: The image ${url} did not load`)))
+    );
+    return zip(loadSuccess, loadError);
   }
 
 }

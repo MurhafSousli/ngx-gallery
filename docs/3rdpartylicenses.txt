@@ -666,15 +666,15 @@ Awesome, nor vice versa. **Please do not use brand logos for any purpose except
 to represent the company, product, or service to which they refer.**
 
 
-@ngx-gallery/core
-MIT
-
 @angular/router
 MIT
 
 @angular/material/dialog
 
 @ngx-gallery/lightbox
+MIT
+
+@ngx-gallery/core
 MIT
 
 ngx-highlightjs
