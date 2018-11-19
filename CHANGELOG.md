@@ -1,5 +1,16 @@
 # Changelog
 
+## 4.0.0
+
+- **fix(core, lightbox):** Add `Optional()` on injected config in gallery and lightbox services, closes [#234](https://github.com/MurhafSousli/ngx-gallery/issues/234) in [31624f9](https://github.com/MurhafSousli/ngx-gallery/pull/235/commits/31624f998ede9fef4335bb170b69b3d54d846d11).
+- **refactor(core, lightbox):** Rename `forRoot(config?)` to `withConfig(config)`, in [8446c1a](https://github.com/MurhafSousli/ngx-gallery/pull/235/commits/8446c1ae1417210698a244be6d30be81fa1eed88).
+
+### Breaking Changes
+
+- The function `forRoot()` has been removed from `GalleryModule` and `LightboxModule`.
+- Use `GalleryModule.withConfig({ ... })` only if you want to set global config, otherwise just use `GalleryModule` (same applies on `LightboxModule`).
+
+
 ## 4.0.0-beta.1
 
 - **feat(core):** Add indeterminate option to the radial progress, in [df682c4](https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/df682c4353f3795dd3f45f53dfa488b428fdb99f).
