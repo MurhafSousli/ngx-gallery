@@ -56,9 +56,9 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() dotsPosition: 'top' | 'bottom' = this._gallery.config.dotsPosition;
   @Input() counterPosition: 'top' | 'bottom' = this._gallery.config.counterPosition;
   @Input() slidingDirection: 'horizontal' | 'vertical' = this._gallery.config.slidingDirection;
+  @Input() loadingMode: 'determinate' | 'indeterminate' = this._gallery.config.loadingMode;
   @Input() loadingStrategy: 'preload' | 'lazy' | 'default' = this._gallery.config.loadingStrategy;
   @Input() thumbPosition: 'top' | 'left' | 'right' | 'bottom' = this._gallery.config.thumbPosition;
-  @Input() imageLoaderMode: 'determinate' | 'indeterminate' = this._gallery.config.imageLoaderMode;
 
   // Inputs used by the lightbox
 
@@ -100,6 +100,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       thumbMode: this.thumbMode,
       thumbWidth: this.thumbWidth,
       thumbHeight: this.thumbHeight,
+      loadingMode: this.loadingMode,
       disableThumb: this.disableThumb,
       dotsPosition: this.dotsPosition,
       itemTemplate: this.itemTemplate,
@@ -108,7 +109,6 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       panSensitivity: this.panSensitivity,
       playerInterval: this.playerInterval,
       counterPosition: this.counterPosition,
-      imageLoaderMode: this.imageLoaderMode,
       loadingStrategy: this.loadingStrategy,
       slidingDirection: this.slidingDirection
     };

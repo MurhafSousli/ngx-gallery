@@ -5,7 +5,7 @@ import { GalleryConfig } from '../models/config.model';
   selector: 'gallery-thumb',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <gallery-image [src]="data.thumb" [isThumbnail]="true" (error)="error.emit($event)"></gallery-image>
+    <gallery-image [src]="data.thumb" [isThumbnail]="true" mode="indeterminate" (error)="error.emit($event)"></gallery-image>
 
     <div *ngIf="config.thumbTemplate" class="g-template g-thumb-template">
       <ng-container
