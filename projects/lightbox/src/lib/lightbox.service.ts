@@ -5,8 +5,7 @@ import { LEFT_ARROW, RIGHT_ARROW, ESCAPE } from '@angular/cdk/keycodes';
 import { Gallery } from '@ngx-gallery/core';
 import { Subject } from 'rxjs';
 
-import { LIGHTBOX_CONFIG } from './lightbox.token';
-import { LightboxConfig } from './lightbox.model';
+import { LightboxConfig, LIGHTBOX_CONFIG } from './lightbox.model';
 import { defaultConfig } from './lightbox.default';
 import { LightboxComponent } from './lightbox.component';
 
