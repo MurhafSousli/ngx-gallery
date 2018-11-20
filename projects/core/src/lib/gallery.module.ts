@@ -2,8 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
-import { GalleryConfig } from './models/config.model';
-import { GALLERY_CONFIG } from './utils/gallery.token';
+import { GalleryConfig, GALLERY_CONFIG } from './models/config.model';
 
 import { GalleryComponent } from './components/gallery.component';
 import { GalleryNavComponent } from './components/gallery-nav.component';
