@@ -20,24 +20,23 @@ export class CachingInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    // continue if not cachable.
-    if (!isCachable(req)) {
-      return next.handle(req);
-    }
+    if (req.headers.has('CACHE_GALLERY_IMAGE') && isCachable(req)) {
 
-    const cachedResponse = this.cache.get(req);
+      const cachedResponse = this.cache.get(req);
 
-    // cache-then-refresh
-    if (req.headers.get('x-refresh')) {
-      const results$ = sendRequest(req, next, this.cache);
+      // cache-then-refresh
+      if (req.headers.get('x-refresh')) {
+        const results$ = sendRequest(req, next, this.cache);
+        return cachedResponse
+          ? results$.pipe(startWith(cachedResponse))
+          : results$;
+      }
+      // cache-or-fetch
       return cachedResponse
-        ? results$.pipe(startWith(cachedResponse))
-        : results$;
+        ? of(cachedResponse)
+        : sendRequest(req, next, this.cache);
     }
-    // cache-or-fetch
-    return cachedResponse
-      ? of(cachedResponse)
-      : sendRequest(req, next, this.cache);
+    return next.handle(req);
   }
 }
 
@@ -52,8 +51,8 @@ function isCachable(req: HttpRequest<any>) {
  * Will add the response to the cache on the way out.
  */
 function sendRequest(req: HttpRequest<any>, next: HttpHandler, cache: RequestCache): Observable<HttpEvent<any>> {
-
-  return next.handle(req).pipe(
+  const request = req.clone({headers: req.headers.delete('CACHE_GALLERY_IMAGE')});
+  return next.handle(request).pipe(
     tap(event => {
       // There may be other events besides the response.
       if (event instanceof HttpResponse) {

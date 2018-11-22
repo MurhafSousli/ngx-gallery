@@ -1,5 +1,5 @@
 import { Directive, Input, Output, OnDestroy, SimpleChanges, OnChanges, EventEmitter } from '@angular/core';
-import { HttpClient, HttpEventType, HttpRequest, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpRequest, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Subject, Observable, Subscription, SubscriptionLike, zip, fromEvent, EMPTY } from 'rxjs';
 import { tap, switchMap, catchError } from 'rxjs/operators';
 
@@ -47,7 +47,8 @@ export class LazyImage implements OnChanges, OnDestroy {
   progressiveLoader(url: string): Observable<any> {
     const downloadImage = new HttpRequest('GET', url, {
       reportProgress: true,
-      responseType: 'blob'
+      responseType: 'blob',
+      headers: new HttpHeaders({'CACHE_GALLERY_IMAGE': 'true'})
     });
     return this.http.request(downloadImage).pipe(
       tap((event: HttpEvent<string>) => {

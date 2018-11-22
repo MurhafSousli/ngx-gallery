@@ -21,7 +21,6 @@ export class HomeComponent implements OnInit {
     this.camel$ = pixabay.getHDImages('juice');
     this.media$ = media.asObservable().pipe(
       map((res: MediaChange) => {
-        console.log(res);
         if (res.mqAlias === 'sm' || res.mqAlias === 'xs') {
           return {
             thumbWidth: 80,
