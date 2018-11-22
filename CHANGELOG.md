@@ -2,13 +2,54 @@
 
 ## 4.0.0
 
+- **feat(gallerize):** Scan `imageSrc` and `thumbSrc` attributes for image sources, in [4826d52](https://github.com/MurhafSousli/ngx-gallery/pull/235/commits/4826d52cbaa349a4004d63f39677b436e1fe6496).
+- **enhance(core, lightbox, gallerize)**: Ability to lazy load the library.
+- **enhance(core, lightbox):** Export `GALLERY_CONFIG` and `LIGHTBOX_CONFIG` tokens, in [56c704f](https://github.com/MurhafSousli/ngx-gallery/pull/235/commits/56c704f7db55d87143e949ebdfe115efca852ae9) and [9cab04b](https://github.com/MurhafSousli/ngx-gallery/pull/235/commits/9cab04ba97f916b16d9c0becd060ec0f127bdbc2).
 - **fix(core, lightbox):** Add `Optional()` on injected config in gallery and lightbox services, closes [#234](https://github.com/MurhafSousli/ngx-gallery/issues/234) in [31624f9](https://github.com/MurhafSousli/ngx-gallery/pull/235/commits/31624f998ede9fef4335bb170b69b3d54d846d11).
 - **refactor(core, lightbox):** Rename `forRoot(config?)` to `withConfig(config)`, in [8446c1a](https://github.com/MurhafSousli/ngx-gallery/pull/235/commits/8446c1ae1417210698a244be6d30be81fa1eed88).
+- **refactor(lightbox):** Remove `providedIn: 'root'` from `Lightbox` service and provid it locally in its module, in [7ba8dd9](https://github.com/MurhafSousli/ngx-gallery/pull/235/commits/7ba8dd9c539559d036e57fb19f01f067367970e5).
 
 ### Breaking Changes
 
 - The function `forRoot()` has been removed from `GalleryModule` and `LightboxModule`.
-- Use `GalleryModule.withConfig({ ... })` only if you want to set global config, otherwise just use `GalleryModule` (same applies on `LightboxModule`).
+- Use `GalleryModule.withConfig({ ... })` to set config that applies on a module and its children (same applies on `LightboxModule`).
+- To set global config across the entire app while still lazy load the library, provide the `GALLERY_CONFIG` token with the config value in the root module (same applies on `LightboxModule` with `LIGHTBOX_CONFIG`).
+
+##### Example: Lazy load the library
+
+In this example, will set global config without importing the library in the main bundle
+
+- Provide `GALLERY_CONFIG` value in the root module
+
+```ts
+import { GALLERY_CONFIG } from '@ngx-gallery/core';
+
+@NgModule({
+  providers: [
+    {
+      provide: GALLERY_CONFIG, 
+      useValue: {
+        dots: true,
+        imageSize: 'cover'
+      }
+    }
+  ]
+})
+export class AppModule { }
+```
+
+- Import `GalleryModule` in a feature module
+
+```ts
+import { GalleryModule } from '@ngx-gallery/core';
+
+@NgModule({
+  imports: [
+    GalleryModule
+  ]
+})
+export class FeatureModule { }
+```
 
 
 ## 4.0.0-beta.1
