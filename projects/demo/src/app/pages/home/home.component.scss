@@ -1,4 +1,10 @@
 @import "../../../assets/mixin";
+@import "../../../assets/variables";
+
+gallery {
+  height: 700px;
+  transform: translateX(calc(-50vw + 6px));
+}
 
 .logo {
   display: flex;
@@ -80,5 +86,13 @@ section {
   }
   a {
     margin-bottom: 4em;
+  }
+}
+.black-bg {
+  background: $primary-color;
+}
+::ng-deep {
+  .fix-padding {
+    padding-right: 2px !important;
   }
 }

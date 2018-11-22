@@ -9,9 +9,9 @@ h2 {
   &:after {
     content: '';
     display: block;
-    height: 1px;
+    height: 2px;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.12);
+    background-color: $highlight-color;
     margin-top: 1em;
   }
 }

@@ -21,6 +21,8 @@ export class LabComponent implements OnInit {
   loadingStrategies = ['default', 'lazy', 'preload'];
   thumbModes = ['strict', 'free'];
   slidingDirections = ['vertical', 'horizontal'];
+  dotsCounterPositions = ['top', 'bottom'];
+  loadingModes = ['determinate', 'indeterminate'];
 
   player$ = new BehaviorSubject<any>({active: false});
   itemClick$ = new BehaviorSubject<any>({active: false});
@@ -38,6 +40,9 @@ export class LabComponent implements OnInit {
       loop: true,
       zoomOut: 0,
       dots: false,
+      dotsPosition: 'bottom',
+      counterPosition: 'top',
+      loadingMode: 'determinate',
       thumb: true,
       counter: true,
       gestures: true,

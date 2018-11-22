@@ -8,16 +8,38 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class DocLightboxComponent {
 
-  docs = `import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { GalleryModule } from  '@ngx-gallery/core';
+  docs = `import { GalleryModule } from  '@ngx-gallery/core';
 import { LightboxModule } from  '@ngx-gallery/lightbox';
 
 @NgModule({
- imports: [
-    BrowserAnimationsModule,
-    GalleryModule.forRoot(galleryConfig?),
-    LightboxModule.forRoot(lightboxConfig?)
- ]
+  imports: [
+    GalleryModule,
+    LightboxModule
+  ]
 })`;
+
+  docsWithConfig = `import { GalleryModule } from  '@ngx-gallery/core';
+import { LightboxModule } from  '@ngx-gallery/lightbox';
+
+@NgModule({
+  imports: [
+    GalleryModule,
+    LightboxModule.withConfig({ ... })
+  ]
+})`;
+
+  globalConfig = `import { LIGHTBOX_CONFIG } from '@ngx-gallery/lightbox';
+
+@NgModule({
+  providers: [
+    {
+      provide: LIGHTBOX_CONFIG,
+      useValue: {
+        keyboardShortcuts: false
+      }
+    }
+  ]
+})
+export class AppModule { }`;
 
 }

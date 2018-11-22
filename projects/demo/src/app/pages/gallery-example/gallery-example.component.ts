@@ -23,6 +23,7 @@ export class GalleryExampleComponent implements OnInit {
     this.fruits$ = pixabay.getImages('fruit');
     this.media$ = media.asObservable().pipe(
       map((res: MediaChange) => {
+        console.log(res);
         if (res.mqAlias === 'sm' || res.mqAlias === 'xs') {
           return {
             thumbPosition: ThumbnailsPosition.Top,

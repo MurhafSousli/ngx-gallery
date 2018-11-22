@@ -5,10 +5,6 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HighlightModule } from 'ngx-highlightjs';
 
-// Gallery modules
-import { GalleryModule } from '@ngx-gallery/core';
-import { LightboxModule } from '@ngx-gallery/lightbox';
-
 import { AppRoutingModule } from './routing.module';
 import { MaterialModule } from './material.module';
 
@@ -20,6 +16,19 @@ import { SharedModule } from './shared/shared.module';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpModule } from '@ngx-progressbar/http';
 import { NgProgressRouterModule } from '@ngx-progressbar/router';
+import { GALLERY_CONFIG } from '@ngx-gallery/core';
+
+import xml from 'highlight.js/lib/languages/xml';
+import scss from 'highlight.js/lib/languages/scss';
+import typescript from 'highlight.js/lib/languages/typescript';
+
+export function hljsLanguages() {
+  return [
+    {name: 'typescript', func: typescript},
+    {name: 'scss', func: scss},
+    {name: 'xml', func: xml}
+  ];
+}
 
 @NgModule({
   declarations: [
@@ -37,12 +46,16 @@ import { NgProgressRouterModule } from '@ngx-progressbar/router';
     NgProgressModule.forRoot(),
     NgProgressHttpModule,
     NgProgressRouterModule,
-    HighlightModule.forRoot({theme: 'tomorrow'}),
-    GalleryModule.forRoot({imageSize: 'cover'}),
-    LightboxModule.forRoot()
+    HighlightModule.forRoot({languages: hljsLanguages})
   ],
   providers: [
-    Pixabay
+    Pixabay,
+    {
+      provide: GALLERY_CONFIG,
+      useValue: {
+        imageSize: 'cover'
+      }
+    }
   ],
   entryComponents: [
     GalleryMockDialog

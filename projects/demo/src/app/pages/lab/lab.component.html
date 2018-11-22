@@ -18,11 +18,14 @@
                [imageSize]="config.imageSize"
                [thumbMode]="config.thumbMode"
                [thumbWidth]="config.thumbWidth"
+               [loadingMode]="config.loadingMode"
                [thumbHeight]="config.thumbHeight"
                [disableThumb]="config.disableThumb"
+               [dotsPosition]="config.dotsPosition"
                [thumbPosition]="config.thumbPosition"
                [panSensitivity]="config.panSensitivity"
                [playerInterval]="config.playerInterval"
+               [counterPosition]="config.counterPosition"
                [loadingStrategy]="config.loadingStrategy"
                [slidingDirection]="config.slidingDirection"
                (playingChange)="onPlayer($event)"
@@ -118,6 +121,26 @@
                 </mat-select>
               </mat-form-field>
             </div>
+
+            <div>
+              <mat-form-field>
+                <mat-label>Counter Position</mat-label>
+                <mat-select [(ngModel)]="config.counterPosition" [disabled]="!config.counter">
+                  <mat-option *ngFor="let position of dotsCounterPositions" [value]="position">{{position}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field>
+                <mat-label>Dots Position</mat-label>
+                <mat-select [(ngModel)]="config.dotsPosition" [disabled]="!config.dots">
+                  <mat-option *ngFor="let position of dotsCounterPositions" [value]="position">{{position}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
           </div>
 
           <div class="column">
@@ -155,6 +178,16 @@
                 <input matInput [(ngModel)]="config.playerInterval">
               </mat-form-field>
             </div>
+
+            <div>
+              <mat-form-field>
+                <mat-label>Loading Mode</mat-label>
+                <mat-select [(ngModel)]="config.loadingMode">
+                  <mat-option *ngFor="let mode of loadingModes" [value]="mode">{{mode}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
           </div>
 
           <div class="column checkboxes">
@@ -168,7 +201,7 @@
               <mat-checkbox [(ngModel)]="config.nav">Show navigation</mat-checkbox>
             </div>
             <div>
-              <mat-checkbox [(ngModel)]="config.dots">Show dots navigation</mat-checkbox>
+              <mat-checkbox [(ngModel)]="config.dots">Show dots</mat-checkbox>
             </div>
             <div>
               <mat-checkbox [(ngModel)]="config.counter">Show counter</mat-checkbox>

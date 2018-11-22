@@ -1,7 +1,10 @@
 <ng-container *ngIf="state$ | async; let state">
   <ng-scrollbar [overlay]="true"
-                [trackX]="true"
+                [trackY]="trackY"
+                [trackX]="trackX"
                 [style.height]="state.height"
+                [disabled]="disabled"
+                [disableOnBreakpoints]="false"
                 barClass="code-scrollbar"
                 thumbClass="code-scrollbar-thumb"
                 (cdkObserveContent)="updateHeight()">
@@ -14,7 +17,7 @@
 
       <ng-template #enabled>
         <pre>
-          <code #codeEL highlight [code]="code"></code>
+          <code #codeEL [highlight]="code"></code>
         </pre>
       </ng-template>
 

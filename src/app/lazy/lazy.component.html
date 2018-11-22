@@ -6,6 +6,9 @@
 <div class="gallerize-example">
   <h2>Gallerize Example</h2>
   <p class="container" gallerize>
-    <img *ngFor="let img of items" [src]="img?.data?.thumb">
+    <img *ngFor="let img of items"
+      [src]="img?.data?.thumb"
+      [attr.imageSrc]="img?.data?.src"
+      [attr.thumbSrc]="img?.data?.thumb">
   </p>
 </div>

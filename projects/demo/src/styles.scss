@@ -4,6 +4,7 @@
 @import 'assets/theme';
 @import 'assets/mixin';
 @import 'assets/variables';
+@import '~highlight.js/styles/tomorrow.css';
 
 * {
   box-sizing: border-box;
@@ -58,25 +59,31 @@ not-found {
 }
 
 ng-scrollbar {
+  color: $text-color;
+
   .ng-scrollbar {
     border-radius: 0;
     background-color: $primary-color;
     opacity: 0.5;
   }
+
   .ng-scrollbar-thumb {
     height: 8px;
-    background-color: #e3f2fd;// $accent-color;
+    background-color: #e3f2fd; // $accent-color;
     border-radius: 0;
+
     &:hover, &:active {
       background-color: #fff176; // $accent-color;
     }
   }
+
   .ng-scrollbar-vertical {
     width: 12px;
     top: 0;
     right: 0;
     bottom: 0;
   }
+
   .ng-scrollbar-horizontal {
     height: 12px;
     left: 0;
@@ -111,6 +118,10 @@ code {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
+.hljs {
+  color: $text-color;
+}
+
 a {
   text-decoration: none;
   color: $accent-color;
@@ -118,6 +129,7 @@ a {
 
 .usage-title {
   display: flex;
+
   p {
     margin: 0;
   }
@@ -150,6 +162,7 @@ a {
   display: flex;
   flex-direction: column;
   color: #fff;
+
   h1 {
     text-align: center;
     margin: 2em auto;
@@ -180,7 +193,7 @@ a {
 /* Create four equal columns that sits next to each other */
 .column {
   flex: 25%;
-  max-width: 30%;
+  max-width: 150px;
   padding: 0 4px;
   display: flex;
   flex-direction: column;
@@ -190,22 +203,6 @@ a {
 .column img {
   margin-top: 8px;
   vertical-align: middle;
-}
-
-/* Responsive layout - makes a two column-layout instead of four columns */
-@media (max-width: 800px) {
-  .column {
-    flex: 50%;
-    max-width: 50%;
-  }
-}
-
-/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media (max-width: 600px) {
-  .column {
-    flex: 100%;
-    max-width: 100%;
-  }
 }
 
 .separator {

@@ -9,10 +9,6 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MaterialModule } from '../material.module';
 
-import { GalleryModule } from '@ngx-gallery/core';
-import { LightboxModule } from '@ngx-gallery/lightbox';
-import { GallerizeModule } from '@ngx-gallery/gallerize';
-
 import { KeysPipe } from './pipes/keys.pipe';
 import { BadgesComponent } from './badges/badges.component';
 
@@ -40,9 +36,6 @@ import { NoteComponent } from './note/note.component';
     HighlightModule,
     PlatformModule,
     FlexLayoutModule,
-    GalleryModule,
-    LightboxModule,
-    GallerizeModule,
     NgScrollbarModule,
     FontAwesomeModule
   ],
@@ -53,9 +46,6 @@ import { NoteComponent } from './note/note.component';
     MaterialModule,
     ObserversModule,
     FlexLayoutModule,
-    GalleryModule,
-    LightboxModule,
-    GallerizeModule,
     NgScrollbarModule,
     FontAwesomeModule,
     SectionTitleComponent,

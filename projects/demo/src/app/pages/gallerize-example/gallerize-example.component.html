@@ -39,17 +39,26 @@
 
       <h3>Basic example</h3>
 
-      <hl-code [code]="code.onElements"></hl-code>
+      <hl-code [code]="code.onElements" [trackY]="false"></hl-code>
 
       <div class="row" gallerize="auto-detect">
         <div class="column">
-          <img *ngFor="let item of images$ | async | slice:0:3" src="{{item.data.src}}">
+          <img *ngFor="let item of images$ | async | slice:0:3" 
+               src="{{item.data.thumb}}"
+               [attr.imageSrc]="item.data.src"
+               [attr.thumbSrc]="item.data.thumb">
         </div>
         <div class="column">
-          <img *ngFor="let item of images$ | async | slice:3:6" src="{{item.data.src}}">
+          <img *ngFor="let item of images$ | async | slice:3:6" 
+               src="{{item.data.thumb}}"
+               [attr.imageSrc]="item.data.src"
+               [attr.thumbSrc]="item.data.thumb">
         </div>
         <div class="column">
-          <img *ngFor="let item of images$ | async | slice:6:9" src="{{item.data.src}}">
+          <img *ngFor="let item of images$ | async | slice:6:9" 
+          src="{{item.data.src}}"
+          [attr.imageSrc]=""
+          [attr.thumbSrc]="">
         </div>
       </div>
 
@@ -62,7 +71,7 @@
 
       <p>Detect background images of elements with selector <code class="hljs">.gallery-img</code></p>
 
-      <hl-code [code]="code.withSelector"></hl-code>
+      <hl-code [code]="code.withSelector" [trackY]="false"></hl-code>
 
     </section>
 
@@ -77,7 +86,7 @@
 
       <h3>Code</h3>
 
-      <hl-code [code]="code.onGallery"></hl-code>
+      <hl-code [code]="code.onGallery" [trackY]="false"></hl-code>
     </section>
   </div>
 

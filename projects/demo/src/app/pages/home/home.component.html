@@ -1,67 +1,21 @@
-<ng-scrollbar [overlay]="true">
+<ng-scrollbar class="black-bg" viewClass="fix-padding">
   <div class="page-title">
     <h1>Angular Gallery</h1>
-
-    <badges></badges>
-
     <sub>Simplifies the process of creating beautiful galleries.</sub>
-
     <a mat-raised-button class="docs-button" routerLink="/getting-started">Get Started</a>
+    <badges></badges>
   </div>
-
   <div class="page-content">
-
-    <section>
-      <section-title>Features</section-title>
-
-      <div class="row">
-        <div class="column">
-          <div>
-            <div *ngFor="let feature of features | slice:0:4">
-              <button mat-icon-button color="accent">
-                <mat-icon class="md-24">done</mat-icon>
-              </button>
-              <span>{{ feature }}</span>
-            </div>
-          </div>
-        </div>
-        <div class="column">
-          <div>
-            <div *ngFor="let feature of features | slice:4:8">
-              <button mat-icon-button color="accent">
-                <mat-icon class="md-24">done</mat-icon>
-              </button>
-              <span>{{ feature }}</span>
-            </div>
-          </div>
-        </div>
-        <div class="column">
-          <div>
-            <div *ngFor="let feature of features | slice:8">
-              <button mat-icon-button color="accent">
-                <mat-icon class="md-24">done</mat-icon>
-              </button>
-              <span>{{ feature }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <section-title>Issues</section-title>
-
-      <p>If you identify any errors in this module, or have an idea for an improvement, please open an
-        <a href="https://github.com/MurhafSousli/ng-gallery/issues">issue</a>.</p>
-
-      <p>Here is a
-        <a mat-button class="inline-button" color="primary"
-           href="https://stackblitz.com/edit/ngx-gallery">
-          <fa-icon icon="external-link-alt"></fa-icon>
-          Stackblitz
-        </a> template.
-      </p>
-    </section>
+    <gallery id="basic"
+             fluid
+             *ngIf="media$ | async; let config"
+             [items]="camel$ | async"
+             [thumbWidth]="config.thumbWidth"
+             [thumbHeight]="config.thumbHeight"
+             ngStyle.lg="height: 540px"
+             imageSize="contain"
+             autoPlay="true"
+             thumbPosition="top"></gallery>
   </div>
 
   <footer></footer>

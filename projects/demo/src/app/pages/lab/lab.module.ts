@@ -5,10 +5,13 @@ import { MatCardModule, MatCheckboxModule, MatInputModule, MatSelectModule } fro
 import { LabComponent } from './lab.component';
 import { SharedModule } from '../../shared/shared.module';
 
+import { GalleryModule } from '@ngx-gallery/core';
+
 @NgModule({
   imports: [
     FormsModule,
     SharedModule,
+    GalleryModule,
     MatCardModule,
     MatInputModule,
     MatSelectModule,

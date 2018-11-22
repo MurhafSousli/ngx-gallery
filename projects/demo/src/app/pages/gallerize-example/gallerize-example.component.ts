@@ -17,11 +17,13 @@ export class GallerizeExampleComponent implements OnInit {
   constructor(private _pixabay: Pixabay, gallery: Gallery, private _title: Title) {
     this.code = code;
     gallery.ref('lightbox').setConfig({
-      thumbPosition: 'bottom'
+      thumbPosition: 'bottom',
+      imageSize: 'cover'
     });
     gallery.ref('auto-detect').setConfig({
       dots: true,
-      thumbPosition: 'top'
+      thumbPosition: 'top',
+      imageSize: 'cover'
     });
   }
 
@@ -33,10 +35,16 @@ export class GallerizeExampleComponent implements OnInit {
 
 const code = {
   onElements: `<div class="container" gallerize>
-  <img *ngFor="let srcPath of images" src="{{srcPath}}">
+  <img *ngFor="let image of images"
+       src="{{image.thumb}}"
+       [attr.imageSrc]="image.src"
+       [attr.thumbSrc]="image.thumb">
 </div>`,
   withSelector: `<div class="container" gallerize selector=".gallery-img">
-  <div *ngFor="let srcPath of images" class="gallery-img" [style.backgroundImage]="'url(' + srcPath + ')'"></div>
+  <div *ngFor="let image of images" class="gallery-img"
+       [style.backgroundImage]="'url(' + image.thumb + ')'"
+       [attr.imageSrc]="image.src"
+       [attr.thumbSrc]="image.thumb"></div>
 </div>`,
   onGallery: `<gallery gallerize [items]="cameraImages"></gallery>`
 };
