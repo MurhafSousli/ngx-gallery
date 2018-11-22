@@ -8,21 +8,16 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class DocGallerizeComponent {
 
-  docs = `import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { GalleryModule } from  '@ngx-gallery/core';
+  docs = `import { GalleryModule } from  '@ngx-gallery/core';
 import { LightboxModule } from  '@ngx-gallery/lightbox';
 import { GallerizeModule } from  '@ngx-gallery/gallerize';
 
 @NgModule({
- imports: [
-    BrowserAnimationsModule,
-    GalleryModule.forRoot(galleryConfig?),
-    GalleryLightbox.forRoot(lightboxConfig?),
+  imports: [
+    GalleryModule,
+    GalleryLightbox,
     GallerizeModule
- ]
+  ]
 })`;
-
-  importStyle = `@import '~@ngx-gallery/core/styles/scss/gallery';
-@import '~@ngx-gallery/core/styles/scss/lightbox';`;
 
 }

@@ -12,8 +12,31 @@ export class DocCoreComponent {
 
 @NgModule({
   imports: [
-    GalleryModule.forRoot(config)
+    GalleryModule
   ]
 })`;
+
+  docsWithConfig = `import { GalleryModule } from  '@ngx-gallery/core';
+
+@NgModule({
+  imports: [
+    GalleryModule.withConfig({ ... })
+  ]
+})`;
+
+  globalConfig = `import { GALLERY_CONFIG } from '@ngx-gallery/core';
+
+@NgModule({
+  providers: [
+    {
+      provide: GALLERY_CONFIG,
+      useValue: {
+        dots: true,
+        imageSize: 'cover'
+      }
+    }
+  ]
+})
+export class AppModule { }`;
 
 }

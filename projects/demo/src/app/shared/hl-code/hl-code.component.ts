@@ -2,6 +2,7 @@ import { Component, Input, ViewChild, AfterViewInit, ElementRef, ChangeDetection
 import { Platform } from '@angular/cdk/platform';
 import { BehaviorSubject, of } from 'rxjs';
 import { delay, finalize, map, take } from 'rxjs/operators';
+import { NgScrollbar } from 'ngx-scrollbar';
 
 @Component({
   selector: 'hl-code',
@@ -18,8 +19,11 @@ export class HlCodeComponent implements AfterViewInit {
   @Input() code: string;
   @Input() height: number;
   @Input() disabled: boolean;
+  @Input() trackY = true;
+  @Input() trackX = false;
 
   @ViewChild('codeEL', {read: ElementRef}) codeEl: ElementRef;
+  @ViewChild(NgScrollbar) scrollable: NgScrollbar;
 
   constructor(private cd: ChangeDetectorRef, private platform: Platform) {
   }
@@ -34,6 +38,7 @@ export class HlCodeComponent implements AfterViewInit {
     } else {
       this.updateState({height: this.height + 'px'});
     }
+    this.scrollable.update();
   }
 
   private updateState(state) {
