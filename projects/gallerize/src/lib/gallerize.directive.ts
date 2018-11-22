@@ -47,7 +47,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
   /** Stream that emits to fire the detection stream the image elements has changed */
   private _observer$: any;
 
-  /** Stream that emits to discover the images */
+  /** Stream that emits when image is discover */
   private _detector$: Subject<any>;
 
   /** If host element is a GalleryComponent, will use the following variables: */
@@ -107,7 +107,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
   }
 
   /** Gallery mode: means `gallerize` directive is used on `<gallery>` component
-   * Adds a click event to each gallery item to make it opens in in lightbox */
+   * Adds a click event to each gallery item so it opens in lightbox */
   private galleryMode(galleryRef: GalleryRef) {
     // Clone its items to the new gallery instance
     this._itemClick$ = this._galleryCmp.galleryRef.itemClick.subscribe((i: number) => this._lightbox.open(i, this._galleryId));
@@ -115,7 +115,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
   }
 
   /** Detector mode: means `gallerize` directive is used on a normal HTMLElement
-   *  Detects images and adds a click event to each image to make it opens in the lightbox */
+   *  Detects images and adds a click event to each image so it opens in the lightbox */
   private detectorMode(galleryRef: GalleryRef) {
     this._detector$ = new Subject();
     // Query image elements
