@@ -141,16 +141,16 @@ export class GallerizeDirective implements OnInit, OnDestroy {
               if (el instanceof HTMLImageElement) {
                 // If element is type of img use the src property
                 return {
-                  src: el.src,
-                  thumb: el.src
+                  src: el.getAttribute('imageSrc') || el.src,
+                  thumb: el.getAttribute('thumbSrc') || el.src
                 };
               } else {
                 // Otherwise, use element background-image url
                 const elStyle = el.currentStyle || this._document.defaultView.getComputedStyle(el, null);
                 const background = elStyle.backgroundImage.slice(4, -1).replace(/"/g, '');
                 return {
-                  src: background,
-                  thumb: background
+                  src: el.getAttribute('imageSrc') || background,
+                  thumb: el.getAttribute('thumbSrc') || background
                 };
               }
             }),
