@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.1
+
+- **fix(core):** Encapsulate the cache interceptor to gallery images only, closes [#237](https://github.com/MurhafSousli/ngx-gallery/issues/237) in [4616eec](https://github.com/MurhafSousli/ngx-gallery/pull/239/commits/4616eeca239d46d49995adb73ea5cae849ae3de4).
+
 ## 4.0.0
 
 - **feat(gallerize):** Scan `imageSrc` and `thumbSrc` attributes for image sources, in [4826d52](https://github.com/MurhafSousli/ngx-gallery/pull/235/commits/4826d52cbaa349a4004d63f39677b436e1fe6496).
