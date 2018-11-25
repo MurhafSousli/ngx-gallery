@@ -17,6 +17,8 @@ export interface GalleryConfig {
   thumbHeight?: number;
   loadingIcon?: string;
   loadingError?: string;
+  thumbLoadingIcon?: string;
+  thumbLoadingError?: string;
   disableThumb?: boolean;
   panSensitivity?: number;
   playerInterval?: number;
