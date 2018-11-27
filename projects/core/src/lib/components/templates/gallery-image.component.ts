@@ -33,12 +33,12 @@ import { animationFrameScheduler, BehaviorSubject } from 'rxjs';
         <div *ngIf="errorTemplate; else defaultError"
              [innerHTML]="errorTemplate"></div>
         <ng-template #defaultError>
-          <ng-container *ngIf="!isThumbnail; else isLarge">
-            <h2>⚠</h2>
-            <p>Unable to load the image!</p>
+          <ng-container *ngIf="isThumbnail; else isLarge">
+            <h4>⚠</h4>
           </ng-container>
           <ng-template #isLarge>
-            <h4>⚠</h4>
+            <h2>⚠</h2>
+            <p>Unable to load the image!</p>
           </ng-template>
         </ng-template>
       </div>
