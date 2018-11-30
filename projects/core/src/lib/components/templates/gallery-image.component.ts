@@ -44,16 +44,19 @@ import { animationFrameScheduler, BehaviorSubject } from 'rxjs';
       </div>
 
       <ng-container *ngSwitchCase="'loading'">
-        <div *ngIf="isThumbnail; else isLarge" class="g-thumb-loading"></div>
-        <ng-template #isLarge>
-          <div class="g-loading">
-            <i *ngIf="loaderTemplate; else progressLoader"
-               [innerHTML]="loaderTemplate"></i>
-          </div>
+        <div *ngIf="loaderTemplate; else defaultLoader"
+             class="g-loading"
+             [innerHTML]="loaderTemplate">
+        </div>
+        <ng-template #defaultLoader>
+
+          <div *ngIf="isThumbnail; else progressLoader" class="g-thumb-loading"></div>
+
           <ng-template #progressLoader>
             <radial-progress [value]="progress" [mode]="mode"></radial-progress>
           </ng-template>
-        </ng-template>
+
+          </ng-template>
       </ng-container>
     </ng-container>
   `
