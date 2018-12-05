@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.0.2
+
+- feat(core): Add `thumbLoadingIcon` and `thumbLoadingError` to gallery config, in [3f8cdca](https://github.com/MurhafSousli/ngx-gallery/pull/241/commits/3f8cdca3fc84f0eef509a5c88ca3d2b5097966bf) and [f2cae92](https://github.com/MurhafSousli/ngx-gallery/pull/241/commits/f2cae9258eef599ca7821c1fb3a82179d4cf6fba).
+- refactor(core): refactor the if/else logic in gallery image template, in [f7d6a22](https://github.com/MurhafSousli/ngx-gallery/pull/247/commits/f7d6a22e3cc20c0977554f8d249bef6aa2076fa5).
+
 ## 4.0.1
 
 - **fix(core):** Encapsulate the cache interceptor to gallery images only, closes [#237](https://github.com/MurhafSousli/ngx-gallery/issues/237) in [4616eec](https://github.com/MurhafSousli/ngx-gallery/pull/239/commits/4616eeca239d46d49995adb73ea5cae849ae3de4).
