@@ -40,13 +40,10 @@ export class GalleryVideoComponent implements OnInit {
   }
 
   hlsDetection() {
-
-    let detected = this.videoSources.filter(x => x.type === 'application/x-mpegURL' || x.url.includes('.m3u8'));
-
-
-    if (detected.length > 0) {
+    let detect = this.videoSources.filter(x => x.type === 'application/x-mpegURL' || x.url.includes('.m3u8'));
+    if (detect.length > 0) {
       const hls = new Hls();
-      hls.loadSource(detected[0].url);
+      hls.loadSource(detect[0].url);
       hls.attachMedia(this.video.nativeElement);
       hls.on(Hls.Events.MANIFEST_PARSED, _ => {
         this.video.nativeElement.play();
