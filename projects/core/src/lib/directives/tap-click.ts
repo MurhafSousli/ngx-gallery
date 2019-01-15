@@ -1,9 +1,8 @@
-import { Directive, Inject, Input, OnDestroy, OnInit, Output, ElementRef, EventEmitter } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { fromEvent, Subscription, SubscriptionLike } from 'rxjs';
+import { Directive, Input, OnDestroy, OnInit, Output, ElementRef, EventEmitter } from '@angular/core';
+import { fromEvent, Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 
-declare let Hammer: any;
+declare const Hammer: any;
 
 /**
  * This directive uses tap event if HammerJS is loaded, otherwise it falls back to normal click event
@@ -18,8 +17,7 @@ export class TapClick implements OnInit, OnDestroy {
   @Input() tapClickDisabled: boolean;
   @Output() tapClick = new EventEmitter();
 
-  constructor(private el: ElementRef, @Inject(DOCUMENT) document: any) {
-    Hammer = (<any>document.defaultView).Hammer;
+  constructor(private _el: ElementRef) {
   }
 
   ngOnInit() {
@@ -27,7 +25,7 @@ export class TapClick implements OnInit, OnDestroy {
   }
 
   activateClickEvent() {
-    if (Hammer) {
+    if (typeof Hammer !== 'undefined') {
       // Use Hammer.js tap event
       this.hammer = new Hammer(this.el.nativeElement);
       this.hammer.on('tap', () => {
