@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import * as Hls from 'hls.js';
 
 @Component({
   selector: 'gallery-video',
@@ -11,9 +12,9 @@ import { Component, Input, OnInit, ViewChild, ElementRef, ChangeDetectionStrateg
 })
 export class GalleryVideoComponent implements OnInit {
 
-  videoSources: {url: string, type?: string}[];
+  videoSources: { url: string, type?: string }[];
 
-  @Input() src: string | {url: string, type?: string}[];
+  @Input() src: string | { url: string, type?: string }[];
   @Input() poster: string;
 
   @Input('pause') set pauseVideo(shouldPause: boolean) {
@@ -33,7 +34,23 @@ export class GalleryVideoComponent implements OnInit {
       // If video has multiple sources
       this.videoSources = [...this.src];
     } else {
-      this.videoSources = [{ url: this.src }];
+      this.videoSources = [{url: this.src}];
+    }
+    this.hlsDetection();
+  }
+
+  hlsDetection() {
+
+    let detected = this.videoSources.filter(x => x.type === 'application/x-mpegURL' || x.url.includes('.m3u8'));
+
+
+    if (detected.length > 0) {
+      const hls = new Hls();
+      hls.loadSource(detected[0].url);
+      hls.attachMedia(this.video.nativeElement);
+      hls.on(Hls.Events.MANIFEST_PARSED, _ => {
+        this.video.nativeElement.play();
+      });
     }
   }
 }
