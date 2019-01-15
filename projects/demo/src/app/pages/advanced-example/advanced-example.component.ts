@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Gallery, GalleryConfig, GalleryItemType } from '@ngx-gallery/core';
-import { MediaChange, ObservableMedia } from '@angular/flex-layout';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -10,6 +10,9 @@ import { slideInAnimation } from './slide-text.animation';
 import { Title } from '@angular/platform-browser';
 
 @Component({
+  host: {
+    'class': 'page'
+  },
   selector: 'advanced-example',
   templateUrl: './advanced-example.component.html',
   styleUrls: ['./advanced-example.component.scss'],
@@ -23,8 +26,8 @@ export class AdvancedExampleComponent implements OnInit {
   readonly youtubeIcon = faYoutube;
   readonly videoIcon = faVideo;
 
-  constructor(private _gallery: Gallery,  media: ObservableMedia, private _title: Title) {
-    this.media$ = media.asObservable().pipe(
+  constructor(private _gallery: Gallery, mediaObserver: MediaObserver, private _title: Title) {
+    this.media$ = mediaObserver.media$.pipe(
       map((res: MediaChange) => {
         if (res.mqAlias === 'sm' || res.mqAlias === 'xs') {
           return {

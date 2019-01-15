@@ -7,6 +7,9 @@ import { map } from 'rxjs/operators';
 import { Pixabay } from '../../service/pixabay.service';
 
 @Component({
+  host: {
+    'class': 'page'
+  },
   selector: 'lightbox-example',
   templateUrl: './lightbox-example.component.html',
   styleUrls: ['./lightbox-example.component.scss'],

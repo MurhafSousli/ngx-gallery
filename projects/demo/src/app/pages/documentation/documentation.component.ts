@@ -2,6 +2,9 @@ import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 @Component({
+  host: {
+    'class': 'page'
+  },
   selector: 'documentation',
   templateUrl: './documentation.component.html',
   styleUrls: ['./documentation.component.scss'],

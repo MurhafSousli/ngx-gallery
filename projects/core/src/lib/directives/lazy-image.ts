@@ -1,6 +1,6 @@
 import { Directive, Input, Output, OnDestroy, SimpleChanges, OnChanges, EventEmitter } from '@angular/core';
 import { HttpClient, HttpEventType, HttpRequest, HttpEvent, HttpHeaders } from '@angular/common/http';
-import { Subject, Observable, Subscription, SubscriptionLike, zip, fromEvent, EMPTY } from 'rxjs';
+import { Subject, Observable, Subscription, zip, fromEvent, EMPTY } from 'rxjs';
 import { tap, switchMap, catchError } from 'rxjs/operators';
 
 @Directive({
@@ -9,7 +9,7 @@ import { tap, switchMap, catchError } from 'rxjs/operators';
 export class LazyImage implements OnChanges, OnDestroy {
 
   private _imageLoader$ = new Subject<string>();
-  private _loaderSub$: SubscriptionLike = Subscription.EMPTY;
+  private _loaderSub$ = Subscription.EMPTY;
 
   @Input('lazyImage') src: string;
 

@@ -2,6 +2,9 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 @Component({
+  host: {
+    'class': 'page'
+  },
   selector: 'not-found',
   templateUrl: './not-found.component.html',
   styleUrls: ['./not-found.component.scss'],

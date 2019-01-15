@@ -4,6 +4,9 @@ import { Gallery } from '@ngx-gallery/core';
 import { Pixabay } from '../../service/pixabay.service';
 
 @Component({
+  host: {
+    'class': 'page'
+  },
   selector: 'gallerize-example',
   templateUrl: './gallerize-example.component.html',
   styleUrls: ['./gallerize-example.component.scss'],

@@ -1,9 +1,8 @@
-import { Directive, Inject, Input, OnDestroy, OnInit, Output, ElementRef, EventEmitter } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { fromEvent, Subscription, SubscriptionLike } from 'rxjs';
+import { Directive, Input, OnDestroy, OnInit, Output, ElementRef, EventEmitter } from '@angular/core';
+import { fromEvent, Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 
-declare let Hammer: any;
+declare const Hammer: any;
 
 /**
  * This directive uses tap event if HammerJS is loaded, otherwise it falls back to normal click event
@@ -13,13 +12,12 @@ declare let Hammer: any;
 })
 export class TapClick implements OnInit, OnDestroy {
 
-  private hammer: any;
-  clickListener: SubscriptionLike = Subscription.EMPTY;
+  private _hammer: any;
+  clickListener = Subscription.EMPTY;
   @Input() tapClickDisabled: boolean;
   @Output() tapClick = new EventEmitter();
 
-  constructor(private el: ElementRef, @Inject(DOCUMENT) document: any) {
-    Hammer = (<any>document.defaultView).Hammer;
+  constructor(private _el: ElementRef) {
   }
 
   ngOnInit() {
@@ -27,17 +25,17 @@ export class TapClick implements OnInit, OnDestroy {
   }
 
   activateClickEvent() {
-    if (Hammer) {
+    if (typeof Hammer !== 'undefined') {
       // Use Hammer.js tap event
-      this.hammer = new Hammer(this.el.nativeElement);
-      this.hammer.on('tap', () => {
+      this._hammer = new Hammer(this._el.nativeElement);
+      this._hammer.on('tap', () => {
         if (!this.tapClickDisabled) {
           this.tapClick.emit(null);
         }
       });
     } else {
       // Use normal click event
-      this.clickListener = fromEvent(this.el.nativeElement, 'click').pipe(
+      this.clickListener = fromEvent(this._el.nativeElement, 'click').pipe(
         filter(() => !this.tapClickDisabled),
         tap(() => this.tapClick.emit(null))
       ).subscribe();
@@ -45,8 +43,8 @@ export class TapClick implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.hammer) {
-      this.hammer.destroy();
+    if (this._hammer) {
+      this._hammer.destroy();
     }
     this.clickListener.unsubscribe();
   }
