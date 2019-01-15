@@ -5,6 +5,9 @@ import { Pixabay } from '../../service/pixabay.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({
+  host: {
+    'class': 'page'
+  },
   selector: 'lab',
   templateUrl: './lab.component.html',
   styleUrls: ['./lab.component.scss'],

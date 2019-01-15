@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { MediaChange, ObservableMedia } from '@angular/flex-layout';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { GalleryItem, GalleryConfig, ThumbnailsPosition } from '@ngx-gallery/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -8,6 +8,9 @@ import { map } from 'rxjs/operators';
 import { Pixabay } from '../../service/pixabay.service';
 
 @Component({
+  host: {
+    'class': 'page'
+  },
   selector: 'gallery-example',
   templateUrl: './gallery-example.component.html',
   styleUrls: ['./gallery-example.component.scss'],
@@ -19,9 +22,9 @@ export class GalleryExampleComponent implements OnInit {
   readonly fruits$: Observable<GalleryItem[]>;
   readonly media$: Observable<GalleryConfig>;
 
-  constructor(pixabay: Pixabay, media: ObservableMedia, private _title: Title) {
+  constructor(pixabay: Pixabay, mediaObserver: MediaObserver, private _title: Title) {
     this.fruits$ = pixabay.getImages('fruit');
-    this.media$ = media.asObservable().pipe(
+    this.media$ = mediaObserver.media$.pipe(
       map((res: MediaChange) => {
         console.log(res);
         if (res.mqAlias === 'sm' || res.mqAlias === 'xs') {

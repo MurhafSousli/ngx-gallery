@@ -1,12 +1,15 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { map } from 'rxjs/operators';
-import { MediaChange, ObservableMedia } from '@angular/flex-layout';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Observable } from 'rxjs';
 import { GalleryConfig, GalleryItem } from '@ngx-gallery/core';
 import { Pixabay } from '../../service/pixabay.service';
 
 @Component({
+  host: {
+    'class': 'page'
+  },
   selector: 'home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
@@ -17,9 +20,9 @@ export class HomeComponent implements OnInit {
   readonly camel$: Observable<GalleryItem[]>;
   readonly media$: Observable<GalleryConfig>;
 
-  constructor(pixabay: Pixabay, media: ObservableMedia, private _title: Title) {
+  constructor(pixabay: Pixabay, mediaObserver: MediaObserver, private _title: Title) {
     this.camel$ = pixabay.getHDImages('juice');
-    this.media$ = media.asObservable().pipe(
+    this.media$ = mediaObserver.media$.pipe(
       map((res: MediaChange) => {
         if (res.mqAlias === 'sm' || res.mqAlias === 'xs') {
           return {

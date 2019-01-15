@@ -39,14 +39,7 @@ mat-sidenav-container {
   height: 100%;
 }
 
-home,
-documentation,
-gallery-example,
-lightbox-example,
-gallerize-example,
-advanced-example,
-lab,
-not-found {
+.page {
   position: absolute;
   left: 0;
   right: 0;
@@ -56,41 +49,58 @@ not-found {
   transform: perspective(1000px);
   backface-visibility: hidden;
   transform-style: preserve-3d;
-}
 
-ng-scrollbar {
-  color: $text-color;
-
-  .ng-scrollbar {
-    border-radius: 0;
-    background-color: $primary-color;
-    opacity: 0.5;
-  }
-
-  .ng-scrollbar-thumb {
-    height: 8px;
-    background-color: #e3f2fd; // $accent-color;
-    border-radius: 0;
-
-    &:hover, &:active {
-      background-color: #fff176; // $accent-color;
+// Custom Scrollbar
+  > ng-scrollbar {
+    --scrollbar-border-radius: 12px;
+    --scrollbar-size: 12px;
+    --scrollbar-thumb-color: #009aaeb0;
+    --scrollbar-color: rgba(0, 0, 0, 0.1);
+    --scrollbar-thumb-hover-color: #e73727a6;
+  
+    .ng-scrollbar {
+      transition: all 120ms ease-out !important;
+  
+      &:hover, &:active {
+        --scrollbar-size: 16px;
+      }
     }
   }
-
-  .ng-scrollbar-vertical {
-    width: 12px;
-    top: 0;
-    right: 0;
-    bottom: 0;
-  }
-
-  .ng-scrollbar-horizontal {
-    height: 12px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
 }
+
+// ng-scrollbar {
+//   color: $text-color;
+
+//   .ng-scrollbar {
+//     border-radius: 0;
+//     background-color: $primary-color;
+//     opacity: 0.5;
+//   }
+
+//   .ng-scrollbar-thumb {
+//     height: 8px;
+//     background-color: #e3f2fd; // $accent-color;
+//     border-radius: 0;
+
+//     &:hover, &:active {
+//       background-color: #fff176; // $accent-color;
+//     }
+//   }
+
+//   .ng-scrollbar-vertical {
+//     width: 12px;
+//     top: 0;
+//     right: 0;
+//     bottom: 0;
+//   }
+
+//   .ng-scrollbar-horizontal {
+//     height: 12px;
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+//   }
+// }
 
 .mat-button.inline-button {
   padding: 0 10px;
