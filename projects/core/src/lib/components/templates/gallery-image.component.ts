@@ -1,7 +1,7 @@
 import { Component, Input, HostBinding, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeStyle } from '@angular/platform-browser';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { animationFrameScheduler, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'gallery-image',
@@ -122,12 +122,12 @@ export class GalleryImageComponent implements OnInit {
 
   onLoaded(blobUrl: string) {
     this.imageUrl = this._sanitizer.bypassSecurityTrustStyle(`url(${blobUrl})`);
-    animationFrameScheduler.schedule(() => this.state.next('success'));
+    this.state.next('success');
   }
 
   onError(err: Error) {
     this.loadError = err;
-    animationFrameScheduler.schedule(() => this.state.next('failed'));
+    this.state.next('failed');
     this.error.emit(err);
   }
 

@@ -11,7 +11,7 @@ import {
   EventEmitter,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { animationFrameScheduler, BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GalleryConfig } from '../models/config.model';
 import { GalleryState, GalleryError } from '../models/gallery.model';
@@ -281,6 +281,6 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
 
   private updateSlider(state: WorkerState) {
     const newState: WorkerState = {...this._slidingWorker$.value, ...state};
-    animationFrameScheduler.schedule(() => this._slidingWorker$.next(newState));
+    this._slidingWorker$.next(newState);
   }
 }

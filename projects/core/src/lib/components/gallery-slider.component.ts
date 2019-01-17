@@ -13,7 +13,7 @@ import {
   PLATFORM_ID
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject, Observable, Subscription, fromEvent, animationFrameScheduler } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, fromEvent } from 'rxjs';
 import { map, tap, debounceTime } from 'rxjs/operators';
 import { GalleryState, GalleryError } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
@@ -220,6 +220,6 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   private updateSlider(state: WorkerState) {
     const newState: WorkerState = {...this._slidingWorker$.value, ...state};
-    animationFrameScheduler.schedule(() => this._slidingWorker$.next(newState));
+    this._slidingWorker$.next(newState);
   }
 }
