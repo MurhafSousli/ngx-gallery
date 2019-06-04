@@ -2,6 +2,11 @@
 
 ## 4.0.2
 
+- fix(core): Fix universal error, closes [#262](https://github.com/MurhafSousli/ngx-gallery/issues/262) in [fc6c3f7](https://github.com/MurhafSousli/ngx-gallery/pull/282/commits/fc6c3f76730f90721bee99a2404a39310cccd0db).
+- fix(core): clean up state subject in `<gallery-image>` component in [7796b50](https://github.com/MurhafSousli/ngx-gallery/pull/283/commits/7796b500b814bd43564e2284b2a937c9d0ec2229). 
+
+## 4.0.2-beta.0
+
 - feat(core): Add `thumbLoadingIcon` and `thumbLoadingError` to gallery config, in [3f8cdca](https://github.com/MurhafSousli/ngx-gallery/pull/241/commits/3f8cdca3fc84f0eef509a5c88ca3d2b5097966bf) and [f2cae92](https://github.com/MurhafSousli/ngx-gallery/pull/241/commits/f2cae9258eef599ca7821c1fb3a82179d4cf6fba).
 - refactor(core): refactor the if/else logic in gallery image template, in [f7d6a22](https://github.com/MurhafSousli/ngx-gallery/pull/247/commits/f7d6a22e3cc20c0977554f8d249bef6aa2076fa5).
 
