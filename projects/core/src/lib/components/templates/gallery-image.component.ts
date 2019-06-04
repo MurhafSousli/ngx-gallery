@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, HostBinding, OnInit, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeStyle } from '@angular/platform-browser';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { BehaviorSubject } from 'rxjs';
@@ -62,10 +62,11 @@ import { BehaviorSubject } from 'rxjs';
   `
 })
 
-export class GalleryImageComponent implements OnInit {
+export class GalleryImageComponent implements OnInit, OnDestroy {
 
   /** Stream that emits the state */
-  readonly state = new BehaviorSubject<'loading' | 'success' | 'failed'>('loading');
+  private readonly _state = new BehaviorSubject<'loading' | 'success' | 'failed'>('loading');
+  readonly state = this._state.asObservable();
 
   /** Progress value */
   progress = 0;
@@ -116,18 +117,22 @@ export class GalleryImageComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    this._state.complete();
+  }
+
   onProgress({loaded, total}: { loaded: number, total: number }) {
     this.progress = loaded * 100 / total;
   }
 
   onLoaded(blobUrl: string) {
     this.imageUrl = this._sanitizer.bypassSecurityTrustStyle(`url(${blobUrl})`);
-    this.state.next('success');
+    this._state.next('success');
   }
 
   onError(err: Error) {
     this.loadError = err;
-    this.state.next('failed');
+    this._state.next('failed');
     this.error.emit(err);
   }
 
