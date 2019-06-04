@@ -1,6 +1,6 @@
 # Changelog
 
-## 4.0.2
+## 4.0.3
 
 - fix(core): Fix universal error, closes [#262](https://github.com/MurhafSousli/ngx-gallery/issues/262) in [fc6c3f7](https://github.com/MurhafSousli/ngx-gallery/pull/282/commits/fc6c3f76730f90721bee99a2404a39310cccd0db).
 - fix(core): clean up state subject in `<gallery-image>` component in [7796b50](https://github.com/MurhafSousli/ngx-gallery/pull/283/commits/7796b500b814bd43564e2284b2a937c9d0ec2229). 
