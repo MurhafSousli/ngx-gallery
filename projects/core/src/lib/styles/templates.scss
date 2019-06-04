@@ -69,5 +69,12 @@
   gallery-core[imageSize='contain'] gallery-slider .g-image-item {
     background-size: contain;
   }
+
+  gallery-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
 }
 

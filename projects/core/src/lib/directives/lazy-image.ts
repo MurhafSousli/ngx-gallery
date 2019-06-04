@@ -22,8 +22,6 @@ export class LazyImage implements OnChanges, OnDestroy {
 
   constructor(
     private http: HttpClient,
-    // Need to be declared as any
-    // See https://github.com/angular/angular/issues/20351
     @Inject(DOCUMENT) private document: any
   ) {
     this._loaderSub$ = this._imageLoader$.pipe(
