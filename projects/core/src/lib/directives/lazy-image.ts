@@ -1,6 +1,6 @@
 import { Directive, Input, Output, OnDestroy, SimpleChanges, OnChanges, EventEmitter, Inject } from '@angular/core';
 import { HttpClient, HttpEventType, HttpRequest, HttpEvent, HttpHeaders } from '@angular/common/http';
-import { Subject, Observable, Subscription, zip, fromEvent, EMPTY } from 'rxjs';
+import { Subject, Observable, Subscription, fromEvent, EMPTY, merge } from 'rxjs';
 import { tap, switchMap, catchError } from 'rxjs/operators';
 import { DOCUMENT } from '@angular/common';
 
@@ -89,7 +89,7 @@ export class LazyImage implements OnChanges, OnDestroy {
     const loadError = fromEvent(img, 'error').pipe(
       tap(() => this.error.emit(new Error(`[lazyImage]: The image ${url} did not load`)))
     );
-    return zip(loadSuccess, loadError);
+    return merge(loadSuccess, loadError);
   }
 
 }
