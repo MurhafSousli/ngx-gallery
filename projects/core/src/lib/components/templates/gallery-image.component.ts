@@ -16,7 +16,6 @@ import { BehaviorSubject } from 'rxjs';
   ],
   template: `
     <ng-container [lazyImage]="src"
-                  [mode]="mode"
                   (progress)="onProgress($event)"
                   (loaded)="onLoaded($event)"
                   (error)="onError($event)"
@@ -49,14 +48,8 @@ import { BehaviorSubject } from 'rxjs';
              [innerHTML]="loaderTemplate">
         </div>
         <ng-template #defaultLoader>
-
-          <div *ngIf="isThumbnail; else progressLoader" class="g-thumb-loading"></div>
-
-          <ng-template #progressLoader>
-            <radial-progress [value]="progress" [mode]="mode"></radial-progress>
-          </ng-template>
-
-          </ng-template>
+          <div *ngIf="isThumbnail" class="g-thumb-loading"></div>
+        </ng-template>
       </ng-container>
     </ng-container>
   `
@@ -70,9 +63,6 @@ export class GalleryImageComponent implements OnInit, OnDestroy {
 
   /** Progress value */
   progress = 0;
-
-  /** Image loader mode */
-  @Input() mode: 'determinate' | 'indeterminate' = 'determinate';
 
   /** Is thumbnail */
   @Input() isThumbnail: boolean;

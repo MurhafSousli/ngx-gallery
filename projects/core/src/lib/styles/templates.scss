@@ -52,7 +52,7 @@
     height: 100%;
   }
 
-  .g-template, .g-loading, .g-image-error-message {
+  .g-template, .g-image-error-message {
     position: absolute;
     z-index: 10;
     left: 0;
@@ -64,6 +64,15 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+  }
+
+  .g-loading {
+    position: absolute;
+    transform: translate3d(-50%, -50%, 0);
+    left: 50%;
+    top: 50%;
+    width: 80px;
+    height: 80px;
   }
 
   gallery-core[imageSize='contain'] gallery-slider .g-image-item {

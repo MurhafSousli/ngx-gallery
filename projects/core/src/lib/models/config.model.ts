@@ -29,7 +29,6 @@ export interface GalleryConfig {
   dotsPosition?: 'top' | 'bottom';
   counterPosition?: 'top' | 'bottom';
   slidingDirection?: 'horizontal' | 'vertical';
-  loadingMode?: 'determinate' | 'indeterminate';
   loadingStrategy?: 'preload' | 'lazy' | 'default';
   thumbPosition?: 'top' | 'left' | 'right' | 'bottom';
 }

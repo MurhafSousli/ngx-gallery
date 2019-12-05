@@ -1,7 +1,6 @@
 import { Directive, Input, Output, OnDestroy, SimpleChanges, OnChanges, EventEmitter, Inject } from '@angular/core';
-import { HttpClient, HttpEventType, HttpRequest, HttpEvent, HttpHeaders } from '@angular/common/http';
-import { Subject, Observable, Subscription, zip, fromEvent, EMPTY } from 'rxjs';
-import { tap, switchMap, catchError } from 'rxjs/operators';
+import { Subject, Observable, Subscription, zip, fromEvent } from 'rxjs';
+import { tap, switchMap } from 'rxjs/operators';
 import { DOCUMENT } from '@angular/common';
 
 @Directive({
@@ -14,18 +13,12 @@ export class LazyImage implements OnChanges, OnDestroy {
 
   @Input('lazyImage') src: string;
 
-  @Input() mode: 'determinate' | 'indeterminate';
-
-  @Output() progress = new EventEmitter<{ loaded: number, total: number }>();
   @Output() loaded = new EventEmitter<string>();
   @Output() error = new EventEmitter<Error>();
 
-  constructor(
-    private http: HttpClient,
-    @Inject(DOCUMENT) private document: any
-  ) {
+  constructor(@Inject(DOCUMENT) private document: any) {
     this._loaderSub$ = this._imageLoader$.pipe(
-      switchMap((imageSrc: string) => this.mode === 'determinate' ? this.progressiveLoader(imageSrc) : this.nativeLoader(imageSrc))
+      switchMap((imageSrc: string) => this.nativeLoader(imageSrc))
     ).subscribe();
   }
 
@@ -42,35 +35,6 @@ export class LazyImage implements OnChanges, OnDestroy {
 
   loadImage(imagePath: string) {
     this._imageLoader$.next(imagePath);
-  }
-
-  /**
-   * Load image using HttpClient, This requires XHR access to the URL
-   * @param url
-   */
-  progressiveLoader(url: string): Observable<any> {
-    const downloadImage = new HttpRequest('GET', url, {
-      reportProgress: true,
-      responseType: 'blob',
-      headers: new HttpHeaders({ 'CACHE_GALLERY_IMAGE': 'true' })
-    });
-    return this.http.request(downloadImage).pipe(
-      tap((event: HttpEvent<string>) => {
-
-        if (event.type === HttpEventType.DownloadProgress) {
-          this.progress.emit({ loaded: event.loaded, total: event.total });
-        }
-
-        if (event.type === HttpEventType.Response) {
-          this.loaded.emit(URL.createObjectURL(event.body));
-        }
-
-      }),
-      catchError((err: Error) => {
-        this.error.emit(err);
-        return EMPTY;
-      })
-    );
   }
 
   /**
