@@ -1,6 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { GalleryConfig, GALLERY_CONFIG } from './models/config.model';
 
@@ -26,8 +26,7 @@ import { RequestCache, RequestCacheWithMap } from './services/cache.service';
 
 @NgModule({
   imports: [
-    CommonModule,
-    HttpClientModule
+    CommonModule
   ],
   providers: [
     {provide: RequestCache, useClass: RequestCacheWithMap},
