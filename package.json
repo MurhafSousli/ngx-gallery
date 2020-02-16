@@ -1,6 +1,6 @@
 {
   "name": "ngx-gallery",
-  "version": "4.0.3",
+  "version": "5.0.0-beta.0",
   "description": "Angular gallery directive that hooks the lightbox with the images automatically.",
   "homepage": "http://github.com/murhafsousli/ngx-gallery",
   "author": {
