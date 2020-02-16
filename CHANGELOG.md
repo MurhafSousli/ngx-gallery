@@ -1,8 +1,12 @@
 # Changelog
 
-## 4.1.0-beta.0
+## 5.0.0-beta.0
 
 - regret: Remove `mode=intermediate` option, closes [#309](https://github.com/MurhafSousli/ngx-gallery/issues/309) and [#297](https://github.com/MurhafSousli/ngx-gallery/issues/297) in [b1df18c](https://github.com/MurhafSousli/ngx-gallery/pull/311/commits/b1df18c6069ddabe02c0bee1e0653dd97692a96e).
+
+### Breaking changes (There could be more breaking changes until version 5 is released which will make it compatible with Angular 9 and ivy)
+
+- The `loadingMode` option has been removed from the gallery component's input and from the global options.
 
 ## 4.0.3
 
