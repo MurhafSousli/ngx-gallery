@@ -1,5 +1,15 @@
 # Changelog
 
+## 5.0.0
+
+- Upgrade to Angular 9.
+- Combine all packages in one package.
+- Remove `HttpClientModule` from GalleryModule.
+
+### Breaking changes
+
+- Use `npm i ngx-gallery`
+
 ## 5.0.0-beta.0
 
 - regret: Remove `mode=intermediate` option, closes [#309](https://github.com/MurhafSousli/ngx-gallery/issues/309) and [#297](https://github.com/MurhafSousli/ngx-gallery/issues/297) in [b1df18c](https://github.com/MurhafSousli/ngx-gallery/pull/311/commits/b1df18c6069ddabe02c0bee1e0653dd97692a96e).

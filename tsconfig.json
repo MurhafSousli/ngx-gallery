@@ -2,34 +2,31 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "importHelpers": true,
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "es2017",
+      "es2018",
       "dom"
     ],
     "paths": {
-      "core": [
-        "dist/core"
-      ],
-      "lightbox": [
-        "dist/lightbox"
-      ],
-      "gallerize": [
-        "dist/gallerize"
-      ],
-      "magnifier": [
-        "dist/magnifier"
+      "ngx-gallery": [
+        "dist/ngx-gallery/ngx-gallery",
+        "dist/ngx-gallery"
       ]
     }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
   }
 }

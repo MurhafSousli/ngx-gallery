@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('ngx-scrollbar app is running!');
+    expect(page.getTitleText()).toEqual('ngx-gallery-demo app is running!');
   });
 
   afterEach(async () => {
