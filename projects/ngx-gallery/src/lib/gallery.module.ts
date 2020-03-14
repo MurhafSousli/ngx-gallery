@@ -43,11 +43,11 @@ import { TapClick } from './directives/tap-click';
   exports: [
     GalleryComponent,
     LazyImage,
-    TapClick,
+    TapClick
   ]
 })
 export class GalleryModule {
-  static withConfig(config: GalleryConfig): ModuleWithProviders {
+  static withConfig(config: GalleryConfig): ModuleWithProviders<GalleryModule> {
 
     return {
       ngModule: GalleryModule,

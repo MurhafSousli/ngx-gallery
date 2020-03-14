@@ -2,9 +2,11 @@ import { ComponentRef, Inject, Injectable, Optional } from '@angular/core';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Overlay, OverlayRef, OverlayConfig } from '@angular/cdk/overlay';
 import { LEFT_ARROW, RIGHT_ARROW, ESCAPE } from '@angular/cdk/keycodes';
-// import { Gallery } from '@ngx-gallery/core';
-import { Gallery } from '../../src/public-api';
 import { Subject } from 'rxjs';
+
+import { Gallery } from 'ngx-gallery';
+// Uncomment the following line in development mode
+// import { Gallery } from '../../src/public-api';
 
 import { LightboxConfig, LIGHTBOX_CONFIG } from './lightbox.model';
 import { defaultConfig } from './lightbox.default';

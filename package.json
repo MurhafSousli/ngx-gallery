@@ -1,20 +1,17 @@
 {
   "name": "ngx-gallery-project",
-  "version": "0.0.0",
+  "version": "5.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
     "start-demo": "ng serve ngx-gallery-demo",
     "build-demo": "ng build ngx-gallery-demo --prod",
-    "build-lib": "ng build ngx-gallery",
+    "build-lib": "ng build ngx-gallery --prod",
     "link-lib": "npm link dist/ngx-gallery && npm link ngx-gallery",
     "publish-all": "npm publish dist/ngx-gallery"
   },
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MurhafSousli/ngx-gallery"
+  },
   "dependencies": {
     "@angular/animations": "~9.0.6",
     "@angular/cdk": "^9.1.2",
@@ -36,9 +33,9 @@
     "@angular/cli": "~9.0.6",
     "@angular/compiler-cli": "~9.0.6",
     "@angular/language-service": "~9.0.6",
-    "@types/node": "^12.11.1",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
@@ -47,7 +44,7 @@
     "karma-coverage-istanbul-reporter": "~2.1.0",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
-    "ng-packagr": "^9.0.0",
+    "ng-packagr": "^9.0.3",
     "protractor": "~5.4.3",
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",

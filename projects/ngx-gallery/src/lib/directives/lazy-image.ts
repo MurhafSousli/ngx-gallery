@@ -1,7 +1,7 @@
 import { Directive, Input, Output, OnDestroy, SimpleChanges, OnChanges, EventEmitter, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { Subject, Observable, Subscription, zip, fromEvent } from 'rxjs';
 import { tap, switchMap } from 'rxjs/operators';
-import { DOCUMENT } from '@angular/common';
 
 @Directive({
   selector: '[lazyImage]'

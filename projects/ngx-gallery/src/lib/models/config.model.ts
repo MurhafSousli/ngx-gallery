@@ -1,6 +1,6 @@
 import { InjectionToken, TemplateRef } from '@angular/core';
 
-export const GALLERY_CONFIG = new InjectionToken<GalleryConfig>('galleryConfig');
+export const GALLERY_CONFIG = new InjectionToken<GalleryConfig>('GALLERY_CONFIG');
 
 export interface GalleryConfig {
   nav?: boolean;

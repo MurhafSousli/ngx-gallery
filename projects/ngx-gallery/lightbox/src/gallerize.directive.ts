@@ -14,8 +14,9 @@ import {
 } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
-// import { Gallery, GalleryRef, ImageItem, GalleryComponent, GalleryState, GalleryItem } from '@ngx-gallery/core';
-import { Gallery, GalleryRef, ImageItem, GalleryComponent, GalleryState, GalleryItem } from '../../src/public-api';
+import { Gallery, GalleryRef, ImageItem, GalleryComponent, GalleryState, GalleryItem } from 'ngx-gallery';
+// Uncomment the following line in development mode
+// import { Gallery, GalleryRef, ImageItem, GalleryComponent, GalleryState, GalleryItem } from '../../src/public-api';
 import { Lightbox } from './lightbox.service';
 
 import { Subject, Subscription, from, EMPTY } from 'rxjs';

@@ -1,9 +1,32 @@
 {
   "name": "ngx-gallery",
-  "version": "0.0.1",
+  "version": "5.0.0-beta.1",
+  "homepage": "https://ngx-gallery.netlify.com/",
+  "author": {
+    "name": "Murhaf Sousli",
+    "url": "http://github.com/murhafsousli"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/murhafsousli/ngx-gallery.git"
+  },
+  "bugs": {
+    "url": "http://github.com/murhafsousli/ngx-gallery/issues"
+  },
+  "keywords": [
+    "gallery",
+    "slider",
+    "carousel",
+    "lightbox",
+    "images",
+    "video",
+    "modal"
+  ],
+  "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^9.0.0",
-    "@angular/core": "^9.0.0",
-    "tslib": "^1.10.0"
+    "@angular/common": ">=8.0.0",
+    "@angular/core": ">=8.0.0",
+    "@angular/cdk": ">=8.0.0",
+    "rxjs": ">=6.0.0"
   }
 }
