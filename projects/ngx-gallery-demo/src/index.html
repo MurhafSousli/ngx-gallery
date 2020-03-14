@@ -1,13 +1,243 @@
 <!doctype html>
-<html lang="en">
+<html>
+
 <head>
   <meta charset="utf-8">
-  <title>NgxGalleryDemo</title>
+  <title>Angular Gallery</title>
   <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="assets/icons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="assets/icons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="assets/icons/site.webmanifest.json">
+  <link rel="mask-icon" href="assets/icons/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
+
+  <meta name="title" content="Angular Gallery">
+  <meta name="description"
+        content="Simplifies the process of creating beautiful image galleries for the web and mobile devices.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@MurhafSousli">
+  <meta name="twitter:creator" content="@MurhafSousli">
+
+  <meta property="og:site_name" content="Angular Gallery">
+  <meta property="og:title" content="Angular Gallery">
+  <meta property="og:description"
+        content="Simplifies the process of creating beautiful image galleries for the web and mobile devices.">
+  <meta property="og:url" content="https://murhafsousli.github.io/ngx-gallery">
+  <meta property="og:image"
+        content="https://user-images.githubusercontent.com/8130692/35766040-0dc8027c-08e1-11e8-9567-cdfb4c4d0530.png">
+
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-81405917-10', 'auto');
+    ga('send', 'pageview');
+
+  </script>
 </head>
-<body>
-  <app-root></app-root>
+<style>
+  @-webkit-keyframes dancing-dots-jump {
+    0% {
+      top: 0;
+    }
+    55% {
+      top: 0;
+      text-shadow: 0px 0px 0px rgba(0, 0, 0, 0.5);
+    }
+    60% {
+      top: -20px;
+      text-shadow: 5px 20px 5px rgba(0, 0, 0, 0.5);
+    }
+    80% {
+      top: 4px;
+      text-shadow: 0px 0px 0px rgba(0, 0, 0, 0.5);
+    }
+    90% {
+      top: -3px;
+      text-shadow: 0px 3px 1px rgba(0, 0, 0, 0.5);
+    }
+    95% {
+      top: 1px;
+      text-shadow: 0px 0px 0px rgba(0, 0, 0, 0.5);
+    }
+    100% {
+      top: 0;
+      text-shadow: 0px 0px 0px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  @-moz-keyframes dancing-dots-jump {
+    0% {
+      top: 0;
+    }
+    55% {
+      top: 0;
+      text-shadow: 0px 0px 0px rgba(0, 0, 0, 0.5);
+    }
+    60% {
+      top: -20px;
+      text-shadow: 5px 20px 5px rgba(0, 0, 0, 0.5);
+    }
+    80% {
+      top: 4px;
+      text-shadow: 0px 0px 0px rgba(0, 0, 0, 0.5);
+    }
+    90% {
+      top: -3px;
+      text-shadow: 0px 3px 1px rgba(0, 0, 0, 0.5);
+    }
+    95% {
+      top: 1px;
+      text-shadow: 0px 0px 0px rgba(0, 0, 0, 0.5);
+    }
+    100% {
+      top: 0;
+      text-shadow: 0px 0px 0px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  @-moz-keyframes shake-me {
+    0% {
+      margin-left: 0;
+    }
+    10% {
+      margin-left: -2px;
+      margin-top: 33px;
+    }
+    20% {
+      margin-left: 2px;
+    }
+    30% {
+      margin-left: -3px;
+    }
+    40% {
+      margin-left: 3px;
+      margin-top: 27px;
+    }
+    50% {
+      margin-left: -2px;
+    }
+    60% {
+      margin-left: 4px;
+    }
+    70% {
+      margin-left: -6px;
+    }
+    80% {
+      margin-left: 3px;
+    }
+    90% {
+      margin-left: -2px;
+    }
+    100% {
+      margin-left: 3px;
+    }
+  }
+
+  @-moz-keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0.7;
+    }
+  }
+
+  #dancing-dots-text {
+    width: 200px;
+    padding: 30px 50px;
+    text-align: center;
+  }
+
+  #dancing-dots-text:hover {
+    -webkit-animation-duration: 300ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: shake-me;
+    -moz-animation-duration: 300ms;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-name: shake-me;
+  }
+
+  #dancing-dots-text span {
+    text-shadow: 0px 0px 0px rgba(0, 0, 0, 0.5);
+  }
+
+  #dancing-dots-text span span {
+    -webkit-animation-duration: 1000ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: dancing-dots-jump;
+    -moz-animation-duration: 1000ms;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-name: dancing-dots-jump;
+    padding: 1px;
+    position: relative;
+  }
+
+  #dancing-dots-text span span:nth-child(1) {
+    -webkit-animation-delay: 50ms;
+    -moz-animation-delay: 50ms;
+  }
+
+  #dancing-dots-text span span:nth-child(2) {
+    -webkit-animation-delay: 250ms;
+    -moz-animation-delay: 250ms;
+  }
+
+  #dancing-dots-text span span:nth-child(3) {
+    -webkit-animation-delay: 450ms;
+    -moz-animation-delay: 450ms;
+  }
+
+  #dancing-dots-text span span:nth-child(4) {
+    -webkit-animation-delay: 650ms;
+    -moz-animation-delay: 650ms;
+  }
+
+  #dancing-dots-text span span:nth-child(5) {
+    -webkit-animation-delay: 850ms;
+    -moz-animation-delay: 850ms;
+  }
+
+  .loader-wrapper {
+    background: #2196f3;
+    color: white;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-family: monospace;
+  }
+</style>
+<body class="white-bg">
+<app-root>
+  <div class="loader-wrapper">
+    <img src="assets/img/ng-gallery.png" alt="logo">
+    <div id="dancing-dots-text">
+      Loading<span><span>.</span><span>.</span><span>.</span><span>.</span><span>.</span></span>
+    </div>
+  </div>
+</app-root>
 </body>
+
 </html>

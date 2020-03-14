@@ -1,0 +1,92 @@
+@import '../../../assets/variables';
+@import '../../../assets/mixin';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-width: 100%;
+  margin-top: 2em;
+  margin-bottom: 3em;
+  border: 2px solid $code-color;
+  overflow: hidden;
+  border-radius: 0.5em;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+
+  ng-scrollbar {
+    ::ng-deep {
+      .code-scrollbar-thumb {
+        border-radius: 4px;
+        opacity: 0.7;
+        &:active {
+          opacity: 1;
+        }
+      }
+      .ng-scrollbar-vertical {
+        width: 6px;
+        &:hover, &:active {
+          width: 10px;
+        }
+      }
+      .ng-scrollbar-horizontal {
+        height: 6px;
+        &:hover, &:active {
+          height: 10px;
+        }
+      }
+      .code-scrollbar {
+        transition: all 100ms ease;
+      }
+    }
+  }
+}
+
+pre {
+  min-height: 100%;
+  min-width: 100%;
+  margin: 0;
+  display: inline-flex;
+  word-wrap: normal;
+  code {
+    background-color: $code-bg-color;
+    display: inline-block;
+    height: 100%;
+    padding: 1.7em 2em !important;
+    border-radius: 0;
+    flex: 1;
+    margin: 0;
+    box-shadow: none;
+    overflow: hidden;
+    border: none;
+    min-height: 100%;
+  }
+}
+
+button {
+  position: absolute;
+  right: 1em;
+  top: 1em;
+}
+
+.copy-message {
+  color: $code-color;
+  background-color: $code-bg-color;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  border-radius: 0.2em;
+}
+
+span {
+  margin-left: 10px;
+}
+
+pre {
+  min-height: 100%;
+}

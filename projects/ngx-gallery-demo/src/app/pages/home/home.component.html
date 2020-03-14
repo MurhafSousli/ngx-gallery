@@ -1,0 +1,22 @@
+<ng-scrollbar class="black-bg" viewClass="fix-padding">
+  <div class="page-title">
+    <h1>Angular Gallery</h1>
+    <sub>Simplifies the process of creating beautiful galleries.</sub>
+    <a mat-raised-button class="docs-button" routerLink="/getting-started">Get Started</a>
+    <badges></badges>
+  </div>
+  <div class="page-content">
+    <gallery id="basic"
+             fluid
+             *ngIf="media$ | async; let config"
+             [items]="camel$ | async"
+             [thumbWidth]="config.thumbWidth"
+             [thumbHeight]="config.thumbHeight"
+             ngStyle.lg="height: 540px"
+             imageSize="contain"
+             autoPlay="true"
+             thumbPosition="top"></gallery>
+  </div>
+
+  <footer></footer>
+</ng-scrollbar>

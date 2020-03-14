@@ -1,0 +1,36 @@
+@import '../../../assets/variables';
+
+img {
+  width: 100%;
+}
+
+.row {
+  margin: 3em 0;
+}
+
+#gallerize-ex {
+  margin: 3em 0;
+  ::ng-deep {
+    .g-image-item {
+      cursor: pointer;
+    }
+    gallery-thumb {
+      padding: 0;
+    }
+  }
+}
+
+ul {
+  list-style: none
+}
+
+li {
+  display: flex;
+  align-items: center;
+  &:before {
+    margin-right: 10px;
+    content: "•";
+    color: $accent-color;
+    font-size: 2em;
+  }
+}

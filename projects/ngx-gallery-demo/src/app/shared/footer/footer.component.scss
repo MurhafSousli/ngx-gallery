@@ -1,0 +1,45 @@
+@import '../../../assets/variables';
+
+:host {
+  box-shadow: inset 0 3px 8px 0 rgba(0, 0, 0, 0.08);
+  background-color: $primary-color;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  padding: 3em 2em;
+  font-size: .9em;
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
+  p {
+    margin-right: 0.5em;
+  }
+  h3 {
+    font-weight: normal;
+    color: white;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 1.5em;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  a {
+    color: $danger-color;
+    text-decoration: underline;
+  }
+}
+
+.icon {
+  background: white;
+  margin: 5px;
+}
+
+fa-icon {
+  margin: 0 0.3em;
+}
+
+.twitter fa-icon {
+  color: #00b0e8;
+}
+.github fa-icon {
+  color: black;
+}
