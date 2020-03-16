@@ -1,14 +1,22 @@
 # Changelog
 
-## 5.0.0
+## 5.0.0-beta.1
 
 - Upgrade to Angular 9.
 - Combine all packages in one package.
-- Remove `HttpClientModule` from GalleryModule.
+- Remove import `HttpClientModule` from `GalleryModule`.
 
 ### Breaking changes
 
-- Use `npm i ngx-gallery`
+**Before:**
+
+- The packages were published on `@ngx-gallery/core`, `@ngx-gallery/lightbox` and `@ngx-gallery/gallerize`.
+
+**After:**
+
+- All the packages are now combined in `ng-gallery` (NOTE: it is not `ngx-gallery` that is a different package).
+- Import `GalleryMlodule` from `ng-gallery` and `LightboxModule` from `ng-gallery/lightbox`.
+- The module `GallerizeModule` has been removed, the `[gallerize]` directive can still be used from the `LightboxModule`.
 
 ## 5.0.0-beta.0
 
