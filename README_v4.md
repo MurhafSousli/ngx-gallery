@@ -14,12 +14,10 @@
 [![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](/LICENSE)
 
 
-___
-
-### The documentation is available at the [wiki page](https://github.com/MurhafSousli/ngx-scrollbar/wiki) 📚
-
-___
-
+- **For version 4.x**, See the [wiki docs](https://github.com/MurhafSousli/ngx-gallery/wiki)
+- **For version 3.x**, See the [wiki docs](https://github.com/MurhafSousli/ngx-gallery/wiki) and check the [changelog](/CHANGELOG.md) for the changes
+- **For version 2.x**, See the [wiki docs](https://github.com/MurhafSousli/ngx-gallery/wiki) and check the [changelog](/CHANGELOG.md) for the changes
+- **For version 1.x**, See this [docs](/README_V1.md)
 
 ## Support
 
