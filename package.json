@@ -6,7 +6,7 @@
     "build-demo": "ng build ngx-gallery-demo --prod",
     "build-lib": "ng build ngx-gallery --prod",
     "link-lib": "npm link dist/ngx-gallery && npm link ngx-gallery",
-    "publish-all": "npm publish dist/ngx-gallery"
+    "publish-lib": "npm publish dist/ngx-gallery"
   },
   "repository": {
     "type": "git",
