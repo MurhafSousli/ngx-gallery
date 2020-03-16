@@ -85,7 +85,7 @@ export class AppComponent implements OnInit {
 }`,
   alt: `import { Component, OnInit } from '@angular/core';
 import { Gallery, GalleryItem } from 'ngx-gallery';
-import { Lightbox } from '@ngx-gallery/lightbox';
+import { Lightbox } from 'ngx-gallery/lightbox';
 
 export class AppComponent implements OnInit {
 

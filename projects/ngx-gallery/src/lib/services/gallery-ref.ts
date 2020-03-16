@@ -1,4 +1,4 @@
-import { BehaviorSubject, Subject, Observable, of, EMPTY} from 'rxjs';
+import { BehaviorSubject, Subject, Observable, of, EMPTY } from 'rxjs';
 import { delay, filter, switchMap, tap } from 'rxjs/operators';
 import { defaultState } from '../utils/gallery.default';
 import { GalleryError, GalleryItem, GalleryState } from '../models/gallery.model';
@@ -60,7 +60,7 @@ export class GalleryRef {
     return this.state.pipe(filterActions([GalleryAction.PLAY, GalleryAction.STOP, GalleryAction.INDEX_CHANGED]));
   }
 
-  constructor(config: GalleryConfig, private deleteInstance: Function) {
+  constructor(config: GalleryConfig, private deleteInstance: () => void) {
     this._state = new BehaviorSubject<GalleryState>(defaultState);
     this._config = new BehaviorSubject<GalleryConfig>(config);
     this.state = this._state.asObservable();
@@ -83,7 +83,6 @@ export class GalleryRef {
 
   /**
    * Set gallery state
-   * @param state
    */
   private setState(state: GalleryState) {
     this._state.next({...this._state.value, ...state});
@@ -91,22 +90,21 @@ export class GalleryRef {
 
   /**
    * Set gallery config
-   * @param config
    */
   setConfig(config: GalleryConfig) {
     this._config.next({...this._config.value, ...config});
   }
 
-  /** Add gallery item
-   * @param item - Gallery item object
-   * @param active - Set the new item as current slide
+  /**
+   * Add gallery item
    */
   add(item: GalleryItem, active?: boolean) {
 
+    // console.log('add item', this.state.value.items, item);
     const items = [...this._state.value.items, item];
     this.setState({
       action: GalleryAction.ITEMS_CHANGED,
-      items: items,
+      items,
       hasNext: items.length > 1,
       currIndex: active ? items.length - 1 : this._state.value.currIndex
     });
@@ -114,8 +112,6 @@ export class GalleryRef {
 
   /**
    * Add image item
-   * @param data
-   * @param active
    */
   addImage(data: any, active?: boolean) {
     this.add(new ImageItem(data), active);
@@ -123,8 +119,6 @@ export class GalleryRef {
 
   /**
    * Add video item
-   * @param data
-   * @param active
    */
   addVideo(data: any, active?: boolean) {
     this.add(new VideoItem(data), active);
@@ -132,8 +126,6 @@ export class GalleryRef {
 
   /**
    * Add iframe item
-   * @param data
-   * @param active
    */
   addIframe(data: any, active?: boolean) {
     this.add(new IframeItem(data), active);
@@ -141,15 +133,13 @@ export class GalleryRef {
 
   /**
    * Add youtube item
-   * @param data
-   * @param active
    */
   addYoutube(data: any, active?: boolean) {
     this.add(new YoutubeItem(data), active);
   }
 
-  /** Remove gallery item
-   * @param i - Item index
+  /**
+   * Remove gallery item
    */
   remove(i: number) {
     const items = [
@@ -158,7 +148,7 @@ export class GalleryRef {
     ];
     this.setState({
       action: GalleryAction.ITEMS_CHANGED,
-      items: items,
+      items,
       hasNext: items.length > 1,
       hasPrev: i > 0
     });
@@ -166,13 +156,12 @@ export class GalleryRef {
 
   /**
    * Load items and reset the state
-   * @param items - Gallery images data
    */
   load(items: GalleryItem[]) {
     if (items) {
       this.setState({
         action: GalleryAction.ITEMS_CHANGED,
-        items: items,
+        items,
         hasNext: items.length > 1,
         hasPrev: false
       });
@@ -181,7 +170,6 @@ export class GalleryRef {
 
   /**
    * Set active item
-   * @param i - Active Index
    */
   set(i: number) {
     if (i !== this._state.value.currIndex) {
@@ -218,7 +206,6 @@ export class GalleryRef {
 
   /**
    * Start gallery player
-   * @param interval
    */
   play(interval?: number) {
     if (interval) {

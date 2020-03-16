@@ -9,14 +9,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 export class DocGallerizeComponent {
 
   docs = `import { GalleryModule } from  'ngx-gallery';
-import { LightboxModule } from  '@ngx-gallery/lightbox';
-import { GallerizeModule } from  '@ngx-gallery/gallerize';
+import { LightboxModule } from  'ngx-gallery/lightbox';
 
 @NgModule({
   imports: [
     GalleryModule,
-    GalleryLightbox,
-    GallerizeModule
+    LightboxModule,
   ]
 })`;
 

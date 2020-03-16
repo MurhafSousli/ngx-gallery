@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Gallery, GalleryConfig, GalleryItemType } from 'ngx-gallery';
+import { Title } from '@angular/platform-browser';
+import { Gallery, GalleryConfig, GalleryItemType } from '../../../../../ngx-gallery/src/public-api';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -7,7 +8,6 @@ import { map } from 'rxjs/operators';
 import { faYoutube } from '@fortawesome/free-brands-svg-icons/faYoutube';
 import { faVideo } from '@fortawesome/free-solid-svg-icons/faVideo';
 import { slideInAnimation } from './slide-text.animation';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   host: {
@@ -46,6 +46,9 @@ export class AdvancedExampleComponent implements OnInit {
   ngOnInit() {
     this._title.setTitle('Advanced | ngx-gallery');
     const galleryRef = this._gallery.ref('mixed');
+
+    galleryRef.state.subscribe(x => console.log(x));
+    console.log('gallery mixed');
     this.arr.map((item: any) => {
       switch (item.type) {
         case GalleryItemType.Image:
