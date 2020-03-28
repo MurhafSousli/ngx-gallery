@@ -133,7 +133,7 @@ const code = {
   </span>
 </ng-template>`,
   component: `import { Component, OnInit } from '@angular/core';
-import { Gallery, GalleryRef } from 'ngx-gallery';
+import { Gallery, GalleryRef } from 'ng-gallery';
 
 @Component({...})
 export class AppComponent implements OnInit {

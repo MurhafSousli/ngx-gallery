@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Gallery, GalleryItem } from 'ngx-gallery';
+import { Gallery, GalleryItem } from 'ng-gallery';
 import { Lightbox } from '../../../../../ngx-gallery/lightbox/src/public_api';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -56,7 +56,7 @@ galleryRef.load(items)`,
   <img [src]="item.data.thumbnail">
 </div>`,
   ex: `import { Component, OnInit } from '@angular/core';
-import { Gallery, GalleryItem } from 'ngx-gallery';
+import { Gallery, GalleryItem } from 'ng-gallery';
 
 @Component({
   template: \`
@@ -84,8 +84,8 @@ export class AppComponent implements OnInit {
   }
 }`,
   alt: `import { Component, OnInit } from '@angular/core';
-import { Gallery, GalleryItem } from 'ngx-gallery';
-import { Lightbox } from 'ngx-gallery/lightbox';
+import { Gallery, GalleryItem } from 'ng-gallery';
+import { Lightbox } from 'ng-gallery/lightbox';
 
 export class AppComponent implements OnInit {
 

@@ -24,7 +24,7 @@ export class DocCoreComponent {
   ]
 })`;
 
-  globalConfig = `import { GALLERY_CONFIG } from 'ngx-gallery';
+  globalConfig = `import { GALLERY_CONFIG } from 'ng-gallery';
 
 @NgModule({
   providers: [

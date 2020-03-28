@@ -28,7 +28,7 @@ import { LightboxModule } from  'ngx-gallery/lightbox';
   ]
 })`;
 
-  globalConfig = `import { LIGHTBOX_CONFIG } from 'ngx-gallery/lightbox';
+  globalConfig = `import { LIGHTBOX_CONFIG } from 'ng-gallery/lightbox';
 
 @NgModule({
   providers: [

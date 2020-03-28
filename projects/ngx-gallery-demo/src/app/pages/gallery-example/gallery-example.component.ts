@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { GalleryItem, GalleryConfig, ThumbnailsPosition } from 'ngx-gallery';
+import { GalleryItem, GalleryConfig, ThumbnailsPosition } from 'ng-gallery';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -52,7 +52,7 @@ export class GalleryExampleComponent implements OnInit {
 const code = {
   example: '<gallery [items]="items" thumbPosition="left"></gallery>',
   basic: `import { Component, OnInit } from '@angular/core';
-import { GalleryItem, ImageItem } from 'ngx-gallery';
+import { GalleryItem, ImageItem } from 'ng-gallery';
 
 @Component({
   template: \`
@@ -72,7 +72,7 @@ export class AppComponent implements OnInit {
   }
 }`,
   stream: `import { Component, OnInit } from '@angular/core';
-import { GalleryItem, ImageItem } from 'ngx-gallery';
+import { GalleryItem, ImageItem } from 'ng-gallery';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -95,7 +95,7 @@ export class AppComponent implements OnInit {
   }
 }`,
   galleryCmp: `import { Component, OnInit } from '@angular/core';
-import { GalleryComponent, ImageItem } from 'ngx-gallery';
+import { GalleryComponent, ImageItem } from 'ng-gallery';
 
 @Component({
   template: \`
@@ -118,7 +118,7 @@ export class AppComponent implements OnInit {
   }
 }`,
   galleryRef: `import { Component, OnInit } from '@angular/core';
-import { Gallery, GalleryRef, ImageItem } from 'ngx-gallery';
+import { Gallery, GalleryRef, ImageItem } from 'ng-gallery';
 
 @Component({
   template: \`

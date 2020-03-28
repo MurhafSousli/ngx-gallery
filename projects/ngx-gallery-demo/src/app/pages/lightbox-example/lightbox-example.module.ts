@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { LightboxExampleComponent } from './lightbox-example.component';
 import { SharedModule } from '../../shared/shared.module';
 
-import { GalleryModule } from 'ngx-gallery';
+import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from '../../../../../ngx-gallery/lightbox/src/public_api';
 
 @NgModule({
