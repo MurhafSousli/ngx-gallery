@@ -4,7 +4,7 @@ import { Overlay, OverlayRef, OverlayConfig } from '@angular/cdk/overlay';
 import { LEFT_ARROW, RIGHT_ARROW, ESCAPE } from '@angular/cdk/keycodes';
 import { Subject } from 'rxjs';
 
-import { Gallery } from 'ngx-gallery';
+import { Gallery } from 'ng-gallery';
 // Uncomment the following line in development mode
 // import { Gallery } from '../../src/public-api';
 

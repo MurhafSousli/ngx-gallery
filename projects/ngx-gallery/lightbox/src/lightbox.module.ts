@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { A11yModule } from '@angular/cdk/a11y';
 
-import { GalleryModule } from 'ngx-gallery';
+import { GalleryModule } from 'ng-gallery';
 // Uncomment the following line in development mode
 // import { GalleryModule } from '../../src/public-api';
 
