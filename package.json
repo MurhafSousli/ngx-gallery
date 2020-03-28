@@ -1,12 +1,12 @@
 {
-  "name": "ngx-gallery-project",
+  "name": "ng-gallery-project",
   "version": "5.0.0",
   "scripts": {
-    "start-demo": "ng serve ngx-gallery-demo",
-    "build-demo": "ng build ngx-gallery-demo --prod",
-    "build-lib": "ng build ngx-gallery --prod",
-    "link-lib": "npm link dist/ngx-gallery && npm link ngx-gallery",
-    "publish-lib": "npm publish dist/ngx-gallery"
+    "start-demo": "ng serve ng-gallery-demo",
+    "build-demo": "ng build ng-gallery-demo --prod",
+    "build-lib": "ng build ng-gallery --prod",
+    "link-lib": "npm link dist/ng-gallery && npm link ng-gallery",
+    "publish-lib": "npm publish dist/ng-gallery"
   },
   "repository": {
     "type": "git",

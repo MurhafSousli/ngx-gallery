@@ -1,161 +1,40 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-scrollbar": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
-      "root": "",
-      "sourceRoot": "src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/ngx-scrollbar",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
-            "aot": true,
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "ngx-scrollbar:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "ngx-scrollbar:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "ngx-scrollbar:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": []
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ngx-scrollbar:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "ngx-scrollbar:serve:production"
-            }
-          }
-        }
-      }
-    },
-    "ngx-gallery": {
+    "ng-gallery": {
       "projectType": "library",
-      "root": "projects/ngx-gallery",
-      "sourceRoot": "projects/ngx-gallery/src",
+      "root": "projects/ng-gallery",
+      "sourceRoot": "projects/ng-gallery/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/ngx-gallery/tsconfig.lib.json",
-            "project": "projects/ngx-gallery/ng-package.json"
+            "tsConfig": "projects/ng-gallery/tsconfig.lib.json",
+            "project": "projects/ng-gallery/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/ngx-gallery/tsconfig.lib.prod.json"
+              "tsConfig": "projects/ng-gallery/tsconfig.lib.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ngx-gallery/src/test.ts",
-            "tsConfig": "projects/ngx-gallery/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-gallery/karma.conf.js"
+            "main": "projects/ng-gallery/src/test.ts",
+            "tsConfig": "projects/ng-gallery/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-gallery/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/ngx-gallery/tsconfig.lib.json",
-              "projects/ngx-gallery/tsconfig.spec.json"
+              "projects/ng-gallery/tsconfig.lib.json",
+              "projects/ng-gallery/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -164,32 +43,32 @@
         }
       }
     },
-    "ngx-gallery-demo": {
+    "ng-gallery-demo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "projects/ngx-gallery-demo",
-      "sourceRoot": "projects/ngx-gallery-demo/src",
+      "root": "projects/ng-gallery-demo",
+      "sourceRoot": "projects/ng-gallery-demo/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ngx-gallery-demo",
-            "index": "projects/ngx-gallery-demo/src/index.html",
-            "main": "projects/ngx-gallery-demo/src/main.ts",
-            "polyfills": "projects/ngx-gallery-demo/src/polyfills.ts",
-            "tsConfig": "projects/ngx-gallery-demo/tsconfig.app.json",
+            "outputPath": "dist/ng-gallery-demo",
+            "index": "projects/ng-gallery-demo/src/index.html",
+            "main": "projects/ng-gallery-demo/src/main.ts",
+            "polyfills": "projects/ng-gallery-demo/src/polyfills.ts",
+            "tsConfig": "projects/ng-gallery-demo/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "projects/ngx-gallery-demo/src/favicon.ico",
-              "projects/ngx-gallery-demo/src/assets"
+              "projects/ng-gallery-demo/src/favicon.ico",
+              "projects/ng-gallery-demo/src/assets"
             ],
             "styles": [
-              "projects/ngx-gallery-demo/src/styles.scss"
+              "projects/ng-gallery-demo/src/styles.scss"
             ],
             "scripts": []
           },
@@ -197,8 +76,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "projects/ngx-gallery-demo/src/environments/environment.ts",
-                  "with": "projects/ngx-gallery-demo/src/environments/environment.prod.ts"
+                  "replace": "projects/ng-gallery-demo/src/environments/environment.ts",
+                  "with": "projects/ng-gallery-demo/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -227,33 +106,33 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-gallery-demo:build"
+            "browserTarget": "ng-gallery-demo:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ngx-gallery-demo:build:production"
+              "browserTarget": "ng-gallery-demo:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-gallery-demo:build"
+            "browserTarget": "ng-gallery-demo:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ngx-gallery-demo/src/test.ts",
-            "polyfills": "projects/ngx-gallery-demo/src/polyfills.ts",
-            "tsConfig": "projects/ngx-gallery-demo/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-gallery-demo/karma.conf.js",
+            "main": "projects/ng-gallery-demo/src/test.ts",
+            "polyfills": "projects/ng-gallery-demo/src/polyfills.ts",
+            "tsConfig": "projects/ng-gallery-demo/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-gallery-demo/karma.conf.js",
             "assets": [
-              "projects/ngx-gallery-demo/src/favicon.ico",
-              "projects/ngx-gallery-demo/src/assets"
+              "projects/ng-gallery-demo/src/favicon.ico",
+              "projects/ng-gallery-demo/src/assets"
             ],
             "styles": [
-              "projects/ngx-gallery-demo/src/styles.scss"
+              "projects/ng-gallery-demo/src/styles.scss"
             ],
             "scripts": []
           }
@@ -262,9 +141,9 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/ngx-gallery-demo/tsconfig.app.json",
-              "projects/ngx-gallery-demo/tsconfig.spec.json",
-              "projects/ngx-gallery-demo/e2e/tsconfig.json"
+              "projects/ng-gallery-demo/tsconfig.app.json",
+              "projects/ng-gallery-demo/tsconfig.spec.json",
+              "projects/ng-gallery-demo/e2e/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -274,16 +153,16 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "projects/ngx-gallery-demo/e2e/protractor.conf.js",
-            "devServerTarget": "ngx-gallery-demo:serve"
+            "protractorConfig": "projects/ng-gallery-demo/e2e/protractor.conf.js",
+            "devServerTarget": "ng-gallery-demo:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ngx-gallery-demo:serve:production"
+              "devServerTarget": "ng-gallery-demo:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "ngx-scrollbar"
+  "defaultProject": "ng-gallery-demo"
 }
