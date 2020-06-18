@@ -116,7 +116,7 @@ export class GalleryImageComponent implements OnInit, OnDestroy {
   }
 
   onLoaded(blobUrl: string) {
-    this.imageUrl = this._sanitizer.bypassSecurityTrustStyle(`url(${blobUrl})`);
+    this.imageUrl = this._sanitizer.bypassSecurityTrustStyle(`url("${blobUrl}")`);
     this._state.next('success');
   }
 
