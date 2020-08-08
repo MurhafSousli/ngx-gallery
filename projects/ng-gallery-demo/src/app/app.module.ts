@@ -26,16 +26,6 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
 import { NG_SCROLLBAR_OPTIONS } from 'ngx-scrollbar';
 
-// =================
-// Highlight.js languages
-export function getHighlightLanguages() {
-  return {
-    typescript: () => import('highlight.js/lib/languages/typescript'),
-    css: () => import('highlight.js/lib/languages/css'),
-    xml: () => import('highlight.js/lib/languages/xml')
-  };
-}
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +54,12 @@ export function getHighlightLanguages() {
     {
       provide: HIGHLIGHT_OPTIONS,
       useValue: {
-        languages: getHighlightLanguages()
+        coreLibraryLoader: () => import('highlight.js/lib/core'),
+        languages: {
+          typescript: () => import('highlight.js/lib/languages/typescript'),
+          css: () => import('highlight.js/lib/languages/css'),
+          xml: () => import('highlight.js/lib/languages/xml')
+        }
       }
     },
     {
