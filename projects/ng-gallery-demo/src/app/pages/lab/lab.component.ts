@@ -32,7 +32,7 @@ export class LabComponent implements OnInit {
   indexChange$ = new BehaviorSubject<any>({active: false});
 
   constructor(pixabay: Pixabay, private _title: Title) {
-    this.photos$ = pixabay.getImages('cars');
+    this.photos$ = pixabay.getHDImages('cars');
   }
 
   ngOnInit() {

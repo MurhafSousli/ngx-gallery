@@ -23,11 +23,10 @@ export class GalleryExampleComponent implements OnInit {
   readonly media$: Observable<GalleryConfig>;
 
   constructor(pixabay: Pixabay, mediaObserver: MediaObserver, private _title: Title) {
-    this.fruits$ = pixabay.getImages('fruit');
-    this.media$ = mediaObserver.media$.pipe(
-      map((res: MediaChange) => {
-        console.log(res);
-        if (res.mqAlias === 'sm' || res.mqAlias === 'xs') {
+    this.fruits$ = pixabay.getHDImages('fruit');
+    this.media$ = mediaObserver.asObservable().pipe(
+      map((res: MediaChange[]) => {
+        if (res.some((x => x.mqAlias === 'sm' || x.mqAlias === 'xs'))) {
           return {
             thumbPosition: ThumbnailsPosition.Top,
             thumbWidth: 80,
