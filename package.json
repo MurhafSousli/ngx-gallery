@@ -28,6 +28,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/free-brands-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
+    "hammerjs": "^2.0.8",
     "ngx-highlightjs": "^4.1.1",
     "ngx-progressbar": "^6.0.3",
     "ngx-scrollbar": "^7.2.3",
