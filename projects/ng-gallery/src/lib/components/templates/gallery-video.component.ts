@@ -11,15 +11,17 @@ import { Component, Input, OnInit, ViewChild, ElementRef, ChangeDetectionStrateg
 })
 export class GalleryVideoComponent implements OnInit {
 
-  videoSources: {url: string, type?: string}[];
+  videoSources: { url: string, type?: string }[];
 
-  @Input() src: string | {url: string, type?: string}[];
+  @Input() src: string | { url: string, type?: string }[];
   @Input() poster: string;
 
   @Input('pause') set pauseVideo(shouldPause: boolean) {
-    const video: HTMLVideoElement = this.video.nativeElement;
-    if (shouldPause && !video.paused) {
-      video.pause();
+    if (this.video.nativeElement) {
+      const video: HTMLVideoElement = this.video.nativeElement;
+      if (shouldPause && !video.paused) {
+        video.pause();
+      }
     }
   }
 
