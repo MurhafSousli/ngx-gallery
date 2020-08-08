@@ -80,6 +80,8 @@ export class Lightbox {
     lightboxRef.instance.ariaLabel = this._config.ariaLabel;
     lightboxRef.instance.ariaLabelledBy = this._config.ariaLabelledBy;
     lightboxRef.instance.ariaDescribedBy = this._config.ariaDescribedBy;
+    lightboxRef.instance.startAnimationTime = this._config.startAnimationTime;
+    lightboxRef.instance.exitAnimationTime = this._config.exitAnimationTime;
 
     if (_config.hasBackdrop) {
       this._overlayRef.backdropClick().subscribe(() => this.close());

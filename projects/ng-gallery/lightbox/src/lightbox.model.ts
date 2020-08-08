@@ -12,4 +12,6 @@ export interface LightboxConfig {
   ariaLabelledBy?: string;
   ariaLabel?: string;
   ariaDescribedBy?: string;
+  startAnimationTime?: number;
+  exitAnimationTime?: number;
 }

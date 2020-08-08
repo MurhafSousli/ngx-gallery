@@ -3,7 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { AnimationEvent } from '@angular/animations';
 import { OverlayRef } from '@angular/cdk/overlay';
-import { FocusTrap, FocusTrapFactory } from '@angular/cdk/a11y';
+import { FocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { lightboxAnimation } from './lightbox.animation';
 
 @Component({
@@ -25,7 +25,7 @@ import { lightboxAnimation } from './lightbox.animation';
     '[attr.aria-labelledby]': 'ariaLabel ? null : ariaLabelledBy',
     '[attr.aria-label]': 'ariaLabel',
     '[attr.aria-describedby]': 'ariaDescribedBy || null',
-    '[@lightbox]': 'state',
+    '[@lightbox]': '{ value: state, params: { startAnimationTime: startAnimationTime, exitAnimationTime: exitAnimationTime } }',
     '(@lightbox.done)': 'onAnimationDone($event)',
   }
 })
@@ -55,6 +55,12 @@ export class LightboxComponent {
   /** ID of the element that describes the lightbox. */
   ariaDescribedBy: string;
 
+  /** The lightbox start animation time in ms */
+  startAnimationTime: number;
+
+  /** The lightbox exit animation time in ms */
+  exitAnimationTime: number;
+
   /** The class that traps and manages focus within the lightbox. */
   private _focusTrap: FocusTrap;
 
@@ -62,7 +68,7 @@ export class LightboxComponent {
   private _elementFocusedBeforeDialogWasOpened: HTMLElement;
 
   constructor(@Optional() @Inject(DOCUMENT) private _document: any,
-              private _focusTrapFactory: FocusTrapFactory,
+              private _focusTrapFactory: ConfigurableFocusTrapFactory,
               private _elementRef: ElementRef,
               public sanitizer: DomSanitizer) {
     this._savePreviouslyFocusedElement();
