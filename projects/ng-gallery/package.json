@@ -28,5 +28,8 @@
     "@angular/core": ">=8.0.0",
     "@angular/cdk": ">=8.0.0",
     "rxjs": ">=6.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
   }
 }
