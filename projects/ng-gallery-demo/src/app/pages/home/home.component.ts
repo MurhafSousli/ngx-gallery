@@ -22,9 +22,9 @@ export class HomeComponent implements OnInit {
 
   constructor(pixabay: Pixabay, mediaObserver: MediaObserver, private _title: Title) {
     this.camel$ = pixabay.getHDImages('juice');
-    this.media$ = mediaObserver.media$.pipe(
-      map((res: MediaChange) => {
-        if (res.mqAlias === 'sm' || res.mqAlias === 'xs') {
+    this.media$ = mediaObserver.asObservable().pipe(
+      map((res: MediaChange[]) => {
+        if (res.some((x => x.mqAlias === 'sm' || x.mqAlias === 'xs'))) {
           return {
             thumbWidth: 80,
             thumbHeight: 80
