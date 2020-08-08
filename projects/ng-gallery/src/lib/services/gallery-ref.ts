@@ -99,8 +99,6 @@ export class GalleryRef {
    * Add gallery item
    */
   add(item: GalleryItem, active?: boolean) {
-
-    // console.log('add item', this.state.value.items, item);
     const items = [...this._state.value.items, item];
     this.setState({
       action: GalleryAction.ITEMS_CHANGED,

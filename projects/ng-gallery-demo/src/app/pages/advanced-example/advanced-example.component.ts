@@ -47,8 +47,6 @@ export class AdvancedExampleComponent implements OnInit {
     this._title.setTitle('Advanced | ng-gallery');
     const galleryRef = this._gallery.ref('mixed');
 
-    galleryRef.state.subscribe(x => console.log(x));
-    console.log('gallery mixed');
     this.arr.map((item: any) => {
       switch (item.type) {
         case GalleryItemType.Image:
