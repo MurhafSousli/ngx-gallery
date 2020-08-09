@@ -14,7 +14,16 @@ import { Subscription, SubscriptionLike } from 'rxjs';
 import { Gallery } from '../services/gallery.service';
 import { GalleryRef } from '../services/gallery-ref';
 import { GalleryError, GalleryItem, GalleryState } from '../models/gallery.model';
-import { IframeItem, ImageItem, VideoItem, YoutubeItem } from './templates/items.model';
+import {
+  IframeItem,
+  IframeItemData,
+  ImageItem,
+  ImageItemData,
+  VideoItem,
+  VideoItemData,
+  YoutubeItem,
+  YoutubeItemData
+} from './templates/items.model';
 
 @Component({
   selector: 'gallery',
@@ -121,7 +130,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
         this.galleryRef.prev();
         break;
       default:
-        this.galleryRef.set(<number>i);
+        this.galleryRef.set(i as number);
     }
   }
 
@@ -202,19 +211,19 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     this.galleryRef.add(item, active);
   }
 
-  addImage(data: any, active?: boolean) {
+  addImage(data: ImageItemData, active?: boolean) {
     this.add(new ImageItem(data), active);
   }
 
-  addVideo(data: any, active?: boolean) {
+  addVideo(data: VideoItemData, active?: boolean) {
     this.add(new VideoItem(data), active);
   }
 
-  addIframe(data: any, active?: boolean) {
+  addIframe(data: IframeItemData, active?: boolean) {
     this.add(new IframeItem(data), active);
   }
 
-  addYoutube(data: any, active?: boolean) {
+  addYoutube(data: YoutubeItemData, active?: boolean) {
     this.add(new YoutubeItem(data), active);
   }
 

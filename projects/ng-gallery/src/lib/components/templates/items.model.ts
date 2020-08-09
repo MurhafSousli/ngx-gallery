@@ -3,9 +3,9 @@ import { GalleryItemType } from '../../models/constants';
 
 export class ImageItem implements GalleryItem {
   readonly type: string;
-  readonly data: ImageItemOptions;
+  readonly data: ImageItemData;
 
-  constructor(data: ImageItemOptions) {
+  constructor(data: ImageItemData) {
     this.data = data;
     this.type = GalleryItemType.Image;
   }
@@ -13,9 +13,9 @@ export class ImageItem implements GalleryItem {
 
 export class VideoItem implements GalleryItem {
   readonly type: string;
-  readonly data: VideoItemOptions;
+  readonly data: VideoItemData;
 
-  constructor(data: VideoItemOptions) {
+  constructor(data: VideoItemData) {
     this.data = data;
     this.type = GalleryItemType.Video;
   }
@@ -23,9 +23,9 @@ export class VideoItem implements GalleryItem {
 
 export class IframeItem implements GalleryItem {
   readonly type: string;
-  readonly data: IframeItemOptions;
+  readonly data: IframeItemData;
 
-  constructor(data: IframeItemOptions) {
+  constructor(data: IframeItemData) {
     this.data = data;
     this.type = GalleryItemType.Iframe;
   }
@@ -33,9 +33,9 @@ export class IframeItem implements GalleryItem {
 
 export class YoutubeItem implements GalleryItem {
   readonly type: string;
-  readonly data: YoutubeItemOptions;
+  readonly data: YoutubeItemData;
 
-  constructor(data: YoutubeItemOptions) {
+  constructor(data: YoutubeItemData) {
     this.data = {
       ...data,
       ...{
@@ -47,22 +47,22 @@ export class YoutubeItem implements GalleryItem {
   }
 }
 
-type GalleryItemOptions = {
+type GalleryItemData = {
   src?: string;
   thumb?: string;
 };
 
-export type ImageItemOptions = GalleryItemOptions;
+export type ImageItemData = GalleryItemData;
 
-export type IframeItemOptions = GalleryItemOptions & {
+export type IframeItemData = GalleryItemData & {
   params?: any;
 };
 
-export type YoutubeItemOptions = IframeItemOptions & {
+export type YoutubeItemData = IframeItemData & {
   autoplay?: boolean;
 };
 
-export type VideoItemOptions = {
+export type VideoItemData = {
   src?: string | { url: string, type: string }[];
   thumb?: string;
   poster?: string;
