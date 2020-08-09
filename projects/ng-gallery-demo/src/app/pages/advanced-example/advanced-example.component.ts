@@ -50,16 +50,16 @@ export class AdvancedExampleComponent implements OnInit {
     this.arr.map((item: any) => {
       switch (item.type) {
         case GalleryItemType.Image:
-          galleryRef.addImage({src: item.src, thumb: item.thumb, title: item.title});
+          galleryRef.addImage(item);
           break;
         case GalleryItemType.Video:
-          galleryRef.addVideo({src: item.src, thumb: item.thumb, poster: item.poster});
+          galleryRef.addVideo(item);
           break;
         case GalleryItemType.Youtube:
-          galleryRef.addYoutube({src: item.src});
+          galleryRef.addYoutube(item);
           break;
         default:
-          galleryRef.addIframe({src: item.src, thumb: item.thumb});
+          galleryRef.addIframe(item);
       }
     });
   }
@@ -92,13 +92,22 @@ const data = [
   },
   {
     type: 'video',
-    src: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
-    thumb: 'http://laza.jalbum.net/Testing%20Base%20as%20site/Media/slides/big_buck_bunny.jpg',
-    poster: 'http://laza.jalbum.net/Testing%20Base%20as%20site/Media/slides/big_buck_bunny.jpg'
+    autoplay: true,
+    src: [
+      {
+        url: 'https://interactive-examples.mdn.mozilla.net/media/examples/flower.webm',
+        type: 'video/webm'
+      },
+      {
+        url: 'https://interactive-examples.mdn.mozilla.net/media/examples/flower.mp4',
+        type: 'video/mp4'
+      },
+    ]
   },
   {
     type: 'youtube',
-    src: '-OvvpsfU3NQ'
+    autoplay: true,
+    src: '1nf61dNdzPc'
   },
   {
     type: 'iframe',
