@@ -4,7 +4,7 @@ import { Component, Input, OnInit, ViewChild, ElementRef, ChangeDetectionStrateg
   selector: 'gallery-video',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <video #video controls [poster]="poster" (error)="error.emit($event)">
+    <video #video [controls]="controls" [poster]="poster" (error)="error.emit($event)">
       <source *ngFor="let src of videoSources" [src]="src?.url" [type]="src?.type"/>
     </video>
   `
@@ -12,9 +12,11 @@ import { Component, Input, OnInit, ViewChild, ElementRef, ChangeDetectionStrateg
 export class GalleryVideoComponent implements OnInit {
 
   videoSources: { url: string, type?: string }[];
+  controls: boolean;
 
   @Input() src: string | { url: string, type?: string }[];
   @Input() poster: string;
+  @Input('controls') controlsEnabled: boolean;
 
   @Input('pause') set pauseVideo(shouldPause: boolean) {
     if (this.video.nativeElement) {
@@ -37,5 +39,6 @@ export class GalleryVideoComponent implements OnInit {
     } else {
       this.videoSources = [{ url: this.src }];
     }
+    this.controls = typeof this.controlsEnabled === 'boolean' ? this.controlsEnabled : true;
   }
 }

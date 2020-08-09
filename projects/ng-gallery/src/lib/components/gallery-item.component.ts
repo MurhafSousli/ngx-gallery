@@ -26,6 +26,7 @@ import { LoadingStrategy, GalleryItemType } from '../models/constants';
       <gallery-video *ngSwitchCase="Types.Video"
                      [src]="data.src"
                      [poster]="data.poster"
+                     [controls]="data.controls"
                      [pause]="currIndex !== index"
                      (error)="error.emit($event)"></gallery-video>
 
