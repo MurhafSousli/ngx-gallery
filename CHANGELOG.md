@@ -1,5 +1,23 @@
 # Changelog
 
+## 5.0.0-beta.1
+
+- Upgrade to Angular 9.
+- Combine all packages in one package.
+- Remove import `HttpClientModule` from `GalleryModule`.
+
+### Breaking changes
+
+**Before:**
+
+- The packages were published on `@ngx-gallery/core`, `@ngx-gallery/lightbox` and `@ngx-gallery/gallerize`.
+
+**After:**
+
+- All the packages are now combined in `ng-gallery` (NOTE: it is not `ngx-gallery` that is a different package).
+- Import `GalleryMlodule` from `ng-gallery` and `LightboxModule` from `ng-gallery/lightbox`.
+- The module `GallerizeModule` has been removed, the `[gallerize]` directive can still be used from the `LightboxModule`.
+
 ## 5.0.0-beta.0
 
 - regret: Remove `mode=intermediate` option, closes [#309](https://github.com/MurhafSousli/ngx-gallery/issues/309) and [#297](https://github.com/MurhafSousli/ngx-gallery/issues/297) in [b1df18c](https://github.com/MurhafSousli/ngx-gallery/pull/311/commits/b1df18c6069ddabe02c0bee1e0653dd97692a96e).

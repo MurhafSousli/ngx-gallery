@@ -3,8 +3,15 @@ dist: trusty
 
 language: node_js
 node_js:
+  - "12"
   - "10"
-  - "8"
 
-script: npm run build-core
+cache:
+  directories:
+    - ./node_modules
 
+install:
+  - npm install
+
+script:
+  - npm run build-lib

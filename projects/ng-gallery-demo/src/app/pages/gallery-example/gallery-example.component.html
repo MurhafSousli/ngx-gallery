@@ -1,0 +1,103 @@
+<ng-scrollbar>
+  <div class="page-title">
+    <h1>Gallery</h1>
+  </div>
+  <div class="page-content">
+
+    <section>
+      <section-title>Overview</section-title>
+      <p><code class="hljs" [textContent]="'<gallery>'"></code> a slideshow component for cycling through
+        elements - images, videos or iframes - like a carousel.</p>
+    </section>
+    
+    <section>
+      <section-title>Installation</section-title>
+      <p>Install with NPM</p>
+
+      <div class="install">
+        <b>NPM</b>
+        <hl-code [code]="'npm i ng-gallery'" [disabled]="true"></hl-code>
+      </div>
+    </section>
+
+    <section>
+      <section-title class="no-margin-bottom">Usage</section-title>
+
+      <note class="info" style="margin: -3em 0 -1em">
+        <p>If you haven't installed and imported the module in step <span class="section-number inline-number">1</span>,
+          see the <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent" [routerLink]="['/getting-started/core']">Getting
+            Started Guide</a></p>
+      </note>
+
+      <div class="usage-title">
+        <span class="section-number">2</span>
+        <p>Create a gallery items array to load it in the gallery</p>
+      </div>
+
+      <mat-tab-group>
+
+        <mat-tab label="Basic">
+          <ng-template matTabContent>
+            <p>The most basic usage is to load items using an array of type <code class="hljs">GalleryItem[]</code></p>
+            <p>This is done using the template binding</p>
+            <hl-code [code]="code.basic" [height]="400"></hl-code>
+          </ng-template>
+        </mat-tab>
+
+        <mat-tab label="Stream">
+          <ng-template matTabContent>
+            <p>Another way is to convert a stream of data to a stream of gallery items using the map operator.</p>
+            <p>This can be done using the <code class="hljs">async</code> pipe to subscribe to the stream in the
+              template.</p>
+            <hl-code [code]="code.stream" [height]="400"></hl-code>
+          </ng-template>
+        </mat-tab>
+
+        <mat-tab label="GalleryComponent">
+          <ng-template matTabContent>
+            <p>Alternatively, The gallery can be accessed using the component reference.</p>
+            <p>Get the component using <code class="hljs">@ViewChild(GalleryComponent)</code> then add items</p>
+            <hl-code [code]="code.galleryCmp" [height]="400"></hl-code>
+          </ng-template>
+        </mat-tab>
+
+        <mat-tab label="GalleryRef">
+          <ng-template matTabContent>
+            <p>Access the gallery from anywhere in your app.</p>
+            <p>Use the <code class="hljs">Gallery</code> service to get the <code class="hljs">GalleryRef</code> by id
+            </p>
+            <hl-code [code]="code.galleryRef" [height]="400"></hl-code>
+          </ng-template>
+        </mat-tab>
+
+      </mat-tab-group>
+
+      <h3>Example</h3>
+
+      <gallery id="basic" *ngIf="media$ | async; let config" [items]="fruits$ | async" [thumbWidth]="config.thumbWidth"
+        [thumbHeight]="config.thumbHeight" [thumbPosition]="config.thumbPosition"></gallery>
+
+
+      <hl-code [code]="code.example"></hl-code>
+
+      <note>
+        <p>The gallery has many options that you can adjust, check all available options in
+          <a mat-button class="inline-button" color="primary" href="https://github.com/MurhafSousli/ngx-gallery/wiki/Gallery-API">
+            <fa-icon icon="external-link-alt"></fa-icon>
+            Gallery API
+          </a>
+        </p>
+      </note>
+
+      <p>Beside these options, you can also use CSS to change gallery's style.</p>
+
+      <p>For more advanced usage, check the
+        <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent" routerLink="/advanced">Advanced
+          Example</a>
+      </p>
+
+    </section>
+
+  </div>
+  <footer></footer>
+</ng-scrollbar>
