@@ -18,11 +18,7 @@ export const docRoutes: Routes = [
       {
         path: 'lightbox',
         loadChildren: () => import('./doc-lightbox/doc-lightbox.module').then(m => m.DocLightboxModule)
-      },
-      {
-        path: 'gallerize',
-        loadChildren: () => import('./doc-gallerize/doc-gallerize.module').then(m => m.DocGallerizeModule)
-      },
+      }
     ]
   }
 ];
