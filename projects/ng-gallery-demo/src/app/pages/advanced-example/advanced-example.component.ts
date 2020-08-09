@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Gallery, GalleryConfig, GalleryItemType } from '../../../../../ng-gallery/src/public-api';
+import {
+  Gallery,
+  GalleryConfig,
+  GalleryItemType,
+  IframeItemOptions,
+  ImageItemOptions,
+  VideoItemOptions,
+  YoutubeItemOptions
+} from '../../../../../ng-gallery/src/public-api';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -27,9 +35,9 @@ export class AdvancedExampleComponent implements OnInit {
   readonly videoIcon = faVideo;
 
   constructor(private _gallery: Gallery, mediaObserver: MediaObserver, private _title: Title) {
-    this.media$ = mediaObserver.media$.pipe(
-      map((res: MediaChange) => {
-        if (res.mqAlias === 'sm' || res.mqAlias === 'xs') {
+    this.media$ = mediaObserver.asObservable().pipe(
+      map((res: MediaChange[]) => {
+        if (res.some((x => x.mqAlias === 'sm' || x.mqAlias === 'xs'))) {
           return {
             thumbWidth: 80,
             thumbHeight: 80
@@ -71,25 +79,25 @@ const data = [
     src: 'assets/img/img13.jpg',
     thumb: 'assets/img/thumb/img13.jpg',
     title: 'Scelerisque dapibus fringilla consequat scelerisque torquent senectus porttitor, placerat fames convallis molestie lobortis diam aliquam'
-  },
+  } as ImageItemOptions,
   {
     type: 'image',
     src: 'assets/img/img11.jpg',
     thumb: 'assets/img/thumb/img11.jpg',
     title: 'Lorem ipsum curabitur auctor netus facilisis inceptos vivamus fusce inceptos, ullamcorper ipsum id pharetra curabitur leo curabitur.'
-  },
+  } as ImageItemOptions,
   {
     type: 'image',
     src: 'assets/img/img3.jpg',
     thumb: 'assets/img/thumb/img3.jpg',
     title: 'Iaculis eros leo interdum erat tellus primis pharetra pulvinar, elit risus blandit tempus praesent himenaeos porta, neque elit neque ullamcorper ipsum curabitur at tempus aliquet quam fringilla.'
-  },
+  } as ImageItemOptions,
   {
     type: 'image',
     src: 'assets/img/img4.jpg',
     thumb: 'assets/img/thumb/img4.jpg',
     title: 'Morbi etiam interdum velit lacinia platea magna libero curae auctor'
-  },
+  } as ImageItemOptions,
   {
     type: 'video',
     autoplay: true,
@@ -103,17 +111,17 @@ const data = [
         type: 'video/mp4'
       },
     ]
-  },
+  } as VideoItemOptions,
   {
     type: 'youtube',
     autoplay: true,
-    src: '1nf61dNdzPc'
-  },
+    src: 'b7Cl7S0pLRw'
+  } as YoutubeItemOptions,
   {
     type: 'iframe',
     src: 'https://material.angular.io/',
     thumb: 'https://vignette.wikia.nocookie.net/random-ness/images/5/5f/TEH_POOTIS_MAN.jpg/revision/latest?cb=20130508152055'
-  }
+  } as IframeItemOptions
 ];
 
 const code = {
