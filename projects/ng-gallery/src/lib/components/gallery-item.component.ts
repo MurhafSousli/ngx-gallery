@@ -27,11 +27,13 @@ import { LoadingStrategy, GalleryItemType } from '../models/constants';
                      [src]="data.src"
                      [poster]="data.poster"
                      [controls]="data.controls"
+                     [play]="isAutoPlay"
                      [pause]="currIndex !== index"
                      (error)="error.emit($event)"></gallery-video>
 
       <gallery-iframe *ngSwitchCase="Types.Youtube"
                       [src]="data.src"
+                      [autoplay]="isAutoPlay"
                       [pause]="currIndex !== index"></gallery-iframe>
 
       <gallery-iframe *ngSwitchCase="Types.Iframe"
@@ -74,6 +76,14 @@ export class GalleryItemComponent {
 
   @HostBinding('class.g-active-item') get isActive() {
     return this.index === this.currIndex;
+  }
+
+  get isAutoPlay() {
+    if (this.isActive) {
+      if (this.type === GalleryItemType.Video || this.type === GalleryItemType.Youtube) {
+        return this.data.autoplay;
+      }
+    }
   }
 
   get load() {

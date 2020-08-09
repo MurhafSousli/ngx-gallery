@@ -27,6 +27,15 @@ export class GalleryVideoComponent implements OnInit {
     }
   }
 
+  @Input('play') set playVideo(shouldPlay: boolean) {
+    if (this.video.nativeElement) {
+      const video: HTMLVideoElement = this.video.nativeElement;
+      if (shouldPlay) {
+        video.play();
+      }
+    }
+  }
+
   /** Stream that emits when an error occurs */
   @Output() error = new EventEmitter<Error>();
 

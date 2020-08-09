@@ -37,8 +37,11 @@ export class YoutubeItem implements GalleryItem {
 
   constructor(data: any) {
     this.data = {
-      src: `//youtube.com/embed/${data.src}?wmode=transparent`,
-      thumb: data.thumb ? data.thumb : `//img.youtube.com/vi/${data.src}/default.jpg`
+      ...data,
+      ...{
+        src: `//youtube.com/embed/${ data.src }?wmode=transparent${ data.autoplay ? '&autoplay=1' : '' }`,
+        thumb: data.thumb ? data.thumb : `//img.youtube.com/vi/${ data.src }/default.jpg`
+      }
     };
     this.type = GalleryItemType.Youtube;
   }

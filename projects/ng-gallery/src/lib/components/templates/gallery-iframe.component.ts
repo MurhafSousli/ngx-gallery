@@ -8,6 +8,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
     <iframe #iframe
             frameborder="0"
             allowfullscreen
+            [attr.allow]="autoplay ? 'autoplay' : 'false'"
             [src]="iframeSrc">
     </iframe>
   `
@@ -17,6 +18,7 @@ export class GalleryIframeComponent implements OnInit {
   iframeSrc: SafeResourceUrl;
 
   @Input() src: string;
+  @Input() autoplay: boolean;
 
   @Input('pause') set pauseVideo(shouldPause: boolean) {
     const iframe: HTMLIFrameElement = this.iframe.nativeElement;
