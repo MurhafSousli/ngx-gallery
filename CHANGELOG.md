@@ -1,5 +1,16 @@
 # Changelog
 
+## 5.0.0
+
+- Upgrade to Angular 10.
+- feat(Lightbox): Add start/exit animation options, closes [#346](https://github.com/MurhafSousli/ngx-gallery/issues/346) in [6799a1c](https://github.com/MurhafSousli/ngx-gallery/pull/326/commits/6799a1c5e895dbc0753dfbb9f068d02807adf358).
+- feat(video item): ability to disable video controls, in [f6b48b1](https://github.com/MurhafSousli/ngx-gallery/pull/326/commits/f6b48b13616d8999bc5c76bf44a6fa428191ce8b).
+- feat(video item, youtube item): Ability to autoplay, closes [#304](https://github.com/MurhafSousli/ngx-gallery/issues/304) in [9caf8bf](https://github.com/MurhafSousli/ngx-gallery/pull/326/commits/9caf8bf7cbc8bf7cf580368cc5e3aefeb7d6daf5).
+- feat(youtube item): Allow url parameters, closes [#302](https://github.com/MurhafSousli/ngx-gallery/issues/302) in [3760789](https://github.com/MurhafSousli/ngx-gallery/pull/326/commits/37607895da4266b2ed4c297609db99f710d92b00).
+- fix(lightbox): Remove cdk styles import from the library.
+- fix(video item): Cannot read property 'nativeElement' of undefined, closes [#353](https://github.com/MurhafSousli/ngx-gallery/issues/353) in [ff10363](https://github.com/MurhafSousli/ngx-gallery/pull/326/commits/ff10363e03090d8dfc88fd44674b3cb655399c58).
+- fix(video item): Sanitized urls not working in <video>, closes [#346](https://github.com/MurhafSousli/ngx-gallery/issues/346) in [6799a1c](https://github.com/MurhafSousli/ngx-gallery/pull/326/commits/6799a1c5e895dbc0753dfbb9f068d02807adf358).
+
 ## 5.0.0-beta.1
 
 - Upgrade to Angular 9.

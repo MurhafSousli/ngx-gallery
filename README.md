@@ -16,7 +16,7 @@
 
 ___
 
-### The documentation is available at the [wiki page](https://github.com/MurhafSousli/ngx-scrollbar/wiki) 📚
+### The documentation is available at the [wiki page](https://github.com/MurhafSousli/ngx-gallery/wiki) 📚
 
 ___
 
