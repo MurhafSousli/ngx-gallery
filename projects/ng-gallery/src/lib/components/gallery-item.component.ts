@@ -32,7 +32,7 @@ import { LoadingStrategy, GalleryItemType } from '../models/constants';
                      (error)="error.emit($event)"></gallery-video>
 
       <gallery-iframe *ngSwitchCase="Types.Youtube"
-                      [src]="data.src"
+                      [src]="youtubeSrc"
                       [autoplay]="isAutoPlay"
                       [pause]="currIndex !== index"></gallery-iframe>
 
@@ -84,6 +84,20 @@ export class GalleryItemComponent {
         return this.data.autoplay;
       }
     }
+  }
+
+  get youtubeSrc() {
+    let autoplay: 1 | 0 = 0;
+    if (this.isActive && this.type === GalleryItemType.Youtube && this.data.autoplay) {
+      autoplay = 1;
+    }
+    const url = new URL(this.data.src);
+    url.search = new URLSearchParams({
+      wmode: 'transparent',
+      ...this.data.params,
+      autoplay
+    }).toString();
+    return url.href;
   }
 
   get load() {
