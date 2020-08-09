@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import {
   Gallery,
   GalleryConfig,
+  GalleryItemData,
   GalleryItemType,
   IframeItemData,
   ImageItemData,
@@ -55,7 +56,7 @@ export class AdvancedExampleComponent implements OnInit {
     this._title.setTitle('Advanced | ng-gallery');
     const galleryRef = this._gallery.ref('mixed');
 
-    this.arr.map((item: any) => {
+    this.arr.map((item: GalleryItemData) => {
       switch (item.type) {
         case GalleryItemType.Image:
           galleryRef.addImage(item);
@@ -73,7 +74,7 @@ export class AdvancedExampleComponent implements OnInit {
   }
 }
 
-const data = [
+const data: GalleryItemData[] = [
   {
     type: 'image',
     src: 'assets/img/img13.jpg',

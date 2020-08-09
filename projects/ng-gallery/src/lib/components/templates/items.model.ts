@@ -47,14 +47,15 @@ export class YoutubeItem implements GalleryItem {
   }
 }
 
-type GalleryItemData = {
+type GalleryItemModel = {
+  type?: string;
   src?: string;
   thumb?: string;
 };
 
-export type ImageItemData = GalleryItemData;
+export type ImageItemData = GalleryItemModel;
 
-export type IframeItemData = GalleryItemData & {
+export type IframeItemData = GalleryItemModel & {
   params?: any;
 };
 
@@ -62,10 +63,12 @@ export type YoutubeItemData = IframeItemData & {
   autoplay?: boolean;
 };
 
-export type VideoItemData = {
+export type VideoItemData = GalleryItemModel & {
   src?: string | { url: string, type: string }[];
   thumb?: string;
   poster?: string;
   controls?: boolean;
   autoplay?: boolean;
 };
+
+export type GalleryItemData = ImageItemData | VideoItemData | IframeItemData | YoutubeItemData;
