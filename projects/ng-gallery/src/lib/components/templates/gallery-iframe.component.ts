@@ -16,8 +16,10 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class GalleryIframeComponent {
 
   iframeSrc: SafeResourceUrl;
+  videoSrc: string;
 
   @Input('src') set src(src: string) {
+    this.videoSrc = src;
     this.iframeSrc = this._sanitizer.bypassSecurityTrustResourceUrl(src);
   }
 
@@ -26,6 +28,10 @@ export class GalleryIframeComponent {
       if (shouldPause) {
         const iframe: HTMLIFrameElement = this.iframe.nativeElement;
         iframe.src = null;
+
+        if (!this.autoplay && this.videoSrc) {
+          this.iframeSrc = this._sanitizer.bypassSecurityTrustResourceUrl(this.videoSrc);
+        }
       }
     }
   }
