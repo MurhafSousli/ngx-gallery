@@ -55,3 +55,8 @@ export enum GalleryItemType {
   Youtube = 'youtube',
   Iframe = 'iframe'
 }
+
+export enum ThumbnailsView {
+  Default = 'default',
+  Contain = 'contain',
+}
