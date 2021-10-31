@@ -208,27 +208,55 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
    * Convert sliding state to styles
    */
   private getSliderStyles(state: WorkerState): any {
+    const containerWidth = this._el.nativeElement?.getBoundingClientRect().width;
+    const containerHeight = this._el.nativeElement?.getBoundingClientRect().height;
+    const itemsLength = this.state.items.length;
+    const {thumbWidth, thumbHeight} = this.config;
+    const currIndex = this.state.currIndex;
+    const minHorizontalShift = (itemsLength * thumbWidth - containerWidth / 2) + 1;
+    const minVerticalShift = (itemsLength * thumbHeight - containerHeight / 2) + 1;
+
     let value: number;
     switch (this.config.thumbPosition) {
       case ThumbnailsPosition.Top:
       case ThumbnailsPosition.Bottom:
         this.width = '100%';
         this.height = this.config.thumbHeight + 'px';
-        value = -(this.state.currIndex * this.config.thumbWidth) - (this.config.thumbWidth / 2 - state.value);
+        switch (this.config.thumbView) {
+          case 'contain':
+            if ((currIndex * thumbWidth + thumbWidth / 2) > containerWidth / 2) {
+              value = -(Math.min(currIndex * thumbWidth + thumbWidth / 2, minHorizontalShift));
+            } else {
+              value = -(containerWidth / 2 - 1);
+            }
+            break;
+          default:
+            value = -(currIndex * thumbWidth) - (thumbWidth / 2 - state.value);
+        }
         return {
           transform: `translate3d(${value}px, 0, 0)`,
-          width: this.state.items.length * this.config.thumbWidth + 'px',
+          width: itemsLength * thumbWidth + 'px',
           height: '100%'
         };
       case ThumbnailsPosition.Left:
       case ThumbnailsPosition.Right:
         this.width = this.config.thumbWidth + 'px';
         this.height = '100%';
-        value = -(this.state.currIndex * this.config.thumbHeight) - (this.config.thumbHeight / 2 - state.value);
+        switch (this.config.thumbView) {
+          case 'contain':
+            if ((currIndex * thumbHeight + thumbHeight / 2) > containerHeight / 2) {
+              value = -(Math.min(currIndex * thumbHeight + thumbHeight / 2, minVerticalShift));
+            } else {
+              value = -(containerHeight / 2 - 1);
+            }
+            break;
+          default:
+            value = -(currIndex * thumbHeight) - (thumbHeight / 2 - state.value);
+        }
         return {
           transform: `translate3d(0, ${value}px, 0)`,
           width: '100%',
-          height: this.state.items.length * this.config.thumbHeight + 'px'
+          height: itemsLength * thumbHeight + 'px'
         };
     }
   }
