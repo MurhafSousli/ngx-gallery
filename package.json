@@ -1,6 +1,6 @@
 {
   "name": "ng-gallery-project",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "scripts": {
     "start-demo": "ng serve ng-gallery-demo",
     "build-demo": "ng build ng-gallery-demo --prod",
