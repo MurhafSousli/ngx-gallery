@@ -19,9 +19,8 @@
       "dom"
     ],
     "paths": {
-      "ngx-gallery": [
-        "dist/ngx-gallery/ngx-gallery",
-        "dist/ngx-gallery"
+      "ng-gallery": [
+        "projects/ng-gallery/src/public-api"
       ]
     }
   },
