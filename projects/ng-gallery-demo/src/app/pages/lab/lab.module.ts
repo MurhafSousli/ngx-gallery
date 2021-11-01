@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { LabComponent } from './lab.component';
+import { GalleryModule } from 'ng-gallery';
 import { SharedModule } from '../../shared/shared.module';
-
-import { GalleryModule } from '../../../../../ng-gallery/src/public-api';
+import { LabComponent } from './lab.component';
 
 @NgModule({
   imports: [

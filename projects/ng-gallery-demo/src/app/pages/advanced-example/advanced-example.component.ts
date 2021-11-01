@@ -9,7 +9,7 @@ import {
   ImageItemData,
   VideoItemData,
   YoutubeItemData
-} from '../../../../../ng-gallery/src/public-api';
+} from 'ng-gallery';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -104,13 +104,9 @@ const data: GalleryItemData[] = [
     autoplay: true,
     src: [
       {
-        url: 'https://interactive-examples.mdn.mozilla.net/media/examples/flower.webm',
-        type: 'video/webm'
-      },
-      {
-        url: 'https://interactive-examples.mdn.mozilla.net/media/examples/flower.mp4',
+        url: 'http://techslides.com/demos/sample-videos/small.mp4',
         type: 'video/mp4'
-      },
+      }
     ]
   } as VideoItemData,
   {
@@ -120,7 +116,7 @@ const data: GalleryItemData[] = [
   } as YoutubeItemData,
   {
     type: 'iframe',
-    src: 'https://material.angular.io/',
+    src: 'https://html.com/resources/free-html-templates/',
     thumb: 'https://vignette.wikia.nocookie.net/random-ness/images/5/5f/TEH_POOTIS_MAN.jpg/revision/latest?cb=20130508152055'
   } as IframeItemData
 ];
