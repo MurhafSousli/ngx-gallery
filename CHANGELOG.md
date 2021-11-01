@@ -1,5 +1,14 @@
 # Changelog
 
+## 5.1.0
+
+Adds a new option to the global config as well as an input called `thumbView` which is expects a value of either `default` or `contain`
+
+- feat(core): Thumbnails should always use the available space, cloeses [#340](https://github.com/MurhafSousli/ngx-gallery/issues/340) in [ad3e514](https://github.com/MurhafSousli/ngx-gallery/pull/409/commits/ad3e5143e86c922d5d5927bb527f83e9a99612d8). 
+- fix(core): Viedo item displays the application instead of video, cloeses [#398](https://github.com/MurhafSousli/ngx-gallery/issues/398) in [f07c304](https://github.com/MurhafSousli/ngx-gallery/pull/409/commits/f07c3047a2426293bc34bcf57765642df0bcc35a).
+
+ > Special thanks to @NexGenUA for the PR
+
 ## 5.0.0
 
 - Upgrade to Angular 10.
