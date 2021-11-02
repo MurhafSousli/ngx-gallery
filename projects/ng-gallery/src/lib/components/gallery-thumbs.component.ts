@@ -15,7 +15,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GalleryConfig } from '../models/config.model';
 import { GalleryState, GalleryError } from '../models/gallery.model';
-import { ThumbnailsPosition, ThumbnailsMode } from '../models/constants';
+import { ThumbnailsPosition, ThumbnailsMode, ThumbnailsView } from '../models/constants';
 import { SliderState, WorkerState } from '../models/slider.model';
 
 declare const Hammer: any;
@@ -27,6 +27,7 @@ declare const Hammer: any;
     <div *ngIf="sliderState$ | async; let sliderState"
          class="g-thumbs-container">
       <div class="g-slider"
+           [class.contain]="config.thumbView === thumbnailsView.Contain"
            [class.g-no-transition]="sliderState.active"
            [ngStyle]="sliderState.style">
 
@@ -53,6 +54,9 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
 
   /** Current slider position in free sliding mode */
   private _freeModeCurrentOffset = 0;
+
+  /** Thumbnails view enum */
+  thumbnailsView = ThumbnailsView;
 
   /** Stream that emits sliding state */
   sliderState$: Observable<SliderState>;
@@ -213,8 +217,8 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
     const itemsLength = this.state.items.length;
     const {thumbWidth, thumbHeight} = this.config;
     const currIndex = this.state.currIndex;
-    const minHorizontalShift = (itemsLength * thumbWidth - containerWidth / 2) + 1;
-    const minVerticalShift = (itemsLength * thumbHeight - containerHeight / 2) + 1;
+    const minHorizontalShift = itemsLength * thumbWidth - containerWidth;
+    const minVerticalShift = itemsLength * thumbHeight - containerHeight;
 
     let value: number;
     switch (this.config.thumbPosition) {
@@ -224,10 +228,10 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
         this.height = this.config.thumbHeight + 'px';
         switch (this.config.thumbView) {
           case 'contain':
-            if ((currIndex * thumbWidth + thumbWidth / 2) > containerWidth / 2) {
-              value = -(Math.min(currIndex * thumbWidth + thumbWidth / 2, minHorizontalShift));
+            if (((currIndex * thumbWidth + thumbWidth / 2) > containerWidth / 2) && containerWidth < itemsLength * thumbWidth) {
+              value = -(Math.min((currIndex * thumbWidth + thumbWidth / 2) - (containerWidth / 2), minHorizontalShift));
             } else {
-              value = -(containerWidth / 2 - 1);
+              value = 0;
             }
             break;
           default:
@@ -244,10 +248,10 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
         this.height = '100%';
         switch (this.config.thumbView) {
           case 'contain':
-            if ((currIndex * thumbHeight + thumbHeight / 2) > containerHeight / 2) {
-              value = -(Math.min(currIndex * thumbHeight + thumbHeight / 2, minVerticalShift));
+            if (((currIndex * thumbHeight + thumbHeight / 2) > containerHeight / 2) && containerHeight < itemsLength * thumbHeight) {
+              value = -(Math.min((currIndex * thumbHeight + thumbHeight / 2) - (containerHeight / 2), minVerticalShift));
             } else {
-              value = -(containerHeight / 2 - 1);
+              value = 0;
             }
             break;
           default:

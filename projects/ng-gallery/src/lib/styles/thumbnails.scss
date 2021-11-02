@@ -28,6 +28,10 @@
       flex-direction: row;
       top: 0;
       left: 50%;
+
+      &.contain {
+        left: 0;
+      }
     }
     gallery-thumb {
       padding: 1px 0 1px 1px;
@@ -41,6 +45,10 @@
         flex-direction: column;
         top: 50%;
         left: 0;
+
+        &.contain {
+          top: 0;
+        }
       }
     }
     gallery-thumb {
