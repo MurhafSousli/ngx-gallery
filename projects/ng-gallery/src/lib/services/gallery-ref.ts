@@ -35,6 +35,10 @@ export class GalleryRef {
   /** Stream that emits gallery config */
   readonly config: Observable<GalleryConfig>;
 
+  get stateSnapshot(): GalleryState {
+    return this._state.value;
+  }
+
   /** Stream that emits when gallery is initialized/reset */
   get initialized(): Observable<GalleryState> {
     return this.state.pipe(filterActions([GalleryAction.INITIALIZED]));
@@ -85,7 +89,7 @@ export class GalleryRef {
    * Set gallery state
    */
   private setState(state: GalleryState) {
-    this._state.next({...this._state.value, ...state});
+    this._state.next({...this.stateSnapshot, ...state});
   }
 
   /**
@@ -99,12 +103,12 @@ export class GalleryRef {
    * Add gallery item
    */
   add(item: GalleryItem, active?: boolean) {
-    const items = [...this._state.value.items, item];
+    const items = [...this.stateSnapshot.items, item];
     this.setState({
       action: GalleryAction.ITEMS_CHANGED,
       items,
       hasNext: items.length > 1,
-      currIndex: active ? items.length - 1 : this._state.value.currIndex
+      currIndex: active ? items.length - 1 : this.stateSnapshot.currIndex
     });
   }
 
@@ -141,11 +145,12 @@ export class GalleryRef {
    */
   remove(i: number) {
     const items = [
-      ...this._state.value.items.slice(0, i),
-      ...this._state.value.items.slice(i + 1, this._state.value.items.length)
+      ...this.stateSnapshot.items.slice(0, i),
+      ...this.stateSnapshot.items.slice(i + 1, this.stateSnapshot.items.length)
     ];
     this.setState({
       action: GalleryAction.ITEMS_CHANGED,
+      currIndex: i - 1 === 0 ? 0 : i - 1,
       items,
       hasNext: items.length > 1,
       hasPrev: i > 0
@@ -170,11 +175,11 @@ export class GalleryRef {
    * Set active item
    */
   set(i: number) {
-    if (i !== this._state.value.currIndex) {
+    if (i !== this.stateSnapshot.currIndex) {
       this.setState({
         action: GalleryAction.INDEX_CHANGED,
         currIndex: i,
-        hasNext: i < this._state.value.items.length - 1,
+        hasNext: i < this.stateSnapshot.items.length - 1,
         hasPrev: i > 0
       });
     }
@@ -184,8 +189,8 @@ export class GalleryRef {
    * Next item
    */
   next() {
-    if (this._state.value.hasNext) {
-      this.set(this._state.value.currIndex + 1);
+    if (this.stateSnapshot.hasNext) {
+      this.set(this.stateSnapshot.currIndex + 1);
     } else if (this._config.value.loop) {
       this.set(0);
     }
@@ -195,10 +200,10 @@ export class GalleryRef {
    * Prev item
    */
   prev() {
-    if (this._state.value.hasPrev) {
-      this.set(this._state.value.currIndex - 1);
+    if (this.stateSnapshot.hasPrev) {
+      this.set(this.stateSnapshot.currIndex - 1);
     } else if (this._config.value.loop) {
-      this.set(this._state.value.items.length - 1);
+      this.set(this.stateSnapshot.items.length - 1);
     }
   }
 
