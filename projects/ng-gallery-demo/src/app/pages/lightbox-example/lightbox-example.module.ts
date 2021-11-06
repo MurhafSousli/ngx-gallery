@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LightboxExampleComponent } from './lightbox-example.component';
+import { GalleryModule } from 'ng-gallery';
+import { LightboxModule } from 'ng-gallery/lightbox';
 import { SharedModule } from '../../shared/shared.module';
-
-import { GalleryModule } from '../../../../../ng-gallery/src/public-api';
-import { LightboxModule } from '../../../../../ng-gallery/lightbox/src/public_api';
+import { LightboxExampleComponent } from './lightbox-example.component';
 
 @NgModule({
   declarations: [LightboxExampleComponent],

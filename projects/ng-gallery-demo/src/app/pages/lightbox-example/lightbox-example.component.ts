@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Gallery, GalleryItem } from '../../../../../ng-gallery/src/public-api';
-import { Lightbox } from '../../../../../ng-gallery/lightbox/src/public_api';
+import { Gallery, GalleryItem } from 'ng-gallery';
+import { Lightbox } from 'ng-gallery/lightbox';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Pixabay } from '../../service/pixabay.service';
@@ -32,7 +32,8 @@ export class LightboxExampleComponent implements OnInit, OnDestroy {
         // Load items manually into the lightbox gallery ref
         this.gallery.ref('lightbox', {
           thumbPosition: 'top',
-          imageSize: 'cover'
+          imageSize: 'cover',
+          thumbView: 'contain'
         }).load(items);
 
         return items;

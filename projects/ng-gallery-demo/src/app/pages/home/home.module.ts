@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { GalleryModule } from 'ng-gallery';
 import { HomeComponent } from './home.component';
 import { SharedModule } from '../../shared/shared.module';
-import { GalleryModule } from '../../../../../ng-gallery/src/public-api';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -15,7 +15,6 @@ import { GalleryModule } from '../../../../../ng-gallery/src/public-api';
       }
     ])
   ]
-
 })
 export class HomeModule {
 }

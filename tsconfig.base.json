@@ -21,6 +21,9 @@
     "paths": {
       "ng-gallery": [
         "projects/ng-gallery/src/public-api"
+      ],
+      "ng-gallery/lightbox": [
+        "projects/ng-gallery/lightbox/src/public_api"
       ]
     }
   },

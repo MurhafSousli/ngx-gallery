@@ -28,6 +28,15 @@
       flex-direction: row;
       top: 0;
       left: 50%;
+
+      &.g-contain {
+        left: 0;
+
+        &.g-contain-small-content {
+          left: 50%;
+          transform: translate3d(-50%, 0px, 0px) !important;
+        }
+      }
     }
     gallery-thumb {
       padding: 1px 0 1px 1px;
@@ -41,6 +50,15 @@
         flex-direction: column;
         top: 50%;
         left: 0;
+
+        &.g-contain {
+          top: 0;
+
+          &.g-contain-small-content {
+            top: 50%;
+            transform: translate3d(0px, -50%, 0px) !important;
+          }
+        }
       }
     }
     gallery-thumb {

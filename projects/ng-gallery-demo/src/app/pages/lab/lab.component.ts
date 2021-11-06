@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { GalleryItem, GalleryConfig, LoadingStrategy, SlidingDirection, ThumbnailsMode, ThumbnailsPosition } from '../../../../../ng-gallery/src/public-api';
+import { Title } from '@angular/platform-browser';
+import { GalleryItem, GalleryConfig, LoadingStrategy, SlidingDirection, ThumbnailsMode, ThumbnailsPosition } from 'ng-gallery';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Pixabay } from '../../service/pixabay.service';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   host: {

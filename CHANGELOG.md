@@ -1,5 +1,16 @@
 # Changelog
 
+## 5.1.0
+
+Adds a new option to the global config as well as an input called `thumbView` which is expects a value of either `default` or `contain`
+
+- feat(core): Thumbnails should always use the available space, cloeses [#340](https://github.com/MurhafSousli/ngx-gallery/issues/340) in [ad3e514](https://github.com/MurhafSousli/ngx-gallery/pull/409/commits/ad3e5143e86c922d5d5927bb527f83e9a99612d8) and [5523b2e](https://github.com/MurhafSousli/ngx-gallery/pull/411/commits/5523b2e01c0a9263141854bb8b838d85ebf16cc9).
+- feat(core): Add `stateSnapshot` property to `GalleryRef` to get a instant snapshot of the gallery state observable.
+- fix(core): Video item displays the application instead of video, cloeses [#398](https://github.com/MurhafSousli/ngx-gallery/issues/398) in [f07c304](https://github.com/MurhafSousli/ngx-gallery/pull/409/commits/f07c3047a2426293bc34bcf57765642df0bcc35a).
+- fix(core): Issue with gallery.remove() function, closes [#405](https://github.com/MurhafSousli/ngx-gallery/issues/405) in [f0fb1c3](https://github.com/MurhafSousli/ngx-gallery/pull/411#:~:text=removing%20an%20item-,f0fb1c3,-Merge%20state) and [6e080b4](https://github.com/MurhafSousli/ngx-gallery/pull/411/commits/6e080b43e03448ce329253918ae51c2da56eafae).
+
+ > Special thanks to @NexGenUA for his PR
+
 ## 5.0.0
 
 - Upgrade to Angular 10.

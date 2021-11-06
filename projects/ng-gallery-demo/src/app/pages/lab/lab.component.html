@@ -37,6 +37,7 @@
         <button mat-button color="accent" (click)="gallery.stop()">Stop</button>
         <button mat-button color="primary" (click)="gallery.prev()">Prev</button>
         <button mat-button color="primary" (click)="gallery.next()">Next</button>
+        <button mat-button color="primary" (click)="gallery.remove(gallery.galleryRef.stateSnapshot.currIndex)">Remove</button>
       </div>
     </div>
 
