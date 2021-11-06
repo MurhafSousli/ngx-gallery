@@ -103,7 +103,7 @@ export class GalleryRef {
    * Add gallery item
    */
   add(item: GalleryItem, active?: boolean) {
-    const items = [...this.stateSnapshot.items, item];
+    const items: GalleryItem[] = [...this.stateSnapshot.items, item];
     this.setState({
       action: GalleryAction.ITEMS_CHANGED,
       items,
@@ -144,13 +144,14 @@ export class GalleryRef {
    * Remove gallery item
    */
   remove(i: number) {
-    const items = [
-      ...this.stateSnapshot.items.slice(0, i),
-      ...this.stateSnapshot.items.slice(i + 1, this.stateSnapshot.items.length)
+    const state: GalleryState = this.stateSnapshot;
+    const items: GalleryItem[] = [
+      ...state.items.slice(0, i),
+      ...state.items.slice(i + 1, state.items.length)
     ];
     this.setState({
       action: GalleryAction.ITEMS_CHANGED,
-      currIndex: i - 1 === 0 ? 0 : i - 1,
+      currIndex: i < 1 ? state.currIndex : i - 1,
       items,
       hasNext: items.length > 1,
       hasPrev: i > 0
