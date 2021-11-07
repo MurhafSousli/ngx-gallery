@@ -5,7 +5,7 @@
     "start-demo": "ng serve ng-gallery-demo",
     "build-demo": "ng build ng-gallery-demo --prod",
     "build-lib": "ng build ng-gallery --prod",
-    "publish-lib": "npm publish dist/ng-gallery"
+    "publish-lib": "npm publish ./dist/ng-gallery"
   },
   "repository": {
     "type": "git",
