@@ -1,6 +1,6 @@
 # Changelog
 
-## 5.1.0
+## 5.1.1
 
 Adds a new option to the global config as well as an input called `thumbView` which is expects a value of either `default` or `contain`
 
