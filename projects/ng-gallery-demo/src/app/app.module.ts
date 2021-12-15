@@ -27,52 +27,49 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons/faExternalL
 import { NG_SCROLLBAR_OPTIONS } from 'ngx-scrollbar';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    GalleryMockDialog
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    MaterialModule,
-    FlexLayoutModule,
-    SharedModule,
-    NgProgressModule,
-    NgProgressHttpModule,
-    NgProgressRouterModule,
-    HighlightModule
-  ],
-  providers: [
-    {
-      provide: GALLERY_CONFIG,
-      useValue: {
-        imageSize: 'cover'
-      }
-    },
-    {
-      provide: HIGHLIGHT_OPTIONS,
-      useValue: {
-        coreLibraryLoader: () => import('highlight.js/lib/core'),
-        languages: {
-          typescript: () => import('highlight.js/lib/languages/typescript'),
-          css: () => import('highlight.js/lib/languages/css'),
-          xml: () => import('highlight.js/lib/languages/xml')
+    declarations: [
+        AppComponent,
+        GalleryMockDialog
+    ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        AppRoutingModule,
+        MaterialModule,
+        FlexLayoutModule,
+        SharedModule,
+        NgProgressModule,
+        NgProgressHttpModule,
+        NgProgressRouterModule,
+        HighlightModule
+    ],
+    providers: [
+        {
+            provide: GALLERY_CONFIG,
+            useValue: {
+                imageSize: 'cover'
+            }
+        },
+        {
+            provide: HIGHLIGHT_OPTIONS,
+            useValue: {
+                coreLibraryLoader: () => import('highlight.js/lib/core'),
+                languages: {
+                    typescript: () => import('highlight.js/lib/languages/typescript'),
+                    css: () => import('highlight.js/lib/languages/css'),
+                    xml: () => import('highlight.js/lib/languages/xml')
+                }
+            }
+        },
+        {
+            provide: NG_SCROLLBAR_OPTIONS,
+            useValue: {
+                appearance: 'compact'
+            }
         }
-      }
-    },
-    {
-      provide: NG_SCROLLBAR_OPTIONS,
-      useValue: {
-        appearance: 'compact'
-      }
-    }
-  ],
-  entryComponents: [
-    GalleryMockDialog
-  ],
-  bootstrap: [AppComponent]
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor(library: FaIconLibrary) {
