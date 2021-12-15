@@ -1,6 +1,7 @@
 <ng-container *ngIf="state$ | async; let state">
   <ng-scrollbar appearance="compact"
                 [disabled]="disabled"
+                [autoHeightDisabled]="false"
                 barClass="code-scrollbar"
                 thumbClass="code-scrollbar-thumb">
 
