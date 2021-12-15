@@ -1,13 +1,14 @@
+@use '~@angular/material' as mat;
 @import '~@angular/material/theming';
 
-@include mat-core();
+@include mat.core();
 
 //$demo-primary: mat-palette($mat-deep-purple, 900); //$mat-indigo
-$demo-primary: mat-palette($mat-blue);
-$demo-accent: mat-palette($mat-pink, 400);
-$demo-warn: mat-palette($mat-amber, 300);
+$demo-primary: mat.define-palette(mat.$blue-palette);
+$demo-accent: mat.define-palette(mat.$pink-palette, 400);
+$demo-warn: mat.define-palette(mat.$amber-palette, 300);
 
-$demo-theme: mat-light-theme($demo-primary, $demo-accent, $demo-warn);
+$demo-theme: mat.define-light-theme($demo-primary, $demo-accent, $demo-warn);
 
-@include angular-material-theme($demo-theme);
+@include mat.all-component-themes($demo-theme);
 
