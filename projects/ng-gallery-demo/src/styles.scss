@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import 'assets/theme';
@@ -70,10 +71,6 @@ mat-sidenav-container {
     }
 
     transition: all 120ms ease-out !important;
-
-    //&:hover, &:active {
-    //  --scrollbar-size: 16px;
-    //}
   }
 }
 
@@ -141,7 +138,6 @@ a {
 }
 
 .page-title {
-  //box-shadow: inset 0 -5px 5px -5px rgba(0, 0, 0, 0.5);
   box-shadow: inset 0 -3px 8px 0 rgba(0, 0, 0, 0.08);
   background-color: $primary-color;
   display: flex;
@@ -193,5 +189,5 @@ a {
 .separator {
   height: 120px;
   width: 3px;
-  background-color: rgba(mat-color($demo-primary), 0.8);
+  background-color: rgba(mat.get-color-from-palette($demo-primary), 0.8);
 }

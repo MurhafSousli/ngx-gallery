@@ -1,5 +1,9 @@
 # Changelog
 
+## 6.0.0
+
+- Update to Angular 13, closes [#322](https://github.com/MurhafSousli/ngx-gallery/issues/322) in [#420](https://github.com/MurhafSousli/ngx-gallery/pull/420).
+
 ## 5.1.1
 
 Adds a new option to the global config as well as an input called `thumbView` which is expects a value of either `default` or `contain`
