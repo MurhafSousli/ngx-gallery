@@ -62,7 +62,6 @@
             "main": "projects/ng-gallery-demo/src/main.ts",
             "polyfills": "projects/ng-gallery-demo/src/polyfills.ts",
             "tsConfig": "projects/ng-gallery-demo/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "projects/ng-gallery-demo/src/favicon.ico",
               "projects/ng-gallery-demo/src/assets"
@@ -70,7 +69,13 @@
             "styles": [
               "projects/ng-gallery-demo/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -100,7 +105,8 @@
                 }
               ]
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
