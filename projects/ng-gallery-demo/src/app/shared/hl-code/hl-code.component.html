@@ -4,29 +4,25 @@
                 [autoHeightDisabled]="false"
                 barClass="code-scrollbar"
                 thumbClass="code-scrollbar-thumb">
-
-    <ng-container *ngIf="!state.copied; else copiedMessage">
-
-      <pre *ngIf="disabled; else enabled">
-        <code #codeEL class="hljs" [innerHTML]="code"></code>
-      </pre>
-
-      <ng-template #enabled>
-        <pre>
-          <code #codeEL [highlight]="code"></code>
+    <div class="code-wrapper">
+      <div [style.visibility]="!state.copied ? 'visible' : 'hidden'">
+        <pre *ngIf="disabled; else enabled">
+          <code #codeEL class="hljs" [innerHTML]="code"></code>
         </pre>
-      </ng-template>
 
-    </ng-container>
+        <ng-template #enabled>
+          <pre>
+            <code #codeEL [highlight]="code"></code>
+          </pre>
+        </ng-template>
+      </div>
 
-    <ng-template #copiedMessage>
-      <div class="hljs copy-message">
+      <div class="hljs copy-message" [style.visibility]="state.copied ? 'visible' : 'hidden'">
         <mat-icon>done</mat-icon>
         <span>Copied!</span>
       </div>
-    </ng-template>
+    </div>
   </ng-scrollbar>
-
 </ng-container>
 
 <button mat-icon-button color="accent" matTooltipClass="copy-tooltip"
