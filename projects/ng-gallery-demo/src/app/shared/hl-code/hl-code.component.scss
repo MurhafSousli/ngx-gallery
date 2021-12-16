@@ -68,14 +68,17 @@ button {
   top: 1em;
 }
 
-.copy-message {
-  color: $code-color;
+.code-wrapper {
   background-color: $code-bg-color;
+}
+
+.copy-message {
+  background-color: $code-bg-color;
+  color: $code-color;
   position: absolute;
   left: 0;
   right: 0;
-  top: 0;
-  bottom: 0;
+  top: 1em;
   display: flex;
   justify-content: center;
   align-items: center;
