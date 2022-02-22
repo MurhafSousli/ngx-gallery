@@ -1,8 +1,12 @@
 # Changelog
 
+## 6.0.1
+
+- fix: Downgrade rxjs peerDependencies to v6 in [35f58fd](https://github.com/MurhafSousli/ngx-gallery/pull/429/commits/35f58fde087fa4f01916eb4dfd3ff6a10f9c62cc).
+
 ## 6.0.0
 
-- Update to Angular 13, closes [#322](https://github.com/MurhafSousli/ngx-gallery/issues/322) in [#420](https://github.com/MurhafSousli/ngx-gallery/pull/420).
+- Update to Angular 13, closes [#424](https://github.com/MurhafSousli/ngx-gallery/issues/322) in [#420](https://github.com/MurhafSousli/ngx-gallery/pull/420).
 
 ## 5.1.1
 
