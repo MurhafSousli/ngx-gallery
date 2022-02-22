@@ -13,14 +13,11 @@ import {
   PLATFORM_ID
 } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-
 import { Gallery, GalleryRef, ImageItem, GalleryComponent, GalleryState, GalleryItem } from 'ng-gallery';
-// Uncomment the following line in development mode
-// import { Gallery, GalleryRef, ImageItem, GalleryComponent, GalleryState, GalleryItem } from '../../src/public-api';
-import { Lightbox } from './lightbox.service';
-
 import { Subject, Subscription, from, EMPTY } from 'rxjs';
 import { tap, map, switchMap, finalize, debounceTime } from 'rxjs/operators';
+
+import { Lightbox } from './lightbox.service';
 
 /**
  * This directive has 2 modes:
