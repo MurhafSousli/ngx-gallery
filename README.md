@@ -27,7 +27,7 @@ ___
 
 ## Issues
 
-If you identify any errors in this module, or have an idea for an improvement, please open an [issue](https://github.com/MurhafSousli/@ngx-gallery/core/issues).
+If you identify any errors in this module, or have an idea for an improvement, please open an [issue](https://github.com/MurhafSousli/ngx-gallery/issues).
 
 ## Author
 
