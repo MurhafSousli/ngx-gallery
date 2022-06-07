@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.0.0
+
+- Update to Angular 14 in []().
+
 ## 6.0.1
 
 - fix: Downgrade rxjs peerDependencies to v6 in [35f58fd](https://github.com/MurhafSousli/ngx-gallery/pull/429/commits/35f58fde087fa4f01916eb4dfd3ff6a10f9c62cc).
