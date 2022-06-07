@@ -2,7 +2,7 @@
 
 ## 7.0.0
 
-- Update to Angular 14 in []().
+- Update to Angular 14 in [64d5620](https://github.com/MurhafSousli/ngx-gallery/pull/444/commits/64d5620c27ee7ea3caab8ad1cafc9eca7f0c7bf4).
 
 ## 6.0.1
 
