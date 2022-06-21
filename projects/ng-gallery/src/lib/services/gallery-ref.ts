@@ -176,6 +176,10 @@ export class GalleryRef {
    * Set active item
    */
   set(i: number) {
+    if (i < 0 || i >= this.stateSnapshot.items.length) {
+      console.error(`[NgGallery]: Unable to set the active item because the given index (${ i }) is outside the items range!`);
+      return;
+    }
     if (i !== this.stateSnapshot.currIndex) {
       this.setState({
         action: GalleryAction.INDEX_CHANGED,
