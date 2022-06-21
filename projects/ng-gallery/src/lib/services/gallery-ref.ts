@@ -89,14 +89,14 @@ export class GalleryRef {
    * Set gallery state
    */
   private setState(state: GalleryState) {
-    this._state.next({...this.stateSnapshot, ...state});
+    this._state.next({ ...this.stateSnapshot, ...state });
   }
 
   /**
    * Set gallery config
    */
   setConfig(config: GalleryConfig) {
-    this._config.next({...this._config.value, ...config});
+    this._config.next({ ...this._config.value, ...config });
   }
 
   /**
@@ -217,16 +217,16 @@ export class GalleryRef {
    */
   play(interval?: number) {
     if (interval) {
-      this.setConfig({playerInterval: interval});
+      this.setConfig({ playerInterval: interval });
     }
-    this.setState({action: GalleryAction.PLAY, isPlaying: true});
+    this.setState({ action: GalleryAction.PLAY, isPlaying: true });
   }
 
   /**
    * Stop gallery player
    */
   stop() {
-    this.setState({action: GalleryAction.STOP, isPlaying: false});
+    this.setState({ action: GalleryAction.STOP, isPlaying: false });
   }
 
   /**
