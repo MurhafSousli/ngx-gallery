@@ -19,8 +19,8 @@ import { GalleryState, GalleryError } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
 import { SlidingDirection } from '../models/constants';
 import { SliderState, WorkerState } from '../models/slider.model';
-
-declare const Hammer: any;
+import { createSwipeSubscription } from '../utils/touch-functions';
+import { SwipeEvent } from '../models/swipe.model'
 
 @Component({
   selector: 'gallery-slider',
@@ -52,10 +52,7 @@ declare const Hammer: any;
 export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   /** Sliding worker */
-  private readonly _slidingWorker$ = new BehaviorSubject<WorkerState>({value: 0, active: false});
-
-  /** HammerJS instance */
-  private _hammer: any;
+  private readonly _slidingWorker$ = new BehaviorSubject<WorkerState>({ value: 0, active: false });
 
   /** Stream that emits when the view is re-sized */
   private _resizeSub$: Subscription;
@@ -78,9 +75,11 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   /** Stream that emits when an error occurs */
   @Output() error = new EventEmitter<GalleryError>();
 
+  private swipeSubscription: Subscription
+
   /** Item zoom */
   get zoom() {
-    return {transform: `perspective(50px) translate3d(0, 0, ${-this.config.zoomOut}px)`};
+    return { transform: `perspective(50px) translate3d(0, 0, ${-this.config.zoomOut}px)` };
   }
 
   constructor(private _el: ElementRef, private _zone: NgZone, @Inject(PLATFORM_ID) private platform: Object) {
@@ -94,42 +93,21 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges() {
     // Refresh the slider
-    this.updateSlider({value: 0, active: false});
+    this.updateSlider({ value: 0, active: false });
   }
 
   ngOnInit() {
-    if (this.config.gestures && typeof Hammer !== 'undefined') {
-
-      const direction = this.config.slidingDirection === SlidingDirection.Horizontal
-        ? Hammer.DIRECTION_HORIZONTAL
-        : Hammer.DIRECTION_VERTICAL;
-
-      // Activate gestures
-      this._hammer = new Hammer(this._el.nativeElement);
-      this._hammer.get('pan').set({direction});
-
-      this._zone.runOutsideAngular(() => {
-        // Move the slider
-        this._hammer.on('pan', (e) => {
-
-          switch (this.config.slidingDirection) {
-            case SlidingDirection.Horizontal:
-              this.updateSlider({value: e.deltaX, active: true});
-              if (e.isFinal) {
-                this.updateSlider({value: 0, active: false});
-                this.horizontalPan(e);
-              }
-              break;
-            case SlidingDirection.Vertical:
-              this.updateSlider({value: e.deltaY, active: true});
-              if (e.isFinal) {
-                this.updateSlider({value: 0, active: false});
-                this.verticalPan(e);
-              }
-          }
-        });
-      });
-    }
+    this._zone.runOutsideAngular(() => {
+      createSwipeSubscription({
+        domElement: this._el.nativeElement,
+        onSwipeMove: event => {
+          // if (event.direction === this.config.slidingDirection) {
+          //   this.updateSlider({ value: event.distance, active: true });
+          // }
+        },
+        onSwipeEnd: event => this.onSwipe(event)
+      })
+    });
 
     // Rearrange slider on window resize
     if (isPlatformBrowser(this.platform)) {
@@ -139,16 +117,14 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
       ).subscribe();
     }
 
-    setTimeout(() => this.updateSlider({value: 0, active: false}));
+    setTimeout(() => this.updateSlider({ value: 0, active: false }));
   }
 
   ngOnDestroy() {
-    if (this._hammer) {
-      this._hammer.destroy();
-    }
     if (this._resizeSub$) {
       this._resizeSub$.unsubscribe();
     }
+    this.swipeSubscription.unsubscribe();
     this._slidingWorker$.complete();
   }
 
@@ -172,41 +148,26 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  private verticalPan(e) {
-    if (!(e.direction & Hammer.DIRECTION_UP && e.offsetDirection & Hammer.DIRECTION_VERTICAL)) {
-      return;
-    }
-    if (e.velocityY > 0.3) {
-      this.prev();
-    } else if (e.velocityY < -0.3) {
-      this.next();
-    } else {
-      if (e.deltaY / 2 <= -this._el.nativeElement.offsetHeight * this.state.items.length / this.config.panSensitivity) {
-        this.next();
-      } else if (e.deltaY / 2 >= this._el.nativeElement.offsetHeight * this.state.items.length / this.config.panSensitivity) {
-        this.prev();
-      } else {
-        this.action.emit(this.state.currIndex);
-      }
-    }
-  }
-
-  private horizontalPan(e) {
-    if (!(e.direction & Hammer.DIRECTION_HORIZONTAL && e.offsetDirection & Hammer.DIRECTION_HORIZONTAL)) {
-      return;
-    }
-    if (e.velocityX > 0.3) {
-      this.prev();
-    } else if (e.velocityX < -0.3) {
-      this.next();
-    } else {
-      if (e.deltaX / 2 <= -this._el.nativeElement.offsetWidth * this.state.items.length / this.config.panSensitivity) {
-        this.next();
-      } else if (e.deltaX / 2 >= this._el.nativeElement.offsetWidth * this.state.items.length / this.config.panSensitivity) {
-        this.prev();
-      } else {
-        this.action.emit(this.state.currIndex);
-      }
+  private onSwipe(e: SwipeEvent) {
+    if (e.direction === this.config.slidingDirection) {
+      const velocity = e.distance/(e.moveEvent.sourceEvent.timeStamp - e.startEvent.sourceEvent.timeStamp);
+      console.log(velocity);
+      
+      this.updateSlider({ value: 0, active: false });
+      const limit = (e.direction === SlidingDirection.Vertical
+        ? this._el.nativeElement.offsetHeight
+        : this._el.nativeElement.offsetWidth
+      ) * this.state.items.length / this.config.panSensitivity;
+      console.log(limit, e.distance);
+      this._zone.run(() => {
+        if (velocity > 0.3 && e.distance > 100 || e.distance >= limit) {
+          this.prev();
+        } else if (velocity < -0.3 && e.distance < 100 || e.distance <= -limit) {
+          this.next();
+        } else {
+          this.action.emit(this.state.currIndex);
+        }
+      });
     }
   }
 
@@ -219,7 +180,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private updateSlider(state: WorkerState) {
-    const newState: WorkerState = {...this._slidingWorker$.value, ...state};
+    const newState: WorkerState = { ...this._slidingWorker$.value, ...state };
     this._slidingWorker$.next(newState);
   }
 }
