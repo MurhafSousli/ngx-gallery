@@ -13,11 +13,11 @@ export function createSwipeSubscription({ domElement, onSwipeMove, onSwipeEnd }:
     throw new Error('At least one of the following swipe event handler functions should be provided: onSwipeMove and/or onSwipeEnd');
   }
 
-  const touchStarts$ = fromEvent<TouchEvent>(domElement, 'mousedown').pipe(map(getTouchCoordinates));
-  const touchMoves$ = fromEvent<TouchEvent>(domElement, 'touchmove').pipe(map(getTouchCoordinates));
-  const touchEnds$ = fromEvent<TouchEvent>(domElement, 'touchend').pipe(map(getTouchCoordinates));
-  const touchCancels$ = fromEvent<TouchEvent>(domElement, 'touchcancel');
- 
+  const touchStarts$ = fromEvent<TouchEvent>(domElement, 'touchstart', { passive: true }).pipe(map(getTouchCoordinates));
+  const touchMoves$ = fromEvent<TouchEvent>(domElement, 'touchmove', { passive: true }).pipe(map(getTouchCoordinates));
+  const touchEnds$ = fromEvent<TouchEvent>(domElement, 'touchend', { passive: true }).pipe(map(getTouchCoordinates));
+  const touchCancels$ = fromEvent<TouchEvent>(domElement, 'touchcancel', { passive: true });
+
   const touchStartsWithDirection$ = touchStarts$.pipe(
     switchMap(touchStartEvent => touchMoves$.pipe(
       elementAt(3),
@@ -38,7 +38,7 @@ export function createSwipeSubscription({ domElement, onSwipeMove, onSwipeEnd }:
       takeUntil(race(
         touchEnds$.pipe(
           tap(coordinates => {
-            
+
             if (typeof onSwipeEnd !== 'function') { return; }
             onSwipeEnd(getSwipeEvent(touchStartEvent, coordinates));
           }),
@@ -49,29 +49,26 @@ export function createSwipeSubscription({ domElement, onSwipeMove, onSwipeEnd }:
   ).subscribe();
 }
 
-function getTouchCoordinates(touchEvent: TouchEvent): TouchEventWithCoordinates {
-  console.log(touchEvent);
-  return {
-    x: touchEvent.changedTouches[0].clientX,
-    y: touchEvent.changedTouches[0].clientY,
-    sourceEvent: touchEvent
-  };
-}
+const getTouchCoordinates = (touchEvent: TouchEvent): TouchEventWithCoordinates => ({
+  x: touchEvent.changedTouches[0].clientX,
+  y: touchEvent.changedTouches[0].clientY,
+  sourceEvent: touchEvent
+});
 
-function getTouchDistance(startCoordinates: TouchEventWithCoordinates, moveCoordinates: TouchEventWithCoordinates): SwipeCoordinates {
-  return {
-    x: moveCoordinates.x - startCoordinates.x,
-    y: moveCoordinates.y - startCoordinates.y
-  };
-}
 
-function getTouchDirection(startCoordinates: TouchEventWithCoordinates, moveCoordinates: TouchEventWithCoordinates): SlidingDirection {
+const getTouchDistance = (startCoordinates: TouchEventWithCoordinates, moveCoordinates: TouchEventWithCoordinates): SwipeCoordinates => ({
+  x: moveCoordinates.x - startCoordinates.x,
+  y: moveCoordinates.y - startCoordinates.y
+});
+
+
+const getTouchDirection = (startCoordinates: TouchEventWithCoordinates, moveCoordinates: TouchEventWithCoordinates): SlidingDirection => {
   const { x, y } = getTouchDistance(startCoordinates, moveCoordinates);
   return Math.abs(x) < Math.abs(y) ? SlidingDirection.Vertical : SlidingDirection.Horizontal;
 }
 
-function getSwipeEvent(touchStartEvent: SwipeStartEvent, coordinates: TouchEventWithCoordinates): SwipeEvent {
-  
+const getSwipeEvent = (touchStartEvent: SwipeStartEvent, coordinates: TouchEventWithCoordinates): SwipeEvent => {
+
   const distance = getTouchDistance(touchStartEvent, coordinates);
   return {
     moveEvent: coordinates,

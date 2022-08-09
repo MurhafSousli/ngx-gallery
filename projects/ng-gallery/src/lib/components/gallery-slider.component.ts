@@ -98,12 +98,12 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     this._zone.runOutsideAngular(() => {
-      createSwipeSubscription({
+      this.swipeSubscription = createSwipeSubscription({
         domElement: this._el.nativeElement,
         onSwipeMove: event => {
-          // if (event.direction === this.config.slidingDirection) {
-          //   this.updateSlider({ value: event.distance, active: true });
-          // }
+          if (event.direction === this.config.slidingDirection) {
+            this._zone.run(() => this.updateSlider({ value: event.distance, active: true }));
+          }
         },
         onSwipeEnd: event => this.onSwipe(event)
       })
@@ -150,23 +150,20 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   private onSwipe(e: SwipeEvent) {
     if (e.direction === this.config.slidingDirection) {
-      const velocity = e.distance/(e.moveEvent.sourceEvent.timeStamp - e.startEvent.sourceEvent.timeStamp);
-      console.log(velocity);
-      
-      this.updateSlider({ value: 0, active: false });
+      const velocity = e.distance / (e.moveEvent.sourceEvent.timeStamp - e.startEvent.sourceEvent.timeStamp);
       const limit = (e.direction === SlidingDirection.Vertical
         ? this._el.nativeElement.offsetHeight
         : this._el.nativeElement.offsetWidth
       ) * this.state.items.length / this.config.panSensitivity;
-      console.log(limit, e.distance);
       this._zone.run(() => {
-        if (velocity > 0.3 && e.distance > 100 || e.distance >= limit) {
+        if (velocity > 0.3 && e.distance > 50 || e.distance >= limit) {
           this.prev();
-        } else if (velocity < -0.3 && e.distance < 100 || e.distance <= -limit) {
+        } else if (velocity < -0.3 && e.distance < 50 || e.distance <= -limit) {
           this.next();
         } else {
           this.action.emit(this.state.currIndex);
         }
+        this.updateSlider({ value: 0, active: false });
       });
     }
   }
