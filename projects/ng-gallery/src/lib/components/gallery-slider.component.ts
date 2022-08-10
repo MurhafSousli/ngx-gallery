@@ -10,7 +10,8 @@ import {
   ElementRef,
   EventEmitter,
   ChangeDetectionStrategy,
-  PLATFORM_ID
+  PLATFORM_ID,
+  ChangeDetectorRef
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable, Subscription, fromEvent } from 'rxjs';
@@ -58,7 +59,10 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   private _resizeSub$: Subscription;
 
   /** Stream that emits sliding state */
-  sliderState$: Observable<SliderState>;
+  readonly sliderState$: Observable<SliderState> = this._slidingWorker$.pipe(map((state: WorkerState) => ({
+    style: this.getSliderStyles(state),
+    active: state.active
+  })));
 
   /** Gallery state */
   @Input() state: GalleryState;
@@ -82,21 +86,20 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     return { transform: `perspective(50px) translate3d(0, 0, ${-this.config.zoomOut}px)` };
   }
 
-  constructor(private _el: ElementRef, private _zone: NgZone, @Inject(PLATFORM_ID) private platform: Object) {
+  constructor(
+    private readonly _el: ElementRef,
+    private readonly _zone: NgZone,
+    @Inject(PLATFORM_ID)
+    private readonly platform: Object,
+    private readonly changeDetector: ChangeDetectorRef
+  ) { }
 
-    // Activate sliding worker
-    this.sliderState$ = this._slidingWorker$.pipe(map((state: WorkerState) => ({
-      style: this.getSliderStyles(state),
-      active: state.active
-    })));
-  }
-
-  ngOnChanges() {
+  ngOnChanges(): void {
     // Refresh the slider
     this.updateSlider({ value: 0, active: false });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.config.gestures) {
       this._zone.runOutsideAngular(() => {
         this.swipeSubscription = createSwipeSubscription({
@@ -131,7 +134,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   /**
    * Convert sliding state to styles
    */
-  private getSliderStyles(state: WorkerState): any {
+  private getSliderStyles(state: WorkerState) {
     switch (this.config.slidingDirection) {
       case SlidingDirection.Horizontal:
         return {
@@ -148,7 +151,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  private onSwipe(e: SwipeEvent) {
+  private onSwipe(e: SwipeEvent): void {
     if (e.direction === this.config.slidingDirection) {
       const limit = (e.direction === SlidingDirection.Vertical
         ? this._el.nativeElement.offsetHeight
@@ -167,16 +170,17 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  private next() {
+  private next(): void {
     this.action.emit('next');
   }
 
-  private prev() {
+  private prev(): void {
     this.action.emit('prev');
   }
 
-  private updateSlider(state: WorkerState) {
+  private updateSlider(state: WorkerState): void {
     const newState: WorkerState = { ...this._slidingWorker$.value, ...state };
     this._slidingWorker$.next(newState);
+    this.changeDetector.detectChanges();
   }
 }
