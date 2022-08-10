@@ -90,7 +90,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     private readonly _zone: NgZone,
     @Inject(PLATFORM_ID)
     private readonly platform: Object
-  ) { 
+  ) {
 
   }
 
@@ -101,18 +101,15 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit(): void {
     if (this.config.gestures) {
-      this._zone.runOutsideAngular(() => {
-        this.swipeSubscription = createSwipeSubscription({
-          domElement: this._el.nativeElement,
-          onSwipeMove: event => {
-            if (event.direction === this.config.slidingDirection) {
-              this.updateSlider({ value: event.distance, active: true });
-            }
-          },
-          onSwipeEnd: event => this.onSwipe(event)
-        })
-      });
-
+      this._zone.runOutsideAngular(() => this.swipeSubscription = createSwipeSubscription({
+        domElement: this._el.nativeElement,
+        onSwipeMove: event => {
+          if (event.direction === this.config.slidingDirection) {
+            this.updateSlider({ value: event.distance, active: true });
+          }
+        },
+        onSwipeEnd: event => this.onSwipe(event)
+      }));
     }
     // Rearrange slider on window resize
     if (isPlatformBrowser(this.platform)) {
@@ -157,14 +154,14 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
         ? this._el.nativeElement.offsetHeight
         : this._el.nativeElement.offsetWidth
       ) * this.state.items.length / this.config.panSensitivity;
-        if (e.velocity > 0.3 && e.distance > 50 || e.distance >= limit) {
-          this.prev();
-        } else if (e.velocity < -0.3 && e.distance < 50 || e.distance <= -limit) {
-          this.next();
-        } else {
-          this.action.emit(this.state.currIndex);
-        }
-        this.updateSlider({ value: 0, active: false });
+      if (e.velocity > 0.3 && e.distance > 50 || e.distance >= limit) {
+        this.prev();
+      } else if (e.velocity < -0.3 && e.distance < 50 || e.distance <= -limit) {
+        this.next();
+      } else {
+        this.action.emit(this.state.currIndex);
+      }
+      this.updateSlider({ value: 0, active: false });
     }
   }
 

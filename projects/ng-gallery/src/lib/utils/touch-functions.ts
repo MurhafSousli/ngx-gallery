@@ -1,5 +1,5 @@
 import { fromEvent, merge, race, Subscription } from 'rxjs';
-import { elementAt, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { elementAt, map, switchMap, takeUntil, takeWhile, tap } from 'rxjs/operators';
 import { SlidingDirection } from '../models/constants';
 import { SwipeSubscriptionConfig, SwipeStartEvent, SwipeCoordinates, SwipeEvent, TouchEventWithCoordinates } from '../models/swipe.model';
 
@@ -12,21 +12,25 @@ export function createSwipeSubscription({ domElement, onSwipeMove, onSwipeEnd }:
   if ((typeof onSwipeMove !== 'function') && (typeof onSwipeEnd !== 'function')) {
     throw new Error('At least one of the following swipe event handler functions should be provided: onSwipeMove and/or onSwipeEnd');
   }
-
+  let mousedownFlag = false;
+  const mousedown$ = fromEvent<MouseEvent>(domElement, 'mousedown', { passive: true });
+  const mouseup$ = fromEvent<MouseEvent>(domElement, 'mouseup', { passive: true });
+  const mouseout$ = fromEvent<MouseEvent>(domElement, 'mouseout', { passive: true });
+  const mousedownSubscription = mousedown$.subscribe(() => mousedownFlag = true);
+  const mouseupSubsctiption = merge(mouseup$, mouseout$).subscribe(() => mousedownFlag = false);
   const touchStarts$ = merge(
     fromEvent<TouchEvent>(domElement, 'touchstart', { passive: true }).pipe(map(getTouchCoordinates)),
-    fromEvent<MouseEvent>(domElement, 'mousedown', { passive: true }).pipe(map(getMouseCoordinates))
+    mousedown$.pipe(map(getMouseCoordinates))
   );
   const touchMoves$ = merge(
     fromEvent<TouchEvent>(domElement, 'touchmove', { passive: true }).pipe(map(getTouchCoordinates)),
-    fromEvent<MouseEvent>(domElement, 'mousemove', { passive: true }).pipe(map(getMouseCoordinates))
+    fromEvent<MouseEvent>(domElement, 'mousemove', { passive: true }).pipe(map(getMouseCoordinates), takeWhile(() => mousedownFlag))
   );
   const touchEnds$ = merge(
     fromEvent<TouchEvent>(domElement, 'touchend', { passive: true }).pipe(map(getTouchCoordinates)),
-    fromEvent<MouseEvent>(domElement, 'mouseup', { passive: true }).pipe(map(getMouseCoordinates)),
-    fromEvent<MouseEvent>(domElement, 'mouseout', { passive: true }).pipe(map(getMouseCoordinates))
+    merge( mouseup$, mouseout$).pipe(map(getMouseCoordinates))
   );
-  const touchCancels$ = fromEvent<TouchEvent>(domElement, 'touchcancel', { passive: true }) ;
+  const touchCancels$ = merge(fromEvent<TouchEvent>(domElement, 'touchcancel', { passive: true }));
 
   const touchStartsWithDirection$ = touchStarts$.pipe(
     switchMap(touchStartEvent => touchMoves$.pipe(
@@ -48,7 +52,6 @@ export function createSwipeSubscription({ domElement, onSwipeMove, onSwipeEnd }:
       takeUntil(race(
         touchEnds$.pipe(
           tap(coordinates => {
-
             if (typeof onSwipeEnd !== 'function') { return; }
             onSwipeEnd(getSwipeEvent(touchStartEvent, coordinates));
           }),
@@ -56,7 +59,10 @@ export function createSwipeSubscription({ domElement, onSwipeMove, onSwipeEnd }:
         touchCancels$
       ))
     ))
-  ).subscribe();
+  ).subscribe().add(() => {
+    mousedownSubscription.unsubscribe();
+    mouseupSubsctiption.unsubscribe();
+  });
 }
 
 const getTouchCoordinates = (touchEvent: TouchEvent): TouchEventWithCoordinates => ({
