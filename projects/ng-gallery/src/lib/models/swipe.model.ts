@@ -18,6 +18,7 @@ export interface SwipeEvent {
   distance: number;
   startEvent: SwipeStartEvent;
   moveEvent: TouchEventWithCoordinates;
+  velocity: number
 }
 
 export interface SwipeSubscriptionConfig {

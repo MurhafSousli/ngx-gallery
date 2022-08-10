@@ -97,18 +97,20 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
-    this._zone.runOutsideAngular(() => {
-      this.swipeSubscription = createSwipeSubscription({
-        domElement: this._el.nativeElement,
-        onSwipeMove: event => {
-          if (event.direction === this.config.slidingDirection) {
-            this._zone.run(() => this.updateSlider({ value: event.distance, active: true }));
-          }
-        },
-        onSwipeEnd: event => this.onSwipe(event)
-      })
-    });
+    if (this.config.gestures) {
+      this._zone.runOutsideAngular(() => {
+        this.swipeSubscription = createSwipeSubscription({
+          domElement: this._el.nativeElement,
+          onSwipeMove: event => {
+            if (event.direction === this.config.slidingDirection) {
+              this.updateSlider({ value: event.distance, active: true });
+            }
+          },
+          onSwipeEnd: event => this.onSwipe(event)
+        })
+      });
 
+    }
     // Rearrange slider on window resize
     if (isPlatformBrowser(this.platform)) {
       this._resizeSub$ = fromEvent(window, 'resize').pipe(
@@ -121,10 +123,8 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this._resizeSub$) {
-      this._resizeSub$.unsubscribe();
-    }
-    this.swipeSubscription.unsubscribe();
+    this._resizeSub$?.unsubscribe();
+    this.swipeSubscription?.unsubscribe();
     this._slidingWorker$.complete();
   }
 
@@ -150,15 +150,14 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   private onSwipe(e: SwipeEvent) {
     if (e.direction === this.config.slidingDirection) {
-      const velocity = e.distance / (e.moveEvent.sourceEvent.timeStamp - e.startEvent.sourceEvent.timeStamp);
       const limit = (e.direction === SlidingDirection.Vertical
         ? this._el.nativeElement.offsetHeight
         : this._el.nativeElement.offsetWidth
       ) * this.state.items.length / this.config.panSensitivity;
       this._zone.run(() => {
-        if (velocity > 0.3 && e.distance > 50 || e.distance >= limit) {
+        if (e.velocity > 0.3 && e.distance > 50 || e.distance >= limit) {
           this.prev();
-        } else if (velocity < -0.3 && e.distance < 50 || e.distance <= -limit) {
+        } else if (e.velocity < -0.3 && e.distance < 50 || e.distance <= -limit) {
           this.next();
         } else {
           this.action.emit(this.state.currIndex);

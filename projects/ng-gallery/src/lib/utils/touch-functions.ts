@@ -67,13 +67,14 @@ const getTouchDirection = (startCoordinates: TouchEventWithCoordinates, moveCoor
   return Math.abs(x) < Math.abs(y) ? SlidingDirection.Vertical : SlidingDirection.Horizontal;
 }
 
-const getSwipeEvent = (touchStartEvent: SwipeStartEvent, coordinates: TouchEventWithCoordinates): SwipeEvent => {
+const getSwipeEvent = (startEvent: SwipeStartEvent, moveEvent: TouchEventWithCoordinates): SwipeEvent => {
 
-  const distance = getTouchDistance(touchStartEvent, coordinates);
+  const distance = getTouchDistance(startEvent, moveEvent)[startEvent.direction === SlidingDirection.Horizontal ? 'x' : 'y'];
   return {
-    moveEvent: coordinates,
-    startEvent: touchStartEvent,
-    direction: touchStartEvent.direction,
-    distance: distance[touchStartEvent.direction === SlidingDirection.Horizontal ? 'x' : 'y']
+    moveEvent,
+    startEvent,
+    direction: startEvent.direction,
+    distance,
+    velocity: distance / (moveEvent.sourceEvent.timeStamp - startEvent.sourceEvent.timeStamp)
   };
 }
