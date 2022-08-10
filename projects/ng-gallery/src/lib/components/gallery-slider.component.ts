@@ -11,7 +11,7 @@ import {
   EventEmitter,
   ChangeDetectionStrategy,
   PLATFORM_ID,
-  ChangeDetectorRef
+  ApplicationRef
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable, Subscription, fromEvent } from 'rxjs';
@@ -27,7 +27,7 @@ import { SwipeEvent } from '../models/swipe.model'
   selector: 'gallery-slider',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div *ngIf="sliderState$ | async; let sliderState"
+    <div *ngIf="sliderState$ | voAsync; let sliderState"
          class="g-items-container"
          [ngStyle]="zoom">
 
@@ -41,7 +41,7 @@ import { SwipeEvent } from '../models/swipe.model'
                       [data]="item.data"
                       [currIndex]="state.currIndex"
                       [index]="i"
-                      (tapClick)="itemClick.emit(i)"
+                      (click)="itemClick.emit(i)"
                       (error)="error.emit({itemIndex: i, error: $event})">
         </gallery-item>
 
@@ -71,7 +71,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   @Input() config: GalleryConfig;
 
   /** Stream that emits when the active item should change */
-  @Output() action = new EventEmitter<string | number>();
+  @Output() action = new EventEmitter<'next' | 'prev' | number>();
 
   /** Stream that emits when item is clicked */
   @Output() itemClick = new EventEmitter<number>();
@@ -91,8 +91,11 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     private readonly _zone: NgZone,
     @Inject(PLATFORM_ID)
     private readonly platform: Object,
-    private readonly changeDetector: ChangeDetectorRef
-  ) { }
+    private appState: ApplicationRef
+  ) { 
+
+    this.appState.isStable.subscribe(x => console.log(x));
+  }
 
   ngOnChanges(): void {
     // Refresh the slider
@@ -157,7 +160,6 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
         ? this._el.nativeElement.offsetHeight
         : this._el.nativeElement.offsetWidth
       ) * this.state.items.length / this.config.panSensitivity;
-      this._zone.run(() => {
         if (e.velocity > 0.3 && e.distance > 50 || e.distance >= limit) {
           this.prev();
         } else if (e.velocity < -0.3 && e.distance < 50 || e.distance <= -limit) {
@@ -166,7 +168,6 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
           this.action.emit(this.state.currIndex);
         }
         this.updateSlider({ value: 0, active: false });
-      });
     }
   }
 
@@ -181,6 +182,5 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   private updateSlider(state: WorkerState): void {
     const newState: WorkerState = { ...this._slidingWorker$.value, ...state };
     this._slidingWorker$.next(newState);
-    this.changeDetector.detectChanges();
   }
 }

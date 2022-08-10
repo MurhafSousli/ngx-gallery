@@ -21,7 +21,7 @@ import { SliderState, WorkerState } from '../models/slider.model';
   selector: 'gallery-thumbs',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div *ngIf="sliderState$ | async; let sliderState"
+    <div *ngIf="sliderState$ | voAsync; let sliderState"
          class="g-thumbs-container">
       <div class="g-slider"
            [class.g-contain]="config.thumbView === thumbnailsView.Contain"
@@ -35,7 +35,7 @@ import { SliderState, WorkerState } from '../models/slider.model';
                        [data]="item.data"
                        [currIndex]="state.currIndex"
                        [index]="i"
-                       (tapClick)="thumbClick.emit(i)"
+                       (click)="thumbClick.emit(i)"
                        (error)="error.emit({itemIndex: i, error: $event})"></gallery-thumb>
       </div>
     </div>

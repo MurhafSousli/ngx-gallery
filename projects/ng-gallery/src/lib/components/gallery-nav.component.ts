@@ -10,13 +10,13 @@ import { GalleryConfig } from '../models/config.model';
     <i *ngIf="config.loop || state.hasPrev"
        class="g-nav-prev"
        aria-label="Previous"
-       (tapClick)="action.emit('prev')"
+       (click)="action.emit('prev')"
        [innerHtml]="navIcon"></i>
 
     <i *ngIf="config.loop || state.hasNext"
        class="g-nav-next"
        aria-label="Next"
-       (tapClick)="action.emit('next')"
+       (click)="action.emit('next')"
        [innerHtml]="navIcon"></i>
   `
 })

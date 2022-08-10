@@ -19,7 +19,7 @@ import { BehaviorSubject } from 'rxjs';
                   (progress)="onProgress($event)"
                   (loaded)="onLoaded($event)"
                   (error)="onError($event)"
-                  [ngSwitch]="state | async">
+                  [ngSwitch]="state | voAsync">
 
       <div *ngSwitchCase="'success'"
            @fadeIn

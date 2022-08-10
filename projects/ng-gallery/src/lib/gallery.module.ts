@@ -18,6 +18,7 @@ import { GalleryVideoComponent } from './components/templates/gallery-video.comp
 import { GalleryIframeComponent } from './components/templates/gallery-iframe.component';
 
 import { LazyImage } from './directives/lazy-image';
+import { VoAsyncPipe } from './pipes/vo-async.pipe';
 @NgModule({
   imports: [
     CommonModule
@@ -35,7 +36,8 @@ import { LazyImage } from './directives/lazy-image';
     GalleryImageComponent,
     GalleryVideoComponent,
     GalleryIframeComponent,
-    LazyImage
+    LazyImage,
+    VoAsyncPipe
   ],
   exports: [
     GalleryComponent,
