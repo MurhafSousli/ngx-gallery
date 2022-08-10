@@ -10,8 +10,7 @@ import {
   ElementRef,
   EventEmitter,
   ChangeDetectionStrategy,
-  PLATFORM_ID,
-  ApplicationRef
+  PLATFORM_ID
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, Observable, Subscription, fromEvent } from 'rxjs';
@@ -90,11 +89,9 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     private readonly _el: ElementRef,
     private readonly _zone: NgZone,
     @Inject(PLATFORM_ID)
-    private readonly platform: Object,
-    private appState: ApplicationRef
+    private readonly platform: Object
   ) { 
 
-    this.appState.isStable.subscribe(x => console.log(x));
   }
 
   ngOnChanges(): void {

@@ -6,7 +6,7 @@ export interface SwipeCoordinates {
 }
 
 export interface TouchEventWithCoordinates extends SwipeCoordinates {
-  sourceEvent: TouchEvent;
+  timeStamp: number;
 }
 
 export interface SwipeStartEvent extends TouchEventWithCoordinates {
