@@ -34,11 +34,11 @@ const getMouseObservable = ({ domElement, onSwipeMove, onSwipeEnd }: SwipeSubscr
   return mouseStartsWithDirection$.pipe(
     switchMap(mouseStartEvent => mouseMoves$.pipe(
       map(getMouseCoordinates),
-      tap(coordinates => onSwipeMove(getSwipeEvent(mouseStartEvent, coordinates))),
+      tap(coordinates => onSwipeMove && onSwipeMove(getSwipeEvent(mouseStartEvent, coordinates))),
       takeUntil(
         merge(mouseUp$, mouseOut$).pipe(
           map(getMouseCoordinates),
-          tap(coordinates => onSwipeEnd(getSwipeEvent(mouseStartEvent, coordinates)))
+          tap(coordinates => onSwipeEnd && onSwipeEnd(getSwipeEvent(mouseStartEvent, coordinates)))
         ))
     ))
   );
@@ -71,11 +71,11 @@ const getTouchObservable = ({ domElement, onSwipeMove, onSwipeEnd }: SwipeSubscr
   return touchStartsWithDirection$.pipe(
     switchMap(touchStartEvent => touchMoves$.pipe(
       map(getTouchCoordinates),
-      tap(coordinates => onSwipeMove(getSwipeEvent(touchStartEvent, coordinates))),
+      tap(coordinates => onSwipeMove && onSwipeMove(getSwipeEvent(touchStartEvent, coordinates))),
       takeUntil(race(
         touchEnds$.pipe(
           map(getTouchCoordinates),
-          tap(coordinates => onSwipeEnd(getSwipeEvent(touchStartEvent, coordinates)))
+          tap(coordinates => onSwipeEnd && onSwipeEnd(getSwipeEvent(touchStartEvent, coordinates)))
         ),
         touchCancels$
       ))
