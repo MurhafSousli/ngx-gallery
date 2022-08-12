@@ -4,9 +4,12 @@ import { SlidingDirection } from '../models/constants';
 import { SwipeSubscriptionConfig, SwipeStartEvent, SwipeCoordinates, SwipeEvent, TouchEventWithCoordinates } from '../models/swipe.model';
 
 
-export const createSwipeSubscription = (config: SwipeSubscriptionConfig) => merge(
-  getMouseObservable(config),
-  getTouchObservable(config)
+export const createSwipeSubscription = (config: SwipeSubscriptionConfig) => (
+  config.enableMouseEvents
+    ? merge(
+      getMouseObservable(config),
+      getTouchObservable(config)
+    ) : getTouchObservable(config)
 ).subscribe();
 
 

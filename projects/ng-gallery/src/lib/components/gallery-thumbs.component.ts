@@ -96,6 +96,7 @@ export class GalleryThumbsComponent implements OnChanges, OnInit, OnDestroy {
   ngOnInit() {
     if (this.config.gestures && !this.config.disableThumb) {
       this._zone.runOutsideAngular(() => this.swipeSubscription = createSwipeSubscription({
+        enableMouseEvents: true,
         domElement: this._el.nativeElement,
         onSwipeMove: event => {
           if (event.direction === this.currentDirection) {

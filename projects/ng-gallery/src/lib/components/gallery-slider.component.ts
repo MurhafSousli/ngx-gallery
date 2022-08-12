@@ -102,6 +102,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
     if (this.config.gestures) {
       this._zone.runOutsideAngular(() => this.swipeSubscription = createSwipeSubscription({
+        enableMouseEvents: true,
         domElement: this._el.nativeElement,
         onSwipeMove: event => {
           if (event.direction === this.config.slidingDirection) {

@@ -23,6 +23,7 @@ export interface SwipeEvent {
 
 export interface SwipeSubscriptionConfig {
   domElement: HTMLElement;
+  enableMouseEvents: boolean;
   onSwipeMove?: (event: SwipeEvent) => void;
   onSwipeEnd?: (event: SwipeEvent) => void;
 }
