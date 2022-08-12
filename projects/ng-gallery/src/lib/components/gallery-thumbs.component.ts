@@ -39,7 +39,7 @@ import { SwipeEvent } from '../models/swipe.model';
                        [data]="item.data"
                        [currIndex]="state.currIndex"
                        [index]="i"
-                       (click)="thumbClick.emit(i)"
+                       (click)="config.disableThumb || thumbClick.emit(i)"
                        (error)="error.emit({itemIndex: i, error: $event})"></gallery-thumb>
       </div>
     </div>
