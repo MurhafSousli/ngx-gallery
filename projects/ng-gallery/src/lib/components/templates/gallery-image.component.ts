@@ -83,9 +83,9 @@ export class GalleryImageComponent implements OnInit, OnDestroy {
   errorTemplate: SafeHtml;
 
   /** Stream that emits when an error occurs */
-  @Output() error = new EventEmitter<Error>();
+  @Output() error = new EventEmitter<ErrorEvent>();
   /** loading error */
-  loadError: Error;
+  loadError: ErrorEvent;
 
   @HostBinding('class.g-image-loaded') get imageLoadSuccess(): boolean {
     return !!this.imageUrl;
@@ -120,7 +120,7 @@ export class GalleryImageComponent implements OnInit, OnDestroy {
     this._state.next('success');
   }
 
-  onError(err: Error) {
+  onError(err: ErrorEvent) {
     this.loadError = err;
     this._state.next('failed');
     this.error.emit(err);

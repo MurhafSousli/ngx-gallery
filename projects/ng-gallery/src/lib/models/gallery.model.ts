@@ -16,5 +16,5 @@ export interface GalleryItem {
 
 export interface GalleryError {
   itemIndex: number;
-  error: Error;
+  error: ErrorEvent;
 }

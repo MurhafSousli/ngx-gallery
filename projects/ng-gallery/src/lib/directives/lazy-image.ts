@@ -14,7 +14,7 @@ export class LazyImage implements OnChanges, OnDestroy {
   @Input('lazyImage') src: string;
 
   @Output() loaded = new EventEmitter<string>();
-  @Output() error = new EventEmitter<Error>();
+  @Output() error = new EventEmitter<ErrorEvent>();
 
   constructor(@Inject(DOCUMENT) private document: any) {
     this._loaderSub$ = this._imageLoader$.pipe(
@@ -51,7 +51,7 @@ export class LazyImage implements OnChanges, OnDestroy {
     );
     // Image load failed
     const loadError = fromEvent(img, 'error').pipe(
-      tap(() => this.error.emit(new Error(`[lazyImage]: The image ${url} did not load`)))
+      tap(() => this.error.emit(new ErrorEvent(`[lazyImage]: The image ${url} did not load`)))
     );
     return zip(loadSuccess, loadError);
   }

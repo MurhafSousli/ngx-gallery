@@ -35,7 +35,7 @@ export class GalleryThumbComponent {
   /** Item's data, this object contains the data required to display the content (e.g. src path) */
   @Input() data: any;
 
-  @Output() error = new EventEmitter<Error>();
+  @Output() error = new EventEmitter<ErrorEvent>();
 
   @HostBinding('class.g-active-thumb') get isActive() {
     return this.index === this.currIndex;

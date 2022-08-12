@@ -106,7 +106,7 @@
             <div>
               <mat-form-field>
                 <mat-label>Thumbnails mode</mat-label>
-                <mat-select [(ngModel)]="config.thumbMode" (selectionChange)="restart()" [disabled]="!config.thumb">
+                <mat-select [(ngModel)]="config.thumbMode" [disabled]="!config.thumb">
                   <mat-option *ngFor="let mode of thumbModes" [value]="mode">{{mode}}</mat-option>
                 </mat-select>
               </mat-form-field>
