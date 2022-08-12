@@ -25,7 +25,7 @@ export class GalleryNavComponent implements OnInit {
   navIcon: SafeHtml;
   @Input() state: GalleryState;
   @Input() config: GalleryConfig;
-  @Output() action = new EventEmitter<string>();
+  @Output() action = new EventEmitter<'next' | 'prev'>();
 
   constructor(private _sanitizer: DomSanitizer) {
   }

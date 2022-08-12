@@ -43,7 +43,7 @@ export class GalleryCoreComponent {
 
   @Input() state: GalleryState;
   @Input() config: GalleryConfig;
-  @Output() action = new EventEmitter<string | number>();
+  @Output() action = new EventEmitter<'next'| 'prev' | number>();
   @Output() itemClick = new EventEmitter<number>();
   @Output() thumbClick = new EventEmitter<number>();
   @Output() error = new EventEmitter<GalleryError>();

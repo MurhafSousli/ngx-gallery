@@ -70,7 +70,7 @@ export class GalleryThumbsComponent implements OnChanges, OnInit, OnDestroy {
   @Input() config: GalleryConfig;
 
   /** Stream that emits when the active item should change */
-  @Output() action = new EventEmitter<string | number>();
+  @Output() action = new EventEmitter<'next' | 'prev' | number>();
 
   /** Stream that emits when thumb is clicked */
   @Output() thumbClick = new EventEmitter<number>();
@@ -167,6 +167,7 @@ export class GalleryThumbsComponent implements OnChanges, OnInit, OnDestroy {
       width = this.config.thumbHeight;
       height = this.config.thumbWidth;
     }
+
     if (this.minFreeScrollExceeded(e.distance, width, height)) {
       this._freeModeCurrentOffset = -(this.state.items.length - 1 - this.state.currIndex) * height;
     } else if (this.maxFreeScrollExceeded(e.distance, height, width)) {
