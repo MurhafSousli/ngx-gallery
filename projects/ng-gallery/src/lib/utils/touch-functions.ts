@@ -38,7 +38,7 @@ const getMouseObservable = ({ domElement, onSwipeMove, onSwipeEnd }: SwipeSubscr
       takeUntil(
         merge(mouseUp$, mouseOut$).pipe(
           map(getMouseCoordinates),
-          tap(coordinates => onSwipeEnd(getSwipeEvent(mouseStartEvent, coordinates))),
+          tap(coordinates => onSwipeEnd(getSwipeEvent(mouseStartEvent, coordinates)))
         ))
     ))
   );
@@ -75,7 +75,7 @@ const getTouchObservable = ({ domElement, onSwipeMove, onSwipeEnd }: SwipeSubscr
       takeUntil(race(
         touchEnds$.pipe(
           map(getTouchCoordinates),
-          tap(coordinates => onSwipeEnd(getSwipeEvent(touchStartEvent, coordinates))),
+          tap(coordinates => onSwipeEnd(getSwipeEvent(touchStartEvent, coordinates)))
         ),
         touchCancels$
       ))
