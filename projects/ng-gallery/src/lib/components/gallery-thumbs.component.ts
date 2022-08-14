@@ -189,9 +189,9 @@ export class GalleryThumbsComponent implements OnChanges, OnInit, OnDestroy {
         ? this._el.nativeElement.offsetHeight
         : this._el.nativeElement.offsetWidth
       ) * this.state.items.length / this.config.panSensitivity;
-      if (e.velocity > 0.3 && e.distance > 50 || e.distance >= limit) {
+      if (e.velocity > 0.3 && e.distance > 30 || e.distance >= limit) {
         this.prev();
-      } else if (e.velocity < -0.3 && e.distance < 50 || e.distance <= -limit) {
+      } else if (e.velocity < -0.3 && e.distance < -30 || e.distance <= -limit) {
         this.next();
       } else {
         this.action.emit(this.state.currIndex);
