@@ -1,5 +1,10 @@
 # Changelog
 
+## 7.0.1
+
+- feat(core): Avoid triggering change detection while dragging in [8ed5948](https://github.com/MurhafSousli/ngx-gallery/pull/456/commits/8ed5948b7e6a12624bb398ce6a70536190563778).
+- fix(core): Gallery thumbs vertical slider does not navigate when direction is up, closes [#454](https://github.com/MurhafSousli/ngx-gallery/issues/454) in [4eb7d2f](https://github.com/MurhafSousli/ngx-gallery/pull/455/commits/4eb7d2fda10f5b3f10a049fa955377b3afb392fd).
+
 ## 7.0.0
 
 - Update to Angular 14 in [64d5620](https://github.com/MurhafSousli/ngx-gallery/pull/444/commits/64d5620c27ee7ea3caab8ad1cafc9eca7f0c7bf4).
