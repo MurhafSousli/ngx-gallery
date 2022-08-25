@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.0.1
+
+- feat(core): Avoid triggering change detection while dragging in [8ed5948](https://github.com/MurhafSousli/ngx-gallery/pull/456/commits/8ed5948b7e6a12624bb398ce6a70536190563778).
+- fix(core): Gallery thumbs vertical slider does not navigate when direction is up, closes [#454](https://github.com/MurhafSousli/ngx-gallery/issues/454) in [4eb7d2f](https://github.com/MurhafSousli/ngx-gallery/pull/455/commits/4eb7d2fda10f5b3f10a049fa955377b3afb392fd).
+
+## 7.0.0
+
+- Update to Angular 14 in [64d5620](https://github.com/MurhafSousli/ngx-gallery/pull/444/commits/64d5620c27ee7ea3caab8ad1cafc9eca7f0c7bf4).
+
 ## 6.0.1
 
 - fix: Downgrade rxjs peerDependencies to v6 in [35f58fd](https://github.com/MurhafSousli/ngx-gallery/pull/429/commits/35f58fde087fa4f01916eb4dfd3ff6a10f9c62cc).
@@ -12,9 +21,9 @@
 
 Adds a new option to the global config as well as an input called `thumbView` which is expects a value of either `default` or `contain`
 
-- feat(core): Thumbnails should always use the available space, cloeses [#340](https://github.com/MurhafSousli/ngx-gallery/issues/340) in [ad3e514](https://github.com/MurhafSousli/ngx-gallery/pull/409/commits/ad3e5143e86c922d5d5927bb527f83e9a99612d8) and [5523b2e](https://github.com/MurhafSousli/ngx-gallery/pull/411/commits/5523b2e01c0a9263141854bb8b838d85ebf16cc9).
-- feat(core): Add `stateSnapshot` property to `GalleryRef` to get a instant snapshot of the gallery state observable.
-- fix(core): Video item displays the application instead of video, cloeses [#398](https://github.com/MurhafSousli/ngx-gallery/issues/398) in [f07c304](https://github.com/MurhafSousli/ngx-gallery/pull/409/commits/f07c3047a2426293bc34bcf57765642df0bcc35a).
+- feat(core): Thumbnails should always use the available space, closes [#340](https://github.com/MurhafSousli/ngx-gallery/issues/340) in [ad3e514](https://github.com/MurhafSousli/ngx-gallery/pull/409/commits/ad3e5143e86c922d5d5927bb527f83e9a99612d8) and [5523b2e](https://github.com/MurhafSousli/ngx-gallery/pull/411/commits/5523b2e01c0a9263141854bb8b838d85ebf16cc9).
+- feat(core): Add `stateSnapshot` property to `GalleryRef` to get an instant snapshot of the gallery state observable.
+- fix(core): Video item displays the application instead of video, closes [#398](https://github.com/MurhafSousli/ngx-gallery/issues/398) in [f07c304](https://github.com/MurhafSousli/ngx-gallery/pull/409/commits/f07c3047a2426293bc34bcf57765642df0bcc35a).
 - fix(core): Issue with gallery.remove() function, closes [#405](https://github.com/MurhafSousli/ngx-gallery/issues/405) in [f0fb1c3](https://github.com/MurhafSousli/ngx-gallery/pull/411#:~:text=removing%20an%20item-,f0fb1c3,-Merge%20state) and [6e080b4](https://github.com/MurhafSousli/ngx-gallery/pull/411/commits/6e080b43e03448ce329253918ae51c2da56eafae).
 
  > Special thanks to @NexGenUA for his PR
