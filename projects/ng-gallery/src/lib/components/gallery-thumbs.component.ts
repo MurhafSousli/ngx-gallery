@@ -284,7 +284,7 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private verticalPan(e: any) {
-    if (!(e.direction & Hammer.DIRECTION_UP && e.offsetDirection & Hammer.DIRECTION_VERTICAL)) {
+    if (!(e.direction & Hammer.DIRECTION_VERTICAL && e.offsetDirection & Hammer.DIRECTION_VERTICAL)) {
       return;
     }
     if (e.velocityY > 0.3) {
