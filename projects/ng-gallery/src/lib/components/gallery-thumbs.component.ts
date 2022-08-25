@@ -260,7 +260,6 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
                 value = 0;
               }
             }
-            console.log(value)
             break;
           default:
             value = -(currIndex * thumbWidth) - (thumbWidth / 2 - state.value);

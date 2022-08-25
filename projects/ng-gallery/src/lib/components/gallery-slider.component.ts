@@ -113,10 +113,11 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
         ? Hammer.DIRECTION_HORIZONTAL
         : Hammer.DIRECTION_VERTICAL;
 
+      this._hammer = new Hammer(this._el.nativeElement);
+      this._hammer.get('pan').set({ direction });
+
       this._zone.runOutsideAngular(() => {
         // Activate gestures
-        this._hammer = new Hammer(this._el.nativeElement);
-        this._hammer.get('pan').set({ direction });
 
         // Move the slider
         this._hammer.on('pan', (e) => {
