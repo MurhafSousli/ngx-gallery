@@ -1,5 +1,10 @@
 # Changelog
 
+## 7.0.3
+
+- enhance(core): Use `img` element instead of div background image to display images.
+- feat(core): Add alt property to `GalleryImage`.
+
 ## 7.0.2
 
 - fix(core): Should not show sliding effect on initial state, closes [#458](https://github.com/MurhafSousli/ngx-gallery/issues/458) in [c810039](https://github.com/MurhafSousli/ngx-gallery/pull/459/commits/c8100396e711b76cf350d69e706e472f63658209).
