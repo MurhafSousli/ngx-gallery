@@ -6,6 +6,7 @@ import {
   OnInit,
   OnChanges,
   ViewChild,
+  SimpleChanges,
   HostBinding,
   NgZone,
   ElementRef,
@@ -47,7 +48,7 @@ declare const Hammer: any;
 export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
 
   /** Sliding worker */
-  private readonly _slidingWorker$ = new BehaviorSubject<WorkerState>({ value: 0, active: false });
+  private readonly _slidingWorker$ = new BehaviorSubject<WorkerState>({ value: 0, instant: true });
 
   /** HammerJS instance */
   private _hammer: any;
@@ -99,13 +100,13 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
     // Activate sliding worker
     this.sliderState$ = this._slidingWorker$.pipe(map((state: WorkerState) => ({
       style: this.getSliderStyles(state),
-      active: state.active
+      instant: state.instant
     })));
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges) {
     // Refresh the slider
-    this.updateSlider({ value: 0, active: false });
+    this.updateSlider({ value: 0, instant: changes.state.firstChange });
     this._freeModeCurrentOffset = 0;
   }
 
@@ -145,7 +146,7 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
             this.slider.style.transform = state.style.transform;
             this.slider.style.height = state.style.height;
             this.slider.style.width = state.style.width;
-            this.slider.classList.toggle('g-no-transition', state.active);
+            this.slider.classList.toggle('g-no-transition', state.instant);
           })
         ).subscribe();
       });
@@ -165,17 +166,17 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
     switch (this.config.thumbPosition) {
       case ThumbnailsPosition.Right:
       case ThumbnailsPosition.Left:
-        this.updateSlider({ value: e.deltaY, active: true });
+        this.updateSlider({ value: e.deltaY, instant: true });
         if (e.isFinal) {
-          this.updateSlider({ value: 0, active: false });
+          this.updateSlider({ value: 0, instant: false });
           this.verticalPan(e);
         }
         break;
       case ThumbnailsPosition.Top:
       case ThumbnailsPosition.Bottom:
-        this.updateSlider({ value: e.deltaX, active: true });
+        this.updateSlider({ value: e.deltaX, instant: true });
         if (e.isFinal) {
-          this.updateSlider({ value: 0, active: false });
+          this.updateSlider({ value: 0, instant: false });
           this.horizontalPan(e);
         }
     }
@@ -188,7 +189,7 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
     switch (this.config.thumbPosition) {
       case ThumbnailsPosition.Right:
       case ThumbnailsPosition.Left:
-        this.updateSlider({ value: this._freeModeCurrentOffset + e.deltaY, active: true });
+        this.updateSlider({ value: this._freeModeCurrentOffset + e.deltaY, instant: true });
         if (e.isFinal) {
           if (this.minFreeScrollExceeded(e.deltaY, this.config.thumbWidth, this.config.thumbHeight)) {
             this._freeModeCurrentOffset = -(this.state.items.length - 1 - this.state.currIndex) * this.config.thumbHeight;
@@ -197,12 +198,12 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
           } else {
             this._freeModeCurrentOffset += e.deltaY;
           }
-          this.updateSlider({ value: this._freeModeCurrentOffset, active: false });
+          this.updateSlider({ value: this._freeModeCurrentOffset, instant: false });
         }
         break;
       case ThumbnailsPosition.Top:
       case ThumbnailsPosition.Bottom:
-        this.updateSlider({ value: this._freeModeCurrentOffset + e.deltaX, active: true });
+        this.updateSlider({ value: this._freeModeCurrentOffset + e.deltaX, instant: true });
         if (e.isFinal) {
           if (this.minFreeScrollExceeded(e.deltaX, this.config.thumbHeight, this.config.thumbWidth)) {
             this._freeModeCurrentOffset = -(this.state.items.length - 1 - this.state.currIndex) * this.config.thumbWidth;
@@ -211,7 +212,7 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
           } else {
             this._freeModeCurrentOffset += e.deltaX;
           }
-          this.updateSlider({ value: this._freeModeCurrentOffset, active: false });
+          this.updateSlider({ value: this._freeModeCurrentOffset, instant: false });
         }
     }
   }

@@ -6,6 +6,7 @@ import {
   OnInit,
   OnChanges,
   ViewChild,
+  SimpleChanges,
   Inject,
   NgZone,
   ElementRef,
@@ -46,7 +47,7 @@ declare const Hammer: any;
 export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   /** Sliding worker */
-  private readonly _slidingWorker$ = new BehaviorSubject<WorkerState>({ value: 0, active: false });
+  private readonly _slidingWorker$ = new BehaviorSubject<WorkerState>({ value: 0, instant: true });
 
   /** HammerJS instance */
   private _hammer: any;
@@ -97,13 +98,13 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     // Activate sliding worker
     this.sliderState$ = this._slidingWorker$.pipe(map((state: WorkerState) => ({
       style: this.getSliderStyles(state),
-      active: state.active
+      instant: state.instant
     })));
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges) {
     // Refresh the slider
-    this.updateSlider({ value: 0, active: false });
+    this.updateSlider({ value: 0, instant: changes.state.firstChange });
   }
 
   ngOnInit() {
@@ -124,16 +125,16 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
           switch (this.config.slidingDirection) {
             case SlidingDirection.Horizontal:
-              this.updateSlider({ value: e.deltaX, active: true });
+              this.updateSlider({ value: e.deltaX, instant: true });
               if (e.isFinal) {
-                this.updateSlider({ value: 0, active: false });
+                this.updateSlider({ value: 0, instant: false });
                 this.horizontalPan(e);
               }
               break;
             case SlidingDirection.Vertical:
-              this.updateSlider({ value: e.deltaY, active: true });
+              this.updateSlider({ value: e.deltaY, instant: true });
               if (e.isFinal) {
-                this.updateSlider({ value: 0, active: false });
+                this.updateSlider({ value: 0, instant: false });
                 this.verticalPan(e);
               }
           }
@@ -145,7 +146,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
             this.slider.style.transform = state.style.transform;
             this.slider.style.height = state.style.height;
             this.slider.style.width = state.style.width;
-            this.slider.classList.toggle('g-no-transition', state.active);
+            this.slider.classList.toggle('g-no-transition', state.instant);
             this.container.style.transform = this.zoom.transform;
           })
         ).subscribe();
@@ -159,8 +160,6 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
         tap(() => this.updateSlider(this._slidingWorker$.value))
       ).subscribe();
     }
-
-    setTimeout(() => this.updateSlider({ value: 0, active: false }));
   }
 
   ngOnDestroy() {
