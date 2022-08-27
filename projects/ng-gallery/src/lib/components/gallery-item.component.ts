@@ -11,6 +11,7 @@ import { LoadingStrategy, GalleryItemType } from '../models/constants';
       <ng-container *ngSwitchCase="Types.Image">
 
         <gallery-image [src]="data.src"
+                       [alt]="data.alt"
                        [loadingIcon]="config.loadingIcon"
                        [loadingError]="config.loadingError"
                        (error)="error.emit($event)"></gallery-image>
