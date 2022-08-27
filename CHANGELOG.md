@@ -2,8 +2,8 @@
 
 ## 7.0.3
 
-- enhance(core): Use `img` element instead of div background image to display images.
-- feat(core): Add alt property to `GalleryImage`.
+- enhance(core): Use `img` element instead of div background image to display images, in [b6b5120](https://github.com/MurhafSousli/ngx-gallery/pull/460/commits/b6b512012a983699446d03481cb39f9739e1e67b).
+- feat(core): Add alt property to `GalleryImage`, in [b6b5120](https://github.com/MurhafSousli/ngx-gallery/pull/460/commits/b6b512012a983699446d03481cb39f9739e1e67b).
 
 ## 7.0.2
 
