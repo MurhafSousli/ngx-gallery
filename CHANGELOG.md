@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.0.3
+
+- enhance(core): Use `img` element instead of div background image to display images, in [b6b5120](https://github.com/MurhafSousli/ngx-gallery/pull/460/commits/b6b512012a983699446d03481cb39f9739e1e67b).
+- feat(core): Add alt property to `GalleryImage`, in [b6b5120](https://github.com/MurhafSousli/ngx-gallery/pull/460/commits/b6b512012a983699446d03481cb39f9739e1e67b).
+
+## 7.0.2
+
+- fix(core): Should not show sliding effect on initial state, closes [#458](https://github.com/MurhafSousli/ngx-gallery/issues/458) in [c810039](https://github.com/MurhafSousli/ngx-gallery/pull/459/commits/c8100396e711b76cf350d69e706e472f63658209).
+
 ## 7.0.1
 
 - feat(core): Avoid triggering change detection while dragging in [8ed5948](https://github.com/MurhafSousli/ngx-gallery/pull/456/commits/8ed5948b7e6a12624bb398ce6a70536190563778).
