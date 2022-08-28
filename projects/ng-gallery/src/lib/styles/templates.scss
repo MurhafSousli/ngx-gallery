@@ -77,7 +77,7 @@
   }
 
   gallery-core[imageSize='contain'] gallery-slider .g-image-item {
-    background-size: contain;
+    object-fit: contain;
   }
 
   gallery-image {

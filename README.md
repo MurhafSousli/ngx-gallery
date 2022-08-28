@@ -9,7 +9,7 @@
 [![npm](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://murhafsousli.github.io/ngx-gallery/)
 [![npm](https://img.shields.io/badge/stackblitz-online-orange.svg)](https://stackblitz.com/edit/ngx-gallery)
 [![npm](https://img.shields.io/npm/v/ng-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ng-gallery)
-[![Travis branch](https://travis-ci.org/MurhafSousli/ngx-gallery.svg?branch=master)](https://travis-ci.org/MurhafSousli/ngx-gallery)
+[![tests](https://github.com/MurhafSousli/ngx-gallery/workflows/tests/badge.svg)](https://github.com/MurhafSousli/ngx-gallery/actions?query=workflow%3Atests)
 [![npm](https://img.shields.io/npm/dt/ng-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ng-gallery)
 [![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](/LICENSE)
 
@@ -31,7 +31,7 @@ If you identify any errors in this module, or have an idea for an improvement, p
 
 ## Author
 
- **[Murhaf Sousli](http://murhafsousli.com)**
+**[Murhaf Sousli](http://murhafsousli.com)**
 
 - [github/murhafsousli](https://github.com/MurhafSousli)
 - [twitter/murhafsousli](https://twitter.com/MurhafSousli)
