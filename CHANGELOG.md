@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.0.4
+
+- fix(core): imageSize option when set to contain, in [3ecf94e](https://github.com/MurhafSousli/ngx-gallery/pull/462/commits/3ecf94e78d26378cc1330f2d432b59675526f63f).
+
 ## 7.0.3
 
 - enhance(core): Use `img` element instead of div background image to display images, in [b6b5120](https://github.com/MurhafSousli/ngx-gallery/pull/460/commits/b6b512012a983699446d03481cb39f9739e1e67b).
