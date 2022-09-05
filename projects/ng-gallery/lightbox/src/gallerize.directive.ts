@@ -47,7 +47,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
   private _observer$: any;
 
   /** Stream that emits when image is discover */
-  private _detector$: Subject<any>;
+  private _detector$: Subject<void>;
 
   /** If host element is a GalleryComponent, will use the following variables: */
 

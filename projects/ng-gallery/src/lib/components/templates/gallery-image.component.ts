@@ -1,5 +1,14 @@
-import { Component, Input, HostBinding, OnInit, Output, EventEmitter, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { DomSanitizer, SafeHtml, SafeStyle } from '@angular/platform-browser';
+import {
+  Component,
+  Input,
+  Output,
+  HostBinding,
+  EventEmitter,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy
+} from '@angular/core';
+import { DomSanitizer, SafeHtml, SafeUrl } from '@angular/platform-browser';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { BehaviorSubject } from 'rxjs';
 
@@ -9,8 +18,8 @@ import { BehaviorSubject } from 'rxjs';
   animations: [
     trigger('fadeIn', [
       transition(':enter', [
-        style({opacity: 0}),
-        animate('300ms ease-in', style({opacity: 1}))
+        style({ opacity: 0 }),
+        animate('300ms ease-in', style({ opacity: 1 }))
       ])
     ])
   ],
@@ -21,11 +30,12 @@ import { BehaviorSubject } from 'rxjs';
                   (error)="onError($event)"
                   [ngSwitch]="state | voAsync">
 
-      <div *ngSwitchCase="'success'"
+      <img *ngSwitchCase="'success'"
            @fadeIn
-           class="g-image-item"
-           [style.backgroundImage]="imageUrl">
-      </div>
+           [src]="imageUrl"
+           draggable="false"
+           [attr.alt]="alt"
+           class="g-image-item"/>
 
       <div *ngSwitchCase="'failed'"
            class="g-image-error-message">
@@ -67,10 +77,13 @@ export class GalleryImageComponent implements OnInit, OnDestroy {
   /** Is thumbnail */
   @Input() isThumbnail: boolean;
 
+  /** Image alt */
+  @Input() alt: string;
+
   /** Image source URL */
   @Input() src: string;
   /** Loaded image URL */
-  imageUrl: SafeStyle;
+  imageUrl: SafeUrl;
 
   /** Custom loader template */
   @Input() loadingIcon: string;
@@ -111,12 +124,12 @@ export class GalleryImageComponent implements OnInit, OnDestroy {
     this._state.complete();
   }
 
-  onProgress({loaded, total}: { loaded: number, total: number }) {
+  onProgress({ loaded, total }: { loaded: number, total: number }) {
     this.progress = loaded * 100 / total;
   }
 
   onLoaded(blobUrl: string) {
-    this.imageUrl = this._sanitizer.bypassSecurityTrustStyle(`url("${blobUrl}")`);
+    this.imageUrl = this._sanitizer.bypassSecurityTrustUrl(blobUrl);
     this._state.next('success');
   }
 

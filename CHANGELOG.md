@@ -1,5 +1,23 @@
 # Changelog
 
+## 7.0.4
+
+- fix(core): imageSize option when set to contain, in [3ecf94e](https://github.com/MurhafSousli/ngx-gallery/pull/462/commits/3ecf94e78d26378cc1330f2d432b59675526f63f).
+
+## 7.0.3
+
+- enhance(core): Use `img` element instead of div background image to display images, in [b6b5120](https://github.com/MurhafSousli/ngx-gallery/pull/460/commits/b6b512012a983699446d03481cb39f9739e1e67b).
+- feat(core): Add alt property to `GalleryImage`, in [b6b5120](https://github.com/MurhafSousli/ngx-gallery/pull/460/commits/b6b512012a983699446d03481cb39f9739e1e67b).
+
+## 7.0.2
+
+- fix(core): Should not show sliding effect on initial state, closes [#458](https://github.com/MurhafSousli/ngx-gallery/issues/458) in [c810039](https://github.com/MurhafSousli/ngx-gallery/pull/459/commits/c8100396e711b76cf350d69e706e472f63658209).
+
+## 7.0.1
+
+- feat(core): Avoid triggering change detection while dragging in [8ed5948](https://github.com/MurhafSousli/ngx-gallery/pull/456/commits/8ed5948b7e6a12624bb398ce6a70536190563778).
+- fix(core): Gallery thumbs vertical slider does not navigate when direction is up, closes [#454](https://github.com/MurhafSousli/ngx-gallery/issues/454) in [4eb7d2f](https://github.com/MurhafSousli/ngx-gallery/pull/455/commits/4eb7d2fda10f5b3f10a049fa955377b3afb392fd).
+
 ## 7.0.0
 
 - Update to Angular 14 in [64d5620](https://github.com/MurhafSousli/ngx-gallery/pull/444/commits/64d5620c27ee7ea3caab8ad1cafc9eca7f0c7bf4).

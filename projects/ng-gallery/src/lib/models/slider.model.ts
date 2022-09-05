@@ -1,9 +1,9 @@
 export interface SliderState {
   style: any;
-  active: boolean;
+  instant: boolean;
 }
 
 export interface WorkerState {
   value: number;
-  active: boolean;
+  instant: boolean;
 }

@@ -3,6 +3,8 @@ import {
   Input,
   Output,
   OnChanges,
+  ViewChild,
+  SimpleChanges,
   HostBinding,
   NgZone,
   ElementRef,
@@ -12,7 +14,7 @@ import {
   OnDestroy
 } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { GalleryConfig } from '../models/config.model';
 import { GalleryState, GalleryError } from '../models/gallery.model';
 import { SlidingDirection, ThumbnailsMode, ThumbnailsPosition, ThumbnailsView } from '../models/constants';
@@ -25,13 +27,11 @@ import { SwipeEvent } from '../models/swipe.model';
   selector: 'gallery-thumbs',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div *ngIf="sliderState$ | voAsync; let sliderState"
-         class="g-thumbs-container">
-      <div class="g-slider"
+    <div class="g-thumbs-container">
+      <div #slider
+           class="g-slider"
            [class.g-contain]="config.thumbView === thumbnailsView.Contain"
-           [class.g-contain-small-content]="thumbnailsLessThanSlider"
-           [class.g-no-transition]="sliderState.active"
-           [ngStyle]="sliderState.style">
+           [class.g-contain-small-content]="thumbnailsLessThanSlider">
 
         <gallery-thumb *ngFor="let item of state.items;let i = index"
                        [type]="item.type"
@@ -48,11 +48,13 @@ import { SwipeEvent } from '../models/swipe.model';
 export class GalleryThumbsComponent implements OnChanges, OnInit, OnDestroy {
 
   /** Sliding worker */
-  private readonly _slidingWorker$ = new BehaviorSubject<WorkerState>({ value: 0, active: false });
+  private readonly _slidingWorker$ = new BehaviorSubject<WorkerState>({ value: 0, instant: true });
 
   /** Current slider position in free sliding mode */
   private _freeModeCurrentOffset = 0;
-  private swipeSubscription: Subscription
+
+  /** Subscription reference to slider state stream */
+  private _sliderStateSub$: Subscription;
 
   /** Thumbnails view enum */
   thumbnailsView = ThumbnailsView;
@@ -61,7 +63,10 @@ export class GalleryThumbsComponent implements OnChanges, OnInit, OnDestroy {
   thumbnailsLessThanSlider: boolean;
 
   /** Stream that emits sliding state */
-  sliderState$: Observable<SliderState>;
+  sliderState$ = this._slidingWorker$.pipe(map((state: WorkerState) => ({
+    style: this.getSliderStyles(state),
+    instant: state.instant
+  } as SliderState)));
 
   /** Gallery state */
   @Input() state: GalleryState;
@@ -84,43 +89,57 @@ export class GalleryThumbsComponent implements OnChanges, OnInit, OnDestroy {
   /** Host width */
   @HostBinding('style.width') width: string;
 
-  constructor(private _el: ElementRef, private _zone: NgZone) {
+  @ViewChild('slider', { static: true }) sliderEl: ElementRef;
 
-    // Activate sliding worker
-    this.sliderState$ = this._slidingWorker$.pipe(map((state: WorkerState) => ({
-      style: this.getSliderStyles(state),
-      active: state.active
-    })));
+  get slider(): HTMLElement {
+    return this.sliderEl.nativeElement;
+  }
+
+  private swipeSubscription: Subscription;
+
+  constructor(private _el: ElementRef, private _zone: NgZone) {
   }
 
   ngOnInit() {
     if (this.config.gestures && !this.config.disableThumb) {
-      this._zone.runOutsideAngular(() => this.swipeSubscription = createSwipeSubscription({
-        enableMouseEvents: true,
-        domElement: this._el.nativeElement,
-        onSwipeMove: event => {
-          if (event.direction === this.currentDirection) {
-            this.updateSlider({
-              value: this.config.thumbMode === ThumbnailsMode.Strict ? event.distance : (this._freeModeCurrentOffset + event.distance),
-              active: true
-            });
+      this._zone.runOutsideAngular(() => {
+        this.swipeSubscription = createSwipeSubscription({
+          enableMouseEvents: true,
+          domElement: this._el.nativeElement,
+          onSwipeMove: event => {
+            if (event.direction === this.currentDirection) {
+              this.updateSlider({
+                value: this.config.thumbMode === ThumbnailsMode.Strict ? event.distance : (this._freeModeCurrentOffset + event.distance),
+                instant: true
+              });
 
-          }
-        },
-        onSwipeEnd: event => this.config.thumbMode === ThumbnailsMode.Strict
-          ? this.onSwipeStrictMode(event)
-          : this.onSwipeFreeMode(event)
-      }));
+            }
+          },
+          onSwipeEnd: event => this.config.thumbMode === ThumbnailsMode.Strict
+            ? this.onSwipeStrictMode(event)
+            : this.onSwipeFreeMode(event)
+        });
+        this._sliderStateSub$ = this.sliderState$.pipe(
+          tap((state: SliderState) => {
+            this.slider.style.transform = state.style.transform;
+            this.slider.style.height = state.style.height;
+            this.slider.style.width = state.style.width;
+            this.slider.classList.toggle('g-no-transition', state.instant);
+          })
+        ).subscribe();
+      });
     }
   }
-  ngOnChanges() {
+
+  ngOnChanges(changes: SimpleChanges) {
     // Refresh the slider
-    this.updateSlider({ value: 0, active: false });
+    this.updateSlider({ value: 0, instant: changes.state.firstChange });
     this._freeModeCurrentOffset = 0;
   }
 
   ngOnDestroy(): void {
     this.swipeSubscription?.unsubscribe();
+    this._sliderStateSub$?.unsubscribe();
   }
 
   private get currentDirection(): SlidingDirection {
@@ -132,13 +151,6 @@ export class GalleryThumbsComponent implements OnChanges, OnInit, OnDestroy {
     return SlidingDirection.Horizontal;
   }
 
-
-  /**
-   * Check if the minimum free scroll is exceeded (used in Bottom, Left directions)
-   */
-  private minFreeScrollExceeded(delta: number, width: number, height: number): boolean {
-    return -(this._freeModeCurrentOffset + delta - width / 2) > (this.state.items.length - this.state.currIndex) * height;
-  }
 
   /**
    * Check if the maximum free scroll is exceeded (used in Top, Right directions)
@@ -176,7 +188,7 @@ export class GalleryThumbsComponent implements OnChanges, OnInit, OnDestroy {
     } else {
       this._freeModeCurrentOffset += e.distance;
     }
-    this.updateSlider({ value: this._freeModeCurrentOffset, active: false });
+    this.updateSlider({ value: this._freeModeCurrentOffset, instant: false });
   }
 
 
@@ -196,9 +208,10 @@ export class GalleryThumbsComponent implements OnChanges, OnInit, OnDestroy {
       } else {
         this.action.emit(this.state.currIndex);
       }
-      this.updateSlider({ value: 0, active: false });
+      this.updateSlider({ value: 0, instant: false });
     }
   }
+
 
   /**
    * Convert sliding state to styles
@@ -274,5 +287,12 @@ export class GalleryThumbsComponent implements OnChanges, OnInit, OnDestroy {
   private updateSlider(state: WorkerState) {
     const newState: WorkerState = { ...this._slidingWorker$.value, ...state };
     this._slidingWorker$.next(newState);
+  }
+
+  /**
+ * Check if the minimum free scroll is exceeded (used in Bottom, Left directions)
+ */
+  private minFreeScrollExceeded(delta: number, width: number, height: number): boolean {
+    return -(this._freeModeCurrentOffset + delta - width / 2) > (this.state.items.length - this.state.currIndex) * height;
   }
 }

@@ -5,6 +5,8 @@ import {
   OnDestroy,
   OnInit,
   OnChanges,
+  ViewChild,
+  SimpleChanges,
   Inject,
   NgZone,
   ElementRef,
@@ -13,7 +15,7 @@ import {
   PLATFORM_ID
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject, Observable, Subscription, fromEvent } from 'rxjs';
+import { BehaviorSubject, Subscription, fromEvent } from 'rxjs';
 import { map, tap, debounceTime } from 'rxjs/operators';
 import { GalleryState, GalleryError } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
@@ -26,14 +28,8 @@ import { SwipeEvent } from '../models/swipe.model'
   selector: 'gallery-slider',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div *ngIf="sliderState$ | voAsync; let sliderState"
-         class="g-items-container"
-         [ngStyle]="zoom">
-
-      <div class="g-slider"
-           [class.g-no-transition]="sliderState.active"
-           [ngStyle]="sliderState.style">
-
+    <div #container class="g-items-container">
+      <div #slider class="g-slider">
         <gallery-item *ngFor="let item of state.items; let i = index"
                       [type]="item.type"
                       [config]="config"
@@ -43,7 +39,6 @@ import { SwipeEvent } from '../models/swipe.model'
                       (click)="itemClick.emit(i)"
                       (error)="error.emit({itemIndex: i, error: $event})">
         </gallery-item>
-
       </div>
     </div>
     <ng-content></ng-content>
@@ -52,16 +47,19 @@ import { SwipeEvent } from '../models/swipe.model'
 export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   /** Sliding worker */
-  private readonly _slidingWorker$ = new BehaviorSubject<WorkerState>({ value: 0, active: false });
+  private readonly _slidingWorker$ = new BehaviorSubject<WorkerState>({ value: 0, instant: true });
 
-  /** Stream that emits when the view is re-sized */
+  /** Subscription reference to window resize stream */
   private _resizeSub$: Subscription;
 
+  /** Subscription reference to slider state stream */
+  private _sliderStateSub$: Subscription;
+
   /** Stream that emits sliding state */
-  readonly sliderState$: Observable<SliderState> = this._slidingWorker$.pipe(map((state: WorkerState) => ({
+  readonly sliderState$ = this._slidingWorker$.pipe(map((state: WorkerState) => ({
     style: this.getSliderStyles(state),
-    active: state.active
-  })));
+    instant: state.instant
+  } as SliderState)));
 
   /** Gallery state */
   @Input() state: GalleryState;
@@ -78,6 +76,18 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   /** Stream that emits when an error occurs */
   @Output() error = new EventEmitter<GalleryError>();
 
+  @ViewChild('container', { static: true }) containerEl: ElementRef;
+
+  @ViewChild('slider', { static: true }) sliderEl: ElementRef;
+
+  get container(): HTMLElement {
+    return this.containerEl.nativeElement;
+  }
+
+  get slider(): HTMLElement {
+    return this.sliderEl.nativeElement;
+  }
+
   private swipeSubscription: Subscription
 
   /** Item zoom */
@@ -85,32 +95,43 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     return { transform: `perspective(50px) translate3d(0, 0, ${-this.config.zoomOut}px)` };
   }
 
-  constructor(
-    private readonly _el: ElementRef,
-    private readonly _zone: NgZone,
-    @Inject(PLATFORM_ID)
-    private readonly platform: Object
-  ) {
+  constructor(private _el: ElementRef, private _zone: NgZone, @Inject(PLATFORM_ID) private platform: Object) {
 
+    // Activate sliding worker
+    this.sliderState$ = this._slidingWorker$.pipe(map((state: WorkerState) => ({
+      style: this.getSliderStyles(state),
+      instant: state.instant
+    })));
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: SimpleChanges) {
     // Refresh the slider
-    this.updateSlider({ value: 0, active: false });
+    this.updateSlider({ value: 0, instant: changes.state.firstChange });
   }
 
   ngOnInit(): void {
     if (this.config.gestures) {
-      this._zone.runOutsideAngular(() => this.swipeSubscription = createSwipeSubscription({
-        enableMouseEvents: true,
-        domElement: this._el.nativeElement,
-        onSwipeMove: event => {
-          if (event.direction === this.config.slidingDirection) {
-            this.updateSlider({ value: event.distance, active: true });
-          }
-        },
-        onSwipeEnd: event => this.onSwipe(event)
-      }));
+      this._zone.runOutsideAngular(() => {
+        this.swipeSubscription = createSwipeSubscription({
+          enableMouseEvents: true,
+          domElement: this._el.nativeElement,
+          onSwipeMove: event => {
+            if (event.direction === this.config.slidingDirection) {
+              this.updateSlider({ value: event.distance, instant: true });
+            }
+          },
+          onSwipeEnd: event => this.onSwipe(event)
+        });
+        this._sliderStateSub$ = this.sliderState$.pipe(
+          tap((state: SliderState) => {
+            this.slider.style.transform = state.style.transform;
+            this.slider.style.height = state.style.height;
+            this.slider.style.width = state.style.width;
+            this.slider.classList.toggle('g-no-transition', state.instant);
+            this.container.style.transform = this.zoom.transform;
+          })
+        ).subscribe();
+      });
     }
     // Rearrange slider on window resize
     if (isPlatformBrowser(this.platform)) {
@@ -120,12 +141,13 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
       ).subscribe();
     }
 
-    setTimeout(() => this.updateSlider({ value: 0, active: false }));
+    setTimeout(() => this.updateSlider({ value: 0, instant: false }));
   }
 
   ngOnDestroy() {
     this._resizeSub$?.unsubscribe();
     this.swipeSubscription?.unsubscribe();
+    this._sliderStateSub$?.unsubscribe();
     this._slidingWorker$.complete();
   }
 
@@ -162,7 +184,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
       } else {
         this.action.emit(this.state.currIndex);
       }
-      this.updateSlider({ value: 0, active: false });
+      this.updateSlider({ value: 0, instant: false });
     }
   }
 
