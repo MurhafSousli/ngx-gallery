@@ -53,7 +53,9 @@ type GalleryItemModel = {
   thumb?: string;
 };
 
-export type ImageItemData = GalleryItemModel;
+export type ImageItemData = GalleryItemModel & {
+  alt?: string;
+};
 
 export type IframeItemData = GalleryItemModel & {
   params?: any;
