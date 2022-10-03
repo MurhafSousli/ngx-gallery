@@ -104,7 +104,18 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges) {
     // Refresh the slider
-    this.updateSlider({ value: 0, instant: changes.state.firstChange });
+    if (changes.state) {
+      this.updateSlider({ value: 0, instant: changes.state.firstChange });
+    }
+
+    // Enable/Disable gestures on changes
+    if (changes.config && changes.config.currentValue?.gestures !== changes.config.previousValue?.gestures) {
+      if (this.config.gestures) {
+        this.activateGestures();
+      } else {
+        this.deactivateGestures();
+      }
+    }
   }
 
   ngOnInit() {
@@ -121,18 +132,33 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
       ).subscribe();
     });
 
-    if (this.config.gestures && typeof Hammer !== 'undefined') {
+    // Rearrange slider on window resize
+    if (isPlatformBrowser(this.platform)) {
+      this._resizeSub$ = fromEvent(window, 'resize').pipe(
+        debounceTime(200),
+        tap(() => this.updateSlider(this._slidingWorker$.value))
+      ).subscribe();
+    }
+  }
 
+  ngOnDestroy() {
+    this.deactivateGestures();
+    this._resizeSub$?.unsubscribe();
+    this._sliderStateSub$?.unsubscribe();
+    this._slidingWorker$.complete();
+  }
+
+  private activateGestures() {
+    if (typeof Hammer !== 'undefined') {
       const direction = this.config.slidingDirection === SlidingDirection.Horizontal
         ? Hammer.DIRECTION_HORIZONTAL
         : Hammer.DIRECTION_VERTICAL;
 
+      // Activate gestures
       this._hammer = new Hammer(this._el.nativeElement);
       this._hammer.get('pan').set({ direction });
 
       this._zone.runOutsideAngular(() => {
-        // Activate gestures
-
         // Move the slider
         this._hammer.on('pan', (e) => {
 
@@ -154,27 +180,10 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
         });
       });
     }
-
-    // Rearrange slider on window resize
-    if (isPlatformBrowser(this.platform)) {
-      this._resizeSub$ = fromEvent(window, 'resize').pipe(
-        debounceTime(200),
-        tap(() => this.updateSlider(this._slidingWorker$.value))
-      ).subscribe();
-    }
   }
 
-  ngAfterViewInit() {
-    // setTimeout(() => {
-    //   this.updateSlider({ value: 0, instant: true });
-    // }, 200)
-  }
-
-  ngOnDestroy() {
+  private deactivateGestures() {
     this._hammer?.destroy();
-    this._resizeSub$?.unsubscribe();
-    this._sliderStateSub$?.unsubscribe();
-    this._slidingWorker$.complete();
   }
 
   /**

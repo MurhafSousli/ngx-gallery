@@ -106,7 +106,19 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges) {
     // Refresh the slider
-    this.updateSlider({ value: 0, instant: changes.state.firstChange });
+    if (changes.state) {
+      this.updateSlider({ value: 0, instant: changes.state.firstChange });
+    }
+
+    // Enable/Disable gestures on changes
+    if (changes.config && changes.config.currentValue?.gestures !== changes.config.previousValue?.gestures) {
+      if (this.config.gestures) {
+        this.activateGestures();
+      } else {
+        this.deactivateGestures();
+      }
+    }
+
     this._freeModeCurrentOffset = 0;
   }
 
@@ -122,8 +134,16 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
         })
       ).subscribe();
     });
+  }
 
-    if (this.config.gestures && !this.config.disableThumb && typeof Hammer !== 'undefined') {
+  ngOnDestroy() {
+    this._hammer?.destroy();
+    this._sliderStateSub$?.unsubscribe();
+    this._slidingWorker$.complete();
+  }
+
+  private activateGestures() {
+    if (!this.config.disableThumb && typeof Hammer !== 'undefined') {
 
       let direction: number;
 
@@ -155,10 +175,8 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  private deactivateGestures() {
     this._hammer?.destroy();
-    this._sliderStateSub$?.unsubscribe();
-    this._slidingWorker$.complete();
   }
 
   /**
