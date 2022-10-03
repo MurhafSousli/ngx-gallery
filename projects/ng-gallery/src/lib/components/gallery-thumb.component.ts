@@ -7,7 +7,6 @@ import { GalleryConfig } from '../models/config.model';
   template: `
     <gallery-image [src]="data.thumb"
                    [alt]="data.alt + '-thumbnail'"
-                   mode="indeterminate"
                    [isThumbnail]="true"
                    [loadingIcon]="config.thumbLoadingIcon"
                    [loadingError]="config.thumbLoadingError"

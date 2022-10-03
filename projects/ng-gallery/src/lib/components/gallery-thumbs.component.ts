@@ -106,12 +106,44 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges) {
     // Refresh the slider
-    this.updateSlider({ value: 0, instant: changes.state.firstChange });
+    if (changes.state) {
+      this.updateSlider({ value: 0, instant: changes.state.firstChange });
+    }
+
+    // Enable/Disable gestures on changes
+    if (changes.config && changes.config.currentValue?.gestures !== changes.config.previousValue?.gestures) {
+      if (this.config.gestures) {
+        this.activateGestures();
+      } else {
+        this.deactivateGestures();
+      }
+    }
+
     this._freeModeCurrentOffset = 0;
   }
 
   ngOnInit() {
-    if (this.config.gestures && !this.config.disableThumb && typeof Hammer !== 'undefined') {
+    this._zone.runOutsideAngular(() => {
+      // Set styles manually avoid triggering change detection on dragging
+      this._sliderStateSub$ = this.sliderState$.pipe(
+        tap((state: SliderState) => {
+          this.slider.style.transform = state.style.transform;
+          this.slider.style.height = state.style.height;
+          this.slider.style.width = state.style.width;
+          this.slider.classList.toggle('g-no-transition', state.instant);
+        })
+      ).subscribe();
+    });
+  }
+
+  ngOnDestroy() {
+    this._hammer?.destroy();
+    this._sliderStateSub$?.unsubscribe();
+    this._slidingWorker$.complete();
+  }
+
+  private activateGestures() {
+    if (!this.config.disableThumb && typeof Hammer !== 'undefined') {
 
       let direction: number;
 
@@ -139,24 +171,12 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
           case ThumbnailsMode.Free:
             this._hammer.on('pan', (e) => this.freeMode(e));
         }
-
-        // Set styles manually avoid triggering change detection on dragging
-        this._sliderStateSub$ = this.sliderState$.pipe(
-          tap((state: SliderState) => {
-            this.slider.style.transform = state.style.transform;
-            this.slider.style.height = state.style.height;
-            this.slider.style.width = state.style.width;
-            this.slider.classList.toggle('g-no-transition', state.instant);
-          })
-        ).subscribe();
       });
     }
   }
 
-  ngOnDestroy() {
+  private deactivateGestures() {
     this._hammer?.destroy();
-    this._sliderStateSub$?.unsubscribe();
-    this._slidingWorker$.complete();
   }
 
   /**

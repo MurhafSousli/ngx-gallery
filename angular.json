@@ -57,6 +57,11 @@
             "styles": [
               "projects/ng-gallery-demo/src/styles.scss"
             ],
+            "allowedCommonJsDependencies": [
+              "bezier-easing",
+              "@fortawesome/free-brands-svg-icons",
+              "@fortawesome/free-solid-svg-icons"
+            ],
             "scripts": [],
             "vendorChunk": true,
             "extractLicenses": false,
@@ -143,5 +148,6 @@
           }
         }
       }
-    }}
+    }
+  }
 }
