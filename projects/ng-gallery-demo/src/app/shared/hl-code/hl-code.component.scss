@@ -72,20 +72,6 @@ button {
   background-color: $code-bg-color;
 }
 
-.copy-message {
-  background-color: $code-bg-color;
-  color: $code-color;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 1em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  border-radius: 0.2em;
-}
-
 span {
   margin-left: 10px;
 }

@@ -1,31 +1,26 @@
-<ng-container *ngIf="state$ | async; let state">
-  <ng-scrollbar appearance="compact"
-                [disabled]="disabled"
-                [autoHeightDisabled]="false"
-                barClass="code-scrollbar"
-                thumbClass="code-scrollbar-thumb">
-    <div class="code-wrapper">
-      <div [style.visibility]="!state.copied ? 'visible' : 'hidden'">
-        <pre *ngIf="disabled; else enabled">
-          <code #codeEL class="hljs" [innerHTML]="code"></code>
-        </pre>
+<ng-scrollbar appearance="compact"
+              [disabled]="disabled"
+              [autoHeightDisabled]="false"
+              barClass="code-scrollbar"
+              thumbClass="code-scrollbar-thumb">
+  <div class="code-wrapper">
+    <pre *ngIf="disabled; else enabled">
+      <code class="hljs" [innerHTML]="code"></code>
+    </pre>
 
-        <ng-template #enabled>
-          <pre>
-            <code #codeEL [highlight]="code"></code>
-          </pre>
-        </ng-template>
-      </div>
+    <ng-template #enabled>
+      <pre>
+        <code [highlight]="code"></code>
+      </pre>
+    </ng-template>
+  </div>
+</ng-scrollbar>
 
-      <div class="hljs copy-message" [style.visibility]="state.copied ? 'visible' : 'hidden'">
-        <mat-icon>done</mat-icon>
-        <span>Copied!</span>
-      </div>
-    </div>
-  </ng-scrollbar>
-</ng-container>
-
-<button mat-icon-button color="accent" matTooltipClass="copy-tooltip"
-        matTooltip="Copy code" matTooltipPosition="before" (click)="copy()">
+<button mat-icon-button color="accent"
+        matTooltipClass="copy-tooltip"
+        matTooltip="Copy code"
+        matTooltipPosition="before"
+        [cdkCopyToClipboard]="code"
+        (cdkCopyToClipboardCopied)="snackBar.open(' Code copied!', null, { duration: 3000 })">
   <mat-icon class="md-24" aria-label="Copy code">content_paste</mat-icon>
 </button>

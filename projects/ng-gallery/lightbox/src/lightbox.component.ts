@@ -1,9 +1,9 @@
-import { Component, Optional, ChangeDetectionStrategy, ElementRef, Inject } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, Optional, Inject, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { SafeHtml } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { AnimationEvent } from '@angular/animations';
 import { OverlayRef } from '@angular/cdk/overlay';
-import { FocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
+import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { lightboxAnimation } from './lightbox.animation';
 
 @Component({
@@ -13,8 +13,7 @@ import { lightboxAnimation } from './lightbox.animation';
   styleUrls: ['./lightbox.component.scss'],
   template: `
     <gallery [id]="id" [destroyRef]="false" [skipInitConfig]="true">
-      <i class="g-btn-close" aria-label="Close" (click)="overlayRef.detach()"
-         [innerHTML]="sanitizer.bypassSecurityTrustHtml(closeIcon)"></i>
+      <i class="g-btn-close" aria-label="Close" [innerHTML]="closeIcon" (click)="overlayRef.detach()"></i>
     </gallery>
   `,
   host: {
@@ -38,7 +37,7 @@ export class LightboxComponent {
   overlayRef: OverlayRef;
 
   /** Close button svg data */
-  closeIcon: string;
+  closeIcon: SafeHtml;
 
   /** State of the lightbox animation. */
   state: 'void' | 'enter' | 'exit' = 'enter';
@@ -62,15 +61,14 @@ export class LightboxComponent {
   exitAnimationTime: number;
 
   /** The class that traps and manages focus within the lightbox. */
-  private _focusTrap: FocusTrap;
+  private _focusTrap: ConfigurableFocusTrap;
 
   /** Element that was focused before the lightbox was opened. Save this to restore upon close. */
   private _elementFocusedBeforeDialogWasOpened: HTMLElement;
 
   constructor(@Optional() @Inject(DOCUMENT) private _document: any,
               private _focusTrapFactory: ConfigurableFocusTrapFactory,
-              private _elementRef: ElementRef,
-              public sanitizer: DomSanitizer) {
+              private _elementRef: ElementRef) {
     this._savePreviouslyFocusedElement();
   }
 

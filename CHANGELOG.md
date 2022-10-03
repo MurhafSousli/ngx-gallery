@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.1.0
+
+- feat(core): Settings change shouldn't require restart, closes [#466](https://github.com/MurhafSousli/ngx-gallery/issues/466) in [ee71e52](https://github.com/MurhafSousli/ngx-gallery/pull/472/commits/ee71e528313f7780d82226aa1d849a6debc74ade).
+- fix(core): Unable to drag thumbnails properly, closes [473](https://github.com/MurhafSousli/ngx-gallery/issues/473) in [8635701](https://github.com/MurhafSousli/ngx-gallery/pull/472/commits/86357014d140360cb110adb1d3115836c988e4c7).
+- fix(core): Setting gestures to false breaks the gallery, closes [#464](https://github.com/MurhafSousli/ngx-gallery/issues/464), [#467](https://github.com/MurhafSousli/ngx-gallery/issues/467) and [#469](https://github.com/MurhafSousli/ngx-gallery/issues/469) in [a374603](https://github.com/MurhafSousli/ngx-gallery/pull/472/commits/a374603d60e82518c5b9de11309e68be365c94bc).
+- fix(core): Set `alt` on gallery thumbnails and add `role="button"` to gallery nav, closes [#468](https://github.com/MurhafSousli/ngx-gallery/issues/468) in [57bebca](https://github.com/MurhafSousli/ngx-gallery/pull/471/commits/57bebca657b160e3973fd1f73daf6b655dd25fa2).
+- fix(lightbox): Close icon in lightbox container being re-rendered all the time due to bug in template, closes [#307](https://github.com/MurhafSousli/ngx-gallery/issues/307) in [6bdc7a4](https://github.com/MurhafSousli/ngx-gallery/pull/472/commits/6bdc7a4add557a90043a665b73ea77f0d7d1979f).
+- enhance(core, lightbox): Remove deprecated usage, in [23506eb](https://github.com/MurhafSousli/ngx-gallery/pull/472/commits/23506eb52ebd2c2e5f1d124e77dc8c8695a7eafc).
+
 ## 7.0.4
 
 - fix(core): imageSize option when set to contain, in [3ecf94e](https://github.com/MurhafSousli/ngx-gallery/pull/462/commits/3ecf94e78d26378cc1330f2d432b59675526f63f).
