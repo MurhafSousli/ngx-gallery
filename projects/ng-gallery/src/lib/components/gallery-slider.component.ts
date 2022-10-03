@@ -108,6 +108,19 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
+    this._zone.runOutsideAngular(() => {
+      // Set styles manually avoid triggering change detection on dragging
+      this._sliderStateSub$ = this.sliderState$.pipe(
+        tap((state: SliderState) => {
+          this.slider.style.transform = state.style.transform;
+          this.slider.style.height = state.style.height;
+          this.slider.style.width = state.style.width;
+          this.slider.classList.toggle('g-no-transition', state.instant);
+          this.container.style.transform = this.zoom.transform;
+        })
+      ).subscribe();
+    });
+
     if (this.config.gestures && typeof Hammer !== 'undefined') {
 
       const direction = this.config.slidingDirection === SlidingDirection.Horizontal
@@ -139,17 +152,6 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
               }
           }
         });
-
-        // Set styles manually avoid triggering change detection on dragging
-        this._sliderStateSub$ = this.sliderState$.pipe(
-          tap((state: SliderState) => {
-            this.slider.style.transform = state.style.transform;
-            this.slider.style.height = state.style.height;
-            this.slider.style.width = state.style.width;
-            this.slider.classList.toggle('g-no-transition', state.instant);
-            this.container.style.transform = this.zoom.transform;
-          })
-        ).subscribe();
       });
     }
 
@@ -160,6 +162,12 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
         tap(() => this.updateSlider(this._slidingWorker$.value))
       ).subscribe();
     }
+  }
+
+  ngAfterViewInit() {
+    // setTimeout(() => {
+    //   this.updateSlider({ value: 0, instant: true });
+    // }, 200)
   }
 
   ngOnDestroy() {

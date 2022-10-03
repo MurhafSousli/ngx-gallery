@@ -111,6 +111,18 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
+    this._zone.runOutsideAngular(() => {
+      // Set styles manually avoid triggering change detection on dragging
+      this._sliderStateSub$ = this.sliderState$.pipe(
+        tap((state: SliderState) => {
+          this.slider.style.transform = state.style.transform;
+          this.slider.style.height = state.style.height;
+          this.slider.style.width = state.style.width;
+          this.slider.classList.toggle('g-no-transition', state.instant);
+        })
+      ).subscribe();
+    });
+
     if (this.config.gestures && !this.config.disableThumb && typeof Hammer !== 'undefined') {
 
       let direction: number;
@@ -139,16 +151,6 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
           case ThumbnailsMode.Free:
             this._hammer.on('pan', (e) => this.freeMode(e));
         }
-
-        // Set styles manually avoid triggering change detection on dragging
-        this._sliderStateSub$ = this.sliderState$.pipe(
-          tap((state: SliderState) => {
-            this.slider.style.transform = state.style.transform;
-            this.slider.style.height = state.style.height;
-            this.slider.style.width = state.style.width;
-            this.slider.classList.toggle('g-no-transition', state.instant);
-          })
-        ).subscribe();
       });
     }
   }
