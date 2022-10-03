@@ -1,4 +1,5 @@
 import { ComponentRef, Inject, Injectable, Optional } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Overlay, OverlayRef, OverlayConfig } from '@angular/cdk/overlay';
 import { LEFT_ARROW, RIGHT_ARROW, ESCAPE } from '@angular/cdk/keycodes';
@@ -24,7 +25,7 @@ export class Lightbox {
   /** Stream that emits when lightbox is closed */
   closed = new Subject<string>();
 
-  constructor(@Optional() @Inject(LIGHTBOX_CONFIG) config: LightboxConfig, private _gallery: Gallery, private _overlay: Overlay) {
+  constructor(@Optional() @Inject(LIGHTBOX_CONFIG) config: LightboxConfig, private _gallery: Gallery, private _overlay: Overlay, private _sanitizer: DomSanitizer) {
     this._config = config ? {...defaultConfig, ...config} : defaultConfig;
   }
 
@@ -72,7 +73,7 @@ export class Lightbox {
 
     lightboxRef.instance.id = id;
     lightboxRef.instance.overlayRef = this._overlayRef;
-    lightboxRef.instance.closeIcon = this._config.closeIcon;
+    lightboxRef.instance.closeIcon = this._sanitizer.bypassSecurityTrustHtml(this._config.closeIcon);
     lightboxRef.instance.role = this._config.role;
     lightboxRef.instance.ariaLabel = this._config.ariaLabel;
     lightboxRef.instance.ariaLabelledBy = this._config.ariaLabelledBy;
