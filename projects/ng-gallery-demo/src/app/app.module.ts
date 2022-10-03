@@ -10,9 +10,8 @@ import { NgProgressHttpModule } from 'ngx-progressbar/http';
 import { NgProgressRouterModule } from 'ngx-progressbar/router';
 // ICONS
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faTwitter } from '@fortawesome/free-brands-svg-icons/faTwitter';
-import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub';
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt';
+import { faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { AppRoutingModule } from './routing.module';
 import { SharedModule } from './shared/shared.module';
