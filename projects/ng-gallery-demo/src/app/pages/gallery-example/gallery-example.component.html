@@ -9,7 +9,7 @@
       <p><code class="hljs" [textContent]="'<gallery>'"></code> a slideshow component for cycling through
         elements - images, videos or iframes - like a carousel.</p>
     </section>
-    
+
     <section>
       <section-title>Installation</section-title>
       <p>Install with NPM</p>
@@ -40,7 +40,7 @@
           <ng-template matTabContent>
             <p>The most basic usage is to load items using an array of type <code class="hljs">GalleryItem[]</code></p>
             <p>This is done using the template binding</p>
-            <hl-code [code]="code.basic" [height]="400"></hl-code>
+            <hl-code [code]="code.basic"></hl-code>
           </ng-template>
         </mat-tab>
 
@@ -49,7 +49,7 @@
             <p>Another way is to convert a stream of data to a stream of gallery items using the map operator.</p>
             <p>This can be done using the <code class="hljs">async</code> pipe to subscribe to the stream in the
               template.</p>
-            <hl-code [code]="code.stream" [height]="400"></hl-code>
+            <hl-code [code]="code.stream"></hl-code>
           </ng-template>
         </mat-tab>
 
@@ -57,7 +57,7 @@
           <ng-template matTabContent>
             <p>Alternatively, The gallery can be accessed using the component reference.</p>
             <p>Get the component using <code class="hljs">@ViewChild(GalleryComponent)</code> then add items</p>
-            <hl-code [code]="code.galleryCmp" [height]="400"></hl-code>
+            <hl-code [code]="code.galleryCmp"></hl-code>
           </ng-template>
         </mat-tab>
 
@@ -66,7 +66,7 @@
             <p>Access the gallery from anywhere in your app.</p>
             <p>Use the <code class="hljs">Gallery</code> service to get the <code class="hljs">GalleryRef</code> by id
             </p>
-            <hl-code [code]="code.galleryRef" [height]="400"></hl-code>
+            <hl-code [code]="code.galleryRef"></hl-code>
           </ng-template>
         </mat-tab>
 
