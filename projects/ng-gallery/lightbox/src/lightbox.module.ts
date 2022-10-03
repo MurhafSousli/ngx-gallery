@@ -10,23 +10,23 @@ import { LightboxConfig, LIGHTBOX_CONFIG } from './lightbox.model';
 import { GallerizeDirective } from './gallerize.directive';
 
 @NgModule({
-    imports: [
-        OverlayModule,
-        GalleryModule,
-        A11yModule
-    ],
-    declarations: [
-        LightboxComponent,
-        LightboxDirective,
-        GallerizeDirective
-    ],
-    exports: [
-        LightboxDirective,
-        GallerizeDirective
-    ],
-    providers: [
-        Lightbox
-    ]
+  imports: [
+    OverlayModule,
+    GalleryModule,
+    A11yModule
+  ],
+  declarations: [
+    LightboxComponent,
+    LightboxDirective,
+    GallerizeDirective
+  ],
+  exports: [
+    LightboxDirective,
+    GallerizeDirective
+  ],
+  providers: [
+    Lightbox
+  ]
 })
 export class LightboxModule {
   static withConfig(config: LightboxConfig): ModuleWithProviders<LightboxModule> {
