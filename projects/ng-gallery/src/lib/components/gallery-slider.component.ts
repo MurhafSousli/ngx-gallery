@@ -93,7 +93,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     return { transform: `perspective(50px) translate3d(0, 0, ${ -this.config.zoomOut }px)` };
   }
 
-  constructor(private _el: ElementRef, private _zone: NgZone, @Inject(PLATFORM_ID) private platform: Object) {
+  constructor(private _el: ElementRef, private _zone: NgZone, @Inject(PLATFORM_ID) private _platform: Object) {
 
     // Activate sliding worker
     this.sliderState$ = this._slidingWorker$.pipe(map((state: WorkerState) => ({
@@ -133,10 +133,10 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     });
 
     // Rearrange slider on window resize
-    if (isPlatformBrowser(this.platform)) {
+    if (isPlatformBrowser(this._platform)) {
       this._resizeSub$ = fromEvent(window, 'resize').pipe(
         debounceTime(200),
-        tap(() => this.updateSlider(this._slidingWorker$.value))
+        tap(() => this.updateSlider({ value: 0, instant: true }))
       ).subscribe();
     }
   }
@@ -150,7 +150,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   private activateGestures() {
     if (typeof Hammer !== 'undefined') {
-      let direction: 'VERTICAL' | 'HORIZONTAL';
+      let direction: number;
       let touchAction: 'pan-x' | 'pan-y' | 'compute' = 'compute';
 
       if (this.config.slidingDirection === SlidingDirection.Horizontal) {
@@ -170,24 +170,23 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
       this._hammer.get('pan').set({ direction });
 
       this._zone.runOutsideAngular(() => {
-        this._hammer.on('panmove', (e) => {
+        this._hammer.on('pan', (e) => {
           switch (this.config.slidingDirection) {
             case SlidingDirection.Horizontal:
-              this.updateSlider({ value: e.deltaX, instant: true });
+              if (e.isFinal) {
+                this.updateSlider({ value: 0, instant: false });
+                this.horizontalPan(e);
+              } else {
+                this.updateSlider({ value: e.deltaX, instant: true });
+              }
               break;
             case SlidingDirection.Vertical:
-              this.updateSlider({ value: e.deltaY, instant: true });
-          }
-        });
-
-        this._hammer.on('panend', (e) => {
-          this.updateSlider({ value: 0, instant: false });
-          switch (this.config.slidingDirection) {
-            case SlidingDirection.Horizontal:
-              this.horizontalPan(e);
-              break;
-            case SlidingDirection.Vertical:
-              this.verticalPan(e);
+              if (e.isFinal) {
+                this.updateSlider({ value: 0, instant: false });
+                this.verticalPan(e);
+              } else {
+                this.updateSlider({ value: e.deltaY, instant: true });
+              }
           }
         });
       });
