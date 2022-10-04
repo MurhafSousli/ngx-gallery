@@ -146,15 +146,22 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
     if (!this.config.disableThumb && typeof Hammer !== 'undefined') {
 
       let direction: number;
+      let touchAction: 'pan-x' | 'pan-y' | 'compute' = 'compute';
 
       switch (this.config.thumbPosition) {
         case ThumbnailsPosition.Right:
         case ThumbnailsPosition.Left:
           direction = Hammer.DIRECTION_VERTICAL;
+          if (this.config.reserveGesturesAction) {
+            touchAction = 'pan-y';
+          }
           break;
         case ThumbnailsPosition.Top:
         case ThumbnailsPosition.Bottom:
           direction = Hammer.DIRECTION_HORIZONTAL;
+          if (this.config.reserveGesturesAction) {
+            touchAction = 'pan-x';
+          }
           break;
       }
 
@@ -186,18 +193,20 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
     switch (this.config.thumbPosition) {
       case ThumbnailsPosition.Right:
       case ThumbnailsPosition.Left:
-        this.updateSlider({ value: e.deltaY, instant: true });
         if (e.isFinal) {
           this.updateSlider({ value: 0, instant: false });
           this.verticalPan(e);
+        } else {
+          this.updateSlider({ value: e.deltaY, instant: true });
         }
         break;
       case ThumbnailsPosition.Top:
       case ThumbnailsPosition.Bottom:
-        this.updateSlider({ value: e.deltaX, instant: true });
         if (e.isFinal) {
           this.updateSlider({ value: 0, instant: false });
           this.horizontalPan(e);
+        } else {
+          this.updateSlider({ value: e.deltaX, instant: true });
         }
     }
   }
