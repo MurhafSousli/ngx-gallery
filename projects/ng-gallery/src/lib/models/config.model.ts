@@ -22,6 +22,7 @@ export interface GalleryConfig {
   disableThumb?: boolean;
   panSensitivity?: number;
   playerInterval?: number;
+  reserveGesturesAction?: boolean;
   itemTemplate?: TemplateRef<any>;
   thumbTemplate?: TemplateRef<any>;
   thumbMode?: 'strict' | 'free';

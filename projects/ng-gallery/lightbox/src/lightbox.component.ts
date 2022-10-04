@@ -12,7 +12,7 @@ import { lightboxAnimation } from './lightbox.animation';
   animations: [lightboxAnimation],
   styleUrls: ['./lightbox.component.scss'],
   template: `
-    <gallery [id]="id" [destroyRef]="false" [skipInitConfig]="true">
+    <gallery [id]="id" [destroyRef]="false" [skipInitConfig]="true" [reserveGesturesAction]="true">
       <i class="g-btn-close" aria-label="Close" [innerHTML]="closeIcon" (click)="overlayRef.detach()"></i>
     </gallery>
   `,
