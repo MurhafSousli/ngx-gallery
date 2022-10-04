@@ -26,7 +26,7 @@ export class Lightbox {
   closed = new Subject<string>();
 
   constructor(@Optional() @Inject(LIGHTBOX_CONFIG) config: LightboxConfig, private _gallery: Gallery, private _overlay: Overlay, private _sanitizer: DomSanitizer) {
-    this._config = config ? {...defaultConfig, ...config} : defaultConfig;
+    this._config = config ? { ...defaultConfig, ...config } : defaultConfig;
   }
 
   /**
@@ -34,7 +34,7 @@ export class Lightbox {
    * @param config - LightboxConfig
    */
   setConfig(config: LightboxConfig) {
-    this._config = {...this._config, ...config};
+    this._config = { ...this._config, ...config };
   }
 
   /**
@@ -45,7 +45,7 @@ export class Lightbox {
    */
   open(i = 0, id = 'lightbox', config?: LightboxConfig) {
 
-    const _config = config ? {...this._config, ...config} : this._config;
+    const _config = config ? { ...this._config, ...config } : this._config;
 
     const overlayConfig: OverlayConfig = {
       backdropClass: _config.backdropClass,
@@ -57,6 +57,7 @@ export class Lightbox {
     };
 
     const galleryRef = this._gallery.ref(id);
+    galleryRef.setConfig({ reserveGesturesAction: true });
     galleryRef.set(i);
 
     this._overlayRef = this._overlay.create(overlayConfig);

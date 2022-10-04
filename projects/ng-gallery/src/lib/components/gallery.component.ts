@@ -120,7 +120,8 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       playerInterval: this.playerInterval,
       counterPosition: this.counterPosition,
       loadingStrategy: this.loadingStrategy,
-      slidingDirection: this.slidingDirection
+      slidingDirection: this.slidingDirection,
+      reserveGesturesAction: this.reserveGesturesAction
     };
   }
 
