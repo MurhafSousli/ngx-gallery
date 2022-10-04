@@ -108,6 +108,8 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
     // Refresh the slider
     if (changes.state) {
       this.updateSlider({ value: 0, instant: changes.state.firstChange });
+    } else {
+      this.updateSlider({ value: 0, instant: true });
     }
 
     // Enable/Disable gestures on changes

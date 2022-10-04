@@ -93,7 +93,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     return { transform: `perspective(50px) translate3d(0, 0, ${ -this.config.zoomOut }px)` };
   }
 
-  constructor(private _el: ElementRef, private _zone: NgZone, @Inject(PLATFORM_ID) private platform: Object) {
+  constructor(private _el: ElementRef, private _zone: NgZone, @Inject(PLATFORM_ID) private _platform: Object) {
 
     // Activate sliding worker
     this.sliderState$ = this._slidingWorker$.pipe(map((state: WorkerState) => ({
@@ -133,10 +133,10 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     });
 
     // Rearrange slider on window resize
-    if (isPlatformBrowser(this.platform)) {
+    if (isPlatformBrowser(this._platform)) {
       this._resizeSub$ = fromEvent(window, 'resize').pipe(
         debounceTime(200),
-        tap(() => this.updateSlider(this._slidingWorker$.value))
+        tap(() => this.updateSlider({ value: 0, instant: true }))
       ).subscribe();
     }
   }
