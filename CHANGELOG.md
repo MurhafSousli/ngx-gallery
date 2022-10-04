@@ -1,5 +1,10 @@
 # Changelog
 
+## 7.1.1
+
+- feat(core): New option `reserveGesturesAction` adds the ability to block the scrolling of page when sliding the gallery on mobile browser, closes [#477](https://github.com/MurhafSousli/ngx-gallery/issues/477) in [c105f21](https://github.com/MurhafSousli/ngx-gallery/pull/478/commits/c105f21fec747a71e849994d4e749f6e0c4b8b3f).
+- fix(core): Slide bug with touch scroll, closes [#465](https://github.com/MurhafSousli/ngx-gallery/issues/465) in [eb1e60c](https://github.com/MurhafSousli/ngx-gallery/pull/476/commits/eb1e60cd033d939485f4b2e4be30d95b49a3d7c5).
+
 ## 7.1.0
 
 - feat(core): Settings change shouldn't require restart, closes [#466](https://github.com/MurhafSousli/ngx-gallery/issues/466) in [ee71e52](https://github.com/MurhafSousli/ngx-gallery/pull/472/commits/ee71e528313f7780d82226aa1d849a6debc74ade).
