@@ -58,6 +58,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() disableThumb: boolean = this._gallery.config.disableThumb;
   @Input() panSensitivity: number = this._gallery.config.panSensitivity;
   @Input() playerInterval: number = this._gallery.config.playerInterval;
+  @Input() reserveGesturesAction: boolean = this._gallery.config.reserveGesturesAction;
   @Input() itemTemplate: TemplateRef<any> = this._gallery.config.itemTemplate;
   @Input() thumbTemplate: TemplateRef<any> = this._gallery.config.thumbTemplate;
   @Input() thumbMode: 'strict' | 'free' = this._gallery.config.thumbMode;
