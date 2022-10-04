@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.1.2
+
+- fix(core): Fix `reserveGestureAction` input and its default value in the lightbox, in [ba95036](https://github.com/MurhafSousli/ngx-gallery/pull/481/commits/ba950362b3fd5378d929ef14b56b1cb602382c9e).
+- fix(core): Update gallery sliding position properly on window resize, in [f786d0a](https://github.com/MurhafSousli/ngx-gallery/pull/481/commits/f786d0a1ef44fd4a1c0a89126a57765131b5beba).
+- fix(core): Slide bug with touch scroll with gallery thumbnails, related to [#465](https://github.com/MurhafSousli/ngx-gallery/issues/465) in [eb1e60c](https://github.com/MurhafSousli/ngx-gallery/pull/476/commits/eb1e60cd033d939485f4b2e4be30d95b49a3d7c5) in [a26d63f](https://github.com/MurhafSousli/ngx-gallery/pull/481/commits/a26d63fe2f04667eb6bd7e36aba960c066f95305).
+
 ## 7.1.1
 
 - feat(core): New option `reserveGesturesAction` adds the ability to block the scrolling of page when sliding the gallery on mobile browser, closes [#477](https://github.com/MurhafSousli/ngx-gallery/issues/477) in [c105f21](https://github.com/MurhafSousli/ngx-gallery/pull/478/commits/c105f21fec747a71e849994d4e749f6e0c4b8b3f).
