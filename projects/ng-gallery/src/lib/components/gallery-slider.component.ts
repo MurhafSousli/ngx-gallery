@@ -150,32 +150,44 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   private activateGestures() {
     if (typeof Hammer !== 'undefined') {
-      const direction = this.config.slidingDirection === SlidingDirection.Horizontal
-        ? Hammer.DIRECTION_HORIZONTAL
-        : Hammer.DIRECTION_VERTICAL;
+      let direction: 'VERTICAL' | 'HORIZONTAL';
+      let touchAction: 'pan-x' | 'pan-y' | 'compute' = 'compute';
+
+      if (this.config.slidingDirection === SlidingDirection.Horizontal) {
+        direction = Hammer.DIRECTION_HORIZONTAL;
+        if (this.config.reserveGesturesAction) {
+          touchAction = 'pan-x';
+        }
+      } else {
+        direction = Hammer.DIRECTION_VERTICAL;
+        if (this.config.reserveGesturesAction) {
+          touchAction = 'pan-y';
+        }
+      }
 
       // Activate gestures
-      this._hammer = new Hammer(this._el.nativeElement);
+      this._hammer = new Hammer(this._el.nativeElement, { touchAction });
       this._hammer.get('pan').set({ direction });
 
       this._zone.runOutsideAngular(() => {
-        // Move the slider
-        this._hammer.on('pan', (e) => {
-
+        this._hammer.on('panmove', (e) => {
           switch (this.config.slidingDirection) {
             case SlidingDirection.Horizontal:
               this.updateSlider({ value: e.deltaX, instant: true });
-              if (e.isFinal) {
-                this.updateSlider({ value: 0, instant: false });
-                this.horizontalPan(e);
-              }
               break;
             case SlidingDirection.Vertical:
               this.updateSlider({ value: e.deltaY, instant: true });
-              if (e.isFinal) {
-                this.updateSlider({ value: 0, instant: false });
-                this.verticalPan(e);
-              }
+          }
+        });
+
+        this._hammer.on('panend', (e) => {
+          this.updateSlider({ value: 0, instant: false });
+          switch (this.config.slidingDirection) {
+            case SlidingDirection.Horizontal:
+              this.horizontalPan(e);
+              break;
+            case SlidingDirection.Vertical:
+              this.verticalPan(e);
           }
         });
       });
