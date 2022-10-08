@@ -11,7 +11,7 @@ import { GalleryConfig } from '../models/config.model';
          [class.g-dot-active]="i === state.currIndex"
          [style.width.px]="config?.dotsSize"
          [style.height.px]="config?.dotsSize"
-         (tapClick)="action.emit(i)">
+         (click)="action.emit(i)">
       <div class="g-dot-inner"></div>
     </div>
   `

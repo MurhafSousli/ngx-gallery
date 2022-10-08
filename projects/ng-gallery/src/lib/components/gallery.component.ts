@@ -8,7 +8,8 @@ import {
   SimpleChanges,
   TemplateRef,
   EventEmitter,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  NgZone
 } from '@angular/core';
 import { Subscription, SubscriptionLike } from 'rxjs';
 import { Gallery } from '../services/gallery.service';
@@ -30,8 +31,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['../styles/gallery.scss'],
   template: `
-    <gallery-core [state]="galleryRef.state | async"
-                  [config]="galleryRef.config | async"
+    <gallery-core [state]="galleryRef.state | voAsync"
+                  [config]="galleryRef.config | voAsync"
                   (action)="onAction($event)"
                   (itemClick)="onItemClick($event)"
                   (thumbClick)="onThumbClick($event)"
@@ -43,7 +44,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
 
   galleryRef: GalleryRef;
   @Input() id: string;
-  @Input() items: GalleryItem [];
+  @Input() items: GalleryItem[];
   @Input() nav: boolean = this._gallery.config.nav;
   @Input() dots: boolean = this._gallery.config.dots;
   @Input() loop: boolean = this._gallery.config.loop;
@@ -92,7 +93,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   private _playingChange$: SubscriptionLike = Subscription.EMPTY;
   private _playerListener$: SubscriptionLike = Subscription.EMPTY;
 
-  constructor(private _gallery: Gallery) {
+  constructor(private _gallery: Gallery, private _zone: NgZone) {
   }
 
   private getConfig() {
@@ -159,24 +160,28 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     // Load gallery items
     this.load(this.items);
 
-    // Activate player listener
-    this._playerListener$ = this.galleryRef.activatePlayer().subscribe();
+    // Subscribe outside of Zone to avoid eternal unstable app state
+    this._zone.runOutsideAngular(() => {
 
-    // Subscribes to events on demand
-    if (this.indexChange.observed) {
-      this._indexChange$ = this.galleryRef.indexChanged.subscribe((state: GalleryState) => this.indexChange.emit(state));
-    }
-    if (this.itemsChange.observed) {
-      this._itemChange$ = this.galleryRef.itemsChanged.subscribe((state: GalleryState) => this.itemsChange.emit(state));
-    }
-    if (this.playingChange.observed) {
-      this._playingChange$ = this.galleryRef.playingChanged.subscribe((state: GalleryState) => this.playingChange.emit(state));
-    }
+      // Activate player listener
+      this._playerListener$ = this.galleryRef.activatePlayer().subscribe();
 
-    // Start playing if autoplay is set to true
-    if (this.autoPlay) {
-      this.play();
-    }
+      // Subscribes to events on demand
+      if (this.indexChange.observed) {
+        this._indexChange$ = this.galleryRef.indexChanged.subscribe((state: GalleryState) => this.indexChange.emit(state));
+      }
+      if (this.itemsChange.observed) {
+        this._itemChange$ = this.galleryRef.itemsChanged.subscribe((state: GalleryState) => this.itemsChange.emit(state));
+      }
+      if (this.playingChange.observed) {
+        this._playingChange$ = this.galleryRef.playingChanged.subscribe((state: GalleryState) => this.playingChange.emit(state));
+      }
+
+      // Start playing if autoplay is set to true
+      if (this.autoPlay) {
+        this.play();
+      }
+    });
   }
 
   ngOnDestroy() {

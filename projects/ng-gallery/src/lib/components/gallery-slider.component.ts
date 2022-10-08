@@ -22,7 +22,8 @@ import { GalleryConfig } from '../models/config.model';
 import { SlidingDirection } from '../models/constants';
 import { SliderState, WorkerState } from '../models/slider.model';
 
-declare const Hammer: any;
+import { createSwipeSubscription } from '../utils/touch-functions';
+import { SwipeEvent } from '../models/swipe.model'
 
 @Component({
   selector: 'gallery-slider',
@@ -36,7 +37,7 @@ declare const Hammer: any;
                       [data]="item.data"
                       [currIndex]="state.currIndex"
                       [index]="i"
-                      (tapClick)="itemClick.emit(i)"
+                      (click)="itemClick.emit(i)"
                       (error)="error.emit({itemIndex: i, error: $event})">
         </gallery-item>
       </div>
@@ -49,8 +50,6 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   /** Sliding worker */
   private readonly _slidingWorker$ = new BehaviorSubject<WorkerState>({ value: 0, instant: true });
 
-  /** HammerJS instance */
-  private _hammer: any;
 
   /** Subscription reference to window resize stream */
   private _resizeSub$: Subscription;
@@ -87,6 +86,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   get slider(): HTMLElement {
     return this.sliderEl.nativeElement;
   }
+  private swipeSubscription: Subscription
 
   /** Item zoom */
   get zoom() {
@@ -99,7 +99,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     this.sliderState$ = this._slidingWorker$.pipe(map((state: WorkerState) => ({
       style: this.getSliderStyles(state),
       instant: state.instant
-    })));
+    } as SliderState)));
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -146,55 +146,27 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     this._resizeSub$?.unsubscribe();
     this._sliderStateSub$?.unsubscribe();
     this._slidingWorker$.complete();
+    this.swipeSubscription?.unsubscribe();
+
   }
 
   private activateGestures() {
-    if (typeof Hammer !== 'undefined') {
-      let direction: number;
-      let touchAction: 'pan-x' | 'pan-y' | 'compute' = 'compute';
-
-      if (this.config.slidingDirection === SlidingDirection.Horizontal) {
-        direction = Hammer.DIRECTION_HORIZONTAL;
-        if (this.config.reserveGesturesAction) {
-          touchAction = 'pan-x';
-        }
-      } else {
-        direction = Hammer.DIRECTION_VERTICAL;
-        if (this.config.reserveGesturesAction) {
-          touchAction = 'pan-y';
-        }
-      }
-
-      // Activate gestures
-      this._hammer = new Hammer(this._el.nativeElement, { touchAction });
-      this._hammer.get('pan').set({ direction });
-
       this._zone.runOutsideAngular(() => {
-        this._hammer.on('pan', (e) => {
-          switch (this.config.slidingDirection) {
-            case SlidingDirection.Horizontal:
-              if (e.isFinal) {
-                this.updateSlider({ value: 0, instant: false });
-                this.horizontalPan(e);
-              } else {
-                this.updateSlider({ value: e.deltaX, instant: true });
-              }
-              break;
-            case SlidingDirection.Vertical:
-              if (e.isFinal) {
-                this.updateSlider({ value: 0, instant: false });
-                this.verticalPan(e);
-              } else {
-                this.updateSlider({ value: e.deltaY, instant: true });
-              }
-          }
+        this.swipeSubscription = createSwipeSubscription({
+          enableMouseEvents: true,
+          domElement: this._el.nativeElement,
+          onSwipeMove: event => {
+            if (event.direction === this.config.slidingDirection) {
+              this.updateSlider({ value: event.distance, instant: true });
+            }
+          },
+          onSwipeEnd: event => this.onSwipe(event)
         });
       });
-    }
   }
 
   private deactivateGestures() {
-    this._hammer?.destroy();
+    this.swipeSubscription.unsubscribe();
   }
 
   /**
@@ -217,41 +189,20 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  private verticalPan(e) {
-    if (!(e.direction & Hammer.DIRECTION_UP && e.offsetDirection & Hammer.DIRECTION_VERTICAL)) {
-      return;
-    }
-    if (e.velocityY > 0.3) {
-      this.prev();
-    } else if (e.velocityY < -0.3) {
-      this.next();
-    } else {
-      if (e.deltaY / 2 <= -this._el.nativeElement.offsetHeight * this.state.items.length / this.config.panSensitivity) {
-        this.next();
-      } else if (e.deltaY / 2 >= this._el.nativeElement.offsetHeight * this.state.items.length / this.config.panSensitivity) {
+  private onSwipe(e: SwipeEvent): void {
+    if (e.direction === this.config.slidingDirection) {
+      const limit = (e.direction === SlidingDirection.Vertical
+        ? this._el.nativeElement.offsetHeight
+        : this._el.nativeElement.offsetWidth
+      ) * this.state.items.length / this.config.panSensitivity;
+      if (e.velocity > 0.3 || e.distance >= limit) {
         this.prev();
+      } else if (e.velocity < -0.3 || e.distance <= -limit) {
+        this.next();
       } else {
         this.action.emit(this.state.currIndex);
       }
-    }
-  }
-
-  private horizontalPan(e) {
-    if (!(e.direction & Hammer.DIRECTION_HORIZONTAL && e.offsetDirection & Hammer.DIRECTION_HORIZONTAL)) {
-      return;
-    }
-    if (e.velocityX > 0.3) {
-      this.prev();
-    } else if (e.velocityX < -0.3) {
-      this.next();
-    } else {
-      if (e.deltaX / 2 <= -this._el.nativeElement.offsetWidth * this.state.items.length / this.config.panSensitivity) {
-        this.next();
-      } else if (e.deltaX / 2 >= this._el.nativeElement.offsetWidth * this.state.items.length / this.config.panSensitivity) {
-        this.prev();
-      } else {
-        this.action.emit(this.state.currIndex);
-      }
+      this.updateSlider({ value: 0, instant: false });
     }
   }
 

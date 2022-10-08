@@ -18,7 +18,7 @@ import { GalleryVideoComponent } from './components/templates/gallery-video.comp
 import { GalleryIframeComponent } from './components/templates/gallery-iframe.component';
 
 import { LazyImage } from './directives/lazy-image';
-import { TapClick } from './directives/tap-click';
+import { VoAsyncPipe } from './pipes/vo-async.pipe';
 
 @NgModule({
   imports: [
@@ -38,12 +38,11 @@ import { TapClick } from './directives/tap-click';
     GalleryVideoComponent,
     GalleryIframeComponent,
     LazyImage,
-    TapClick
+    VoAsyncPipe
   ],
   exports: [
     GalleryComponent,
-    LazyImage,
-    TapClick
+    LazyImage
   ]
 })
 export class GalleryModule {

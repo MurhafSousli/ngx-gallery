@@ -33,6 +33,7 @@ import { BehaviorSubject } from 'rxjs';
       <img *ngSwitchCase="'success'"
            @fadeIn
            [src]="imageUrl"
+           draggable="false"
            [attr.alt]="alt"
            class="g-image-item"/>
 
