@@ -99,7 +99,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     this.sliderState$ = this._slidingWorker$.pipe(map((state: WorkerState) => ({
       style: this.getSliderStyles(state),
       instant: state.instant
-    } as SliderState)));
+    })));
   }
 
   ngOnChanges(changes: SimpleChanges) {
