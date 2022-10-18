@@ -25,7 +25,6 @@ export interface GalleryConfig {
   reserveGesturesAction?: boolean;
   itemTemplate?: TemplateRef<any>;
   thumbTemplate?: TemplateRef<any>;
-  thumbMode?: 'strict' | 'free';
   imageSize?: 'cover' | 'contain';
   dotsPosition?: 'top' | 'bottom';
   counterPosition?: 'top' | 'bottom';

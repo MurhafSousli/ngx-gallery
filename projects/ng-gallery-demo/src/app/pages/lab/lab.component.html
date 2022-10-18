@@ -16,7 +16,6 @@
              [autoPlay]="config.autoPlay"
              [imageSize]="config.imageSize"
              [thumbView]="config.thumbView"
-             [thumbMode]="config.thumbMode"
              [thumbWidth]="config.thumbWidth"
              [thumbHeight]="config.thumbHeight"
              [disableThumb]="config.disableThumb"
@@ -103,15 +102,6 @@
               </mat-select>
             </mat-form-field>
           </div>
-
-<!--          <div>-->
-<!--            <mat-form-field>-->
-<!--              <mat-label>Thumbnails mode</mat-label>-->
-<!--              <mat-select [(ngModel)]="config.thumbMode" (selectionChange)="restart()" [disabled]="!config.thumb">-->
-<!--                <mat-option *ngFor="let mode of thumbModes" [value]="mode">{{mode}}</mat-option>-->
-<!--              </mat-select>-->
-<!--            </mat-form-field>-->
-<!--          </div>-->
 
           <div>
             <mat-form-field>

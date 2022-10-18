@@ -40,7 +40,6 @@ export const defaultConfig: GalleryConfig = {
   reserveGesturesAction: false,
   imageSize: ImageSize.Contain,
   thumbView: ThumbnailsView.Default,
-  thumbMode: ThumbnailsMode.Strict,
   dotsPosition: DotsPosition.Bottom,
   counterPosition: CounterPosition.Top,
   thumbPosition: ThumbnailsPosition.Bottom,

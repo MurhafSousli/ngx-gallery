@@ -24,6 +24,7 @@ import {
   YoutubeItem,
   YoutubeItemData
 } from './templates/items.model';
+import { GalleryConfig } from '../models/config.model';
 
 @Component({
   selector: 'gallery',
@@ -61,7 +62,6 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() reserveGesturesAction: boolean = this._gallery.config.reserveGesturesAction;
   @Input() itemTemplate: TemplateRef<any> = this._gallery.config.itemTemplate;
   @Input() thumbTemplate: TemplateRef<any> = this._gallery.config.thumbTemplate;
-  @Input() thumbMode: 'strict' | 'free' = this._gallery.config.thumbMode;
   @Input() imageSize: 'cover' | 'contain' = this._gallery.config.imageSize;
   @Input() dotsPosition: 'top' | 'bottom' = this._gallery.config.dotsPosition;
   @Input() counterPosition: 'top' | 'bottom' = this._gallery.config.counterPosition;
@@ -95,7 +95,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private _gallery: Gallery) {
   }
 
-  private getConfig() {
+  private getConfig(): GalleryConfig {
     return {
       nav: this.nav,
       dots: this.dots,
@@ -107,7 +107,6 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       gestures: this.gestures,
       dotsSize: this.dotsSize,
       imageSize: this.imageSize,
-      thumbMode: this.thumbMode,
       thumbView: this.thumbView,
       thumbWidth: this.thumbWidth,
       thumbHeight: this.thumbHeight,
