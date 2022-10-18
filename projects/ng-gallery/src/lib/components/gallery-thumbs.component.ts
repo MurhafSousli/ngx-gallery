@@ -132,8 +132,8 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // Scroll to current index
-    if (changes.state) {
+    if (changes.state.firstChange || !this.config.thumbDetached) {
+      // Scroll slide to item when current index changes.
       requestAnimationFrame(() => {
         this.scrollToIndex(this.state.currIndex, changes.state.firstChange ? 'auto' : 'smooth');
       });
@@ -166,7 +166,7 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
     switch (this.config.thumbPosition) {
       case ThumbnailsPosition.Top:
       case ThumbnailsPosition.Bottom:
-        let left: number = value * this.config.thumbWidth;
+        let left: number = (value * this.config.thumbWidth);
         if (this.config.thumbView === ThumbnailsView.Default) {
           left -= (this.slider.parentElement.clientWidth / 2) - (this.config.thumbWidth / 2);
         }
@@ -185,27 +185,33 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     this._zone.runOutsideAngular(() => {
-      this._scrollSub$ = fromEvent(this.slider, 'scroll').pipe(
-        debounceTime(50),
-        tap(() => {
-          let index: number;
-          switch (this.config.thumbPosition) {
-            case ThumbnailsPosition.Top:
-            case ThumbnailsPosition.Bottom:
-              index = this.slider.scrollLeft / this.slider.clientWidth;
-              break;
-            case ThumbnailsPosition.Left:
-            case ThumbnailsPosition.Right:
-              index = this.slider.scrollTop / this.slider.clientHeight;
-              break;
-          }
-          // Check if index value is
-          if (Number.isSafeInteger(index)) {
-            this._zone.run(() => this.action.emit(index));
-          }
-        })
-      ).subscribe();
+      // this._scrollSub$ = fromEvent(this.slider, 'scroll').pipe(
+      //   debounceTime(50),
+      //   tap(() => {
+      //     let index: number;
+      //     switch (this.config.thumbPosition) {
+      //       case ThumbnailsPosition.Top:
+      //       case ThumbnailsPosition.Bottom:
+      //         index = this.slider.scrollLeft / this.slider.clientWidth;
+      //         break;
+      //       case ThumbnailsPosition.Left:
+      //       case ThumbnailsPosition.Right:
+      //         index = this.slider.scrollTop / this.slider.clientHeight;
+      //         break;
+      //     }
+      //     // Check if index value is
+      //     if (Number.isSafeInteger(index)) {
+      //       this._zone.run(() => this.action.emit(index));
+      //     }
+      //   })
+      // ).subscribe();
     });
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.scrollToIndex(this.state.currIndex, 'auto');
+    }, 200);
   }
 
   ngOnDestroy() {

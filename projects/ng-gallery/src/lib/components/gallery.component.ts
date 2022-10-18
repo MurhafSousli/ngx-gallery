@@ -69,6 +69,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() loadingStrategy: 'preload' | 'lazy' | 'default' = this._gallery.config.loadingStrategy;
   @Input() thumbPosition: 'top' | 'left' | 'right' | 'bottom' = this._gallery.config.thumbPosition;
   @Input() thumbView: 'default' | 'contain' = this._gallery.config.thumbView;
+  @Input() thumbDetached: boolean = this._gallery.config.thumbDetached;
 
   // Inputs used by the lightbox
 
@@ -114,6 +115,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       dotsPosition: this.dotsPosition,
       itemTemplate: this.itemTemplate,
       thumbTemplate: this.thumbTemplate,
+      thumbDetached: this.thumbDetached,
       thumbPosition: this.thumbPosition,
       panSensitivity: this.panSensitivity,
       playerInterval: this.playerInterval,
