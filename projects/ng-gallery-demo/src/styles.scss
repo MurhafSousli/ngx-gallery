@@ -46,7 +46,7 @@ mat-sidenav-container {
   right: 0;
   top: $header-height;
   bottom: 0;
-  overflow: hidden;
+  overflow: auto;
   transform: perspective(1000px);
   backface-visibility: hidden;
   transform-style: preserve-3d;

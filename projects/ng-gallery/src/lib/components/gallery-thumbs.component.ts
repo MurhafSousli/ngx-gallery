@@ -13,12 +13,11 @@ import {
   EventEmitter,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { fromEvent, Subscription } from 'rxjs';
+import { debounceTime, tap } from 'rxjs/operators';
 import { GalleryConfig } from '../models/config.model';
 import { GalleryState, GalleryError } from '../models/gallery.model';
-import { ThumbnailsPosition, ThumbnailsMode, ThumbnailsView } from '../models/constants';
-import { SliderState, WorkerState } from '../models/slider.model';
+import { ThumbnailsPosition, ThumbnailsView } from '../models/constants';
 
 declare const Hammer: any;
 
@@ -26,13 +25,12 @@ declare const Hammer: any;
   selector: 'gallery-thumbs',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="g-thumbs-container">
-      <div #slider
-           class="g-slider"
-           [class.g-contain]="config.thumbView === thumbnailsView.Contain"
-           [class.g-contain-small-content]="thumbnailsLessThanSlider">
-
+    <div #container class="g-thumbs-container">
+      <div #slider class="g-slider">
+        <div *ngIf="config.thumbView === thumbnailsView.Contain || isContentLessThanContainer"
+             [style.flex]="'0 0 ' + centralizerSize + 'px'"></div>
         <gallery-thumb *ngFor="let item of state.items;let i = index"
+                       [style.flex]="'0 0 ' + thumbSize + 'px'"
                        [type]="item.type"
                        [config]="config"
                        [data]="item.data"
@@ -41,32 +39,22 @@ declare const Hammer: any;
                        [tapClickDisabled]="config.disableThumb"
                        (tapClick)="thumbClick.emit(i)"
                        (error)="error.emit({itemIndex: i, error: $event})"></gallery-thumb>
+        <div *ngIf="config.thumbView === thumbnailsView.Contain || isContentLessThanContainer"
+             [style.flex]="'0 0 ' + centralizerSize + 'px'"></div>
       </div>
+      <div>{{slider.clientWidth}}, {{ slider.scrollWidth}}, {{slider.offsetWidth }}</div>
     </div>
   `
 })
 export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
 
-  /** Sliding worker */
-  private readonly _slidingWorker$ = new BehaviorSubject<WorkerState>({ value: 0, instant: true });
-
   /** HammerJS instance */
   private _hammer: any;
 
-  /** Current slider position in free sliding mode */
-  private _freeModeCurrentOffset = 0;
-
-  /** Subscription reference to slider state stream */
-  private _sliderStateSub$: Subscription;
+  private _scrollSub$: Subscription;
 
   /** Thumbnails view enum */
-  thumbnailsView = ThumbnailsView;
-
-  /** Thumbnails size is less than slider size (for contain thumbnails view) */
-  thumbnailsLessThanSlider: boolean;
-
-  /** Stream that emits sliding state */
-  sliderState$: Observable<SliderState>;
+  readonly thumbnailsView = ThumbnailsView;
 
   /** Gallery state */
   @Input() state: GalleryState;
@@ -91,25 +79,77 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
 
   @ViewChild('slider', { static: true }) sliderEl: ElementRef;
 
+  @ViewChild('container', { static: true }) containerEl: ElementRef;
+
   get slider(): HTMLElement {
     return this.sliderEl.nativeElement;
   }
 
-  constructor(private _el: ElementRef, private _zone: NgZone) {
+  get container(): HTMLElement {
+    return this.containerEl.nativeElement;
+  }
 
-    // Activate sliding worker
-    this.sliderState$ = this._slidingWorker$.pipe(map((state: WorkerState) => ({
-      style: this.getSliderStyles(state),
-      instant: state.instant
-    })));
+  get centralizerSize(): number {
+    switch (this.config.thumbPosition) {
+      case ThumbnailsPosition.Top:
+      case ThumbnailsPosition.Bottom:
+        if (this.isContentLessThanContainer) {
+          const thumbSize = this.config.thumbWidth;
+          const size = this.slider.clientWidth - (thumbSize * this.state.items.length);
+          return size / 2;
+        }
+        return (this.container.clientWidth / 2) - (this.config.thumbWidth / 2);
+      case ThumbnailsPosition.Left:
+      case ThumbnailsPosition.Right:
+        if (this.isContentLessThanContainer) {
+          const thumbSize = this.config.thumbHeight;
+          const size = this.slider.clientHeight - (thumbSize * this.state.items.length);
+          return size / 2;
+        }
+        return (this.container.clientHeight / 2) - (this.config.thumbHeight / 2);
+    }
+  }
+
+  get thumbSize(): number {
+    switch (this.config.thumbPosition) {
+      case ThumbnailsPosition.Top:
+      case ThumbnailsPosition.Bottom:
+        return this.config.thumbWidth;
+    }
+    return this.config.thumbHeight;
+  }
+
+  get isContentLessThanContainer(): boolean {
+    switch (this.config.thumbPosition) {
+      case ThumbnailsPosition.Top:
+      case ThumbnailsPosition.Bottom:
+        return this.slider.clientWidth >= this.slider.scrollWidth;
+    }
+    return this.slider.clientHeight >= this.slider.scrollHeight;
+  }
+
+  constructor(private _el: ElementRef, private _zone: NgZone) {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // Refresh the slider
+    // Scroll to current index
     if (changes.state) {
-      this.updateSlider({ value: 0, instant: changes.state.firstChange });
-    } else {
-      this.updateSlider({ value: 0, instant: true });
+      requestAnimationFrame(() => {
+        this.scrollToIndex(this.state.currIndex, changes.state.firstChange ? 'auto' : 'smooth');
+      });
+    }
+
+    switch (this.config.thumbPosition) {
+      case ThumbnailsPosition.Right:
+      case ThumbnailsPosition.Left:
+        this.height = '100%';
+        this.width = this.config.thumbWidth + 'px';
+        break;
+      case ThumbnailsPosition.Top:
+      case ThumbnailsPosition.Bottom:
+        this.height = this.config.thumbHeight + 'px';
+        this.width = '100%';
+        break;
     }
 
     // Enable/Disable gestures on changes
@@ -120,19 +160,49 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
         this.deactivateGestures();
       }
     }
+  }
 
-    this._freeModeCurrentOffset = 0;
+  private scrollToIndex(value: number, behavior) {
+    switch (this.config.thumbPosition) {
+      case ThumbnailsPosition.Top:
+      case ThumbnailsPosition.Bottom:
+        let left: number = value * this.config.thumbWidth;
+        if (this.config.thumbView === ThumbnailsView.Default) {
+          left -= (this.slider.parentElement.clientWidth / 2) - (this.config.thumbWidth / 2);
+        }
+        this.slider.scrollTo({ behavior, left });
+        break;
+
+      case ThumbnailsPosition.Left:
+      case ThumbnailsPosition.Right:
+        let top: number = value * this.config.thumbHeight;
+        if (this.config.thumbView === ThumbnailsView.Default) {
+          top -= (this.slider.parentElement.clientHeight / 2) - (this.config.thumbHeight / 2);
+        }
+        this.slider.scrollTo({ behavior, top });
+    }
   }
 
   ngOnInit() {
     this._zone.runOutsideAngular(() => {
-      // Set styles manually avoid triggering change detection on dragging
-      this._sliderStateSub$ = this.sliderState$.pipe(
-        tap((state: SliderState) => {
-          this.slider.style.transform = state.style.transform;
-          this.slider.style.height = state.style.height;
-          this.slider.style.width = state.style.width;
-          this.slider.classList.toggle('g-no-transition', state.instant);
+      this._scrollSub$ = fromEvent(this.slider, 'scroll').pipe(
+        debounceTime(50),
+        tap(() => {
+          let index: number;
+          switch (this.config.thumbPosition) {
+            case ThumbnailsPosition.Top:
+            case ThumbnailsPosition.Bottom:
+              index = this.slider.scrollLeft / this.slider.clientWidth;
+              break;
+            case ThumbnailsPosition.Left:
+            case ThumbnailsPosition.Right:
+              index = this.slider.scrollTop / this.slider.clientHeight;
+              break;
+          }
+          // Check if index value is
+          if (Number.isSafeInteger(index)) {
+            this._zone.run(() => this.action.emit(index));
+          }
         })
       ).subscribe();
     });
@@ -140,8 +210,7 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy() {
     this._hammer?.destroy();
-    this._sliderStateSub$?.unsubscribe();
-    this._slidingWorker$.complete();
+    this._scrollSub$?.unsubscribe();
   }
 
   private activateGestures() {
@@ -172,14 +241,31 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
       this._hammer.get('pan').set({ direction });
 
       this._zone.runOutsideAngular(() => {
+        let freeModeCurrentOffset: number = 0;
         // Move the slider
-        switch (this.config.thumbMode) {
-          case ThumbnailsMode.Strict:
-            this._hammer.on('pan', (e) => this.strictMode(e));
-            break;
-          case ThumbnailsMode.Free:
-            this._hammer.on('pan', (e) => this.freeMode(e));
-        }
+        this._hammer.on('panstart', () => {
+          switch (this.config.thumbPosition) {
+            case ThumbnailsPosition.Right:
+            case ThumbnailsPosition.Left:
+              freeModeCurrentOffset = this.slider.scrollTop;
+              break;
+            case ThumbnailsPosition.Top:
+            case ThumbnailsPosition.Bottom:
+              freeModeCurrentOffset = this.slider.scrollLeft;
+
+          }
+        });
+        this._hammer.on('pan', (e) => {
+          switch (this.config.thumbPosition) {
+            case ThumbnailsPosition.Right:
+            case ThumbnailsPosition.Left:
+              this.slider.scrollTo({ top: freeModeCurrentOffset - e.deltaY, behavior: 'auto' });
+              break;
+            case ThumbnailsPosition.Top:
+            case ThumbnailsPosition.Bottom:
+              this.slider.scrollTo({ left: freeModeCurrentOffset - e.deltaX, behavior: 'auto' });
+          }
+        });
       });
     }
   }
@@ -188,199 +274,11 @@ export class GalleryThumbsComponent implements OnInit, OnChanges, OnDestroy {
     this._hammer?.destroy();
   }
 
-  /**
-   * Sliding strict mode
-   */
-  private strictMode(e) {
-    switch (this.config.thumbPosition) {
-      case ThumbnailsPosition.Right:
-      case ThumbnailsPosition.Left:
-        if (e.isFinal) {
-          this.updateSlider({ value: 0, instant: false });
-          this.verticalPan(e);
-        } else {
-          this.updateSlider({ value: e.deltaY, instant: true });
-        }
-        break;
-      case ThumbnailsPosition.Top:
-      case ThumbnailsPosition.Bottom:
-        if (e.isFinal) {
-          this.updateSlider({ value: 0, instant: false });
-          this.horizontalPan(e);
-        } else {
-          this.updateSlider({ value: e.deltaX, instant: true });
-        }
-    }
-  }
-
-  /**
-   * Sliding free mode
-   */
-  private freeMode(e) {
-    switch (this.config.thumbPosition) {
-      case ThumbnailsPosition.Right:
-      case ThumbnailsPosition.Left:
-        this.updateSlider({ value: this._freeModeCurrentOffset + e.deltaY, instant: true });
-        if (e.isFinal) {
-          if (this.minFreeScrollExceeded(e.deltaY, this.config.thumbWidth, this.config.thumbHeight)) {
-            this._freeModeCurrentOffset = -(this.state.items.length - 1 - this.state.currIndex) * this.config.thumbHeight;
-          } else if (this.maxFreeScrollExceeded(e.deltaY, this.config.thumbHeight, this.config.thumbWidth)) {
-            this._freeModeCurrentOffset = this.state.currIndex * this.config.thumbHeight;
-          } else {
-            this._freeModeCurrentOffset += e.deltaY;
-          }
-          this.updateSlider({ value: this._freeModeCurrentOffset, instant: false });
-        }
-        break;
-      case ThumbnailsPosition.Top:
-      case ThumbnailsPosition.Bottom:
-        this.updateSlider({ value: this._freeModeCurrentOffset + e.deltaX, instant: true });
-        if (e.isFinal) {
-          if (this.minFreeScrollExceeded(e.deltaX, this.config.thumbHeight, this.config.thumbWidth)) {
-            this._freeModeCurrentOffset = -(this.state.items.length - 1 - this.state.currIndex) * this.config.thumbWidth;
-          } else if (this.maxFreeScrollExceeded(e.deltaX, this.config.thumbWidth, this.config.thumbHeight)) {
-            this._freeModeCurrentOffset = this.state.currIndex * this.config.thumbWidth;
-          } else {
-            this._freeModeCurrentOffset += e.deltaX;
-          }
-          this.updateSlider({ value: this._freeModeCurrentOffset, instant: false });
-        }
-    }
-  }
-
-  /**
-   * Check if the minimum free scroll is exceeded (used in Bottom, Left directions)
-   */
-  private minFreeScrollExceeded(delta: number, width: number, height: number): boolean {
-    return -(this._freeModeCurrentOffset + delta - width / 2) > (this.state.items.length - this.state.currIndex) * height;
-  }
-
-  /**
-   * Check if the maximum free scroll is exceeded (used in Top, Right directions)
-   */
-  private maxFreeScrollExceeded(delta: number, width: number, height: number): boolean {
-    return this._freeModeCurrentOffset + delta > (this.state.currIndex * width) + (height / 2);
-  }
-
-  /**
-   * Convert sliding state to styles
-   */
-  private getSliderStyles(state: WorkerState): any {
-    const currIndex: number = this.state.currIndex;
-    const itemsLength: number = this.state.items.length;
-    const { thumbWidth, thumbHeight } = this.config;
-
-    let value: number;
-    switch (this.config.thumbPosition) {
-      case ThumbnailsPosition.Top:
-      case ThumbnailsPosition.Bottom:
-        this.width = '100%';
-        this.height = this.config.thumbHeight + 'px';
-        switch (this.config.thumbView) {
-          case 'contain':
-            const containerWidth: number = this._el.nativeElement.clientWidth;
-            const minHorizontalShift: number = itemsLength * thumbWidth - containerWidth;
-            // If slider size is larger than thumbnails size
-            if (containerWidth > (itemsLength * thumbWidth)) {
-              this.thumbnailsLessThanSlider = true;
-            } else {
-              // If slider size is smaller than thumbnails size
-              this.thumbnailsLessThanSlider = false;
-              if ((currIndex * thumbWidth + thumbWidth / 2) > containerWidth / 2) {
-                value = -(Math.min((currIndex * thumbWidth + thumbWidth / 2) - (containerWidth / 2), minHorizontalShift));
-              } else {
-                value = 0;
-              }
-            }
-            break;
-          default:
-            value = -(currIndex * thumbWidth) - (thumbWidth / 2 - state.value);
-        }
-        return {
-          transform: `translate3d(${ value }px, 0, 0)`,
-          width: itemsLength * thumbWidth + 'px',
-          height: '100%'
-        };
-      case ThumbnailsPosition.Left:
-      case ThumbnailsPosition.Right:
-        this.width = this.config.thumbWidth + 'px';
-        this.height = '100%';
-        switch (this.config.thumbView) {
-          case 'contain':
-            const containerHeight: number = this._el.nativeElement.clientHeight;
-            const minVerticalShift: number = itemsLength * thumbHeight - containerHeight;
-            // If slider size is larger than thumbnails size
-            if (containerHeight > (itemsLength * thumbHeight)) {
-              this.thumbnailsLessThanSlider = true;
-            } else {
-              // If slider size is smaller than thumbnails size
-              this.thumbnailsLessThanSlider = false;
-              if ((currIndex * thumbHeight + thumbHeight / 2) > containerHeight / 2) {
-                value = -(Math.min((currIndex * thumbHeight + thumbHeight / 2) - (containerHeight / 2), minVerticalShift));
-              } else {
-                value = 0;
-              }
-            }
-            break;
-          default:
-            value = -(currIndex * thumbHeight) - (thumbHeight / 2 - state.value);
-        }
-        return {
-          transform: `translate3d(0, ${ value }px, 0)`,
-          width: '100%',
-          height: itemsLength * thumbHeight + 'px'
-        };
-    }
-  }
-
-  private verticalPan(e: any) {
-    if (!(e.direction & Hammer.DIRECTION_VERTICAL && e.offsetDirection & Hammer.DIRECTION_VERTICAL)) {
-      return;
-    }
-    if (e.velocityY > 0.3) {
-      this.prev();
-    } else if (e.velocityY < -0.3) {
-      this.next();
-    } else {
-      if (e.deltaY / 2 <= -this.config.thumbHeight * this.state.items.length / this.config.panSensitivity) {
-        this.next();
-      } else if (e.deltaY / 2 >= this.config.thumbHeight * this.state.items.length / this.config.panSensitivity) {
-        this.prev();
-      } else {
-        this.action.emit(this.state.currIndex);
-      }
-    }
-  }
-
-  private horizontalPan(e: any) {
-    if (!(e.direction & Hammer.DIRECTION_HORIZONTAL && e.offsetDirection & Hammer.DIRECTION_HORIZONTAL)) {
-      return;
-    }
-    if (e.velocityX > 0.3) {
-      this.prev();
-    } else if (e.velocityX < -0.3) {
-      this.next();
-    } else {
-      if (e.deltaX / 2 <= -this.config.thumbWidth * this.state.items.length / this.config.panSensitivity) {
-        this.next();
-      } else if (e.deltaX / 2 >= this.config.thumbWidth * this.state.items.length / this.config.panSensitivity) {
-        this.prev();
-      } else {
-        this.action.emit(this.state.currIndex);
-      }
-    }
-  }
-
   private next() {
     this.action.emit('next');
   }
 
   private prev() {
     this.action.emit('prev');
-  }
-
-  private updateSlider(state: WorkerState) {
-    const newState: WorkerState = { ...this._slidingWorker$.value, ...state };
-    this._slidingWorker$.next(newState);
   }
 }

@@ -1,6 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { GalleryItem, GalleryConfig, LoadingStrategy, SlidingDirection, ThumbnailsMode, ThumbnailsPosition } from 'ng-gallery';
+import {
+  GalleryItem,
+  GalleryConfig,
+  LoadingStrategy,
+  SlidingDirection,
+  ThumbnailsMode,
+  ThumbnailsPosition,
+  ThumbnailsView
+} from 'ng-gallery';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Pixabay } from '../../service/pixabay.service';
 
@@ -23,13 +31,14 @@ export class LabComponent implements OnInit {
   thumbPositions = ['top', 'left', 'right', 'bottom'];
   loadingStrategies = ['default', 'lazy', 'preload'];
   thumbModes = ['strict', 'free'];
+  thumbViews = ['default', 'contain'];
   slidingDirections = ['vertical', 'horizontal'];
   dotsCounterPositions = ['top', 'bottom'];
 
-  player$ = new BehaviorSubject<any>({active: false});
-  itemClick$ = new BehaviorSubject<any>({active: false});
-  thumbClick$ = new BehaviorSubject<any>({active: false});
-  indexChange$ = new BehaviorSubject<any>({active: false});
+  player$ = new BehaviorSubject<any>({ active: false });
+  itemClick$ = new BehaviorSubject<any>({ active: false });
+  thumbClick$ = new BehaviorSubject<any>({ active: false });
+  indexChange$ = new BehaviorSubject<any>({ active: false });
 
   constructor(pixabay: Pixabay, private _title: Title) {
     this.photos$ = pixabay.getHDImages('cars');
@@ -54,9 +63,10 @@ export class LabComponent implements OnInit {
       panSensitivity: 25,
       disableThumb: false,
       playerInterval: 3000,
+      thumbView: ThumbnailsView.Default,
       thumbMode: ThumbnailsMode.Free,
       thumbPosition: ThumbnailsPosition.Bottom,
-      loadingStrategy: LoadingStrategy.Default,
+      loadingStrategy: LoadingStrategy.Preload,
       slidingDirection: SlidingDirection.Horizontal,
     };
   }
@@ -67,34 +77,34 @@ export class LabComponent implements OnInit {
   }
 
   onPlayer(e) {
-    this.updateEvent(this.player$, {active: true, e});
+    this.updateEvent(this.player$, { active: true, e });
     setTimeout(() => {
-      this.updateEvent(this.player$, {active: false});
+      this.updateEvent(this.player$, { active: false });
     }, 800);
   }
 
   onItemClick(e) {
-    this.updateEvent(this.itemClick$, {active: true, e});
+    this.updateEvent(this.itemClick$, { active: true, e });
     setTimeout(() => {
-      this.updateEvent(this.itemClick$, {active: false});
+      this.updateEvent(this.itemClick$, { active: false });
     }, 800);
   }
 
   onThumbClick(e) {
-    this.updateEvent(this.thumbClick$, {active: true, e});
+    this.updateEvent(this.thumbClick$, { active: true, e });
     setTimeout(() => {
-      this.updateEvent(this.thumbClick$, {active: false});
+      this.updateEvent(this.thumbClick$, { active: false });
     }, 800);
   }
 
   onIndexChange(e) {
-    this.updateEvent(this.indexChange$, {active: true, e});
+    this.updateEvent(this.indexChange$, { active: true, e });
     setTimeout(() => {
-      this.updateEvent(this.indexChange$, {active: false});
+      this.updateEvent(this.indexChange$, { active: false });
     }, 800);
   }
 
   private updateEvent(eventState: BehaviorSubject<any>, args) {
-    eventState.next({...eventState.value, ...args});
+    eventState.next({ ...eventState.value, ...args });
   }
 }

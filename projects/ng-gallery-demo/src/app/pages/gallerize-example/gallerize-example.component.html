@@ -1,94 +1,93 @@
-<ng-scrollbar>
-  <div class="page-title">
-    <h1>Gallerize</h1>
-  </div>
-  <div class="page-content">
-    <section>
-      <section-title>Overview</section-title>
-      <p>The <code class="hljs">gallerize</code> directive is used to create lightbox gallery from image elements or
-        gallery components.</p>
+<div class="page-title">
+  <h1>Gallerize</h1>
+</div>
+<div class="page-content">
+  <section>
+    <section-title>Overview</section-title>
+    <p>The <code class="hljs">gallerize</code> directive is used to create lightbox gallery from image elements or
+      gallery components.</p>
 
-      <p>This directive loads the images in the gallery autmatically, you don't need to load them manually.</p>
+    <p>This directive loads the images in the gallery autmatically, you don't need to load them manually.</p>
 
-      <p><b>Gallerize</b> has 2 modes:</p>
+    <p><b>Gallerize</b> has 2 modes:</p>
 
-      <ul>
-        <li>
+    <ul>
+      <li>
           <span>If used on <code class="hljs">HTMLElement</code>, it detects the images and hooks their clicks to the
             lightbox.</span>
-        </li>
-        <li>
+      </li>
+      <li>
           <span>If used on <code class="hljs" [textContent]="'<gallery>'"></code>, it hooks the images click to the
             lightbox.</span>
-        </li>
-      </ul>
+      </li>
+    </ul>
 
-      <note class="info" style="margin-top: -1em">
-        <p>If you haven't installed and imported the module in step <span class="section-number inline-number">1</span>,
-          see the <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent" [routerLink]="['/getting-started/gallery']">Getting
-            Started Guide</a></p>
-      </note>
+    <note class="info" style="margin-top: -1em">
+      <p>If you haven't installed and imported the module in step <span class="section-number inline-number">1</span>,
+        see the <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent"
+                   [routerLink]="['/getting-started/gallery']">Getting
+          Started Guide</a></p>
+    </note>
 
-    </section>
+  </section>
 
-    <section>
-      <section-title>Auto-detect images</section-title>
+  <section>
+    <section-title>Auto-detect images</section-title>
 
-      <p>There are use cases when images are received as HTML format, this directive takes the
-        headache of fetching the src paths for you and connect them automatically to the lightbox.</p>
+    <p>There are use cases when images are received as HTML format, this directive takes the
+      headache of fetching the src paths for you and connect them automatically to the lightbox.</p>
 
-      <h3>Basic example</h3>
+    <h3>Basic example</h3>
 
-      <hl-code [code]="code.onElements"></hl-code>
+    <hl-code [code]="code.onElements"></hl-code>
 
-      <div class="row" gallerize="auto-detect">
-        <div class="column">
-          <img *ngFor="let item of images$ | async | slice:0:3"
-               src="{{item.data.thumb}}"
-               [attr.imageSrc]="item.data.src"
-               [attr.thumbSrc]="item.data.thumb">
-        </div>
-        <div class="column">
-          <img *ngFor="let item of images$ | async | slice:3:6"
-               src="{{item.data.thumb}}"
-               [attr.imageSrc]="item.data.src"
-               [attr.thumbSrc]="item.data.thumb">
-        </div>
-        <div class="column">
-          <img *ngFor="let item of images$ | async | slice:6:9"
-          src="{{item.data.src}}"
-          [attr.imageSrc]=""
-          [attr.thumbSrc]="">
-        </div>
+    <div class="row" gallerize="auto-detect">
+      <div class="column">
+        <img *ngFor="let item of images$ | async | slice:0:3"
+             src="{{item.data.thumb}}"
+             [attr.imageSrc]="item.data.src"
+             [attr.thumbSrc]="item.data.thumb">
       </div>
+      <div class="column">
+        <img *ngFor="let item of images$ | async | slice:3:6"
+             src="{{item.data.thumb}}"
+             [attr.imageSrc]="item.data.src"
+             [attr.thumbSrc]="item.data.thumb">
+      </div>
+      <div class="column">
+        <img *ngFor="let item of images$ | async | slice:6:9"
+             src="{{item.data.src}}"
+             [attr.imageSrc]=""
+             [attr.thumbSrc]="">
+      </div>
+    </div>
 
-      <note>
-        <p>By default, <b>Gallerize</b> will process all img elements, but you can limit that to elements with a
-          specific selector.</p>
-      </note>
+    <note>
+      <p>By default, <b>Gallerize</b> will process all img elements, but you can limit that to elements with a
+        specific selector.</p>
+    </note>
 
-      <h3>Selector example</h3>
+    <h3>Selector example</h3>
 
-      <p>Detect background images of elements with selector <code class="hljs">.gallery-img</code></p>
+    <p>Detect background images of elements with selector <code class="hljs">.gallery-img</code></p>
 
-      <hl-code [code]="code.withSelector"></hl-code>
+    <hl-code [code]="code.withSelector"></hl-code>
 
-    </section>
+  </section>
 
-    <section>
-      <section-title>Use with <code class="hljs" [textContent]="'<gallery>'"></code> Component</section-title>
-      <p>Gallerize is also compatible with the <code class="hljs" [textContent]="'<gallery>'"></code> component, if you
-        want to trigger the lightbox on a gallery item's click, just add <code class="hljs">gallerize</code> on your
-        gallery component.
-      </p>
+  <section>
+    <section-title>Use with <code class="hljs" [textContent]="'<gallery>'"></code> Component</section-title>
+    <p>Gallerize is also compatible with the <code class="hljs" [textContent]="'<gallery>'"></code> component, if you
+      want to trigger the lightbox on a gallery item's click, just add <code class="hljs">gallerize</code> on your
+      gallery component.
+    </p>
 
-      <gallery id="gallerize-ex" gallerize [items]="images$ | async"></gallery>
+    <gallery id="gallerize-ex" gallerize [items]="images$ | async"></gallery>
 
-      <h3>Code</h3>
+    <h3>Code</h3>
 
-      <hl-code [code]="code.onGallery"></hl-code>
-    </section>
-  </div>
+    <hl-code [code]="code.onGallery"></hl-code>
+  </section>
+</div>
 
-  <footer></footer>
-</ng-scrollbar>
+<footer></footer>

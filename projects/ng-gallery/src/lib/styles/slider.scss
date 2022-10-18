@@ -1,6 +1,11 @@
 ::ng-deep {
+  gallery-slider {
+    display: flex;
+
+  }
   .g-items-container {
     height: 100%;
+    flex: 1;
   }
 
   .g-slider {
@@ -11,12 +16,47 @@
   gallery-core[slidingDirection='horizontal'] {
     .g-slider {
       flex-direction: row;
+      scroll-snap-type: x mandatory;
+      overflow-x: scroll;
+      overflow-y: hidden;
     }
   }
 
   gallery-core[slidingDirection='vertical'] {
     .g-slider {
+      overflow-y: scroll;
+      overflow-x: hidden;
       flex-direction: column;
+      scroll-snap-type: y mandatory;
+    }
+  }
+
+
+  .g-slider {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+
+    scrollbar-width: none; /* Firefox 64 */
+    -ms-overflow-style: none; /* Internet Explorer 11 */
+    &::-webkit-scrollbar { /** WebKit */
+      display: none;
+    }
+
+    gallery-item{
+      width: 100%;
+      flex: none;
+    }
+
+    gallery-thumb,
+    gallery-item {
+      width: 100%;
+      flex: unset;
+      content-visibility:auto;
+      //contain-intrinsic-size: 0 5000px;
+      //scroll-snap-align: center;
     }
   }
 }
