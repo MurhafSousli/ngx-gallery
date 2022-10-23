@@ -7,14 +7,11 @@ import {
   OnChanges,
   ViewChild,
   SimpleChanges,
-  Inject,
   NgZone,
   ElementRef,
   EventEmitter,
-  ChangeDetectionStrategy,
-  PLATFORM_ID
+  ChangeDetectionStrategy
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
 import { Subscription, fromEvent } from 'rxjs';
 import { tap, debounceTime } from 'rxjs/operators';
 import { GalleryState, GalleryError } from '../models/gallery.model';
@@ -49,9 +46,6 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   /** HammerJS instance */
   private _hammer: any;
-
-  /** Subscription reference to window resize stream */
-  private _resizeSub$: Subscription;
 
   /** Subscription reference to slider scroll stream */
   private _scrollSub$: Subscription;
@@ -93,8 +87,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private _el: ElementRef,
               private _zone: NgZone,
-              private _smoothScroll: SmoothScrollManager,
-              @Inject(PLATFORM_ID) private _platform: Object) {
+              private _smoothScroll: SmoothScrollManager) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -142,20 +135,11 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
         })
       ).subscribe();
     });
-
-    // Rearrange slider on window resize
-    if (isPlatformBrowser(this._platform)) {
-      this._resizeSub$ = fromEvent(window, 'resize').pipe(
-        debounceTime(200),
-        // tap(() => this.updateSlider({ value: 0, instant: true }))
-      ).subscribe();
-    }
   }
 
   ngOnDestroy(): void {
     this.deactivateGestures();
     this._scrollSub$?.unsubscribe();
-    this._resizeSub$?.unsubscribe();
   }
 
   trackByFn(index: number, item: any) {

@@ -3,6 +3,7 @@ import {
   Input,
   Output,
   HostBinding,
+  Inject,
   AfterViewInit,
   OnDestroy,
   OnChanges,
@@ -10,7 +11,9 @@ import {
   SimpleChanges,
   NgZone,
   ElementRef,
+  PLATFORM_ID,
   EventEmitter,
+  ChangeDetectorRef,
   ChangeDetectionStrategy
 } from '@angular/core';
 import { GalleryConfig } from '../models/config.model';
@@ -18,6 +21,9 @@ import { GalleryState, GalleryError } from '../models/gallery.model';
 import { ThumbnailsPosition, ThumbnailsView } from '../models/constants';
 import { ThumbSliderAdapter, HorizontalThumbAdapter, VerticalThumbAdapter } from './adapters';
 import { SmoothScrollManager } from '../smooth-scroll';
+import { isPlatformBrowser } from '@angular/common';
+import { fromEvent, Subscription } from 'rxjs';
+import { debounceTime, tap } from 'rxjs/operators';
 
 declare const Hammer: any;
 
@@ -50,6 +56,9 @@ export class GalleryThumbsComponent implements AfterViewInit, OnChanges, OnDestr
 
   /** Thumbnails view enum */
   readonly thumbnailsView = ThumbnailsView;
+
+  /** Subscription reference to window resize stream */
+  private _resizeSub$: Subscription;
 
   /** Slider adapter */
   adapter: ThumbSliderAdapter;
@@ -90,17 +99,14 @@ export class GalleryThumbsComponent implements AfterViewInit, OnChanges, OnDestr
     return (this.adapter.clientSize / 2) - (this.adapter.thumbSize / 2);
   }
 
-  constructor(private _el: ElementRef, private _zone: NgZone, private _smoothScroll: SmoothScrollManager) {
+  constructor(private _el: ElementRef,
+              private _zone: NgZone,
+              private _smoothScroll: SmoothScrollManager,
+              private _cd: ChangeDetectorRef,
+              @Inject(PLATFORM_ID) private _platform: Object) {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.state.firstChange || !this.config.thumbDetached) {
-      // Scroll slide to item when current index changes.
-      requestAnimationFrame(() => {
-        this.scrollToIndex(this.state.currIndex, changes.state.firstChange ? 'auto' : 'smooth');
-      });
-    }
-
     if (changes.config) {
       // Sets sliding direction
       if (changes.config.currentValue?.thumbPosition !== changes.config.previousValue?.thumbPosition) {
@@ -128,11 +134,33 @@ export class GalleryThumbsComponent implements AfterViewInit, OnChanges, OnDestr
         }
       }
     }
+
+    if (changes.state.firstChange || !this.config.thumbDetached) {
+      // Scroll slide to item when current index changes.
+      requestAnimationFrame(() => {
+        this.scrollToIndex(this.state.currIndex, changes.state.firstChange ? 'auto' : 'smooth');
+      });
+    }
   }
 
   ngAfterViewInit(): void {
     // Workaround: opening a lightbox (centralised) with last index active, show in wrong position
     setTimeout(() => this.scrollToIndex(this.state.currIndex, 'auto'), 200);
+
+    this._zone.runOutsideAngular(() => {
+      // Update necessary calculation on window resize
+      if (isPlatformBrowser(this._platform)) {
+        this._resizeSub$ = fromEvent(window, 'resize').pipe(
+          debounceTime(50),
+          tap(() => {
+            // Update thumb centralize size
+            this.slider.style.setProperty('--thumb-centralize-size', this.centralizerSize + 'px');
+            this._cd.detectChanges();
+            this.scrollToIndex(this.state.currIndex, 'auto');
+          })
+        ).subscribe();
+      }
+    });
   }
 
   ngAfterViewChecked(): void {
@@ -186,5 +214,6 @@ export class GalleryThumbsComponent implements AfterViewInit, OnChanges, OnDestr
 
   private deactivateGestures(): void {
     this._hammer?.destroy();
+    this._resizeSub$?.unsubscribe();
   }
 }
