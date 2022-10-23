@@ -2,15 +2,19 @@
   gallery-thumbs {
     display: block;
     z-index: 1;
-    overflow: unset;
+
+    .g-slider[centralised="true"] {
+      &:before, &:after {
+        content: '';
+        flex: 0 0 var(--thumb-centralize-size);
+      }
+    }
   }
 
   .g-thumbs-container {
-    overflow: hidden;
     position: relative;
     height: 100%;
     width: 100%;
-    display: flex;
   }
 
   gallery-core[disableThumb='true'] {
@@ -24,9 +28,9 @@
     gallery-thumbs .g-slider {
       flex-direction: row;
       top: 0;
-      scroll-snap-type: x mandatory !important;
-      overflow-x: scroll !important;
+      overflow-x: auto;
     }
+
     gallery-thumb {
       padding: 1px 0 1px 1px;
     }
@@ -38,10 +42,10 @@
       .g-slider {
         flex-direction: column;
         left: 0;
-        scroll-snap-type: y mandatory !important;
-        overflow-y: scroll !important;
+        overflow-y: auto;
       }
     }
+
     gallery-thumb {
       padding: 0 1px 1px 1px;
     }
