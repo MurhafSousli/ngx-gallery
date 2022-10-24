@@ -4,6 +4,7 @@ import {
   Output,
   HostBinding,
   AfterViewInit,
+  AfterViewChecked,
   OnDestroy,
   OnChanges,
   ViewChild,
@@ -47,7 +48,7 @@ declare const Hammer: any;
     </div>
   `
 })
-export class GalleryThumbsComponent implements AfterViewInit, OnChanges, OnDestroy {
+export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, OnChanges, OnDestroy {
 
   /** HammerJS instance */
   private _hammer: any;
@@ -135,7 +136,7 @@ export class GalleryThumbsComponent implements AfterViewInit, OnChanges, OnDestr
       }
     }
 
-    if (changes.state.firstChange || !this.config.thumbDetached) {
+    if (changes.state?.firstChange || !this.config.thumbDetached) {
       // Scroll slide to item when current index changes.
       requestAnimationFrame(() => {
         this.scrollToIndex(this.state.currIndex, changes.state.firstChange ? 'auto' : 'smooth');
@@ -144,8 +145,6 @@ export class GalleryThumbsComponent implements AfterViewInit, OnChanges, OnDestr
   }
 
   ngAfterViewInit(): void {
-    this.slider.style.setProperty('--thumb-centralize-size', this.centralizerSize + 'px');
-
     // Workaround: opening a lightbox (centralised) with last index active, show in wrong position
     setTimeout(() => this.scrollToIndex(this.state.currIndex, 'auto'), 200);
 
@@ -163,6 +162,10 @@ export class GalleryThumbsComponent implements AfterViewInit, OnChanges, OnDestr
         ).subscribe();
       }
     });
+  }
+
+  ngAfterViewChecked(): void {
+    this.slider.style.setProperty('--thumb-centralize-size', this.centralizerSize + 'px');
   }
 
   ngOnDestroy(): void {

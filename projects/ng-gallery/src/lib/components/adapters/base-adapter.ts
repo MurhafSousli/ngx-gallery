@@ -39,4 +39,8 @@ export abstract class SliderAdapter extends BaseSliderAdapter {
   abstract get measureIndex(): number;
 
   abstract getScrollToValue(value, behavior: ScrollBehavior): ScrollToOptions;
+
+  abstract getPanDelta(e: any): number;
+
+  abstract getPanVelocity(e: any): number;
 }

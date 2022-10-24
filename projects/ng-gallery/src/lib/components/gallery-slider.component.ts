@@ -185,15 +185,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
         this._hammer.on('panend', (e: any) => {
           this.slider.classList.remove('g-sliding');
-          this._zone.run(() => {
-            switch (this.config.slidingDirection) {
-              case SlidingDirection.Horizontal:
-                this.horizontalPan(e);
-                break;
-              case SlidingDirection.Vertical:
-                this.verticalPan(e);
-            }
-          });
+          this.onPanEnd(e);
         });
       });
     }
@@ -203,38 +195,21 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     this._hammer?.destroy();
   }
 
-  private horizontalPan(e) {
-    if (e.velocityX > 0.3) {
-      this.prev();
-    } else if (e.velocityX < -0.3) {
-      this.next();
-    } else {
-      if (e.deltaX / 2 <= -this._el.nativeElement.offsetWidth * this.state.items.length / this.config.panSensitivity) {
-        this.next();
-      } else if (e.deltaX / 2 >= this._el.nativeElement.offsetWidth * this.state.items.length / this.config.panSensitivity) {
-        this.prev();
-      } else {
-        this.scrollToIndex(this.state.currIndex, 'smooth');
-        this.action.emit(this.state.currIndex);
+  protected onPanEnd(e): void {
+    this._zone.run(() => {
+      const delta: number = this.adapter.getPanDelta(e);
+      const velocity: number = this.adapter.getPanVelocity(e);
+      // Check if scrolled item is great enough to navigate
+      if (Math.abs(delta) > this.adapter.clientSize / 2) {
+        return delta > 0 ? this.prev() : this.next();
       }
-    }
-  }
-
-  private verticalPan(e) {
-    if (e.velocityY > 0.3) {
-      this.prev();
-    } else if (e.velocityY < -0.3) {
-      this.next();
-    } else {
-      if (e.deltaY / 2 <= -this._el.nativeElement.offsetHeight * this.state.items.length / this.config.panSensitivity) {
-        this.next();
-      } else if (e.deltaY / 2 >= this._el.nativeElement.offsetHeight * this.state.items.length / this.config.panSensitivity) {
-        this.prev();
-      } else {
-        this.scrollToIndex(this.state.currIndex, 'smooth');
-        this.action.emit(this.state.currIndex);
+      // Check if velocity is great enough to navigate
+      if (Math.abs(velocity) > 0.3) {
+        return velocity > 0 ? this.prev() : this.next();
       }
-    }
+      this.scrollToIndex(this.state.currIndex, 'smooth');
+      this.action.emit(this.state.currIndex);
+    });
   }
 
   private next(): void {

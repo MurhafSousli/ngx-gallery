@@ -20,6 +20,14 @@ export class HorizontalAdapter extends HorizontalCommonAdapter implements Slider
       duration: behavior === 'smooth' ? 400 : 0
     };
   }
+
+  getPanDelta(e): number {
+    return e.deltaX;
+  }
+
+  getPanVelocity(e): number {
+    return e.velocityX;
+  }
 }
 
 export class VerticalAdapter extends VerticalCommonAdapter implements SliderAdapter {
@@ -38,5 +46,13 @@ export class VerticalAdapter extends VerticalCommonAdapter implements SliderAdap
       top: position,
       duration: behavior === 'smooth' ? 400 : 0
     };
+  }
+
+  getPanDelta(e): number {
+    return e.deltaY;
+  }
+
+  getPanVelocity(e): number {
+    return e.velocityY;
   }
 }
