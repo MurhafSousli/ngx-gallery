@@ -191,22 +191,14 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
       const velocity: number = this.adapter.getPanVelocity(e);
       // Check if scrolled item is great enough to navigate
       if (Math.abs(delta) > this.adapter.clientSize / 2) {
-        return delta > 0 ? this.prev() : this.next();
+        return this.action.emit(delta > 0 ? 'prev' : 'next');
       }
       // Check if velocity is great enough to navigate
       if (Math.abs(velocity) > 0.3) {
-        return velocity > 0 ? this.prev() : this.next();
+        return this.action.emit(velocity > 0 ? 'prev' : 'next');
       }
       this.scrollToIndex(this.state.currIndex, 'smooth');
       this.action.emit(this.state.currIndex);
     });
-  }
-
-  private next(): void {
-    this.action.emit('next');
-  }
-
-  private prev(): void {
-    this.action.emit('prev');
   }
 }
