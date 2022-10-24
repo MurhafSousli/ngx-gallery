@@ -11,7 +11,6 @@
              [dots]="config.dots"
              [thumb]="config.thumb"
              [counter]="config.counter"
-             [zoomOut]="config.zoomOut"
              [gestures]="config.gestures"
              [autoPlay]="config.autoPlay"
              [imageSize]="config.imageSize"
@@ -155,13 +154,6 @@
             <mat-form-field>
               <mat-label>Thumbnail height</mat-label>
               <input matInput [(ngModel)]="config.thumbHeight" [disabled]="!config.thumb">
-            </mat-form-field>
-          </div>
-
-          <div>
-            <mat-form-field>
-              <mat-label>Zoom out</mat-label>
-              <input matInput [(ngModel)]="config.zoomOut">
             </mat-form-field>
           </div>
 

@@ -25,7 +25,6 @@ export const defaultState: GalleryState = {
 export const defaultConfig: GalleryConfig = {
   nav: true,
   loop: true,
-  zoomOut: 0,
   dots: false,
   thumb: true,
   dotsSize: 30,

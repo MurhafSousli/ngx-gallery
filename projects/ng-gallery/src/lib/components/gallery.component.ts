@@ -49,7 +49,6 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() dots: boolean = this._gallery.config.dots;
   @Input() loop: boolean = this._gallery.config.loop;
   @Input() thumb: boolean = this._gallery.config.thumb;
-  @Input() zoomOut: number = this._gallery.config.zoomOut;
   @Input() counter: boolean = this._gallery.config.counter;
   @Input() dotsSize: number = this._gallery.config.dotsSize;
   @Input() autoPlay: boolean = this._gallery.config.autoPlay;
@@ -103,7 +102,6 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       dots: this.dots,
       loop: this.loop,
       thumb: this.thumb,
-      zoomOut: this.zoomOut,
       counter: this.counter,
       autoPlay: this.autoPlay,
       gestures: this.gestures,

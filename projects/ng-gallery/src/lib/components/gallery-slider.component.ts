@@ -27,7 +27,7 @@ declare const Hammer: any;
   selector: 'gallery-slider',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div #container class="g-items-container">
+    <div class="g-items-container">
       <div #slider class="g-slider">
         <gallery-item *ngFor="let item of state.items; trackBy: trackByFn; index as i"
                       [type]="item.type"
@@ -73,17 +73,8 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   @ViewChild('slider', { static: true }) sliderEl: ElementRef;
 
-  get container(): HTMLElement {
-    return this.containerEl.nativeElement;
-  }
-
   get slider(): HTMLElement {
     return this.sliderEl.nativeElement;
-  }
-
-  /** Item zoom */
-  get zoom(): { transform: string } {
-    return { transform: `perspective(50px) translate3d(0, 0, ${ -this.config.zoomOut }px)` };
   }
 
   constructor(private _el: ElementRef,
@@ -151,7 +142,6 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private scrollToIndex(value: number, behavior: ScrollBehavior): void {
-    this.container.style.transform = this.zoom.transform;
     this._zone.runOutsideAngular(() => {
       this.slider.style.scrollSnapType = 'unset';
       this._smoothScroll.scrollTo(this.slider, this.adapter.getScrollToValue(value, behavior)).then(() => {

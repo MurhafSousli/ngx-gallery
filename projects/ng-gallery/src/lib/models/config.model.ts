@@ -7,7 +7,6 @@ export interface GalleryConfig {
   dots?: boolean;
   loop?: boolean;
   thumb?: boolean;
-  zoomOut?: number;
   navIcon?: string;
   counter?: boolean;
   dotsSize?: number;
