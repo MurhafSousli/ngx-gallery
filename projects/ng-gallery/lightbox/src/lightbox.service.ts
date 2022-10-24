@@ -57,7 +57,6 @@ export class Lightbox {
     };
 
     const galleryRef = this._gallery.ref(id);
-    galleryRef.setConfig({ reserveGesturesAction: true });
     galleryRef.set(i);
 
     this._overlayRef = this._overlay.create(overlayConfig);
