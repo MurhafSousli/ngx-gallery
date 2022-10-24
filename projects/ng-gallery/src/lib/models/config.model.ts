@@ -1,4 +1,5 @@
 import { InjectionToken, TemplateRef } from '@angular/core';
+import { BezierEasingOptions } from '../smooth-scroll';
 
 export const GALLERY_CONFIG = new InjectionToken<GalleryConfig>('GALLERY_CONFIG');
 
@@ -20,6 +21,8 @@ export interface GalleryConfig {
   thumbLoadingError?: string;
   disableThumb?: boolean;
   panSensitivity?: number;
+  slidingDuration?: number;
+  slidingEase?: BezierEasingOptions;
   resizeDebounceTime?: number;
   playerInterval?: number;
   boxTemplate?: TemplateRef<any>;

@@ -25,6 +25,7 @@ import {
   YoutubeItemData
 } from './templates/items.model';
 import { GalleryConfig } from '../models/config.model';
+import { BezierEasingOptions } from '../smooth-scroll';
 
 @Component({
   selector: 'gallery',
@@ -58,6 +59,8 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() disableThumb: boolean = this._gallery.config.disableThumb;
   @Input() panSensitivity: number = this._gallery.config.panSensitivity;
   @Input() playerInterval: number = this._gallery.config.playerInterval;
+  @Input() slidingDuration: number = this._gallery.config.slidingDuration;
+  @Input() slidingEase: BezierEasingOptions = this._gallery.config.slidingEase;
   @Input() boxTemplate: TemplateRef<any> = this._gallery.config.boxTemplate;
   @Input() itemTemplate: TemplateRef<any> = this._gallery.config.itemTemplate;
   @Input() thumbTemplate: TemplateRef<any> = this._gallery.config.thumbTemplate;
@@ -110,6 +113,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       thumbView: this.thumbView,
       thumbWidth: this.thumbWidth,
       thumbHeight: this.thumbHeight,
+      slidingEase: this.slidingEase,
       disableThumb: this.disableThumb,
       dotsPosition: this.dotsPosition,
       boxTemplate: this.boxTemplate,
@@ -121,6 +125,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       playerInterval: this.playerInterval,
       counterPosition: this.counterPosition,
       loadingStrategy: this.loadingStrategy,
+      slidingDuration: this.slidingDuration,
       slidingDirection: this.slidingDirection,
       resizeDebounceTime: this.resizeDebounceTime
     };

@@ -13,11 +13,12 @@ export class HorizontalAdapter extends HorizontalCommonAdapter implements Slider
     super(slider, config);
   }
 
-  getScrollToValue(value, behavior: ScrollBehavior): SmoothScrollToOptions {
+  getScrollToValue(value: number, behavior: ScrollBehavior): SmoothScrollToOptions {
     const position: number = value * this.clientSize;
     return {
       start: position,
-      duration: behavior === 'smooth' ? 400 : 0
+      duration: behavior === 'smooth' ? this.config.slidingDuration : 0,
+      easing: this.config.slidingEase
     };
   }
 
@@ -40,11 +41,12 @@ export class VerticalAdapter extends VerticalCommonAdapter implements SliderAdap
     super(slider, config);
   }
 
-  getScrollToValue(value, behavior: ScrollBehavior): SmoothScrollToOptions {
+  getScrollToValue(value: number, behavior: ScrollBehavior): SmoothScrollToOptions {
     const position: number = value * this.clientSize;
     return {
       top: position,
-      duration: behavior === 'smooth' ? 400 : 0
+      duration: behavior === 'smooth' ? this.config.slidingDuration : 0,
+      easing: this.config.slidingEase
     };
   }
 

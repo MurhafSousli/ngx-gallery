@@ -27,14 +27,15 @@ export class HorizontalThumbAdapter extends HorizontalCommonAdapter implements T
     super(slider, config);
   }
 
-  getCentralisedScrollToValue(value, behavior: ScrollBehavior): SmoothScrollToOptions {
+  getCentralisedScrollToValue(value: number, behavior: ScrollBehavior): SmoothScrollToOptions {
     let position: number = value * this.thumbSize;
     if (this.config.thumbView === ThumbnailsView.Default) {
       position -= (this.clientSize / 2) - (this.thumbSize / 2);
     }
     return {
       start: position,
-      duration: behavior === 'smooth' ? 400 : 0
+      duration: behavior === 'smooth' ? this.config.slidingDuration : 0,
+      easing: this.config.slidingEase
     };
   }
 }
@@ -61,14 +62,15 @@ export class VerticalThumbAdapter extends VerticalCommonAdapter implements Thumb
     super(slider, config);
   }
 
-  getCentralisedScrollToValue(value, behavior: ScrollBehavior): SmoothScrollToOptions {
+  getCentralisedScrollToValue(value: number, behavior: ScrollBehavior): SmoothScrollToOptions {
     let position: number = value * this.thumbSize;
     if (this.config.thumbView === ThumbnailsView.Default) {
       position -= (this.clientSize / 2) - (this.thumbSize / 2);
     }
     return {
       top: position,
-      duration: behavior === 'smooth' ? 400 : 0
+      duration: behavior === 'smooth' ? this.config.slidingDuration : 0,
+      easing: this.config.slidingEase
     };
   }
 }

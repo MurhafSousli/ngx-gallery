@@ -36,6 +36,13 @@ export const defaultConfig: GalleryConfig = {
   panSensitivity: 25,
   disableThumb: false,
   playerInterval: 3000,
+  slidingDuration: 468,
+  slidingEase: {
+    x1: 0.42,
+    y1: 0,
+    x2: 0.58,
+    y2: 1
+  },
   resizeDebounceTime: 50,
   imageSize: ImageSize.Contain,
   thumbView: ThumbnailsView.Default,

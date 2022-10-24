@@ -3,7 +3,7 @@ import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { coerceElement } from '@angular/cdk/coercion';
 import { getRtlScrollAxisType, RtlScrollAxisType } from '@angular/cdk/platform';
 import { _Bottom, _Left, _Right, _Top, _Without } from '@angular/cdk/scrolling';
-import { fromEvent, merge, of, Observable, Subject, Subscriber, animationFrameScheduler } from 'rxjs';
+import { fromEvent, merge, of, Observable, Subject, Subscriber } from 'rxjs';
 import { expand, finalize, take, takeUntil, takeWhile } from 'rxjs/operators';
 import * as BezierEasing from 'bezier-easing';
 import {
@@ -36,10 +36,8 @@ export class SmoothScrollManager {
   /**
    * Timing method
    */
-  private get _now() {
-    return this._w.performance && this._w.performance.now
-      ? this._w.performance.now.bind(this._w.performance)
-      : Date.now;
+  private get _now(): () => number {
+    return this._w.performance?.now?.bind(this._w.performance) || Date.now;
   }
 
   constructor(@Inject(DOCUMENT) private _document: Document,
@@ -82,7 +80,7 @@ export class SmoothScrollManager {
     if (this._onGoingScrolls.has(el)) {
       this._onGoingScrolls.get(el).next();
     }
-    return this._onGoingScrolls.set(el, new Subject<void>())!.get(el)!;
+    return this._onGoingScrolls.set(el, new Subject<void>()).get(el)!;
   }
 
   /**
@@ -134,13 +132,13 @@ export class SmoothScrollManager {
 
       this._scrollElement(context.scrollable, context.currentX, context.currentY);
       // Proceed to the step
-      animationFrameScheduler.schedule(() => subscriber.next(context));
+      requestAnimationFrame(() => subscriber.next(context));
     });
   }
 
   private _applyScrollToOptions(el: HTMLElement, options: SmoothScrollToOptions): Promise<void> {
     if (!options.duration) {
-      this._scrollElement(el, options!.left!, options!.top!);
+      this._scrollElement(el, options.left, options.top);
       return Promise.resolve();
     }
 
@@ -155,7 +153,7 @@ export class SmoothScrollManager {
       x: options.left == null ? el.scrollLeft : ~~options.left,
       y: options.top == null ? el.scrollTop : ~~options.top,
       duration: options.duration,
-      easing: BezierEasing(options.easing!.x1!, options.easing!.y1!, options.easing!.x2!, options.easing!.y2!)
+      easing: BezierEasing(options.easing.x1, options.easing.y1, options.easing.x2, options.easing.y2)
     };
 
     return new Promise(resolve => {
