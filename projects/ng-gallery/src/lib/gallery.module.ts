@@ -1,5 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PlatformModule } from '@angular/cdk/platform';
 
 import { GalleryConfig, GALLERY_CONFIG } from './models/config.model';
 
@@ -21,7 +22,8 @@ import { LazyImage } from './directives/lazy-image';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    PlatformModule
   ],
   declarations: [
     GalleryComponent,

@@ -12,6 +12,7 @@ import {
   EventEmitter,
   ChangeDetectionStrategy
 } from '@angular/core';
+import { Platform } from '@angular/cdk/platform';
 import { Subscription, fromEvent } from 'rxjs';
 import { tap, debounceTime } from 'rxjs/operators';
 import { GalleryState, GalleryError } from '../models/gallery.model';
@@ -87,6 +88,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private _el: ElementRef,
               private _zone: NgZone,
+              private _platform: Platform,
               private _smoothScroll: SmoothScrollManager) {
   }
 
@@ -103,12 +105,14 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
         }
       }
 
-      // Enable/Disable gestures on changes
-      if (changes.config.currentValue?.gestures !== changes.config.previousValue?.gestures) {
-        if (this.config.gestures) {
-          this.activateGestures();
-        } else {
-          this.deactivateGestures();
+      if (!this._platform.IOS && !this._platform.ANDROID) {
+        // Enable/Disable gestures on changes
+        if (changes.config.currentValue?.gestures !== changes.config.previousValue?.gestures) {
+          if (this.config.gestures) {
+            this.activateGestures();
+          } else {
+            this.deactivateGestures();
+          }
         }
       }
     }
@@ -163,7 +167,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
       // Activate gestures
       this._zone.runOutsideAngular(() => {
-        this._hammer = new Hammer(this.slider, { inputClass: Hammer.MouseInput });
+        this._hammer = new Hammer(this._el.nativeElement, { inputClass: Hammer.MouseInput });
         this._hammer.get('pan').set({ direction });
 
         let panOffset: number;

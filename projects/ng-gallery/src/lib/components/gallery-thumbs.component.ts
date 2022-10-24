@@ -3,7 +3,6 @@ import {
   Input,
   Output,
   HostBinding,
-  Inject,
   AfterViewInit,
   OnDestroy,
   OnChanges,
@@ -11,19 +10,18 @@ import {
   SimpleChanges,
   NgZone,
   ElementRef,
-  PLATFORM_ID,
   EventEmitter,
   ChangeDetectorRef,
   ChangeDetectionStrategy
 } from '@angular/core';
+import { Platform } from '@angular/cdk/platform';
+import { fromEvent, Subscription } from 'rxjs';
+import { debounceTime, tap } from 'rxjs/operators';
 import { GalleryConfig } from '../models/config.model';
 import { GalleryState, GalleryError } from '../models/gallery.model';
 import { ThumbnailsPosition, ThumbnailsView } from '../models/constants';
 import { ThumbSliderAdapter, HorizontalThumbAdapter, VerticalThumbAdapter } from './adapters';
 import { SmoothScrollManager } from '../smooth-scroll';
-import { isPlatformBrowser } from '@angular/common';
-import { fromEvent, Subscription } from 'rxjs';
-import { debounceTime, tap } from 'rxjs/operators';
 
 declare const Hammer: any;
 
@@ -103,7 +101,7 @@ export class GalleryThumbsComponent implements AfterViewInit, OnChanges, OnDestr
               private _zone: NgZone,
               private _smoothScroll: SmoothScrollManager,
               private _cd: ChangeDetectorRef,
-              @Inject(PLATFORM_ID) private _platform: Object) {
+              private _platform: Platform) {
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -125,12 +123,14 @@ export class GalleryThumbsComponent implements AfterViewInit, OnChanges, OnDestr
         this.height = this.adapter.containerHeight;
       }
 
-      // Enable/Disable gestures
-      if (changes.config.currentValue?.gestures !== changes.config.previousValue?.gestures) {
-        if (this.config.gestures) {
-          this.activateGestures();
-        } else {
-          this.deactivateGestures();
+      if (!this._platform.IOS && !this._platform.ANDROID) {
+        // Enable/Disable gestures on Desktop browser only
+        if (changes.config.currentValue?.gestures !== changes.config.previousValue?.gestures) {
+          if (this.config.gestures) {
+            this.activateGestures();
+          } else {
+            this.deactivateGestures();
+          }
         }
       }
     }
@@ -144,12 +144,14 @@ export class GalleryThumbsComponent implements AfterViewInit, OnChanges, OnDestr
   }
 
   ngAfterViewInit(): void {
+    this.slider.style.setProperty('--thumb-centralize-size', this.centralizerSize + 'px');
+
     // Workaround: opening a lightbox (centralised) with last index active, show in wrong position
     setTimeout(() => this.scrollToIndex(this.state.currIndex, 'auto'), 200);
 
     this._zone.runOutsideAngular(() => {
       // Update necessary calculation on window resize
-      if (isPlatformBrowser(this._platform)) {
+      if (this._platform.isBrowser) {
         this._resizeSub$ = fromEvent(window, 'resize').pipe(
           debounceTime(this.config.resizeDebounceTime),
           tap(() => {
@@ -161,10 +163,6 @@ export class GalleryThumbsComponent implements AfterViewInit, OnChanges, OnDestr
         ).subscribe();
       }
     });
-  }
-
-  ngAfterViewChecked(): void {
-    this.slider.style.setProperty('--thumb-centralize-size', this.centralizerSize + 'px');
   }
 
   ngOnDestroy(): void {
