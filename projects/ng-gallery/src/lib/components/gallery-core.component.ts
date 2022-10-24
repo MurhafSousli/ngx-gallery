@@ -36,6 +36,10 @@ import { GalleryConfig } from '../models/config.model';
       <gallery-counter *ngIf="config.counter"
                        [state]="state">
       </gallery-counter>
+
+      <div class="g-box-template" style="position: absolute">
+        <ng-container *ngTemplateOutlet="config.boxTemplate; context: { state: state, config: config }"></ng-container>
+      </div>
     </div>
   `
 })

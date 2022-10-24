@@ -23,7 +23,7 @@ export interface GalleryConfig {
   panSensitivity?: number;
   resizeDebounceTime?: number;
   playerInterval?: number;
-  reserveGesturesAction?: boolean;
+  boxTemplate?: TemplateRef<any>;
   itemTemplate?: TemplateRef<any>;
   thumbTemplate?: TemplateRef<any>;
   thumbDetached?: boolean;
