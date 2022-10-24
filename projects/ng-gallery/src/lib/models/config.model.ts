@@ -21,6 +21,7 @@ export interface GalleryConfig {
   thumbLoadingError?: string;
   disableThumb?: boolean;
   panSensitivity?: number;
+  resizeDebounceTime?: number;
   playerInterval?: number;
   reserveGesturesAction?: boolean;
   itemTemplate?: TemplateRef<any>;

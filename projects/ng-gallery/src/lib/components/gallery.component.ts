@@ -62,6 +62,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() reserveGesturesAction: boolean = this._gallery.config.reserveGesturesAction;
   @Input() itemTemplate: TemplateRef<any> = this._gallery.config.itemTemplate;
   @Input() thumbTemplate: TemplateRef<any> = this._gallery.config.thumbTemplate;
+  @Input() resizeDebounceTime: number = this._gallery.config.resizeDebounceTime;
   @Input() imageSize: 'cover' | 'contain' = this._gallery.config.imageSize;
   @Input() dotsPosition: 'top' | 'bottom' = this._gallery.config.dotsPosition;
   @Input() counterPosition: 'top' | 'bottom' = this._gallery.config.counterPosition;
@@ -122,7 +123,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       counterPosition: this.counterPosition,
       loadingStrategy: this.loadingStrategy,
       slidingDirection: this.slidingDirection,
-      reserveGesturesAction: this.reserveGesturesAction
+      resizeDebounceTime: this.resizeDebounceTime
     };
   }
 

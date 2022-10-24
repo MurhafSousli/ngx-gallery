@@ -151,7 +151,7 @@ export class GalleryThumbsComponent implements AfterViewInit, OnChanges, OnDestr
       // Update necessary calculation on window resize
       if (isPlatformBrowser(this._platform)) {
         this._resizeSub$ = fromEvent(window, 'resize').pipe(
-          debounceTime(50),
+          debounceTime(this.config.resizeDebounceTime),
           tap(() => {
             // Update thumb centralize size
             this.slider.style.setProperty('--thumb-centralize-size', this.centralizerSize + 'px');
