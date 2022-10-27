@@ -97,9 +97,11 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
       }
 
       if (!this._platform.IOS && !this._platform.ANDROID) {
-        // Enable/Disable gestures on changes
-        if (changes.config.currentValue?.gestures !== changes.config.previousValue?.gestures) {
-          if (this.config.gestures) {
+        // Enable/Disable mouse sliding on desktop browser only
+        console.log(changes.config)
+        if (changes.config.currentValue?.mouseSlidingDisabled !== changes.config.previousValue?.mouseSlidingDisabled) {
+          console.log(this.config.mouseSlidingDisabled)
+          if (!this.config.mouseSlidingDisabled) {
             this.activateGestures();
           } else {
             this.deactivateGestures();

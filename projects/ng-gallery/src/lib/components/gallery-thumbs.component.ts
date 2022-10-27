@@ -125,9 +125,9 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
       }
 
       if (!this._platform.IOS && !this._platform.ANDROID) {
-        // Enable/Disable gestures on Desktop browser only
-        if (changes.config.currentValue?.gestures !== changes.config.previousValue?.gestures) {
-          if (this.config.gestures) {
+        // Enable/Disable mouse sliding on desktop browser only
+        if (changes.config.currentValue?.thumbMouseSlidingDisabled !== changes.config.previousValue?.thumbMouseSlidingDisabled) {
+          if (!this.config.thumbMouseSlidingDisabled) {
             this.activateGestures();
           } else {
             this.deactivateGestures();
@@ -139,7 +139,7 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
     if (changes.state?.firstChange || !this.config.thumbDetached) {
       // Scroll slide to item when current index changes.
       requestAnimationFrame(() => {
-        this.scrollToIndex(this.state.currIndex, changes.state.firstChange ? 'auto' : 'smooth');
+        this.scrollToIndex(this.state.currIndex, changes.state?.firstChange ? 'auto' : 'smooth');
       });
     }
   }

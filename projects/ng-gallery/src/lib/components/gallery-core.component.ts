@@ -82,4 +82,13 @@ export class GalleryCoreComponent {
     return this.config.counterPosition;
   }
 
+  /** Set gallery counter position */
+  @HostBinding('attr.slidingDisabled') get slidingDisabled(): boolean {
+    return this.config.slidingDisabled;
+  }
+
+  /** Set gallery counter position */
+  @HostBinding('attr.thumbSlidingDisabled') get thumbSlidingDisabled(): boolean {
+    return this.config.thumbSlidingDisabled;
+  }
 }

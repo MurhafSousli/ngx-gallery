@@ -57,6 +57,10 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() thumbWidth: number = this._gallery.config.thumbWidth;
   @Input() thumbHeight: number = this._gallery.config.thumbHeight;
   @Input() disableThumb: boolean = this._gallery.config.disableThumb;
+  @Input() slidingDisabled: boolean = this._gallery.config.slidingDisabled;
+  @Input() thumbSlidingDisabled: boolean = this._gallery.config.thumbSlidingDisabled;
+  @Input() mouseSlidingDisabled: boolean = this._gallery.config.mouseSlidingDisabled;
+  @Input() thumbMouseSlidingDisabled: boolean = this._gallery.config.thumbMouseSlidingDisabled;
   @Input() playerInterval: number = this._gallery.config.playerInterval;
   @Input() slidingDuration: number = this._gallery.config.slidingDuration;
   @Input() slidingEase: BezierEasingOptions = this._gallery.config.slidingEase;
@@ -125,7 +129,11 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       loadingStrategy: this.loadingStrategy,
       slidingDuration: this.slidingDuration,
       slidingDirection: this.slidingDirection,
-      resizeDebounceTime: this.resizeDebounceTime
+      resizeDebounceTime: this.resizeDebounceTime,
+      slidingDisabled: this.slidingDisabled,
+      thumbSlidingDisabled: this.thumbSlidingDisabled,
+      mouseSlidingDisabled: this.mouseSlidingDisabled,
+      thumbMouseSlidingDisabled: this.thumbMouseSlidingDisabled
     };
   }
 

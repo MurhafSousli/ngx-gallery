@@ -26,6 +26,12 @@
     }
   }
 
+  /** Disable sliding */
+  gallery-core[slidingDisabled='true'] {
+    .g-slider {
+      overflow: hidden !important;
+    }
+  }
 
   .g-slider {
     display: flex;

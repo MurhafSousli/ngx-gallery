@@ -38,16 +38,21 @@
 
   gallery-core[thumbPosition='left'],
   gallery-core[thumbPosition='right'] {
-    gallery-thumbs {
-      .g-slider {
-        flex-direction: column;
-        left: 0;
-        overflow-y: auto;
-      }
+    gallery-thumbs .g-slider {
+      flex-direction: column;
+      left: 0;
+      overflow-y: auto;
     }
 
     gallery-thumb {
       padding: 0 1px 1px 1px;
+    }
+  }
+
+  /** Disable sliding */
+  gallery-core[thumbSlidingDisabled='true'] {
+    gallery-thumbs .g-slider {
+      overflow: hidden !important;
     }
   }
 

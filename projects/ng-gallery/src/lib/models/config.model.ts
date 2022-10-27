@@ -22,6 +22,10 @@ export interface GalleryConfig {
   disableThumb?: boolean;
   slidingDuration?: number;
   slidingEase?: BezierEasingOptions;
+  slidingDisabled?: boolean;
+  thumbSlidingDisabled?: boolean;
+  mouseSlidingDisabled?: boolean;
+  thumbMouseSlidingDisabled?: boolean;
   resizeDebounceTime?: number;
   playerInterval?: number;
   boxTemplate?: TemplateRef<any>;
