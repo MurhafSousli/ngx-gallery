@@ -1,6 +1,10 @@
 # Changelog
 
-## 8.0.0-beta.0
+## 8.0.0-beta.2
+
+- fix(lightbox): close button is not displayed, in [506249b](https://github.com/MurhafSousli/ngx-gallery/pull/490/commits/506249bbc5877cd4ed54cf610a42b3a31abcb417).
+
+## 8.0.0-beta.1
 
 - feat(core): Use scrolling slider instead of transform method, allows touchpad scroll to slide the gallery as well as native sliding on mobile browser.
 - feat(core): Add `resizeDebounceTime` option which is used to update the gallery on window resize event in [34a2723](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/34a27238eed6515fd748c43909c3fd0098b6a575) and [d867630](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/d86763042553a340b3a367c56c0a2549b690f751).
