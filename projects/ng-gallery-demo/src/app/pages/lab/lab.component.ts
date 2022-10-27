@@ -25,7 +25,7 @@ export class LabComponent implements OnInit {
 
   show$ = new BehaviorSubject<boolean>(true);
   photos$: Observable<GalleryItem[]>;
-  config: GalleryConfig | any;
+  config: GalleryConfig;
 
   imageSizes = ['cover', 'contain'];
   thumbPositions = ['top', 'left', 'right', 'bottom'];
@@ -49,25 +49,27 @@ export class LabComponent implements OnInit {
     this.config = {
       nav: true,
       loop: true,
-      zoomOut: 0,
       dots: false,
       dotsPosition: 'bottom',
       counterPosition: 'top',
+      resizeDebounceTime: 50,
+      slidingDuration: 468,
       thumb: true,
       counter: true,
-      gestures: true,
       autoPlay: false,
+      slidingDisabled: false,
+      thumbSlidingDisabled: false,
+      mouseSlidingDisabled: false,
+      thumbMouseSlidingDisabled: false,
       thumbWidth: 120,
       thumbHeight: 90,
       imageSize: 'contain',
-      panSensitivity: 25,
       disableThumb: false,
       playerInterval: 3000,
       thumbView: ThumbnailsView.Default,
-      thumbMode: ThumbnailsMode.Free,
       thumbPosition: ThumbnailsPosition.Bottom,
       loadingStrategy: LoadingStrategy.Preload,
-      slidingDirection: SlidingDirection.Horizontal,
+      slidingDirection: SlidingDirection.Horizontal
     };
   }
 

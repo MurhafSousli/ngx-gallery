@@ -11,7 +11,6 @@ export interface GalleryConfig {
   navIcon?: string;
   counter?: boolean;
   dotsSize?: number;
-  gestures?: boolean;
   autoPlay?: boolean;
   thumbWidth?: number;
   thumbHeight?: number;

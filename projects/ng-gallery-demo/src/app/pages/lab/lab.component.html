@@ -5,13 +5,11 @@
   <div *ngIf="show$ | async" class="gallery-container">
     <gallery #gallery id="lab"
              [items]="photos$ | async"
-             [attr.fluid]="config.fluid"
              [nav]="config.nav"
              [loop]="config.loop"
              [dots]="config.dots"
              [thumb]="config.thumb"
              [counter]="config.counter"
-             [gestures]="config.gestures"
              [autoPlay]="config.autoPlay"
              [imageSize]="config.imageSize"
              [thumbView]="config.thumbView"
@@ -20,10 +18,16 @@
              [disableThumb]="config.disableThumb"
              [dotsPosition]="config.dotsPosition"
              [thumbPosition]="config.thumbPosition"
+             [thumbDetached]="config.thumbDetached"
              [playerInterval]="config.playerInterval"
              [counterPosition]="config.counterPosition"
              [loadingStrategy]="config.loadingStrategy"
              [slidingDirection]="config.slidingDirection"
+             [slidingDuration]="config.slidingDuration"
+             [slidingDisabled]="config.slidingDisabled"
+             [thumbSlidingDisabled]="config.thumbSlidingDisabled"
+             [mouseSlidingDisabled]="config.mouseSlidingDisabled"
+             [thumbMouseSlidingDisabled]="config.thumbMouseSlidingDisabled"
              (playingChange)="onPlayer($event)"
              (indexChange)="onIndexChange($event)"
              (itemClick)="onItemClick($event)"
@@ -76,8 +80,7 @@
             <mat-form-field>
               <mat-label>Loading strategy</mat-label>
               <mat-select [(ngModel)]="config.loadingStrategy">
-                <mat-option *ngFor="let strategy of loadingStrategies" [value]="strategy">{{strategy}}
-                </mat-option>
+                <mat-option *ngFor="let strategy of loadingStrategies" [value]="strategy">{{strategy}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -85,9 +88,7 @@
             <mat-form-field name="slidingDirection">
               <mat-label>Sliding directions</mat-label>
               <mat-select [(ngModel)]="config.slidingDirection">
-                <mat-option *ngFor="let direction of slidingDirections" [value]="direction">
-                  {{direction}}
-                </mat-option>
+                <mat-option *ngFor="let direction of slidingDirections" [value]="direction">{{direction}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -114,8 +115,7 @@
             <mat-form-field>
               <mat-label>Thumbnails Position</mat-label>
               <mat-select [(ngModel)]="config.thumbPosition" [disabled]="!config.thumb">
-                <mat-option *ngFor="let position of thumbPositions" [value]="position">{{position}}
-                </mat-option>
+                <mat-option *ngFor="let position of thumbPositions" [value]="position">{{position}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -124,8 +124,7 @@
             <mat-form-field>
               <mat-label>Counter Position</mat-label>
               <mat-select [(ngModel)]="config.counterPosition" [disabled]="!config.counter">
-                <mat-option *ngFor="let position of dotsCounterPositions" [value]="position">{{position}}
-                </mat-option>
+                <mat-option *ngFor="let position of dotsCounterPositions" [value]="position">{{position}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -158,8 +157,21 @@
 
           <div>
             <mat-form-field>
+              <mat-label>Sliding duration</mat-label>
+              <input matInput [(ngModel)]="config.slidingDuration">
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field>
               <mat-label>Player interval</mat-label>
               <input matInput [(ngModel)]="config.playerInterval">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Resize debounce time</mat-label>
+              <input matInput [(ngModel)]="config.resizeDebounceTime">
             </mat-form-field>
           </div>
 
@@ -168,9 +180,6 @@
         <div class="column checkboxes">
           <div>
             <mat-checkbox [(ngModel)]="config.loop">Loop navigation</mat-checkbox>
-          </div>
-          <div>
-            <mat-checkbox [(ngModel)]="config.fluid">Fluid size</mat-checkbox>
           </div>
           <div>
             <mat-checkbox [(ngModel)]="config.nav">Show navigation</mat-checkbox>
@@ -185,14 +194,30 @@
             <mat-checkbox [(ngModel)]="config.thumb">Show thumbnails</mat-checkbox>
           </div>
           <div>
+            <mat-checkbox [(ngModel)]="config.thumbDetached">Detach thumbnails</mat-checkbox>
+          </div>
+          <div>
             <mat-checkbox [(ngModel)]="config.disableThumb" [disabled]="!config.thumb">Disable thumbnails' clicks
             </mat-checkbox>
           </div>
           <div>
-            <mat-checkbox [(ngModel)]="config.gestures" (change)="restart()">Enable gestures</mat-checkbox>
-          </div>
-          <div>
             <mat-checkbox [(ngModel)]="config.autoPlay" (change)="restart()">Auto-play</mat-checkbox>
+          </div>
+
+          <div>
+            <mat-checkbox [(ngModel)]="config.slidingDisabled">Sliding Disabled</mat-checkbox>
+          </div>
+
+          <div>
+            <mat-checkbox [(ngModel)]="config.thumbSlidingDisabled">Thumb Sliding Disabled</mat-checkbox>
+          </div>
+
+          <div>
+            <mat-checkbox [(ngModel)]="config.mouseSlidingDisabled">Mouse Sliding Disabled</mat-checkbox>
+          </div>
+
+          <div>
+            <mat-checkbox [(ngModel)]="config.thumbMouseSlidingDisabled">Thumb Mouse Sliding Disabled</mat-checkbox>
           </div>
         </div>
       </div>

@@ -29,7 +29,6 @@ export const defaultConfig: GalleryConfig = {
   thumb: true,
   dotsSize: 30,
   counter: true,
-  gestures: true,
   autoPlay: false,
   thumbWidth: 120,
   thumbHeight: 90,
