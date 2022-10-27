@@ -2,7 +2,7 @@
   "name": "ng-gallery-project",
   "version": "0.0.0",
   "scripts": {
-    "start-demo": "ng serve ng-gallery-demo",
+    "start-demo": "ng serve ng-gallery-demo --host 0.0.0.0",
     "build-demo": "ng build ng-gallery-demo --configuration production",
     "build-lib": "ng build ng-gallery --configuration production",
     "publish-lib": "npm publish ./dist/ng-gallery"

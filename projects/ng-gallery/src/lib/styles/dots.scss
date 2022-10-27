@@ -2,19 +2,23 @@
   gallery-core[dotsPosition='top'] gallery-dots {
     top: 0;
   }
+
   gallery-core[dotsPosition='bottom'] gallery-dots {
     bottom: 0;
   }
+
   gallery-dots {
     margin: 7px;
     position: absolute;
     left: 50%;
+    z-index: 99;
     transform: translateX(-50%);
   }
 
   .g-dot {
     cursor: pointer;
     z-index: 20;
+
     &:hover .g-dot-inner {
       opacity: 1;
     }

@@ -89,14 +89,14 @@ export class GalleryRef {
    * Set gallery state
    */
   private setState(state: GalleryState) {
-    this._state.next({...this.stateSnapshot, ...state});
+    this._state.next({ ...this.stateSnapshot, ...state });
   }
 
   /**
    * Set gallery config
    */
   setConfig(config: GalleryConfig) {
-    this._config.next({...this._config.value, ...config});
+    this._config.next({ ...this._config.value, ...config });
   }
 
   /**
@@ -176,6 +176,10 @@ export class GalleryRef {
    * Set active item
    */
   set(i: number) {
+    if (i < 0 || i >= this.stateSnapshot.items.length) {
+      console.error(`[NgGallery]: Unable to set the active item because the given index (${ i }) is outside the items range!`);
+      return;
+    }
     if (i !== this.stateSnapshot.currIndex) {
       this.setState({
         action: GalleryAction.INDEX_CHANGED,
@@ -213,16 +217,16 @@ export class GalleryRef {
    */
   play(interval?: number) {
     if (interval) {
-      this.setConfig({playerInterval: interval});
+      this.setConfig({ playerInterval: interval });
     }
-    this.setState({action: GalleryAction.PLAY, isPlaying: true});
+    this.setState({ action: GalleryAction.PLAY, isPlaying: true });
   }
 
   /**
    * Stop gallery player
    */
   stop() {
-    this.setState({action: GalleryAction.STOP, isPlaying: false});
+    this.setState({ action: GalleryAction.STOP, isPlaying: false });
   }
 
   /**

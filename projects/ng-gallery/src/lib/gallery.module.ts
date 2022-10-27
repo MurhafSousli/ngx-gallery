@@ -1,5 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PlatformModule } from '@angular/cdk/platform';
 
 import { GalleryConfig, GALLERY_CONFIG } from './models/config.model';
 
@@ -18,11 +19,11 @@ import { GalleryVideoComponent } from './components/templates/gallery-video.comp
 import { GalleryIframeComponent } from './components/templates/gallery-iframe.component';
 
 import { LazyImage } from './directives/lazy-image';
-import { TapClick } from './directives/tap-click';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    PlatformModule
   ],
   declarations: [
     GalleryComponent,
@@ -37,13 +38,11 @@ import { TapClick } from './directives/tap-click';
     GalleryImageComponent,
     GalleryVideoComponent,
     GalleryIframeComponent,
-    LazyImage,
-    TapClick
+    LazyImage
   ],
   exports: [
     GalleryComponent,
-    LazyImage,
-    TapClick
+    LazyImage
   ]
 })
 export class GalleryModule {

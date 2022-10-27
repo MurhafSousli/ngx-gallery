@@ -24,6 +24,8 @@ import {
   YoutubeItem,
   YoutubeItemData
 } from './templates/items.model';
+import { GalleryConfig } from '../models/config.model';
+import { BezierEasingOptions } from '../smooth-scroll';
 
 @Component({
   selector: 'gallery',
@@ -36,7 +38,6 @@ import {
                   (itemClick)="onItemClick($event)"
                   (thumbClick)="onThumbClick($event)"
                   (error)="onError($event)"></gallery-core>
-    <ng-content></ng-content>
   `
 })
 export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
@@ -48,20 +49,23 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() dots: boolean = this._gallery.config.dots;
   @Input() loop: boolean = this._gallery.config.loop;
   @Input() thumb: boolean = this._gallery.config.thumb;
-  @Input() zoomOut: number = this._gallery.config.zoomOut;
   @Input() counter: boolean = this._gallery.config.counter;
   @Input() dotsSize: number = this._gallery.config.dotsSize;
   @Input() autoPlay: boolean = this._gallery.config.autoPlay;
-  @Input() gestures: boolean = this._gallery.config.gestures;
   @Input() thumbWidth: number = this._gallery.config.thumbWidth;
   @Input() thumbHeight: number = this._gallery.config.thumbHeight;
   @Input() disableThumb: boolean = this._gallery.config.disableThumb;
-  @Input() panSensitivity: number = this._gallery.config.panSensitivity;
+  @Input() slidingDisabled: boolean = this._gallery.config.slidingDisabled;
+  @Input() thumbSlidingDisabled: boolean = this._gallery.config.thumbSlidingDisabled;
+  @Input() mouseSlidingDisabled: boolean = this._gallery.config.mouseSlidingDisabled;
+  @Input() thumbMouseSlidingDisabled: boolean = this._gallery.config.thumbMouseSlidingDisabled;
   @Input() playerInterval: number = this._gallery.config.playerInterval;
-  @Input() reserveGesturesAction: boolean = this._gallery.config.reserveGesturesAction;
+  @Input() slidingDuration: number = this._gallery.config.slidingDuration;
+  @Input() slidingEase: BezierEasingOptions = this._gallery.config.slidingEase;
+  @Input() boxTemplate: TemplateRef<any> = this._gallery.config.boxTemplate;
   @Input() itemTemplate: TemplateRef<any> = this._gallery.config.itemTemplate;
   @Input() thumbTemplate: TemplateRef<any> = this._gallery.config.thumbTemplate;
-  @Input() thumbMode: 'strict' | 'free' = this._gallery.config.thumbMode;
+  @Input() resizeDebounceTime: number = this._gallery.config.resizeDebounceTime;
   @Input() imageSize: 'cover' | 'contain' = this._gallery.config.imageSize;
   @Input() dotsPosition: 'top' | 'bottom' = this._gallery.config.dotsPosition;
   @Input() counterPosition: 'top' | 'bottom' = this._gallery.config.counterPosition;
@@ -69,6 +73,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() loadingStrategy: 'preload' | 'lazy' | 'default' = this._gallery.config.loadingStrategy;
   @Input() thumbPosition: 'top' | 'left' | 'right' | 'bottom' = this._gallery.config.thumbPosition;
   @Input() thumbView: 'default' | 'contain' = this._gallery.config.thumbView;
+  @Input() thumbDetached: boolean = this._gallery.config.thumbDetached;
 
   // Inputs used by the lightbox
 
@@ -95,33 +100,37 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private _gallery: Gallery) {
   }
 
-  private getConfig() {
+  private getConfig(): GalleryConfig {
     return {
       nav: this.nav,
       dots: this.dots,
       loop: this.loop,
       thumb: this.thumb,
-      zoomOut: this.zoomOut,
       counter: this.counter,
       autoPlay: this.autoPlay,
-      gestures: this.gestures,
       dotsSize: this.dotsSize,
       imageSize: this.imageSize,
-      thumbMode: this.thumbMode,
       thumbView: this.thumbView,
       thumbWidth: this.thumbWidth,
       thumbHeight: this.thumbHeight,
+      slidingEase: this.slidingEase,
       disableThumb: this.disableThumb,
       dotsPosition: this.dotsPosition,
+      boxTemplate: this.boxTemplate,
       itemTemplate: this.itemTemplate,
       thumbTemplate: this.thumbTemplate,
+      thumbDetached: this.thumbDetached,
       thumbPosition: this.thumbPosition,
-      panSensitivity: this.panSensitivity,
       playerInterval: this.playerInterval,
       counterPosition: this.counterPosition,
       loadingStrategy: this.loadingStrategy,
+      slidingDuration: this.slidingDuration,
       slidingDirection: this.slidingDirection,
-      reserveGesturesAction: this.reserveGesturesAction
+      resizeDebounceTime: this.resizeDebounceTime,
+      slidingDisabled: this.slidingDisabled,
+      thumbSlidingDisabled: this.thumbSlidingDisabled,
+      mouseSlidingDisabled: this.mouseSlidingDisabled,
+      thumbMouseSlidingDisabled: this.thumbMouseSlidingDisabled
     };
   }
 

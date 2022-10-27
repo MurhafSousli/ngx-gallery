@@ -1,220 +1,227 @@
-<ng-scrollbar appearance="compact">
-  <div class="page-title">
-    <h1>Lab</h1>
-  </div>
-  <div class="page-content">
-    <div *ngIf="show$ | async" class="gallery-container">
-      <gallery #gallery id="lab"
-               [items]="photos$ | async"
-               [attr.fluid]="config.fluid"
-               [nav]="config.nav"
-               [loop]="config.loop"
-               [dots]="config.dots"
-               [thumb]="config.thumb"
-               [counter]="config.counter"
-               [zoomOut]="config.zoomOut"
-               [gestures]="config.gestures"
-               [autoPlay]="config.autoPlay"
-               [imageSize]="config.imageSize"
-               [thumbMode]="config.thumbMode"
-               [thumbWidth]="config.thumbWidth"
-               [thumbHeight]="config.thumbHeight"
-               [disableThumb]="config.disableThumb"
-               [dotsPosition]="config.dotsPosition"
-               [thumbPosition]="config.thumbPosition"
-               [panSensitivity]="config.panSensitivity"
-               [playerInterval]="config.playerInterval"
-               [counterPosition]="config.counterPosition"
-               [loadingStrategy]="config.loadingStrategy"
-               [slidingDirection]="config.slidingDirection"
-               (playingChange)="onPlayer($event)"
-               (indexChange)="onIndexChange($event)"
-               (itemClick)="onItemClick($event)"
-               (thumbClick)="onThumbClick($event)"></gallery>
+<div class="page-title">
+  <h1>Lab</h1>
+</div>
+<div class="page-content">
+  <div *ngIf="show$ | async" class="gallery-container">
+    <gallery #gallery id="lab"
+             [items]="photos$ | async"
+             [nav]="config.nav"
+             [loop]="config.loop"
+             [dots]="config.dots"
+             [thumb]="config.thumb"
+             [counter]="config.counter"
+             [autoPlay]="config.autoPlay"
+             [imageSize]="config.imageSize"
+             [thumbView]="config.thumbView"
+             [thumbWidth]="config.thumbWidth"
+             [thumbHeight]="config.thumbHeight"
+             [disableThumb]="config.disableThumb"
+             [dotsPosition]="config.dotsPosition"
+             [thumbPosition]="config.thumbPosition"
+             [thumbDetached]="config.thumbDetached"
+             [playerInterval]="config.playerInterval"
+             [counterPosition]="config.counterPosition"
+             [loadingStrategy]="config.loadingStrategy"
+             [slidingDirection]="config.slidingDirection"
+             [slidingDuration]="config.slidingDuration"
+             [slidingDisabled]="config.slidingDisabled"
+             [thumbSlidingDisabled]="config.thumbSlidingDisabled"
+             [mouseSlidingDisabled]="config.mouseSlidingDisabled"
+             [thumbMouseSlidingDisabled]="config.thumbMouseSlidingDisabled"
+             (playingChange)="onPlayer($event)"
+             (indexChange)="onIndexChange($event)"
+             (itemClick)="onItemClick($event)"
+             (thumbClick)="onThumbClick($event)"></gallery>
 
-      <div class="buttons-container">
-        <button mat-flat-button (click)="gallery.play()">Play</button>
-        <button mat-button color="accent" (click)="gallery.stop()">Stop</button>
-        <button mat-button color="primary" (click)="gallery.prev()">Prev</button>
-        <button mat-button color="primary" (click)="gallery.next()">Next</button>
-        <button mat-button color="primary" (click)="gallery.remove(gallery.galleryRef.stateSnapshot.currIndex)">Remove</button>
-      </div>
+    <div class="buttons-container">
+      <button mat-flat-button (click)="gallery.play()">Play</button>
+      <button mat-button color="accent" (click)="gallery.stop()">Stop</button>
+      <button mat-button color="primary" (click)="gallery.prev()">Prev</button>
+      <button mat-button color="primary" (click)="gallery.next()">Next</button>
+      <button mat-button color="primary" (click)="gallery.remove(gallery.galleryRef.stateSnapshot.currIndex)">Remove
+      </button>
     </div>
+  </div>
 
-    <mat-card>
-      <mat-card-content>
+  <mat-card>
+    <mat-card-content>
 
-        <div class="outputs-container">
-          <ng-container *ngIf="indexChange$ | async; let indexChange">
+      <div class="outputs-container">
+        <ng-container *ngIf="indexChange$ | async; let indexChange">
             <span class="chip" [class.changed]="indexChange.active">
               <strong>(indexChange): {{indexChange.e?.currIndex}}</strong>
             </span>
-          </ng-container>
+        </ng-container>
 
-          <ng-container *ngIf="thumbClick$ | async; let thumbClick">
+        <ng-container *ngIf="thumbClick$ | async; let thumbClick">
             <span class="chip" [class.changed]="thumbClick.active">
               <strong>(thumbClick): {{thumbClick.e}}</strong>
             </span>
-          </ng-container>
+        </ng-container>
 
-          <ng-container *ngIf="itemClick$ | async; let itemClick">
+        <ng-container *ngIf="itemClick$ | async; let itemClick">
             <span class="chip" [class.changed]="itemClick.active">
               <strong>(itemClick): {{itemClick.e}}</strong>
             </span>
-          </ng-container>
+        </ng-container>
 
-          <ng-container *ngIf="player$ | async; let player">
+        <ng-container *ngIf="player$ | async; let player">
             <span class="chip" [class.changed]="player.active">
               <strong>(playingChange): {{player.e?.isPlaying}}</strong>
             </span>
-          </ng-container>
-        </div>
+        </ng-container>
+      </div>
 
-        <div class="row">
+      <div class="row">
 
-          <div class="column">
+        <div class="column">
 
-            <div>
-              <mat-form-field>
-                <mat-label>Loading strategy</mat-label>
-                <mat-select [(ngModel)]="config.loadingStrategy">
-                  <mat-option *ngFor="let strategy of loadingStrategies" [value]="strategy">{{strategy}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div>
-              <mat-form-field name="slidingDirection">
-                <mat-label>Sliding directions</mat-label>
-                <mat-select [(ngModel)]="config.slidingDirection">
-                  <mat-option *ngFor="let direction of slidingDirections" [value]="direction">
-                    {{direction}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-            <div>
-              <mat-form-field>
-                <mat-label>Image size</mat-label>
-                <mat-select [(ngModel)]="config.imageSize">
-                  <mat-option *ngFor="let size of imageSizes" [value]="size">{{size}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-            <div>
-              <mat-form-field>
-                <mat-label>Thumbnails mode</mat-label>
-                <mat-select [(ngModel)]="config.thumbMode" (selectionChange)="restart()" [disabled]="!config.thumb">
-                  <mat-option *ngFor="let mode of thumbModes" [value]="mode">{{mode}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-            <div>
-              <mat-form-field>
-                <mat-label>Thumbnails Position</mat-label>
-                <mat-select [(ngModel)]="config.thumbPosition" [disabled]="!config.thumb">
-                  <mat-option *ngFor="let position of thumbPositions" [value]="position">{{position}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-            <div>
-              <mat-form-field>
-                <mat-label>Counter Position</mat-label>
-                <mat-select [(ngModel)]="config.counterPosition" [disabled]="!config.counter">
-                  <mat-option *ngFor="let position of dotsCounterPositions" [value]="position">{{position}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-            <div>
-              <mat-form-field>
-                <mat-label>Dots Position</mat-label>
-                <mat-select [(ngModel)]="config.dotsPosition" [disabled]="!config.dots">
-                  <mat-option *ngFor="let position of dotsCounterPositions" [value]="position">{{position}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Loading strategy</mat-label>
+              <mat-select [(ngModel)]="config.loadingStrategy">
+                <mat-option *ngFor="let strategy of loadingStrategies" [value]="strategy">{{strategy}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field name="slidingDirection">
+              <mat-label>Sliding directions</mat-label>
+              <mat-select [(ngModel)]="config.slidingDirection">
+                <mat-option *ngFor="let direction of slidingDirections" [value]="direction">{{direction}}</mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
 
-          <div class="column">
-            <div>
-              <mat-form-field>
-                <mat-label>Thumbnail width</mat-label>
-                <input matInput [(ngModel)]="config.thumbWidth" [disabled]="!config.thumb">
-              </mat-form-field>
-            </div>
-
-            <div>
-              <mat-form-field>
-                <mat-label>Thumbnail height</mat-label>
-                <input matInput [(ngModel)]="config.thumbHeight" [disabled]="!config.thumb">
-              </mat-form-field>
-            </div>
-
-            <div>
-              <mat-form-field>
-                <mat-label>Zoom out</mat-label>
-                <input matInput [(ngModel)]="config.zoomOut">
-              </mat-form-field>
-            </div>
-
-            <div>
-              <mat-form-field>
-                <mat-label>Pan sensitivity</mat-label>
-                <input matInput [(ngModel)]="config.panSensitivity" [disabled]="!config.gestures">
-              </mat-form-field>
-            </div>
-
-            <div>
-              <mat-form-field>
-                <mat-label>Player interval</mat-label>
-                <input matInput [(ngModel)]="config.playerInterval">
-              </mat-form-field>
-            </div>
-
+          <div>
+            <mat-form-field>
+              <mat-label>Image size</mat-label>
+              <mat-select [(ngModel)]="config.imageSize">
+                <mat-option *ngFor="let size of imageSizes" [value]="size">{{size}}</mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
 
-          <div class="column checkboxes">
-            <div>
-              <mat-checkbox [(ngModel)]="config.loop">Loop navigation</mat-checkbox>
-            </div>
-            <div>
-              <mat-checkbox [(ngModel)]="config.fluid">Fluid size</mat-checkbox>
-            </div>
-            <div>
-              <mat-checkbox [(ngModel)]="config.nav">Show navigation</mat-checkbox>
-            </div>
-            <div>
-              <mat-checkbox [(ngModel)]="config.dots">Show dots</mat-checkbox>
-            </div>
-            <div>
-              <mat-checkbox [(ngModel)]="config.counter">Show counter</mat-checkbox>
-            </div>
-            <div>
-              <mat-checkbox [(ngModel)]="config.thumb">Show thumbnails</mat-checkbox>
-            </div>
-            <div>
-              <mat-checkbox [(ngModel)]="config.disableThumb" [disabled]="!config.thumb">Disable thumbnails' clicks
-              </mat-checkbox>
-            </div>
-            <div>
-              <mat-checkbox [(ngModel)]="config.gestures" (change)="restart()">Enable gestures</mat-checkbox>
-            </div>
-            <div>
-              <mat-checkbox [(ngModel)]="config.autoPlay" (change)="restart()">Auto-play</mat-checkbox>
-            </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Thumbnails View</mat-label>
+              <mat-select [(ngModel)]="config.thumbView" [disabled]="!config.thumb">
+                <mat-option *ngFor="let view of thumbViews" [value]="view">{{view}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field>
+              <mat-label>Thumbnails Position</mat-label>
+              <mat-select [(ngModel)]="config.thumbPosition" [disabled]="!config.thumb">
+                <mat-option *ngFor="let position of thumbPositions" [value]="position">{{position}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field>
+              <mat-label>Counter Position</mat-label>
+              <mat-select [(ngModel)]="config.counterPosition" [disabled]="!config.counter">
+                <mat-option *ngFor="let position of dotsCounterPositions" [value]="position">{{position}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field>
+              <mat-label>Dots Position</mat-label>
+              <mat-select [(ngModel)]="config.dotsPosition" [disabled]="!config.dots">
+                <mat-option *ngFor="let position of dotsCounterPositions" [value]="position">{{position}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
         </div>
 
-      </mat-card-content>
-    </mat-card>
+        <div class="column">
+          <div>
+            <mat-form-field>
+              <mat-label>Thumbnail width</mat-label>
+              <input matInput [(ngModel)]="config.thumbWidth" [disabled]="!config.thumb">
+            </mat-form-field>
+          </div>
 
-  </div>
-</ng-scrollbar>
+          <div>
+            <mat-form-field>
+              <mat-label>Thumbnail height</mat-label>
+              <input matInput [(ngModel)]="config.thumbHeight" [disabled]="!config.thumb">
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field>
+              <mat-label>Sliding duration</mat-label>
+              <input matInput [(ngModel)]="config.slidingDuration">
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field>
+              <mat-label>Player interval</mat-label>
+              <input matInput [(ngModel)]="config.playerInterval">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Resize debounce time</mat-label>
+              <input matInput [(ngModel)]="config.resizeDebounceTime">
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div class="column checkboxes">
+          <div>
+            <mat-checkbox [(ngModel)]="config.loop">Loop navigation</mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox [(ngModel)]="config.nav">Show navigation</mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox [(ngModel)]="config.dots">Show dots</mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox [(ngModel)]="config.counter">Show counter</mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox [(ngModel)]="config.thumb">Show thumbnails</mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox [(ngModel)]="config.thumbDetached">Detach thumbnails</mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox [(ngModel)]="config.disableThumb" [disabled]="!config.thumb">Disable thumbnails' clicks
+            </mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox [(ngModel)]="config.autoPlay" (change)="restart()">Auto-play</mat-checkbox>
+          </div>
+
+          <div>
+            <mat-checkbox [(ngModel)]="config.slidingDisabled">Sliding Disabled</mat-checkbox>
+          </div>
+
+          <div>
+            <mat-checkbox [(ngModel)]="config.thumbSlidingDisabled">Thumb Sliding Disabled</mat-checkbox>
+          </div>
+
+          <div>
+            <mat-checkbox [(ngModel)]="config.mouseSlidingDisabled">Mouse Sliding Disabled</mat-checkbox>
+          </div>
+
+          <div>
+            <mat-checkbox [(ngModel)]="config.thumbMouseSlidingDisabled">Thumb Mouse Sliding Disabled</mat-checkbox>
+          </div>
+        </div>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>

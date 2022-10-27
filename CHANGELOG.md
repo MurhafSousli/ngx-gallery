@@ -1,5 +1,38 @@
 # Changelog
 
+## 8.0.0-beta.0
+
+- feat(core): Use scrolling slider instead of transform method, allows touchpad scroll to slide the gallery as well as native sliding on mobile browser.
+- feat(core): Add `resizeDebounceTime` option which is used to update the gallery on window resize event in [34a2723](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/34a27238eed6515fd748c43909c3fd0098b6a575) and [d867630](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/d86763042553a340b3a367c56c0a2549b690f751).
+- feat(core): Add `slidingEase` and `slidingDuration` to customize sliding ease and duration in [4c1db03](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/4c1db03afb3a27896cd6dad5d08f91612bfa75a2).
+- feat(core): Add `thumbDetached` to detach thumb slider, closes [#289](https://github.com/MurhafSousli/ngx-gallery/issues/289) in [1f47484](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/1f474847f999b2f1b0c820d50bf7336bfe6b8a3c).
+- feat(core): Add `boxTemplate` to the gallery, closes [#487](https://github.com/MurhafSousli/ngx-gallery/issues/487) in [f46e33a](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/f46e33abf231ab86bd0b906e4b20e02e4bbf7bf4).
+- feat(core): Add `slidingDisabled` and `thumbSlidingDisabled` options to enable/disable sliding on Mobile and Desktop using the touchpad. in [2451581](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/2451581cee382a17f3a95671cf3950910a5122d3).
+- feat(core): Add `mouseSlidingDisabled` and `mouseThumbSlidingDisabled` options to enable/disable sliding on Desktop using the mouse. in [2451581](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/2451581cee382a17f3a95671cf3950910a5122d3).
+- feat(core): Images not shown, when number of images get larger, closes [#484](https://github.com/MurhafSousli/ngx-gallery/issues/484) in [e819ebe](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/e819ebe3442f0cd37c1914bccf82a72d1fb2ce85).
+- fix(core): `thumbView="contain"` Sliding thumbnails using gestures has an issue, closes [#417](https://github.com/MurhafSousli/ngx-gallery/issues/417) in [e819ebe](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/e819ebe3442f0cd37c1914bccf82a72d1fb2ce85).
+- refactor(core): Remove `thumbMode` option from the gallery, in [18f71e3](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/18f71e3599f7af1a20f1482307a6370c0c8b6f05)
+- refactor(core): Remove `tapClick` event and use native `click` event, in [3d960cc](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/3d960cca3b4954c999e10a86b0993d45d5c8462f).
+- refactor(core): Remove `ng-content` from the gallery, in [63e3b6b](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/63e3b6b5110ee5eaab6452cf775c3488023bd7d9).
+- refactor(core): Remove `panSensitivity` option, in [d1f8d34](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/d1f8d342a597d88afe66681b4ae099362273e03c).
+- refactor(core): Remove `gestures` option, in [70cb00c](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/70cb00c5aa808ea33aba1b674666ab0f99501a9d).
+- refactor(core): Remove `reserveGesturesAction` option, in [4b07fc7](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/4b07fc7ca4ef3d50e59accfe11593ee3a84ee706).
+- refactor(core): Remove `zoomOut` option, in [19ba2b8](https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/19ba2b8c8d4402085c0b400b3e4c0e014d2e5abb).
+
+### Breaking changes:
+
+HammerJs is only used for sliding using the mouse on desktop only, Sliding on mobile devices is now native scroll.
+
+- `gestures` option has been deprecated.
+- `thumbMode` option has been deprecated, sliding thumbnails is free.
+- `zoomOut` has been deprecated.
+- `reserveGesturesAction` has been deprecated.
+- `panSensitivity` has been deprecated.
+- Remove `ng-content` from the gallery, use `boxTemplate` option to add your custom layer.
+- The default value for `loadingStrategy` option has changed to `LoadingStrategy.Preload`.
+- Added new tiny dependency `bezier-easing`.
+
+
 ## 7.1.2
 
 - fix(core): Fix `reserveGestureAction` input and its default value in the lightbox, in [ba95036](https://github.com/MurhafSousli/ngx-gallery/pull/481/commits/ba950362b3fd5378d929ef14b56b1cb602382c9e).

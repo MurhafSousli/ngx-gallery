@@ -1,22 +1,67 @@
 ::ng-deep {
-  .g-items-container {
-    height: 100%;
+  gallery-slider {
+    display: flex;
   }
 
-  .g-slider {
-    position: absolute;
-    transition: transform 400ms cubic-bezier(0.5, 0, 0.5, 1);
+  .g-items-container {
+    height: 100%;
+    flex: 1;
   }
 
   gallery-core[slidingDirection='horizontal'] {
     .g-slider {
       flex-direction: row;
+      scroll-snap-type: x mandatory;
+      overflow-x: auto;
+      overflow-y: hidden;
     }
   }
 
   gallery-core[slidingDirection='vertical'] {
     .g-slider {
       flex-direction: column;
+      scroll-snap-type: y mandatory;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+  }
+
+  /** Disable sliding */
+  gallery-core[slidingDisabled='true'] {
+    .g-slider {
+      overflow: hidden !important;
+    }
+  }
+
+  .g-slider {
+    display: flex;
+    width: 100%;
+    height: 100%;
+
+    scrollbar-width: none; /* Firefox 64 */
+    -ms-overflow-style: none; /* Internet Explorer 11 */
+    &::-webkit-scrollbar { /** WebKit */
+      display: none;
+    }
+
+    // Disable mouse click on gallery items/thumbnails when the slider is being dragged using the mouse
+    &.g-sliding * {
+      pointer-events: none;
+    }
+
+    gallery-item {
+      flex: 0 0 auto;
+    }
+
+    gallery-thumb,
+    gallery-item {
+      scroll-snap-align: center;
+      // Disable highlighting the elements on mouse move or click
+      user-select: none;
+      -webkit-user-drag: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      //content-visibility: auto;
+      //contain-intrinsic-size: 0 500px;
     }
   }
 }

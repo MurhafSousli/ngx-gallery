@@ -6,7 +6,6 @@ export * from './lib/components/templates/gallery-iframe.component';
 export * from './lib/components/templates/gallery-image.component';
 export * from './lib/components/templates/gallery-video.component';
 export * from './lib/directives/lazy-image';
-export * from './lib/directives/tap-click';
 export * from './lib/models/config.model';
 export * from './lib/models/gallery.model';
 export * from './lib/models/constants';

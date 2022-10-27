@@ -1,4 +1,5 @@
 import { InjectionToken, TemplateRef } from '@angular/core';
+import { BezierEasingOptions } from '../smooth-scroll';
 
 export const GALLERY_CONFIG = new InjectionToken<GalleryConfig>('GALLERY_CONFIG');
 
@@ -7,11 +8,9 @@ export interface GalleryConfig {
   dots?: boolean;
   loop?: boolean;
   thumb?: boolean;
-  zoomOut?: number;
   navIcon?: string;
   counter?: boolean;
   dotsSize?: number;
-  gestures?: boolean;
   autoPlay?: boolean;
   thumbWidth?: number;
   thumbHeight?: number;
@@ -20,12 +19,18 @@ export interface GalleryConfig {
   thumbLoadingIcon?: string;
   thumbLoadingError?: string;
   disableThumb?: boolean;
-  panSensitivity?: number;
+  slidingDuration?: number;
+  slidingEase?: BezierEasingOptions;
+  slidingDisabled?: boolean;
+  thumbSlidingDisabled?: boolean;
+  mouseSlidingDisabled?: boolean;
+  thumbMouseSlidingDisabled?: boolean;
+  resizeDebounceTime?: number;
   playerInterval?: number;
-  reserveGesturesAction?: boolean;
+  boxTemplate?: TemplateRef<any>;
   itemTemplate?: TemplateRef<any>;
   thumbTemplate?: TemplateRef<any>;
-  thumbMode?: 'strict' | 'free';
+  thumbDetached?: boolean;
   imageSize?: 'cover' | 'contain';
   dotsPosition?: 'top' | 'bottom';
   counterPosition?: 'top' | 'bottom';

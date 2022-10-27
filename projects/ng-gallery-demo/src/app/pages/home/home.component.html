@@ -8,7 +8,6 @@
   </div>
   <div class="page-content">
     <gallery id="basic"
-             fluid
              *ngIf="media$ | async; let config"
              [items]="camel$ | async"
              [thumbWidth]="config.thumbWidth"
