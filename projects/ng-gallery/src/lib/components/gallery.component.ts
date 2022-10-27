@@ -38,7 +38,6 @@ import { BezierEasingOptions } from '../smooth-scroll';
                   (itemClick)="onItemClick($event)"
                   (thumbClick)="onThumbClick($event)"
                   (error)="onError($event)"></gallery-core>
-    <ng-content></ng-content>
   `
 })
 export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
