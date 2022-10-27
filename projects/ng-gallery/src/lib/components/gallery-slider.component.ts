@@ -85,7 +85,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.config) {
-      if (changes.config.currentValue?.thumbPosition !== changes.config.previousValue?.thumbPosition) {
+      if (changes.config.currentValue?.slidingDirection !== changes.config.previousValue?.slidingDirection) {
         switch (this.config.slidingDirection) {
           case SlidingDirection.Horizontal:
             this.adapter = new HorizontalAdapter(this.slider, this.config);
@@ -94,23 +94,25 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
             this.adapter = new VerticalAdapter(this.slider, this.config);
             break;
         }
+
+        if (!changes.config.firstChange) {
+          // Keep the correct sliding position when direction changes
+          requestAnimationFrame(() => {
+            this.scrollToIndex(this.state.currIndex, 'auto');
+          });
+        }
+
+        // Reactivate gestures
+        this.enableDisableGestures();
       }
 
-      if (!this._platform.IOS && !this._platform.ANDROID) {
-        // Enable/Disable mouse sliding on desktop browser only
-        if (changes.config.currentValue?.mouseSlidingDisabled !== changes.config.previousValue?.mouseSlidingDisabled) {
-          console.log(this.config.mouseSlidingDisabled)
-          if (!this.config.mouseSlidingDisabled) {
-            this.activateGestures();
-          } else {
-            this.deactivateGestures();
-          }
-        }
+      if (!changes.config.firstChange && changes.config.currentValue?.mouseSlidingDisabled !== changes.config.previousValue?.mouseSlidingDisabled) {
+        this.enableDisableGestures();
       }
     }
 
     // Scroll to current index
-    if (changes.state) {
+    if (changes.state && changes.state.currentValue?.currIndex !== changes.state.previousValue?.currIndex) {
       requestAnimationFrame(() => {
         this.scrollToIndex(this.state.currIndex, changes.state.firstChange ? 'auto' : 'smooth');
       });
@@ -151,8 +153,21 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
+  private enableDisableGestures(): void {
+    // Enable/Disable mouse sliding on desktop browser only
+    if (!this._platform.IOS && !this._platform.ANDROID) {
+      if (!this.config.mouseSlidingDisabled) {
+        this.activateGestures();
+      } else {
+        this.deactivateGestures();
+      }
+    }
+  }
+
   private activateGestures(): void {
     if (typeof Hammer !== 'undefined') {
+      // Destroy hammer if a previous instance was created
+      this.deactivateGestures();
 
       const direction: number = this.adapter.panDirection;
 

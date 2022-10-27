@@ -122,25 +122,30 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
         // Set host height and width according to thumb position
         this.width = this.adapter.containerWidth;
         this.height = this.adapter.containerHeight;
+
+        if (!changes.config.firstChange) {
+          // Keep the correct sliding position when direction changes
+          requestAnimationFrame(() => {
+            this.scrollToIndex(this.state.currIndex, 'auto');
+          })
+        }
+
+        // Reactivate gestures
+        this.enableDisableGestures();
       }
 
-      if (!this._platform.IOS && !this._platform.ANDROID) {
-        // Enable/Disable mouse sliding on desktop browser only
-        if (changes.config.currentValue?.thumbMouseSlidingDisabled !== changes.config.previousValue?.thumbMouseSlidingDisabled) {
-          if (!this.config.thumbMouseSlidingDisabled) {
-            this.activateGestures();
-          } else {
-            this.deactivateGestures();
-          }
-        }
+      if (!changes.config.firstChange && changes.config.currentValue?.thumbMouseSlidingDisabled !== changes.config.previousValue?.thumbMouseSlidingDisabled) {
+        this.enableDisableGestures();
       }
     }
 
-    if (changes.state?.firstChange || !this.config.thumbDetached) {
-      // Scroll slide to item when current index changes.
-      requestAnimationFrame(() => {
-        this.scrollToIndex(this.state.currIndex, changes.state?.firstChange ? 'auto' : 'smooth');
-      });
+    if (changes.state && (changes.state.firstChange || !this.config.thumbDetached)) {
+      if (changes.state.currentValue?.currIndex !== changes.state.previousValue?.currIndex) {
+        // Scroll slide to item when current index changes.
+        requestAnimationFrame(() => {
+          this.scrollToIndex(this.state.currIndex, changes.state?.firstChange ? 'auto' : 'smooth');
+        });
+      }
     }
   }
 
@@ -183,6 +188,17 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
         this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
       });
     });
+  }
+
+  private enableDisableGestures(): void {
+    if (!this._platform.IOS && !this._platform.ANDROID) {
+      // Enable/Disable mouse sliding on desktop browser only
+      if (!this.config.thumbMouseSlidingDisabled) {
+        this.activateGestures();
+      } else {
+        this.deactivateGestures();
+      }
+    }
   }
 
   private activateGestures(): void {
