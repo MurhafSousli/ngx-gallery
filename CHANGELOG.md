@@ -30,6 +30,7 @@ HammerJs is only used for sliding using the mouse on desktop only, Sliding on mo
 - `panSensitivity` has been deprecated.
 - Remove `ng-content` from the gallery, use `boxTemplate` option to add your custom layer.
 - The default value for `loadingStrategy` option has changed to `LoadingStrategy.Preload`.
+- Added new tiny dependency `bezier-easing`.
 
 
 ## 7.1.2
