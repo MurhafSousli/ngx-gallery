@@ -74,11 +74,13 @@
 
     <h3>Example</h3>
 
-    <gallery id="basic" *ngIf="media$ | async; let config" [items]="fruits$ | async"
+    <gallery id="basic"
+             *ngIf="media$ | async; let config"
+             [items]="fruits$ | async"
              [thumbWidth]="config.thumbWidth"
              [thumbHeight]="config.thumbHeight"
-             [thumbPosition]="config.thumbPosition"></gallery>
-
+             [thumbPosition]="config.thumbPosition">
+    </gallery>
 
     <hl-code [code]="code.example"></hl-code>
 
