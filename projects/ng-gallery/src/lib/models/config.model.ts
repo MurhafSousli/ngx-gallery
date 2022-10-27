@@ -20,7 +20,6 @@ export interface GalleryConfig {
   thumbLoadingIcon?: string;
   thumbLoadingError?: string;
   disableThumb?: boolean;
-  panSensitivity?: number;
   slidingDuration?: number;
   slidingEase?: BezierEasingOptions;
   resizeDebounceTime?: number;

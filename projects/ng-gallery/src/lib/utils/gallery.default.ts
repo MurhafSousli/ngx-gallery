@@ -33,7 +33,6 @@ export const defaultConfig: GalleryConfig = {
   autoPlay: false,
   thumbWidth: 120,
   thumbHeight: 90,
-  panSensitivity: 25,
   disableThumb: false,
   playerInterval: 3000,
   slidingDuration: 468,

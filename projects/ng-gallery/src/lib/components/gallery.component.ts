@@ -57,7 +57,6 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() thumbWidth: number = this._gallery.config.thumbWidth;
   @Input() thumbHeight: number = this._gallery.config.thumbHeight;
   @Input() disableThumb: boolean = this._gallery.config.disableThumb;
-  @Input() panSensitivity: number = this._gallery.config.panSensitivity;
   @Input() playerInterval: number = this._gallery.config.playerInterval;
   @Input() slidingDuration: number = this._gallery.config.slidingDuration;
   @Input() slidingEase: BezierEasingOptions = this._gallery.config.slidingEase;
@@ -121,7 +120,6 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       thumbTemplate: this.thumbTemplate,
       thumbDetached: this.thumbDetached,
       thumbPosition: this.thumbPosition,
-      panSensitivity: this.panSensitivity,
       playerInterval: this.playerInterval,
       counterPosition: this.counterPosition,
       loadingStrategy: this.loadingStrategy,
