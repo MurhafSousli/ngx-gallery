@@ -3,5 +3,6 @@
   "dest": "../../dist/ng-gallery",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "allowedNonPeerDependencies": ["."]
 }
