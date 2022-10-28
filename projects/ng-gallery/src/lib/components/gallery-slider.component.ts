@@ -20,6 +20,7 @@ import { GalleryConfig } from '../models/config.model';
 import { SlidingDirection } from '../models/constants';
 import { SliderAdapter, HorizontalAdapter, VerticalAdapter } from './adapters';
 import { SmoothScrollManager } from '../smooth-scroll';
+import { resizeObservable } from '../utils/resize-observer';
 
 declare const Hammer: any;
 
@@ -49,7 +50,10 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   private _hammer: any;
 
   /** Subscription reference to slider scroll stream */
-  private _scrollSub$: Subscription;
+  private _scrollObserver$: Subscription;
+
+  /** Subscription reference to host resize stream */
+  private _resizeObserver$: Subscription;
 
   /** Slider adapter */
   adapter: SliderAdapter;
@@ -122,22 +126,35 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
     this._zone.runOutsideAngular(() => {
       // Subscribe to slider scroll event
-      this._scrollSub$ = fromEvent(this.slider, 'scroll', { passive: true }).pipe(
+      this._scrollObserver$ = fromEvent(this.slider, 'scroll', { passive: true }).pipe(
         debounceTime(50),
         tap(() => {
           const index: number = this.adapter.measureIndex;
-          // Check if index value is
+          // Check if the index value has no fraction
           if (Number.isSafeInteger(index)) {
+            this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
             this._zone.run(() => this.action.emit(index));
           }
         })
       ).subscribe();
+
+      // Detect if the size of the slider has changed detecting current index on scroll
+      if (this._platform.isBrowser) {
+        this._resizeObserver$ = resizeObservable(this._el.nativeElement).pipe(
+          debounceTime(this.config.resizeDebounceTime),
+          tap(([entry]: ResizeObserverEntry[]) => {
+            this.slider.style.width = `${ Math.ceil(entry.contentRect.width) }px`;
+            this.slider.style.height = `${ Math.ceil(entry.contentRect.height) }px`;
+          })
+        ).subscribe();
+      }
     });
   }
 
   ngOnDestroy(): void {
     this.deactivateGestures();
-    this._scrollSub$?.unsubscribe();
+    this._resizeObserver$?.unsubscribe();
+    this._scrollObserver$?.unsubscribe();
   }
 
   trackByFn(index: number, item: any) {
