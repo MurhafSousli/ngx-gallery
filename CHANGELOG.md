@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.0.0-beta.3
+
+- fix(core): Set current index in sliding event does not work if slider size number has fraction, in [58e89fb](https://github.com/MurhafSousli/ngx-gallery/pull/491/commits/58e89fb3ed0e3837ca08a8111d567d992717ba7a).
+
 ## 8.0.0-beta.2
 
 - fix(lightbox): close button is not displayed, in [506249b](https://github.com/MurhafSousli/ngx-gallery/pull/490/commits/506249bbc5877cd4ed54cf610a42b3a31abcb417).
