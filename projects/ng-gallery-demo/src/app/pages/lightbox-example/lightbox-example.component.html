@@ -49,8 +49,7 @@
       <button mat-raised-button mat-ripple class="grid-item" *ngFor="let item of space$ | async; let i = index"
               [lightbox]="i" gallery="lightbox">
 
-        <span class="grid-image" [style.backgroundImage]="'url(' + item.data.thumb + ')'"></span>
-
+        <img class="grid-image" loading="lazy" [src]="item.data.thumb"/>
       </button>
     </div>
 
