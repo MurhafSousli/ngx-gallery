@@ -33,6 +33,20 @@
     }
   }
 
+  /** Disable sliding */
+  gallery-core[contentVisibilityAuto='true'] {
+    gallery-thumb, gallery-item {
+      content-visibility: auto;
+    }
+
+    gallery-item {
+      contain-intrinsic-size: var(--item-contain-intrinsic-size);
+    }
+    gallery-thumb {
+      contain-intrinsic-size: var(--thumb-contain-intrinsic-size);
+    }
+  }
+
   .g-slider {
     display: flex;
     width: 100%;
@@ -60,8 +74,6 @@
       user-select: none;
       -webkit-user-drag: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-      //content-visibility: auto;
-      //contain-intrinsic-size: 0 500px;
     }
   }
 }

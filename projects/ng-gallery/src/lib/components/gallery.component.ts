@@ -32,7 +32,8 @@ import { BezierEasingOptions } from '../smooth-scroll';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['../styles/gallery.scss'],
   template: `
-    <gallery-core [state]="galleryRef.state | async"
+    <gallery-core [galleryId]="id"
+                  [state]="galleryRef.state | async"
                   [config]="galleryRef.config | async"
                   (itemClick)="onItemClick($event)"
                   (thumbClick)="onThumbClick($event)"
@@ -53,6 +54,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() autoPlay: boolean = this._gallery.config.autoPlay;
   @Input() thumbWidth: number = this._gallery.config.thumbWidth;
   @Input() thumbHeight: number = this._gallery.config.thumbHeight;
+  @Input() contentVisibilityAuto: boolean = this._gallery.config.contentVisibilityAuto;
   @Input() disableThumb: boolean = this._gallery.config.disableThumb;
   @Input() slidingDisabled: boolean = this._gallery.config.slidingDisabled;
   @Input() thumbSlidingDisabled: boolean = this._gallery.config.thumbSlidingDisabled;
@@ -126,6 +128,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       slidingDuration: this.slidingDuration,
       slidingDirection: this.slidingDirection,
       resizeDebounceTime: this.resizeDebounceTime,
+      contentVisibilityAuto: this.contentVisibilityAuto,
       slidingDisabled: this.slidingDisabled,
       thumbSlidingDisabled: this.thumbSlidingDisabled,
       mouseSlidingDisabled: this.mouseSlidingDisabled,

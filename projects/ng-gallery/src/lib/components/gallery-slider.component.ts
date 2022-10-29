@@ -133,8 +133,8 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
         tap(() => {
           const index: number = this.adapter.measureIndex;
           // Check if the index value has no fraction
+          this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
           if (Number.isSafeInteger(index)) {
-            this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
             this._zone.run(() => this._gallery.ref(this.galleryId).set(index));
           }
         })
@@ -145,8 +145,13 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
         this._resizeObserver$ = resizeObservable(this._el.nativeElement).pipe(
           debounceTime(this.config.resizeDebounceTime),
           tap(([entry]: ResizeObserverEntry[]) => {
-            this.slider.style.width = `${ Math.ceil(entry.contentRect.width) }px`;
-            this.slider.style.height = `${ Math.ceil(entry.contentRect.height) }px`;
+            const width: number = Math.ceil(entry.contentRect.width);
+            const height: number = Math.ceil(entry.contentRect.height);
+            this.slider.style.width = `${ width }px`;
+            this.slider.style.height = `${ height }px`;
+            if (this.config.contentVisibilityAuto) {
+              this.slider.style.setProperty('--item-contain-intrinsic-size', `${ width }px ${ height }px`);
+            }
           })
         ).subscribe();
       }

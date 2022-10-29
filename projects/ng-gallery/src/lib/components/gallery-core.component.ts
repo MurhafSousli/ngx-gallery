@@ -90,4 +90,9 @@ export class GalleryCoreComponent {
   @HostBinding('attr.thumbSlidingDisabled') get thumbSlidingDisabled(): boolean {
     return this.config.thumbSlidingDisabled;
   }
+
+  /** Set gallery slider content-visibility-auto style  */
+  @HostBinding('attr.contentVisibilityAuto') get contentVisibilityAuto(): boolean {
+    return this.config.contentVisibilityAuto;
+  }
 }

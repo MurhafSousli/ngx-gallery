@@ -121,6 +121,10 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
         this.width = this.adapter.containerWidth;
         this.height = this.adapter.containerHeight;
 
+        if (this.config.contentVisibilityAuto) {
+          this.slider.style.setProperty('--thumb-contain-intrinsic-size', `${ this.config.thumbWidth }px ${ this.config.thumbHeight }px`);
+        }
+
         if (!changes.config.firstChange) {
           // Keep the correct sliding position when direction changes
           requestAnimationFrame(() => {
