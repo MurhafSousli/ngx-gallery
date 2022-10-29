@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { GalleryComponent } from './gallery.component';
 import { GalleryState } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
 
@@ -11,14 +12,14 @@ import { GalleryConfig } from '../models/config.model';
        class="g-nav-prev"
        aria-label="Previous"
        role="button"
-       (click)="action.emit('prev')"
+       (click)="gallery.prev()"
        [innerHtml]="navIcon"></i>
 
     <i *ngIf="config.loop || state.hasNext"
        class="g-nav-next"
        aria-label="Next"
        role="button"
-       (click)="action.emit('next')"
+       (click)="gallery.next()"
        [innerHtml]="navIcon"></i>
   `
 })
@@ -27,9 +28,8 @@ export class GalleryNavComponent implements OnInit {
   navIcon: SafeHtml;
   @Input() state: GalleryState;
   @Input() config: GalleryConfig;
-  @Output() action = new EventEmitter<string>();
 
-  constructor(private _sanitizer: DomSanitizer) {
+  constructor(public gallery: GalleryComponent, private _sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {

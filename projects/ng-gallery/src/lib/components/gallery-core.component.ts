@@ -9,28 +9,24 @@ import { GalleryConfig } from '../models/config.model';
     <gallery-thumbs *ngIf="config.thumb"
                     [state]="state"
                     [config]="config"
-                    (action)="action.emit($event)"
                     (thumbClick)="thumbClick.emit($event)">
     </gallery-thumbs>
     <div class="g-box">
       <gallery-slider [state]="state"
                       [config]="config"
-                      (action)="action.emit($event)"
                       (itemClick)="itemClick.emit($event)"
                       (error)="error.emit($event)">
 
         <gallery-nav *ngIf="config.nav && state.items.length > 1"
                      [state]="state"
-                     [config]="config"
-                     (action)="action.emit($event)">
+                     [config]="config">
         </gallery-nav>
 
       </gallery-slider>
 
       <gallery-dots *ngIf="config.dots"
                     [state]="state"
-                    [config]="config"
-                    (action)="action.emit($event)">
+                    [config]="config">
       </gallery-dots>
 
       <gallery-counter *ngIf="config.counter"
@@ -47,7 +43,6 @@ export class GalleryCoreComponent {
 
   @Input() state: GalleryState;
   @Input() config: GalleryConfig;
-  @Output() action = new EventEmitter<string | number>();
   @Output() itemClick = new EventEmitter<number>();
   @Output() thumbClick = new EventEmitter<number>();
   @Output() error = new EventEmitter<GalleryError>();

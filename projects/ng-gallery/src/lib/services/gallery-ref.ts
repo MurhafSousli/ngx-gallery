@@ -193,10 +193,10 @@ export class GalleryRef {
   /**
    * Next item
    */
-  next() {
+  next(loop: boolean = true) {
     if (this.stateSnapshot.hasNext) {
       this.set(this.stateSnapshot.currIndex + 1);
-    } else if (this._config.value.loop) {
+    } else if (loop && this._config.value.loop) {
       this.set(0);
     }
   }
@@ -204,10 +204,10 @@ export class GalleryRef {
   /**
    * Prev item
    */
-  prev() {
+  prev(loop: boolean = true) {
     if (this.stateSnapshot.hasPrev) {
       this.set(this.stateSnapshot.currIndex - 1);
-    } else if (this._config.value.loop) {
+    } else if (loop && this._config.value.loop) {
       this.set(this.stateSnapshot.items.length - 1);
     }
   }

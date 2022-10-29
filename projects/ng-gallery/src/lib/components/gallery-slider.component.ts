@@ -15,6 +15,7 @@ import {
 import { Platform } from '@angular/cdk/platform';
 import { Subscription, fromEvent } from 'rxjs';
 import { tap, debounceTime } from 'rxjs/operators';
+import { GalleryComponent } from './gallery.component';
 import { GalleryState, GalleryError } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
 import { SlidingDirection } from '../models/constants';
@@ -64,9 +65,6 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   /** Gallery config */
   @Input() config: GalleryConfig;
 
-  /** Stream that emits when the active item should change */
-  @Output() action = new EventEmitter<string | number>();
-
   /** Stream that emits when item is clicked */
   @Output() itemClick = new EventEmitter<number>();
 
@@ -84,7 +82,8 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private _el: ElementRef,
               private _zone: NgZone,
               private _platform: Platform,
-              private _smoothScroll: SmoothScrollManager) {
+              private _smoothScroll: SmoothScrollManager,
+              private _gallery: GalleryComponent) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -133,7 +132,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
           // Check if the index value has no fraction
           if (Number.isSafeInteger(index)) {
             this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
-            this._zone.run(() => this.action.emit(index));
+            this._zone.run(() => this._gallery.set(index));
           }
         })
       ).subscribe();
@@ -222,16 +221,17 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     this._zone.run(() => {
       const delta: number = this.adapter.getPanDelta(e);
       const velocity: number = this.adapter.getPanVelocity(e);
+
       // Check if scrolled item is great enough to navigate
       if (Math.abs(delta) > this.adapter.clientSize / 2) {
-        return this.action.emit(delta > 0 ? 'prev' : 'next');
+        return delta > 0 ? this._gallery.prev(false) : this._gallery.next(false);
       }
       // Check if velocity is great enough to navigate
       if (Math.abs(velocity) > 0.3) {
-        return this.action.emit(velocity > 0 ? 'prev' : 'next');
+        return velocity > 0 ? this._gallery.prev(false) : this._gallery.next(false);
       }
+      // Need to scroll back manually since the currIndex did not change
       this.scrollToIndex(this.state.currIndex, 'smooth');
-      this.action.emit(this.state.currIndex);
     });
   }
 }

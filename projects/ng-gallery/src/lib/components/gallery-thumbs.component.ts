@@ -69,9 +69,6 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
   /** Gallery config */
   @Input() config: GalleryConfig;
 
-  /** Stream that emits when the active item should change */
-  @Output() action = new EventEmitter<string | number>();
-
   /** Stream that emits when thumb is clicked */
   @Output() thumbClick = new EventEmitter<number>();
 

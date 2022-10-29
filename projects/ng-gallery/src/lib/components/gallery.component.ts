@@ -34,7 +34,6 @@ import { BezierEasingOptions } from '../smooth-scroll';
   template: `
     <gallery-core [state]="galleryRef.state | async"
                   [config]="galleryRef.config | async"
-                  (action)="onAction($event)"
                   (itemClick)="onItemClick($event)"
                   (thumbClick)="onThumbClick($event)"
                   (error)="onError($event)"></gallery-core>
@@ -134,19 +133,6 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     };
   }
 
-  onAction(i: string | number) {
-    switch (i) {
-      case 'next':
-        this.galleryRef.next();
-        break;
-      case 'prev':
-        this.galleryRef.prev();
-        break;
-      default:
-        this.galleryRef.set(i as number);
-    }
-  }
-
   ngOnChanges(changes: SimpleChanges) {
     if (this.galleryRef) {
       this.galleryRef.setConfig(this.getConfig());
@@ -244,12 +230,12 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     this.galleryRef.remove(i);
   }
 
-  next() {
-    this.galleryRef.next();
+  next(loop?: boolean) {
+    this.galleryRef.next(loop);
   }
 
-  prev() {
-    this.galleryRef.prev();
+  prev(loop?: boolean) {
+    this.galleryRef.prev(loop);
   }
 
   set(i: number) {
