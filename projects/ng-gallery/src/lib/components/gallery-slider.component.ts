@@ -15,7 +15,7 @@ import {
 import { Platform } from '@angular/cdk/platform';
 import { Subscription, fromEvent } from 'rxjs';
 import { tap, debounceTime } from 'rxjs/operators';
-import { GalleryComponent } from './gallery.component';
+import { Gallery } from '../services/gallery.service';
 import { GalleryState, GalleryError } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
 import { SlidingDirection } from '../models/constants';
@@ -59,6 +59,9 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   /** Slider adapter */
   adapter: SliderAdapter;
 
+  /** Gallery ID */
+  @Input() galleryId: string;
+
   /** Gallery state */
   @Input() state: GalleryState;
 
@@ -83,7 +86,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
               private _zone: NgZone,
               private _platform: Platform,
               private _smoothScroll: SmoothScrollManager,
-              private _gallery: GalleryComponent) {
+              private _gallery: Gallery) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -132,7 +135,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
           // Check if the index value has no fraction
           if (Number.isSafeInteger(index)) {
             this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
-            this._zone.run(() => this._gallery.set(index));
+            this._zone.run(() => this._gallery.ref(this.galleryId).set(index));
           }
         })
       ).subscribe();
@@ -222,13 +225,15 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
       const delta: number = this.adapter.getPanDelta(e);
       const velocity: number = this.adapter.getPanVelocity(e);
 
+      const galleryRef = this._gallery.ref(this.galleryId);
+
       // Check if scrolled item is great enough to navigate
       if (Math.abs(delta) > this.adapter.clientSize / 2) {
-        return delta > 0 ? this._gallery.prev(false) : this._gallery.next(false);
+        return delta > 0 ? galleryRef.prev(false) : galleryRef.next(false);
       }
       // Check if velocity is great enough to navigate
       if (Math.abs(velocity) > 0.3) {
-        return velocity > 0 ? this._gallery.prev(false) : this._gallery.next(false);
+        return velocity > 0 ? galleryRef.prev(false) : galleryRef.next(false);
       }
       // Need to scroll back manually since the currIndex did not change
       this.scrollToIndex(this.state.currIndex, 'smooth');

@@ -14,19 +14,22 @@ import { GalleryConfig } from '../models/config.model';
     <div class="g-box">
       <gallery-slider [state]="state"
                       [config]="config"
+                      [galleryId]="galleryId"
                       (itemClick)="itemClick.emit($event)"
                       (error)="error.emit($event)">
 
         <gallery-nav *ngIf="config.nav && state.items.length > 1"
                      [state]="state"
-                     [config]="config">
+                     [config]="config"
+                     [galleryId]="galleryId">
         </gallery-nav>
 
       </gallery-slider>
 
       <gallery-dots *ngIf="config.dots"
                     [state]="state"
-                    [config]="config">
+                    [config]="config"
+                    [galleryId]="galleryId">
       </gallery-dots>
 
       <gallery-counter *ngIf="config.counter"
@@ -41,6 +44,7 @@ import { GalleryConfig } from '../models/config.model';
 })
 export class GalleryCoreComponent {
 
+  @Input() galleryId: string;
   @Input() state: GalleryState;
   @Input() config: GalleryConfig;
   @Output() itemClick = new EventEmitter<number>();
