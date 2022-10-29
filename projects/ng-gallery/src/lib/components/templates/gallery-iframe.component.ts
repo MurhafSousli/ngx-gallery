@@ -9,7 +9,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
             frameborder="0"
             allowfullscreen
             [attr.allow]="autoplay ? 'autoplay' : ''"
-            [src]="iframeSrc">
+            [src]="iframeSrc"
+            [attr.loading]="loading">
     </iframe>
   `
 })
@@ -35,6 +36,8 @@ export class GalleryIframeComponent {
       }
     }
   }
+
+  @Input() loading: 'lazy' | 'eager' = 'lazy';
 
   @Input() autoplay: boolean;
 

@@ -5,36 +5,32 @@ import {
   HostBinding,
   EventEmitter,
   OnInit,
-  OnDestroy,
   ChangeDetectionStrategy
 } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeUrl } from '@angular/platform-browser';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'gallery-image',
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('fadeIn', [
-      transition(':enter', [
+      transition('* => success', [
         style({ opacity: 0 }),
         animate('300ms ease-in', style({ opacity: 1 }))
       ])
     ])
   ],
   template: `
-    <ng-container [lazyImage]="src"
-                  (progress)="onProgress($event)"
-                  (loaded)="onLoaded($event)"
-                  (error)="onError($event)"
-                  [ngSwitch]="state | async">
-
-      <img *ngSwitchCase="'success'"
-           @fadeIn
-           [src]="imageUrl"
+    <ng-container [ngSwitch]="state">
+      <img [@fadeIn]="state"
+           [attr.loading]="loading"
+           [src]="src"
            [attr.alt]="alt"
-           class="g-image-item"/>
+           [style.visibility]="state === 'loading' ? 'hidden' : 'unset'"
+           class="g-image-item"
+           (load)="state = 'success'"
+           (error)="state = 'failed'; error.emit($event)"/>
 
       <div *ngSwitchCase="'failed'"
            class="g-image-error-message">
@@ -64,11 +60,9 @@ import { BehaviorSubject } from 'rxjs';
   `
 })
 
-export class GalleryImageComponent implements OnInit, OnDestroy {
+export class GalleryImageComponent implements OnInit {
 
-  /** Stream that emits the state */
-  private readonly _state = new BehaviorSubject<'loading' | 'success' | 'failed'>('loading');
-  readonly state = this._state.asObservable();
+  state: 'loading' | 'success' | 'failed' = 'loading';
 
   /** Progress value */
   progress = 0;
@@ -84,6 +78,8 @@ export class GalleryImageComponent implements OnInit, OnDestroy {
   /** Loaded image URL */
   imageUrl: SafeUrl;
 
+  @Input() loading: 'eager' | 'lazy' = 'lazy';
+
   /** Custom loader template */
   @Input() loadingIcon: string;
   /** Custom loader safe template */
@@ -95,16 +91,10 @@ export class GalleryImageComponent implements OnInit, OnDestroy {
   errorTemplate: SafeHtml;
 
   /** Stream that emits when an error occurs */
-  @Output() error = new EventEmitter<Error>();
-  /** loading error */
-  loadError: Error;
+  @Output() error = new EventEmitter<ErrorEvent>();
 
-  @HostBinding('class.g-image-loaded') get imageLoadSuccess(): boolean {
-    return !!this.imageUrl;
-  }
-
-  @HostBinding('class.g-image-error') get imageLoadFailed(): boolean {
-    return !!this.loadError;
+  @HostBinding('attr.image-state') get imageState(): string {
+    return this.state;
   }
 
   constructor(private _sanitizer: DomSanitizer) {
@@ -118,24 +108,4 @@ export class GalleryImageComponent implements OnInit, OnDestroy {
       this.errorTemplate = this._sanitizer.bypassSecurityTrustHtml(this.loadingError);
     }
   }
-
-  ngOnDestroy() {
-    this._state.complete();
-  }
-
-  onProgress({ loaded, total }: { loaded: number, total: number }) {
-    this.progress = loaded * 100 / total;
-  }
-
-  onLoaded(blobUrl: string) {
-    this.imageUrl = this._sanitizer.bypassSecurityTrustUrl(blobUrl);
-    this._state.next('success');
-  }
-
-  onError(err: Error) {
-    this.loadError = err;
-    this._state.next('failed');
-    this.error.emit(err);
-  }
-
 }

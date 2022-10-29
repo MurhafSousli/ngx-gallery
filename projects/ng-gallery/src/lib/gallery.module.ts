@@ -18,8 +18,6 @@ import { GalleryImageComponent } from './components/templates/gallery-image.comp
 import { GalleryVideoComponent } from './components/templates/gallery-video.component';
 import { GalleryIframeComponent } from './components/templates/gallery-iframe.component';
 
-import { LazyImage } from './directives/lazy-image';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -37,12 +35,10 @@ import { LazyImage } from './directives/lazy-image';
     GalleryItemComponent,
     GalleryImageComponent,
     GalleryVideoComponent,
-    GalleryIframeComponent,
-    LazyImage
+    GalleryIframeComponent
   ],
   exports: [
-    GalleryComponent,
-    LazyImage
+    GalleryComponent
   ]
 })
 export class GalleryModule {
