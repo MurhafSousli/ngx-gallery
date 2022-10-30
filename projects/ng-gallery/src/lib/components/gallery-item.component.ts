@@ -73,7 +73,7 @@ export class GalleryItemComponent {
   @Input() data: any;
 
   /** Stream that emits when an error occurs */
-  @Output() error = new EventEmitter<Error>();
+  @Output() error = new EventEmitter<ErrorEvent>();
 
   @HostBinding('class.g-active-item') get isActive() {
     return this.index === this.currIndex;

@@ -24,11 +24,11 @@ import { animate, style, transition, trigger } from '@angular/animations';
   template: `
     <ng-container [ngSwitch]="state">
       <img [@fadeIn]="state"
-           [attr.loading]="loading"
            [src]="src"
            [attr.alt]="alt"
            [style.visibility]="state === 'loading' ? 'hidden' : 'unset'"
            class="g-image-item"
+           loading="lazy"
            (load)="state = 'success'"
            (error)="state = 'failed'; error.emit($event)"/>
 
@@ -77,8 +77,6 @@ export class GalleryImageComponent implements OnInit {
   @Input() src: string;
   /** Loaded image URL */
   imageUrl: SafeUrl;
-
-  @Input() loading: 'eager' | 'lazy' = 'lazy';
 
   /** Custom loader template */
   @Input() loadingIcon: string;

@@ -37,7 +37,7 @@ export class GalleryVideoComponent implements OnInit {
   }
 
   /** Stream that emits when an error occurs */
-  @Output() error = new EventEmitter<Error>();
+  @Output() error = new EventEmitter<ErrorEvent>();
 
   @ViewChild('video', { static: true }) video: ElementRef;
 
