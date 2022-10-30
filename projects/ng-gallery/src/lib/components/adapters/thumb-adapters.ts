@@ -27,9 +27,9 @@ export class HorizontalThumbAdapter extends HorizontalCommonAdapter implements T
     super(slider, config);
   }
 
-  getCentralisedScrollToValue(value: number, behavior: ScrollBehavior): SmoothScrollToOptions {
+  getCentralisedScrollToValue(value: number, behavior: ScrollBehavior, thumbView: 'default' | 'contain'): SmoothScrollToOptions {
     let position: number = value * this.thumbSize;
-    if (this.config.thumbView === ThumbnailsView.Default) {
+    if (thumbView === ThumbnailsView.Default) {
       position -= (this.clientSize / 2) - (this.thumbSize / 2);
     }
     return {
@@ -62,9 +62,9 @@ export class VerticalThumbAdapter extends VerticalCommonAdapter implements Thumb
     super(slider, config);
   }
 
-  getCentralisedScrollToValue(value: number, behavior: ScrollBehavior): SmoothScrollToOptions {
+  getCentralisedScrollToValue(value: number, behavior: ScrollBehavior, thumbView: 'default' | 'contain'): SmoothScrollToOptions {
     let position: number = value * this.thumbSize;
-    if (this.config.thumbView === ThumbnailsView.Default) {
+    if (thumbView === ThumbnailsView.Default) {
       position -= (this.clientSize / 2) - (this.thumbSize / 2);
     }
     return {

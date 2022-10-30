@@ -30,7 +30,7 @@ export abstract class ThumbSliderAdapter extends BaseSliderAdapter {
 
   abstract get isContentLessThanContainer(): boolean;
 
-  abstract getCentralisedScrollToValue(value, behavior: ScrollBehavior): ScrollToOptions;
+  abstract getCentralisedScrollToValue(value, behavior: ScrollBehavior, thumbView: 'default' | 'contain'): ScrollToOptions;
 }
 
 

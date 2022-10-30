@@ -187,7 +187,7 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
   private scrollToIndex(value: number, behavior): void {
     this._zone.runOutsideAngular(() => {
       this.slider.style.scrollSnapType = 'unset';
-      this._smoothScroll.scrollTo(this.slider, this.adapter.getCentralisedScrollToValue(value, behavior)).then(() => {
+      this._smoothScroll.scrollTo(this.slider, this.adapter.getCentralisedScrollToValue(value, behavior, this.config.thumbView)).then(() => {
         this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
       });
     });
