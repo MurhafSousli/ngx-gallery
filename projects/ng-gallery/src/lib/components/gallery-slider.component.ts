@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
 import { Subscription, fromEvent } from 'rxjs';
-import { tap, debounceTime } from 'rxjs/operators';
+import { tap, debounceTime, filter } from 'rxjs/operators';
 import { Gallery } from '../services/gallery.service';
 import { GalleryState, GalleryError } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
@@ -55,6 +55,8 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
   /** Subscription reference to host resize stream */
   private _resizeObserver$: Subscription;
+
+  private _isPanning: boolean;
 
   /** Slider adapter */
   adapter: SliderAdapter;
@@ -130,6 +132,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
       // Subscribe to slider scroll event
       this._scrollObserver$ = fromEvent(this.slider, 'scroll', { passive: true }).pipe(
         debounceTime(50),
+        filter(() => !this._isPanning),
         tap(() => {
           const index: number = this.adapter.measureIndex;
           // Check if the index value has no fraction
@@ -209,6 +212,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
           panOffset = this.adapter.scrollValue;
           // Disable scroll-snap-type functionality
           this.slider.style.scrollSnapType = 'unset';
+          this._isPanning = true;
         });
 
         this._hammer.on('panmove', (e: any) => this.slider.scrollTo(this.adapter.getPanValue(panOffset, e, 'auto')));
@@ -216,6 +220,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
         this._hammer.on('panend', (e: any) => {
           this.slider.classList.remove('g-sliding');
           this.onPanEnd(e);
+          this._isPanning = false;
         });
       });
     }
