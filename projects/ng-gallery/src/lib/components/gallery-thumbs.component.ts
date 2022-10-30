@@ -16,13 +16,14 @@ import {
   ChangeDetectionStrategy
 } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
-import { fromEvent, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { debounceTime, tap } from 'rxjs/operators';
 import { GalleryConfig } from '../models/config.model';
 import { GalleryState, GalleryError } from '../models/gallery.model';
 import { ThumbnailsPosition, ThumbnailsView } from '../models/constants';
 import { ThumbSliderAdapter, HorizontalThumbAdapter, VerticalThumbAdapter } from './adapters';
 import { SmoothScrollManager } from '../smooth-scroll';
+import { resizeObservable } from '../utils/resize-observer';
 
 declare const Hammer: any;
 
@@ -56,8 +57,8 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
   /** Thumbnails view enum */
   readonly thumbnailsView = ThumbnailsView;
 
-  /** Subscription reference to window resize stream */
-  private _resizeSub$: Subscription;
+  /** Subscription reference to host resize stream */
+  private _resizeObserver$: Subscription;
 
   /** Slider adapter */
   adapter: ThumbSliderAdapter;
@@ -67,9 +68,6 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
 
   /** Gallery config */
   @Input() config: GalleryConfig;
-
-  /** Stream that emits when the active item should change */
-  @Output() action = new EventEmitter<string | number>();
 
   /** Stream that emits when thumb is clicked */
   @Output() thumbClick = new EventEmitter<number>();
@@ -123,11 +121,15 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
         this.width = this.adapter.containerWidth;
         this.height = this.adapter.containerHeight;
 
+        if (this.config.contentVisibilityAuto) {
+          this.slider.style.setProperty('--thumb-contain-intrinsic-size', `${ this.config.thumbWidth }px ${ this.config.thumbHeight }px`);
+        }
+
         if (!changes.config.firstChange) {
           // Keep the correct sliding position when direction changes
           requestAnimationFrame(() => {
             this.scrollToIndex(this.state.currIndex, 'auto');
-          })
+          });
         }
 
         // Reactivate gestures
@@ -154,9 +156,9 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
     setTimeout(() => this.scrollToIndex(this.state.currIndex, 'auto'), 200);
 
     this._zone.runOutsideAngular(() => {
-      // Update necessary calculation on window resize
+      // Update necessary calculation on host resize
       if (this._platform.isBrowser) {
-        this._resizeSub$ = fromEvent(window, 'resize').pipe(
+        this._resizeObserver$ = resizeObservable(this._el.nativeElement).pipe(
           debounceTime(this.config.resizeDebounceTime),
           tap(() => {
             // Update thumb centralize size
@@ -175,6 +177,7 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
 
   ngOnDestroy(): void {
     this.deactivateGestures();
+    this._resizeObserver$?.unsubscribe();
   }
 
   trackByFn(index: number, item: any) {
@@ -231,6 +234,5 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
 
   private deactivateGestures(): void {
     this._hammer?.destroy();
-    this._resizeSub$?.unsubscribe();
   }
 }

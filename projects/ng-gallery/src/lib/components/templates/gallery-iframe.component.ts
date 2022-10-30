@@ -7,6 +7,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   template: `
     <iframe #iframe
             frameborder="0"
+            loading="lazy"
             allowfullscreen
             [attr.allow]="autoplay ? 'autoplay' : ''"
             [src]="iframeSrc">

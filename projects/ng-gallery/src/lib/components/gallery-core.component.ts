@@ -9,20 +9,19 @@ import { GalleryConfig } from '../models/config.model';
     <gallery-thumbs *ngIf="config.thumb"
                     [state]="state"
                     [config]="config"
-                    (action)="action.emit($event)"
                     (thumbClick)="thumbClick.emit($event)">
     </gallery-thumbs>
     <div class="g-box">
       <gallery-slider [state]="state"
                       [config]="config"
-                      (action)="action.emit($event)"
+                      [galleryId]="galleryId"
                       (itemClick)="itemClick.emit($event)"
                       (error)="error.emit($event)">
 
         <gallery-nav *ngIf="config.nav && state.items.length > 1"
                      [state]="state"
                      [config]="config"
-                     (action)="action.emit($event)">
+                     [galleryId]="galleryId">
         </gallery-nav>
 
       </gallery-slider>
@@ -30,7 +29,7 @@ import { GalleryConfig } from '../models/config.model';
       <gallery-dots *ngIf="config.dots"
                     [state]="state"
                     [config]="config"
-                    (action)="action.emit($event)">
+                    [galleryId]="galleryId">
       </gallery-dots>
 
       <gallery-counter *ngIf="config.counter"
@@ -45,9 +44,9 @@ import { GalleryConfig } from '../models/config.model';
 })
 export class GalleryCoreComponent {
 
+  @Input() galleryId: string;
   @Input() state: GalleryState;
   @Input() config: GalleryConfig;
-  @Output() action = new EventEmitter<string | number>();
   @Output() itemClick = new EventEmitter<number>();
   @Output() thumbClick = new EventEmitter<number>();
   @Output() error = new EventEmitter<GalleryError>();
@@ -90,5 +89,10 @@ export class GalleryCoreComponent {
   /** Set gallery counter position */
   @HostBinding('attr.thumbSlidingDisabled') get thumbSlidingDisabled(): boolean {
     return this.config.thumbSlidingDisabled;
+  }
+
+  /** Set gallery slider content-visibility-auto style  */
+  @HostBinding('attr.contentVisibilityAuto') get contentVisibilityAuto(): boolean {
+    return this.config.contentVisibilityAuto;
   }
 }

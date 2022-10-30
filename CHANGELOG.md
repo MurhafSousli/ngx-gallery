@@ -1,5 +1,16 @@
 # Changelog
 
+## 8.0.0-beta.4
+
+- feat(core): Add `contentVisibilityAuto` option to set the proper `content-visibility` and `contain-intrinsic-size` value on all gallery items/thumbs, in [73b20a9](https://github.com/MurhafSousli/ngx-gallery/pull/491/commits/73b20a9f996371e4a3ad52283b358263fd88546f).
+- feat(core): Use native `loading` attribute on all `img` and `iframe` for native lazy loading.
+- refactor(core): Fix loop issue when sliding with using the mouse, in [1572bea](https://github.com/MurhafSousli/ngx-gallery/pull/491/commits/1572beae2bc58792fac94243f4f3e20c0a61e549).
+- refactor(core): Remove `lazy-image` directive.
+
+## 8.0.0-beta.3
+
+- fix(core): Set current index in sliding event does not work if slider size number has fraction, in [58e89fb](https://github.com/MurhafSousli/ngx-gallery/pull/491/commits/58e89fb3ed0e3837ca08a8111d567d992717ba7a).
+
 ## 8.0.0-beta.2
 
 - fix(lightbox): close button is not displayed, in [506249b](https://github.com/MurhafSousli/ngx-gallery/pull/490/commits/506249bbc5877cd4ed54cf610a42b3a31abcb417).

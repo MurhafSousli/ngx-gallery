@@ -33,6 +33,7 @@ export const defaultConfig: GalleryConfig = {
   thumbWidth: 120,
   thumbHeight: 90,
   disableThumb: false,
+  contentVisibilityAuto: true,
   slidingDisabled: false,
   thumbSlidingDisabled: false,
   mouseSlidingDisabled: false,

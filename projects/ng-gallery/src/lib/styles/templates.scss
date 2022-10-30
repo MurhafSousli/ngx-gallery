@@ -25,6 +25,14 @@
     h4 {
       font-size: 1.6em;
     }
+
+    img, gallery-image {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+    }
   }
 
   gallery-item {
@@ -85,7 +93,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
   }
 }
 

@@ -15,11 +15,13 @@ import {
 import { Platform } from '@angular/cdk/platform';
 import { Subscription, fromEvent } from 'rxjs';
 import { tap, debounceTime } from 'rxjs/operators';
+import { Gallery } from '../services/gallery.service';
 import { GalleryState, GalleryError } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
 import { SlidingDirection } from '../models/constants';
 import { SliderAdapter, HorizontalAdapter, VerticalAdapter } from './adapters';
 import { SmoothScrollManager } from '../smooth-scroll';
+import { resizeObservable } from '../utils/resize-observer';
 
 declare const Hammer: any;
 
@@ -49,19 +51,22 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   private _hammer: any;
 
   /** Subscription reference to slider scroll stream */
-  private _scrollSub$: Subscription;
+  private _scrollObserver$: Subscription;
+
+  /** Subscription reference to host resize stream */
+  private _resizeObserver$: Subscription;
 
   /** Slider adapter */
   adapter: SliderAdapter;
+
+  /** Gallery ID */
+  @Input() galleryId: string;
 
   /** Gallery state */
   @Input() state: GalleryState;
 
   /** Gallery config */
   @Input() config: GalleryConfig;
-
-  /** Stream that emits when the active item should change */
-  @Output() action = new EventEmitter<string | number>();
 
   /** Stream that emits when item is clicked */
   @Output() itemClick = new EventEmitter<number>();
@@ -80,7 +85,8 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private _el: ElementRef,
               private _zone: NgZone,
               private _platform: Platform,
-              private _smoothScroll: SmoothScrollManager) {
+              private _smoothScroll: SmoothScrollManager,
+              private _gallery: Gallery) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -122,22 +128,40 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
     this._zone.runOutsideAngular(() => {
       // Subscribe to slider scroll event
-      this._scrollSub$ = fromEvent(this.slider, 'scroll', { passive: true }).pipe(
+      this._scrollObserver$ = fromEvent(this.slider, 'scroll', { passive: true }).pipe(
         debounceTime(50),
         tap(() => {
           const index: number = this.adapter.measureIndex;
-          // Check if index value is
+          // Check if the index value has no fraction
+          this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
           if (Number.isSafeInteger(index)) {
-            this._zone.run(() => this.action.emit(index));
+            this._zone.run(() => this._gallery.ref(this.galleryId).set(index));
           }
         })
       ).subscribe();
+
+      // Detect if the size of the slider has changed detecting current index on scroll
+      if (this._platform.isBrowser) {
+        this._resizeObserver$ = resizeObservable(this._el.nativeElement).pipe(
+          debounceTime(this.config.resizeDebounceTime),
+          tap(([entry]: ResizeObserverEntry[]) => {
+            const width: number = Math.ceil(entry.contentRect.width);
+            const height: number = Math.ceil(entry.contentRect.height);
+            this.slider.style.width = `${ width }px`;
+            this.slider.style.height = `${ height }px`;
+            if (this.config.contentVisibilityAuto) {
+              this.slider.style.setProperty('--item-contain-intrinsic-size', `${ width }px ${ height }px`);
+            }
+          })
+        ).subscribe();
+      }
     });
   }
 
   ngOnDestroy(): void {
     this.deactivateGestures();
-    this._scrollSub$?.unsubscribe();
+    this._resizeObserver$?.unsubscribe();
+    this._scrollObserver$?.unsubscribe();
   }
 
   trackByFn(index: number, item: any) {
@@ -205,16 +229,19 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     this._zone.run(() => {
       const delta: number = this.adapter.getPanDelta(e);
       const velocity: number = this.adapter.getPanVelocity(e);
+
+      const galleryRef = this._gallery.ref(this.galleryId);
+
       // Check if scrolled item is great enough to navigate
       if (Math.abs(delta) > this.adapter.clientSize / 2) {
-        return this.action.emit(delta > 0 ? 'prev' : 'next');
+        return delta > 0 ? galleryRef.prev(false) : galleryRef.next(false);
       }
       // Check if velocity is great enough to navigate
       if (Math.abs(velocity) > 0.3) {
-        return this.action.emit(velocity > 0 ? 'prev' : 'next');
+        return velocity > 0 ? galleryRef.prev(false) : galleryRef.next(false);
       }
+      // Need to scroll back manually since the currIndex did not change
       this.scrollToIndex(this.state.currIndex, 'smooth');
-      this.action.emit(this.state.currIndex);
     });
   }
 }

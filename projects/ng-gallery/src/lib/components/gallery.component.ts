@@ -32,9 +32,9 @@ import { BezierEasingOptions } from '../smooth-scroll';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['../styles/gallery.scss'],
   template: `
-    <gallery-core [state]="galleryRef.state | async"
+    <gallery-core [galleryId]="id"
+                  [state]="galleryRef.state | async"
                   [config]="galleryRef.config | async"
-                  (action)="onAction($event)"
                   (itemClick)="onItemClick($event)"
                   (thumbClick)="onThumbClick($event)"
                   (error)="onError($event)"></gallery-core>
@@ -54,6 +54,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() autoPlay: boolean = this._gallery.config.autoPlay;
   @Input() thumbWidth: number = this._gallery.config.thumbWidth;
   @Input() thumbHeight: number = this._gallery.config.thumbHeight;
+  @Input() contentVisibilityAuto: boolean = this._gallery.config.contentVisibilityAuto;
   @Input() disableThumb: boolean = this._gallery.config.disableThumb;
   @Input() slidingDisabled: boolean = this._gallery.config.slidingDisabled;
   @Input() thumbSlidingDisabled: boolean = this._gallery.config.thumbSlidingDisabled;
@@ -127,24 +128,12 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       slidingDuration: this.slidingDuration,
       slidingDirection: this.slidingDirection,
       resizeDebounceTime: this.resizeDebounceTime,
+      contentVisibilityAuto: this.contentVisibilityAuto,
       slidingDisabled: this.slidingDisabled,
       thumbSlidingDisabled: this.thumbSlidingDisabled,
       mouseSlidingDisabled: this.mouseSlidingDisabled,
       thumbMouseSlidingDisabled: this.thumbMouseSlidingDisabled
     };
-  }
-
-  onAction(i: string | number) {
-    switch (i) {
-      case 'next':
-        this.galleryRef.next();
-        break;
-      case 'prev':
-        this.galleryRef.prev();
-        break;
-      default:
-        this.galleryRef.set(i as number);
-    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -244,12 +233,12 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     this.galleryRef.remove(i);
   }
 
-  next() {
-    this.galleryRef.next();
+  next(loop?: boolean) {
+    this.galleryRef.next(loop);
   }
 
-  prev() {
-    this.galleryRef.prev();
+  prev(loop?: boolean) {
+    this.galleryRef.prev(loop);
   }
 
   set(i: number) {
