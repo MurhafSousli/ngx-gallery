@@ -9,7 +9,8 @@ import { GalleryConfig } from '../models/config.model';
     <gallery-thumbs *ngIf="config.thumb"
                     [state]="state"
                     [config]="config"
-                    (thumbClick)="thumbClick.emit($event)">
+                    (thumbClick)="thumbClick.emit($event)"
+                    (error)="error.emit($event)">
     </gallery-thumbs>
     <div class="g-box">
       <gallery-slider [state]="state"
@@ -71,6 +72,10 @@ export class GalleryCoreComponent {
     return this.config.imageSize;
   }
 
+  @HostBinding('attr.thumbImageSize') get thumbImageSize(): 'contain' | 'cover' {
+    return this.config.thumbImageSize;
+  }
+
   /** Set gallery dots position */
   @HostBinding('attr.dotsPosition') get dotsPosition(): 'top' | 'bottom' {
     return this.config.dotsPosition;
@@ -94,5 +99,20 @@ export class GalleryCoreComponent {
   /** Set gallery slider content-visibility-auto style  */
   @HostBinding('attr.contentVisibilityAuto') get contentVisibilityAuto(): boolean {
     return this.config.contentVisibilityAuto;
+  }
+
+  /** Set gallery slider autoWidth style  */
+  @HostBinding('attr.autoWidth') get autoWidth(): boolean {
+    return this.config.autoWidth;
+  }
+
+  /** Set gallery slider autoHeight style  */
+  @HostBinding('attr.autoHeight') get autoHeight(): boolean {
+    return this.config.autoHeight;
+  }
+
+  /** Set gallery slider thumbAutoWidth style  */
+  @HostBinding('attr.thumbAutoWidth') get thumbAutoWidth(): boolean {
+    return this.config.thumbAutoWidth;
   }
 }

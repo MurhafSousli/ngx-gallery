@@ -2,6 +2,7 @@ import {
   Component,
   Input,
   Output,
+  HostBinding,
   OnInit,
   OnChanges,
   OnDestroy,
@@ -14,16 +15,7 @@ import { Subscription, SubscriptionLike } from 'rxjs';
 import { Gallery } from '../services/gallery.service';
 import { GalleryRef } from '../services/gallery-ref';
 import { GalleryError, GalleryItem, GalleryState } from '../models/gallery.model';
-import {
-  IframeItem,
-  IframeItemData,
-  ImageItem,
-  ImageItemData,
-  VideoItem,
-  VideoItemData,
-  YoutubeItem,
-  YoutubeItemData
-} from './templates/items.model';
+import { IframeItemData, ImageItemData, VideoItemData, YoutubeItemData } from './templates/items.model';
 import { GalleryConfig } from '../models/config.model';
 import { BezierEasingOptions } from '../smooth-scroll';
 
@@ -56,6 +48,8 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() thumbHeight: number = this._gallery.config.thumbHeight;
   @Input() contentVisibilityAuto: boolean = this._gallery.config.contentVisibilityAuto;
   @Input() disableThumb: boolean = this._gallery.config.disableThumb;
+  @Input() scrollBehavior: ScrollBehavior = this._gallery.config.scrollBehavior;
+  @Input() navScrollBehavior: ScrollBehavior = this._gallery.config.navScrollBehavior;
   @Input() slidingDisabled: boolean = this._gallery.config.slidingDisabled;
   @Input() thumbSlidingDisabled: boolean = this._gallery.config.thumbSlidingDisabled;
   @Input() mouseSlidingDisabled: boolean = this._gallery.config.mouseSlidingDisabled;
@@ -68,13 +62,18 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() thumbTemplate: TemplateRef<any> = this._gallery.config.thumbTemplate;
   @Input() resizeDebounceTime: number = this._gallery.config.resizeDebounceTime;
   @Input() imageSize: 'cover' | 'contain' = this._gallery.config.imageSize;
+  @Input() thumbImageSize: 'cover' | 'contain' = this._gallery.config.thumbImageSize;
   @Input() dotsPosition: 'top' | 'bottom' = this._gallery.config.dotsPosition;
   @Input() counterPosition: 'top' | 'bottom' = this._gallery.config.counterPosition;
   @Input() slidingDirection: 'horizontal' | 'vertical' = this._gallery.config.slidingDirection;
   @Input() loadingStrategy: 'preload' | 'lazy' | 'default' = this._gallery.config.loadingStrategy;
   @Input() thumbPosition: 'top' | 'left' | 'right' | 'bottom' = this._gallery.config.thumbPosition;
   @Input() thumbView: 'default' | 'contain' = this._gallery.config.thumbView;
+  @Input() view: 'default' | 'contain' = this._gallery.config.view;
   @Input() thumbDetached: boolean = this._gallery.config.thumbDetached;
+  @Input() thumbAutoWidth: boolean = this._gallery.config.thumbAutoWidth;
+  @Input() autoWidth: boolean = this._gallery.config.autoWidth;
+  @Input() autoHeight: boolean = this._gallery.config.autoHeight;
 
   // Inputs used by the lightbox
 
@@ -91,6 +90,10 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Output() itemsChange = new EventEmitter<GalleryState>();
   @Output() error = new EventEmitter<GalleryError>();
 
+  @HostBinding('class.autoHeight') get isAutoHeight() {
+    return this.galleryRef.configSnapshot.autoHeight;
+  }
+
   private _itemClick$: SubscriptionLike = Subscription.EMPTY;
   private _thumbClick$: SubscriptionLike = Subscription.EMPTY;
   private _itemChange$: SubscriptionLike = Subscription.EMPTY;
@@ -104,6 +107,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   private getConfig(): GalleryConfig {
     return {
       nav: this.nav,
+      view: this.view,
       dots: this.dots,
       loop: this.loop,
       thumb: this.thumb,
@@ -111,6 +115,9 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       autoPlay: this.autoPlay,
       dotsSize: this.dotsSize,
       imageSize: this.imageSize,
+      thumbImageSize: this.thumbImageSize,
+      scrollBehavior: this.scrollBehavior,
+      navScrollBehavior: this.navScrollBehavior,
       thumbView: this.thumbView,
       thumbWidth: this.thumbWidth,
       thumbHeight: this.thumbHeight,
@@ -132,7 +139,10 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       slidingDisabled: this.slidingDisabled,
       thumbSlidingDisabled: this.thumbSlidingDisabled,
       mouseSlidingDisabled: this.mouseSlidingDisabled,
-      thumbMouseSlidingDisabled: this.thumbMouseSlidingDisabled
+      thumbMouseSlidingDisabled: this.thumbMouseSlidingDisabled,
+      thumbAutoWidth: this.thumbAutoWidth,
+      autoWidth: this.autoWidth,
+      autoHeight: this.autoHeight,
     };
   }
 
@@ -214,35 +224,35 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   addImage(data: ImageItemData, active?: boolean) {
-    this.add(new ImageItem(data), active);
+    this.galleryRef.addImage(data, active);
   }
 
   addVideo(data: VideoItemData, active?: boolean) {
-    this.add(new VideoItem(data), active);
+    this.galleryRef.addVideo(data, active);
   }
 
   addIframe(data: IframeItemData, active?: boolean) {
-    this.add(new IframeItem(data), active);
+    this.galleryRef.addIframe(data, active);
   }
 
   addYoutube(data: YoutubeItemData, active?: boolean) {
-    this.add(new YoutubeItem(data), active);
+    this.galleryRef.addYoutube(data, active);
   }
 
   remove(i: number) {
     this.galleryRef.remove(i);
   }
 
-  next(loop?: boolean) {
-    this.galleryRef.next(loop);
+  next(behavior?: ScrollBehavior, loop?: boolean) {
+    this.galleryRef.next(behavior, loop);
   }
 
-  prev(loop?: boolean) {
-    this.galleryRef.prev(loop);
+  prev(behavior?: ScrollBehavior, loop?: boolean) {
+    this.galleryRef.prev(behavior, loop);
   }
 
-  set(i: number) {
-    this.galleryRef.set(i);
+  set(i: number, behavior?: ScrollBehavior) {
+    this.galleryRef.set(i, behavior);
   }
 
   reset() {

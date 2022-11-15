@@ -12,14 +12,14 @@ import { GalleryConfig } from '../models/config.model';
        class="g-nav-prev"
        aria-label="Previous"
        role="button"
-       (click)="gallery.ref(this.galleryId).prev()"
+       (click)="gallery.ref(this.galleryId).prev(config.navScrollBehavior)"
        [innerHtml]="navIcon"></i>
 
     <i *ngIf="config.loop || state.hasNext"
        class="g-nav-next"
        aria-label="Next"
        role="button"
-       (click)="gallery.ref(this.galleryId).next()"
+       (click)="gallery.ref(this.galleryId).next(config.navScrollBehavior)"
        [innerHtml]="navIcon"></i>
   `
 })

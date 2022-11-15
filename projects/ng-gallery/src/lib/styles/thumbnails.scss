@@ -1,20 +1,39 @@
 ::ng-deep {
   gallery-thumbs {
     display: block;
-    z-index: 1;
+    z-index: 100;
 
     .g-slider[centralised="true"] {
       &:before, &:after {
         content: '';
-        flex: 0 0 var(--thumb-centralize-size);
+      }
+
+      &:before {
+        flex: 0 0 var(--thumb-centralize-start-size);
+      }
+
+      &:after {
+        flex: 0 0 var(--thumb-centralize-end-size);
+      }
+    }
+
+    .g-slider gallery-thumb {
+      max-height: 100%;
+      background: black;
+      height: var(--thumb-height);
+      width: var(--thumb-width);
+
+      gallery-image, img {
+        width: 100%;
+        height: 100%;
       }
     }
   }
 
-  .g-thumbs-container {
-    position: relative;
-    height: 100%;
-    width: 100%;
+  gallery-core[thumbAutoWidth="true"] {
+    gallery-thumb {
+      width: initial;
+    }
   }
 
   gallery-core[disableThumb='true'] {
@@ -25,27 +44,31 @@
 
   gallery-core[thumbPosition='top'],
   gallery-core[thumbPosition='bottom'] {
-    gallery-thumbs .g-slider {
-      flex-direction: row;
-      top: 0;
-      overflow-x: auto;
-    }
+    gallery-thumbs {
+      .g-slider {
+        top: 0;
+        overflow-x: auto;
+        flex-direction: row;
+      }
 
-    gallery-thumb {
-      padding: 1px 0 1px 1px;
+      .g-slider-content {
+        flex-direction: row;
+      }
     }
   }
 
   gallery-core[thumbPosition='left'],
   gallery-core[thumbPosition='right'] {
-    gallery-thumbs .g-slider {
-      flex-direction: column;
-      left: 0;
-      overflow-y: auto;
-    }
+    gallery-thumbs {
+      .g-slider {
+        left: 0;
+        overflow-y: auto;
+        flex-direction: column;
+      }
 
-    gallery-thumb {
-      padding: 0 1px 1px 1px;
+      .g-slider-content {
+        flex-direction: column;
+      }
     }
   }
 
@@ -108,6 +131,18 @@
     }
     100% {
       transform: translate3d(30%, 0, 0);
+    }
+  }
+
+
+  gallery-core[thumbAutoWidth='true'] {
+    gallery-thumb {
+      //width: auto !important;
+    }
+  }
+
+  gallery-core[thumbAutoWidth='false'] {
+    gallery-thumb {
     }
   }
 }

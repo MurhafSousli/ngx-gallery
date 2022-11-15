@@ -3,6 +3,7 @@ import { GalleryAction } from './constants';
 export interface GalleryState {
   action?: GalleryAction;
   items?: GalleryItem[];
+  behavior?: ScrollBehavior;
   currIndex?: number;
   hasNext?: boolean;
   hasPrev?: boolean;
@@ -16,5 +17,5 @@ export interface GalleryItem {
 
 export interface GalleryError {
   itemIndex: number;
-  error: Error;
+  error: ErrorEvent;
 }

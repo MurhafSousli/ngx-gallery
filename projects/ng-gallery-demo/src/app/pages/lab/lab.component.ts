@@ -34,6 +34,7 @@ export class LabComponent implements OnInit {
   thumbViews = ['default', 'contain'];
   slidingDirections = ['vertical', 'horizontal'];
   dotsCounterPositions = ['top', 'bottom'];
+  scrollBehaviors = ['auto', 'smooth'];
 
   player$ = new BehaviorSubject<any>({ active: false });
   itemClick$ = new BehaviorSubject<any>({ active: false });
@@ -66,10 +67,16 @@ export class LabComponent implements OnInit {
       imageSize: 'contain',
       disableThumb: false,
       playerInterval: 3000,
-      thumbView: ThumbnailsView.Default,
+      thumbView: ThumbnailsView.Contain,
       thumbPosition: ThumbnailsPosition.Bottom,
       loadingStrategy: LoadingStrategy.Preload,
-      slidingDirection: SlidingDirection.Horizontal
+      slidingDirection: SlidingDirection.Horizontal,
+      autoHeight: false,
+      autoWidth: false,
+      thumbAutoWidth: false,
+      view: 'default',
+      scrollBehavior: 'smooth',
+      navScrollBehavior: 'smooth'
     };
   }
 

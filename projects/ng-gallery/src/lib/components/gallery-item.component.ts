@@ -1,4 +1,12 @@
-import { Component, Input, ChangeDetectionStrategy, HostBinding, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  HostBinding,
+  Output,
+  EventEmitter,
+  ElementRef,
+} from '@angular/core';
 import { GalleryConfig } from '../models/config.model';
 import { LoadingStrategy, GalleryItemType } from '../models/constants';
 
@@ -16,7 +24,7 @@ import { LoadingStrategy, GalleryItemType } from '../models/constants';
                        [loadingError]="config.loadingError"
                        (error)="error.emit($event)"></gallery-image>
 
-        <div class="g-template g-item-template">
+        <div *ngIf="config.itemTemplate" class="g-template g-item-template">
           <ng-container *ngTemplateOutlet="config.itemTemplate;
           context: { index: this.index, currIndex: this.currIndex, type: this.type, data: this.data }">
           </ng-container>
@@ -42,7 +50,7 @@ import { LoadingStrategy, GalleryItemType } from '../models/constants';
 
       <ng-container *ngSwitchDefault>
 
-        <div class="g-template g-item-template">
+        <div *ngIf="config.itemTemplate" class="g-template g-item-template">
           <ng-container *ngTemplateOutlet="config.itemTemplate;
           context: { index: this.index, currIndex: this.currIndex, type: this.type, data: this.data }">
           </ng-container>
@@ -66,6 +74,8 @@ export class GalleryItemComponent {
   /** Gallery current index */
   @Input() currIndex: number;
 
+  @Input() galleryId: string;
+
   /** Item's type 'image', 'video', 'youtube', 'iframe' */
   @Input() type: string;
 
@@ -75,8 +85,36 @@ export class GalleryItemComponent {
   /** Stream that emits when an error occurs */
   @Output() error = new EventEmitter<ErrorEvent>();
 
+  @Output() active = new EventEmitter<Element>;
+
   @HostBinding('class.g-active-item') get isActive() {
     return this.index === this.currIndex;
+  }
+
+  @HostBinding('attr.galleryIndex') get isIndexAttr() {
+    return this.index;
+  }
+
+  @HostBinding('style.width') get getWidth(): string {
+    if (this.config.slidingDirection === 'horizontal') {
+      if (this.config.autoWidth) {
+        return this.el.nativeElement.firstChild.clientWidth ? `${ this.el.nativeElement.firstChild.clientWidth }px` : 'unset';
+      }
+      return `${ this.el.nativeElement.parentElement.parentElement.clientWidth }px`;
+    } else {
+      return null;
+    }
+  }
+
+  @HostBinding('style.height') get getHeight(): string {
+    if (this.config.slidingDirection === 'horizontal') {
+      return null;
+    } else {
+      if (this.config.autoHeight) {
+        return this.el.nativeElement.firstChild.clientHeight ? `${ this.el.nativeElement.firstChild.clientHeight }px` : 'unset';
+      }
+      return `${ this.el.nativeElement.parentElement.parentElement.clientHeight }px`;
+    }
   }
 
   get isAutoPlay() {
@@ -112,4 +150,13 @@ export class GalleryItemComponent {
     }
   }
 
+  constructor(public el: ElementRef) {
+  }
+
+  ngAfterViewChecked() {
+    if (this.currIndex === this.index) {
+      this.active.emit(this.el.nativeElement);
+    }
+  }
 }
+

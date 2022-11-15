@@ -39,6 +39,10 @@ export class GalleryRef {
     return this._state.value;
   }
 
+  get configSnapshot(): GalleryConfig {
+    return this._config.value;
+  }
+
   /** Stream that emits when gallery is initialized/reset */
   get initialized(): Observable<GalleryState> {
     return this.state.pipe(filterActions([GalleryAction.INITIALIZED]));
@@ -79,7 +83,7 @@ export class GalleryRef {
       switchMap((e: GalleryState) =>
         e.isPlaying ? of({}).pipe(
           delay(this._config.value.playerInterval),
-          tap(() => this.next())
+          tap(() => this.next(this._config.value.scrollBehavior))
         ) : EMPTY
       )
     );
@@ -175,13 +179,14 @@ export class GalleryRef {
   /**
    * Set active item
    */
-  set(i: number) {
+  set(i: number, behavior: ScrollBehavior = this._config.value.scrollBehavior) {
     if (i < 0 || i >= this.stateSnapshot.items.length) {
       console.error(`[NgGallery]: Unable to set the active item because the given index (${ i }) is outside the items range!`);
       return;
     }
     if (i !== this.stateSnapshot.currIndex) {
       this.setState({
+        behavior,
         action: GalleryAction.INDEX_CHANGED,
         currIndex: i,
         hasNext: i < this.stateSnapshot.items.length - 1,
@@ -193,22 +198,22 @@ export class GalleryRef {
   /**
    * Next item
    */
-  next(loop: boolean = true) {
+  next(behavior: ScrollBehavior = this._config.value.scrollBehavior, loop: boolean = true) {
     if (this.stateSnapshot.hasNext) {
-      this.set(this.stateSnapshot.currIndex + 1);
+      this.set(this.stateSnapshot.currIndex + 1, behavior);
     } else if (loop && this._config.value.loop) {
-      this.set(0);
+      this.set(0, behavior);
     }
   }
 
   /**
    * Prev item
    */
-  prev(loop: boolean = true) {
+  prev(behavior: ScrollBehavior = this._config.value.scrollBehavior, loop: boolean = true) {
     if (this.stateSnapshot.hasPrev) {
-      this.set(this.stateSnapshot.currIndex - 1);
+      this.set(this.stateSnapshot.currIndex - 1, behavior);
     } else if (loop && this._config.value.loop) {
-      this.set(this.stateSnapshot.items.length - 1);
+      this.set(this.stateSnapshot.items.length - 1, behavior);
     }
   }
 
