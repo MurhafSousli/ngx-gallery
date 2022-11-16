@@ -1,21 +1,19 @@
 ::ng-deep {
   gallery {
+    --gallery-height: 500px;
     position: relative;
     z-index: 1;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 500px;
+
+    height: var(--gallery-height);
     background-color: black;
     transition: height linear 0.4s;
 
     * {
       box-sizing: border-box;
-    }
-
-    &.autoHeight {
-      height: fit-content;
     }
   }
 
@@ -29,10 +27,6 @@
   gallery-slider,
   .g-box {
     height: 100%;
-  }
-
-  .g-slider {
-    height: fit-content;
   }
 
   gallery-core,
@@ -67,8 +61,18 @@
     }
   }
 
-  gallery-core[autoHeight='false'] {
-    .g-slider, gallery-item {
+  gallery-core[autoHeight='true'] {
+    .g-slider {
+      height: 100%;
+    }
+
+    gallery-slider, gallery-core {
+      height: 100%;
+    }
+  }
+
+  gallery-core[autoHeight='false']  {
+    gallery-item, .g-slider {
       height: 100%;
     }
   }

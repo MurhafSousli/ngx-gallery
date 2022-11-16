@@ -2,7 +2,6 @@ import {
   Component,
   Input,
   Output,
-  HostBinding,
   OnInit,
   OnChanges,
   OnDestroy,
@@ -89,10 +88,6 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Output() indexChange = new EventEmitter<GalleryState>();
   @Output() itemsChange = new EventEmitter<GalleryState>();
   @Output() error = new EventEmitter<GalleryError>();
-
-  @HostBinding('class.autoHeight') get isAutoHeight() {
-    return this.galleryRef.configSnapshot.autoHeight;
-  }
 
   private _itemClick$: SubscriptionLike = Subscription.EMPTY;
   private _thumbClick$: SubscriptionLike = Subscription.EMPTY;

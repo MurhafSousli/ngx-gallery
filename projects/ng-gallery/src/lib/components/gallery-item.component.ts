@@ -1,11 +1,12 @@
 import {
   Component,
-  Input,
-  ChangeDetectionStrategy,
   HostBinding,
+  Input,
   Output,
   EventEmitter,
+  OnChanges,
   ElementRef,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { GalleryConfig } from '../models/config.model';
 import { LoadingStrategy, GalleryItemType } from '../models/constants';
@@ -61,7 +62,7 @@ import { LoadingStrategy, GalleryItemType } from '../models/constants';
     </ng-container>
   `
 })
-export class GalleryItemComponent {
+export class GalleryItemComponent implements OnChanges {
 
   readonly Types = GalleryItemType;
 
@@ -153,7 +154,7 @@ export class GalleryItemComponent {
   constructor(public el: ElementRef) {
   }
 
-  ngAfterViewChecked() {
+  ngOnChanges(): void {
     if (this.currIndex === this.index) {
       this.active.emit(this.el.nativeElement);
     }

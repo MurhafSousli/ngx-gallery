@@ -143,23 +143,6 @@
             </mat-form-field>
           </div>
 
-          <div>
-            <mat-form-field>
-              <mat-label>Scroll Behavior</mat-label>
-              <mat-select [(ngModel)]="config.scrollBehavior">
-                <mat-option *ngFor="let behavior of scrollBehaviors" [value]="behavior">{{behavior}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div>
-            <mat-form-field>
-              <mat-label>Nav Scroll Behavior</mat-label>
-              <mat-select [(ngModel)]="config.navScrollBehavior" [disabled]="!config.nav">
-                <mat-option *ngFor="let behavior of scrollBehaviors" [value]="behavior">{{behavior}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
         </div>
 
         <div class="column">
@@ -194,6 +177,23 @@
             </mat-form-field>
           </div>
 
+          <div>
+            <mat-form-field>
+              <mat-label>Scroll Behavior</mat-label>
+              <mat-select [(ngModel)]="config.scrollBehavior">
+                <mat-option *ngFor="let behavior of scrollBehaviors" [value]="behavior">{{behavior}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field>
+              <mat-label>Nav Scroll Behavior</mat-label>
+              <mat-select [(ngModel)]="config.navScrollBehavior" [disabled]="!config.nav">
+                <mat-option *ngFor="let behavior of scrollBehaviors" [value]="behavior">{{behavior}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
 
         <div class="column checkboxes">

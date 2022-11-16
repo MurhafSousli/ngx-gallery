@@ -93,8 +93,6 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   /** Stream that emits when an error occurs */
   @Output() error = new EventEmitter<GalleryError>();
 
-  @ViewChild('container', { static: true }) containerEl: ElementRef;
-
   @ViewChild('slider', { static: true }) sliderEl: ElementRef;
 
   @ViewChildren(GalleryItemComponent) items = new QueryList<GalleryItemComponent>();
@@ -233,9 +231,12 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onItemActivated(el: Element): void {
+    // Auto-height feature
     if (this.config.autoHeight && el.clientHeight) {
-      // Auto-height feature
+      // Change slider height
       this.slider.style.height = `${ el.clientHeight }px`;
+      // Change root component height
+      (this._el.nativeElement as Element).parentElement.parentElement.parentElement.style.height = `${ el.clientHeight }px`;
     }
   }
 
