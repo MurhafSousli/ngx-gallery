@@ -101,9 +101,9 @@ export class GalleryCoreComponent {
     return this.config.contentVisibilityAuto;
   }
 
-  /** Set gallery slider autoWidth style  */
-  @HostBinding('attr.autoWidth') get autoWidth(): boolean {
-    return this.config.autoWidth;
+  /** Set gallery slider itemAutosize style  */
+  @HostBinding('attr.itemAutosize') get itemAutosize(): boolean {
+    return this.config.itemAutosize;
   }
 
   /** Set gallery slider autoHeight style  */
@@ -111,8 +111,13 @@ export class GalleryCoreComponent {
     return this.config.autoHeight;
   }
 
-  /** Set gallery slider thumbAutoWidth style  */
-  @HostBinding('attr.thumbAutoWidth') get thumbAutoWidth(): boolean {
-    return this.config.thumbAutoWidth;
+  /** Set gallery slider thumbAutosize style  */
+  @HostBinding('attr.thumbAutosize') get thumbAutosize(): boolean {
+    return this.config.thumbAutosize;
+  }
+
+  /** Set debug style  */
+  @HostBinding('attr.debug') get debug(): boolean {
+    return this.config.debug;
   }
 }

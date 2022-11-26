@@ -1,6 +1,8 @@
 ::ng-deep {
   gallery-slider {
+    position: relative;
     display: flex;
+    align-items: center;
     justify-content: center;
 
     .g-slider[centralised="true"] {
@@ -52,6 +54,7 @@
 
       .g-slider-content {
         flex-direction: column;
+        width: 100%;
       }
     }
   }
@@ -82,7 +85,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    transition: height linear 0.4s;
+    transition: height 200ms cubic-bezier(0.5, 0, 0.5, 1);
 
     scrollbar-width: none; /* Firefox 64 */
     -ms-overflow-style: none; /* Internet Explorer 11 */
@@ -102,14 +105,13 @@
       display: flex;
       flex-direction: column;
       flex: 0 0 auto;
-      width: fit-content;
       scroll-snap-align: center;
       // Disable highlighting the elements on mouse move or click
       user-select: none;
       -webkit-user-drag: none;
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
-      gallery-image {
+      gallery-image[imageState='success'] {
         align-self: center;
       }
     }

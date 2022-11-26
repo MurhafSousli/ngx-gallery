@@ -5,7 +5,9 @@ import {
   Output,
   EventEmitter,
   OnChanges,
+  AfterViewChecked,
   ElementRef,
+  ChangeDetectorRef,
   ChangeDetectionStrategy
 } from '@angular/core';
 import { GalleryConfig } from '../models/config.model';
@@ -58,13 +60,15 @@ import { LoadingStrategy, GalleryItemType } from '../models/constants';
         </div>
 
       </ng-container>
-
     </ng-container>
   `
 })
-export class GalleryItemComponent implements OnChanges {
+export class GalleryItemComponent implements AfterViewChecked, OnChanges {
 
   readonly Types = GalleryItemType;
+
+  /** A flag that ensure that the height was emitted after tbe image is loaded, used only for gallery image types */
+  private imageLoadingState: 'IN_PROGRESS' | 'DONE' = 'IN_PROGRESS';
 
   /** Gallery config */
   @Input() config: GalleryConfig;
@@ -75,8 +79,6 @@ export class GalleryItemComponent implements OnChanges {
   /** Gallery current index */
   @Input() currIndex: number;
 
-  @Input() galleryId: string;
-
   /** Item's type 'image', 'video', 'youtube', 'iframe' */
   @Input() type: string;
 
@@ -86,6 +88,7 @@ export class GalleryItemComponent implements OnChanges {
   /** Stream that emits when an error occurs */
   @Output() error = new EventEmitter<ErrorEvent>();
 
+  /** Stream that emits when item is active */
   @Output() active = new EventEmitter<Element>;
 
   @HostBinding('class.g-active-item') get isActive() {
@@ -96,26 +99,12 @@ export class GalleryItemComponent implements OnChanges {
     return this.index;
   }
 
-  @HostBinding('style.width') get getWidth(): string {
-    if (this.config.slidingDirection === 'horizontal') {
-      if (this.config.autoWidth) {
-        return this.el.nativeElement.firstChild.clientWidth ? `${ this.el.nativeElement.firstChild.clientWidth }px` : 'unset';
-      }
-      return `${ this.el.nativeElement.parentElement.parentElement.clientWidth }px`;
-    } else {
-      return null;
-    }
+  @HostBinding('attr.imageState') get imageState() {
+    return this.imageLoadingState;
   }
 
-  @HostBinding('style.height') get getHeight(): string {
-    if (this.config.slidingDirection === 'horizontal') {
-      return null;
-    } else {
-      if (this.config.autoHeight) {
-        return this.el.nativeElement.firstChild.clientHeight ? `${ this.el.nativeElement.firstChild.clientHeight }px` : 'unset';
-      }
-      return `${ this.el.nativeElement.parentElement.parentElement.clientHeight }px`;
-    }
+  get element(): HTMLElement {
+    return this.el.nativeElement;
   }
 
   get isAutoPlay() {
@@ -152,12 +141,36 @@ export class GalleryItemComponent implements OnChanges {
   }
 
   constructor(public el: ElementRef) {
+
+  ngAfterViewChecked(): void {
+    this.element.style.setProperty('--g-item-width', this.getWidth());
+    this.element.style.setProperty('--g-item-height', this.getHeight());
   }
 
   ngOnChanges(): void {
     if (this.currIndex === this.index) {
       this.active.emit(this.el.nativeElement);
+  private getWidth(): string {
+    if (this.config.slidingDirection === 'horizontal') {
+      if (this.config.itemAutosize && this.imageLoadingState === 'DONE' && this.element.firstElementChild.clientWidth) {
+        return `${ this.element.firstElementChild.clientWidth }px`;
+      }
     }
+    return `${ this.element.parentElement.parentElement.clientWidth }px`;
+  }
+
+  private getHeight(): string {
+    if (this.config.autoHeight) {
+      if (this.imageLoadingState === 'DONE' && this.element.firstElementChild.clientHeight) {
+        return `${ this.element.firstElementChild.clientHeight }px`;
+      }
+    }
+    if (this.config.slidingDirection === 'vertical') {
+      if (this.config.itemAutosize && this.imageLoadingState === 'DONE' && this.element.firstElementChild.clientHeight) {
+        return `${ this.element.firstElementChild.clientHeight }px`;
+      }
+    }
+    return `${ this.element.parentElement.parentElement.clientHeight }px`;
   }
 }
 

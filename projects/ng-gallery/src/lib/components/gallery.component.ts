@@ -68,10 +68,9 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() loadingStrategy: 'preload' | 'lazy' | 'default' = this._gallery.config.loadingStrategy;
   @Input() thumbPosition: 'top' | 'left' | 'right' | 'bottom' = this._gallery.config.thumbPosition;
   @Input() thumbView: 'default' | 'contain' = this._gallery.config.thumbView;
-  @Input() view: 'default' | 'contain' = this._gallery.config.view;
   @Input() thumbDetached: boolean = this._gallery.config.thumbDetached;
-  @Input() thumbAutoWidth: boolean = this._gallery.config.thumbAutoWidth;
-  @Input() autoWidth: boolean = this._gallery.config.autoWidth;
+  @Input() thumbAutosize: boolean = this._gallery.config.thumbAutosize;
+  @Input() itemAutosize: boolean = this._gallery.config.itemAutosize;
   @Input() autoHeight: boolean = this._gallery.config.autoHeight;
 
   // Inputs used by the lightbox
@@ -102,9 +101,9 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   private getConfig(): GalleryConfig {
     return {
       nav: this.nav,
-      view: this.view,
       dots: this.dots,
       loop: this.loop,
+      debug: this.debug,
       thumb: this.thumb,
       counter: this.counter,
       autoPlay: this.autoPlay,
@@ -135,8 +134,8 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       thumbSlidingDisabled: this.thumbSlidingDisabled,
       mouseSlidingDisabled: this.mouseSlidingDisabled,
       thumbMouseSlidingDisabled: this.thumbMouseSlidingDisabled,
-      thumbAutoWidth: this.thumbAutoWidth,
-      autoWidth: this.autoWidth,
+      thumbAutosize: this.thumbAutosize,
+      itemAutosize: this.itemAutosize,
       autoHeight: this.autoHeight,
     };
   }

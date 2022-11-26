@@ -1,14 +1,11 @@
 ::ng-deep {
   gallery {
-    --gallery-height: 500px;
     position: relative;
     z-index: 1;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-
-    height: var(--gallery-height);
     background-color: black;
     transition: height linear 0.4s;
 
@@ -23,10 +20,10 @@
     overflow: hidden;
   }
 
-  gallery-core,
-  gallery-slider,
-  .g-box {
-    height: 100%;
+  gallery-core {
+    max-height: 100%;
+    min-height: 100%;
+    height: 500px;
   }
 
   gallery-core,
@@ -44,6 +41,7 @@
     display: flex;
     flex-direction: column;
     order: 1;
+    flex: 1;
   }
 
   gallery-nav,
@@ -62,30 +60,110 @@
   }
 
   gallery-core[autoHeight='true'] {
-    .g-slider {
-      height: 100%;
+    &[thumbPosition='top'],
+    &[thumbPosition='bottom'] {
+      // if auto-height, use fit-content
+      height: fit-content !important;
+
+      .g-slider {
+        height: 100%;
+      }
+
+      gallery-slider, gallery-core {
+        height: 100%;
+      }
     }
 
-    gallery-slider, gallery-core {
-      height: 100%;
-    }
-  }
-
-  gallery-core[autoHeight='false']  {
-    gallery-item, .g-slider {
-      height: 100%;
-    }
-  }
-
-  gallery-core[autoWidth='true'] gallery-slider {
     gallery-item {
-      width: auto;
+      min-height: 100%;
     }
   }
 
-  gallery-core[autoWidth='false'] gallery-slider {
-    gallery-item, gallery-image, img {
-      width: 100%;
+
+  gallery-core[autoHeight='true'] {
+    &[slidingDirection='horizontal'] {
+      gallery-item {
+        //height: 100%;
+        height: unset;
+        max-height: unset;
+        min-height: unset;
+
+        gallery-image {
+          height: 100%;
+          width: auto;
+        }
+      }
+    }
+
+    &[slidingDirection='vertical'] {
+      gallery-item {
+        // Allow getting the real image height
+        height: unset;
+        max-height: unset;
+        min-height: unset;
+
+        gallery-image {
+          width: 100%;
+          height: auto;
+        }
+      }
+    }
+  }
+
+  gallery-core[autoHeight='false'] {
+    &[slidingDirection='horizontal'] {
+      gallery-item, .g-slider {
+        height: 100%;
+      }
+    }
+  }
+
+  gallery-core[itemAutoSize='true'] {
+    &[slidingDirection='horizontal'] {
+      gallery-item {
+        gallery-image {
+          height: 100%;
+          width: auto;
+        }
+      }
+    }
+
+    &[slidingDirection='vertical'] {
+      gallery-item {
+        // Allow getting the real image height
+        height: auto;
+
+        gallery-image {
+          width: 100%;
+          height: auto;
+        }
+      }
+    }
+  }
+
+  gallery-core[debug='true'] {
+    gallery-slider {
+      &:after, &:before {
+        position: absolute;
+        content: '';
+        background: lime;
+        box-shadow: 0 0 5px lime;
+        z-index: 99999;
+      }
+
+      &:before {
+        width: 100%;
+        height: 1px;
+      }
+
+      &:after {
+        height: 100%;
+        width: 1px;
+      }
+
+      gallery-item {
+        outline: 1px solid darkorange;
+      }
     }
   }
 }

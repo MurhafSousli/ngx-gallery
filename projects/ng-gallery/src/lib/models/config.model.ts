@@ -9,7 +9,6 @@ export interface GalleryConfig {
   nav?: boolean;
   dots?: boolean;
   loop?: boolean;
-  view?: 'default' | 'contain';
   thumb?: boolean;
   navIcon?: string;
   counter?: boolean;
@@ -43,7 +42,8 @@ export interface GalleryConfig {
   loadingStrategy?: 'preload' | 'lazy' | 'default';
   thumbPosition?: 'top' | 'left' | 'right' | 'bottom';
   thumbView?: 'default' | 'contain';
-  thumbAutoWidth?: boolean;
-  autoWidth?: boolean;
+  thumbAutosize?: boolean;
+  itemAutosize?: boolean;
   autoHeight?: boolean;
+  debug?: boolean;
 }

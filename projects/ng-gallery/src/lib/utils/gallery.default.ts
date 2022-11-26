@@ -27,6 +27,7 @@ export const defaultConfig: GalleryConfig = {
   loop: true,
   dots: false,
   thumb: true,
+  debug: false,
   dotsSize: 30,
   counter: true,
   autoPlay: false,
@@ -46,8 +47,8 @@ export const defaultConfig: GalleryConfig = {
     x2: 0.58,
     y2: 1
   },
-  thumbAutoWidth: false,
-  autoWidth: false,
+  thumbAutosize: false,
+  itemAutosize: false,
   autoHeight: false,
   scrollBehavior: 'smooth',
   navScrollBehavior: 'smooth',

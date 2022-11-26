@@ -91,7 +91,9 @@ export class GalleryImageComponent implements OnInit {
   /** Stream that emits when an error occurs */
   @Output() error = new EventEmitter<ErrorEvent>();
 
-  @HostBinding('attr.image-state') get imageState(): string {
+  @Output() loaded = new EventEmitter<void>();
+
+  @HostBinding('attr.imageState') get imageState(): string {
     return this.state;
   }
 
