@@ -22,8 +22,8 @@ export class GallerizeExampleComponent implements OnInit {
     gallery.ref('lightbox').setConfig({
       thumbPosition: 'bottom',
       imageSize: 'cover',
-      autoWidth: false,
-      thumbAutoWidth: false,
+      itemAutosize: false,
+      thumbAutosize: false,
       // thumbWidth: 120,
       // thumbHeight: 90,
       contentVisibilityAuto: false,
@@ -33,8 +33,8 @@ export class GallerizeExampleComponent implements OnInit {
       dots: true,
       thumbPosition: 'top',
       imageSize: 'cover',
-      autoWidth: false,
-      thumbAutoWidth: false,
+      itemAutosize: false,
+      thumbAutosize: false,
       contentVisibilityAuto: false,
       // thumbView: 'contain'
     });

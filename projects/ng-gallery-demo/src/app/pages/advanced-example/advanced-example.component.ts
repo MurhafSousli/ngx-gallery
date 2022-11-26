@@ -102,9 +102,14 @@ const data: GalleryItemData[] = [
   {
     type: 'video',
     autoplay: true,
+    controls: true,
+    mute: null,
+    loop: true,
+    thumb: 'https://images.pond5.com/orangutan-sitting-tree-and-attentively-footage-074672817_iconl.jpeg',
+    poster: 'https://images.pond5.com/orangutan-sitting-tree-and-attentively-footage-074672817_iconl.jpeg',
     src: [
       {
-        url: 'http://techslides.com/demos/sample-videos/small.mp4',
+        url: 'https://videos.pond5.com/orangutan-sitting-tree-and-attentively-footage-074672817_main_xxl.mp4',
         type: 'video/mp4'
       }
     ]

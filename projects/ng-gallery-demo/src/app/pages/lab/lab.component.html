@@ -6,11 +6,12 @@
     <gallery #gallery id="lab"
              [items]="photos$ | async"
              [autoHeight]="config.autoHeight"
-             [autoWidth]="config.autoWidth"
-             [thumbAutoWidth]="config.thumbAutoWidth"
+             [itemAutosize]="config.itemAutosize"
+             [thumbAutosize]="config.thumbAutosize"
              [nav]="config.nav"
              [loop]="config.loop"
              [dots]="config.dots"
+             [debug]="config.debug"
              [thumb]="config.thumb"
              [counter]="config.counter"
              [autoPlay]="config.autoPlay"
@@ -147,14 +148,16 @@
 
         <div class="column">
           <div>
-            <mat-checkbox [(ngModel)]="config.autoHeight" [disabled]="!config.thumb">Auto-height</mat-checkbox>
+            <mat-checkbox [(ngModel)]="config.debug">Debug</mat-checkbox>
           </div>
           <div>
-            <mat-checkbox [(ngModel)]="config.autoWidth" [disabled]="!config.thumb">Auto-width</mat-checkbox>
+            <mat-checkbox [(ngModel)]="config.autoHeight" [disabled]="config.itemAutosize">Auto-height</mat-checkbox>
           </div>
-
           <div>
-            <mat-checkbox [(ngModel)]="config.thumbAutoWidth" [disabled]="!config.thumb">Thumb Auto-width</mat-checkbox>
+            <mat-checkbox [(ngModel)]="config.itemAutosize" [disabled]="config.autoHeight">Item autosize</mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox [(ngModel)]="config.thumbAutosize" [disabled]="!config.thumb">Thumb autosize</mat-checkbox>
           </div>
 
           <div>
