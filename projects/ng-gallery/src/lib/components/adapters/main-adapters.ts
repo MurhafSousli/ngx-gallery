@@ -26,7 +26,7 @@ export class HorizontalAdapter extends HorizontalCommonAdapter implements Slider
   }
 
   getScrollToValue(el: HTMLElement, behavior: ScrollBehavior): SmoothScrollToOptions {
-    let position = el.offsetLeft - ((this.clientSize - el.clientWidth) / 2);
+    const position = el.offsetLeft - ((this.clientSize - el.clientWidth) / 2);
     return {
       start: position,
       duration: behavior === 'smooth' ? this.config.slidingDuration : 0,
@@ -82,7 +82,7 @@ export class VerticalAdapter extends VerticalCommonAdapter implements SliderAdap
   }
 
   getScrollToValue(el: HTMLElement, behavior: ScrollBehavior): SmoothScrollToOptions {
-    const position = el.offsetTop + ((this.clientSize - el.clientHeight) / 2);
+    const position = el.offsetTop - ((this.clientSize - el.clientHeight) / 2);
     return {
       top: position,
       duration: behavior === 'smooth' ? this.config.slidingDuration : 0,
