@@ -110,9 +110,6 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
           this.slider.style.setProperty('--thumb-contain-intrinsic-size', `${ this.config.thumbWidth }px ${ this.config.thumbHeight }px`);
         }
 
-        this.slider.style.setProperty('--thumb-height', `${ this.config.thumbHeight }px`);
-        this.slider.style.setProperty('--thumb-width', `${ this.config.thumbWidth }px`);
-
         if (!changes.config.firstChange) {
           // Keep the correct sliding position when direction changes
           requestAnimationFrame(() => {
@@ -127,6 +124,9 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
       if (!changes.config.firstChange && changes.config.currentValue?.thumbMouseSlidingDisabled !== changes.config.previousValue?.thumbMouseSlidingDisabled) {
         this.enableDisableGestures();
       }
+
+      this.slider.style.setProperty('--thumb-height', `${ this.config.thumbHeight }px`);
+      this.slider.style.setProperty('--thumb-width', `${ this.config.thumbWidth }px`);
     }
 
     if (changes.state && (changes.state.firstChange || !this.config.thumbDetached)) {
