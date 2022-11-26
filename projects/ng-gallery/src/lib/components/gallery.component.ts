@@ -26,6 +26,7 @@ import { BezierEasingOptions } from '../smooth-scroll';
     <gallery-core [galleryId]="id"
                   [state]="galleryRef.state | async"
                   [config]="galleryRef.config | async"
+                  (itemLoaded)="itemLoaded.emit($event)"
                   (itemClick)="onItemClick($event)"
                   (thumbClick)="onThumbClick($event)"
                   (error)="onError($event)"></gallery-core>
@@ -39,6 +40,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() nav: boolean = this._gallery.config.nav;
   @Input() dots: boolean = this._gallery.config.dots;
   @Input() loop: boolean = this._gallery.config.loop;
+  @Input() debug: boolean = this._gallery.config.debug;
   @Input() thumb: boolean = this._gallery.config.thumb;
   @Input() counter: boolean = this._gallery.config.counter;
   @Input() dotsSize: number = this._gallery.config.dotsSize;
@@ -86,6 +88,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Output() playingChange = new EventEmitter<GalleryState>();
   @Output() indexChange = new EventEmitter<GalleryState>();
   @Output() itemsChange = new EventEmitter<GalleryState>();
+  @Output() itemLoaded = new EventEmitter<GalleryState>();
   @Output() error = new EventEmitter<GalleryError>();
 
   private _itemClick$: SubscriptionLike = Subscription.EMPTY;

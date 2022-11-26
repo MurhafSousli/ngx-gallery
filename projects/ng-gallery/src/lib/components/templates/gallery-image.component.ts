@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeUrl } from '@angular/platform-browser';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { imageFailedSvg } from './svg-assets';
 
 @Component({
   selector: 'gallery-image',
@@ -26,10 +27,10 @@ import { animate, style, transition, trigger } from '@angular/animations';
       <img [@fadeIn]="state"
            [src]="src"
            [attr.alt]="alt"
-           [style.visibility]="state === 'loading' ? 'hidden' : 'unset'"
+           [attr.loading]="isThumbnail ? 'eager' : 'lazy'"
+           [style.visibility]="state === 'success' ? 'visible' : 'hidden'"
            class="g-image-item"
-           loading="lazy"
-           (load)="state = 'success'"
+           (load)="state = 'success'; loaded.emit()"
            (error)="state = 'failed'; error.emit($event)"/>
 
       <div *ngSwitchCase="'failed'"
@@ -38,10 +39,14 @@ import { animate, style, transition, trigger } from '@angular/animations';
              [innerHTML]="errorTemplate"></div>
         <ng-template #defaultError>
           <ng-container *ngIf="isThumbnail; else isLarge">
-            <h4>⚠</h4>
+            <h4>
+              <div class="gallery-thumb-error" [innerHTML]="errorSvg"></div>
+            </h4>
           </ng-container>
           <ng-template #isLarge>
-            <h2>⚠</h2>
+            <h2>
+              <div class="gallery-image-error" [innerHTML]="errorSvg"></div>
+            </h2>
             <p>Unable to load the image!</p>
           </ng-template>
         </ng-template>
@@ -88,6 +93,9 @@ export class GalleryImageComponent implements OnInit {
   /** Custom error safe template */
   errorTemplate: SafeHtml;
 
+  @Input() errorIcon: string = imageFailedSvg;
+  errorSvg: SafeHtml;
+
   /** Stream that emits when an error occurs */
   @Output() error = new EventEmitter<ErrorEvent>();
 
@@ -106,6 +114,9 @@ export class GalleryImageComponent implements OnInit {
     }
     if (this.loadingError) {
       this.errorTemplate = this._sanitizer.bypassSecurityTrustHtml(this.loadingError);
+    }
+    if (this.errorIcon) {
+      this.errorSvg = this._sanitizer.bypassSecurityTrustHtml(this.errorIcon);
     }
   }
 }

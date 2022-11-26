@@ -18,13 +18,13 @@ import { LoadingStrategy, GalleryItemType } from '../models/constants';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ng-container *ngIf="load" [ngSwitch]="type">
-
       <ng-container *ngSwitchCase="Types.Image">
 
         <gallery-image [src]="data.src"
                        [alt]="data.alt"
                        [loadingIcon]="config.loadingIcon"
                        [loadingError]="config.loadingError"
+                       (loaded)="onItemLoaded()"
                        (error)="error.emit($event)"></gallery-image>
 
         <div *ngIf="config.itemTemplate" class="g-template g-item-template">
@@ -37,8 +37,11 @@ import { LoadingStrategy, GalleryItemType } from '../models/constants';
 
       <gallery-video *ngSwitchCase="Types.Video"
                      [src]="data.src"
+                     [mute]="data.mute"
                      [poster]="data.poster"
                      [controls]="data.controls"
+                     [controlsList]="data.controlsList"
+                     [disablePictureInPicture]="data.disablePictureInPicture"
                      [play]="isAutoPlay"
                      [pause]="currIndex !== index"
                      (error)="error.emit($event)"></gallery-video>
@@ -140,7 +143,8 @@ export class GalleryItemComponent implements AfterViewChecked, OnChanges {
     }
   }
 
-  constructor(public el: ElementRef) {
+  constructor(private el: ElementRef, private cd: ChangeDetectorRef) {
+  }
 
   ngAfterViewChecked(): void {
     this.element.style.setProperty('--g-item-width', this.getWidth());
@@ -148,8 +152,22 @@ export class GalleryItemComponent implements AfterViewChecked, OnChanges {
   }
 
   ngOnChanges(): void {
-    if (this.currIndex === this.index) {
-      this.active.emit(this.el.nativeElement);
+    if (this.currIndex === this.index && (this.type !== this.Types.Image || this.imageLoadingState === 'DONE')) {
+      this.active.emit(this.element);
+    }
+  }
+
+  onItemLoaded(): void {
+    if (this.imageLoadingState === 'IN_PROGRESS') {
+      if (this.currIndex === this.index) {
+        this.active.emit(this.element);
+      }
+      this.imageLoadingState = 'DONE';
+      // Detect changes to re-calculate item size
+      this.cd.detectChanges();
+    }
+  }
+
   private getWidth(): string {
     if (this.config.slidingDirection === 'horizontal') {
       if (this.config.itemAutosize && this.imageLoadingState === 'DONE' && this.element.firstElementChild.clientWidth) {

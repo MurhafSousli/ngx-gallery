@@ -2,20 +2,32 @@ import {
   Component,
   Input,
   Output,
+  EventEmitter,
   OnDestroy,
   OnInit,
   OnChanges,
   ViewChild,
+  ViewChildren,
   SimpleChanges,
   NgZone,
   ElementRef,
-  EventEmitter,
-  ChangeDetectionStrategy,
-  ViewChildren,
-  QueryList
+  QueryList,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
-import { from, distinctUntilChanged, fromEvent, mergeMap, startWith, EMPTY, Observable, Subject, Subscriber } from 'rxjs';
+import {
+  from,
+  distinctUntilChanged,
+  fromEvent,
+  mergeMap,
+  startWith,
+  EMPTY,
+  Observable,
+  Subject,
+  Subscriber,
+  animationFrameScheduler
+} from 'rxjs';
 import { tap, debounceTime, filter, takeUntil, switchMap } from 'rxjs/operators';
 import { Gallery } from '../services/gallery.service';
 import { GalleryState, GalleryError } from '../models/gallery.model';
@@ -40,9 +52,10 @@ declare const Hammer: any;
   template: `
     <div #slider
          class="g-slider"
-         [attr.centralised]="config.view === thumbnailsView.Contain || config.autoWidth">
+         [attr.centralised]="config.itemAutosize">
       <div class="g-slider-content">
         <gallery-item *ngFor="let item of state.items; trackBy: trackByFn; index as i"
+                      [attr.galleryId]="galleryId"
                       [type]="item.type"
                       [config]="config"
                       [data]="item.data"
@@ -90,6 +103,9 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   /** Stream that emits when item is clicked */
   @Output() itemClick = new EventEmitter<number>();
 
+  /** Stream that emits when item is loaded */
+  @Output() itemLoaded = new EventEmitter<number>();
+
   /** Stream that emits when an error occurs */
   @Output() error = new EventEmitter<GalleryError>();
 
@@ -102,31 +118,42 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   constructor(private _el: ElementRef,
+              private _cd: ChangeDetectorRef,
               private _zone: NgZone,
               private _platform: Platform,
               private _smoothScroll: SmoothScrollManager,
               private _gallery: Gallery) {
-    this._zone.runOutsideAngular(() => {
-      this.scrollHandler$.pipe(
-        switchMap(({ value, behavior }: ScrollObserver) => {
-          this.slider.style.scrollSnapType = 'unset';
+
+    this.scrollHandler$.pipe(
+      debounceTime(0, animationFrameScheduler),
+      switchMap(({ value, behavior }: ScrollObserver) => {
+        this._gallery.debugConsole('[Gallery scrollHandler$] ', this.slider.style.scrollSnapType);
+        this.slider.style.scrollSnapType = 'unset';
+        const el: HTMLElement = this.items.get(value)?.element;
+
+        this._gallery.debugConsole('🤯 [Gallery scrollHandler$] scrollSnapType = unset, scrollTo element', !!el);
+        if (el) {
           this.slider.classList.add('g-scrolling');
-          const el: HTMLElement = this.items.get(value)?.el.nativeElement;
-          if (el) {
-            const pos = this.adapter.getScrollToValue(el, behavior || this.config.scrollBehavior);
-            return from(this._smoothScroll.scrollTo(this.slider, pos)).pipe(
-              tap(() => {
-                this._isPanning = false;
-                this.slider.classList.remove('g-scrolling');
-                this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
-              })
-            );
-          }
-          return EMPTY;
-        }),
-        takeUntil(this._destroyed$)
-      ).subscribe();
-    });
+          const pos = this.adapter.getScrollToValue(el, behavior || this.config.scrollBehavior);
+          const index: number = +this.items.get(value)?.element.getAttribute('galleryIndex');
+          this._gallery.debugConsole(`🚀 [Gallery scrollHandler$] Scroll start ===> index: ${ index }, position:`, pos);
+          this._gallery.debugConsole(`🚀 [Gallery scrollHandler$] slider scrollable`, this.adapter.scrollValue);
+
+          return from(this._smoothScroll.scrollTo(this.slider, pos)).pipe(
+            tap(() => {
+              // Reset viewport properties on scroll end
+              this._isPanning = false;
+              this.slider.classList.remove('g-scrolling');
+              // this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
+              this._gallery.debugConsole('✅ [Gallery scrollHandler$] Scroll end');
+            })
+          );
+        }
+        this._gallery.debugConsole('😡 [Gallery scrollHandler$] Scroll element was not found!');
+        return EMPTY;
+      }),
+      takeUntil(this._destroyed$)
+    ).subscribe();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -142,8 +169,8 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         if (!changes.config.firstChange) {
-          // Keep the correct sliding position when direction changes
           requestAnimationFrame(() => {
+            // Keep the correct sliding position when direction changes
             this.scrollToIndex(this.state.currIndex, 'auto');
           });
         }
@@ -152,8 +179,10 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
         this.enableDisableGestures();
       }
 
-      if (!changes.config.firstChange && changes.config.currentValue?.mouseSlidingDisabled !== changes.config.previousValue?.mouseSlidingDisabled) {
-        this.enableDisableGestures();
+      if (!changes.config.firstChange) {
+        if (changes.config.currentValue?.mouseSlidingDisabled !== changes.config.previousValue?.mouseSlidingDisabled) {
+          this.enableDisableGestures();
+        }
       }
     }
 
@@ -200,7 +229,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.items.notifyOnChanges();
     this.items.changes.pipe(
       startWith(null),
@@ -212,16 +241,18 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
         // Connect with the new items
         this.items.toArray().map((item: GalleryItemComponent) => {
-          this.intersectionObserver.observe(item.el.nativeElement);
+          this.intersectionObserver.observe(item.element);
         });
       }),
       takeUntil(this._destroyed$)
     ).subscribe();
   }
 
-  ngAfterViewChecked() {
-    this.slider.style.setProperty('--slider-centralize-start-size', this.adapter.getCentralizerStartSize() + 'px');
-    this.slider.style.setProperty('--slider-centralize-end-size', this.adapter.getCentralizerEndSize() + 'px');
+  ngAfterViewChecked(): void {
+    if (this.config.itemAutosize) {
+      this.slider.style.setProperty('--slider-centralize-start-size', this.adapter.getCentralizerStartSize() + 'px');
+      this.slider.style.setProperty('--slider-centralize-end-size', this.adapter.getCentralizerEndSize() + 'px');
+    }
   }
 
   ngOnDestroy(): void {
@@ -231,12 +262,15 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onItemActivated(el: Element): void {
-    // Auto-height feature
-    if (this.config.autoHeight && el.clientHeight) {
+    this._gallery.debugConsole('🐓 [Gallery onItemActivated]: ', +el.getAttribute('galleryIndex'));
+    // Auto-height feature, only allowed when sliding direction is horizontal
+    const isThumbPositionHorizontal: boolean = this.config.thumbPosition === 'top' || this.config.thumbPosition === 'bottom';
+    if (this.config.autoHeight && el.clientHeight && isThumbPositionHorizontal) {
+      this._gallery.debugConsole('🦐 [Gallery onItemActivated]: Set slider height and emit it', el.clientHeight);
       // Change slider height
       this.slider.style.height = `${ el.clientHeight }px`;
       // Change root component height
-      (this._el.nativeElement as Element).parentElement.parentElement.parentElement.style.height = `${ el.clientHeight }px`;
+      this.itemLoaded.emit(el.clientHeight);
     }
   }
 
@@ -251,31 +285,48 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     if (this.config.contentVisibilityAuto) {
       this.slider.style.setProperty('--item-contain-intrinsic-size', `${ width }px ${ height }px`);
     }
+    // Detect changes on gallery-item components to re-calculate item size
+    this._cd.detectChanges();
+    this._gallery.debugConsole('🦐 [Gallery OnHostResize]: set viewport width to absolute number');
   }
 
   private onViewportScroll(): void {
-    // Check if the index value has no fraction
-    this.visibleElements.forEach((entry: IntersectionObserverEntry) => {
-      const allowedMargin: number = 10;
-      const offsetDiff: number = (this.adapter.clientSize - this.adapter.getClientSize(entry.target as HTMLElement)) / 2;
-      const rangeStart: number = this.adapter.scrollValue + offsetDiff;
-      const rangeEnd: number = this.adapter.scrollValue + this.adapter.clientSize - offsetDiff;
-      const elStart: number = this.adapter.getOffsetSize(entry.target as HTMLElement);
-      const elEnd: number = elStart + this.adapter.getClientSize(entry.target as HTMLElement);
+    // Check if scrolled item is great enough to navigate
+    const currElement: Element = this.items.get(this.state.currIndex)?.element;
+    const elementAtCenter: Element = this.getElementFromViewportCenter();
 
-      const isStart: boolean = rangeStart + allowedMargin >= elStart && rangeStart - allowedMargin <= elStart;
-      const isEnd: boolean = rangeEnd + allowedMargin >= elEnd && rangeEnd - allowedMargin <= elEnd;
+    if (elementAtCenter) {
+      // Check if the gallery-item element is not the active element
+      if (elementAtCenter !== currElement) {
+        // Get the centralised element
+        const allowedMargin: number = 10;
+        const offsetDiff: number = (this.adapter.clientSize - this.adapter.getClientSize(elementAtCenter as HTMLElement)) / 2;
+        const rangeStart: number = this.adapter.scrollValue + offsetDiff;
+        const rangeEnd: number = this.adapter.scrollValue + this.adapter.clientSize - offsetDiff;
+        const elStart: number = this.adapter.getOffsetSize(elementAtCenter as HTMLElement);
+        const elEnd: number = elStart + this.adapter.getClientSize(elementAtCenter as HTMLElement);
 
-      const index: number = +entry.target.getAttribute('galleryIndex');
+        const isStart: boolean = rangeStart + allowedMargin >= elStart && rangeStart - allowedMargin <= elStart;
+        const isEnd: boolean = rangeEnd + allowedMargin >= elEnd && rangeEnd - allowedMargin <= elEnd;
 
-      if (isStart && isEnd) {
-        this._zone.run(() => this._gallery.ref(this.galleryId).set(index, 'smooth'));
-      } else {
+        // Check if element is within the detection range
+        if (isStart && isEnd) {
+          // If element is within the range set it as the active gallery item
+          this._gallery.debugConsole('🍄 [Gallery onViewportScroll]: Set active gallery item');
+
+          const index: number = +elementAtCenter.getAttribute('galleryIndex');
+          this._zone.run(() => this._gallery.ref(this.galleryId).set(index, 'smooth'));
+          return;
+        }
         // Reset position
+
+        this._gallery.debugConsole('🔙 [Gallery onViewportScroll]: Gallery is the same');
         this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
+      } else {
+        // It is the same active the item, assuming it will reset its position using CSS snap-type method
+        this._gallery.debugConsole('⁉ [Gallery onViewportScroll]: No center element was found');
       }
-      return;
-    });
+    }
   }
 
   private scrollToIndex(value: number, behavior: ScrollBehavior, onEnd?: () => void): void {
@@ -329,6 +380,9 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   protected onPanEnd(e): void {
+
+    this._gallery.debugConsole('🖱️ [Gallery]: onPanEnd', e);
+
     this.slider.classList.remove('g-sliding');
     const delta: number = this.adapter.getPanDelta(e);
     const velocity: number = this.adapter.getPanVelocity(e);
@@ -337,17 +391,43 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
 
     this._zone.run(() => {
       // Check if scrolled item is great enough to navigate
-      const el: Element = this.items.get(this.state.currIndex)?.el.nativeElement;
-      if (Math.abs(delta) > (el.clientWidth || this.adapter.clientSize) / 2) {
+      const currElement: Element = this.items.get(this.state.currIndex)?.element;
+
+      // Find the gallery item element in the center elements
+      const centerItem: Element = this.getElementFromViewportCenter();
+
+      // Check if center item can be taken from element using
+      if (centerItem && centerItem !== currElement) {
+        const index: number = +centerItem.getAttribute('galleryIndex');
+        this.scrollToIndex(index, 'smooth');
+        return;
+      }
+
+      // Check if delta is great enough to navigate
+      if (Math.abs(delta) > (currElement.clientWidth || this.adapter.clientSize) / 2) {
         return delta > 0 ? galleryRef.prev('smooth', false) : galleryRef.next('smooth', false);
       }
+
       // Check if velocity is great enough to navigate
       if (Math.abs(velocity) > 0.3) {
         return velocity > 0 ? galleryRef.prev('smooth', false) : galleryRef.next('smooth', false);
       }
-      // Need to scroll back manually since the currIndex did not change
+
+      // Reset position to the current index
       this.scrollToIndex(this.state.currIndex, 'smooth');
     });
+  }
+
+  private getElementFromViewportCenter(): Element {
+    // Get slider position relative to the document
+    const sliderRect = this.slider.getBoundingClientRect();
+    // Try look for the center item using `elementsFromPoint` function
+    const centerElements = document.elementsFromPoint(sliderRect.x + (sliderRect.width / 2), sliderRect.y + (sliderRect.height / 2));
+    // Find the gallery item element in the center elements
+    const element = centerElements.find((element: Element) => element.localName === 'gallery-item' && element.getAttribute('galleryId') === this.galleryId);
+
+    this._gallery.debugConsole('🪟 [Gallery]: getElementFromViewportCenter', element);
+    return element;
   }
 
   private createIntersectionObserver(slider: HTMLElement): Observable<IntersectionObserverEntry> {
