@@ -121,8 +121,8 @@ const data: GalleryItemData[] = [
   } as YoutubeItemData,
   {
     type: 'iframe',
-    src: 'https://html.com/resources/free-html-templates/',
-    thumb: 'https://vignette.wikia.nocookie.net/random-ness/images/5/5f/TEH_POOTIS_MAN.jpg/revision/latest?cb=20130508152055'
+    src: 'https://ngx-scrollbar.netlify.com/',
+    thumb: 'https://user-images.githubusercontent.com/8130692/64606830-d4006f00-d3cf-11e9-9874-c75269fa3a9c.png'
   } as IframeItemData
 ];
 

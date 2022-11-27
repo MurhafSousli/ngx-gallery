@@ -5,7 +5,6 @@
 @import 'assets/theme';
 @import 'assets/mixin';
 @import 'assets/variables';
-@import '~highlight.js/styles/a11y-light.css';
 
 * {
   box-sizing: border-box;
@@ -16,6 +15,7 @@ body {
   margin: 0;
   height: 100vh;
   overflow: hidden;
+  --header-height: 56px;
 }
 
 p {
@@ -44,7 +44,7 @@ mat-sidenav-container {
   position: absolute;
   left: 0;
   right: 0;
-  top: $header-height;
+  top: var(--header-height);
   bottom: 0;
   overflow: auto;
   transform: perspective(1000px);

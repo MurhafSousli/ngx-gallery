@@ -14,7 +14,7 @@
     <!-- MAIN TOOLBAR -->
 
     <mat-toolbar color="primary">
-      <a mat-button class="toggle-button" (click)="sidenav.open()">
+      <a fxHide fxShow.lt-sm mat-icon-button class="toggle-button" (click)="sidenav.open()">
         <mat-icon>menu</mat-icon>
       </a>
 
@@ -26,7 +26,7 @@
       </div>
 
       <span fxFlex></span>
-      <menu></menu>
+      <menu fxHide.lt-sm></menu>
     </mat-toolbar>
 
     <!-- ROUTER OUTLET -->

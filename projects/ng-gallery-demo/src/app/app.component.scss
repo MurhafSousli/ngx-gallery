@@ -25,6 +25,7 @@ h3 {
   align-items: center;
   padding: 1em;
   margin: 1em 0;
+
   mat-icon {
     height: 84px;
     width: 84px;
@@ -40,18 +41,22 @@ main {
 .toolbar-logo {
   display: flex;
   align-items: center;
+
   h1 {
     text-align: center;
     font-size: 16px;
     font-family: $font-family;
   }
+
   span {
     flex: 1;
   }
+
   mat-icon {
     height: 44px;
     width: 44px;
   }
+
   a {
     width: 40px;
     height: 40px;
@@ -65,25 +70,9 @@ main {
   left: 0;
   right: 0;
   z-index: 110;
+  height: var(--header-height);
   //box-shadow: 0 2px 2px -1px rgba(0, 0, 0, .2), 0 2px 8px 0 rgba(0, 0, 0, .08), 0 1px 18px 0 rgba(0, 0, 0, .12);
   box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.08);
-
-  .toggle-button {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    height: $header-height;
-    width: $header-height;
-    min-width: unset;
-    padding: 0;
-    @include mobile() {
-      display: flex;
-    }
-  }
-}
-
-.mat-toolbar-single-row {
-  height: unset !important;
 }
 
 .toolbar-buttons {
@@ -94,6 +83,7 @@ main {
 
 .mat-sidenav {
   background-color: $primary-color;
+
   h3, menu {
     color: white;
   }
