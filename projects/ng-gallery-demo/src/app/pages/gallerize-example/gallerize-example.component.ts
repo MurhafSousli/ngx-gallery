@@ -26,7 +26,6 @@ export class GallerizeExampleComponent implements OnInit {
       thumbAutosize: false,
       // thumbWidth: 120,
       // thumbHeight: 90,
-      contentVisibilityAuto: false,
       // thumbView: 'contain'
     });
     gallery.ref('auto-detect').setConfig({
@@ -35,7 +34,6 @@ export class GallerizeExampleComponent implements OnInit {
       imageSize: 'cover',
       itemAutosize: false,
       thumbAutosize: false,
-      contentVisibilityAuto: false,
       // thumbView: 'contain'
     });
   }

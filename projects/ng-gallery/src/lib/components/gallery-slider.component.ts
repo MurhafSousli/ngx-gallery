@@ -282,9 +282,8 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     const width: number = Math.ceil(entry.contentRect.width);
     const height: number = Math.ceil(entry.contentRect.height);
     this.slider.style.width = `${ width }px`;
-    if (this.config.contentVisibilityAuto) {
-      this.slider.style.setProperty('--item-contain-intrinsic-size', `${ width }px ${ height }px`);
-    }
+    this.slider.style.height = `${ height }px`;
+    this.scrollToIndex(this.state.currIndex, 'auto');
     // Detect changes on gallery-item components to re-calculate item size
     this._cd.detectChanges();
     this._gallery.debugConsole('🦐 [Gallery OnHostResize]: set viewport width to absolute number');

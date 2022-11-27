@@ -99,11 +99,6 @@ export class GalleryCoreComponent {
     return this.config.thumbSlidingDisabled;
   }
 
-  /** Set gallery slider content-visibility-auto style  */
-  @HostBinding('attr.contentVisibilityAuto') get contentVisibilityAuto(): boolean {
-    return this.config.contentVisibilityAuto;
-  }
-
   /** Set gallery slider itemAutosize style  */
   @HostBinding('attr.itemAutosize') get itemAutosize(): boolean {
     return this.config.itemAutosize;

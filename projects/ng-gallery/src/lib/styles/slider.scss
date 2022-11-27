@@ -66,21 +66,6 @@
     }
   }
 
-  /** Disable sliding */
-  gallery-core[contentVisibilityAuto='true'] {
-    gallery-thumb, gallery-item {
-      content-visibility: auto;
-    }
-
-    gallery-item {
-      contain-intrinsic-size: var(--item-contain-intrinsic-size);
-    }
-
-    gallery-thumb {
-      contain-intrinsic-size: var(--thumb-contain-intrinsic-size);
-    }
-  }
-
   .g-slider {
     display: flex;
     align-items: center;

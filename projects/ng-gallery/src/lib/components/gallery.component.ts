@@ -47,7 +47,6 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() autoPlay: boolean = this._gallery.config.autoPlay;
   @Input() thumbWidth: number = this._gallery.config.thumbWidth;
   @Input() thumbHeight: number = this._gallery.config.thumbHeight;
-  @Input() contentVisibilityAuto: boolean = this._gallery.config.contentVisibilityAuto;
   @Input() disableThumb: boolean = this._gallery.config.disableThumb;
   @Input() scrollBehavior: ScrollBehavior = this._gallery.config.scrollBehavior;
   @Input() navScrollBehavior: ScrollBehavior = this._gallery.config.navScrollBehavior;
@@ -132,7 +131,6 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       slidingDuration: this.slidingDuration,
       slidingDirection: this.slidingDirection,
       resizeDebounceTime: this.resizeDebounceTime,
-      contentVisibilityAuto: this.contentVisibilityAuto,
       slidingDisabled: this.slidingDisabled,
       thumbSlidingDisabled: this.thumbSlidingDisabled,
       mouseSlidingDisabled: this.mouseSlidingDisabled,
