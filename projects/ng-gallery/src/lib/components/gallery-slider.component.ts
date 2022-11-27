@@ -144,7 +144,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
               // Reset viewport properties on scroll end
               this._isPanning = false;
               this.slider.classList.remove('g-scrolling');
-              // this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
+              this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
               this._gallery.debugConsole('✅ [Gallery scrollHandler$] Scroll end');
             })
           );
@@ -297,34 +297,37 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
     if (elementAtCenter) {
       // Check if the gallery-item element is not the active element
       if (elementAtCenter !== currElement) {
-        // Get the centralised element
-        const allowedMargin: number = 10;
-        const offsetDiff: number = (this.adapter.clientSize - this.adapter.getClientSize(elementAtCenter as HTMLElement)) / 2;
-        const rangeStart: number = this.adapter.scrollValue + offsetDiff;
-        const rangeEnd: number = this.adapter.scrollValue + this.adapter.clientSize - offsetDiff;
-        const elStart: number = this.adapter.getOffsetSize(elementAtCenter as HTMLElement);
-        const elEnd: number = elStart + this.adapter.getClientSize(elementAtCenter as HTMLElement);
-
-        const isStart: boolean = rangeStart + allowedMargin >= elStart && rangeStart - allowedMargin <= elStart;
-        const isEnd: boolean = rangeEnd + allowedMargin >= elEnd && rangeEnd - allowedMargin <= elEnd;
-
-        // Check if element is within the detection range
-        if (isStart && isEnd) {
-          // If element is within the range set it as the active gallery item
-          this._gallery.debugConsole('🍄 [Gallery onViewportScroll]: Set active gallery item');
-
-          const index: number = +elementAtCenter.getAttribute('galleryIndex');
-          this._zone.run(() => this._gallery.ref(this.galleryId).set(index, 'smooth'));
-          return;
-        }
-        // Reset position
-
-        this._gallery.debugConsole('🔙 [Gallery onViewportScroll]: Gallery is the same');
-        this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
-      } else {
-        // It is the same active the item, assuming it will reset its position using CSS snap-type method
-        this._gallery.debugConsole('⁉ [Gallery onViewportScroll]: No center element was found');
+        this.tryScrollToElement(elementAtCenter as HTMLElement);
       }
+    } else {
+      this._gallery.debugConsole('⁉ [Gallery onViewportScroll]: No center element was found');
+      this.visibleElements.forEach((entry: IntersectionObserverEntry) => {
+        this.tryScrollToElement(entry.target as HTMLElement);
+      });
+    }
+  }
+
+  private tryScrollToElement(elementAtCenter: HTMLElement): void {
+    const allowedMargin: number = 10;
+    const offsetDiff: number = (this.adapter.clientSize - this.adapter.getClientSize(elementAtCenter)) / 2;
+    const rangeStart: number = this.adapter.scrollValue + offsetDiff;
+    const rangeEnd: number = this.adapter.scrollValue + this.adapter.clientSize - offsetDiff;
+    const elStart: number = this.adapter.getOffsetSize(elementAtCenter);
+    const elEnd: number = elStart + this.adapter.getClientSize(elementAtCenter);
+
+    const isStart: boolean = rangeStart + allowedMargin >= elStart && rangeStart - allowedMargin <= elStart;
+    const isEnd: boolean = rangeEnd + allowedMargin >= elEnd && rangeEnd - allowedMargin <= elEnd;
+
+    // Reset position
+    this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
+
+    // Check if element is within the detection range
+    if (isStart && isEnd) {
+      // If element is within the range set it as the active gallery item
+      this._gallery.debugConsole('🍄 [Gallery onViewportScroll]: Set active gallery item');
+
+      const index: number = +elementAtCenter.getAttribute('galleryIndex');
+      this._zone.run(() => this._gallery.ref(this.galleryId).set(index, 'smooth'));
     }
   }
 
@@ -393,11 +396,11 @@ export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
       const currElement: Element = this.items.get(this.state.currIndex)?.element;
 
       // Find the gallery item element in the center elements
-      const centerItem: Element = this.getElementFromViewportCenter();
+      const elementAtCenter: Element = this.getElementFromViewportCenter();
 
       // Check if center item can be taken from element using
-      if (centerItem && centerItem !== currElement) {
-        const index: number = +centerItem.getAttribute('galleryIndex');
+      if (elementAtCenter && elementAtCenter !== currElement) {
+        const index: number = +elementAtCenter.getAttribute('galleryIndex');
         this.scrollToIndex(index, 'smooth');
         return;
       }
