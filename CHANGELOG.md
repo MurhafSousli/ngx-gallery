@@ -1,5 +1,20 @@
 # Changelog
 
+## 8.0.0-beta.5
+
+- regret(core): Remove`contentVisibilityAuto` option for version 8.
+- feat(core): Add `itemLoaded` output which emits after an item is loaded, for image items it emits after the image is loaded.
+- feat(core): Add `autoHeight` option, when set to true, the gallery height will fit the active item height.
+- feat(core): Add `autoItemSize` option, when set to true, the item will fit its image aspect ratio.
+- feat(core): Add `autoThumbSize` option, when set to true, the thumb will fit its image aspect ratio.
+- feat(core): Add `scrollBehavior` option.
+- feat(core): Add `navScrollBehavior` option.
+- feat(core): Add `thumbImageSize` option.
+- feat(core): Add more options to the video item.
+- feat(core): Add `configSnapshot` to `GalleryRef` class.
+- feat(core): Add an optional parameter `behavior` to all `next(behavior?)`, `prev(behavior?)`, `set(index, behavior?)` functions, fallbacks to the `scrollBehavior` config.
+- refactor(core): Only display custom item template container when `itemTemplate` is provided.
+
 ## 8.0.0-beta.4
 
 - feat(core): Add `contentVisibilityAuto` option to set the proper `content-visibility` and `contain-intrinsic-size` value on all gallery items/thumbs, in [73b20a9](https://github.com/MurhafSousli/ngx-gallery/pull/491/commits/73b20a9f996371e4a3ad52283b358263fd88546f).
