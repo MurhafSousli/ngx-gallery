@@ -55,7 +55,8 @@
               "projects/ng-gallery-demo/src/assets"
             ],
             "styles": [
-              "projects/ng-gallery-demo/src/styles.scss"
+              "projects/ng-gallery-demo/src/styles.scss",
+              "node_modules/highlight.js/styles/a11y-light.css"
             ],
             "allowedCommonJsDependencies": [
               "bezier-easing",
@@ -93,8 +94,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "12kb",
+                  "maximumError": "12kb"
                 }
               ]
             }
