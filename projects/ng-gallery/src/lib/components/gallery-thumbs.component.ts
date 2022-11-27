@@ -151,8 +151,8 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
               this.slider.style.setProperty('--thumb-centralize-start-size', this.adapter.getCentralizerStartSize() + 'px');
               this.slider.style.setProperty('--thumb-centralize-end-size', this.adapter.getCentralizerEndSize() + 'px');
             }
-            // this._cd.detectChanges();
-            // this.scrollToIndex(this.state.currIndex, 'auto');
+            this._cd.detectChanges();
+            this.scrollToIndex(this.state.currIndex, 'auto');
           }),
           takeUntil(this._destroyed$)
         ).subscribe();
