@@ -145,16 +145,4 @@
       transform: translate3d(30%, 0, 0);
     }
   }
-
-
-  gallery-core[thumbAutosize='true'] {
-    gallery-thumb {
-      //width: auto !important;
-    }
-  }
-
-  gallery-core[thumbAutosize='false'] {
-    gallery-thumb {
-    }
-  }
 }
