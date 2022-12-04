@@ -70,7 +70,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    transition: height 200ms cubic-bezier(0.5, 0, 0.5, 1);
+    transition: var(--g-height-transition);
 
     scrollbar-width: none; /* Firefox 64 */
     -ms-overflow-style: none; /* Internet Explorer 11 */

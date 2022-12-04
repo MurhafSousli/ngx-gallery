@@ -7,7 +7,7 @@
     justify-content: center;
     align-items: center;
     background-color: black;
-    transition: height linear 0.4s;
+    --g-height-transition: height 400ms linear;
 
     * {
       box-sizing: border-box;
