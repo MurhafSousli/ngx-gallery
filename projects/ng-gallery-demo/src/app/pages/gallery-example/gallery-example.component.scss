@@ -1,5 +1,9 @@
+@import '../../../assets/variables';
+
 gallery {
   margin-top: 3em;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5em;
 }
 
 code {

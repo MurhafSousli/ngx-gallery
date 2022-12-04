@@ -1,3 +1,14 @@
+:host {
+  .mdc-button {
+    ::ng-deep {
+      .mdc-button__label {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+}
+
 .example-card {
   width: 400px;
 }

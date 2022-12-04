@@ -14,7 +14,7 @@
     <section-title>Usage</section-title>
 
     <note class="info" style="margin-top: -4em">
-      <p>If you haven't installed and imported the module in step <span class="section-number inline-number">1</span>,
+      <p>If you haven't installed and imported the module in step <span class="section-number inline-number">1</span>
         see the <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent"
                    [routerLink]="['/getting-started/lightbox']">Getting
           Started Guide</a></p>
@@ -46,7 +46,7 @@
     <h3>Demo</h3>
 
     <div class="grid">
-      <button mat-raised-button mat-ripple class="grid-item" *ngFor="let item of space$ | async; let i = index"
+      <button mat-raised-button class="grid-item" *ngFor="let item of space$ | async; let i = index"
               [lightbox]="i" gallery="lightbox">
 
         <img class="grid-image" loading="lazy" [src]="item.data.thumb"/>

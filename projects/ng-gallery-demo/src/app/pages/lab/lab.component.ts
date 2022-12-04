@@ -5,7 +5,6 @@ import {
   GalleryConfig,
   LoadingStrategy,
   SlidingDirection,
-  ThumbnailsMode,
   ThumbnailsPosition,
   ThumbnailsView
 } from 'ng-gallery';

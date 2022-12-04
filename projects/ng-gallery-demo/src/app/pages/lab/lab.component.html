@@ -54,27 +54,27 @@
 
       <div class="outputs-container">
         <ng-container *ngIf="indexChange$ | async; let indexChange">
-            <span class="chip" [class.changed]="indexChange.active">
-              <strong>(indexChange): {{indexChange.e?.currIndex}}</strong>
-            </span>
+          <span class="chip" [class.changed]="indexChange.active">
+            <strong>indexChange {{indexChange.e?.currIndex}}</strong>
+          </span>
         </ng-container>
 
         <ng-container *ngIf="thumbClick$ | async; let thumbClick">
-            <span class="chip" [class.changed]="thumbClick.active">
-              <strong>(thumbClick): {{thumbClick.e}}</strong>
-            </span>
+          <span class="chip" [class.changed]="thumbClick.active">
+            <strong>thumbClick {{thumbClick.e}}</strong>
+          </span>
         </ng-container>
 
         <ng-container *ngIf="itemClick$ | async; let itemClick">
-            <span class="chip" [class.changed]="itemClick.active">
-              <strong>(itemClick): {{itemClick.e}}</strong>
-            </span>
+          <span class="chip" [class.changed]="itemClick.active">
+            <strong>itemClick {{itemClick.e}}</strong>
+          </span>
         </ng-container>
 
         <ng-container *ngIf="player$ | async; let player">
-            <span class="chip" [class.changed]="player.active">
-              <strong>(playingChange): {{player.e?.isPlaying}}</strong>
-            </span>
+          <span class="chip" [class.changed]="player.active">
+            <strong>playingChange {{player.e?.isPlaying}}</strong>
+          </span>
         </ng-container>
       </div>
 
@@ -247,3 +247,5 @@
     </mat-card-content>
   </mat-card>
 </div>
+
+<footer></footer>
