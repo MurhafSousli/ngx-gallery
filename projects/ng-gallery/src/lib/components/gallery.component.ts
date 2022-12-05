@@ -141,7 +141,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     };
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (this.galleryRef) {
       this.galleryRef.setConfig(this.getConfig());
 
@@ -151,7 +151,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     // Get gallery instance by id
     if (this.skipInitConfig) {
       this.galleryRef = this._gallery.ref(this.id);
@@ -182,7 +182,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._itemClick$.unsubscribe();
     this._thumbClick$.unsubscribe();
     this._itemChange$.unsubscribe();
@@ -194,71 +194,71 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  onItemClick(i: number) {
+  onItemClick(i: number): void {
     this.itemClick.emit(i);
     this.galleryRef.itemClick.next(i);
   }
 
-  onThumbClick(i: number) {
+  onThumbClick(i: number): void {
     this.galleryRef.set(i);
     this.thumbClick.emit(i);
     this.galleryRef.thumbClick.next(i);
   }
 
-  onError(err: GalleryError) {
+  onError(err: GalleryError): void {
     this.error.emit(err);
     this.galleryRef.error.next(err);
   }
 
-  load(items: GalleryItem[]) {
+  load(items: GalleryItem[]): void {
     this.galleryRef.load(items);
   }
 
-  add(item: GalleryItem, active?: boolean) {
+  add(item: GalleryItem, active?: boolean): void {
     this.galleryRef.add(item, active);
   }
 
-  addImage(data: ImageItemData, active?: boolean) {
+  addImage(data: ImageItemData, active?: boolean): void {
     this.galleryRef.addImage(data, active);
   }
 
-  addVideo(data: VideoItemData, active?: boolean) {
+  addVideo(data: VideoItemData, active?: boolean): void {
     this.galleryRef.addVideo(data, active);
   }
 
-  addIframe(data: IframeItemData, active?: boolean) {
+  addIframe(data: IframeItemData, active?: boolean): void {
     this.galleryRef.addIframe(data, active);
   }
 
-  addYoutube(data: YoutubeItemData, active?: boolean) {
+  addYoutube(data: YoutubeItemData, active?: boolean): void {
     this.galleryRef.addYoutube(data, active);
   }
 
-  remove(i: number) {
+  remove(i: number): void {
     this.galleryRef.remove(i);
   }
 
-  next(behavior?: ScrollBehavior, loop?: boolean) {
+  next(behavior?: ScrollBehavior, loop?: boolean): void {
     this.galleryRef.next(behavior, loop);
   }
 
-  prev(behavior?: ScrollBehavior, loop?: boolean) {
+  prev(behavior?: ScrollBehavior, loop?: boolean): void {
     this.galleryRef.prev(behavior, loop);
   }
 
-  set(i: number, behavior?: ScrollBehavior) {
+  set(i: number, behavior?: ScrollBehavior): void {
     this.galleryRef.set(i, behavior);
   }
 
-  reset() {
+  reset(): void {
     this.galleryRef.reset();
   }
 
-  play(interval?: number) {
+  play(interval?: number): void {
     this.galleryRef.play(interval);
   }
 
-  stop() {
+  stop(): void {
     this.galleryRef.stop();
   }
 }

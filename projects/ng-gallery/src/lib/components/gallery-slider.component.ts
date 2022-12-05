@@ -3,6 +3,8 @@ import {
   Input,
   Output,
   EventEmitter,
+  AfterViewInit,
+  AfterViewChecked,
   OnDestroy,
   OnInit,
   OnChanges,
@@ -70,12 +72,9 @@ declare const Hammer: any;
     <ng-content></ng-content>
   `
 })
-export class GallerySliderComponent implements OnInit, OnChanges, OnDestroy {
+export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit, AfterViewChecked, OnDestroy {
 
   readonly scrollHandler$: Subject<ScrollObserver> = new Subject<ScrollObserver>();
-
-  /** Thumbnails view enum */
-  readonly thumbnailsView = ThumbnailsView;
 
   /** HammerJS instance */
   private _hammer: any;

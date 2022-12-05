@@ -70,7 +70,7 @@ export class GalleryImageComponent implements OnInit {
   state: 'loading' | 'success' | 'failed' = 'loading';
 
   /** Progress value */
-  progress = 0;
+  progress: number = 0;
 
   /** Is thumbnail */
   @Input() isThumbnail: boolean;

@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { GalleryConfig } from '../models/config.model';
 import { LoadingStrategy, GalleryItemType } from '../models/constants';
+import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from './templates/items.model';
 
 @Component({
   selector: 'gallery-item',
@@ -20,8 +21,8 @@ import { LoadingStrategy, GalleryItemType } from '../models/constants';
     <ng-container *ngIf="load" [ngSwitch]="type">
       <ng-container *ngSwitchCase="Types.Image">
 
-        <gallery-image [src]="data.src"
-                       [alt]="data.alt"
+        <gallery-image [src]="imageData.src"
+                       [alt]="imageData.alt"
                        [loadingIcon]="config.loadingIcon"
                        [loadingError]="config.loadingError"
                        (loaded)="onItemLoaded()"
@@ -36,12 +37,12 @@ import { LoadingStrategy, GalleryItemType } from '../models/constants';
       </ng-container>
 
       <gallery-video *ngSwitchCase="Types.Video"
-                     [src]="data.src"
-                     [mute]="data.mute"
-                     [poster]="data.poster"
-                     [controls]="data.controls"
-                     [controlsList]="data.controlsList"
-                     [disablePictureInPicture]="data.disablePictureInPicture"
+                     [src]="videoData.src"
+                     [mute]="videoData.mute"
+                     [poster]="videoData.poster"
+                     [controls]="videoData.controls"
+                     [controlsList]="videoData.controlsList"
+                     [disablePictureInPicture]="videoData.disablePictureInPicture"
                      [play]="isAutoPlay"
                      [pause]="currIndex !== index"
                      (error)="error.emit($event)"></gallery-video>
@@ -86,7 +87,7 @@ export class GalleryItemComponent implements AfterViewChecked, OnChanges {
   @Input() type: string;
 
   /** Item's data, this object contains the data required to display the content (e.g. src path) */
-  @Input() data: any;
+  @Input() data: GalleryItemData;
 
   /** Stream that emits when an error occurs */
   @Output() error = new EventEmitter<ErrorEvent>();
@@ -94,15 +95,15 @@ export class GalleryItemComponent implements AfterViewChecked, OnChanges {
   /** Stream that emits when item is active */
   @Output() active = new EventEmitter<Element>;
 
-  @HostBinding('class.g-active-item') get isActive() {
+  @HostBinding('class.g-active-item') get isActive(): boolean {
     return this.index === this.currIndex;
   }
 
-  @HostBinding('attr.galleryIndex') get isIndexAttr() {
+  @HostBinding('attr.galleryIndex') get isIndexAttr(): number {
     return this.index;
   }
 
-  @HostBinding('attr.imageState') get imageState() {
+  @HostBinding('attr.imageState') get imageState(): 'IN_PROGRESS' | 'DONE' {
     return this.imageLoadingState;
   }
 
@@ -110,29 +111,29 @@ export class GalleryItemComponent implements AfterViewChecked, OnChanges {
     return this.el.nativeElement;
   }
 
-  get isAutoPlay() {
+  get isAutoPlay(): boolean {
     if (this.isActive) {
       if (this.type === GalleryItemType.Video || this.type === GalleryItemType.Youtube) {
-        return this.data.autoplay;
+        return this.videoData.autoplay;
       }
     }
   }
 
-  get youtubeSrc() {
+  get youtubeSrc(): string {
     let autoplay: 1 | 0 = 0;
-    if (this.isActive && this.type === GalleryItemType.Youtube && this.data.autoplay) {
+    if (this.isActive && this.type === GalleryItemType.Youtube && (this.data as YoutubeItemData).autoplay) {
       autoplay = 1;
     }
     const url = new URL(this.data.src);
     url.search = new URLSearchParams({
       wmode: 'transparent',
-      ...this.data.params,
+      ...(this.data as YoutubeItemData).params,
       autoplay
     }).toString();
     return url.href;
   }
 
-  get load() {
+  get load(): boolean {
     switch (this.config.loadingStrategy) {
       case LoadingStrategy.Preload:
         return true;
@@ -141,6 +142,14 @@ export class GalleryItemComponent implements AfterViewChecked, OnChanges {
       default:
         return this.currIndex === this.index || this.currIndex === this.index - 1 || this.currIndex === this.index + 1;
     }
+  }
+
+  get imageData(): ImageItemData {
+    return this.data;
+  }
+
+  get videoData(): VideoItemData {
+    return this.data;
   }
 
   constructor(private el: ElementRef, private cd: ChangeDetectorRef) {
@@ -170,22 +179,26 @@ export class GalleryItemComponent implements AfterViewChecked, OnChanges {
 
   private getWidth(): string {
     if (this.config.slidingDirection === 'horizontal') {
-      if (this.config.itemAutosize && this.imageLoadingState === 'DONE' && this.element.firstElementChild.clientWidth) {
-        return `${ this.element.firstElementChild.clientWidth }px`;
+      const firstElementChild: Element = this.element?.firstElementChild;
+      if (this.config.itemAutosize && this.imageLoadingState === 'DONE' && firstElementChild?.clientWidth) {
+        return `${ firstElementChild.clientWidth }px`;
       }
     }
     return `${ this.element.parentElement.parentElement.clientWidth }px`;
   }
 
   private getHeight(): string {
-    if (this.config.autoHeight) {
-      if (this.imageLoadingState === 'DONE' && this.element.firstElementChild.clientHeight) {
-        return `${ this.element.firstElementChild.clientHeight }px`;
+    const firstElementChild: Element = this.element.firstElementChild;
+    if (firstElementChild) {
+      if (this.config.autoHeight) {
+        if (this.imageLoadingState === 'DONE' && firstElementChild.clientHeight) {
+          return `${ firstElementChild.clientHeight }px`;
+        }
       }
-    }
-    if (this.config.slidingDirection === 'vertical') {
-      if (this.config.itemAutosize && this.imageLoadingState === 'DONE' && this.element.firstElementChild.clientHeight) {
-        return `${ this.element.firstElementChild.clientHeight }px`;
+      if (this.config.slidingDirection === 'vertical') {
+        if (this.config.itemAutosize && this.imageLoadingState === 'DONE' && firstElementChild.clientHeight) {
+          return `${ firstElementChild.clientHeight }px`;
+        }
       }
     }
     return `${ this.element.parentElement.parentElement.clientHeight }px`;

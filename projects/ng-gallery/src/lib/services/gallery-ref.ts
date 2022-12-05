@@ -4,7 +4,16 @@ import { defaultState } from '../utils/gallery.default';
 import { GalleryError, GalleryItem, GalleryState } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
 import { GalleryAction } from '../models/constants';
-import { IframeItem, ImageItem, VideoItem, YoutubeItem } from '../components/templates/items.model';
+import {
+  IframeItem,
+  IframeItemData,
+  ImageItem,
+  ImageItemData,
+  VideoItem,
+  VideoItemData,
+  YoutubeItem,
+  YoutubeItemData
+} from '../components/templates/items.model';
 
 const filterActions = (actions: string[]) => {
   return filter((state: GalleryState) => actions.indexOf(state.action) > -1);
@@ -92,21 +101,21 @@ export class GalleryRef {
   /**
    * Set gallery state
    */
-  private setState(state: GalleryState) {
+  private setState(state: GalleryState): void {
     this._state.next({ ...this.stateSnapshot, ...state });
   }
 
   /**
    * Set gallery config
    */
-  setConfig(config: GalleryConfig) {
+  setConfig(config: GalleryConfig): void {
     this._config.next({ ...this._config.value, ...config });
   }
 
   /**
    * Add gallery item
    */
-  add(item: GalleryItem, active?: boolean) {
+  add(item: GalleryItem, active?: boolean): void {
     const items: GalleryItem[] = [...this.stateSnapshot.items, item];
     this.setState({
       action: GalleryAction.ITEMS_CHANGED,
@@ -119,35 +128,35 @@ export class GalleryRef {
   /**
    * Add image item
    */
-  addImage(data: any, active?: boolean) {
+  addImage(data: ImageItemData, active?: boolean): void {
     this.add(new ImageItem(data), active);
   }
 
   /**
    * Add video item
    */
-  addVideo(data: any, active?: boolean) {
+  addVideo(data: VideoItemData, active?: boolean): void {
     this.add(new VideoItem(data), active);
   }
 
   /**
    * Add iframe item
    */
-  addIframe(data: any, active?: boolean) {
+  addIframe(data: IframeItemData, active?: boolean): void {
     this.add(new IframeItem(data), active);
   }
 
   /**
    * Add youtube item
    */
-  addYoutube(data: any, active?: boolean) {
+  addYoutube(data: YoutubeItemData, active?: boolean): void {
     this.add(new YoutubeItem(data), active);
   }
 
   /**
    * Remove gallery item
    */
-  remove(i: number) {
+  remove(i: number): void {
     const state: GalleryState = this.stateSnapshot;
     const items: GalleryItem[] = [
       ...state.items.slice(0, i),
@@ -165,7 +174,7 @@ export class GalleryRef {
   /**
    * Load items and reset the state
    */
-  load(items: GalleryItem[]) {
+  load(items: GalleryItem[]): void {
     if (items) {
       this.setState({
         action: GalleryAction.ITEMS_CHANGED,
@@ -179,7 +188,7 @@ export class GalleryRef {
   /**
    * Set active item
    */
-  set(i: number, behavior: ScrollBehavior = this._config.value.scrollBehavior) {
+  set(i: number, behavior: ScrollBehavior = this._config.value.scrollBehavior): void {
     if (i < 0 || i >= this.stateSnapshot.items.length) {
       console.error(`[NgGallery]: Unable to set the active item because the given index (${ i }) is outside the items range!`);
       return;
@@ -198,7 +207,7 @@ export class GalleryRef {
   /**
    * Next item
    */
-  next(behavior: ScrollBehavior = this._config.value.scrollBehavior, loop: boolean = true) {
+  next(behavior: ScrollBehavior = this._config.value.scrollBehavior, loop: boolean = true): void {
     if (this.stateSnapshot.hasNext) {
       this.set(this.stateSnapshot.currIndex + 1, behavior);
     } else if (loop && this._config.value.loop) {
@@ -209,7 +218,7 @@ export class GalleryRef {
   /**
    * Prev item
    */
-  prev(behavior: ScrollBehavior = this._config.value.scrollBehavior, loop: boolean = true) {
+  prev(behavior: ScrollBehavior = this._config.value.scrollBehavior, loop: boolean = true): void {
     if (this.stateSnapshot.hasPrev) {
       this.set(this.stateSnapshot.currIndex - 1, behavior);
     } else if (loop && this._config.value.loop) {
@@ -220,7 +229,7 @@ export class GalleryRef {
   /**
    * Start gallery player
    */
-  play(interval?: number) {
+  play(interval?: number): void {
     if (interval) {
       this.setConfig({ playerInterval: interval });
     }
@@ -230,21 +239,21 @@ export class GalleryRef {
   /**
    * Stop gallery player
    */
-  stop() {
+  stop(): void {
     this.setState({ action: GalleryAction.STOP, isPlaying: false });
   }
 
   /**
    * Reset gallery to initial state
    */
-  reset() {
+  reset(): void {
     this.setState(defaultState);
   }
 
   /**
    * Destroy gallery
    */
-  destroy() {
+  destroy(): void {
     this._state.complete();
     this._config.complete();
     this.itemClick.complete();

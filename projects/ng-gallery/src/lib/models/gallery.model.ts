@@ -1,4 +1,5 @@
 import { GalleryAction } from './constants';
+import { GalleryItemData } from '../components/templates/items.model';
 
 export interface GalleryState {
   action?: GalleryAction;
@@ -11,7 +12,7 @@ export interface GalleryState {
 }
 
 export interface GalleryItem {
-  data?: any;
+  data?: GalleryItemData;
   type?: string;
 }
 
