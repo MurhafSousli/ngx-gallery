@@ -1,6 +1,8 @@
 ::ng-deep {
   #mixed {
     margin: 2em 0 3em;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5em;
 
     .item-type {
       padding: 6px;

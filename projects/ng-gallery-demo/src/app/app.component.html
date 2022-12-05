@@ -5,7 +5,7 @@
     <div class="logo">
       <mat-icon svgIcon="logo"></mat-icon>
     </div>
-    <h3>Angular Gallery</h3>
+    <h3>Ng-gallery</h3>
     <app-menu [toolbar]="false"></app-menu>
   </mat-sidenav>
 
@@ -18,12 +18,10 @@
         <mat-icon>menu</mat-icon>
       </a>
 
-      <div class="toolbar-logo">
-        <a routerLink=".">
-          <mat-icon svgIcon="logo"></mat-icon>
-        </a>
-        <h1>Angular Gallery</h1>
-      </div>
+      <a class="toolbar-logo" routerLink=".">
+        <mat-icon svgIcon="logo"></mat-icon>
+        <h1>Ng-gallery</h1>
+      </a>
 
       <span fxFlex></span>
       <app-menu fxHide.lt-sm></app-menu>

@@ -8,6 +8,7 @@
 
 h3 {
   text-align: center;
+  letter-spacing: 1px;
 }
 
 .main-wrapper {
@@ -42,9 +43,14 @@ main {
   display: flex;
   align-items: center;
 
+  a {
+    letter-spacing: 1px;
+  }
+
   h1 {
-    text-align: center;
+    color: white;
     font-size: 16px;
+    text-align: center;
   }
 
   span {
@@ -52,11 +58,6 @@ main {
   }
 
   mat-icon {
-    height: 100%;
-    width: 100%;
-  }
-
-  a {
     width: 40px;
     height: 40px;
     margin-right: 0.5em;
@@ -85,4 +86,9 @@ main {
   h3, menu {
     color: white;
   }
+}
+
+.toggle-button {
+  width: 40px;
+  height: 40px;
 }
