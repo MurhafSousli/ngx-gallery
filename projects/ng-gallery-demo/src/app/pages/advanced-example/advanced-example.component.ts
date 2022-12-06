@@ -101,7 +101,7 @@ const data: GalleryItemData[] = [
   } as ImageItemData,
   {
     type: 'video',
-    autoplay: true,
+    autoplay: false,
     controls: true,
     mute: null,
     loop: true,
@@ -116,7 +116,7 @@ const data: GalleryItemData[] = [
   } as VideoItemData,
   {
     type: 'youtube',
-    autoplay: true,
+    autoplay: false,
     src: 'b7Cl7S0pLRw'
   } as YoutubeItemData,
   {
