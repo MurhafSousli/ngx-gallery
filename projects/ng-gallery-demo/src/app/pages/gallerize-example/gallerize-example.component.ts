@@ -16,6 +16,7 @@ export class GallerizeExampleComponent implements OnInit {
 
   readonly code: any;
   readonly images$ = this._pixabay.getHDImages('house');
+  readonly examples$ = this._pixabay.getHDImages('crocodile');
 
   constructor(private _pixabay: Pixabay, gallery: Gallery, private _title: Title) {
     this.code = code;
@@ -30,6 +31,7 @@ export class GallerizeExampleComponent implements OnInit {
     });
     gallery.ref('auto-detect').setConfig({
       thumbPosition: 'top',
+      autoHeight: true,
       imageSize: 'cover',
       itemAutosize: false,
       thumbAutosize: false,

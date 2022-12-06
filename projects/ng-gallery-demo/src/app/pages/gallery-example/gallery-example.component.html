@@ -67,6 +67,7 @@
     <gallery id="basic"
              *ngIf="media$ | async; let config"
              [items]="fruits$ | async"
+             [dots]="true"
              [thumbWidth]="config.thumbWidth"
              [thumbHeight]="config.thumbHeight"
              [thumbPosition]="config.thumbPosition">
