@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.0.0
+
+- refactor(core): Fix angular error regarding setting the iframe `allow` attribute.
+- refactor(nav): Change default icons.
+- refactor(dots): Change default dot size.
+
 ## 8.0.0-beta.5
 
 - regret(core): Remove`contentVisibilityAuto` option for version 8.
@@ -17,7 +23,7 @@
 
 ## 8.0.0-beta.4
 
-- feat(core): Add `contentVisibilityAuto` option to set the proper `content-visibility` and `contain-intrinsic-size` value on all gallery items/thumbs, in [73b20a9](https://github.com/MurhafSousli/ngx-gallery/pull/491/commits/73b20a9f996371e4a3ad52283b358263fd88546f).
+- ~~feat(core): Add `contentVisibilityAuto` option to set the proper `content-visibility` and `contain-intrinsic-size` value on all gallery items/thumbs, in [73b20a9](https://github.com/MurhafSousli/ngx-gallery/pull/491/commits/73b20a9f996371e4a3ad52283b358263fd88546f).~~
 - feat(core): Use native `loading` attribute on all `img` and `iframe` for native lazy loading.
 - refactor(core): Fix loop issue when sliding with using the mouse, in [1572bea](https://github.com/MurhafSousli/ngx-gallery/pull/491/commits/1572beae2bc58792fac94243f4f3e20c0a61e549).
 - refactor(core): Remove `lazy-image` directive.
@@ -60,7 +66,7 @@ HammerJs is only used for sliding using the mouse on desktop only, Sliding on mo
 - `panSensitivity` has been deprecated.
 - Remove `ng-content` from the gallery, use `boxTemplate` option to add your custom layer.
 - The default value for `loadingStrategy` option has changed to `LoadingStrategy.Preload`.
-- Added new tiny dependency `bezier-easing`.
+- Added new dependency `bezier-easing`.
 
 
 ## 7.1.2
