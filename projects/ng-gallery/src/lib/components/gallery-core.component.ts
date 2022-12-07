@@ -18,7 +18,6 @@ import { GalleryConfig } from '../models/config.model';
                       [config]="config"
                       [galleryId]="galleryId"
                       (itemClick)="itemClick.emit($event)"
-                      (itemLoaded)="itemLoaded.emit(state)"
                       (error)="error.emit($event)">
 
         <gallery-nav *ngIf="config.nav && state.items.length > 1"
@@ -50,7 +49,6 @@ export class GalleryCoreComponent {
   @Input() galleryId: string;
   @Input() state: GalleryState;
   @Input() config: GalleryConfig;
-  @Output() itemLoaded = new EventEmitter<GalleryState>();
   @Output() itemClick = new EventEmitter<number>();
   @Output() thumbClick = new EventEmitter<number>();
   @Output() error = new EventEmitter<GalleryError>();

@@ -64,7 +64,6 @@ declare const Hammer: any;
                       [currIndex]="state.currIndex"
                       [index]="i"
                       (click)="itemClick.emit(i)"
-                      (active)="onItemActivated($event)"
                       (error)="error.emit({ itemIndex: i, error: $event })">
         </gallery-item>
       </div>
@@ -101,9 +100,6 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
 
   /** Stream that emits when item is clicked */
   @Output() itemClick = new EventEmitter<number>();
-
-  /** Stream that emits when item is loaded */
-  @Output() itemLoaded = new EventEmitter<number>();
 
   /** Stream that emits when an error occurs */
   @Output() error = new EventEmitter<GalleryError>();
@@ -258,19 +254,6 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
     this._destroyed$.next();
     this._destroyed$.complete();
     this.deactivateGestures();
-  }
-
-  onItemActivated(el: Element): void {
-    this._gallery.debugConsole('🐓 [Gallery onItemActivated]: ', +el.getAttribute('galleryIndex'));
-    // Auto-height feature, only allowed when sliding direction is horizontal
-    const isThumbPositionHorizontal: boolean = this.config.thumbPosition === 'top' || this.config.thumbPosition === 'bottom';
-    if (this.config.autoHeight && el.clientHeight && isThumbPositionHorizontal) {
-      this._gallery.debugConsole('🦐 [Gallery onItemActivated]: Set slider height and emit it', el.clientHeight);
-      // Change slider height
-      this.slider.style.height = `${ el.clientHeight }px`;
-      // Change root component height
-      this.itemLoaded.emit(el.clientHeight);
-    }
   }
 
   trackByFn(index: number, item: any) {

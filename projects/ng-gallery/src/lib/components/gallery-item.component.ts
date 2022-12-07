@@ -4,7 +4,6 @@ import {
   Input,
   Output,
   EventEmitter,
-  OnChanges,
   AfterViewChecked,
   ElementRef,
   ChangeDetectorRef,
@@ -67,7 +66,7 @@ import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from '
     </ng-container>
   `
 })
-export class GalleryItemComponent implements AfterViewChecked, OnChanges {
+export class GalleryItemComponent implements AfterViewChecked {
 
   readonly Types = GalleryItemType;
 
@@ -91,9 +90,6 @@ export class GalleryItemComponent implements AfterViewChecked, OnChanges {
 
   /** Stream that emits when an error occurs */
   @Output() error = new EventEmitter<ErrorEvent>();
-
-  /** Stream that emits when item is active */
-  @Output() active = new EventEmitter<Element>;
 
   @HostBinding('class.g-active-item') get isActive(): boolean {
     return this.index === this.currIndex;
@@ -156,52 +152,52 @@ export class GalleryItemComponent implements AfterViewChecked, OnChanges {
   }
 
   ngAfterViewChecked(): void {
-    this.element.style.setProperty('--g-item-width', this.getWidth());
-    this.element.style.setProperty('--g-item-height', this.getHeight());
-  }
-
-  ngOnChanges(): void {
-    if (this.currIndex === this.index && (this.type !== this.Types.Image || this.imageLoadingState === 'DONE')) {
-      this.active.emit(this.element);
+    const height = this.getHeight();
+    this.element.style.setProperty('--g-item-width', `${ this.getWidth() }px`);
+    this.element.style.setProperty('--g-item-height', `${ height }px`);
+    if (this.currIndex === this.index) {
+      // Auto-height feature, only allowed when sliding direction is horizontal
+      const isThumbPositionHorizontal: boolean = this.config.thumbPosition === 'top' || this.config.thumbPosition === 'bottom';
+      if (this.config.autoHeight && height && isThumbPositionHorizontal) {
+        // Change slider height
+        this.element.parentElement.parentElement.style.height = `${ height }px`;
+      }
     }
   }
 
   onItemLoaded(): void {
     if (this.imageLoadingState === 'IN_PROGRESS') {
-      if (this.currIndex === this.index) {
-        this.active.emit(this.element);
-      }
       this.imageLoadingState = 'DONE';
       // Detect changes to re-calculate item size
       this.cd.detectChanges();
     }
   }
 
-  private getWidth(): string {
+  private getWidth(): number {
     if (this.config.slidingDirection === 'horizontal') {
       const firstElementChild: Element = this.element?.firstElementChild;
       if (this.config.itemAutosize && this.imageLoadingState === 'DONE' && firstElementChild?.clientWidth) {
-        return `${ firstElementChild.clientWidth }px`;
+        return firstElementChild.clientWidth;
       }
     }
-    return `${ this.element.parentElement.parentElement.clientWidth }px`;
+    return this.element.parentElement.parentElement.clientWidth;
   }
 
-  private getHeight(): string {
+  private getHeight(): number {
     const firstElementChild: Element = this.element.firstElementChild;
     if (firstElementChild) {
       if (this.config.autoHeight) {
         if (this.imageLoadingState === 'DONE' && firstElementChild.clientHeight) {
-          return `${ firstElementChild.clientHeight }px`;
+          return firstElementChild.clientHeight;
         }
       }
       if (this.config.slidingDirection === 'vertical') {
         if (this.config.itemAutosize && this.imageLoadingState === 'DONE' && firstElementChild.clientHeight) {
-          return `${ firstElementChild.clientHeight }px`;
+          return firstElementChild.clientHeight;
         }
       }
     }
-    return `${ this.element.parentElement.parentElement.clientHeight }px`;
+    return this.element.parentElement.parentElement.clientHeight;
   }
 }
 
