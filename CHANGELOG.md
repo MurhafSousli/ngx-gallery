@@ -2,9 +2,11 @@
 
 ## 8.0.0
 
-- refactor(core): Fix angular error regarding setting the iframe `allow` attribute.
+- feat(core): Add `isActive` to custom gallery template context, in [0b3f8bf](https://github.com/MurhafSousli/ngx-gallery/pull/497/commits/0b3f8bf43e383a8ee3e53a3140e18b8bcf1c2d69).
+- refactor(core): Fix the iframe error regarding the `allow` attribute.
 - refactor(core): Change default navigation icons.
 - refactor(core): Change default dots size.
+- refactor(core): Change default counter styles.
 - regret(core): Remove`itemLoaded` output.
 
 
