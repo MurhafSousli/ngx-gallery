@@ -8,6 +8,10 @@
     align-items: center;
     background-color: black;
     --g-height-transition: height 400ms linear;
+    --g-nav-drop-shadow: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6));
+    --g-box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+    --g-font-color: #000;
+    --g-overlay-color: #fff;
 
     * {
       box-sizing: border-box;

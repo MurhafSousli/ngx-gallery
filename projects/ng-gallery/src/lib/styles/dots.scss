@@ -29,12 +29,11 @@
   }
 
   .g-dot-inner {
-    background-color: white;
+    background-color: var(--g-overlay-color);
     opacity: 0.4;
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    box-shadow: 0 0 1px black;
     transition: opacity linear 150ms;
   }
 
