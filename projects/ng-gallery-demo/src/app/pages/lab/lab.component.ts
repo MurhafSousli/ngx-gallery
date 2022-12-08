@@ -49,7 +49,7 @@ export class LabComponent implements OnInit {
     this.config = {
       nav: true,
       loop: true,
-      dots: false,
+      dots: true,
       dotsPosition: 'bottom',
       counterPosition: 'top',
       resizeDebounceTime: 50,
@@ -71,7 +71,7 @@ export class LabComponent implements OnInit {
       loadingStrategy: LoadingStrategy.Preload,
       slidingDirection: SlidingDirection.Horizontal,
       autoHeight: false,
-      itemAutosize: false,
+      itemAutosize: true,
       thumbAutosize: false,
       scrollBehavior: 'smooth',
       navScrollBehavior: 'smooth',

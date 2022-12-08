@@ -8,7 +8,15 @@ $demo-primary: mat.define-palette(mat.$blue-palette);
 $demo-accent: mat.define-palette(mat.$pink-palette, 400);
 $demo-warn: mat.define-palette(mat.$amber-palette, 300);
 
-$demo-theme: mat.define-light-theme($demo-primary, $demo-accent, $demo-warn);
+$demo-theme: mat.define-light-theme((
+  color: (
+    primary: $demo-primary,
+    accent: $demo-accent,
+    warn: $demo-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
 
 @include mat.all-component-themes($demo-theme);
 

@@ -15,7 +15,7 @@ import { Pixabay } from '../../service/pixabay.service';
 export class GallerizeExampleComponent implements OnInit {
 
   readonly code: any;
-  readonly images$ = this._pixabay.getHDImages('house');
+  readonly images$ = this._pixabay.getHDImages('jaguar');
   readonly examples$ = this._pixabay.getHDImages('crocodile');
 
   constructor(private _pixabay: Pixabay, gallery: Gallery, private _title: Title) {
