@@ -71,7 +71,7 @@ export class LabComponent implements OnInit {
       loadingStrategy: LoadingStrategy.Preload,
       slidingDirection: SlidingDirection.Horizontal,
       autoHeight: false,
-      itemAutosize: true,
+      itemAutosize: false,
       thumbAutosize: false,
       scrollBehavior: 'smooth',
       navScrollBehavior: 'smooth',
