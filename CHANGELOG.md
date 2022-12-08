@@ -3,13 +3,15 @@
 ## 8.0.0
 
 - refactor(core): Fix angular error regarding setting the iframe `allow` attribute.
-- refactor(nav): Change default icons.
-- refactor(dots): Change default dot size.
+- refactor(core): Change default navigation icons.
+- refactor(core): Change default dots size.
+- regret(core): Remove`itemLoaded` output.
+
 
 ## 8.0.0-beta.5
 
 - regret(core): Remove`contentVisibilityAuto` option for version 8.
-- feat(core): Add `itemLoaded` output which emits after an item is loaded, for image items it emits after the image is loaded.
+- ~~feat(core): Add `itemLoaded` output which emits after an item is loaded, for image items it emits after the image is loaded.~~
 - feat(core): Add `autoHeight` option, when set to true, the gallery height will fit the active item height.
 - feat(core): Add `autoItemSize` option, when set to true, the item will fit its image aspect ratio.
 - feat(core): Add `autoThumbSize` option, when set to true, the thumb will fit its image aspect ratio.
