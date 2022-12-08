@@ -16,21 +16,21 @@ export abstract class BaseSliderAdapter {
 
   abstract get clientSize(): number;
 
+  abstract get isContentLessThanContainer(): boolean;
+
   abstract getPanValue(value: number, e: any, behavior: ScrollBehavior): ScrollToOptions;
+
+  abstract getScrollToValue(el: Element, behavior: ScrollBehavior): ScrollToOptions;
+
+  abstract getCentralizerStartSize(): number;
+
+  abstract getCentralizerEndSize(): number;
 }
 
 
 export abstract class ThumbSliderAdapter extends BaseSliderAdapter {
 
-  abstract get containerWidth(): string;
-
-  abstract get containerHeight(): string;
-
   abstract get thumbSize(): number;
-
-  abstract get isContentLessThanContainer(): boolean;
-
-  abstract getCentralisedScrollToValue(value, behavior: ScrollBehavior): ScrollToOptions;
 }
 
 
@@ -38,7 +38,9 @@ export abstract class SliderAdapter extends BaseSliderAdapter {
 
   abstract get measureIndex(): number;
 
-  abstract getScrollToValue(value: number, behavior: ScrollBehavior): ScrollToOptions;
+  abstract getClientSize(el: HTMLElement): number;
+
+  abstract getOffsetSize(el: HTMLElement): number;
 
   abstract getPanDelta(e: any): number;
 

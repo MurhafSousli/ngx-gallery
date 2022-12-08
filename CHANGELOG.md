@@ -1,8 +1,33 @@
 # Changelog
 
+## 8.0.0
+
+- feat(core): Add `isActive` to custom gallery template context, in [0b3f8bf](https://github.com/MurhafSousli/ngx-gallery/pull/497/commits/0b3f8bf43e383a8ee3e53a3140e18b8bcf1c2d69).
+- refactor(core): Fix the iframe error regarding the `allow` attribute.
+- refactor(core): Change default navigation icons.
+- refactor(core): Change default dots size.
+- refactor(core): Change default counter styles.
+- regret(core): Remove`itemLoaded` output.
+
+
+## 8.0.0-beta.5
+
+- regret(core): Remove`contentVisibilityAuto` option for version 8.
+- ~~feat(core): Add `itemLoaded` output which emits after an item is loaded, for image items it emits after the image is loaded.~~
+- feat(core): Add `autoHeight` option, when set to true, the gallery height will fit the active item height.
+- feat(core): Add `autoItemSize` option, when set to true, the item will fit its image aspect ratio.
+- feat(core): Add `autoThumbSize` option, when set to true, the thumb will fit its image aspect ratio.
+- feat(core): Add `scrollBehavior` option.
+- feat(core): Add `navScrollBehavior` option.
+- feat(core): Add `thumbImageSize` option.
+- feat(core): Add more options to the video item.
+- feat(core): Add `configSnapshot` to `GalleryRef` class.
+- feat(core): Add an optional parameter `behavior` to all `next(behavior?)`, `prev(behavior?)`, `set(index, behavior?)` functions, fallbacks to the `scrollBehavior` config.
+- refactor(core): Only display custom item template container when `itemTemplate` is provided.
+
 ## 8.0.0-beta.4
 
-- feat(core): Add `contentVisibilityAuto` option to set the proper `content-visibility` and `contain-intrinsic-size` value on all gallery items/thumbs, in [73b20a9](https://github.com/MurhafSousli/ngx-gallery/pull/491/commits/73b20a9f996371e4a3ad52283b358263fd88546f).
+- ~~feat(core): Add `contentVisibilityAuto` option to set the proper `content-visibility` and `contain-intrinsic-size` value on all gallery items/thumbs, in [73b20a9](https://github.com/MurhafSousli/ngx-gallery/pull/491/commits/73b20a9f996371e4a3ad52283b358263fd88546f).~~
 - feat(core): Use native `loading` attribute on all `img` and `iframe` for native lazy loading.
 - refactor(core): Fix loop issue when sliding with using the mouse, in [1572bea](https://github.com/MurhafSousli/ngx-gallery/pull/491/commits/1572beae2bc58792fac94243f4f3e20c0a61e549).
 - refactor(core): Remove `lazy-image` directive.
@@ -45,7 +70,7 @@ HammerJs is only used for sliding using the mouse on desktop only, Sliding on mo
 - `panSensitivity` has been deprecated.
 - Remove `ng-content` from the gallery, use `boxTemplate` option to add your custom layer.
 - The default value for `loadingStrategy` option has changed to `LoadingStrategy.Preload`.
-- Added new tiny dependency `bezier-easing`.
+- Added new dependency `bezier-easing`.
 
 
 ## 7.1.2

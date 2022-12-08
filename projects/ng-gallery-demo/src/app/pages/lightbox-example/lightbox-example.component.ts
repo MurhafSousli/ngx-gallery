@@ -33,6 +33,7 @@ export class LightboxExampleComponent implements OnInit, OnDestroy {
         this.gallery.ref('lightbox', {
           thumbPosition: 'top',
           imageSize: 'cover',
+          autoHeight: false
           // thumbView: 'contain'
         }).load(items);
 

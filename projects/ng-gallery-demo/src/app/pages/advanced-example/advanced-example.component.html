@@ -1,13 +1,13 @@
 <div class="page-title">
-  <h1>Advanced</h1>
+  <h1>Advanced Example</h1>
 </div>
 <div class="page-content">
   <section>
     <section-title>Overview</section-title>
 
-    <p>The gallery supports the ability for items and thumbnails to extend their templates. To do so, you have to
-      define your custom template, then the content can be provided as an <code class="hljs"
-                                                                                [textContent]="'<ng-template>'"></code>
+    <p>The gallery items and thumbnails use basic predefined templates by default, but they can be replaced by custom
+      templates.
+      Your custom template can be provided as an <code class="hljs" [textContent]="'<ng-template>'"></code>
     </p>
     <p>Use <code class="hljs">[itemTemplate]</code> for items and <code class="hljs">[thumbTemplate]</code> for
       thumbnails.</p>
@@ -51,8 +51,13 @@
   </span>
 </ng-template>
 
-<ng-template #itemTemplate let-index="index" let-type="type" let-data="data" let-currIndex="currIndex">
-  <span *ngIf="type === 'image' && index === currIndex" [@slideAnimation] class="item-text">
+<ng-template #itemTemplate
+             let-index="index"
+             let-type="type"
+             let-data="data"
+             let-currIndex="currIndex"
+             let-isActive="isActive">
+  <span *ngIf="type === 'image' && isActive" [@slideAnimation] class="item-text">
     {{data?.title}}
   </span>
 </ng-template>

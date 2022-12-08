@@ -5,17 +5,17 @@
 @import 'assets/theme';
 @import 'assets/mixin';
 @import 'assets/variables';
-@import '~highlight.js/styles/a11y-light.css';
 
 * {
   box-sizing: border-box;
 }
 
 body {
-  font-family: $font-family;
+  font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
   margin: 0;
   height: 100vh;
   overflow: hidden;
+  --header-height: 56px;
 }
 
 p {
@@ -44,42 +44,17 @@ mat-sidenav-container {
   position: absolute;
   left: 0;
   right: 0;
-  top: $header-height;
+  top: var(--header-height);
   bottom: 0;
   overflow: auto;
   transform: perspective(1000px);
   backface-visibility: hidden;
   transform-style: preserve-3d;
-
-  // Custom Scrollbar
-  > .ng-scrollbar {
-    --scrollbar-thumb-color: #e3f2fd;
-    --scrollbar-track-color: #2196f3;
-    --scrollbar-thumb-hover-color: #fff176;
-    --scrollbar-size: 10px;
-    --scrollbar-hover-size: 10px;
-    --scrollbar-padding: 0px;
-    --scrollbar-border-radius: 0px;
-
-    .ng-scroll-content {
-      width: 100%;
-    }
-
-    .ng-scrollbar-thumb {
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-      overflow: auto;
-    }
-
-    .ng-scrollbar-track {
-      opacity: 0.5;
-    }
-
-    transition: all 120ms ease-out !important;
-  }
 }
 
-.mat-button.inline-button {
-  padding: 0 10px;
+.mdc-button {
+  letter-spacing: 1px;
+  font-size: 14px;
 }
 
 section {
@@ -90,18 +65,17 @@ section {
 
 code {
   flex: 1;
-  font-size: 1.1em;
   box-sizing: border-box;
   font-weight: normal;
   line-height: 1.75em;
   margin: 0 0.3em;
   display: inline-block !important;
-  padding: 0.05em 0.5em !important;
+  padding: 0 6px !important;
   overflow-x: unset !important;
-  background-color: $code-bg-color !important;
-  border: 2px solid $code-color;
-  border-radius: 0.5em;
+  background-color: white !important;
+  border-radius: 3px;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
 }
 
 .hljs {
@@ -123,17 +97,16 @@ a {
 
 .section-number {
   flex: 0 0 auto;
-  border: 2px solid $primary-color;
   border-radius: 50%;
-  background-color: $code-bg-color;
   color: $primary-color;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 3px 10px rgb(0 0 0 / 10%);
   width: 30px;
   height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 1em;
+  background: white;
 }
 
 .inline-number {
@@ -146,9 +119,12 @@ a {
   background-color: $primary-color;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   color: #fff;
 
   h1 {
+    letter-spacing: 2px;
     text-align: center;
     margin: 2em auto;
     padding: 16px;
@@ -178,7 +154,6 @@ a {
 /* Create four equal columns that sits next to each other */
 .column {
   flex: 25%;
-  max-width: 150px;
   padding: 0 4px;
   display: flex;
   flex-direction: column;
@@ -192,6 +167,6 @@ a {
 
 .separator {
   height: 120px;
-  width: 3px;
-  background-color: rgba(mat.get-color-from-palette($demo-primary), 0.8);
+  width: 20%;
+  background-color: rgba($primary-color, 0.2);
 }

@@ -15,18 +15,27 @@ import { Pixabay } from '../../service/pixabay.service';
 export class GallerizeExampleComponent implements OnInit {
 
   readonly code: any;
-  readonly images$ = this._pixabay.getHDImages('house');
+  readonly images$ = this._pixabay.getHDImages('jaguar');
+  readonly examples$ = this._pixabay.getHDImages('crocodile');
 
   constructor(private _pixabay: Pixabay, gallery: Gallery, private _title: Title) {
     this.code = code;
     gallery.ref('lightbox').setConfig({
       thumbPosition: 'bottom',
-      imageSize: 'cover'
+      imageSize: 'cover',
+      itemAutosize: false,
+      thumbAutosize: false,
+      // thumbWidth: 120,
+      // thumbHeight: 90,
+      // thumbView: 'contain'
     });
     gallery.ref('auto-detect').setConfig({
-      dots: true,
       thumbPosition: 'top',
-      imageSize: 'cover'
+      autoHeight: true,
+      imageSize: 'cover',
+      itemAutosize: false,
+      thumbAutosize: false,
+      // thumbView: 'contain'
     });
   }
 

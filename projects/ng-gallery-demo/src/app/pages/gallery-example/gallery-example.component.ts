@@ -23,7 +23,7 @@ export class GalleryExampleComponent implements OnInit {
   readonly media$: Observable<GalleryConfig>;
 
   constructor(pixabay: Pixabay, mediaObserver: MediaObserver, private _title: Title) {
-    this.fruits$ = pixabay.getHDImages('fruit');
+    this.fruits$ = pixabay.getHDImages('vegetables');
     this.media$ = mediaObserver.asObservable().pipe(
       map((res: MediaChange[]) => {
         if (res.some((x => x.mqAlias === 'sm' || x.mqAlias === 'xs'))) {
@@ -63,7 +63,7 @@ export class AppComponent implements OnInit {
   images: GalleryItem[];
 
   ngOnInit() {
-    // Set gallery items array
+    // Set items array
     this.images = [
       new ImageItem({ src: 'IMAGE_SRC_URL', thumb: 'IMAGE_THUMBNAIL_URL' })),
       // ... more items
@@ -130,7 +130,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Get the gallery reference by id, default: 'root'
+    // Get the galleryRef by id
     const galleryRef = gallery.ref('myGallery');
 
     // Add items individually

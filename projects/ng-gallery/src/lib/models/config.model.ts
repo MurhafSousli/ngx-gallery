@@ -4,6 +4,8 @@ import { BezierEasingOptions } from '../smooth-scroll';
 export const GALLERY_CONFIG = new InjectionToken<GalleryConfig>('GALLERY_CONFIG');
 
 export interface GalleryConfig {
+  scrollBehavior?: ScrollBehavior;
+  navScrollBehavior?: ScrollBehavior;
   nav?: boolean;
   dots?: boolean;
   loop?: boolean;
@@ -25,7 +27,6 @@ export interface GalleryConfig {
   thumbSlidingDisabled?: boolean;
   mouseSlidingDisabled?: boolean;
   thumbMouseSlidingDisabled?: boolean;
-  contentVisibilityAuto?: boolean;
   resizeDebounceTime?: number;
   playerInterval?: number;
   boxTemplate?: TemplateRef<any>;
@@ -33,10 +34,15 @@ export interface GalleryConfig {
   thumbTemplate?: TemplateRef<any>;
   thumbDetached?: boolean;
   imageSize?: 'cover' | 'contain';
+  thumbImageSize?: 'cover' | 'contain';
   dotsPosition?: 'top' | 'bottom';
   counterPosition?: 'top' | 'bottom';
   slidingDirection?: 'horizontal' | 'vertical';
   loadingStrategy?: 'preload' | 'lazy' | 'default';
   thumbPosition?: 'top' | 'left' | 'right' | 'bottom';
   thumbView?: 'default' | 'contain';
+  thumbAutosize?: boolean;
+  itemAutosize?: boolean;
+  autoHeight?: boolean;
+  debug?: boolean;
 }

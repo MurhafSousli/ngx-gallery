@@ -9,8 +9,10 @@ import { GalleryConfig } from '../models/config.model';
     <gallery-thumbs *ngIf="config.thumb"
                     [state]="state"
                     [config]="config"
-                    (thumbClick)="thumbClick.emit($event)">
+                    (thumbClick)="thumbClick.emit($event)"
+                    (error)="error.emit($event)">
     </gallery-thumbs>
+
     <div class="g-box">
       <gallery-slider [state]="state"
                       [config]="config"
@@ -36,7 +38,7 @@ import { GalleryConfig } from '../models/config.model';
                        [state]="state">
       </gallery-counter>
 
-      <div class="g-box-template" style="position: absolute">
+      <div class="g-box-template">
         <ng-container *ngTemplateOutlet="config.boxTemplate; context: { state: state, config: config }"></ng-container>
       </div>
     </div>
@@ -71,6 +73,10 @@ export class GalleryCoreComponent {
     return this.config.imageSize;
   }
 
+  @HostBinding('attr.thumbImageSize') get thumbImageSize(): 'contain' | 'cover' {
+    return this.config.thumbImageSize;
+  }
+
   /** Set gallery dots position */
   @HostBinding('attr.dotsPosition') get dotsPosition(): 'top' | 'bottom' {
     return this.config.dotsPosition;
@@ -91,8 +97,23 @@ export class GalleryCoreComponent {
     return this.config.thumbSlidingDisabled;
   }
 
-  /** Set gallery slider content-visibility-auto style  */
-  @HostBinding('attr.contentVisibilityAuto') get contentVisibilityAuto(): boolean {
-    return this.config.contentVisibilityAuto;
+  /** Set gallery slider itemAutosize style  */
+  @HostBinding('attr.itemAutosize') get itemAutosize(): boolean {
+    return this.config.itemAutosize;
+  }
+
+  /** Set gallery slider autoHeight style  */
+  @HostBinding('attr.autoHeight') get autoHeight(): boolean {
+    return this.config.autoHeight;
+  }
+
+  /** Set gallery slider thumbAutosize style  */
+  @HostBinding('attr.thumbAutosize') get thumbAutosize(): boolean {
+    return this.config.thumbAutosize;
+  }
+
+  /** Set debug style  */
+  @HostBinding('attr.debug') get debug(): boolean {
+    return this.config.debug;
   }
 }

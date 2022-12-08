@@ -1,14 +1,13 @@
 ::ng-deep {
   gallery-core[dotsPosition='top'] gallery-dots {
-    top: 0;
+    top: 15px;
   }
 
   gallery-core[dotsPosition='bottom'] gallery-dots {
-    bottom: 0;
+    bottom: 15px;
   }
 
   gallery-dots {
-    margin: 7px;
     position: absolute;
     left: 50%;
     z-index: 99;
@@ -17,6 +16,7 @@
 
   .g-dot {
     cursor: pointer;
+    margin-right: 6px;
     z-index: 20;
 
     &:hover .g-dot-inner {
@@ -26,17 +26,15 @@
 
   .g-dot-active .g-dot-inner {
     opacity: 1;
-    transform: scale(1.5) !important;
   }
 
   .g-dot-inner {
-    background-color: white;
-    opacity: 0.6;
-    width: 30%;
-    height: 30%;
+    background-color: var(--g-overlay-color);
+    opacity: 0.4;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
-    box-shadow: 0 0 1px black;
-    transition: all ease 0.2s;
+    transition: opacity linear 150ms;
   }
 
   gallery-dots,

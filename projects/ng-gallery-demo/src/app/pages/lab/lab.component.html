@@ -1,13 +1,20 @@
 <div class="page-title">
-  <h1>Lab</h1>
+  <h1 fxLayout>
+    <mat-icon style="font-size: 56px; height: 56px; width: 56px;">biotech</mat-icon>
+    <div fxLayout fxFlexAlign="center">Lab</div>
+  </h1>
 </div>
 <div class="page-content">
   <div *ngIf="show$ | async" class="gallery-container">
     <gallery #gallery id="lab"
              [items]="photos$ | async"
+             [autoHeight]="config.autoHeight"
+             [itemAutosize]="config.itemAutosize"
+             [thumbAutosize]="config.thumbAutosize"
              [nav]="config.nav"
              [loop]="config.loop"
              [dots]="config.dots"
+             [debug]="config.debug"
              [thumb]="config.thumb"
              [counter]="config.counter"
              [autoPlay]="config.autoPlay"
@@ -28,6 +35,8 @@
              [thumbSlidingDisabled]="config.thumbSlidingDisabled"
              [mouseSlidingDisabled]="config.mouseSlidingDisabled"
              [thumbMouseSlidingDisabled]="config.thumbMouseSlidingDisabled"
+             [navScrollBehavior]="config.navScrollBehavior"
+             [scrollBehavior]="config.scrollBehavior"
              (playingChange)="onPlayer($event)"
              (indexChange)="onIndexChange($event)"
              (itemClick)="onItemClick($event)"
@@ -48,27 +57,27 @@
 
       <div class="outputs-container">
         <ng-container *ngIf="indexChange$ | async; let indexChange">
-            <span class="chip" [class.changed]="indexChange.active">
-              <strong>(indexChange): {{indexChange.e?.currIndex}}</strong>
-            </span>
+          <span class="chip" [class.changed]="indexChange.active">
+            <strong>indexChange {{indexChange.e?.currIndex}}</strong>
+          </span>
         </ng-container>
 
         <ng-container *ngIf="thumbClick$ | async; let thumbClick">
-            <span class="chip" [class.changed]="thumbClick.active">
-              <strong>(thumbClick): {{thumbClick.e}}</strong>
-            </span>
+          <span class="chip" [class.changed]="thumbClick.active">
+            <strong>thumbClick {{thumbClick.e}}</strong>
+          </span>
         </ng-container>
 
         <ng-container *ngIf="itemClick$ | async; let itemClick">
-            <span class="chip" [class.changed]="itemClick.active">
-              <strong>(itemClick): {{itemClick.e}}</strong>
-            </span>
+          <span class="chip" [class.changed]="itemClick.active">
+            <strong>itemClick {{itemClick.e}}</strong>
+          </span>
         </ng-container>
 
         <ng-container *ngIf="player$ | async; let player">
-            <span class="chip" [class.changed]="player.active">
-              <strong>(playingChange): {{player.e?.isPlaying}}</strong>
-            </span>
+          <span class="chip" [class.changed]="player.active">
+            <strong>playingChange {{player.e?.isPlaying}}</strong>
+          </span>
         </ng-container>
       </div>
 
@@ -133,26 +142,25 @@
             <mat-form-field>
               <mat-label>Dots Position</mat-label>
               <mat-select [(ngModel)]="config.dotsPosition" [disabled]="!config.dots">
-                <mat-option *ngFor="let position of dotsCounterPositions" [value]="position">{{position}}
-                </mat-option>
+                <mat-option *ngFor="let position of dotsCounterPositions" [value]="position">{{position}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
+
         </div>
 
         <div class="column">
           <div>
-            <mat-form-field>
-              <mat-label>Thumbnail width</mat-label>
-              <input matInput [(ngModel)]="config.thumbWidth" [disabled]="!config.thumb">
-            </mat-form-field>
+            <mat-checkbox [(ngModel)]="config.debug">Debug</mat-checkbox>
           </div>
-
           <div>
-            <mat-form-field>
-              <mat-label>Thumbnail height</mat-label>
-              <input matInput [(ngModel)]="config.thumbHeight" [disabled]="!config.thumb">
-            </mat-form-field>
+            <mat-checkbox [(ngModel)]="config.autoHeight" [disabled]="config.itemAutosize">Auto-height</mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox [(ngModel)]="config.itemAutosize" [disabled]="config.autoHeight">Item autosize</mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox [(ngModel)]="config.thumbAutosize" [disabled]="!config.thumb">Thumb autosize</mat-checkbox>
           </div>
 
           <div>
@@ -175,6 +183,23 @@
             </mat-form-field>
           </div>
 
+          <div>
+            <mat-form-field>
+              <mat-label>Scroll Behavior</mat-label>
+              <mat-select [(ngModel)]="config.scrollBehavior">
+                <mat-option *ngFor="let behavior of scrollBehaviors" [value]="behavior">{{behavior}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field>
+              <mat-label>Nav Scroll Behavior</mat-label>
+              <mat-select [(ngModel)]="config.navScrollBehavior" [disabled]="!config.nav">
+                <mat-option *ngFor="let behavior of scrollBehaviors" [value]="behavior">{{behavior}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
 
         <div class="column checkboxes">
@@ -225,3 +250,5 @@
     </mat-card-content>
   </mat-card>
 </div>
+
+<footer></footer>

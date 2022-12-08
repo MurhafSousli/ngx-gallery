@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { ObserversModule } from '@angular/cdk/observers';
 import { PlatformModule } from '@angular/cdk/platform';
 import { ClipboardModule} from '@angular/cdk/clipboard';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HighlightModule } from 'ngx-highlightjs';
@@ -41,7 +40,6 @@ import { NoteComponent } from './note/note.component';
     NgScrollbarModule,
     FontAwesomeModule,
     ClipboardModule,
-    MatSnackBarModule
   ],
   exports: [
     CommonModule,
@@ -59,7 +57,6 @@ import { NoteComponent } from './note/note.component';
     BadgesComponent,
     NoteComponent,
     ClipboardModule,
-    MatSnackBarModule
   ]
 })
 export class SharedModule {

@@ -2,11 +2,12 @@
 
 :host {
   display: block;
+
   &.info {
     section {
-      border: 2px solid $primary-color;
-      background-color: $code-bg-color;
+      background-color: #a7daff;
     }
+
     .note-icon {
       background-color: $primary-color;
     }
@@ -41,12 +42,11 @@ mat-icon {
 section {
   min-height: 80px;
   position: relative;
-  border: 2px solid $note-color;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
   margin: 4em 0;
   display: flex;
   align-items: center;
   background-color: $note-bg;
   border-radius: 0.5em;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }

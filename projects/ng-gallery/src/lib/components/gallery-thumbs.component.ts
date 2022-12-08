@@ -2,7 +2,6 @@ import {
   Component,
   Input,
   Output,
-  HostBinding,
   AfterViewInit,
   AfterViewChecked,
   OnDestroy,
@@ -13,17 +12,20 @@ import {
   ElementRef,
   EventEmitter,
   ChangeDetectorRef,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  ViewChildren,
+  QueryList
 } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
-import { Subscription } from 'rxjs';
-import { debounceTime, tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, takeUntil, tap } from 'rxjs/operators';
 import { GalleryConfig } from '../models/config.model';
 import { GalleryState, GalleryError } from '../models/gallery.model';
 import { ThumbnailsPosition, ThumbnailsView } from '../models/constants';
 import { ThumbSliderAdapter, HorizontalThumbAdapter, VerticalThumbAdapter } from './adapters';
 import { SmoothScrollManager } from '../smooth-scroll';
 import { resizeObservable } from '../utils/resize-observer';
+import { GalleryThumbComponent } from './gallery-thumb.component';
 
 declare const Hammer: any;
 
@@ -31,12 +33,11 @@ declare const Hammer: any;
   selector: 'gallery-thumbs',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="g-thumbs-container">
-      <div #slider
-           class="g-slider"
-           [attr.centralised]="config.thumbView === thumbnailsView.Contain || adapter.isContentLessThanContainer">
+    <div #slider
+         class="g-slider"
+         [attr.centralised]="config.thumbView === thumbnailsView.Contain || adapter.isContentLessThanContainer">
+      <div class="g-slider-content">
         <gallery-thumb *ngFor="let item of state.items; trackBy: trackByFn; index as i"
-                       [style.flex]="'0 0 ' + adapter.thumbSize + 'px'"
                        [type]="item.type"
                        [config]="config"
                        [data]="item.data"
@@ -57,8 +58,7 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
   /** Thumbnails view enum */
   readonly thumbnailsView = ThumbnailsView;
 
-  /** Subscription reference to host resize stream */
-  private _resizeObserver$: Subscription;
+  private readonly _destroyed$ = new Subject<void>();
 
   /** Slider adapter */
   adapter: ThumbSliderAdapter;
@@ -75,25 +75,13 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
   /** Stream that emits when an error occurs */
   @Output() error = new EventEmitter<GalleryError>();
 
-  /** Host height */
-  @HostBinding('style.height') height: string;
-
-  /** Host width */
-  @HostBinding('style.width') width: string;
-
   /** Slider ElementRef */
   @ViewChild('slider', { static: true }) sliderEl: ElementRef;
 
+  @ViewChildren(GalleryThumbComponent, { read: ElementRef }) items = new QueryList<ElementRef>();
+
   get slider(): HTMLElement {
     return this.sliderEl.nativeElement;
-  }
-
-  get centralizerSize(): number {
-    if (this.adapter.isContentLessThanContainer) {
-      const size = this.adapter.clientSize - (this.adapter.thumbSize * this.state.items.length);
-      return size / 2;
-    }
-    return (this.adapter.clientSize / 2) - (this.adapter.thumbSize / 2);
   }
 
   constructor(private _el: ElementRef,
@@ -117,13 +105,6 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
             this.adapter = new HorizontalThumbAdapter(this.slider, this.config);
             break;
         }
-        // Set host height and width according to thumb position
-        this.width = this.adapter.containerWidth;
-        this.height = this.adapter.containerHeight;
-
-        if (this.config.contentVisibilityAuto) {
-          this.slider.style.setProperty('--thumb-contain-intrinsic-size', `${ this.config.thumbWidth }px ${ this.config.thumbHeight }px`);
-        }
 
         if (!changes.config.firstChange) {
           // Keep the correct sliding position when direction changes
@@ -139,6 +120,9 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
       if (!changes.config.firstChange && changes.config.currentValue?.thumbMouseSlidingDisabled !== changes.config.previousValue?.thumbMouseSlidingDisabled) {
         this.enableDisableGestures();
       }
+
+      this.slider.style.setProperty('--thumb-height', `${ this.config.thumbHeight }px`);
+      this.slider.style.setProperty('--thumb-width', `${ this.config.thumbWidth }px`);
     }
 
     if (changes.state && (changes.state.firstChange || !this.config.thumbDetached)) {
@@ -158,38 +142,52 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
     this._zone.runOutsideAngular(() => {
       // Update necessary calculation on host resize
       if (this._platform.isBrowser) {
-        this._resizeObserver$ = resizeObservable(this._el.nativeElement).pipe(
+        resizeObservable(this._el.nativeElement).pipe(
           debounceTime(this.config.resizeDebounceTime),
           tap(() => {
             // Update thumb centralize size
-            this.slider.style.setProperty('--thumb-centralize-size', this.centralizerSize + 'px');
+            const el: HTMLElement = this.items.get(this.state.currIndex)?.nativeElement;
+            if (el) {
+              this.slider.style.setProperty('--thumb-centralize-start-size', this.adapter.getCentralizerStartSize() + 'px');
+              this.slider.style.setProperty('--thumb-centralize-end-size', this.adapter.getCentralizerEndSize() + 'px');
+            }
             this._cd.detectChanges();
             this.scrollToIndex(this.state.currIndex, 'auto');
-          })
+          }),
+          takeUntil(this._destroyed$)
         ).subscribe();
       }
     });
   }
 
   ngAfterViewChecked(): void {
-    this.slider.style.setProperty('--thumb-centralize-size', this.centralizerSize + 'px');
+    const el: HTMLElement = this.items.get(this.state.currIndex)?.nativeElement;
+    if (el) {
+      this.slider.style.setProperty('--thumb-centralize-start-size', this.adapter.getCentralizerStartSize() + 'px');
+      this.slider.style.setProperty('--thumb-centralize-end-size', this.adapter.getCentralizerEndSize() + 'px');
+    }
   }
 
   ngOnDestroy(): void {
     this.deactivateGestures();
-    this._resizeObserver$?.unsubscribe();
+    this._destroyed$.next();
+    this._destroyed$.complete();
   }
 
   trackByFn(index: number, item: any) {
     return item.type;
   }
 
-  private scrollToIndex(value: number, behavior): void {
+  private scrollToIndex(value: number, behavior: ScrollBehavior): void {
     this._zone.runOutsideAngular(() => {
       this.slider.style.scrollSnapType = 'unset';
-      this._smoothScroll.scrollTo(this.slider, this.adapter.getCentralisedScrollToValue(value, behavior)).then(() => {
-        this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
-      });
+
+      const el: HTMLElement = this.items.get(value)?.nativeElement;
+      if (el) {
+        this._smoothScroll.scrollTo(this.slider, this.adapter.getScrollToValue(el, behavior)).then(() => {
+          this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
+        });
+      }
     });
   }
 

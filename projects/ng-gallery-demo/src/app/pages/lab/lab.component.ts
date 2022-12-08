@@ -5,7 +5,6 @@ import {
   GalleryConfig,
   LoadingStrategy,
   SlidingDirection,
-  ThumbnailsMode,
   ThumbnailsPosition,
   ThumbnailsView
 } from 'ng-gallery';
@@ -34,6 +33,7 @@ export class LabComponent implements OnInit {
   thumbViews = ['default', 'contain'];
   slidingDirections = ['vertical', 'horizontal'];
   dotsCounterPositions = ['top', 'bottom'];
+  scrollBehaviors = ['auto', 'smooth'];
 
   player$ = new BehaviorSubject<any>({ active: false });
   itemClick$ = new BehaviorSubject<any>({ active: false });
@@ -41,7 +41,7 @@ export class LabComponent implements OnInit {
   indexChange$ = new BehaviorSubject<any>({ active: false });
 
   constructor(pixabay: Pixabay, private _title: Title) {
-    this.photos$ = pixabay.getHDImages('cars');
+    this.photos$ = pixabay.getHDImages('jet fighter');
   }
 
   ngOnInit() {
@@ -49,7 +49,7 @@ export class LabComponent implements OnInit {
     this.config = {
       nav: true,
       loop: true,
-      dots: false,
+      dots: true,
       dotsPosition: 'bottom',
       counterPosition: 'top',
       resizeDebounceTime: 50,
@@ -66,10 +66,16 @@ export class LabComponent implements OnInit {
       imageSize: 'contain',
       disableThumb: false,
       playerInterval: 3000,
-      thumbView: ThumbnailsView.Default,
+      thumbView: ThumbnailsView.Contain,
       thumbPosition: ThumbnailsPosition.Bottom,
       loadingStrategy: LoadingStrategy.Preload,
-      slidingDirection: SlidingDirection.Horizontal
+      slidingDirection: SlidingDirection.Horizontal,
+      autoHeight: false,
+      itemAutosize: false,
+      thumbAutosize: false,
+      scrollBehavior: 'smooth',
+      navScrollBehavior: 'smooth',
+      debug: false
     };
   }
 
