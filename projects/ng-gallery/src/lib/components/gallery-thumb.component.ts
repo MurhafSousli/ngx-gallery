@@ -14,7 +14,7 @@ import { GalleryConfig } from '../models/config.model';
 
     <div *ngIf="config.thumbTemplate" class="g-template g-thumb-template">
       <ng-container
-        *ngTemplateOutlet="config.thumbTemplate; context: { index: this.index, type: this.type, data: this.data }">
+        *ngTemplateOutlet="config.thumbTemplate; context: { index, type, data, isActive }">
       </ng-container>
     </div>
   `

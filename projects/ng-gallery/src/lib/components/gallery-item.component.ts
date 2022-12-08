@@ -28,8 +28,7 @@ import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from '
                        (error)="error.emit($event)"></gallery-image>
 
         <div *ngIf="config.itemTemplate" class="g-template g-item-template">
-          <ng-container *ngTemplateOutlet="config.itemTemplate;
-          context: { index: this.index, currIndex: this.currIndex, type: this.type, data: this.data }">
+          <ng-container *ngTemplateOutlet="config.itemTemplate; context: { index, type, data, isActive }">
           </ng-container>
         </div>
 
@@ -57,8 +56,7 @@ import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from '
       <ng-container *ngSwitchDefault>
 
         <div *ngIf="config.itemTemplate" class="g-template g-item-template">
-          <ng-container *ngTemplateOutlet="config.itemTemplate;
-          context: { index: this.index, currIndex: this.currIndex, type: this.type, data: this.data }">
+          <ng-container *ngTemplateOutlet="config.itemTemplate; context: { index, type, data, isActive: isActive }">
           </ng-container>
         </div>
 
