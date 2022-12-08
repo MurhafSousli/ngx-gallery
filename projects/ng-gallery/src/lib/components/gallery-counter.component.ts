@@ -5,7 +5,7 @@ import { GalleryState } from '../models/gallery.model';
   selector: 'gallery-counter',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="g-counter">{{(state.currIndex + 1) + '/' + state.items.length}}</div>
+    <div class="g-counter">{{ (state.currIndex + 1) + ' / ' + state.items.length }}</div>
   `
 })
 export class GalleryCounterComponent {

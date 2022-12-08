@@ -3,14 +3,14 @@
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
     "declarationMap": true,
-    "target": "es2020",
     "declaration": true,
     "inlineSources": true,
     "types": [],
     "lib": [
       "dom",
       "es2018"
-    ]
+    ],
+    "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,

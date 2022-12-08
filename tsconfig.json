@@ -10,7 +10,7 @@
     "module": "es2020",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2020",
+    "target": "ES2022",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -18,6 +18,7 @@
       "es2018",
       "dom"
     ],
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "ng-gallery": [
         "projects/ng-gallery/src/public-api"
@@ -25,7 +26,8 @@
       "ng-gallery/lightbox": [
         "projects/ng-gallery/lightbox/src/public_api"
       ]
-    }
+    },
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

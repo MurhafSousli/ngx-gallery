@@ -14,29 +14,21 @@ import { Subscription, SubscriptionLike } from 'rxjs';
 import { Gallery } from '../services/gallery.service';
 import { GalleryRef } from '../services/gallery-ref';
 import { GalleryError, GalleryItem, GalleryState } from '../models/gallery.model';
-import {
-  IframeItem,
-  IframeItemData,
-  ImageItem,
-  ImageItemData,
-  VideoItem,
-  VideoItemData,
-  YoutubeItem,
-  YoutubeItemData
-} from './templates/items.model';
+import { IframeItemData, ImageItemData, VideoItemData, YoutubeItemData } from './templates/items.model';
+import { GalleryConfig } from '../models/config.model';
+import { BezierEasingOptions } from '../smooth-scroll';
 
 @Component({
   selector: 'gallery',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['../styles/gallery.scss'],
   template: `
-    <gallery-core [state]="galleryRef.state | async"
+    <gallery-core [galleryId]="id"
+                  [state]="galleryRef.state | async"
                   [config]="galleryRef.config | async"
-                  (action)="onAction($event)"
                   (itemClick)="onItemClick($event)"
                   (thumbClick)="onThumbClick($event)"
                   (error)="onError($event)"></gallery-core>
-    <ng-content></ng-content>
   `
 })
 export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
@@ -47,28 +39,39 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() nav: boolean = this._gallery.config.nav;
   @Input() dots: boolean = this._gallery.config.dots;
   @Input() loop: boolean = this._gallery.config.loop;
+  @Input() debug: boolean = this._gallery.config.debug;
   @Input() thumb: boolean = this._gallery.config.thumb;
-  @Input() zoomOut: number = this._gallery.config.zoomOut;
   @Input() counter: boolean = this._gallery.config.counter;
   @Input() dotsSize: number = this._gallery.config.dotsSize;
   @Input() autoPlay: boolean = this._gallery.config.autoPlay;
-  @Input() gestures: boolean = this._gallery.config.gestures;
   @Input() thumbWidth: number = this._gallery.config.thumbWidth;
   @Input() thumbHeight: number = this._gallery.config.thumbHeight;
   @Input() disableThumb: boolean = this._gallery.config.disableThumb;
-  @Input() panSensitivity: number = this._gallery.config.panSensitivity;
+  @Input() scrollBehavior: ScrollBehavior = this._gallery.config.scrollBehavior;
+  @Input() navScrollBehavior: ScrollBehavior = this._gallery.config.navScrollBehavior;
+  @Input() slidingDisabled: boolean = this._gallery.config.slidingDisabled;
+  @Input() thumbSlidingDisabled: boolean = this._gallery.config.thumbSlidingDisabled;
+  @Input() mouseSlidingDisabled: boolean = this._gallery.config.mouseSlidingDisabled;
+  @Input() thumbMouseSlidingDisabled: boolean = this._gallery.config.thumbMouseSlidingDisabled;
   @Input() playerInterval: number = this._gallery.config.playerInterval;
-  @Input() reserveGesturesAction: boolean = this._gallery.config.reserveGesturesAction;
+  @Input() slidingDuration: number = this._gallery.config.slidingDuration;
+  @Input() slidingEase: BezierEasingOptions = this._gallery.config.slidingEase;
+  @Input() boxTemplate: TemplateRef<any> = this._gallery.config.boxTemplate;
   @Input() itemTemplate: TemplateRef<any> = this._gallery.config.itemTemplate;
   @Input() thumbTemplate: TemplateRef<any> = this._gallery.config.thumbTemplate;
-  @Input() thumbMode: 'strict' | 'free' = this._gallery.config.thumbMode;
+  @Input() resizeDebounceTime: number = this._gallery.config.resizeDebounceTime;
   @Input() imageSize: 'cover' | 'contain' = this._gallery.config.imageSize;
+  @Input() thumbImageSize: 'cover' | 'contain' = this._gallery.config.thumbImageSize;
   @Input() dotsPosition: 'top' | 'bottom' = this._gallery.config.dotsPosition;
   @Input() counterPosition: 'top' | 'bottom' = this._gallery.config.counterPosition;
   @Input() slidingDirection: 'horizontal' | 'vertical' = this._gallery.config.slidingDirection;
   @Input() loadingStrategy: 'preload' | 'lazy' | 'default' = this._gallery.config.loadingStrategy;
   @Input() thumbPosition: 'top' | 'left' | 'right' | 'bottom' = this._gallery.config.thumbPosition;
   @Input() thumbView: 'default' | 'contain' = this._gallery.config.thumbView;
+  @Input() thumbDetached: boolean = this._gallery.config.thumbDetached;
+  @Input() thumbAutosize: boolean = this._gallery.config.thumbAutosize;
+  @Input() itemAutosize: boolean = this._gallery.config.itemAutosize;
+  @Input() autoHeight: boolean = this._gallery.config.autoHeight;
 
   // Inputs used by the lightbox
 
@@ -95,50 +98,48 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private _gallery: Gallery) {
   }
 
-  private getConfig() {
+  private getConfig(): GalleryConfig {
     return {
       nav: this.nav,
       dots: this.dots,
       loop: this.loop,
+      debug: this.debug,
       thumb: this.thumb,
-      zoomOut: this.zoomOut,
       counter: this.counter,
       autoPlay: this.autoPlay,
-      gestures: this.gestures,
       dotsSize: this.dotsSize,
       imageSize: this.imageSize,
-      thumbMode: this.thumbMode,
+      thumbImageSize: this.thumbImageSize,
+      scrollBehavior: this.scrollBehavior,
+      navScrollBehavior: this.navScrollBehavior,
       thumbView: this.thumbView,
       thumbWidth: this.thumbWidth,
       thumbHeight: this.thumbHeight,
+      slidingEase: this.slidingEase,
       disableThumb: this.disableThumb,
       dotsPosition: this.dotsPosition,
+      boxTemplate: this.boxTemplate,
       itemTemplate: this.itemTemplate,
       thumbTemplate: this.thumbTemplate,
+      thumbDetached: this.thumbDetached,
       thumbPosition: this.thumbPosition,
-      panSensitivity: this.panSensitivity,
       playerInterval: this.playerInterval,
       counterPosition: this.counterPosition,
       loadingStrategy: this.loadingStrategy,
+      slidingDuration: this.slidingDuration,
       slidingDirection: this.slidingDirection,
-      reserveGesturesAction: this.reserveGesturesAction
+      resizeDebounceTime: this.resizeDebounceTime,
+      slidingDisabled: this.slidingDisabled,
+      thumbSlidingDisabled: this.thumbSlidingDisabled,
+      mouseSlidingDisabled: this.mouseSlidingDisabled,
+      thumbMouseSlidingDisabled: this.thumbMouseSlidingDisabled,
+      thumbAutosize: this.thumbAutosize,
+      itemAutosize: this.itemAutosize,
+      autoHeight: this.autoHeight,
     };
   }
 
-  onAction(i: string | number) {
-    switch (i) {
-      case 'next':
-        this.galleryRef.next();
-        break;
-      case 'prev':
-        this.galleryRef.prev();
-        break;
-      default:
-        this.galleryRef.set(i as number);
-    }
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (this.galleryRef) {
       this.galleryRef.setConfig(this.getConfig());
 
@@ -148,7 +149,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     // Get gallery instance by id
     if (this.skipInitConfig) {
       this.galleryRef = this._gallery.ref(this.id);
@@ -179,7 +180,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this._itemClick$.unsubscribe();
     this._thumbClick$.unsubscribe();
     this._itemChange$.unsubscribe();
@@ -191,71 +192,71 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  onItemClick(i: number) {
+  onItemClick(i: number): void {
     this.itemClick.emit(i);
     this.galleryRef.itemClick.next(i);
   }
 
-  onThumbClick(i: number) {
+  onThumbClick(i: number): void {
     this.galleryRef.set(i);
     this.thumbClick.emit(i);
     this.galleryRef.thumbClick.next(i);
   }
 
-  onError(err: GalleryError) {
+  onError(err: GalleryError): void {
     this.error.emit(err);
     this.galleryRef.error.next(err);
   }
 
-  load(items: GalleryItem[]) {
+  load(items: GalleryItem[]): void {
     this.galleryRef.load(items);
   }
 
-  add(item: GalleryItem, active?: boolean) {
+  add(item: GalleryItem, active?: boolean): void {
     this.galleryRef.add(item, active);
   }
 
-  addImage(data: ImageItemData, active?: boolean) {
-    this.add(new ImageItem(data), active);
+  addImage(data: ImageItemData, active?: boolean): void {
+    this.galleryRef.addImage(data, active);
   }
 
-  addVideo(data: VideoItemData, active?: boolean) {
-    this.add(new VideoItem(data), active);
+  addVideo(data: VideoItemData, active?: boolean): void {
+    this.galleryRef.addVideo(data, active);
   }
 
-  addIframe(data: IframeItemData, active?: boolean) {
-    this.add(new IframeItem(data), active);
+  addIframe(data: IframeItemData, active?: boolean): void {
+    this.galleryRef.addIframe(data, active);
   }
 
-  addYoutube(data: YoutubeItemData, active?: boolean) {
-    this.add(new YoutubeItem(data), active);
+  addYoutube(data: YoutubeItemData, active?: boolean): void {
+    this.galleryRef.addYoutube(data, active);
   }
 
-  remove(i: number) {
+  remove(i: number): void {
     this.galleryRef.remove(i);
   }
 
-  next() {
-    this.galleryRef.next();
+  next(behavior?: ScrollBehavior, loop?: boolean): void {
+    this.galleryRef.next(behavior, loop);
   }
 
-  prev() {
-    this.galleryRef.prev();
+  prev(behavior?: ScrollBehavior, loop?: boolean): void {
+    this.galleryRef.prev(behavior, loop);
   }
 
-  set(i: number) {
-    this.galleryRef.set(i);
+  set(i: number, behavior?: ScrollBehavior): void {
+    this.galleryRef.set(i, behavior);
   }
 
-  reset() {
+  reset(): void {
     this.galleryRef.reset();
   }
 
-  play(interval?: number) {
+  play(interval?: number): void {
     this.galleryRef.play(interval);
   }
 
-  stop() {
+  stop(): void {
     this.galleryRef.stop();
   }
 }

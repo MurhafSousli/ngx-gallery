@@ -5,15 +5,7 @@
 }
 h2 {
   flex: 1;
-  margin: 1em 0;
-  &:after {
-    content: '';
-    display: block;
-    height: 2px;
-    width: 100%;
-    background-color: $highlight-color;
-    margin-top: 1em;
-  }
+  margin: 2em 0 1em;
 }
 
 fa-icon {

@@ -1,45 +1,46 @@
-<ng-scrollbar>
-  <div class="page-title">
-    <h1>Getting Started</h1>
-  </div>
+<div class="page-title">
+  <h1>Getting Started</h1>
+</div>
 
-  <div class="page-content">
+<div class="page-content">
 
-    <div fxLayout fxLayout.lt-md="column" fxLayoutGap="15px">
-      <div class="doc-menu-container">
-        <ul class="doc-menu">
-          <li><a routerLink="./core" routerLinkActive="active-link">Gallery installation</a></li>
-          <li><a routerLink="./lightbox" routerLinkActive="active-link">Lightbox installation</a></li>
-        </ul>
-      </div>
+  <div fxLayout fxLayout.lt-md="column" fxLayoutGap="15px">
+    <div class="doc-menu-container">
+      <ul class="doc-menu">
+        <li><a routerLink="./core" routerLinkActive="active-link">Gallery installation</a></li>
+        <li><a routerLink="./lightbox" routerLinkActive="active-link">Lightbox installation</a></li>
+      </ul>
+    </div>
 
-      <div style="width: 100%">
-        <section>
-          <section-title>Overview</section-title>
+    <div style="width: 100%">
+      <section>
+        <section-title>Overview</section-title>
 
-          <div class="usage-title">
+        <div class="usage-title">
             <span class="section-number">
               <mat-icon>star</mat-icon>
             </span>
-            <p>This library consists of 3 packages:</p>
-          </div>
+          <p>This library consists of 3 packages:</p>
+        </div>
 
-          <div fxLayout>
-            <div fxHide.lt-md="true" fxLayout="column" fxLayoutAlign="center center" style="width: 30px">
-              <div class="separator"></div>
-            </div>
-            <div fxFlex style="margin-left: 1.6em">
-              <p><b>ng-gallery</b> provides <code class="hljs" [textContent]="'<gallery>'"></code> component and <code class="hljs">Gallery</code> service.</p>
-              <p><b>ng-gallery/lightbox</b> provides <code class="hljs">Lightbox</code> service and <code class="hljs">[lightbox]</code> directive that opens the gallery in a modal.</p>
-              <p>The package provides <code class="hljs">[gallerize]</code> directive that automatically adds images to the lightbox.</p>
-            </div>
+        <div fxLayout>
+          <div fxHide.lt-md="true" fxLayout="column" fxLayoutAlign="center center" style="width: 30px">
+            <div class="separator"></div>
           </div>
-        </section>
+          <div fxFlex class="intro">
+            <p><b>ng-gallery</b> provides <code class="hljs" [textContent]="'<gallery>'"></code> component and <code
+              class="hljs">Gallery</code> service.</p>
+            <p><b>ng-gallery/lightbox</b> provides <code class="hljs">Lightbox</code> service and <code class="hljs">[lightbox]</code>
+              directive that opens the gallery in a modal.</p>
+            <p>The package provides <code class="hljs">[gallerize]</code> directive that automatically adds images to
+              the lightbox.</p>
+          </div>
+        </div>
+      </section>
 
-        <router-outlet></router-outlet>
-      </div>
+      <router-outlet></router-outlet>
     </div>
   </div>
-  <footer></footer>
-</ng-scrollbar>
+</div>
+<footer></footer>
 

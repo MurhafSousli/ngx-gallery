@@ -1,48 +1,46 @@
-<ng-scrollbar>
-  <div class="page-title">
-    <h1>Advanced</h1>
-  </div>
-  <div class="page-content">
-    <section>
-      <section-title>Overview</section-title>
+<div class="page-title">
+  <h1>Advanced Example</h1>
+</div>
+<div class="page-content">
+  <section>
+    <section-title>Overview</section-title>
 
-      <p>The gallery supports the ability for items and thumbnails to extend their templates. To do so, you have to
-        define your custom template, then the content can be provided as an <code class="hljs"
-                                                                                  [textContent]="'<ng-template>'"></code>
-      </p>
-      <p>Use <code class="hljs">[itemTemplate]</code> for items and <code class="hljs">[thumbTemplate]</code> for
-        thumbnails.</p>
+    <p>The gallery items and thumbnails use basic predefined templates by default, but they can be replaced by custom
+      templates.
+      Your custom template can be provided as an <code class="hljs" [textContent]="'<ng-template>'"></code>
+    </p>
+    <p>Use <code class="hljs">[itemTemplate]</code> for items and <code class="hljs">[thumbTemplate]</code> for
+      thumbnails.</p>
 
-      <h3>Passing in data to a custom template</h3>
+    <h3>Passing in data to a custom template</h3>
 
-      <p>When using a custom template, additional context data can be used to render the data as needed.</p>
+    <p>When using a custom template, additional context data can be used to render the data as needed.</p>
 
-      <p><b>Available data:</b> <code class="hljs">let-index="index"</code>, <code class="hljs">let-type="type"</code>,
-        <code
-          class="hljs">let-data="data"</code> and <code class="hljs">let-currIndex="currIndex"</code></p>
+    <p><b>Available data:</b> <code class="hljs">let-index="index"</code>, <code class="hljs">let-type="type"</code>,
+      <code
+        class="hljs">let-data="data"</code> and <code class="hljs">let-currIndex="currIndex"</code></p>
 
-      <h3>Example</h3>
+    <h3>Example</h3>
 
-      <gallery id="mixed"
-               *ngIf="media$ | async; let config"
-               [thumbWidth]="config.thumbWidth"
-               [thumbHeight]="config.thumbHeight"
-               [itemTemplate]="itemTemplate"
-               [thumbTemplate]="thumbTemplate"></gallery>
+    <gallery id="mixed"
+             *ngIf="media$ | async; let config"
+             [thumbWidth]="config.thumbWidth"
+             [thumbHeight]="config.thumbHeight"
+             [itemTemplate]="itemTemplate"
+             [thumbTemplate]="thumbTemplate"></gallery>
 
-      <h3>Template</h3>
+    <h3>Template</h3>
 
-      <hl-code [code]="code.template"></hl-code>
+    <hl-code [code]="code.template"></hl-code>
 
-      <h3>Code</h3>
+    <h3>Code</h3>
 
-      <hl-code [code]="code.component"></hl-code>
+    <hl-code [code]="code.component"></hl-code>
 
-    </section>
-  </div>
+  </section>
+</div>
 
-  <footer></footer>
-</ng-scrollbar>
+<footer></footer>
 
 <ng-template #thumbTemplate let-type="type">
   <span *ngIf="type === 'youtube'" class="item-type">
@@ -53,8 +51,13 @@
   </span>
 </ng-template>
 
-<ng-template #itemTemplate let-index="index" let-type="type" let-data="data" let-currIndex="currIndex">
-  <span *ngIf="type === 'image' && index === currIndex" [@slideAnimation] class="item-text">
+<ng-template #itemTemplate
+             let-index="index"
+             let-type="type"
+             let-data="data"
+             let-currIndex="currIndex"
+             let-isActive="isActive">
+  <span *ngIf="type === 'image' && isActive" [@slideAnimation] class="item-text">
     {{data?.title}}
   </span>
 </ng-template>

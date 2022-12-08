@@ -9,7 +9,6 @@ import {
   Host,
   NgZone,
   ElementRef,
-  Renderer2,
   PLATFORM_ID
 } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
@@ -67,7 +66,6 @@ export class GallerizeDirective implements OnInit, OnDestroy {
               private _el: ElementRef,
               private _gallery: Gallery,
               private _lightbox: Lightbox,
-              private _renderer: Renderer2,
               @Inject(PLATFORM_ID) platform: Object,
               @Inject(DOCUMENT) private _document: any,
               @Host() @Self() @Optional() private _galleryCmp: GalleryComponent) {
@@ -114,7 +112,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
   }
 
   /** Detector mode: means `gallerize` directive is used on a normal HTMLElement
-   *  Detects images and adds a click event to each image so it opens in the lightbox */
+   *  Detects images and adds a click event to each image, so it opens in the lightbox */
   private detectorMode(galleryRef: GalleryRef) {
     this._detector$ = new Subject();
     // Query image elements
@@ -130,12 +128,12 @@ export class GallerizeDirective implements OnInit, OnDestroy {
           const images: GalleryItem[] = [];
 
           return from(imageElements).pipe(
-            map((el: any, i) => {
+            map((el: HTMLElement, i: number) => {
               // Add click event to the image
-              this._renderer.setStyle(el, 'cursor', 'pointer');
-              this._renderer.setProperty(el, 'onclick', () =>
-                this._zone.run(() => this._lightbox.open(i, this._galleryId))
-              );
+              el.style.cursor = 'pointer';
+              el.addEventListener('click', () => {
+                this._zone.run(() => this._lightbox.open(i, this._galleryId));
+              });
 
               if (el instanceof HTMLImageElement) {
                 // If element is type of img use the src property
@@ -145,7 +143,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
                 };
               } else {
                 // Otherwise, use element background-image url
-                const elStyle = el.currentStyle || this._document.defaultView.getComputedStyle(el, null);
+                const elStyle = this._document.defaultView.getComputedStyle(el, null);
                 const background = elStyle.backgroundImage.slice(4, -1).replace(/"/g, '');
                 return {
                   src: el.getAttribute('imageSrc') || background,
@@ -164,6 +162,6 @@ export class GallerizeDirective implements OnInit, OnDestroy {
 
     // Observe content changes
     this._observer$ = new MutationObserver(() => this._detector$.next());
-    this._observer$.observe(this._el.nativeElement, {childList: true, subtree: true});
+    this._observer$.observe(this._el.nativeElement, { childList: true, subtree: true });
   }
 }

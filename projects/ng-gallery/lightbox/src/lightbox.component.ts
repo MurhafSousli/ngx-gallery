@@ -12,9 +12,8 @@ import { lightboxAnimation } from './lightbox.animation';
   animations: [lightboxAnimation],
   styleUrls: ['./lightbox.component.scss'],
   template: `
-    <gallery [id]="id" [destroyRef]="false" [skipInitConfig]="true">
-      <i class="g-btn-close" aria-label="Close" [innerHTML]="closeIcon" (click)="overlayRef.detach()"></i>
-    </gallery>
+    <i class="g-btn-close" aria-label="Close" [innerHTML]="closeIcon" (click)="overlayRef.detach()"></i>
+    <gallery [id]="id" [destroyRef]="false" [skipInitConfig]="true"></gallery>
   `,
   host: {
     'tabindex': '-1',

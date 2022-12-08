@@ -1,4 +1,5 @@
-import { Component, Input, Output, ChangeDetectionStrategy, EventEmitter } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Gallery } from '../services/gallery.service';
 import { GalleryState } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
 
@@ -11,13 +12,16 @@ import { GalleryConfig } from '../models/config.model';
          [class.g-dot-active]="i === state.currIndex"
          [style.width.px]="config?.dotsSize"
          [style.height.px]="config?.dotsSize"
-         (tapClick)="action.emit(i)">
+         (click)="gallery.ref(this.galleryId).set(i)">
       <div class="g-dot-inner"></div>
     </div>
   `
 })
 export class GalleryDotsComponent {
+  @Input() galleryId: string;
   @Input() state: GalleryState;
   @Input() config: GalleryConfig;
-  @Output() action = new EventEmitter<number>();
+
+  constructor(public gallery: Gallery) {
+  }
 }

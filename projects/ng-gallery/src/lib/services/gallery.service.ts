@@ -16,7 +16,7 @@ export class Gallery {
   config: GalleryConfig;
 
   constructor(@Optional() @Inject(GALLERY_CONFIG) config: GalleryConfig) {
-    this.config = config ? {...defaultConfig, ...config} : defaultConfig;
+    this.config = config ? { ...defaultConfig, ...config } : defaultConfig;
   }
 
   /**
@@ -28,11 +28,11 @@ export class Gallery {
     if (this._instances.has(id)) {
       const galleryRef = this._instances.get(id);
       if (config) {
-        galleryRef.setConfig({...this.config, ...config});
+        galleryRef.setConfig({ ...this.config, ...config });
       }
       return galleryRef;
     } else {
-      return this._instances.set(id, new GalleryRef({...this.config, ...config}, this.deleteInstance(id))).get(id);
+      return this._instances.set(id, new GalleryRef({ ...this.config, ...config }, this.deleteInstance(id))).get(id);
     }
   }
 
@@ -48,6 +48,15 @@ export class Gallery {
    */
   resetAll() {
     this._instances.forEach((ref: GalleryRef) => ref.reset());
+  }
+
+  /**
+   * Logger for debugging
+   */
+  debugConsole(...data: any[]): void {
+    if (this.config.debug) {
+      console.log(...data)
+    }
   }
 
   /**

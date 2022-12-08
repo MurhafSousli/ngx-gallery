@@ -5,12 +5,22 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   selector: 'gallery-iframe',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <iframe #iframe
-            frameborder="0"
+    <iframe *ngIf="autoplay; else default"
+            #iframe
+            loading="lazy"
             allowfullscreen
-            [attr.allow]="autoplay ? 'autoplay' : ''"
+            allow
+            style="border:none"
             [src]="iframeSrc">
     </iframe>
+    <ng-template #default>
+      <iframe #iframe
+              loading="lazy"
+              allowfullscreen
+              style="border:none"
+              [src]="iframeSrc">
+      </iframe>
+    </ng-template>
   `
 })
 export class GalleryIframeComponent {
@@ -24,7 +34,7 @@ export class GalleryIframeComponent {
   }
 
   @Input('pause') set pauseVideo(shouldPause: boolean) {
-    if (this.iframe.nativeElement) {
+    if (this.iframe?.nativeElement) {
       if (shouldPause) {
         const iframe: HTMLIFrameElement = this.iframe.nativeElement;
         iframe.src = null;
@@ -38,7 +48,7 @@ export class GalleryIframeComponent {
 
   @Input() autoplay: boolean;
 
-  @ViewChild('iframe', { static: true }) iframe: ElementRef;
+  @ViewChild('iframe') iframe: ElementRef;
 
   constructor(private _sanitizer: DomSanitizer) {
   }

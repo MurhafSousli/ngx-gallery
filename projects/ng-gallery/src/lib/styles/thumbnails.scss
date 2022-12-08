@@ -1,19 +1,36 @@
 ::ng-deep {
   gallery-thumbs {
+    max-height: 100%;
+    max-width: 100%;
     display: block;
-    z-index: 1;
-    overflow: unset;
-  }
+    z-index: 100;
 
-  .g-thumbs-container {
-    position: relative;
-    z-index: 206;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    display: flex;
-    overflow: unset;
+    .g-slider[centralised="true"] {
+      &:before, &:after {
+        content: '';
+      }
+
+      &:before {
+        flex: 0 0 var(--thumb-centralize-start-size);
+      }
+
+      &:after {
+        flex: 0 0 var(--thumb-centralize-end-size);
+      }
+    }
+
+    .g-slider gallery-thumb {
+      background: black;
+      height: var(--thumb-height);
+      width: var(--thumb-width);
+      max-height: var(--thumb-height);
+      max-width: var(--thumb-width);
+
+      gallery-image, img {
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
 
   gallery-core[disableThumb='true'] {
@@ -24,22 +41,23 @@
 
   gallery-core[thumbPosition='top'],
   gallery-core[thumbPosition='bottom'] {
-    gallery-thumbs .g-slider {
-      flex-direction: row;
-      top: 0;
-      left: 50%;
+    gallery-thumbs {
+      .g-slider {
+        top: 0;
+        overflow-x: auto;
+        flex-direction: row;
+      }
 
-      &.g-contain {
-        left: 0;
-
-        &.g-contain-small-content {
-          left: 50%;
-          transform: translate3d(-50%, 0px, 0px) !important;
-        }
+      .g-slider-content {
+        flex-direction: row;
       }
     }
-    gallery-thumb {
-      padding: 1px 0 1px 1px;
+
+    &[thumbAutosize="true"] {
+      gallery-thumb {
+        width: initial;
+        max-width: unset;
+      }
     }
   }
 
@@ -47,22 +65,28 @@
   gallery-core[thumbPosition='right'] {
     gallery-thumbs {
       .g-slider {
-        flex-direction: column;
-        top: 50%;
         left: 0;
+        overflow-y: auto;
+        flex-direction: column;
+      }
 
-        &.g-contain {
-          top: 0;
-
-          &.g-contain-small-content {
-            top: 50%;
-            transform: translate3d(0px, -50%, 0px) !important;
-          }
-        }
+      .g-slider-content {
+        flex-direction: column;
       }
     }
-    gallery-thumb {
-      padding: 0 1px 1px 1px;
+
+    &[thumbAutosize="true"] {
+      gallery-thumb {
+        height: initial;
+        max-height: unset;
+      }
+    }
+  }
+
+  /** Disable sliding */
+  gallery-core[thumbSlidingDisabled='true'] {
+    gallery-thumbs .g-slider {
+      overflow: hidden !important;
     }
   }
 
@@ -94,6 +118,7 @@
   .g-thumb-loading {
     position: relative;
     overflow: hidden;
+    width: 100%;
     height: 100%;
     background-color: $placeholder-ng;
 

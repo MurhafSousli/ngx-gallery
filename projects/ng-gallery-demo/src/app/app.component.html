@@ -5,8 +5,8 @@
     <div class="logo">
       <mat-icon svgIcon="logo"></mat-icon>
     </div>
-    <h3>Angular Gallery</h3>
-    <menu [toolbar]="false"></menu>
+    <h3>Ng-gallery</h3>
+    <app-menu [toolbar]="false"></app-menu>
   </mat-sidenav>
 
   <div fxLayout="column" class="main-wrapper">
@@ -14,19 +14,17 @@
     <!-- MAIN TOOLBAR -->
 
     <mat-toolbar color="primary">
-      <a mat-button class="toggle-button" (click)="sidenav.open()">
+      <a fxHide fxShow.lt-sm mat-icon-button class="toggle-button" (click)="sidenav.open()">
         <mat-icon>menu</mat-icon>
       </a>
 
-      <div class="toolbar-logo">
-        <a routerLink=".">
-          <mat-icon svgIcon="logo"></mat-icon>
-        </a>
-        <h1>Angular Gallery</h1>
-      </div>
+      <a class="toolbar-logo" routerLink=".">
+        <mat-icon svgIcon="logo"></mat-icon>
+        <h1>Ng-gallery</h1>
+      </a>
 
       <span fxFlex></span>
-      <menu></menu>
+      <app-menu fxHide.lt-sm></app-menu>
     </mat-toolbar>
 
     <!-- ROUTER OUTLET -->

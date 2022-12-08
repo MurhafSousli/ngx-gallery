@@ -79,45 +79,50 @@ const data: GalleryItemData[] = [
     type: 'image',
     src: 'assets/img/img13.jpg',
     thumb: 'assets/img/thumb/img13.jpg',
-    title: 'Scelerisque dapibus fringilla consequat scelerisque torquent senectus porttitor, placerat fames convallis molestie lobortis diam aliquam'
+    title: '🐓Scelerisque dapibus fringilla consequat scelerisque torquent senectus porttitor, placerat fames convallis molestie lobortis diam aliquam'
   } as ImageItemData,
   {
     type: 'image',
     src: 'assets/img/img11.jpg',
     thumb: 'assets/img/thumb/img11.jpg',
-    title: 'Lorem ipsum curabitur auctor netus facilisis inceptos vivamus fusce inceptos, ullamcorper ipsum id pharetra curabitur leo curabitur.'
+    title: '🐦Lorem ipsum curabitur auctor netus facilisis inceptos vivamus fusce inceptos, ullamcorper ipsum id pharetra curabitur leo curabitur.'
   } as ImageItemData,
   {
     type: 'image',
     src: 'assets/img/img3.jpg',
     thumb: 'assets/img/thumb/img3.jpg',
-    title: 'Iaculis eros leo interdum erat tellus primis pharetra pulvinar, elit risus blandit tempus praesent himenaeos porta, neque elit neque ullamcorper ipsum curabitur at tempus aliquet quam fringilla.'
+    title: '🐯Iaculis eros leo interdum erat tellus primis pharetra pulvinar, elit risus blandit tempus praesent himenaeos porta, neque elit neque ullamcorper ipsum curabitur at tempus aliquet quam fringilla.'
   } as ImageItemData,
   {
     type: 'image',
     src: 'assets/img/img4.jpg',
     thumb: 'assets/img/thumb/img4.jpg',
-    title: 'Morbi etiam interdum velit lacinia platea magna libero curae auctor'
+    title: '🐅Morbi etiam interdum velit lacinia platea magna libero curae auctor'
   } as ImageItemData,
   {
     type: 'video',
-    autoplay: true,
+    autoplay: false,
+    controls: true,
+    mute: null,
+    loop: true,
+    thumb: 'https://images.pond5.com/orangutan-sitting-tree-and-attentively-footage-074672817_iconl.jpeg',
+    poster: 'https://images.pond5.com/orangutan-sitting-tree-and-attentively-footage-074672817_iconl.jpeg',
     src: [
       {
-        url: 'http://techslides.com/demos/sample-videos/small.mp4',
+        url: 'https://videos.pond5.com/orangutan-sitting-tree-and-attentively-footage-074672817_main_xxl.mp4',
         type: 'video/mp4'
       }
     ]
   } as VideoItemData,
   {
     type: 'youtube',
-    autoplay: true,
+    autoplay: false,
     src: 'b7Cl7S0pLRw'
   } as YoutubeItemData,
   {
     type: 'iframe',
-    src: 'https://html.com/resources/free-html-templates/',
-    thumb: 'https://vignette.wikia.nocookie.net/random-ness/images/5/5f/TEH_POOTIS_MAN.jpg/revision/latest?cb=20130508152055'
+    src: 'https://ngx-scrollbar.netlify.com/',
+    thumb: 'https://user-images.githubusercontent.com/8130692/64606830-d4006f00-d3cf-11e9-9874-c75269fa3a9c.png'
   } as IframeItemData
 ];
 
@@ -139,8 +144,9 @@ const code = {
              let-index="index"
              let-type="type"
              let-data="data"
-             let-currIndex="currIndex">
-  <span *ngIf="type === 'image' && index === currIndex" [@slideAnimation] class="item-text">
+             let-currIndex="currIndex"
+             let-isActive="isActive">
+  <span *ngIf="type === 'image' && isActive" [@slideAnimation] class="item-text">
     {{data?.title}}
   </span>
 </ng-template>`,

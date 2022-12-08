@@ -5,6 +5,11 @@ gallery {
   height: 700px;
 }
 
+.mat-mdc-raised-button:not(:disabled) {
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -23,15 +28,6 @@ section {
 
 .row {
   margin-top: 2em;
-}
-
-@include mobile() {
-  gallery {
-    height: 400px;
-  }
-  .column div {
-    width: 100%;
-  }
 }
 
 .description {
@@ -58,43 +54,37 @@ section {
   opacity: 0.6;
 }
 
-::ng-deep {
-  #home {
-    .g-thumb {
-      padding: 20px 10px 0;
-    }
-
-    .slide {
-      margin: 0 1.5em;
-    }
-
-    image-item > div {
-      box-shadow: 0 8px 30px grey;
-      background-color: black;
-    }
-  }
-}
-
 .page-title {
+  height: 420px;
   align-items: center;
 
   h1 {
+    padding: 0;
     font-size: 56px;
-    font-weight: 300;
-    margin-top: 2em;
-    margin-bottom: 0.5em;
+    margin: 115px 5px 0;
+    font-weight: 700;
   }
 
-  sub {
+  h2 {
     text-align: center;
-    font-size: 1.2em;
+    margin: 10px 0 20px;
+    font-size: 20px;
     font-weight: 300;
-    margin-bottom: 3em;
+    line-height: 28px;
   }
 
   a {
-    margin-bottom: 4em;
+    margin: 30px 0 0;
   }
+
+  badges {
+    margin: 30px 0;
+  }
+}
+
+.page-content {
+  padding: 0;
+  max-width: unset;
 }
 
 .black-bg {
