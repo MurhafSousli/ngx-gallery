@@ -48,7 +48,7 @@ export class GallerizeExampleComponent implements OnInit {
 const code = {
   onElements: `<div class="container" gallerize>
   <img *ngFor="let image of images"
-       src="{{image.thumb}}"
+       [src]="image.thumb"
        [attr.imageSrc]="image.src"
        [attr.thumbSrc]="image.thumb">
 </div>`,
