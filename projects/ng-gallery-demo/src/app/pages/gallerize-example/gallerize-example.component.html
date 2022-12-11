@@ -44,21 +44,21 @@
     <div class="row" gallerize="auto-detect">
       <div class="column">
         <img *ngFor="let item of examples$ | async | slice:0:3"
-             src="{{item.data.thumb}}"
+             [src]="item.data.thumb"
              [attr.imageSrc]="item.data.src"
              [attr.thumbSrc]="item.data.thumb">
       </div>
       <div class="column">
         <img *ngFor="let item of examples$ | async | slice:3:6"
-             src="{{item.data.thumb}}"
+             [src]="item.data.thumb"
              [attr.imageSrc]="item.data.src"
              [attr.thumbSrc]="item.data.thumb">
       </div>
       <div class="column">
         <img *ngFor="let item of examples$ | async | slice:6:9"
-             src="{{item.data.src}}"
-             [attr.imageSrc]=""
-             [attr.thumbSrc]="">
+             [src]="item.data.src"
+             [attr.imageSrc]="item.data.src"
+             [attr.thumbSrc]="item.data.thumb">
       </div>
     </div>
 
