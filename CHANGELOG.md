@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.0.1
+
+- fix(core): Gallery nav icons are not alignment properly, in [d4dca8b](https://github.com/MurhafSousli/ngx-gallery/pull/506/commits/d4dca8b4f68b4439471ed7f90ea4e23c27ff0c41).
+- fox(core): Gallery dots is not horizontally centralized, in [f2d6910](https://github.com/MurhafSousli/ngx-gallery/pull/506/commits/f2d691083350adb64ea4b9c205e6fa3c31f6c0a3).
+- fix(core): Fix lib's angular peerDependencies version to >=15 in [9ea5ea3](https://github.com/MurhafSousli/ngx-gallery/pull/506/commits/9ea5ea34f77e6329f9385c7db056cc637557b1bc).
+
 ## 8.0.0
 
 - feat(core): Add `isActive` to custom gallery template context, in [0b3f8bf](https://github.com/MurhafSousli/ngx-gallery/pull/497/commits/0b3f8bf43e383a8ee3e53a3140e18b8bcf1c2d69).
