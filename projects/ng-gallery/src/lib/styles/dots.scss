@@ -12,11 +12,12 @@
     left: 50%;
     z-index: 99;
     transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
   }
 
   .g-dot {
     cursor: pointer;
-    margin-right: 6px;
     z-index: 20;
 
     &:hover .g-dot-inner {
