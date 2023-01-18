@@ -65,6 +65,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() dotsPosition: 'top' | 'bottom' = this._gallery.config.dotsPosition;
   @Input() counterPosition: 'top' | 'bottom' = this._gallery.config.counterPosition;
   @Input() slidingDirection: 'horizontal' | 'vertical' = this._gallery.config.slidingDirection;
+  @Input() loadingAttr: 'eager' | 'lazy' = this._gallery.config.loadingAttr;
   @Input() loadingStrategy: 'preload' | 'lazy' | 'default' = this._gallery.config.loadingStrategy;
   @Input() thumbPosition: 'top' | 'left' | 'right' | 'bottom' = this._gallery.config.thumbPosition;
   @Input() thumbView: 'default' | 'contain' = this._gallery.config.thumbView;
@@ -119,6 +120,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       disableThumb: this.disableThumb,
       dotsPosition: this.dotsPosition,
       boxTemplate: this.boxTemplate,
+      loadingAttr: this.loadingAttr,
       itemTemplate: this.itemTemplate,
       thumbTemplate: this.thumbTemplate,
       thumbDetached: this.thumbDetached,
