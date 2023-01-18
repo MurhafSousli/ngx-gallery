@@ -22,6 +22,7 @@ import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from '
 
         <gallery-image [src]="imageData.src"
                        [alt]="imageData.alt"
+                       [loadingAttr]="config.loadingAttr"
                        [loadingIcon]="config.loadingIcon"
                        [loadingError]="config.loadingError"
                        (loaded)="onItemLoaded()"
@@ -48,10 +49,12 @@ import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from '
       <gallery-iframe *ngSwitchCase="Types.Youtube"
                       [src]="youtubeSrc"
                       [autoplay]="isAutoPlay"
+                      [loadingAttr]="config.loadingAttr"
                       [pause]="currIndex !== index"></gallery-iframe>
 
       <gallery-iframe *ngSwitchCase="Types.Iframe"
-                      [src]="data.src"></gallery-iframe>
+                      [src]="data.src"
+                      [loadingAttr]="config.loadingAttr"></gallery-iframe>
 
       <ng-container *ngSwitchDefault>
 

@@ -17,16 +17,16 @@ export enum LoadingStrategy {
   Default = 'default'
 }
 
+export enum LoadingAttr {
+  Eager= 'eager',
+  Lazy = 'lazy'
+}
+
 export enum ThumbnailsPosition {
   Top = 'top',
   Left = 'left',
   Right = 'right',
   Bottom = 'bottom'
-}
-
-export enum ImageLoaderMode {
-  Determinate= 'determinate',
-  Indeterminate= 'indeterminate'
 }
 
 export enum DotsPosition {
@@ -37,11 +37,6 @@ export enum DotsPosition {
 export enum CounterPosition {
   Top = 'top',
   Bottom = 'bottom'
-}
-
-export enum ThumbnailsMode {
-  Free = 'free',
-  Strict = 'strict'
 }
 
 export enum SlidingDirection {

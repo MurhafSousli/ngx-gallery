@@ -1,13 +1,13 @@
 import {
   ImageSize,
   GalleryAction,
-  ThumbnailsMode,
   LoadingStrategy,
   SlidingDirection,
   ThumbnailsPosition,
   DotsPosition,
   CounterPosition,
-  ThumbnailsView
+  ThumbnailsView,
+  LoadingAttr
 } from '../models/constants';
 import { GalleryState } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
@@ -52,6 +52,7 @@ export const defaultConfig: GalleryConfig = {
   scrollBehavior: 'smooth',
   navScrollBehavior: 'smooth',
   resizeDebounceTime: 50,
+  loadingAttr: LoadingAttr.Lazy,
   imageSize: ImageSize.Contain,
   thumbImageSize: ImageSize.Cover,
   thumbView: ThumbnailsView.Default,

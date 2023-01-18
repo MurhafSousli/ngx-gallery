@@ -39,6 +39,7 @@ export interface GalleryConfig {
   counterPosition?: 'top' | 'bottom';
   slidingDirection?: 'horizontal' | 'vertical';
   loadingStrategy?: 'preload' | 'lazy' | 'default';
+  loadingAttr?: 'eager' | 'lazy';
   thumbPosition?: 'top' | 'left' | 'right' | 'bottom';
   thumbView?: 'default' | 'contain';
   thumbAutosize?: boolean;

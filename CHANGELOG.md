@@ -1,5 +1,10 @@
 # Changelog
 
+## 8.0.2
+
+- feat(core): Add `loadingAttr` option to img and iframe elements, closes [#513](https://github.com/MurhafSousli/ngx-gallery/issues/513) in [093789b](https://github.com/MurhafSousli/ngx-gallery/pull/517/commits/093789b42cff86da957a09632c96705d42820085).
+- fix(core): Videos are unplayable if type not specified, closes [#515](https://github.com/MurhafSousli/ngx-gallery/issues/515) in [11ba153](https://github.com/MurhafSousli/ngx-gallery/pull/516/commits/11ba153401c9c87f2983b99b047cf57849399117).
+
 ## 8.0.1
 
 - fix(core): Gallery nav icons are not alignment properly, in [d4dca8b](https://github.com/MurhafSousli/ngx-gallery/pull/506/commits/d4dca8b4f68b4439471ed7f90ea4e23c27ff0c41).
