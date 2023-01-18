@@ -7,7 +7,7 @@ import {
   OnInit,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { DomSanitizer, SafeHtml, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { imageFailedSvg } from './svg-assets';
 
@@ -27,7 +27,7 @@ import { imageFailedSvg } from './svg-assets';
       <img [@fadeIn]="state"
            [src]="src"
            [attr.alt]="alt"
-           [attr.loading]="isThumbnail ? 'eager' : 'lazy'"
+           [attr.loading]="loadingAttr"
            [style.visibility]="state === 'success' ? 'visible' : 'hidden'"
            class="g-image-item"
            (load)="state = 'success'; loaded.emit()"
@@ -75,13 +75,14 @@ export class GalleryImageComponent implements OnInit {
   /** Is thumbnail */
   @Input() isThumbnail: boolean;
 
+  /** Image loading attribute */
+  @Input() loadingAttr: 'eager' | 'lazy';
+
   /** Image alt */
   @Input() alt: string;
 
   /** Image source URL */
-  @Input() src: string;
-  /** Loaded image URL */
-  imageUrl: SafeUrl;
+  @Input() src: string
 
   /** Custom loader template */
   @Input() loadingIcon: string;
