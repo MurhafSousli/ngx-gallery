@@ -1,7 +1,7 @@
-import { ElementRef, Inject, Injectable, PLATFORM_ID, Optional } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { ElementRef, Inject, Injectable, Optional } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { coerceElement } from '@angular/cdk/coercion';
-import { getRtlScrollAxisType, RtlScrollAxisType } from '@angular/cdk/platform';
+import { getRtlScrollAxisType, Platform, RtlScrollAxisType } from '@angular/cdk/platform';
 import { _Bottom, _Left, _Right, _Top, _Without } from '@angular/cdk/scrolling';
 import { fromEvent, merge, of, Observable, Subject, Subscriber } from 'rxjs';
 import { expand, finalize, take, takeUntil, takeWhile } from 'rxjs/operators';
@@ -41,7 +41,7 @@ export class SmoothScrollManager {
   }
 
   constructor(@Inject(DOCUMENT) private _document: Document,
-              @Inject(PLATFORM_ID) private _platform: object,
+              private _platform: Platform,
               @Optional() @Inject(SMOOTH_SCROLL_OPTIONS) customDefaultOptions: SmoothScrollToOptions) {
     this._defaultOptions = {
       duration: 468,
@@ -187,7 +187,7 @@ export class SmoothScrollManager {
    * @param customOptions specified the offsets to scroll to.
    */
   scrollTo(scrollable: SmoothScrollElement, customOptions: SmoothScrollToOptions): Promise<void> {
-    if (isPlatformBrowser(this._platform)) {
+    if (this._platform.isBrowser) {
       const el = this._getElement(scrollable);
       const isRtl = getComputedStyle(el).direction === 'rtl';
       const rtlScrollAxisType = getRtlScrollAxisType();

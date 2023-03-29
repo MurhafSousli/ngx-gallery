@@ -14,7 +14,9 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy,
   ViewChildren,
-  QueryList
+  QueryList,
+  Inject,
+  PLATFORM_ID
 } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
 import { Subject } from 'rxjs';
@@ -26,6 +28,7 @@ import { ThumbSliderAdapter, HorizontalThumbAdapter, VerticalThumbAdapter } from
 import { SmoothScrollManager } from '../smooth-scroll';
 import { resizeObservable } from '../utils/resize-observer';
 import { GalleryThumbComponent } from './gallery-thumb.component';
+import { isPlatformBrowser } from '@angular/common';
 
 declare const Hammer: any;
 
@@ -106,6 +109,9 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
             break;
         }
 
+        if (!this._platform.isBrowser) {
+          return;
+        }
         if (!changes.config.firstChange) {
           // Keep the correct sliding position when direction changes
           requestAnimationFrame(() => {
@@ -117,12 +123,15 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
         this.enableDisableGestures();
       }
 
+      if (!this._platform.isBrowser) {
+        return;
+      }
       if (!changes.config.firstChange && changes.config.currentValue?.thumbMouseSlidingDisabled !== changes.config.previousValue?.thumbMouseSlidingDisabled) {
         this.enableDisableGestures();
       }
 
-      this.slider.style.setProperty('--thumb-height', `${ this.config.thumbHeight }px`);
-      this.slider.style.setProperty('--thumb-width', `${ this.config.thumbWidth }px`);
+      this.slider.style.setProperty('--thumb-height', `${this.config.thumbHeight}px`);
+      this.slider.style.setProperty('--thumb-width', `${this.config.thumbWidth}px`);
     }
 
     if (changes.state && (changes.state.firstChange || !this.config.thumbDetached)) {
@@ -136,31 +145,35 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
   }
 
   ngAfterViewInit(): void {
+    if (!this._platform.isBrowser) {
+      return;
+    }
     // Workaround: opening a lightbox (centralised) with last index active, show in wrong position
     setTimeout(() => this.scrollToIndex(this.state.currIndex, 'auto'), 200);
 
     this._zone.runOutsideAngular(() => {
       // Update necessary calculation on host resize
-      if (this._platform.isBrowser) {
-        resizeObservable(this._el.nativeElement).pipe(
-          debounceTime(this.config.resizeDebounceTime),
-          tap(() => {
-            // Update thumb centralize size
-            const el: HTMLElement = this.items.get(this.state.currIndex)?.nativeElement;
-            if (el) {
-              this.slider.style.setProperty('--thumb-centralize-start-size', this.adapter.getCentralizerStartSize() + 'px');
-              this.slider.style.setProperty('--thumb-centralize-end-size', this.adapter.getCentralizerEndSize() + 'px');
-            }
-            this._cd.detectChanges();
-            this.scrollToIndex(this.state.currIndex, 'auto');
-          }),
-          takeUntil(this._destroyed$)
-        ).subscribe();
-      }
+      resizeObservable(this._el.nativeElement).pipe(
+        debounceTime(this.config.resizeDebounceTime),
+        tap(() => {
+          // Update thumb centralize size
+          const el: HTMLElement = this.items.get(this.state.currIndex)?.nativeElement;
+          if (el) {
+            this.slider.style.setProperty('--thumb-centralize-start-size', this.adapter.getCentralizerStartSize() + 'px');
+            this.slider.style.setProperty('--thumb-centralize-end-size', this.adapter.getCentralizerEndSize() + 'px');
+          }
+          this._cd.detectChanges();
+          this.scrollToIndex(this.state.currIndex, 'auto');
+        }),
+        takeUntil(this._destroyed$)
+      ).subscribe();
     });
   }
 
   ngAfterViewChecked(): void {
+    if (!this._platform.isBrowser) {
+      return;
+    }
     const el: HTMLElement = this.items.get(this.state.currIndex)?.nativeElement;
     if (el) {
       this.slider.style.setProperty('--thumb-centralize-start-size', this.adapter.getCentralizerStartSize() + 'px');

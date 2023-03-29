@@ -34,7 +34,7 @@ import { tap, debounceTime, filter, takeUntil, switchMap } from 'rxjs/operators'
 import { Gallery } from '../services/gallery.service';
 import { GalleryState, GalleryError } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
-import { SlidingDirection, ThumbnailsView } from '../models/constants';
+import { SlidingDirection } from '../models/constants';
 import { SliderAdapter, HorizontalAdapter, VerticalAdapter } from './adapters';
 import { SmoothScrollManager } from '../smooth-scroll';
 import { resizeObservable } from '../utils/resize-observer';
@@ -113,11 +113,11 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
   }
 
   constructor(private _el: ElementRef,
-              private _cd: ChangeDetectorRef,
-              private _zone: NgZone,
-              private _platform: Platform,
-              private _smoothScroll: SmoothScrollManager,
-              private _gallery: Gallery) {
+    private _cd: ChangeDetectorRef,
+    private _zone: NgZone,
+    private _platform: Platform,
+    private _smoothScroll: SmoothScrollManager,
+    private _gallery: Gallery) {
 
     this.scrollHandler$.pipe(
       debounceTime(0, animationFrameScheduler),
@@ -131,7 +131,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
           this.slider.classList.add('g-scrolling');
           const pos = this.adapter.getScrollToValue(el, behavior || this.config.scrollBehavior);
           const index: number = +this.items.get(value)?.element.getAttribute('galleryIndex');
-          this._gallery.debugConsole(`🚀 [Gallery scrollHandler$] Scroll start ===> index: ${ index }, position:`, pos);
+          this._gallery.debugConsole(`🚀 [Gallery scrollHandler$] Scroll start ===> index: ${index}, position:`, pos);
           this._gallery.debugConsole(`🚀 [Gallery scrollHandler$] slider scrollable`, this.adapter.scrollValue);
 
           return from(this._smoothScroll.scrollTo(this.slider, pos)).pipe(
@@ -163,18 +163,20 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
             break;
         }
 
+        if (!this._platform.isBrowser) {
+          return;
+        }
         if (!changes.config.firstChange) {
           requestAnimationFrame(() => {
             // Keep the correct sliding position when direction changes
             this.scrollToIndex(this.state.currIndex, 'auto');
           });
         }
-
         // Reactivate gestures
         this.enableDisableGestures();
       }
 
-      if (!changes.config.firstChange) {
+      if (!this._platform.isBrowser && !changes.config.firstChange) {
         if (changes.config.currentValue?.mouseSlidingDisabled !== changes.config.previousValue?.mouseSlidingDisabled) {
           this.enableDisableGestures();
         }
@@ -182,7 +184,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
     }
 
     // Scroll to current index
-    if (changes.state && changes.state.currentValue?.currIndex !== changes.state.previousValue?.currIndex) {
+    if (!this._platform.isBrowser && changes.state && changes.state.currentValue?.currIndex !== changes.state.previousValue?.currIndex) {
       requestAnimationFrame(() => {
         this.scrollToIndex(this.state.currIndex, changes.state.firstChange ? 'auto' : this.state.behavior);
       });
@@ -190,6 +192,9 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
   }
 
   ngOnInit(): void {
+    if (!this._platform.isBrowser) {
+      return;
+    }
     this._zone.runOutsideAngular(() => {
 
       // We need to set the visibleElements in the viewport using intersection observer
@@ -225,6 +230,9 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
   }
 
   ngAfterViewInit(): void {
+    if (!this._platform.isBrowser) {
+      return;
+    }
     this.items.notifyOnChanges();
     this.items.changes.pipe(
       startWith(null),
@@ -244,7 +252,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
   }
 
   ngAfterViewChecked(): void {
-    if (this.config.itemAutosize) {
+    if (this.config.itemAutosize && this._platform.isBrowser) {
       this.slider.style.setProperty('--slider-centralize-start-size', this.adapter.getCentralizerStartSize() + 'px');
       this.slider.style.setProperty('--slider-centralize-end-size', this.adapter.getCentralizerEndSize() + 'px');
     }
@@ -263,8 +271,8 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
   private onHostResize(entry: ResizeObserverEntry): void {
     const width: number = Math.ceil(entry.contentRect.width);
     const height: number = Math.ceil(entry.contentRect.height);
-    this.slider.style.width = `${ width }px`;
-    this.slider.style.height = `${ height }px`;
+    this.slider.style.width = `${width}px`;
+    this.slider.style.height = `${height}px`;
     this.scrollToIndex(this.state.currIndex, 'auto');
     // Detect changes on gallery-item components to re-calculate item size
     this._cd.detectChanges();
