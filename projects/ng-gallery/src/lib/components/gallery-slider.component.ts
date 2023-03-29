@@ -176,7 +176,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
         this.enableDisableGestures();
       }
 
-      if (!this._platform.isBrowser && !changes.config.firstChange) {
+      if (this._platform.isBrowser && !changes.config.firstChange) {
         if (changes.config.currentValue?.mouseSlidingDisabled !== changes.config.previousValue?.mouseSlidingDisabled) {
           this.enableDisableGestures();
         }
@@ -184,7 +184,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
     }
 
     // Scroll to current index
-    if (!this._platform.isBrowser && changes.state && changes.state.currentValue?.currIndex !== changes.state.previousValue?.currIndex) {
+    if (this._platform.isBrowser && changes.state && changes.state.currentValue?.currIndex !== changes.state.previousValue?.currIndex) {
       requestAnimationFrame(() => {
         this.scrollToIndex(this.state.currIndex, changes.state.firstChange ? 'auto' : this.state.behavior);
       });
