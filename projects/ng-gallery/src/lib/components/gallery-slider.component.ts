@@ -152,7 +152,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this._platform.isBrowser && changes.config) {
+    if (changes.config) {
       if (changes.config.currentValue?.slidingDirection !== changes.config.previousValue?.slidingDirection) {
         switch (this.config.slidingDirection) {
           case SlidingDirection.Horizontal:
@@ -162,18 +162,19 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
             this.adapter = new VerticalAdapter(this.slider, this.config);
             break;
         }
-
-        if (!changes.config.firstChange) {
-          requestAnimationFrame(() => {
-            // Keep the correct sliding position when direction changes
-            this.scrollToIndex(this.state.currIndex, 'auto');
-          });
+        if (this._platform.isBrowser) {
+          if (!changes.config.firstChange) {
+            requestAnimationFrame(() => {
+              // Keep the correct sliding position when direction changes
+              this.scrollToIndex(this.state.currIndex, 'auto');
+            });
+          }
+          // Reactivate gestures
+          this.enableDisableGestures();
         }
-        // Reactivate gestures
-        this.enableDisableGestures();
       }
 
-      if (!changes.config.firstChange) {
+      if (this._platform.isBrowser && !changes.config.firstChange) {
         if (changes.config.currentValue?.mouseSlidingDisabled !== changes.config.previousValue?.mouseSlidingDisabled) {
           this.enableDisableGestures();
         }

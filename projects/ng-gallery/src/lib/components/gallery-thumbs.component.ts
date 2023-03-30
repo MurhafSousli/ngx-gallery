@@ -92,7 +92,7 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this._platform.isBrowser && changes.config) {
+    if (changes.config) {
       // Sets sliding direction
       if (changes.config.currentValue?.thumbPosition !== changes.config.previousValue?.thumbPosition) {
         switch (this.config.thumbPosition) {
@@ -106,23 +106,26 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
             break;
         }
 
-        if (!changes.config.firstChange) {
-          // Keep the correct sliding position when direction changes
-          requestAnimationFrame(() => {
-            this.scrollToIndex(this.state.currIndex, 'auto');
-          });
+        if (this._platform.isBrowser){
+          if (!changes.config.firstChange) {
+            // Keep the correct sliding position when direction changes
+            requestAnimationFrame(() => {
+              this.scrollToIndex(this.state.currIndex, 'auto');
+            });
+          }
+
+          // Reactivate gestures
+          this.enableDisableGestures();
+        }
+      }
+      if (this._platform.isBrowser){
+        if (!changes.config.firstChange && changes.config.currentValue?.thumbMouseSlidingDisabled !== changes.config.previousValue?.thumbMouseSlidingDisabled) {
+          this.enableDisableGestures();
         }
 
-        // Reactivate gestures
-        this.enableDisableGestures();
+        this.slider.style.setProperty('--thumb-height', `${ this.config.thumbHeight }px`);
+        this.slider.style.setProperty('--thumb-width', `${ this.config.thumbWidth }px`);
       }
-
-      if (!changes.config.firstChange && changes.config.currentValue?.thumbMouseSlidingDisabled !== changes.config.previousValue?.thumbMouseSlidingDisabled) {
-        this.enableDisableGestures();
-      }
-
-      this.slider.style.setProperty('--thumb-height', `${ this.config.thumbHeight }px`);
-      this.slider.style.setProperty('--thumb-width', `${ this.config.thumbWidth }px`);
     }
 
     if (this._platform.isBrowser && changes.state && (changes.state.firstChange || !this.config.thumbDetached)) {
