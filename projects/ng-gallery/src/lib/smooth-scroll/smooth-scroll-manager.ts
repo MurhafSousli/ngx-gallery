@@ -1,4 +1,4 @@
-import { ElementRef, Inject, Injectable, Optional } from '@angular/core';
+import { ElementRef, Inject, Optional, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { coerceElement } from '@angular/cdk/coercion';
 import { getRtlScrollAxisType, Platform, RtlScrollAxisType } from '@angular/cdk/platform';
@@ -41,8 +41,8 @@ export class SmoothScrollManager {
   }
 
   constructor(@Inject(DOCUMENT) private _document: Document,
-              private _platform: Platform,
-              @Optional() @Inject(SMOOTH_SCROLL_OPTIONS) customDefaultOptions: SmoothScrollToOptions) {
+              @Optional() @Inject(SMOOTH_SCROLL_OPTIONS) customDefaultOptions: SmoothScrollToOptions,
+              private _platform: Platform) {
     this._defaultOptions = {
       duration: 468,
       easing: {
@@ -172,7 +172,7 @@ export class SmoothScrollManager {
    * Dismiss an ongoing scroll
    * @param el
    */
-  dismissOngoingScroll(el: HTMLElement) {
+  dismissOngoingScroll(el: HTMLElement): void {
     this._onGoingScrolls.get(el)?.next();
   }
 
@@ -188,9 +188,9 @@ export class SmoothScrollManager {
    */
   scrollTo(scrollable: SmoothScrollElement, customOptions: SmoothScrollToOptions): Promise<void> {
     if (this._platform.isBrowser) {
-      const el = this._getElement(scrollable);
-      const isRtl = getComputedStyle(el).direction === 'rtl';
-      const rtlScrollAxisType = getRtlScrollAxisType();
+      const el: HTMLElement = this._getElement(scrollable);
+      const isRtl: boolean = getComputedStyle(el).direction === 'rtl';
+      const rtlScrollAxisType: RtlScrollAxisType = getRtlScrollAxisType();
 
       const options: SmoothScrollToOptions = {
         ...(this._defaultOptions as _Without<_Bottom & _Top>),
@@ -232,8 +232,8 @@ export class SmoothScrollManager {
    * Scroll to element by reference or selector
    */
   scrollToElement(scrollable: SmoothScrollElement, target: SmoothScrollElement, customOptions: SmoothScrollToElementOptions = {}): Promise<void> {
-    const scrollableEl = this._getElement(scrollable);
-    const targetEl = this._getElement(target, scrollableEl);
+    const scrollableEl: HTMLElement = this._getElement(scrollable);
+    const targetEl: HTMLElement = this._getElement(target, scrollableEl);
     const options: SmoothScrollToOptions = {
       ...customOptions,
       ...{

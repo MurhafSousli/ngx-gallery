@@ -7,16 +7,14 @@ import {
   OnDestroy,
   OnChanges,
   ViewChild,
+  ViewChildren,
+  QueryList,
   SimpleChanges,
   NgZone,
   ElementRef,
   EventEmitter,
   ChangeDetectorRef,
-  ChangeDetectionStrategy,
-  ViewChildren,
-  QueryList,
-  Inject,
-  PLATFORM_ID
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
 import { Subject } from 'rxjs';
@@ -28,7 +26,6 @@ import { ThumbSliderAdapter, HorizontalThumbAdapter, VerticalThumbAdapter } from
 import { SmoothScrollManager } from '../smooth-scroll';
 import { resizeObservable } from '../utils/resize-observer';
 import { GalleryThumbComponent } from './gallery-thumb.component';
-import { isPlatformBrowser } from '@angular/common';
 
 declare const Hammer: any;
 
@@ -81,7 +78,7 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
   /** Slider ElementRef */
   @ViewChild('slider', { static: true }) sliderEl: ElementRef;
 
-  @ViewChildren(GalleryThumbComponent, { read: ElementRef }) items = new QueryList<ElementRef>();
+  @ViewChildren(GalleryThumbComponent, { read: ElementRef }) items = new QueryList<ElementRef<HTMLElement>>();
 
   get slider(): HTMLElement {
     return this.sliderEl.nativeElement;
@@ -94,8 +91,8 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
               private _platform: Platform) {
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.config) {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this._platform.isBrowser && changes.config) {
       // Sets sliding direction
       if (changes.config.currentValue?.thumbPosition !== changes.config.previousValue?.thumbPosition) {
         switch (this.config.thumbPosition) {
@@ -109,9 +106,6 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
             break;
         }
 
-        if (!this._platform.isBrowser) {
-          return;
-        }
         if (!changes.config.firstChange) {
           // Keep the correct sliding position when direction changes
           requestAnimationFrame(() => {
@@ -123,18 +117,15 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
         this.enableDisableGestures();
       }
 
-      if (!this._platform.isBrowser) {
-        return;
-      }
       if (!changes.config.firstChange && changes.config.currentValue?.thumbMouseSlidingDisabled !== changes.config.previousValue?.thumbMouseSlidingDisabled) {
         this.enableDisableGestures();
       }
 
-      this.slider.style.setProperty('--thumb-height', `${this.config.thumbHeight}px`);
-      this.slider.style.setProperty('--thumb-width', `${this.config.thumbWidth}px`);
+      this.slider.style.setProperty('--thumb-height', `${ this.config.thumbHeight }px`);
+      this.slider.style.setProperty('--thumb-width', `${ this.config.thumbWidth }px`);
     }
 
-    if (changes.state && (changes.state.firstChange || !this.config.thumbDetached)) {
+    if (this._platform.isBrowser && changes.state && (changes.state.firstChange || !this.config.thumbDetached)) {
       if (changes.state.currentValue?.currIndex !== changes.state.previousValue?.currIndex) {
         // Scroll slide to item when current index changes.
         requestAnimationFrame(() => {
@@ -145,37 +136,33 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
   }
 
   ngAfterViewInit(): void {
-    if (!this._platform.isBrowser) {
-      return;
-    }
-    // Workaround: opening a lightbox (centralised) with last index active, show in wrong position
-    setTimeout(() => this.scrollToIndex(this.state.currIndex, 'auto'), 200);
+    if (this._platform.isBrowser) {
+      // Workaround: opening a lightbox (centralised) with last index active, show in wrong position
+      setTimeout(() => this.scrollToIndex(this.state.currIndex, 'auto'), 200);
 
-    this._zone.runOutsideAngular(() => {
-      // Update necessary calculation on host resize
-      resizeObservable(this._el.nativeElement).pipe(
-        debounceTime(this.config.resizeDebounceTime),
-        tap(() => {
-          // Update thumb centralize size
-          const el: HTMLElement = this.items.get(this.state.currIndex)?.nativeElement;
-          if (el) {
-            this.slider.style.setProperty('--thumb-centralize-start-size', this.adapter.getCentralizerStartSize() + 'px');
-            this.slider.style.setProperty('--thumb-centralize-end-size', this.adapter.getCentralizerEndSize() + 'px');
-          }
-          this._cd.detectChanges();
-          this.scrollToIndex(this.state.currIndex, 'auto');
-        }),
-        takeUntil(this._destroyed$)
-      ).subscribe();
-    });
+      this._zone.runOutsideAngular(() => {
+        // Update necessary calculation on host resize
+        resizeObservable(this._el.nativeElement).pipe(
+          debounceTime(this.config.resizeDebounceTime),
+          tap(() => {
+            // Update thumb centralize size
+            const el: HTMLElement = this.items.get(this.state.currIndex)?.nativeElement;
+            if (el) {
+              this.slider.style.setProperty('--thumb-centralize-start-size', this.adapter.getCentralizerStartSize() + 'px');
+              this.slider.style.setProperty('--thumb-centralize-end-size', this.adapter.getCentralizerEndSize() + 'px');
+            }
+            this._cd.detectChanges();
+            this.scrollToIndex(this.state.currIndex, 'auto');
+          }),
+          takeUntil(this._destroyed$)
+        ).subscribe();
+      });
+    }
   }
 
   ngAfterViewChecked(): void {
-    if (!this._platform.isBrowser) {
-      return;
-    }
     const el: HTMLElement = this.items.get(this.state.currIndex)?.nativeElement;
-    if (el) {
+    if (el && this._platform.isBrowser) {
       this.slider.style.setProperty('--thumb-centralize-start-size', this.adapter.getCentralizerStartSize() + 'px');
       this.slider.style.setProperty('--thumb-centralize-end-size', this.adapter.getCentralizerEndSize() + 'px');
     }

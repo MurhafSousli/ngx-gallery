@@ -113,11 +113,11 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
   }
 
   constructor(private _el: ElementRef,
-    private _cd: ChangeDetectorRef,
-    private _zone: NgZone,
-    private _platform: Platform,
-    private _smoothScroll: SmoothScrollManager,
-    private _gallery: Gallery) {
+              private _cd: ChangeDetectorRef,
+              private _zone: NgZone,
+              private _platform: Platform,
+              private _smoothScroll: SmoothScrollManager,
+              private _gallery: Gallery) {
 
     this.scrollHandler$.pipe(
       debounceTime(0, animationFrameScheduler),
@@ -131,7 +131,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
           this.slider.classList.add('g-scrolling');
           const pos = this.adapter.getScrollToValue(el, behavior || this.config.scrollBehavior);
           const index: number = +this.items.get(value)?.element.getAttribute('galleryIndex');
-          this._gallery.debugConsole(`🚀 [Gallery scrollHandler$] Scroll start ===> index: ${index}, position:`, pos);
+          this._gallery.debugConsole(`🚀 [Gallery scrollHandler$] Scroll start ===> index: ${ index }, position:`, pos);
           this._gallery.debugConsole(`🚀 [Gallery scrollHandler$] slider scrollable`, this.adapter.scrollValue);
 
           return from(this._smoothScroll.scrollTo(this.slider, pos)).pipe(
@@ -152,7 +152,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.config) {
+    if (this._platform.isBrowser && changes.config) {
       if (changes.config.currentValue?.slidingDirection !== changes.config.previousValue?.slidingDirection) {
         switch (this.config.slidingDirection) {
           case SlidingDirection.Horizontal:
@@ -163,9 +163,6 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
             break;
         }
 
-        if (!this._platform.isBrowser) {
-          return;
-        }
         if (!changes.config.firstChange) {
           requestAnimationFrame(() => {
             // Keep the correct sliding position when direction changes
@@ -176,7 +173,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
         this.enableDisableGestures();
       }
 
-      if (this._platform.isBrowser && !changes.config.firstChange) {
+      if (!changes.config.firstChange) {
         if (changes.config.currentValue?.mouseSlidingDisabled !== changes.config.previousValue?.mouseSlidingDisabled) {
           this.enableDisableGestures();
         }
@@ -192,63 +189,58 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
   }
 
   ngOnInit(): void {
-    if (!this._platform.isBrowser) {
-      return;
-    }
-    this._zone.runOutsideAngular(() => {
+    if (this._platform.isBrowser) {
+      this._zone.runOutsideAngular(() => {
+        // We need to set the visibleElements in the viewport using intersection observer
+        this.createIntersectionObserver(this.slider).pipe(
+          tap((entry: IntersectionObserverEntry) => {
+            entry.target.classList.toggle('g-item-visible', entry.isIntersecting);
+            if (entry.isIntersecting) {
+              this.visibleElements.set(entry.target, entry);
+            } else {
+              this.visibleElements.delete(entry.target);
+            }
+          }),
+          takeUntil(this._destroyed$)
+        ).subscribe();
 
-      // We need to set the visibleElements in the viewport using intersection observer
-      this.createIntersectionObserver(this.slider).pipe(
-        tap((entry: IntersectionObserverEntry) => {
-          entry.target.classList.toggle('g-item-visible', entry.isIntersecting);
-          if (entry.isIntersecting) {
-            this.visibleElements.set(entry.target, entry);
-          } else {
-            this.visibleElements.delete(entry.target);
-          }
-        }),
-        takeUntil(this._destroyed$)
-      ).subscribe();
+        // Subscribe to slider scroll event
+        fromEvent(this.slider, 'scroll', { passive: true }).pipe(
+          debounceTime(50),
+          filter(() => !this._isPanning),
+          tap(() => this.onViewportScroll()),
+          takeUntil(this._destroyed$)
+        ).subscribe();
 
-      // Subscribe to slider scroll event
-      fromEvent(this.slider, 'scroll', { passive: true }).pipe(
-        debounceTime(50),
-        filter(() => !this._isPanning),
-        tap(() => this.onViewportScroll()),
-        takeUntil(this._destroyed$)
-      ).subscribe();
-
-      // Detect if the size of the slider has changed detecting current index on scroll
-      if (this._platform.isBrowser) {
+        // Detect if the size of the slider has changed detecting current index on scroll
         resizeObservable(this._el.nativeElement).pipe(
           debounceTime(this.config.resizeDebounceTime),
           tap(([entry]: ResizeObserverEntry[]) => this.onHostResize(entry)),
           takeUntil(this._destroyed$)
         ).subscribe();
-      }
-    });
+      });
+    }
   }
 
   ngAfterViewInit(): void {
-    if (!this._platform.isBrowser) {
-      return;
-    }
-    this.items.notifyOnChanges();
-    this.items.changes.pipe(
-      startWith(null),
-      tap(() => {
-        // Disconnect all and reconnect later
-        this.visibleElements.forEach((item: IntersectionObserverEntry) => {
-          this.intersectionObserver.unobserve(item.target);
-        });
+    if (this._platform.isBrowser) {
+      this.items.notifyOnChanges();
+      this.items.changes.pipe(
+        startWith(null),
+        tap(() => {
+          // Disconnect all and reconnect later
+          this.visibleElements.forEach((item: IntersectionObserverEntry) => {
+            this.intersectionObserver.unobserve(item.target);
+          });
 
-        // Connect with the new items
-        this.items.toArray().map((item: GalleryItemComponent) => {
-          this.intersectionObserver.observe(item.element);
-        });
-      }),
-      takeUntil(this._destroyed$)
-    ).subscribe();
+          // Connect with the new items
+          this.items.toArray().map((item: GalleryItemComponent) => {
+            this.intersectionObserver.observe(item.element);
+          });
+        }),
+        takeUntil(this._destroyed$)
+      ).subscribe();
+    }
   }
 
   ngAfterViewChecked(): void {
@@ -271,8 +263,8 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
   private onHostResize(entry: ResizeObserverEntry): void {
     const width: number = Math.ceil(entry.contentRect.width);
     const height: number = Math.ceil(entry.contentRect.height);
-    this.slider.style.width = `${width}px`;
-    this.slider.style.height = `${height}px`;
+    this.slider.style.width = `${ width }px`;
+    this.slider.style.height = `${ height }px`;
     this.scrollToIndex(this.state.currIndex, 'auto');
     // Detect changes on gallery-item components to re-calculate item size
     this._cd.detectChanges();
