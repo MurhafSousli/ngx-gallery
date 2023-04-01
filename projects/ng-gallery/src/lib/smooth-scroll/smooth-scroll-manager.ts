@@ -1,7 +1,7 @@
-import { ElementRef, Inject, Injectable, PLATFORM_ID, Optional } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { ElementRef, Inject, Optional, Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { coerceElement } from '@angular/cdk/coercion';
-import { getRtlScrollAxisType, RtlScrollAxisType } from '@angular/cdk/platform';
+import { getRtlScrollAxisType, Platform, RtlScrollAxisType } from '@angular/cdk/platform';
 import { _Bottom, _Left, _Right, _Top, _Without } from '@angular/cdk/scrolling';
 import { fromEvent, merge, of, Observable, Subject, Subscriber } from 'rxjs';
 import { expand, finalize, take, takeUntil, takeWhile } from 'rxjs/operators';
@@ -41,8 +41,8 @@ export class SmoothScrollManager {
   }
 
   constructor(@Inject(DOCUMENT) private _document: Document,
-              @Inject(PLATFORM_ID) private _platform: object,
-              @Optional() @Inject(SMOOTH_SCROLL_OPTIONS) customDefaultOptions: SmoothScrollToOptions) {
+              @Optional() @Inject(SMOOTH_SCROLL_OPTIONS) customDefaultOptions: SmoothScrollToOptions,
+              private _platform: Platform) {
     this._defaultOptions = {
       duration: 468,
       easing: {
@@ -172,7 +172,7 @@ export class SmoothScrollManager {
    * Dismiss an ongoing scroll
    * @param el
    */
-  dismissOngoingScroll(el: HTMLElement) {
+  dismissOngoingScroll(el: HTMLElement): void {
     this._onGoingScrolls.get(el)?.next();
   }
 
@@ -187,10 +187,10 @@ export class SmoothScrollManager {
    * @param customOptions specified the offsets to scroll to.
    */
   scrollTo(scrollable: SmoothScrollElement, customOptions: SmoothScrollToOptions): Promise<void> {
-    if (isPlatformBrowser(this._platform)) {
-      const el = this._getElement(scrollable);
-      const isRtl = getComputedStyle(el).direction === 'rtl';
-      const rtlScrollAxisType = getRtlScrollAxisType();
+    if (this._platform.isBrowser) {
+      const el: HTMLElement = this._getElement(scrollable);
+      const isRtl: boolean = getComputedStyle(el).direction === 'rtl';
+      const rtlScrollAxisType: RtlScrollAxisType = getRtlScrollAxisType();
 
       const options: SmoothScrollToOptions = {
         ...(this._defaultOptions as _Without<_Bottom & _Top>),
@@ -232,8 +232,8 @@ export class SmoothScrollManager {
    * Scroll to element by reference or selector
    */
   scrollToElement(scrollable: SmoothScrollElement, target: SmoothScrollElement, customOptions: SmoothScrollToElementOptions = {}): Promise<void> {
-    const scrollableEl = this._getElement(scrollable);
-    const targetEl = this._getElement(target, scrollableEl);
+    const scrollableEl: HTMLElement = this._getElement(scrollable);
+    const targetEl: HTMLElement = this._getElement(target, scrollableEl);
     const options: SmoothScrollToOptions = {
       ...customOptions,
       ...{
