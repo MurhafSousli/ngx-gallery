@@ -34,7 +34,7 @@ import { tap, debounceTime, filter, takeUntil, switchMap } from 'rxjs/operators'
 import { Gallery } from '../services/gallery.service';
 import { GalleryState, GalleryError } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
-import { SlidingDirection, ThumbnailsView } from '../models/constants';
+import { SlidingDirection } from '../models/constants';
 import { SliderAdapter, HorizontalAdapter, VerticalAdapter } from './adapters';
 import { SmoothScrollManager } from '../smooth-scroll';
 import { resizeObservable } from '../utils/resize-observer';
@@ -162,19 +162,19 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
             this.adapter = new VerticalAdapter(this.slider, this.config);
             break;
         }
-
-        if (!changes.config.firstChange) {
-          requestAnimationFrame(() => {
-            // Keep the correct sliding position when direction changes
-            this.scrollToIndex(this.state.currIndex, 'auto');
-          });
+        if (this._platform.isBrowser) {
+          if (!changes.config.firstChange) {
+            requestAnimationFrame(() => {
+              // Keep the correct sliding position when direction changes
+              this.scrollToIndex(this.state.currIndex, 'auto');
+            });
+          }
+          // Reactivate gestures
+          this.enableDisableGestures();
         }
-
-        // Reactivate gestures
-        this.enableDisableGestures();
       }
 
-      if (!changes.config.firstChange) {
+      if (this._platform.isBrowser && !changes.config.firstChange) {
         if (changes.config.currentValue?.mouseSlidingDisabled !== changes.config.previousValue?.mouseSlidingDisabled) {
           this.enableDisableGestures();
         }
@@ -182,7 +182,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
     }
 
     // Scroll to current index
-    if (changes.state && changes.state.currentValue?.currIndex !== changes.state.previousValue?.currIndex) {
+    if (this._platform.isBrowser && changes.state && changes.state.currentValue?.currIndex !== changes.state.previousValue?.currIndex) {
       requestAnimationFrame(() => {
         this.scrollToIndex(this.state.currIndex, changes.state.firstChange ? 'auto' : this.state.behavior);
       });
@@ -190,61 +190,62 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
   }
 
   ngOnInit(): void {
-    this._zone.runOutsideAngular(() => {
+    if (this._platform.isBrowser) {
+      this._zone.runOutsideAngular(() => {
+        // We need to set the visibleElements in the viewport using intersection observer
+        this.createIntersectionObserver(this.slider).pipe(
+          tap((entry: IntersectionObserverEntry) => {
+            entry.target.classList.toggle('g-item-visible', entry.isIntersecting);
+            if (entry.isIntersecting) {
+              this.visibleElements.set(entry.target, entry);
+            } else {
+              this.visibleElements.delete(entry.target);
+            }
+          }),
+          takeUntil(this._destroyed$)
+        ).subscribe();
 
-      // We need to set the visibleElements in the viewport using intersection observer
-      this.createIntersectionObserver(this.slider).pipe(
-        tap((entry: IntersectionObserverEntry) => {
-          entry.target.classList.toggle('g-item-visible', entry.isIntersecting);
-          if (entry.isIntersecting) {
-            this.visibleElements.set(entry.target, entry);
-          } else {
-            this.visibleElements.delete(entry.target);
-          }
-        }),
-        takeUntil(this._destroyed$)
-      ).subscribe();
+        // Subscribe to slider scroll event
+        fromEvent(this.slider, 'scroll', { passive: true }).pipe(
+          debounceTime(50),
+          filter(() => !this._isPanning),
+          tap(() => this.onViewportScroll()),
+          takeUntil(this._destroyed$)
+        ).subscribe();
 
-      // Subscribe to slider scroll event
-      fromEvent(this.slider, 'scroll', { passive: true }).pipe(
-        debounceTime(50),
-        filter(() => !this._isPanning),
-        tap(() => this.onViewportScroll()),
-        takeUntil(this._destroyed$)
-      ).subscribe();
-
-      // Detect if the size of the slider has changed detecting current index on scroll
-      if (this._platform.isBrowser) {
+        // Detect if the size of the slider has changed detecting current index on scroll
         resizeObservable(this._el.nativeElement).pipe(
           debounceTime(this.config.resizeDebounceTime),
           tap(([entry]: ResizeObserverEntry[]) => this.onHostResize(entry)),
           takeUntil(this._destroyed$)
         ).subscribe();
-      }
-    });
+      });
+    }
   }
 
   ngAfterViewInit(): void {
-    this.items.notifyOnChanges();
-    this.items.changes.pipe(
-      startWith(null),
-      tap(() => {
-        // Disconnect all and reconnect later
-        this.visibleElements.forEach((item: IntersectionObserverEntry) => {
-          this.intersectionObserver.unobserve(item.target);
-        });
+    if (this._platform.isBrowser) {
+      this.items.notifyOnChanges();
+      this.items.changes.pipe(
+        startWith(null),
+        tap(() => {
+          // Disconnect all and reconnect later
+          this.visibleElements.forEach((item: IntersectionObserverEntry) => {
+            this.intersectionObserver.unobserve(item.target);
+          });
 
-        // Connect with the new items
-        this.items.toArray().map((item: GalleryItemComponent) => {
-          this.intersectionObserver.observe(item.element);
-        });
-      }),
-      takeUntil(this._destroyed$)
-    ).subscribe();
+          // Connect with the new items
+          this.items.toArray().map((item: GalleryItemComponent) => {
+            this.intersectionObserver.observe(item.element);
+          });
+        }),
+        takeUntil(this._destroyed$)
+      ).subscribe();
+    }
   }
 
   ngAfterViewChecked(): void {
-    if (this.config.itemAutosize) {
+    if (this.config.itemAutosize && this._platform.isBrowser) {
       this.slider.style.setProperty('--slider-centralize-start-size', this.adapter.getCentralizerStartSize() + 'px');
       this.slider.style.setProperty('--slider-centralize-end-size', this.adapter.getCentralizerEndSize() + 'px');
     }

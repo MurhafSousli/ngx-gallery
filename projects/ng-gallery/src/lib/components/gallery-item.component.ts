@@ -7,8 +7,9 @@ import {
   AfterViewChecked,
   ElementRef,
   ChangeDetectorRef,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
+import { Platform } from '@angular/cdk/platform';
 import { GalleryConfig } from '../models/config.model';
 import { LoadingStrategy, GalleryItemType } from '../models/constants';
 import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from './templates/items.model';
@@ -149,13 +150,15 @@ export class GalleryItemComponent implements AfterViewChecked {
     return this.data;
   }
 
-  constructor(private el: ElementRef, private cd: ChangeDetectorRef) {
+  constructor(private el: ElementRef, private cd: ChangeDetectorRef, private _platform: Platform) {
   }
 
   ngAfterViewChecked(): void {
-    const height = this.getHeight();
-    this.element.style.setProperty('--g-item-width', `${ this.getWidth() }px`);
-    this.element.style.setProperty('--g-item-height', `${ height }px`);
+    const height: number = this.getHeight();
+    if (this._platform.isBrowser) {
+      this.element.style.setProperty('--g-item-width', `${ this.getWidth() }px`);
+      this.element.style.setProperty('--g-item-height', `${ height }px`);
+    }
     if (this.currIndex === this.index) {
       // Auto-height feature, only allowed when sliding direction is horizontal
       const isThumbPositionHorizontal: boolean = this.config.thumbPosition === 'top' || this.config.thumbPosition === 'bottom';
