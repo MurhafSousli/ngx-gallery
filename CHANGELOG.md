@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.0.3
+
+- fix(core): SSR error, closes [532](https://github.com/MurhafSousli/ngx-gallery/issues/532) in [#533](https://github.com/MurhafSousli/ngx-gallery/pull/533).
+
 ## 8.0.2
 
 - feat(core): Add `loadingAttr` option to img and iframe elements, closes [#513](https://github.com/MurhafSousli/ngx-gallery/issues/513) in [093789b](https://github.com/MurhafSousli/ngx-gallery/pull/517/commits/093789b42cff86da957a09632c96705d42820085).
