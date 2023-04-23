@@ -122,7 +122,7 @@ export class GalleryItemComponent implements AfterViewChecked {
     if (this.isActive && this.type === GalleryItemType.Youtube && (this.data as YoutubeItemData).autoplay) {
       autoplay = 1;
     }
-    const url = new URL(this.data.src);
+    const url = new URL(this.data.src as string);
     url.search = new URLSearchParams({
       wmode: 'transparent',
       ...(this.data as YoutubeItemData).params,
