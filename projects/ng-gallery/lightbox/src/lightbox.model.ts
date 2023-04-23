@@ -4,7 +4,7 @@ export const LIGHTBOX_CONFIG = new InjectionToken<LightboxConfig>('LIGHTBOX_CONF
 
 export interface LightboxConfig {
   backdropClass?: string;
-  panelClass?: string;
+  panelClass?: string | string[];
   hasBackdrop?: boolean;
   keyboardShortcuts?: boolean;
   closeIcon?: string;
