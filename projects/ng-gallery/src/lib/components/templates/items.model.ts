@@ -49,7 +49,7 @@ export class YoutubeItem implements GalleryItem {
 
 type GalleryItemModel = {
   type?: string;
-  src?: string;
+  src?: string | { url: string, type: string }[];
   thumb?: string;
 };
 
@@ -66,8 +66,6 @@ export type YoutubeItemData = IframeItemData & {
 };
 
 export type VideoItemData = GalleryItemModel & {
-  src?: string | { url: string, type: string }[];
-  thumb?: string;
   poster?: string;
   loop?: boolean;
   // The only option for boolean video attributes is 'true', because false will still be evaluated to true in attributes binding
