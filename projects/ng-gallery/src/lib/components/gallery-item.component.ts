@@ -23,6 +23,7 @@ import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from '
 
         <gallery-image [src]="imageData.src"
                        [alt]="imageData.alt"
+                       [caption]="imageData.caption"
                        [loadingAttr]="config.loadingAttr"
                        [loadingIcon]="config.loadingIcon"
                        [loadingError]="config.loadingError"
