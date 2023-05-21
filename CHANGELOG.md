@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.0.0
+
+- Upgrade to Angular 16
+
 ## 8.0.4
 
 - fix(core): Fix `VideoItem` typo, closes [#529](https://github.com/MurhafSousli/ngx-gallery/issues/529).
