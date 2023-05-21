@@ -3,8 +3,8 @@ import { InjectionToken } from '@angular/core';
 export const LIGHTBOX_CONFIG = new InjectionToken<LightboxConfig>('LIGHTBOX_CONFIG');
 
 export interface LightboxConfig {
-  backdropClass?: string;
-  panelClass?: string;
+  backdropClass?: string | string[];
+  panelClass?: string | string[];
   hasBackdrop?: boolean;
   keyboardShortcuts?: boolean;
   closeIcon?: string;

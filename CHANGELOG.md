@@ -1,5 +1,14 @@
 # Changelog
 
+## 9.0.0
+
+- Upgrade to Angular 16
+
+## 8.0.4
+
+- fix(core): Fix `VideoItem` typo, closes [#529](https://github.com/MurhafSousli/ngx-gallery/issues/529).
+- enhance(lightbox): Allow multiple classes for `backdropPanel` and `panelClass` config, closes [31368ed](https://github.com/MurhafSousli/ngx-gallery/pull/542/commits/b9d36e31cbc05d258db21bdcfb857aaa70900ba3) and [#541](https://github.com/MurhafSousli/ngx-gallery/issues/541).
+
 ## 8.0.3
 
 - fix(core): SSR error, closes [532](https://github.com/MurhafSousli/ngx-gallery/issues/532) in [#533](https://github.com/MurhafSousli/ngx-gallery/pull/533).
