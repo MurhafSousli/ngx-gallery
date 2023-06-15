@@ -1,9 +1,8 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { ExtendedModule } from '@angular/flex-layout/extended';
 import { MatIconModule } from '@angular/material/icon';
-import { FlexModule } from '@angular/flex-layout/flex';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { SectionTitleComponent } from '../../shared/section-title/section-title.component';
 
@@ -16,7 +15,7 @@ import { SectionTitleComponent } from '../../shared/section-title/section-title.
   styleUrls: ['./documentation.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FlexModule, RouterLink, RouterLinkActive, SectionTitleComponent, MatIconModule, ExtendedModule, RouterOutlet, FooterComponent]
+  imports: [RouterLink, RouterLinkActive, SectionTitleComponent, MatIconModule, RouterOutlet, FooterComponent, FlexLayoutModule]
 })
 export class DocumentationComponent implements OnInit {
 

@@ -3,8 +3,7 @@ import { NgIf, AsyncPipe } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { ExtendedModule } from '@angular/flex-layout/extended';
-import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { FlexLayoutModule, MediaChange, MediaObserver } from '@angular/flex-layout';
 import { GalleryComponent, GalleryConfig, GalleryItem } from 'ng-gallery';
 import { Observable, map } from 'rxjs';
 import { Pixabay } from '../../service/pixabay.service';
@@ -20,7 +19,7 @@ import { BadgesComponent } from '../../shared/badges/badges.component';
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [MatButtonModule, RouterLink, BadgesComponent, NgIf, GalleryComponent, ExtendedModule, FooterComponent, AsyncPipe]
+  imports: [MatButtonModule, RouterLink, BadgesComponent, NgIf, GalleryComponent, FooterComponent, AsyncPipe, FlexLayoutModule]
 })
 export class HomeComponent implements OnInit {
 

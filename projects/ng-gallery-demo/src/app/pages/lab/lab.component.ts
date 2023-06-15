@@ -19,7 +19,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { FlexModule } from '@angular/flex-layout/flex';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Pixabay } from '../../service/pixabay.service';
 import { FooterComponent } from '../../shared/footer/footer.component';
@@ -33,7 +33,7 @@ import { FooterComponent } from '../../shared/footer/footer.component';
   styleUrls: ['./lab.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FlexModule, MatIconModule, NgIf, GalleryComponent, MatButtonModule, MatCardModule, MatFormFieldModule, MatSelectModule, FormsModule, NgFor, MatOptionModule, MatCheckboxModule, MatInputModule, FooterComponent, AsyncPipe]
+  imports: [FlexLayoutModule, MatIconModule, NgIf, GalleryComponent, MatButtonModule, MatCardModule, MatFormFieldModule, MatSelectModule, FormsModule, NgFor, MatOptionModule, MatCheckboxModule, MatInputModule, FooterComponent, AsyncPipe]
 })
 export class LabComponent implements OnInit {
 
