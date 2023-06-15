@@ -14,7 +14,7 @@ import { faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { AppRoutingModule } from './routing.module';
-import { SharedModule } from './shared/shared.module';
+
 
 import { AppComponent } from './app.component';
 
@@ -27,7 +27,6 @@ import { GalleryMockDialog } from './shared/gallery-mock-dialog';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    SharedModule,
     NgProgressModule,
     NgProgressHttpModule,
     NgProgressRouterModule,
