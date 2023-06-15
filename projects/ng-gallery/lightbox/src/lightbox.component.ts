@@ -4,8 +4,8 @@ import { DOCUMENT } from '@angular/common';
 import { AnimationEvent } from '@angular/animations';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
+import { GalleryComponent } from 'ng-gallery';
 import { lightboxAnimation } from './lightbox.animation';
-import { GalleryComponent } from '../../src/lib/components/gallery.component';
 
 @Component({
   selector: 'lightbox',
