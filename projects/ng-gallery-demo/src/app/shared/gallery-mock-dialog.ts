@@ -1,5 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { FlexModule } from '@angular/flex-layout/flex';
 
 @Component({
   selector: 'gallery-mock-dialog',
@@ -24,7 +27,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
       font-size: 60px;
       margin: 10px;
     }
-  `]
+  `],
+  standalone: true,
+  imports: [MatDialogModule, FlexModule, MatIconModule, MatButtonModule]
 })
 export class GalleryMockDialog {
   constructor(public dialogRef: MatDialogRef<GalleryMockDialog>, @Inject(MAT_DIALOG_DATA) public data: any) {

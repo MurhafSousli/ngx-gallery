@@ -6,9 +6,6 @@ import { SharedModule } from '../../shared/shared.module';
 import { GallerizeExampleComponent } from './gallerize-example.component';
 
 @NgModule({
-  declarations: [
-    GallerizeExampleComponent
-  ],
   imports: [
     SharedModule,
     GalleryModule,
@@ -17,8 +14,9 @@ import { GallerizeExampleComponent } from './gallerize-example.component';
       {
         path: '', component: GallerizeExampleComponent
       }
-    ])
+    ]),
+    GallerizeExampleComponent
   ]
-
 })
-export class GallerizeExampleModule { }
+export class GallerizeExampleModule {
+}

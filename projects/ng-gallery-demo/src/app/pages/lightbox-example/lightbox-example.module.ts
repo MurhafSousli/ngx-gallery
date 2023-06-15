@@ -6,19 +6,19 @@ import { SharedModule } from '../../shared/shared.module';
 import { LightboxExampleComponent } from './lightbox-example.component';
 
 @NgModule({
-  declarations: [LightboxExampleComponent],
-  imports: [
-    SharedModule,
-    GalleryModule,
-    LightboxModule.withConfig({
-      keyboardShortcuts: false
-    }),
-    RouterModule.forChild([
-      {
-        path: '', component: LightboxExampleComponent
-      }
-    ])
-  ]
+    imports: [
+        SharedModule,
+        GalleryModule,
+        LightboxModule.withConfig({
+            keyboardShortcuts: false
+        }),
+        RouterModule.forChild([
+            {
+                path: '', component: LightboxExampleComponent
+            }
+        ]),
+        LightboxExampleComponent
+    ]
 })
 export class LightboxExampleModule {
 }

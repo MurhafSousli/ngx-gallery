@@ -5,9 +5,6 @@ import { SharedModule } from '../../shared/shared.module';
 import { AdvancedExampleComponent } from './advanced-example.component';
 
 @NgModule({
-  declarations: [
-    AdvancedExampleComponent
-  ],
   imports: [
     SharedModule,
     GalleryModule,
@@ -15,9 +12,9 @@ import { AdvancedExampleComponent } from './advanced-example.component';
       {
         path: '', component: AdvancedExampleComponent
       }
-    ])
+    ]),
+    AdvancedExampleComponent
   ]
-
 })
 export class AdvancedExampleModule {
 }

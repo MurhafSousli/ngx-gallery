@@ -1,11 +1,19 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonModule } from '@angular/material/button';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { GalleryItem, GalleryConfig, ThumbnailsPosition } from 'ng-gallery';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { GalleryComponent, GalleryItem, GalleryConfig, ThumbnailsPosition } from 'ng-gallery';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { Observable, map } from 'rxjs';
 
 import { Pixabay } from '../../service/pixabay.service';
+import { FooterComponent } from '../../shared/footer/footer.component';
+import { HlCodeComponent } from '../../shared/hl-code/hl-code.component';
+import { NoteComponent } from '../../shared/note/note.component';
+import { SectionTitleComponent } from '../../shared/section-title/section-title.component';
 
 @Component({
   host: {
@@ -14,7 +22,9 @@ import { Pixabay } from '../../service/pixabay.service';
   selector: 'gallery-example',
   templateUrl: './gallery-example.component.html',
   styleUrls: ['./gallery-example.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [SectionTitleComponent, NoteComponent, MatButtonModule, RouterLink, MatTabsModule, HlCodeComponent, NgIf, GalleryComponent, FontAwesomeModule, FooterComponent, AsyncPipe]
 })
 export class GalleryExampleComponent implements OnInit {
 

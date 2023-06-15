@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { NgIf, AsyncPipe } from '@angular/common';
 import {
   Gallery,
   GalleryConfig,
@@ -8,15 +9,19 @@ import {
   IframeItemData,
   ImageItemData,
   VideoItemData,
-  YoutubeItemData
+  YoutubeItemData,
+  GalleryComponent
 } from 'ng-gallery';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
+import { Observable, map } from 'rxjs';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faYoutube } from '@fortawesome/free-brands-svg-icons/faYoutube';
 import { faVideo } from '@fortawesome/free-solid-svg-icons/faVideo';
+
 import { slideInAnimation } from './slide-text.animation';
+import { FooterComponent } from '../../shared/footer/footer.component';
+import { HlCodeComponent } from '../../shared/hl-code/hl-code.component';
+import { SectionTitleComponent } from '../../shared/section-title/section-title.component';
 
 @Component({
   host: {
@@ -25,7 +30,9 @@ import { slideInAnimation } from './slide-text.animation';
   selector: 'advanced-example',
   templateUrl: './advanced-example.component.html',
   styleUrls: ['./advanced-example.component.scss'],
-  animations: [slideInAnimation]
+  animations: [slideInAnimation],
+  standalone: true,
+  imports: [SectionTitleComponent, NgIf, GalleryComponent, HlCodeComponent, FooterComponent, FontAwesomeModule, AsyncPipe]
 })
 export class AdvancedExampleComponent implements OnInit {
 

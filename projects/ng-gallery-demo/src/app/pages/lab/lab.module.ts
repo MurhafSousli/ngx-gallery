@@ -14,9 +14,7 @@ import { LabComponent } from './lab.component';
       {
         path: '', component: LabComponent
       }
-    ])
-  ],
-  declarations: [
+    ]),
     LabComponent
   ]
 })

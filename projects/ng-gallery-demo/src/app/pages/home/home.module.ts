@@ -5,7 +5,6 @@ import { HomeComponent } from './home.component';
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
-  declarations: [HomeComponent],
   imports: [
     SharedModule,
     GalleryModule,
@@ -13,7 +12,8 @@ import { SharedModule } from '../../shared/shared.module';
       {
         path: '', component: HomeComponent
       }
-    ])
+    ]),
+    HomeComponent
   ]
 })
 export class HomeModule {

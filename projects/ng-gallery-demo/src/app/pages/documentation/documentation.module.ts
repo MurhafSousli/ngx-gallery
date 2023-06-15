@@ -5,12 +5,11 @@ import { SharedModule } from '../../shared/shared.module';
 import { docRoutes } from './routes';
 
 @NgModule({
-  declarations: [DocumentationComponent],
   imports: [
     SharedModule,
-    RouterModule.forChild(docRoutes)
+    RouterModule.forChild(docRoutes),
+    DocumentationComponent
   ]
-
 })
 export class DocumentationModule {
 }

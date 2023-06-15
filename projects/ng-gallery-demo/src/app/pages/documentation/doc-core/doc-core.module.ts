@@ -8,8 +8,9 @@ import { DocCoreComponent } from './doc-core/doc-core.component';
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forChild([{path: '', component: DocCoreComponent}])
-  ],
-  declarations: [DocCoreComponent]
+    RouterModule.forChild([{ path: '', component: DocCoreComponent }]),
+    DocCoreComponent
+  ]
 })
-export class DocCoreModule { }
+export class DocCoreModule {
+}

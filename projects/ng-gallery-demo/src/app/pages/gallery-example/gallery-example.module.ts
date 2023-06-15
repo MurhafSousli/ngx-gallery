@@ -5,9 +5,6 @@ import { SharedModule } from '../../shared/shared.module';
 import { GalleryExampleComponent } from './gallery-example.component';
 
 @NgModule({
-  declarations: [
-    GalleryExampleComponent
-  ],
   imports: [
     SharedModule,
     GalleryModule,
@@ -15,9 +12,9 @@ import { GalleryExampleComponent } from './gallery-example.component';
       {
         path: '', component: GalleryExampleComponent
       }
-    ])
+    ]),
+    GalleryExampleComponent
   ]
-
 })
 export class GalleryExampleModule {
 }

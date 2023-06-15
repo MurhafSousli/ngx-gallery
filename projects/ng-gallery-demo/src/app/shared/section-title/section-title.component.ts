@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FlexModule } from '@angular/flex-layout/flex';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'section-title',
@@ -13,7 +15,9 @@ import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
     </div>
   `,
   styleUrls: ['section-title.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [FlexModule, FontAwesomeModule]
 })
 export class SectionTitleComponent {
 

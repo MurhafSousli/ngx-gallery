@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ObserversModule } from '@angular/cdk/observers';
 import { PlatformModule } from '@angular/cdk/platform';
-import { ClipboardModule} from '@angular/cdk/clipboard';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HighlightModule } from 'ngx-highlightjs';
@@ -20,15 +20,6 @@ import { SectionTitleComponent } from './section-title/section-title.component';
 import { NoteComponent } from './note/note.component';
 
 @NgModule({
-  declarations: [
-    SectionTitleComponent,
-    BadgesComponent,
-    NoteComponent,
-    MenuComponent,
-    FooterComponent,
-    HlCodeComponent,
-    KeysPipe
-  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -40,6 +31,13 @@ import { NoteComponent } from './note/note.component';
     NgScrollbarModule,
     FontAwesomeModule,
     ClipboardModule,
+    SectionTitleComponent,
+    BadgesComponent,
+    NoteComponent,
+    MenuComponent,
+    FooterComponent,
+    HlCodeComponent,
+    KeysPipe,
   ],
   exports: [
     CommonModule,

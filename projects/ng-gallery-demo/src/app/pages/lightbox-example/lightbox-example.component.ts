@@ -1,10 +1,17 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { NgFor, AsyncPipe } from '@angular/common';
 import { Title } from '@angular/platform-browser';
+import { MatButtonModule } from '@angular/material/button';
+import { Observable, map } from 'rxjs';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Gallery, GalleryItem } from 'ng-gallery';
-import { Lightbox } from 'ng-gallery/lightbox';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Lightbox, LightboxDirective } from 'ng-gallery/lightbox';
 import { Pixabay } from '../../service/pixabay.service';
+import { FooterComponent } from '../../shared/footer/footer.component';
+import { HlCodeComponent } from '../../shared/hl-code/hl-code.component';
+import { NoteComponent } from '../../shared/note/note.component';
+import { SectionTitleComponent } from '../../shared/section-title/section-title.component';
 
 @Component({
   host: {
@@ -13,7 +20,9 @@ import { Pixabay } from '../../service/pixabay.service';
   selector: 'lightbox-example',
   templateUrl: './lightbox-example.component.html',
   styleUrls: ['./lightbox-example.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [SectionTitleComponent, NoteComponent, MatButtonModule, RouterLink, HlCodeComponent, NgFor, LightboxDirective, FontAwesomeModule, FooterComponent, AsyncPipe]
 })
 export class LightboxExampleComponent implements OnInit, OnDestroy {
 

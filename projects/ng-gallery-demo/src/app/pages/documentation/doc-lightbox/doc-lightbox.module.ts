@@ -8,8 +8,9 @@ import { SharedModule } from '../../../shared/shared.module';
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forChild([{path: '', component: DocLightboxComponent}])
-  ],
-  declarations: [DocLightboxComponent]
+    RouterModule.forChild([{ path: '', component: DocLightboxComponent }]),
+    DocLightboxComponent
+  ]
 })
-export class DocLightboxModule { }
+export class DocLightboxModule {
+}

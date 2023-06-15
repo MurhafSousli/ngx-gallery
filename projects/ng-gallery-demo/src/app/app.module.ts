@@ -21,10 +21,7 @@ import { AppComponent } from './app.component';
 import { GalleryMockDialog } from './shared/gallery-mock-dialog';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    GalleryMockDialog
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -33,7 +30,8 @@ import { GalleryMockDialog } from './shared/gallery-mock-dialog';
     SharedModule,
     NgProgressModule,
     NgProgressHttpModule,
-    NgProgressRouterModule
+    NgProgressRouterModule,
+    GalleryMockDialog
   ],
   providers: [
     {
