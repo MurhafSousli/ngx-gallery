@@ -21,9 +21,7 @@ import { GalleryIframeComponent } from './components/templates/gallery-iframe.co
 @NgModule({
   imports: [
     CommonModule,
-    PlatformModule
-  ],
-  declarations: [
+    PlatformModule,
     GalleryComponent,
     GalleryNavComponent,
     GalleryDotsComponent,

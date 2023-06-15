@@ -16,6 +16,7 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy
 } from '@angular/core';
+import { NgFor } from '@angular/common';
 import { Platform } from '@angular/cdk/platform';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil, tap } from 'rxjs/operators';
@@ -48,7 +49,9 @@ declare const Hammer: any;
         </gallery-thumb>
       </div>
     </div>
-  `
+  `,
+  standalone: true,
+  imports: [NgFor, GalleryThumbComponent]
 })
 export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, OnChanges, OnDestroy {
 
@@ -106,7 +109,7 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
             break;
         }
 
-        if (this._platform.isBrowser){
+        if (this._platform.isBrowser) {
           if (!changes.config.firstChange) {
             // Keep the correct sliding position when direction changes
             requestAnimationFrame(() => {
@@ -118,7 +121,7 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
           this.enableDisableGestures();
         }
       }
-      if (this._platform.isBrowser){
+      if (this._platform.isBrowser) {
         if (!changes.config.firstChange && changes.config.currentValue?.thumbMouseSlidingDisabled !== changes.config.previousValue?.thumbMouseSlidingDisabled) {
           this.enableDisableGestures();
         }

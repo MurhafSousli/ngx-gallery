@@ -17,6 +17,7 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy
 } from '@angular/core';
+import { NgFor } from '@angular/common';
 import { Platform } from '@angular/cdk/platform';
 import {
   from,
@@ -24,13 +25,17 @@ import {
   fromEvent,
   mergeMap,
   startWith,
-  EMPTY,
+  tap,
+  debounceTime,
+  filter,
+  takeUntil,
+  switchMap,
   Observable,
   Subject,
   Subscriber,
-  animationFrameScheduler
+  EMPTY,
+  animationFrameScheduler,
 } from 'rxjs';
-import { tap, debounceTime, filter, takeUntil, switchMap } from 'rxjs/operators';
 import { Gallery } from '../services/gallery.service';
 import { GalleryState, GalleryError } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
@@ -69,7 +74,9 @@ declare const Hammer: any;
       </div>
     </div>
     <ng-content></ng-content>
-  `
+  `,
+  standalone: true,
+  imports: [NgFor, GalleryItemComponent]
 })
 export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit, AfterViewChecked, OnDestroy {
 

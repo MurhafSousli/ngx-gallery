@@ -7,6 +7,7 @@ import {
   OnInit,
   ChangeDetectionStrategy
 } from '@angular/core';
+import { NgSwitch, NgSwitchCase, NgIf } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { imageFailedSvg } from './svg-assets';
@@ -62,7 +63,9 @@ import { imageFailedSvg } from './svg-assets';
         </ng-template>
       </ng-container>
     </ng-container>
-  `
+  `,
+  standalone: true,
+  imports: [NgSwitch, NgSwitchCase, NgIf]
 })
 
 export class GalleryImageComponent implements OnInit {
@@ -82,7 +85,7 @@ export class GalleryImageComponent implements OnInit {
   @Input() alt: string;
 
   /** Image source URL */
-  @Input() src: string
+  @Input() src: string;
 
   /** Custom loader template */
   @Input() loadingIcon: string;

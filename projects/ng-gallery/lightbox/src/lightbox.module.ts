@@ -13,9 +13,7 @@ import { GallerizeDirective } from './gallerize.directive';
   imports: [
     OverlayModule,
     GalleryModule,
-    A11yModule
-  ],
-  declarations: [
+    A11yModule,
     LightboxComponent,
     LightboxDirective,
     GallerizeDirective

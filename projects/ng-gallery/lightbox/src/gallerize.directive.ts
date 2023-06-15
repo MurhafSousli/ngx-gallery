@@ -30,7 +30,8 @@ const enum GallerizeMode {
 }
 
 @Directive({
-  selector: '[gallerize]'
+  selector: '[gallerize]',
+  standalone: true
 })
 export class GallerizeDirective implements OnInit, OnDestroy {
 
