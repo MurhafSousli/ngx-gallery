@@ -82,8 +82,7 @@ export class AppComponent implements OnInit {
 }`,
   stream: `import { Component, OnInit } from '@angular/core';
 import { GalleryItem, ImageItem } from 'ng-gallery';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, map } from 'rxjs';
 
 @Component({
   template: \`

@@ -18,8 +18,7 @@ import {
 } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { Platform } from '@angular/cdk/platform';
-import { Subject } from 'rxjs';
-import { debounceTime, takeUntil, tap } from 'rxjs/operators';
+import { Subject, debounceTime, takeUntil, tap } from 'rxjs';
 import { GalleryConfig } from '../models/config.model';
 import { GalleryState, GalleryError } from '../models/gallery.model';
 import { ThumbnailsPosition, ThumbnailsView } from '../models/constants';

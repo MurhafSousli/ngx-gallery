@@ -3,7 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatIconRegistry } from '@angular/material/icon';
-import { tap, filter } from 'rxjs/operators';
+import { tap, filter } from 'rxjs';
 
 import { fadeAnimation } from './app-routing.animations';
 
