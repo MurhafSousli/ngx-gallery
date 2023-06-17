@@ -1,5 +1,4 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { GalleryConfig, GALLERY_CONFIG } from './models/config.model';
+import { NgModule } from '@angular/core';
 import { GalleryComponent } from './components/gallery.component';
 
 @NgModule({
@@ -7,16 +6,4 @@ import { GalleryComponent } from './components/gallery.component';
   exports: [GalleryComponent]
 })
 export class GalleryModule {
-  static withConfig(config: GalleryConfig): ModuleWithProviders<GalleryModule> {
-
-    return {
-      ngModule: GalleryModule,
-      providers: [
-        {
-          provide: GALLERY_CONFIG,
-          useValue: config
-        }
-      ]
-    };
-  }
 }
