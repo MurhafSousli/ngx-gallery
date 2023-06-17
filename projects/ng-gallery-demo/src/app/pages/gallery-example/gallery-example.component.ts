@@ -1,11 +1,19 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonModule } from '@angular/material/button';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { GalleryItem, GalleryConfig, ThumbnailsPosition } from 'ng-gallery';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { GalleryModule, GalleryItem, GalleryConfig, ThumbnailsPosition } from 'ng-gallery';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { Observable, map } from 'rxjs';
 
 import { Pixabay } from '../../service/pixabay.service';
+import { FooterComponent } from '../../shared/footer/footer.component';
+import { HlCodeComponent } from '../../shared/hl-code/hl-code.component';
+import { NoteComponent } from '../../shared/note/note.component';
+import { SectionTitleComponent } from '../../shared/section-title/section-title.component';
 
 @Component({
   host: {
@@ -14,7 +22,9 @@ import { Pixabay } from '../../service/pixabay.service';
   selector: 'gallery-example',
   templateUrl: './gallery-example.component.html',
   styleUrls: ['./gallery-example.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [SectionTitleComponent, NoteComponent, MatButtonModule, RouterLink, MatTabsModule, HlCodeComponent, NgIf, GalleryModule, FontAwesomeModule, FooterComponent, AsyncPipe]
 })
 export class GalleryExampleComponent implements OnInit {
 
@@ -51,12 +61,14 @@ export class GalleryExampleComponent implements OnInit {
 const code = {
   example: '<gallery [items]="items" thumbPosition="left"></gallery>',
   basic: `import { Component, OnInit } from '@angular/core';
-import { GalleryItem, ImageItem } from 'ng-gallery';
+import { GalleryModule, GalleryItem, ImageItem } from 'ng-gallery';
 
 @Component({
   template: \`
     <gallery [items]="images"></gallery>
-  \`
+  \`,
+  standalone: true,
+  imports: [GalleryModule]
 })
 export class AppComponent implements OnInit {
 
@@ -70,36 +82,15 @@ export class AppComponent implements OnInit {
     ];
   }
 }`,
-  stream: `import { Component, OnInit } from '@angular/core';
-import { GalleryItem, ImageItem } from 'ng-gallery';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
-@Component({
-  template: \`
-    <gallery [items]="images$ | async"></gallery>
-  \`
-})
-export class AppComponent implements OnInit {
-
-  images$: Observable<GalleryItem[]>;
-
-  constructor(private _http: HttpClient){
-  }
-
-  ngOnInit() {
-    this.images$ = this._http.get('REQUEST_URL').pipe(
-      map(res => new ImageItem({ src: res.srcUrl, thumb: res.thumbUrl }))
-    );
-  }
-}`,
   galleryCmp: `import { Component, OnInit } from '@angular/core';
-import { GalleryComponent, ImageItem } from 'ng-gallery';
+import { GalleryModule, GalleryComponent, ImageItem } from 'ng-gallery';
 
 @Component({
   template: \`
     <gallery></gallery>
-  \`
+  \`,
+  standalone: true,
+  imports: [GalleryModule]
 })
 export class AppComponent implements OnInit {
 
@@ -117,12 +108,14 @@ export class AppComponent implements OnInit {
   }
 }`,
   galleryRef: `import { Component, OnInit } from '@angular/core';
-import { Gallery, GalleryRef, ImageItem } from 'ng-gallery';
+import { GalleryModule, Gallery, GalleryRef, ImageItem } from 'ng-gallery';
 
 @Component({
   template: \`
     <gallery id="myGallery"></gallery>
-  \`
+  \`,
+  standalone: true,
+  imports: [GalleryModule]
 })
 export class AppComponent implements OnInit {
 

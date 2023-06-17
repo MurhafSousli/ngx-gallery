@@ -1,23 +1,23 @@
 import { Routes } from '@angular/router';
 import { DocumentationComponent } from './documentation.component';
 
-export const docRoutes: Routes = [
+export const DOCUMENTATION_ROUTES: Routes = [
   {
     path: '',
     component: DocumentationComponent,
     children: [
       {
         path: '',
-        redirectTo: 'core',
+        redirectTo: 'gallery',
         pathMatch: 'full'
       },
       {
-        path: 'core',
-        loadChildren: () => import('./doc-core/doc-core.module').then(m => m.DocCoreModule)
+        path: 'gallery',
+        loadComponent: () => import('./doc-core/doc-core.component').then(m => m.DocCoreComponent)
       },
       {
         path: 'lightbox',
-        loadChildren: () => import('./doc-lightbox/doc-lightbox.module').then(m => m.DocLightboxModule)
+        loadComponent: () => import('./doc-lightbox/doc-lightbox.component').then(m => m.DocLightboxComponent)
       }
     ]
   }

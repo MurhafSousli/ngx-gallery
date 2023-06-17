@@ -13,10 +13,14 @@
     <section-title class="no-margin-bottom">Usage</section-title>
 
     <note class="info" style="margin: -3em 0 -1em">
-      <p>If you haven't installed and imported the module in step <span class="section-number inline-number">1</span>
-        see the <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent"
-                   [routerLink]="['/getting-started/core']">Getting
-          Started Guide</a></p>
+      <p>If you haven't installed the module in step <span class="section-number inline-number">1</span>
+        see the <a mat-button
+                   class="inline-button"
+                   style="padding: 0 0.5em"
+                   color="accent"
+                   routerLink="/getting-started/gallery">
+          Getting Started Guide
+        </a></p>
     </note>
 
     <div class="usage-title">
@@ -31,15 +35,6 @@
           <p>The most basic usage is to load items using an array of type <code class="hljs">GalleryItem[]</code></p>
           <p>This is done using the template binding</p>
           <hl-code [code]="code.basic"></hl-code>
-        </ng-template>
-      </mat-tab>
-
-      <mat-tab label="Stream">
-        <ng-template matTabContent>
-          <p>Another way is to convert a stream of data to a stream of gallery items using the map operator.</p>
-          <p>This can be done using the <code class="hljs">async</code> pipe to subscribe to the stream in the
-            template.</p>
-          <hl-code [code]="code.stream"></hl-code>
         </ng-template>
       </mat-tab>
 

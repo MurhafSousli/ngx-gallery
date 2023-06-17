@@ -1,5 +1,4 @@
-import { BehaviorSubject, Subject, Observable, of, EMPTY } from 'rxjs';
-import { delay, filter, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, Subject, Observable, of, EMPTY, delay, filter, switchMap, tap } from 'rxjs';
 import { defaultState } from '../utils/gallery.default';
 import { GalleryError, GalleryItem, GalleryState } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';

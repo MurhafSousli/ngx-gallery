@@ -1,10 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { NgIf, AsyncPipe } from '@angular/common';
 import { Title } from '@angular/platform-browser';
-import { map } from 'rxjs/operators';
-import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { Observable } from 'rxjs';
-import { GalleryConfig, GalleryItem } from 'ng-gallery';
+import { RouterLink } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { FlexLayoutModule, MediaChange, MediaObserver } from '@angular/flex-layout';
+import { GalleryComponent, GalleryConfig, GalleryItem } from 'ng-gallery';
+import { Observable, map } from 'rxjs';
 import { Pixabay } from '../../service/pixabay.service';
+import { FooterComponent } from '../../shared/footer/footer.component';
+import { BadgesComponent } from '../../shared/badges/badges.component';
 
 @Component({
   host: {
@@ -13,7 +17,9 @@ import { Pixabay } from '../../service/pixabay.service';
   selector: 'home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [MatButtonModule, RouterLink, BadgesComponent, NgIf, GalleryComponent, FooterComponent, AsyncPipe, FlexLayoutModule]
 })
 export class HomeComponent implements OnInit {
 
