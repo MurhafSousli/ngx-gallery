@@ -60,7 +60,7 @@ const code = {
   <img *ngFor="let image of images"
        [src]="image.thumb"
        [attr.imageSrc]="image.src"
-       [attr.thumbSrc]="image.thumb">
+       [attr.thumbSrc]="image.thumb"/>
 </div>`,
   withSelector: `<div class="container" gallerize selector=".gallery-img">
   <div *ngFor="let image of images" class="gallery-img"

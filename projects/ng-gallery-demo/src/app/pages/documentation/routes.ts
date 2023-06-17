@@ -8,11 +8,11 @@ export const DOCUMENTATION_ROUTES: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'core',
+        redirectTo: 'gallery',
         pathMatch: 'full'
       },
       {
-        path: 'core',
+        path: 'gallery',
         loadComponent: () => import('./doc-core/doc-core.component').then(m => m.DocCoreComponent)
       },
       {

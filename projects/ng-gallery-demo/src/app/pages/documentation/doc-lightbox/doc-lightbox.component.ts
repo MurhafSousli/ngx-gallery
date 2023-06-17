@@ -16,38 +16,18 @@ import { SectionTitleComponent } from '../../../shared/section-title/section-tit
 })
 export class DocLightboxComponent {
 
-  docs = `import { GalleryModule } from  'ng-gallery';
-import { LightboxModule } from  'ng-gallery/lightbox';
+  readonly globalConfig: string = `import { LIGHTBOX_CONFIG, LightboxConfig } from 'ng-gallery/lightbox';
 
-@NgModule({
-  imports: [
-    GalleryModule,
-    LightboxModule
-  ]
-})`;
-
-  docsWithConfig = `import { GalleryModule } from  'ng-gallery';
-import { LightboxModule } from  'ng-gallery/lightbox';
-
-@NgModule({
-  imports: [
-    GalleryModule,
-    LightboxModule.withConfig({ ... })
-  ]
-})`;
-
-  globalConfig = `import { LIGHTBOX_CONFIG } from 'ng-gallery/lightbox';
-
-@NgModule({
+bootstrapApplication(AppComponent, {
   providers: [
     {
       provide: LIGHTBOX_CONFIG,
       useValue: {
-        keyboardShortcuts: false
-      }
-    }
+        keyboardShortcuts: false,
+        exitAnimationTime: 1000
+      } as LightboxConfig
+    },
   ]
-})
-export class AppModule { }`;
+})`;
 
 }

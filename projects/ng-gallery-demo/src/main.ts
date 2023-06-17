@@ -7,7 +7,7 @@ import { NgProgressHttpModule } from 'ngx-progressbar/http';
 import { NgProgressModule } from 'ngx-progressbar';
 import { NG_SCROLLBAR_OPTIONS } from 'ngx-scrollbar';
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
-import { GALLERY_CONFIG } from 'ng-gallery';
+import { GALLERY_CONFIG, GalleryConfig } from 'ng-gallery';
 
 import { AppRoutingModule } from './app/routing.module';
 import { environment } from './environments/environment';
@@ -24,7 +24,7 @@ bootstrapApplication(AppComponent, {
       provide: GALLERY_CONFIG,
       useValue: {
         imageSize: 'cover'
-      }
+      } as GalleryConfig
     },
     {
       provide: HIGHLIGHT_OPTIONS,

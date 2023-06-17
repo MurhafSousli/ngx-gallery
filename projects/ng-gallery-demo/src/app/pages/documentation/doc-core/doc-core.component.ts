@@ -15,35 +15,18 @@ import { SectionTitleComponent } from '../../../shared/section-title/section-tit
 })
 export class DocCoreComponent {
 
-  docs = `import { GalleryModule } from  'ng-gallery';
+  readonly globalConfig: string = `import { GALLERY_CONFIG, GalleryConfig } from 'ng-gallery';
 
-@NgModule({
-  imports: [
-    GalleryModule
-  ]
-})`;
-
-  docsWithConfig = `import { GalleryModule } from  'ng-gallery';
-
-@NgModule({
-  imports: [
-    GalleryModule.withConfig({ ... })
-  ]
-})`;
-
-  globalConfig = `import { GALLERY_CONFIG } from 'ng-gallery';
-
-@NgModule({
+bootstrapApplication(AppComponent, {
   providers: [
     {
       provide: GALLERY_CONFIG,
       useValue: {
-        dots: true,
+        autoHeight: true,
         imageSize: 'cover'
-      }
-    }
+      } as GalleryConfig
+    },
   ]
-})
-export class AppModule { }`;
+})`
 
 }

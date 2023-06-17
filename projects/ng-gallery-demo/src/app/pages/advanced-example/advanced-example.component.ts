@@ -158,10 +158,16 @@ const code = {
   </span>
 </ng-template>`,
   component: `import { Component, OnInit } from '@angular/core';
-import { Gallery, GalleryRef } from 'ng-gallery';
+import { NgIf } from '@angular/common';
+import { GalleryModule, Gallery, GalleryRef } from 'ng-gallery';
 
-@Component({...})
-export class AppComponent implements OnInit {
+@Component({
+  selector: 'advanced-example',
+  templateUrl: './advanced-example.html',
+  standalone: true,
+  imports: [GalleryModule, NgIf]
+})
+export class AdvancedExampleComponent implements OnInit {
 
   galleryId = 'mixedExample';
 

@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Observable, map } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Gallery, GalleryItem } from 'ng-gallery';
-import { Lightbox, LIGHTBOX_CONFIG, LightboxDirective } from 'ng-gallery/lightbox';
+import { Lightbox, LIGHTBOX_CONFIG, LightboxModule } from 'ng-gallery/lightbox';
 import { Pixabay } from '../../service/pixabay.service';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { HlCodeComponent } from '../../shared/hl-code/hl-code.component';
@@ -30,7 +30,7 @@ import { SectionTitleComponent } from '../../shared/section-title/section-title.
       }
     }
   ],
-  imports: [SectionTitleComponent, NoteComponent, MatButtonModule, RouterLink, HlCodeComponent, NgFor, LightboxDirective, FontAwesomeModule, FooterComponent, AsyncPipe]
+  imports: [LightboxModule, SectionTitleComponent, NoteComponent, MatButtonModule, RouterLink, HlCodeComponent, NgFor, FontAwesomeModule, FooterComponent, AsyncPipe]
 })
 export class LightboxExampleComponent implements OnInit, OnDestroy {
 
@@ -70,24 +70,28 @@ const code = {
 const galleryRef = this.gallery.ref();
 galleryRef.load(items)`,
   template: `<div class="grid-item"
-  *ngFor="let item of items; let i = index"
-  [lightbox]="i">
-  <img [src]="item.data.thumbnail">
+     *ngFor="let item of items; let i = index"
+     [lightbox]="i">
+  <img [src]="item.data.thumbnail"/>
 </div>`,
   ex: `import { Component, OnInit } from '@angular/core';
-import { Gallery, GalleryItem } from 'ng-gallery';
+import { NgFor, AsyncPipe } from '@angular/common';
+import { GalleryModule, Gallery, GalleryItem } from 'ng-gallery';
+import { LightboxModule } from 'ng-gallery/lightbox';
 
 @Component({
   template: \`
     <div class="grid">
       <div class="grid-item"
-        *ngFor="let item of space$ | async; let i = index"
-        [lightbox]="i"
-        [gallery]="galleryId">
-        <img [src]="item.data.thumbnail">
+           *ngFor="let item of space$ | async; let i = index"
+           [lightbox]="i"
+           [gallery]="galleryId">
+        <img [src]="item.data.thumbnail"/>
       </div>
     </div>
-  \`
+  \`,
+  standalone: true,
+  imports: [LightboxModule, NgFor, AsyncPipe]
 })
 export class AppComponent implements OnInit {
 
@@ -106,6 +110,12 @@ export class AppComponent implements OnInit {
 import { Gallery, GalleryItem } from 'ng-gallery';
 import { Lightbox } from 'ng-gallery/lightbox';
 
+@Component({
+  template: \`
+    <button (click)="openInFullScreen(4)">Open image 5</button>
+  \`,
+  standalone: true
+})
 export class AppComponent implements OnInit {
 
   galleryId = 'myLightbox';
