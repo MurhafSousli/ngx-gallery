@@ -1,8 +1,12 @@
 # Changelog
 
-## 9.0.1
+## 10.0.0
 
-- feat: Migrate to standalone components
+- feat: Migrate to standalone components.
+
+### Breaking Changes
+
+- Both `GalleryModule` and `LightboxModule` no longer provide the `withConfig()` method.
 
 ## 9.0.1
 
