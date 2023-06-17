@@ -4,6 +4,7 @@ import { DOCUMENT } from '@angular/common';
 import { AnimationEvent } from '@angular/animations';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
+import { GalleryComponent } from 'ng-gallery';
 import { lightboxAnimation } from './lightbox.animation';
 
 @Component({
@@ -25,7 +26,9 @@ import { lightboxAnimation } from './lightbox.animation';
     '[attr.aria-describedby]': 'ariaDescribedBy || null',
     '[@lightbox]': '{ value: state, params: { startAnimationTime: startAnimationTime, exitAnimationTime: exitAnimationTime } }',
     '(@lightbox.done)': 'onAnimationDone($event)',
-  }
+  },
+  standalone: true,
+  imports: [GalleryComponent]
 })
 export class LightboxComponent {
 

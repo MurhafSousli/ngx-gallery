@@ -10,7 +10,9 @@ import {
   EventEmitter,
   ChangeDetectionStrategy
 } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 import { Subscription, SubscriptionLike } from 'rxjs';
+import { GalleryCoreComponent } from './gallery-core.component';
 import { Gallery } from '../services/gallery.service';
 import { GalleryRef } from '../services/gallery-ref';
 import { GalleryError, GalleryItem, GalleryState } from '../models/gallery.model';
@@ -29,7 +31,9 @@ import { BezierEasingOptions } from '../smooth-scroll';
                   (itemClick)="onItemClick($event)"
                   (thumbClick)="onThumbClick($event)"
                   (error)="onError($event)"></gallery-core>
-  `
+  `,
+  standalone: true,
+  imports: [GalleryCoreComponent, AsyncPipe]
 })
 export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
 

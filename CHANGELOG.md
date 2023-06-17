@@ -1,5 +1,17 @@
 # Changelog
 
+## 10.0.0
+
+- feat: Migrate to standalone components.
+
+### Breaking Changes
+
+- Both `GalleryModule` and `LightboxModule` no longer provide the `withConfig()` method.
+
+## 9.0.1
+
+- Remove `bezier-easing` package from dependencies, closes [#525](https://github.com/MurhafSousli/ngx-gallery/issues/525) and [#551](https://github.com/MurhafSousli/ngx-gallery/issues/551) in [6c47ecb](https://github.com/MurhafSousli/ngx-gallery/pull/556/commits/6c47ecb59185909186f10a9860d1a98b326ad2d0).
+
 ## 9.0.0
 
 - Upgrade to Angular 16
