@@ -25,7 +25,7 @@ bootstrapApplication(AppComponent, {
         autoHeight: true,
         imageSize: 'cover'
       } as GalleryConfig
-    },
+    }
   ]
 })`
 

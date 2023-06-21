@@ -26,7 +26,7 @@ bootstrapApplication(AppComponent, {
         keyboardShortcuts: false,
         exitAnimationTime: 1000
       } as LightboxConfig
-    },
+    }
   ]
 })`;
 
