@@ -1,4 +1,5 @@
 import { Component, Input, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { NgIf } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
@@ -21,7 +22,9 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
               [src]="iframeSrc">
       </iframe>
     </ng-template>
-  `
+  `,
+  standalone: true,
+  imports: [NgIf]
 })
 export class GalleryIframeComponent {
 

@@ -3,9 +3,8 @@ import { DOCUMENT } from '@angular/common';
 import { coerceElement } from '@angular/cdk/coercion';
 import { getRtlScrollAxisType, Platform, RtlScrollAxisType } from '@angular/cdk/platform';
 import { _Bottom, _Left, _Right, _Top, _Without } from '@angular/cdk/scrolling';
-import { fromEvent, merge, of, Observable, Subject, Subscriber } from 'rxjs';
-import { expand, finalize, take, takeUntil, takeWhile } from 'rxjs/operators';
-import BezierEasing from 'bezier-easing';
+import { Observable, Subject, Subscriber, fromEvent, merge, of, expand, finalize, take, takeUntil, takeWhile } from 'rxjs';
+import BezierEasing from './bezier-easing';
 import {
   SMOOTH_SCROLL_OPTIONS,
   SmoothScrollElement,

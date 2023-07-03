@@ -10,6 +10,10 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
+import { NgIf, NgSwitch, NgSwitchCase, NgTemplateOutlet, NgSwitchDefault } from '@angular/common';
+import { GalleryIframeComponent } from './templates/gallery-iframe.component';
+import { GalleryVideoComponent } from './templates/gallery-video.component';
+import { GalleryImageComponent } from './templates/gallery-image.component';
 import { GalleryConfig } from '../models/config.model';
 import { LoadingStrategy, GalleryItemType } from '../models/constants';
 import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from './templates/items.model';
@@ -20,7 +24,6 @@ import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from '
   template: `
     <ng-container *ngIf="load" [ngSwitch]="type">
       <ng-container *ngSwitchCase="Types.Image">
-
         <gallery-image [src]="imageData.src"
                        [alt]="imageData.alt"
                        [caption]="imageData.caption"
@@ -31,10 +34,9 @@ import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from '
                        (error)="error.emit($event)"></gallery-image>
 
         <div *ngIf="config.itemTemplate" class="g-template g-item-template">
-          <ng-container *ngTemplateOutlet="config.itemTemplate; context: { index, type, data, isActive }">
-          </ng-container>
+            <ng-container *ngTemplateOutlet="config.itemTemplate; context: { index, type, data, isActive }">
+            </ng-container>
         </div>
-
       </ng-container>
 
       <gallery-video *ngSwitchCase="Types.Video"
@@ -59,15 +61,15 @@ import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from '
                       [loadingAttr]="config.loadingAttr"></gallery-iframe>
 
       <ng-container *ngSwitchDefault>
-
         <div *ngIf="config.itemTemplate" class="g-template g-item-template">
-          <ng-container *ngTemplateOutlet="config.itemTemplate; context: { index, type, data, isActive: isActive }">
-          </ng-container>
+            <ng-container *ngTemplateOutlet="config.itemTemplate; context: { index, type, data, isActive: isActive }">
+            </ng-container>
         </div>
-
       </ng-container>
     </ng-container>
-  `
+  `,
+  standalone: true,
+  imports: [NgIf, NgSwitch, NgSwitchCase, GalleryImageComponent, NgTemplateOutlet, GalleryVideoComponent, GalleryIframeComponent, NgSwitchDefault]
 })
 export class GalleryItemComponent implements AfterViewChecked {
 

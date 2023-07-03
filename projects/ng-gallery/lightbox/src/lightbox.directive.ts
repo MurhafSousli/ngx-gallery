@@ -1,10 +1,10 @@
-import { Directive, ElementRef, OnInit, Input, OnDestroy, Renderer2 } from '@angular/core';
-import { fromEvent, SubscriptionLike, Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Directive, Input, ElementRef, OnInit, OnDestroy, Renderer2 } from '@angular/core';
+import { fromEvent, tap, SubscriptionLike, Subscription } from 'rxjs';
 import { Lightbox } from './lightbox.service';
 
 @Directive({
-  selector: '[lightbox]'
+  selector: '[lightbox]',
+  standalone: true
 })
 export class LightboxDirective implements OnInit, OnDestroy {
 

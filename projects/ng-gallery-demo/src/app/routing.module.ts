@@ -4,36 +4,36 @@ import { RouterModule, Routes } from '@angular/router';
 const appRoutes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule),
+    loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent),
     pathMatch: 'full'
   },
   {
     path: 'getting-started',
-    loadChildren: () => import('./pages/documentation/documentation.module').then(m => m.DocumentationModule)
+    loadChildren: () => import('./pages/documentation/routes').then(m => m.DOCUMENTATION_ROUTES)
   },
   {
     path: 'gallery',
-    loadChildren: () => import('./pages/gallery-example/gallery-example.module').then(m => m.GalleryExampleModule)
+    loadComponent: () => import('./pages/gallery-example/gallery-example.component').then(m => m.GalleryExampleComponent)
   },
   {
     path: 'lightbox',
-    loadChildren: () => import('./pages/lightbox-example/lightbox-example.module').then(m => m.LightboxExampleModule)
+    loadComponent: () => import('./pages/lightbox-example/lightbox-example.component').then(m => m.LightboxExampleComponent)
   },
   {
     path: 'gallerize',
-    loadChildren: () => import('./pages/gallerize-example/gallerize-example.module').then(m => m.GallerizeExampleModule)
+    loadComponent: () => import('./pages/gallerize-example/gallerize-example.component').then(m => m.GallerizeExampleComponent)
   },
   {
     path: 'advanced',
-    loadChildren: () => import('./pages/advanced-example/advanced-example.module').then(m => m.AdvancedExampleModule)
+    loadComponent: () => import('./pages/advanced-example/advanced-example.component').then(m => m.AdvancedExampleComponent)
   },
   {
     path: 'lab',
-    loadChildren: () => import('./pages/lab/lab.module').then(m => m.LabModule)
+    loadComponent: () => import('./pages/lab/lab.component').then(m => m.LabComponent)
   },
   {
     path: '**',
-    loadChildren: () => import('./pages/not-found/not-found.module').then(m => m.NotFoundPageModule)
+    loadComponent: () => import('./pages/not-found/not-found.component').then(m => m.NotFoundComponent)
   }
 ];
 

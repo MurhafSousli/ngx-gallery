@@ -1,4 +1,10 @@
 import { Component, Input, Output, HostBinding, ChangeDetectionStrategy, EventEmitter } from '@angular/core';
+import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { GalleryCounterComponent } from './gallery-counter.component';
+import { GalleryDotsComponent } from './gallery-dots.component';
+import { GalleryNavComponent } from './gallery-nav.component';
+import { GallerySliderComponent } from './gallery-slider.component';
+import { GalleryThumbsComponent } from './gallery-thumbs.component';
 import { GalleryError, GalleryState } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
 
@@ -42,7 +48,9 @@ import { GalleryConfig } from '../models/config.model';
         <ng-container *ngTemplateOutlet="config.boxTemplate; context: { state: state, config: config }"></ng-container>
       </div>
     </div>
-  `
+  `,
+  standalone: true,
+  imports: [NgIf, GalleryThumbsComponent, GallerySliderComponent, GalleryNavComponent, GalleryDotsComponent, GalleryCounterComponent, NgTemplateOutlet]
 })
 export class GalleryCoreComponent {
 

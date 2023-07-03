@@ -11,36 +11,14 @@
 <section>
   <section-title>Usage</section-title>
 
-  <div class="usage-title">
-    <span class="section-number">1</span>
-    <p>Import <code class="hljs">BrowserAnimationsModule</code> in the root module</p>
-  </div>
+  <p>Since the standalone components has been the new standard in Angular >= 15, you can import <code class="hljs">GalleryModule</code> in your component imports.</p>
+  <p>See <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent" routerLink="/gallery">Gallery
+    Example</a> and <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent"
+                       routerLink="/advanced">Advanced Example</a>
+  </p>
 
   <p></p>
   <p></p>
-
-  <div class="usage-title">
-    <span class="section-number">2</span>
-    <p>Import <code class="hljs">GalleryModule</code></p>
-  </div>
-
-  <hl-code [code]="docs"></hl-code>
-
-  <p>Use <code class="hljs">{{ 'GalleryModule.withConfig({ ... })' }}</code> to set config that applies on the module
-    and its children</p>
-
-  <hl-code [code]="docsWithConfig"></hl-code>
-
-  <p></p>
-  <p></p>
-
-  <div class="usage-title">
-    <span class="section-number">3</span>
-    <p>See <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent" routerLink="/gallery">Gallery
-      Example</a> and <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent"
-                         routerLink="/advanced">Advanced Example</a>
-    </p>
-  </div>
 
   <note>
     <p>To set global config that applies on all the galleries across the app, provide the config value using <code

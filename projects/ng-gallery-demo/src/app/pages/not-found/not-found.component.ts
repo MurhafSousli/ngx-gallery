@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { FooterComponent } from '../../shared/footer/footer.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
   host: {
@@ -8,7 +10,9 @@ import { Title } from '@angular/platform-browser';
   selector: 'not-found',
   templateUrl: './not-found.component.html',
   styleUrls: ['./not-found.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [FlexLayoutModule, FooterComponent]
 })
 export class NotFoundComponent implements OnInit {
 

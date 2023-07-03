@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, shareReplay } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, shareReplay, map } from 'rxjs';
 
 import { ImageItem, GalleryItem } from 'ng-gallery';
 

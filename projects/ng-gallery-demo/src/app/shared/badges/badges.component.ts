@@ -11,11 +11,13 @@ import { Component } from '@angular/core';
       padding: 1em;
       justify-content: center;
     }
+
     a {
       text-decoration: none;
       margin-left: 0.3em;
     }
-  `]
+  `],
+  standalone: true
 })
 export class BadgesComponent {
 

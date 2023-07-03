@@ -7,6 +7,7 @@ import {
   OnInit,
   ChangeDetectionStrategy
 } from '@angular/core';
+import { NgSwitch, NgSwitchCase, NgIf } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { imageFailedSvg } from './svg-assets';
@@ -24,14 +25,11 @@ import { imageFailedSvg } from './svg-assets';
   ],
   template: `
     <ng-container [ngSwitch]="state">
-          <div *ngIf="caption">
-              <div class="caption"
-                   [@fadeIn]="state"
-                   [style.visibility]="state === 'success' ? 'visible' : 'hidden'"
-              >
-                  <div class="caption-text">{{caption}}</div>
-              </div>
-          </div>
+      <div *ngIf="caption" class="caption"
+           [@fadeIn]="state"
+           [style.visibility]="state === 'success' ? 'visible' : 'hidden'">
+        <div class="caption-text">{{caption}}</div>
+      </div>
       <img [@fadeIn]="state"
            [src]="src"
            [attr.alt]="alt"
@@ -70,7 +68,9 @@ import { imageFailedSvg } from './svg-assets';
         </ng-template>
       </ng-container>
     </ng-container>
-  `
+  `,
+  standalone: true,
+  imports: [NgSwitch, NgSwitchCase, NgIf]
 })
 
 export class GalleryImageComponent implements OnInit {

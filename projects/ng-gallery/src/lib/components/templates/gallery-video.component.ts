@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'gallery-video',
@@ -20,7 +21,9 @@ import { Component, Input, Output, EventEmitter, OnInit, ViewChild, ElementRef, 
         </ng-template>
       </ng-container>
     </video>
-  `
+  `,
+  standalone: true,
+  imports: [NgFor, NgIf]
 })
 export class GalleryVideoComponent implements OnInit {
 

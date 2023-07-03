@@ -1,4 +1,6 @@
-import { Component, Input, ChangeDetectionStrategy, HostBinding, Output, EventEmitter } from '@angular/core';
+import { Component, Input, HostBinding, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { GalleryImageComponent } from './templates/gallery-image.component';
 import { GalleryConfig } from '../models/config.model';
 
 @Component({
@@ -17,7 +19,9 @@ import { GalleryConfig } from '../models/config.model';
         *ngTemplateOutlet="config.thumbTemplate; context: { index, type, data, isActive }">
       </ng-container>
     </div>
-  `
+  `,
+  standalone: true,
+  imports: [GalleryImageComponent, NgIf, NgTemplateOutlet]
 })
 export class GalleryThumbComponent {
 
