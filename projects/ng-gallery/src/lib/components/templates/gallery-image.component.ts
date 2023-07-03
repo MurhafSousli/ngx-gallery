@@ -25,6 +25,11 @@ import { imageFailedSvg } from './svg-assets';
   ],
   template: `
     <ng-container [ngSwitch]="state">
+      <div *ngIf="caption" class="caption"
+           [@fadeIn]="state"
+           [style.visibility]="state === 'success' ? 'visible' : 'hidden'">
+        <div class="caption-text">{{caption}}</div>
+      </div>
       <img [@fadeIn]="state"
            [src]="src"
            [attr.alt]="alt"
@@ -86,6 +91,9 @@ export class GalleryImageComponent implements OnInit {
 
   /** Image source URL */
   @Input() src: string;
+
+  /** Image caption */
+  @Input() caption: string;
 
   /** Custom loader template */
   @Input() loadingIcon: string;

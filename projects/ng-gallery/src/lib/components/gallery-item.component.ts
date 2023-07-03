@@ -26,6 +26,7 @@ import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from '
       <ng-container *ngSwitchCase="Types.Image">
         <gallery-image [src]="imageData.src"
                        [alt]="imageData.alt"
+                       [caption]="imageData.caption"
                        [loadingAttr]="config.loadingAttr"
                        [loadingIcon]="config.loadingIcon"
                        [loadingError]="config.loadingError"

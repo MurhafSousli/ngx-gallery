@@ -51,6 +51,7 @@ type GalleryItemModel = {
   type?: string;
   src?: string | { url: string, type: string }[];
   thumb?: string;
+  caption?: string;
 };
 
 export type ImageItemData = GalleryItemModel & {

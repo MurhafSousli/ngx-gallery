@@ -146,4 +146,27 @@
   gallery-core[thumbImageSize='cover'] gallery-thumb .g-image-item {
     object-fit: cover;
   }
+
+  gallery-item {
+    .caption {
+      position: absolute;
+      bottom: 25px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      .caption-text {
+        text-align: center;
+        background-color: var(--g-overlay-color);
+        opacity: 0.6;
+        padding: 5px 10px;
+      }
+    }
+  }
+
+  gallery-thumb {
+    .caption {
+      display: none;
+    }
+  }
 }
