@@ -31,6 +31,7 @@ export interface GalleryConfig {
   playerInterval?: number;
   boxTemplate?: TemplateRef<any>;
   itemTemplate?: TemplateRef<any>;
+  imageTemplate?: TemplateRef<any>;
   thumbTemplate?: TemplateRef<any>;
   thumbDetached?: boolean;
   imageSize?: 'cover' | 'contain';

@@ -2,15 +2,16 @@ import {
   Component,
   Input,
   Output,
+  ContentChild,
   OnInit,
+  AfterContentInit,
   OnChanges,
   OnDestroy,
   SimpleChanges,
-  TemplateRef,
   EventEmitter,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Subscription, SubscriptionLike } from 'rxjs';
 import { GalleryCoreComponent } from './gallery-core.component';
 import { Gallery } from '../services/gallery.service';
@@ -19,6 +20,10 @@ import { GalleryError, GalleryItem, GalleryState } from '../models/gallery.model
 import { IframeItemData, ImageItemData, VideoItemData, YoutubeItemData } from './templates/items.model';
 import { GalleryConfig } from '../models/config.model';
 import { BezierEasingOptions } from '../smooth-scroll';
+import { GalleryImageDef } from '../directives/gallery-image-def.directive';
+import { GalleryThumbDef } from '../directives/gallery-thumb-def.directive';
+import { GalleryItemDef } from '../directives/gallery-item-def.directive';
+import { GalleryBoxDef } from '../directives/gallery-box-def.directive';
 
 @Component({
   selector: 'gallery',
@@ -33,9 +38,9 @@ import { BezierEasingOptions } from '../smooth-scroll';
                   (error)="onError($event)"></gallery-core>
   `,
   standalone: true,
-  imports: [GalleryCoreComponent, AsyncPipe]
+  imports: [CommonModule, GalleryCoreComponent]
 })
-export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
+export class GalleryComponent implements OnInit, AfterContentInit, OnChanges, OnDestroy {
 
   galleryRef: GalleryRef;
   @Input() id: string;
@@ -60,9 +65,6 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() playerInterval: number = this._gallery.config.playerInterval;
   @Input() slidingDuration: number = this._gallery.config.slidingDuration;
   @Input() slidingEase: BezierEasingOptions = this._gallery.config.slidingEase;
-  @Input() boxTemplate: TemplateRef<any> = this._gallery.config.boxTemplate;
-  @Input() itemTemplate: TemplateRef<any> = this._gallery.config.itemTemplate;
-  @Input() thumbTemplate: TemplateRef<any> = this._gallery.config.thumbTemplate;
   @Input() resizeDebounceTime: number = this._gallery.config.resizeDebounceTime;
   @Input() imageSize: 'cover' | 'contain' = this._gallery.config.imageSize;
   @Input() thumbImageSize: 'cover' | 'contain' = this._gallery.config.thumbImageSize;
@@ -92,6 +94,11 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
   @Output() indexChange = new EventEmitter<GalleryState>();
   @Output() itemsChange = new EventEmitter<GalleryState>();
   @Output() error = new EventEmitter<GalleryError>();
+
+  @ContentChild(GalleryItemDef) galleryItemDef: GalleryItemDef;
+  @ContentChild(GalleryImageDef) galleryImageDef: GalleryImageDef;
+  @ContentChild(GalleryThumbDef) galleryThumbDef: GalleryThumbDef;
+  @ContentChild(GalleryBoxDef) galleryBoxDef: GalleryBoxDef;
 
   private _itemClick$: SubscriptionLike = Subscription.EMPTY;
   private _thumbClick$: SubscriptionLike = Subscription.EMPTY;
@@ -123,10 +130,7 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
       slidingEase: this.slidingEase,
       disableThumb: this.disableThumb,
       dotsPosition: this.dotsPosition,
-      boxTemplate: this.boxTemplate,
       loadingAttr: this.loadingAttr,
-      itemTemplate: this.itemTemplate,
-      thumbTemplate: this.thumbTemplate,
       thumbDetached: this.thumbDetached,
       thumbPosition: this.thumbPosition,
       playerInterval: this.playerInterval,
@@ -183,6 +187,25 @@ export class GalleryComponent implements OnInit, OnChanges, OnDestroy {
     // Start playing if autoplay is set to true
     if (this.autoPlay) {
       this.play();
+    }
+  }
+
+  ngAfterContentInit(): void {
+    const templateConfig: GalleryConfig = {};
+    if (this.galleryItemDef) {
+      templateConfig.itemTemplate = this.galleryItemDef.templateRef;
+    }
+    if (this.galleryImageDef) {
+      templateConfig.imageTemplate = this.galleryImageDef.templateRef;
+    }
+    if (this.galleryThumbDef) {
+      templateConfig.thumbTemplate = this.galleryThumbDef.templateRef;
+    }
+    if (this.galleryBoxDef) {
+      templateConfig.boxTemplate = this.galleryBoxDef.templateRef;
+    }
+    if (Object.keys(templateConfig).length) {
+      this.galleryRef.setConfig(templateConfig);
     }
   }
 

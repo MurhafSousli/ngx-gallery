@@ -17,7 +17,7 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Platform } from '@angular/cdk/platform';
 import {
   from,
@@ -34,7 +34,7 @@ import {
   Subject,
   Subscriber,
   EMPTY,
-  animationFrameScheduler,
+  animationFrameScheduler
 } from 'rxjs';
 import { Gallery } from '../services/gallery.service';
 import { GalleryState, GalleryError } from '../models/gallery.model';
@@ -68,6 +68,7 @@ declare const Hammer: any;
                       [data]="item.data"
                       [currIndex]="state.currIndex"
                       [index]="i"
+                      [count]="state.items.length"
                       (click)="itemClick.emit(i)"
                       (error)="error.emit({ itemIndex: i, error: $event })">
         </gallery-item>
@@ -76,7 +77,7 @@ declare const Hammer: any;
     <ng-content></ng-content>
   `,
   standalone: true,
-  imports: [NgFor, GalleryItemComponent]
+  imports: [CommonModule, GalleryItemComponent]
 })
 export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit, AfterViewChecked, OnDestroy {
 
@@ -111,7 +112,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
   /** Stream that emits when an error occurs */
   @Output() error = new EventEmitter<GalleryError>();
 
-  @ViewChild('slider', { static: true }) sliderEl: ElementRef;
+  @ViewChild('slider', { static: true }) sliderEl: ElementRef<HTMLElement>;
 
   @ViewChildren(GalleryItemComponent) items = new QueryList<GalleryItemComponent>();
 
@@ -119,7 +120,7 @@ export class GallerySliderComponent implements OnInit, OnChanges, AfterViewInit,
     return this.sliderEl.nativeElement;
   }
 
-  constructor(private _el: ElementRef,
+  constructor(private _el: ElementRef<HTMLElement>,
               private _cd: ChangeDetectorRef,
               private _zone: NgZone,
               private _platform: Platform,
