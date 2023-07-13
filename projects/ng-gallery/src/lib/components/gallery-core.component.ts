@@ -1,5 +1,5 @@
 import { Component, Input, Output, HostBinding, ChangeDetectionStrategy, EventEmitter } from '@angular/core';
-import { NgIf, NgTemplateOutlet } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { GalleryCounterComponent } from './gallery-counter.component';
 import { GalleryDotsComponent } from './gallery-dots.component';
 import { GalleryNavComponent } from './gallery-nav.component';
@@ -50,7 +50,7 @@ import { GalleryConfig } from '../models/config.model';
     </div>
   `,
   standalone: true,
-  imports: [NgIf, GalleryThumbsComponent, GallerySliderComponent, GalleryNavComponent, GalleryDotsComponent, GalleryCounterComponent, NgTemplateOutlet]
+  imports: [CommonModule, GalleryThumbsComponent, GallerySliderComponent, GalleryNavComponent, GalleryDotsComponent, GalleryCounterComponent]
 })
 export class GalleryCoreComponent {
 

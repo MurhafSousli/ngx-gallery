@@ -11,7 +11,7 @@ import { Hit2, PixabayHDModel } from './pixabay.model';
 })
 export class Pixabay {
 
-  private readonly API_KEY = '560162-704dd2880c027f22c62ab7941';
+  private readonly API_KEY: string = '560162-704dd2880c027f22c62ab7941';
 
   constructor(private _http: HttpClient) {
   }

@@ -1,0 +1,43 @@
+import { Directive, TemplateRef } from '@angular/core';
+import { GalleryItemData } from '../components/templates/items.model';
+
+@Directive({
+  standalone: true,
+  selector: '[galleryItemDef]'
+})
+export class GalleryItemDef {
+  constructor(public templateRef: TemplateRef<GalleryItemContext<GalleryItemDef>>) {
+  }
+
+  // Make sure the template checker knows the type of the context with which the
+  // template of this directive will be rendered
+  static ngTemplateContextGuard(
+    directive: GalleryItemDef,
+    context: unknown
+  ): context is GalleryItemContext<GalleryItemData> {
+    return true;
+  }
+}
+
+export interface GalleryItemContext<T> {
+  /** Data for the row that this cell is located within. */
+  $implicit?: T;
+
+  /** Index of the data object in the provided data array. */
+  index?: number;
+
+  /** True if this item is the active one. */
+  type?: string;
+
+  /** True if this item is the active one. */
+  active?: boolean;
+
+  /** The number of total items. */
+  count?: number;
+
+  /** True if this item is first. */
+  first?: boolean;
+
+  /** True if this item is last. */
+  last?: boolean;
+}

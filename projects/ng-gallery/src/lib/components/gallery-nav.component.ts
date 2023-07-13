@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Gallery } from '../services/gallery.service';
 import { GalleryState } from '../models/gallery.model';
@@ -24,7 +24,7 @@ import { GalleryConfig } from '../models/config.model';
        [innerHtml]="navIcon"></i>
   `,
   standalone: true,
-  imports: [NgIf]
+  imports: [CommonModule]
 })
 export class GalleryNavComponent implements OnInit {
 

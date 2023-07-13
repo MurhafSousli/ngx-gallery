@@ -9,3 +9,6 @@ export * from './lib/models/config.model';
 export * from './lib/models/gallery.model';
 export * from './lib/models/constants';
 export * from './lib/gallery.module';
+export * from './lib/directives/gallery-item-def.directive';
+export * from './lib/directives/gallery-image-def.directive';
+export * from './lib/directives/gallery-thumb-def.directive';
