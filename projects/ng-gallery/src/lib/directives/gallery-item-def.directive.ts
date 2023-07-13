@@ -1,5 +1,6 @@
 import { Directive, TemplateRef } from '@angular/core';
 import { GalleryItemData } from '../components/templates/items.model';
+import { GalleryItemType } from '../models/constants';
 
 @Directive({
   standalone: true,
@@ -23,11 +24,11 @@ export interface GalleryItemContext<T> {
   /** Data for the row that this cell is located within. */
   $implicit?: T;
 
-  /** Index of the data object in the provided data array. */
+  /** Index of the item. */
   index?: number;
 
-  /** True if this item is the active one. */
-  type?: string;
+  /** The type of the item. */
+  type?: GalleryItemType;
 
   /** True if this item is the active one. */
   active?: boolean;

@@ -16,7 +16,7 @@ import { GalleryIframeComponent } from './templates/gallery-iframe.component';
 import { GalleryVideoComponent } from './templates/gallery-video.component';
 import { GalleryImageComponent } from './templates/gallery-image.component';
 import { GalleryConfig } from '../models/config.model';
-import { LoadingStrategy, GalleryItemType } from '../models/constants';
+import { LoadingStrategy, GalleryItemType, GalleryItemTypes, ThumbnailsPosition } from '../models/constants';
 import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from './templates/items.model';
 
 @Component({
@@ -71,7 +71,7 @@ import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from '
 })
 export class GalleryItemComponent implements AfterViewChecked {
 
-  readonly Types = GalleryItemType;
+  readonly Types = GalleryItemTypes;
 
   /** A flag that ensure that the height was emitted after tbe image is loaded, used only for gallery image types */
   private imageLoadingState: 'IN_PROGRESS' | 'DONE' = 'IN_PROGRESS';
@@ -89,7 +89,7 @@ export class GalleryItemComponent implements AfterViewChecked {
   @Input() currIndex: number;
 
   /** Item's type 'image', 'video', 'youtube', 'iframe' */
-  @Input() type: string;
+  @Input() type: GalleryItemType;
 
   /** Item's data, this object contains the data required to display the content (e.g. src path) */
   @Input() data: GalleryItemData;
@@ -139,7 +139,7 @@ export class GalleryItemComponent implements AfterViewChecked {
 
   get isAutoPlay(): boolean {
     if (this.isActive) {
-      if (this.type === GalleryItemType.Video || this.type === GalleryItemType.Youtube) {
+      if (this.type === GalleryItemTypes.Video || this.type === GalleryItemTypes.Youtube) {
         return this.videoData.autoplay;
       }
     }
@@ -147,7 +147,7 @@ export class GalleryItemComponent implements AfterViewChecked {
 
   get youtubeSrc(): string {
     let autoplay: 1 | 0 = 0;
-    if (this.isActive && this.type === GalleryItemType.Youtube && (this.data as YoutubeItemData).autoplay) {
+    if (this.isActive && this.type === GalleryItemTypes.Youtube && (this.data as YoutubeItemData).autoplay) {
       autoplay = 1;
     }
     const url = new URL(this.data.src as string);
@@ -189,7 +189,10 @@ export class GalleryItemComponent implements AfterViewChecked {
     }
     if (this.currIndex === this.index) {
       // Auto-height feature, only allowed when sliding direction is horizontal
-      const isThumbPositionHorizontal: boolean = this.config.thumbPosition === 'top' || this.config.thumbPosition === 'bottom';
+      const isThumbPositionHorizontal: boolean =
+        this.config.thumbPosition === ThumbnailsPosition.Top
+        || this.config.thumbPosition === ThumbnailsPosition.Bottom;
+
       if (this.config.autoHeight && height && isThumbPositionHorizontal) {
         // Change slider height
         this.element.parentElement.parentElement.style.height = `${ height }px`;
