@@ -146,7 +146,7 @@ export class GalleryRef {
   }
 
   /**
-   * Add youtube item
+   * Add Youtube item
    */
   addYoutube(data: YoutubeItemData, active?: boolean): void {
     this.add(new YoutubeItem(data), active);

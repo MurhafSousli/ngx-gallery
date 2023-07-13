@@ -1,4 +1,4 @@
-import { GalleryAction } from './constants';
+import { GalleryAction, GalleryItemType } from './constants';
 import { GalleryItemData } from '../components/templates/items.model';
 
 export interface GalleryState {
@@ -13,7 +13,7 @@ export interface GalleryState {
 
 export interface GalleryItem {
   data?: GalleryItemData;
-  type?: string;
+  type?: GalleryItemType;
 }
 
 export interface GalleryError {
