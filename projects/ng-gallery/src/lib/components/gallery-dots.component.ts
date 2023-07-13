@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Gallery } from '../services/gallery.service';
 import { GalleryState } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
@@ -18,7 +18,7 @@ import { GalleryConfig } from '../models/config.model';
     </div>
   `,
   standalone: true,
-  imports: [NgFor]
+  imports: [CommonModule]
 })
 export class GalleryDotsComponent {
   @Input() galleryId: string;

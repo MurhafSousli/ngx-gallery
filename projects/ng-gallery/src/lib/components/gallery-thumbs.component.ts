@@ -16,7 +16,7 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Platform } from '@angular/cdk/platform';
 import { Subject, debounceTime, takeUntil, tap } from 'rxjs';
 import { GalleryConfig } from '../models/config.model';
@@ -43,6 +43,7 @@ declare const Hammer: any;
                        [data]="item.data"
                        [currIndex]="state.currIndex"
                        [index]="i"
+                       [count]="state.items.length"
                        (click)="config.disableThumb ? null : thumbClick.emit(i)"
                        (error)="error.emit({ itemIndex: i, error: $event })">
         </gallery-thumb>
@@ -50,7 +51,7 @@ declare const Hammer: any;
     </div>
   `,
   standalone: true,
-  imports: [NgFor, GalleryThumbComponent]
+  imports: [CommonModule, GalleryThumbComponent]
 })
 export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, OnChanges, OnDestroy {
 

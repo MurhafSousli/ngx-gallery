@@ -7,10 +7,11 @@ import {
   AfterViewChecked,
   ElementRef,
   ChangeDetectorRef,
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Platform } from '@angular/cdk/platform';
-import { NgIf, NgSwitch, NgSwitchCase, NgTemplateOutlet, NgSwitchDefault } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { GalleryItemContext } from '../directives/gallery-item-def.directive';
 import { GalleryIframeComponent } from './templates/gallery-iframe.component';
 import { GalleryVideoComponent } from './templates/gallery-video.component';
 import { GalleryImageComponent } from './templates/gallery-image.component';
@@ -32,9 +33,8 @@ import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from '
                        (loaded)="onItemLoaded()"
                        (error)="error.emit($event)"></gallery-image>
 
-        <div *ngIf="config.itemTemplate" class="g-template g-item-template">
-            <ng-container *ngTemplateOutlet="config.itemTemplate; context: { index, type, data, isActive }">
-            </ng-container>
+        <div *ngIf="config.imageTemplate" class="g-template g-item-template">
+          <ng-container *ngTemplateOutlet="config.imageTemplate; context: imageContext"></ng-container>
         </div>
       </ng-container>
 
@@ -61,14 +61,13 @@ import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from '
 
       <ng-container *ngSwitchDefault>
         <div *ngIf="config.itemTemplate" class="g-template g-item-template">
-            <ng-container *ngTemplateOutlet="config.itemTemplate; context: { index, type, data, isActive: isActive }">
-            </ng-container>
+          <ng-container *ngTemplateOutlet="config.itemTemplate; context: itemContext"></ng-container>
         </div>
       </ng-container>
     </ng-container>
   `,
   standalone: true,
-  imports: [NgIf, NgSwitch, NgSwitchCase, GalleryImageComponent, NgTemplateOutlet, GalleryVideoComponent, GalleryIframeComponent, NgSwitchDefault]
+  imports: [CommonModule, GalleryImageComponent, GalleryVideoComponent, GalleryIframeComponent]
 })
 export class GalleryItemComponent implements AfterViewChecked {
 
@@ -82,6 +81,9 @@ export class GalleryItemComponent implements AfterViewChecked {
 
   /** Item's index in the gallery */
   @Input() index: number;
+
+  /** The number of total items */
+  @Input() count: number;
 
   /** Gallery current index */
   @Input() currIndex: number;
@@ -105,6 +107,30 @@ export class GalleryItemComponent implements AfterViewChecked {
 
   @HostBinding('attr.imageState') get imageState(): 'IN_PROGRESS' | 'DONE' {
     return this.imageLoadingState;
+  }
+
+  get imageContext(): GalleryItemContext<ImageItemData> {
+    return {
+      $implicit: this.imageData,
+      index: this.index,
+      type: this.type,
+      active: this.isActive,
+      count: this.count,
+      first: this.index === 0,
+      last: this.index === this.count - 1
+    }
+  }
+
+  get itemContext(): GalleryItemContext<GalleryItemData> {
+    return {
+      $implicit: this.data,
+      index: this.index,
+      type: this.type,
+      active: this.isActive,
+      count: this.count,
+      first: this.index === 0,
+      last: this.index === this.count - 1
+    }
   }
 
   get element(): HTMLElement {
