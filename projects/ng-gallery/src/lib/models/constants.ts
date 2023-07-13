@@ -44,7 +44,7 @@ export enum SlidingDirection {
   Vertical = 'vertical'
 }
 
-export enum GalleryItemType {
+export enum GalleryItemTypes {
   Image = 'image',
   Video = 'video',
   Youtube = 'youtube',
@@ -55,3 +55,5 @@ export enum ThumbnailsView {
   Default = 'default',
   Contain = 'contain',
 }
+
+export type GalleryItemType = GalleryItemTypes | string;

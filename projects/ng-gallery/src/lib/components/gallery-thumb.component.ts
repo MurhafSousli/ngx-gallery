@@ -4,6 +4,7 @@ import { GalleryItemContext } from '../directives/gallery-item-def.directive';
 import { GalleryImageComponent } from './templates/gallery-image.component';
 import { ImageItemData } from './templates/items.model';
 import { GalleryConfig } from '../models/config.model';
+import { GalleryItemType } from '../models/constants';
 
 @Component({
   selector: 'gallery-thumb',
@@ -37,7 +38,7 @@ export class GalleryThumbComponent {
   @Input() currIndex: number;
 
   /** Item's type 'image', 'video', 'youtube', 'iframe' */
-  @Input() type: string;
+  @Input() type: GalleryItemType;
 
   /** Item's data, this object contains the data required to display the content (e.g. src path) */
   @Input() data: ImageItemData;
