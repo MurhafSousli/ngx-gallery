@@ -12,3 +12,4 @@ export * from './lib/gallery.module';
 export * from './lib/directives/gallery-item-def.directive';
 export * from './lib/directives/gallery-image-def.directive';
 export * from './lib/directives/gallery-thumb-def.directive';
+export * from './lib/directives/gallery-box-def.directive';
