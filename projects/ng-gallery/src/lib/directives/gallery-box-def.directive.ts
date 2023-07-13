@@ -1,5 +1,6 @@
 import { Directive, TemplateRef } from '@angular/core';
-import { GalleryConfig, GalleryState } from 'ng-gallery';
+import { GalleryState } from '../models/gallery.model';
+import { GalleryConfig } from '../models/config.model';
 
 
 @Directive({
