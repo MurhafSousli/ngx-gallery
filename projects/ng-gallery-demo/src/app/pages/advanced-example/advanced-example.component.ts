@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   Gallery,
   GalleryConfig,
   GalleryItemData,
-  GalleryItemType,
+  GalleryItemTypes,
   IframeItemData,
   ImageItemData,
   VideoItemData,
   YoutubeItemData,
-  GalleryComponent
+  GalleryModule
 } from 'ng-gallery';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Observable, map } from 'rxjs';
@@ -22,6 +22,8 @@ import { slideInAnimation } from './slide-text.animation';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { HlCodeComponent } from '../../shared/hl-code/hl-code.component';
 import { SectionTitleComponent } from '../../shared/section-title/section-title.component';
+import { MatButtonModule } from '@angular/material/button';
+import { NoteComponent } from '../../shared/note/note.component';
 
 @Component({
   host: {
@@ -32,7 +34,7 @@ import { SectionTitleComponent } from '../../shared/section-title/section-title.
   styleUrls: ['./advanced-example.component.scss'],
   animations: [slideInAnimation],
   standalone: true,
-  imports: [SectionTitleComponent, NgIf, GalleryComponent, HlCodeComponent, FooterComponent, FontAwesomeModule, AsyncPipe]
+  imports: [CommonModule, SectionTitleComponent, GalleryModule, HlCodeComponent, FooterComponent, FontAwesomeModule, MatButtonModule, NoteComponent]
 })
 export class AdvancedExampleComponent implements OnInit {
 
@@ -65,13 +67,13 @@ export class AdvancedExampleComponent implements OnInit {
 
     this.arr.map((item: GalleryItemData) => {
       switch (item.type) {
-        case GalleryItemType.Image:
+        case GalleryItemTypes.Image:
           galleryRef.addImage(item);
           break;
-        case GalleryItemType.Video:
+        case GalleryItemTypes.Video:
           galleryRef.addVideo(item);
           break;
-        case GalleryItemType.Youtube:
+        case GalleryItemTypes.Youtube:
           galleryRef.addYoutube(item);
           break;
         default:
@@ -86,25 +88,25 @@ const data: GalleryItemData[] = [
     type: 'image',
     src: 'assets/img/img13.jpg',
     thumb: 'assets/img/thumb/img13.jpg',
-    title: '🐓Scelerisque dapibus fringilla consequat scelerisque torquent senectus porttitor, placerat fames convallis molestie lobortis diam aliquam'
+    alt: '🐓Scelerisque dapibus fringilla consequat scelerisque torquent senectus porttitor, placerat fames convallis molestie lobortis diam aliquam'
   } as ImageItemData,
   {
     type: 'image',
     src: 'assets/img/img11.jpg',
     thumb: 'assets/img/thumb/img11.jpg',
-    title: '🐦Lorem ipsum curabitur auctor netus facilisis inceptos vivamus fusce inceptos, ullamcorper ipsum id pharetra curabitur leo curabitur.'
+    alt: '🐦Lorem ipsum curabitur auctor netus facilisis inceptos vivamus fusce inceptos, ullamcorper ipsum id pharetra curabitur leo curabitur.'
   } as ImageItemData,
   {
     type: 'image',
     src: 'assets/img/img3.jpg',
     thumb: 'assets/img/thumb/img3.jpg',
-    title: '🐯Iaculis eros leo interdum erat tellus primis pharetra pulvinar, elit risus blandit tempus praesent himenaeos porta, neque elit neque ullamcorper ipsum curabitur at tempus aliquet quam fringilla.'
+    alt: '🐯Iaculis eros leo interdum erat tellus primis pharetra pulvinar, elit risus blandit tempus praesent himenaeos porta, neque elit neque ullamcorper ipsum curabitur at tempus aliquet quam fringilla.'
   } as ImageItemData,
   {
     type: 'image',
     src: 'assets/img/img4.jpg',
     thumb: 'assets/img/thumb/img4.jpg',
-    title: '🐅Morbi etiam interdum velit lacinia platea magna libero curae auctor'
+    alt: '🐅Morbi etiam interdum velit lacinia platea magna libero curae auctor'
   } as ImageItemData,
   {
     type: 'video',
@@ -134,38 +136,49 @@ const data: GalleryItemData[] = [
 ];
 
 const code = {
-  template: `<gallery id="mixedExample" [thumbTemplate]="thumbTemplate" [itemTemplate]="itemTemplate"></gallery>
-
-<!-- Add custom template to thumbnails -->
-<ng-template #thumbTemplate let-type="type">
-  <span *ngIf="type === 'youtube'" class="item-type">
-    <fa-icon [icon]="youtubeIcon" size="lg"></fa-icon>
-  </span>
-  <span *ngIf="type === 'video'" class="item-type">
-    <fa-icon [icon]="videoIcon" size="lg"></fa-icon>
-  </span>
-</ng-template>
-
-<!-- Add custom template to image items -->
-<ng-template #itemTemplate
-             let-index="index"
-             let-type="type"
-             let-data="data"
-             let-currIndex="currIndex"
-             let-isActive="isActive">
-  <span *ngIf="type === 'image' && isActive" [@slideAnimation] class="item-text">
-    {{data?.title}}
-  </span>
-</ng-template>`,
+  customItemTemplate: `<gallery>
+  <div *galleryItemDef="let item; let type = type">
+    <div *ngIf="type === 'image'">
+      <img [src]="item.src">
+    </div>
+    <div *ngIf="type === 'video'">
+      <video>
+        <source src="item.src">
+      </video>
+    </div>
+  </div>
+</gallery>`,
+  customImageTemplate: `<gallery>
+  <ng-container *galleryImageDef="let item; let active = active">
+    <div *ngIf="active" class="item-text">
+      {{ item?.alt }}
+    </div>
+  </ng-container>
+</gallery>`,
+  customThumbTemplate: `<gallery>
+  <ng-container *galleryThumbDef="let item; let type = type">
+    <span *ngIf="type === 'youtube'" class="item-type">
+      <fa-icon [icon]="youtubeIcon" size="lg"></fa-icon>
+    </span>
+    <span *ngIf="type === 'video'" class="item-type">
+      <fa-icon [icon]="videoIcon" size="lg"></fa-icon>
+    </span>
+  </ng-container>
+</gallery>`,
+  customBoxTemplate: `<gallery>
+  <div *galleryBoxDef="let state = state; let config = config">
+    {{ state.currIndex + 1 }} / {{ state.items.length }}
+  </div>
+</gallery>`,
   component: `import { Component, OnInit } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { GalleryModule, Gallery, GalleryRef } from 'ng-gallery';
 
 @Component({
   selector: 'advanced-example',
   templateUrl: './advanced-example.html',
   standalone: true,
-  imports: [GalleryModule, NgIf]
+  imports: [CommonModule, GalleryModule]
 })
 export class AdvancedExampleComponent implements OnInit {
 
@@ -179,7 +192,7 @@ export class AdvancedExampleComponent implements OnInit {
     galleryRef.addImage({
       src: 'IMAGE_URL',
       thumb: '(OPTIONAL)IMAGE_THUMBNAIL_URL',
-      title: 'Some title'
+      alt: 'Some title'
     });
 
     galleryRef.addVideo({

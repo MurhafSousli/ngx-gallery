@@ -5,59 +5,116 @@
   <section>
     <section-title>Overview</section-title>
 
-    <p>The gallery items and thumbnails use basic predefined templates by default, but they can be replaced by custom
-      templates.
-      Your custom template can be provided as an <code class="hljs" [textContent]="'<ng-template>'"></code>
-    </p>
-    <p>Use <code class="hljs">[itemTemplate]</code> for items and <code class="hljs">[thumbTemplate]</code> for
-      thumbnails.</p>
+    <p>This package provides a custom set of directives to make it easy to customize different gallery templates.</p>
 
+    <p>These directives are: <code>*galleryItemDef</code>, <code>*galleryImageDef</code>, <code>*galleryThumbDef</code>
+      and <code>*galleryBoxDef</code></p>
+  </section>
+
+  <gallery id="mixed"
+           *ngIf="media$ | async; let config"
+           [thumbWidth]="config.thumbWidth"
+           [thumbHeight]="config.thumbHeight">
+    <ng-container *galleryImageDef="let item; active as active">
+        <span *ngIf="active" @slideAnimation class="item-text">
+          {{ item?.alt }}
+        </span>
+    </ng-container>
+
+    <ng-container *galleryThumbDef="let item; type as type">
+        <span *ngIf="type === 'youtube'" class="item-type">
+          <fa-icon [icon]="youtubeIcon" size="lg"></fa-icon>
+        </span>
+      <span *ngIf="type === 'video'" class="item-type">
+          <fa-icon [icon]="videoIcon" size="lg"></fa-icon>
+        </span>
+    </ng-container>
+  </gallery>
+
+  <note>Please consider having a look at wiki docs as well
+    <a mat-button class="inline-button" color="primary" target="_blank"
+       href="https://github.com/MurhafSousli/ngx-gallery/wiki/Custom-Templates">
+      <fa-icon icon="external-link-alt"></fa-icon>
+      Gallery Templates
+    </a>
+    and
+    <a mat-button class="inline-button" color="primary" target="_blank"
+       href="https://github.com/MurhafSousli/ngx-gallery/wiki/Custom-templates-for-lightbox">
+      <fa-icon icon="external-link-alt"></fa-icon>
+      Lightbox Templates
+    </a>
+  </note>
+
+  <section>
+    <section-title>GalleryItemDef</section-title>
+
+    <p><code>*galleryItemDef</code> overrides the gallery item template, useful if you want create your own gallery
+      template for any type from scratch.</p>
+
+    <h3>Example:</h3>
+    <hl-code [code]="code.customItemTemplate"></hl-code>
+  </section>
+
+  <section>
+    <section-title>GalleryImageDef</section-title>
+
+    <p><code>*galleryImageDef</code> applies only on image items - the image will still be displayed, but this adds an
+      custom inner template, useful to add text overlay on top of the image.</p>
+
+    <h3>Example:</h3>
+    <hl-code [code]="code.customImageTemplate"></hl-code>
+  </section>
+
+  <section>
+    <section-title>GalleryThumbDef</section-title>
+
+    <p><code>*galleryThumbDef</code> applies on all thumbnails types, image will still displayed, but adds an custom
+      inner template.</p>
+
+    <h3>Example:</h3>
+    <p>The following adds a Youtube icon on Youtube thumbnail and video icon on video thumbnails</p>
+
+    <hl-code [code]="code.customThumbTemplate"></hl-code>
+  </section>
+
+  <section>
     <h3>Passing in data to a custom template</h3>
 
-    <p>When using a custom template, additional context data can be used to render the data as needed.</p>
+    <p>When using one of the previous templates above, additional context data can be used to render the data as
+      needed.</p>
 
-    <p><b>Available data:</b> <code class="hljs">let-index="index"</code>, <code class="hljs">let-type="type"</code>,
-      <code
-        class="hljs">let-data="data"</code> and <code class="hljs">let-currIndex="currIndex"</code></p>
+    <h3>Available data:</h3>
 
-    <h3>Example</h3>
+    <ul>
+      <li><code>let item</code> Object of the item, including properties like <code>src</code>, <code>thumb</code>and
+        <code>alt</code> ... etc.
+      </li>
+      <li><code>let index = index</code> Index of the item.</li>
+      <li><code>let type = type</code> Type of the item, default ones are <code>image</code>, <code>video</code>,
+        <code>youtube</code> and <code>iframe</code>.
+      </li>
+      <li><code>let active = active</code> True if this item is the active one.</li>
+      <li><code>let count = count</code> The number of total items.</li>
+      <li><code>let first = first</code> True if this item is first.</li>
+      <li><code>let last = last</code> True if this item is last.</li>
+    </ul>
+  </section>
 
-    <gallery id="mixed"
-             *ngIf="media$ | async; let config"
-             [thumbWidth]="config.thumbWidth"
-             [thumbHeight]="config.thumbHeight"
-             [itemTemplate]="itemTemplate"
-             [thumbTemplate]="thumbTemplate"></gallery>
+  <section>
+    <section-title>GalleryBoxDef</section-title>
 
-    <h3>Template</h3>
+    <p><code>*galleryBoxDef</code> Adds a single static template on top of the gallery items.</p>
 
-    <hl-code [code]="code.template"></hl-code>
+    <h3>Example:</h3>
+    <hl-code [code]="code.customBoxTemplate"></hl-code>
 
-    <h3>Code</h3>
+    <h3>Available data:</h3>
 
-    <hl-code [code]="code.component"></hl-code>
-
+    <ul>
+      <li><code>let state = state</code> Gallery state object.</li>
+      <li><code>let config = config</code> Gallery config object.</li>
+    </ul>
   </section>
 </div>
 
 <footer></footer>
-
-<ng-template #thumbTemplate let-type="type">
-  <span *ngIf="type === 'youtube'" class="item-type">
-    <fa-icon [icon]="youtubeIcon" size="lg"></fa-icon>
-  </span>
-  <span *ngIf="type === 'video'" class="item-type">
-    <fa-icon [icon]="videoIcon" size="lg"></fa-icon>
-  </span>
-</ng-template>
-
-<ng-template #itemTemplate
-             let-index="index"
-             let-type="type"
-             let-data="data"
-             let-currIndex="currIndex"
-             let-isActive="isActive">
-  <span *ngIf="type === 'image' && isActive" [@slideAnimation] class="item-text">
-    {{data?.title}}
-  </span>
-</ng-template>
