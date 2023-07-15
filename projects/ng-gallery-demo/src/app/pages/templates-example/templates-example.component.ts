@@ -29,14 +29,14 @@ import { NoteComponent } from '../../shared/note/note.component';
   host: {
     'class': 'page'
   },
-  selector: 'advanced-example',
-  templateUrl: './advanced-example.component.html',
-  styleUrls: ['./advanced-example.component.scss'],
+  selector: 'templates-example',
+  templateUrl: './templates-example.component.html',
+  styleUrls: ['./templates-example.component.scss'],
   animations: [slideInAnimation],
   standalone: true,
   imports: [CommonModule, SectionTitleComponent, GalleryModule, HlCodeComponent, FooterComponent, FontAwesomeModule, MatButtonModule, NoteComponent]
 })
-export class AdvancedExampleComponent implements OnInit {
+export class TemplatesExampleComponent implements OnInit {
 
   readonly arr = data;
   readonly code = code;
@@ -62,7 +62,7 @@ export class AdvancedExampleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._title.setTitle('Advanced | ng-gallery');
+    this._title.setTitle('Custom Templates | ng-gallery');
     const galleryRef = this._gallery.ref('mixed');
 
     this.arr.map((item: GalleryItemData) => {
@@ -175,12 +175,12 @@ import { CommonModule } from '@angular/common';
 import { GalleryModule, Gallery, GalleryRef } from 'ng-gallery';
 
 @Component({
-  selector: 'advanced-example',
-  templateUrl: './advanced-example.html',
+  selector: 'example-component',
+  templateUrl: './example-templates.html',
   standalone: true,
   imports: [CommonModule, GalleryModule]
 })
-export class AdvancedExampleComponent implements OnInit {
+export class ExampleComponent implements OnInit {
 
   galleryId = 'mixedExample';
 
