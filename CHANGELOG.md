@@ -1,5 +1,18 @@
 # Changelog
 
+## 11.0.0
+
+- feat: Add `GalleryThumbDef`, `GalleryImageDef`, `GalleryItemDef`, `GalleryBoxDef` to set custom templates.
+- feat: Add `imageTemplate` property to `GalleryConfig`.
+- feat: Add `args` property in case need to attach extra data with the gallery item.
+- enhance: Improve overall typings.
+
+### Breaking changes
+
+- Usage of setting custom template has been changed! see the [wiki page](https://github.com/MurhafSousli/ngx-gallery/wiki) for more info.
+- The inputs `itemTemplate`, `thumbTemplate` and `boxTemplate` has been removed from the gallery component, however they still exist in `GalleryConfig`
+
+
 ## 10.0.0
 
 - feat: Migrate to standalone components.
