@@ -24,8 +24,8 @@ const appRoutes: Routes = [
     loadComponent: () => import('./pages/gallerize-example/gallerize-example.component').then(m => m.GallerizeExampleComponent)
   },
   {
-    path: 'advanced',
-    loadComponent: () => import('./pages/advanced-example/advanced-example.component').then(m => m.AdvancedExampleComponent)
+    path: 'custom-templates',
+    loadComponent: () => import('./pages/templates-example/templates-example.component').then(m => m.TemplatesExampleComponent)
   },
   {
     path: 'lab',
