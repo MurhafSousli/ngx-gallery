@@ -46,8 +46,11 @@
     <h3>Demo</h3>
 
     <div class="grid">
-      <button mat-raised-button class="grid-item" *ngFor="let item of space$ | async; let i = index"
-              [lightbox]="i" gallery="lightbox">
+      <button mat-raised-button
+              class="grid-item"
+              *ngFor="let item of space$ | async; let i = index"
+              [lightbox]="i"
+              gallery="lightbox">
 
         <img class="grid-image" loading="lazy" [src]="item.data.thumb"/>
       </button>
@@ -78,7 +81,6 @@
         Lightbox API
       </a>
     </p>
-
   </section>
 </div>
 <footer></footer>
