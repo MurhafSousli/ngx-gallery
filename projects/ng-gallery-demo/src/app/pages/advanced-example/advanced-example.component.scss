@@ -1,3 +1,5 @@
+@import '../../../assets/variables';
+
 ::ng-deep {
   #mixed {
     margin: 2em 0 3em;
@@ -33,4 +35,23 @@
       border-radius: 8px;
     }
   }
+}
+
+ul {
+  list-style: none
+}
+
+li {
+  display: flex;
+  align-items: center;
+  &:before {
+    margin-right: 10px;
+    content: "•";
+    color: $accent-color;
+    font-size: 2em;
+  }
+}
+
+code {
+  flex: 0 0 auto;
 }

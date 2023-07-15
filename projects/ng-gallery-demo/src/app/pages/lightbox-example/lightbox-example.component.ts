@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NgFor, AsyncPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import { Observable, map } from 'rxjs';
@@ -30,7 +30,7 @@ import { SectionTitleComponent } from '../../shared/section-title/section-title.
       }
     }
   ],
-  imports: [LightboxModule, SectionTitleComponent, NoteComponent, MatButtonModule, RouterLink, HlCodeComponent, NgFor, FontAwesomeModule, FooterComponent, AsyncPipe]
+  imports: [CommonModule, LightboxModule, SectionTitleComponent, NoteComponent, MatButtonModule, RouterLink, HlCodeComponent, FontAwesomeModule, FooterComponent]
 })
 export class LightboxExampleComponent implements OnInit, OnDestroy {
 
@@ -51,7 +51,6 @@ export class LightboxExampleComponent implements OnInit, OnDestroy {
           thumbPosition: 'top',
           imageSize: 'cover',
           autoHeight: false
-          // thumbView: 'contain'
         }).load(items);
 
         return items;
