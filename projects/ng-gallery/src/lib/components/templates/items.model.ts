@@ -47,6 +47,34 @@ export class YoutubeItem implements GalleryItem {
   }
 }
 
+export class VimeoItem implements GalleryItem {
+  readonly type: GalleryItemType;
+  readonly data: VimeoItemData;
+
+  constructor(data: VimeoItemData) {
+    this.data = {
+      ...data,
+      ...{
+        src: `https://player.vimeo.com/video/${ data.src }`,
+        thumb: data.thumb ? data.thumb : this.getThumb(data.src as string)
+      }
+    };
+
+
+    this.type = GalleryItemTypes.Vimeo;
+  }
+
+  private getThumb(videoId: string): string {
+    //This service requires a video ID to have 8 characters or it won't have an image
+    //https://github.com/ThatGuySam/vumbnail/issues/42
+    const minIdLen = 8;
+    if (videoId.length < minIdLen) {
+      videoId = videoId.padStart(minIdLen, '0');
+    }
+    return `//vumbnail.com/${ videoId }.jpg`
+  }
+}
+
 type GalleryItemModel = {
   type?: GalleryItemType;
   src?: string | { url: string, type: string }[];
@@ -66,6 +94,10 @@ export type YoutubeItemData = IframeItemData & {
   autoplay?: boolean;
 };
 
+export type VimeoItemData = IframeItemData & {
+  autoplay?: boolean;
+};
+
 export type VideoItemData = GalleryItemModel & {
   poster?: string;
   loop?: boolean;
@@ -79,4 +111,4 @@ export type VideoItemData = GalleryItemModel & {
   disableRemotePlayback?: boolean;
 };
 
-export type GalleryItemData = ImageItemData | VideoItemData | IframeItemData | YoutubeItemData;
+export type GalleryItemData = ImageItemData | VideoItemData | IframeItemData | YoutubeItemData | VimeoItemData;

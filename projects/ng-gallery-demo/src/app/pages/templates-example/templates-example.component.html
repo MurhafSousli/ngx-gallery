@@ -22,9 +22,12 @@
     </ng-container>
 
     <ng-container *galleryThumbDef="let item; type as type">
-        <span *ngIf="type === 'youtube'" class="item-type">
-          <fa-icon [icon]="youtubeIcon" size="lg"></fa-icon>
-        </span>
+      <span *ngIf="type === 'youtube'" class="item-type">
+        <fa-icon [icon]="youtubeIcon" size="lg"></fa-icon>
+      </span>
+      <span *ngIf="type === 'vimeo'" class="item-type">
+        <fa-icon [icon]="vimeoIcon" size="lg"></fa-icon>
+      </span>
       <span *ngIf="type === 'video'" class="item-type">
           <fa-icon [icon]="videoIcon" size="lg"></fa-icon>
         </span>
@@ -72,7 +75,7 @@
       inner template.</p>
 
     <h3>Example:</h3>
-    <p>The following adds a Youtube icon on Youtube thumbnail and video icon on video thumbnails</p>
+    <p>The following adds a Youtube icon on Youtube thumbnails, a Vimeo icon on Vimeo thumbnails, and video icon on video thumbnails</p>
 
     <hl-code [code]="code.customThumbTemplate"></hl-code>
   </section>
@@ -91,7 +94,7 @@
       </li>
       <li><code>let index = index</code> Index of the item.</li>
       <li><code>let type = type</code> Type of the item, default ones are <code>image</code>, <code>video</code>,
-        <code>youtube</code> and <code>iframe</code>.
+        <code>youtube</code>, <code>vimeo</code> and <code>iframe</code>.
       </li>
       <li><code>let active = active</code> True if this item is the active one.</li>
       <li><code>let count = count</code> The number of total items.</li>
