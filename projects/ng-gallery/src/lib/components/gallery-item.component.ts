@@ -17,7 +17,7 @@ import { GalleryVideoComponent } from './templates/gallery-video.component';
 import { GalleryImageComponent } from './templates/gallery-image.component';
 import { GalleryConfig } from '../models/config.model';
 import { LoadingStrategy, GalleryItemType, GalleryItemTypes, ThumbnailsPosition } from '../models/constants';
-import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from './templates/items.model';
+import { GalleryItemData, ImageItemData, VideoItemData, VimeoItemData, YoutubeItemData } from './templates/items.model';
 
 @Component({
   selector: 'gallery-item',
@@ -55,6 +55,12 @@ import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from '
                       [loadingAttr]="config.loadingAttr"
                       [pause]="currIndex !== index"></gallery-iframe>
 
+      <gallery-iframe *ngSwitchCase="Types.Vimeo"
+                      [src]="vimeoSrc"
+                      [autoplay]="isAutoPlay"
+                      [loadingAttr]="config.loadingAttr"
+                      [pause]="currIndex !== index"></gallery-iframe>
+
       <gallery-iframe *ngSwitchCase="Types.Iframe"
                       [src]="data.src"
                       [loadingAttr]="config.loadingAttr"></gallery-iframe>
@@ -88,7 +94,7 @@ export class GalleryItemComponent implements AfterViewChecked {
   /** Gallery current index */
   @Input() currIndex: number;
 
-  /** Item's type 'image', 'video', 'youtube', 'iframe' */
+  /** Item's type 'image', 'video', 'youtube', 'Vimeo', 'iframe' */
   @Input() type: GalleryItemType;
 
   /** Item's data, this object contains the data required to display the content (e.g. src path) */
@@ -139,7 +145,7 @@ export class GalleryItemComponent implements AfterViewChecked {
 
   get isAutoPlay(): boolean {
     if (this.isActive) {
-      if (this.type === GalleryItemTypes.Video || this.type === GalleryItemTypes.Youtube) {
+      if (this.type === GalleryItemTypes.Video || this.type === GalleryItemTypes.Youtube || this.type === GalleryItemTypes.Vimeo) {
         return this.videoData.autoplay;
       }
     }
@@ -155,6 +161,21 @@ export class GalleryItemComponent implements AfterViewChecked {
       wmode: 'transparent',
       ...(this.data as YoutubeItemData).params,
       autoplay
+    }).toString();
+    return url.href;
+  }
+
+  get vimeoSrc(): string {
+    let autoplay: 1 | 0 = 0;
+    if (this.isActive && this.type === GalleryItemTypes.Vimeo) {
+      if ((this.data as VimeoItemData).autoplay) {
+        autoplay = 1;
+      }
+    }
+    const url = new URL(this.data.src as string);
+    url.search = new URLSearchParams({
+      ...(this.data as VimeoItemData).params,
+      autoplay,
     }).toString();
     return url.href;
   }
