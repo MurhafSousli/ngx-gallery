@@ -24,46 +24,51 @@ import { GalleryItemData, ImageItemData, VideoItemData, YoutubeItemData } from '
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ng-container *ngIf="load" [ngSwitch]="type">
-      <ng-container *ngSwitchCase="Types.Image">
-        <gallery-image [src]="imageData.src"
-                       [alt]="imageData.alt"
-                       [loadingAttr]="config.loadingAttr"
-                       [loadingIcon]="config.loadingIcon"
-                       [loadingError]="config.loadingError"
-                       (loaded)="onItemLoaded()"
-                       (error)="error.emit($event)"></gallery-image>
-
-        <div *ngIf="config.imageTemplate" class="g-template g-item-template">
-          <ng-container *ngTemplateOutlet="config.imageTemplate; context: imageContext"></ng-container>
-        </div>
+      <ng-container
+        *ngIf="config.itemTemplate; else default"
+        class="g-template g-item-template"
+      >
+        <ng-container
+          *ngTemplateOutlet="config.itemTemplate; context: itemContext"
+        ></ng-container>
       </ng-container>
 
-      <gallery-video *ngSwitchCase="Types.Video"
-                     [src]="videoData.src"
-                     [mute]="videoData.mute"
-                     [poster]="videoData.poster"
-                     [controls]="videoData.controls"
-                     [controlsList]="videoData.controlsList"
-                     [disablePictureInPicture]="videoData.disablePictureInPicture"
-                     [play]="isAutoPlay"
-                     [pause]="currIndex !== index"
-                     (error)="error.emit($event)"></gallery-video>
+      <ng-template #default>
+        <ng-container *ngSwitchCase="Types.Image">
+          <gallery-image [src]="imageData.src"
+            [alt]="imageData.alt"
+            [loadingAttr]="config.loadingAttr"
+            [loadingIcon]="config.loadingIcon"
+            [loadingError]="config.loadingError"
+            (loaded)="onItemLoaded()"
+            (error)="error.emit($event)"></gallery-image>
 
-      <gallery-iframe *ngSwitchCase="Types.Youtube"
-                      [src]="youtubeSrc"
-                      [autoplay]="isAutoPlay"
-                      [loadingAttr]="config.loadingAttr"
-                      [pause]="currIndex !== index"></gallery-iframe>
+          <div *ngIf="config.imageTemplate" class="g-template g-item-template">
+            <ng-container *ngTemplateOutlet="config.imageTemplate; context: imageContext"></ng-container>
+          </div>
+        </ng-container>
 
-      <gallery-iframe *ngSwitchCase="Types.Iframe"
-                      [src]="data.src"
-                      [loadingAttr]="config.loadingAttr"></gallery-iframe>
+        <gallery-video *ngSwitchCase="Types.Video"
+          [src]="videoData.src"
+          [mute]="videoData.mute"
+          [poster]="videoData.poster"
+          [controls]="videoData.controls"
+          [controlsList]="videoData.controlsList"
+          [disablePictureInPicture]="videoData.disablePictureInPicture"
+          [play]="isAutoPlay"
+          [pause]="currIndex !== index"
+          (error)="error.emit($event)"></gallery-video>
 
-      <ng-container *ngSwitchDefault>
-        <div *ngIf="config.itemTemplate" class="g-template g-item-template">
-          <ng-container *ngTemplateOutlet="config.itemTemplate; context: itemContext"></ng-container>
-        </div>
-      </ng-container>
+        <gallery-iframe *ngSwitchCase="Types.Youtube"
+          [src]="youtubeSrc"
+          [autoplay]="isAutoPlay"
+          [loadingAttr]="config.loadingAttr"
+          [pause]="currIndex !== index"></gallery-iframe>
+
+        <gallery-iframe *ngSwitchCase="Types.Iframe"
+          [src]="data.src"
+          [loadingAttr]="config.loadingAttr"></gallery-iframe>
+      </ng-template>
     </ng-container>
   `,
   standalone: true,
