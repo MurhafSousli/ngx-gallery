@@ -1,0 +1,128 @@
+:host[debug='true'] {
+  ::ng-deep {
+    .g-sliding, .g-resizing, .g-scrolling {
+      gallery-item.g-item-highlight {
+        visibility: hidden;
+      }
+    }
+  }
+
+  ::ng-deep {
+    gallery-slider {
+      &:after, &:before {
+        position: absolute;
+        content: '';
+        z-index: 12;
+      }
+
+      &:before {
+        width: 100%;
+        height: 0;
+        border-top: 1px dashed lime;
+      }
+
+      &:after {
+        height: 100%;
+        width: 0;
+        border-left: 1px dashed lime;
+      }
+
+      gallery-item {
+        outline: 1px solid darkorange;
+
+        &.g-item-highlight {
+          &:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid lime;
+            box-sizing: border-box;
+            z-index: 10;
+          }
+        }
+      }
+    }
+
+    .g-sliding {
+      .g-slider-sliding {
+        display: block;
+      }
+    }
+
+    .g-scrolling {
+      .g-slider-scrolling {
+        display: block;
+      }
+    }
+
+    .g-resizing {
+      .g-slider-resizing {
+        display: block;
+      }
+    }
+
+    .g-slider-debug {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      gap: 5px;
+      padding: 10px;
+
+      .g-slider-resizing {
+        background: rgba(245, 76, 40);
+      }
+
+      .g-slider-scrolling {
+        background: rgb(255, 133, 36);
+      }
+
+      .g-slider-sliding {
+        background: rgb(31, 108, 185);
+      }
+
+      div, &:before {
+        display: none;
+        color: white;
+        font-family: monospace;
+        z-index: 12;
+        padding: 2px 6px;
+        border-radius: 3px;
+      }
+    }
+  }
+
+  &[itemAutoSize='false'] {
+    ::ng-deep {
+      .g-slider-debug {
+        &:before {
+          content: var(--intersection-margin);
+          background: rgba(236, 236, 236, 0.84);
+          color: #363636;
+          display: block;
+        }
+      }
+    }
+  }
+
+  &[itemAutoSize='true'] {
+    ::ng-deep {
+      gallery-item {
+        &:before {
+          position: absolute;
+          margin: 10px;
+          content: var(--item-intersection-margin);
+          background: rgba(236, 236, 236, 0.84);
+          color: #363636;
+          display: block;
+          width: 270px;
+          font-family: monospace;
+          z-index: 12;
+          padding: 2px 6px;
+          border-radius: 3px;
+        }
+      }
+    }
+  }
+}

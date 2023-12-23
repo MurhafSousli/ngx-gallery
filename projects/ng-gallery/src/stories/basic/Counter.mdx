@@ -1,0 +1,29 @@
+import { Meta, Canvas } from "@storybook/addon-docs";
+import * as GalleryStories from "./Gallery.stories";
+
+<Meta of={GalleryStories}/>
+
+# Gallery Counter
+
+Indicates the number of the active value and the total amount of items in the gallery.
+
+<Canvas of={GalleryStories.CounterExample}/>
+
+
+
+## Counter position
+
+There are 2 choices for positioning the counter, `top` and `bottom`.
+
+**Example**
+
+```html
+<gallery counter counterPosition="bottom" />
+```
+
+
+
+## List of options related to gallery counter
+
+- counter
+- counterPosition

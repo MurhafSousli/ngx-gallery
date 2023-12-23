@@ -1,0 +1,48 @@
+import {Meta, Canvas} from "@storybook/addon-docs";
+import * as LightboxStories from "./Lightbox.stories";
+
+<Meta of={LightboxStories}/>
+
+# Custom templates with the Lightbox
+
+The usage is similar to usage of custom templates in the gallery, however, we need to get a reference to the template and pass it to the gallery config.
+
+**Example:**
+
+```ts
+import {Component, ViewChild } from '@angular/core';
+import { Gallery, GalleryImageDef } from 'ng-gallery';
+
+@Component({ ... })
+export class LightboxExampleComponent {
+  
+  // Reference to the image template
+  @ViewChild(GalleryImageDef) imageDef: GalleryImageDef;
+
+  constructor(public gallery: Gallery) {
+  }
+
+  ngAfterViewInit() {
+    this.gallery.ref('lightbox', {
+      imageTemplate: this.imageDef.templateRef
+    }).load(this.items);
+  }
+}
+```
+
+in the template:
+
+```html
+<div *galleryImageDef="let item">
+  {{ item.alt }}
+</div>
+```
+
+The templates can also be set using `galleryRef.setConfig()` as needed
+
+```ts
+this.galleryRef.setConfig({
+  thumbTemplate: this.thumbDef.templateRef,
+  boxTemplate: this.boxDef.templateRef
+});
+```

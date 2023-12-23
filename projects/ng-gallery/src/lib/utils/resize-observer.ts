@@ -1,11 +1,15 @@
-import { Observable, Subscriber } from 'rxjs';
+import { Observable, Subscriber, mergeMap } from 'rxjs';
 
-export function resizeObservable(el: HTMLElement): Observable<ResizeObserverEntry[]> {
+export function resizeObservable(el: HTMLElement, setter?: (ref: ResizeObserver) => void): Observable<ResizeObserverEntry> {
   return new Observable((subscriber: Subscriber<ResizeObserverEntry[]>) => {
-    const resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => subscriber.next(entries));
+    const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => subscriber.next(entries));
     resizeObserver.observe(el);
-    return function unsubscribe() {
-      resizeObserver.disconnect();
-    };
-  });
+    if (setter) {
+      setter(resizeObserver);
+    }
+    return () => resizeObserver.disconnect();
+  }).pipe(
+    mergeMap((entries: ResizeObserverEntry[]) => entries)
+  );
 }
+

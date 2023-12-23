@@ -9,9 +9,8 @@ import {
   Host,
   NgZone,
   ElementRef,
-  PLATFORM_ID
 } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import { Gallery, GalleryRef, ImageItem, GalleryComponent, GalleryState, GalleryItem } from 'ng-gallery';
 import { Subject, Subscription, from, tap, map, switchMap, finalize, debounceTime, EMPTY } from 'rxjs';
 
@@ -35,7 +34,7 @@ const enum GallerizeMode {
 export class GallerizeDirective implements OnInit, OnDestroy {
 
   /** Default gallery id */
-  private _galleryId = 'lightbox';
+  private _galleryId: string = 'lightbox';
 
   /** Gallerize mode */
   private readonly _mode: GallerizeMode;
@@ -43,7 +42,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
   /** If host element is a HTMLElement, will use the following variables: */
 
   /** Stream that emits to fire the detection stream the image elements has changed */
-  private _observer$: any;
+  private _observer$: MutationObserver;
 
   /** Stream that emits when image is discover */
   private _detector$: Subject<void>;
@@ -60,26 +59,23 @@ export class GallerizeDirective implements OnInit, OnDestroy {
   @Input() gallerize: string;
 
   /** The selector used to query images elements */
-  @Input() selector = 'img';
+  @Input() selector: string = 'img';
 
   constructor(private _zone: NgZone,
               private _el: ElementRef,
               private _gallery: Gallery,
               private _lightbox: Lightbox,
-              @Inject(PLATFORM_ID) platform: Object,
               @Inject(DOCUMENT) private _document: any,
               @Host() @Self() @Optional() private _galleryCmp: GalleryComponent) {
 
     // Set gallerize mode
-    if (isPlatformBrowser(platform)) {
-      this._mode = _galleryCmp ? GallerizeMode.Gallery : GallerizeMode.Detector;
-    }
+    this._mode = _galleryCmp ? GallerizeMode.Gallery : GallerizeMode.Detector;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this._zone.runOutsideAngular(() => {
       this._galleryId = this.gallerize || this._galleryId;
-      const ref = this._gallery.ref(this._galleryId);
+      const ref: GalleryRef = this._gallery.ref(this._galleryId);
 
       switch (this._mode) {
         case GallerizeMode.Detector:
@@ -91,7 +87,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     switch (this._mode) {
       case GallerizeMode.Detector:
         this._detector$.complete();
@@ -105,7 +101,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
 
   /** Gallery mode: means `gallerize` directive is used on `<gallery>` component
    * Adds a click event to each gallery item so it opens in lightbox */
-  private galleryMode(galleryRef: GalleryRef) {
+  private galleryMode(galleryRef: GalleryRef): void {
     // Clone its items to the new gallery instance
     this._itemClick$ = this._galleryCmp.galleryRef.itemClick.subscribe((i: number) => this._lightbox.open(i, this._galleryId));
     this._itemChange$ = this._galleryCmp.galleryRef.itemsChanged.subscribe((state: GalleryState) => galleryRef.load(state.items));
@@ -113,7 +109,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
 
   /** Detector mode: means `gallerize` directive is used on a normal HTMLElement
    *  Detects images and adds a click event to each image, so it opens in the lightbox */
-  private detectorMode(galleryRef: GalleryRef) {
+  private detectorMode(galleryRef: GalleryRef): void {
     this._detector$ = new Subject();
     // Query image elements
     this._detector$.pipe(

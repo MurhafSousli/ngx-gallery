@@ -1,0 +1,917 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>ng-gallery-project documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">ng-gallery-project documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li
+  >
+  GalleryVideoComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>projects/ng-gallery/src/lib/components/templates/gallery-video.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>gallery-video</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">template</td>
+                <td class="col-md-9"><pre class="line-numbers"><code class="language-html">&lt;video #video
+       [attr.mute]&#x3D;&quot;mute&quot;
+       [attr.controlsList]&#x3D;&quot;controlsList&quot;
+       [attr.disablePictureInPicture]&#x3D;&quot;disablePictureInPicture&quot;
+       [disableRemotePlayback]&#x3D;&quot;disableRemotePlayback&quot;
+       [controls]&#x3D;&quot;controls&quot;
+       [loop]&#x3D;&quot;loop&quot;
+       [poster]&#x3D;&quot;poster&quot;
+       (error)&#x3D;&quot;error.emit($event)&quot;&gt;
+  &lt;ng-container *ngFor&#x3D;&quot;let src of videoSources&quot;&gt;
+    &lt;source *ngIf&#x3D;&quot;src?.type; else noType&quot; [src]&#x3D;&quot;src?.url&quot; [type]&#x3D;&quot;src.type&quot;/&gt;
+    &lt;ng-template #noType&gt;
+      &lt;source [src]&#x3D;&quot;src?.url&quot;/&gt;
+    &lt;/ng-template&gt;
+  &lt;/ng-container&gt;
+&lt;/video&gt;
+</code></pre></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#video" >video</a>
+                            </li>
+                            <li>
+                                <a href="#videoSources" >videoSources</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#controls" >controls</a>
+                            </li>
+                            <li>
+                                <a href="#controlsList" >controlsList</a>
+                            </li>
+                            <li>
+                                <a href="#disablePictureInPicture" >disablePictureInPicture</a>
+                            </li>
+                            <li>
+                                <a href="#disableRemotePlayback" >disableRemotePlayback</a>
+                            </li>
+                            <li>
+                                <a href="#loop" >loop</a>
+                            </li>
+                            <li>
+                                <a href="#mute" >mute</a>
+                            </li>
+                            <li>
+                                <a href="#pause" >pause</a>
+                            </li>
+                            <li>
+                                <a href="#play" >play</a>
+                            </li>
+                            <li>
+                                <a href="#poster" >poster</a>
+                            </li>
+                            <li>
+                                <a href="#src" >src</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#error" >error</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <h6><b>Accessors</b></h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <ul class="index-list">
+                                <li>
+                                    <a href="#pauseVideo" >pauseVideo</a>
+                                </li>
+                                <li>
+                                    <a href="#playVideo" >playVideo</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+        </tbody>
+    </table>
+</section>
+
+
+    <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="controls"></a>
+                        <b>controls</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">projects/ng-gallery/src/lib/components/templates/gallery-video.component.ts:36</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="controlsList"></a>
+                        <b>controlsList</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>&quot;nodownload&quot; | &quot;nofullscreen&quot; | &quot;noremoteplayback&quot;</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">projects/ng-gallery/src/lib/components/templates/gallery-video.component.ts:37</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="disablePictureInPicture"></a>
+                        <b>disablePictureInPicture</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">projects/ng-gallery/src/lib/components/templates/gallery-video.component.ts:39</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="disableRemotePlayback"></a>
+                        <b>disableRemotePlayback</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">projects/ng-gallery/src/lib/components/templates/gallery-video.component.ts:38</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="loop"></a>
+                        <b>loop</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">projects/ng-gallery/src/lib/components/templates/gallery-video.component.ts:35</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="mute"></a>
+                        <b>mute</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">projects/ng-gallery/src/lib/components/templates/gallery-video.component.ts:34</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="pause"></a>
+                        <b>pause</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">projects/ng-gallery/src/lib/components/templates/gallery-video.component.ts:41</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="play"></a>
+                        <b>play</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/ng-gallery/src/lib/components/templates/gallery-video.component.ts:50</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="poster"></a>
+                        <b>poster</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">projects/ng-gallery/src/lib/components/templates/gallery-video.component.ts:33</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="src"></a>
+                        <b>src</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string | literal type[]</code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">projects/ng-gallery/src/lib/components/templates/gallery-video.component.ts:32</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section>
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="error"></a>
+                        <b>error</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/EventEmitter" target="_blank" >EventEmitter</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">projects/ng-gallery/src/lib/components/templates/gallery-video.component.ts:60</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Stream that emits when an error occurs</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="64"
+                            class="link-to-prism">projects/ng-gallery/src/lib/components/templates/gallery-video.component.ts:64</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="video"></a>
+                    <span class="name">
+                        <span ><b>video</b></span>
+                        <a href="#video"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://angular.io/api/core/ElementRef" target="_blank" >ElementRef</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;video&#x27;, {static: true})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/ng-gallery/src/lib/components/templates/gallery-video.component.ts:62</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="videoSources"></a>
+                    <span class="name">
+                        <span ><b>videoSources</b></span>
+                        <a href="#videoSources"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>literal type[]</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">projects/ng-gallery/src/lib/components/templates/gallery-video.component.ts:30</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="pauseVideo"></a>
+                        <span class="name"><b>pauseVideo</b><a href="#pauseVideo"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>pauseVideo(shouldPause: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">projects/ng-gallery/src/lib/components/templates/gallery-video.component.ts:41</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>shouldPause</td>
+                                                    
+                                                            <td>
+                                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="playVideo"></a>
+                        <span class="name"><b>playVideo</b><a href="#playVideo"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>set</b><code>playVideo(shouldPlay: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/ng-gallery/src/lib/components/templates/gallery-video.component.ts:50</a></div>
+                                </td>
+                            </tr>
+                    <tr>
+                        <td class="col-md-4">
+
+                                <div class="io-description">
+                                        <b>Parameters :</b>
+                                        <table class="params">
+                                            <thead>
+                                                <tr>
+                                                    <td>Name</td>
+                                                        <td>Type</td>
+                                                    <td>Optional</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                    <tr>
+                                                            <td>shouldPlay</td>
+                                                    
+                                                            <td>
+                                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+                                                            </td>
+                                                    
+                                                        <td>
+                                                                No
+                                                        </td>
+                                                        
+                                                    </tr>
+                                            </tbody>
+                                        </table>
+                                </div>
+                                <div>
+                                </div>
+                                <div class="io-description">
+                                    <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                                </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, Input, Output, EventEmitter, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from &#x27;@angular/core&#x27;;
+import { NgFor, NgIf } from &#x27;@angular/common&#x27;;
+
+@Component({
+  selector: &#x27;gallery-video&#x27;,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: &#x60;
+    &lt;video #video
+           [attr.mute]&#x3D;&quot;mute&quot;
+           [attr.controlsList]&#x3D;&quot;controlsList&quot;
+           [attr.disablePictureInPicture]&#x3D;&quot;disablePictureInPicture&quot;
+           [disableRemotePlayback]&#x3D;&quot;disableRemotePlayback&quot;
+           [controls]&#x3D;&quot;controls&quot;
+           [loop]&#x3D;&quot;loop&quot;
+           [poster]&#x3D;&quot;poster&quot;
+           (error)&#x3D;&quot;error.emit($event)&quot;&gt;
+      &lt;ng-container *ngFor&#x3D;&quot;let src of videoSources&quot;&gt;
+        &lt;source *ngIf&#x3D;&quot;src?.type; else noType&quot; [src]&#x3D;&quot;src?.url&quot; [type]&#x3D;&quot;src.type&quot;/&gt;
+        &lt;ng-template #noType&gt;
+          &lt;source [src]&#x3D;&quot;src?.url&quot;/&gt;
+        &lt;/ng-template&gt;
+      &lt;/ng-container&gt;
+    &lt;/video&gt;
+  &#x60;,
+  standalone: true,
+  imports: [NgFor, NgIf]
+})
+export class GalleryVideoComponent implements OnInit {
+
+  videoSources: { url: string, type?: string }[];
+
+  @Input() src: string | { url: string, type?: string }[];
+  @Input() poster: string;
+  @Input() mute: boolean;
+  @Input() loop: boolean;
+  @Input() controls: boolean;
+  @Input() controlsList: &#x27;nodownload&#x27; | &#x27;nofullscreen&#x27; | &#x27;noremoteplayback&#x27;;
+  @Input() disableRemotePlayback: boolean;
+  @Input() disablePictureInPicture: boolean;
+
+  @Input(&#x27;pause&#x27;) set pauseVideo(shouldPause: boolean) {
+    if (this.video.nativeElement) {
+      const video: HTMLVideoElement &#x3D; this.video.nativeElement;
+      if (shouldPause &amp;&amp; !video.paused) {
+        video.pause();
+      }
+    }
+  }
+
+  @Input(&#x27;play&#x27;) set playVideo(shouldPlay: boolean) {
+    if (this.video.nativeElement) {
+      const video: HTMLVideoElement &#x3D; this.video.nativeElement;
+      if (shouldPlay) {
+        video.play();
+      }
+    }
+  }
+
+  /** Stream that emits when an error occurs */
+  @Output() error &#x3D; new EventEmitter&lt;ErrorEvent&gt;();
+
+  @ViewChild(&#x27;video&#x27;, { static: true }) video: ElementRef;
+
+  ngOnInit() {
+    if (this.src instanceof Array) {
+      // If video has multiple sources
+      this.videoSources &#x3D; [...this.src];
+    } else {
+      this.videoSources &#x3D; [{ url: this.src }];
+    }
+  }
+}
+</code></pre>
+    </div>
+
+
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><video #video       [attr.mute]="mute"       [attr.controlsList]="controlsList"       [attr.disablePictureInPicture]="disablePictureInPicture"       [disableRemotePlayback]="disableRemotePlayback"       [controls]="controls"       [loop]="loop"       [poster]="poster"       (error)="error.emit($event)">  <ng-container *ngFor="let src of videoSources">    <source *ngIf="src?.type; else noType" [src]="src?.url" [type]="src.type"/>    <ng-template #noType>      <source [src]="src?.url"/>    </ng-template>  </ng-container></video></div>'
+    var COMPONENTS = [{'name': 'CustomTemplateComponent', 'selector': 'custom-templates-example'},{'name': 'GalleryComponent', 'selector': 'gallery'},{'name': 'GalleryCoreComponent', 'selector': 'gallery-core'},{'name': 'GalleryCounterComponent', 'selector': 'gallery-counter'},{'name': 'GalleryDotsComponent', 'selector': 'gallery-dots'},{'name': 'GalleryExampleComponent', 'selector': 'gallery-example'},{'name': 'GalleryIframeComponent', 'selector': 'gallery-iframe'},{'name': 'GalleryImageComponent', 'selector': 'gallery-image'},{'name': 'GalleryItemComponent', 'selector': 'gallery-item'},{'name': 'GalleryNavComponent', 'selector': 'gallery-nav'},{'name': 'GallerySliderComponent', 'selector': 'gallery-slider'},{'name': 'GalleryThumbComponent', 'selector': 'gallery-thumb'},{'name': 'GalleryThumbsComponent', 'selector': 'gallery-thumbs'},{'name': 'GalleryVideoComponent', 'selector': 'gallery-video'},{'name': 'LightboxComponent', 'selector': 'lightbox'},{'name': 'LightboxExampleComponent', 'selector': 'lightbox-example'}];
+    var DIRECTIVES = [{'name': 'AutoplayDirective', 'selector': 'gallery-core[autoplay]'},{'name': 'GallerizeDirective', 'selector': '[gallerize]'},{'name': 'GalleryBoxDef', 'selector': '[galleryBoxDef]'},{'name': 'GalleryImageDef', 'selector': '[galleryImageDef]'},{'name': 'GalleryItemDef', 'selector': '[galleryItemDef]'},{'name': 'GalleryThumbDef', 'selector': '[galleryThumbDef]'},{'name': 'HammerSliding', 'selector': '[hammerSliding]'},{'name': 'ImgRecognizer', 'selector': 'img[galleryImage]'},{'name': 'ItemIntersectionObserver', 'selector': '[itemIntersectionObserver]'},{'name': 'LightboxDirective', 'selector': '[lightbox]'},{'name': 'SliderIntersectionObserver', 'selector': '[sliderIntersectionObserver]'},{'name': 'SliderResizeObserver', 'selector': '[sliderResizeObserver]'},{'name': 'SmoothScroll', 'selector': '[smoothScroll]'},{'name': 'ThumbResizeObserver', 'selector': '[thumbResizeObserver]'}];
+    var ACTUAL_COMPONENT = {'name': 'GalleryVideoComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'GalleryVideoComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

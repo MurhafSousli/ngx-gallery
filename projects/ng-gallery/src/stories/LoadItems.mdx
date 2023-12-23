@@ -1,0 +1,192 @@
+# Usage
+
+There are several ways for configuring gallery items. Here are some examples:
+
+## Basic Example with Template Binding
+
+The most straightforward way to load items into the gallery is by using an array of type `GalleryItem[]` and applying the template binding.
+
+```ts
+import { Component, OnInit } from '@angular/core';
+import { GalleryModule, GalleryItem, ImageItem, VideoItem, YoutubeItem, IframeItem } from 'ng-gallery';
+
+@Component({
+  template: `
+    <gallery [items]="images"></gallery>
+  `,
+  standalone: true,
+  imports: [GalleryModule]
+})
+export class AppComponent implements OnInit {
+
+  images: GalleryItem[];
+
+  ngOnInit() {
+    // Set items array
+    this.images = [
+      new ImageItem({
+        src: 'IMAGE_SRC_URL',
+        thumb: 'IMAGE_THUMBNAIL_URL'
+      }),
+      new VideoItem({
+        src: 'VIDEO_URL',
+        poster: 'VIDEO_POSTER_URL',
+        thumb: 'IMAGE_THUMBNAIL_URL'
+      }),
+      new YoutubeItem({
+        src: 'VIDEO_ID'
+      }),
+      new IframeItem({
+        src: 'IFRAME_URL',
+        thumb: 'IMAGE_THUMBNAIL_URL'
+      })
+    ];
+  }
+}
+```
+
+## Accessing via Component Reference
+
+Alternatively, you can access the gallery by referencing the `GalleryComponent`.
+To do this, acquire the component reference using `@ViewChild(GalleryComponent)` and then add items accordingly.
+
+```ts
+import { Component, ViewChild } from '@angular/core';
+import { GalleryModule, GalleryComponent, ImageItem, VideoItem, YoutubeItem, IframeItem } from 'ng-gallery';
+
+@Component({
+  template: `
+    <gallery></gallery>
+  `,
+  standalone: true,
+  imports: [GalleryModule]
+})
+export class AppComponent {
+
+  @ViewChild(GalleryComponent) myGallery: GalleryComponent;
+
+  // Add items individually
+  addItemIndividually() {
+    this.myGallery.addImage({
+      src: 'IMAGE_SRC_URL',
+      thumb: 'IMAGE_THUMBNAIL_URL'
+    });
+
+    this.myGallery.addVideo({
+      src: 'VIDEO_URL',
+      poster: 'VIDEO_POSTER_URL',
+      thumb: 'IMAGE_THUMBNAIL_URL'
+    });
+
+    this.myGallery.addYoutube({
+      src: 'VIDEO_ID'
+    });
+
+    this.myGallery.addIframe({
+      src: 'IFRAME_URL',
+      thumb: 'IMAGE_THUMBNAIL_URL'
+    });
+  }
+
+  // Load a new set of items
+  loadItems() {
+    const items: GalleryItem[] = [
+      new ImageItem({
+        src: 'IMAGE_SRC_URL',
+        thumb: 'IMAGE_THUMBNAIL_URL'
+      }),
+      new VideoItem({
+        src: 'VIDEO_URL',
+        poster: 'VIDEO_POSTER_URL',
+        thumb: 'IMAGE_THUMBNAIL_URL'
+      }),
+      new YoutubeItem({
+        src: 'VIDEO_ID'
+      }),
+      new IframeItem({
+        src: 'IFRAME_URL',
+        thumb: 'IMAGE_THUMBNAIL_URL'
+      })
+    ]
+
+    this.myGallery.load(items);
+  }
+}
+```
+
+## Accessing via `Gallery` Service
+
+To access the gallery from any location within your application, utilize the `Gallery` service to obtain the `GalleryRef` by its unique identifier.
+
+```ts
+import { Component, OnInit } from '@angular/core';
+import { GalleryModule, Gallery, GalleryRef, GalleryItem, ImageItem, VideoItem, YoutubeItem, IframeItem } from 'ng-gallery';
+
+@Component({
+  template: `
+    <gallery id="myGallery"></gallery>
+  `,
+  standalone: true,
+  imports: [GalleryModule]
+})
+export class AppComponent implements OnInit {
+
+  galleryRef: GalleryRef;
+
+  constructor(private gallery: Gallery) {
+  }
+
+  ngOnInit() {
+    // Get the galleryRef by id
+    this.galleryRef = this.gallery.ref('myGallery');
+  }
+
+  // Add items individually
+  addItemIndividually() {
+    this.galleryRef.addImage({
+      src: 'IMAGE_SRC_URL',
+      thumb: 'IMAGE_THUMBNAIL_URL'
+    });
+
+    this.galleryRef.addVideo({
+      src: 'VIDEO_URL',
+      poster: 'VIDEO_POSTER_URL',
+      thumb: 'IMAGE_THUMBNAIL_URL'
+    });
+
+    this.galleryRef.addYoutube({
+      src: 'VIDEO_ID'
+    });
+
+    this.galleryRef.addIframe({
+      src: 'IFRAME_URL',
+      thumb: 'IMAGE_THUMBNAIL_URL'
+    });
+  }
+
+  // Load a new set of items
+  loadItems() {
+    const items: GalleryItem[] = [
+      new ImageItem({
+        src: 'IMAGE_SRC_URL',
+        thumb: 'IMAGE_THUMBNAIL_URL'
+      }),
+      new VideoItem({
+        src: 'VIDEO_URL',
+        poster: 'VIDEO_POSTER_URL',
+        thumb: 'IMAGE_THUMBNAIL_URL'
+      }),
+      new YoutubeItem({
+        src: 'VIDEO_ID'
+      }),
+      new IframeItem({
+        src: 'IFRAME_URL',
+        thumb: 'IMAGE_THUMBNAIL_URL'
+      })
+    ]
+    this.galleryRef.load(items);
+  }
+}
+```
+
+These methods provide flexibility in setting up and configuring the gallery in your application.

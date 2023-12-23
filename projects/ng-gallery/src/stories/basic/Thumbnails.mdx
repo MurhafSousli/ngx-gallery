@@ -1,0 +1,89 @@
+import { Meta, Canvas } from "@storybook/addon-docs";
+import * as GalleryStories from "./Gallery.stories";
+
+<Meta of={GalleryStories}/>
+
+# Gallery Thumbnails
+
+Thumbnails are an integral part of the gallery component, offering multiple customization options for appearance and behavior.
+
+
+
+## Displaying thumbnails
+
+To display thumbnails, add the following attribute:
+
+```html
+<gallery thumbs />
+```
+
+
+## Thumbnail position
+
+There are 4 positioning choices are available for thumbnails: `top`, `left`, `bottom` and `right`.
+
+The chosen position also dictates the slide direction: horizontal for `top` and `bottom`, and vertical for `left` and `right`.
+
+<Canvas of={GalleryStories.ThumbPositionExample}/>
+
+
+
+## Customizing thumbnail size
+
+Thumbnails can be resized using the `thumbWidth` and `thumbHeight` inputs:
+
+- For `top` or `bottom` positions, `thumbHeight` determines the height of the thumbnails' slider.
+- For `left` or `right` positions, `thumbWidth` determines the width of the thumbnails' slider.
+
+
+## Automatic thumbnail sizing
+
+The `thumbAutosize` attribute enables automatic thumbnail sizing, ensuring each thumbnail fits its content size.
+
+- In `top` or `bottom` positions, the width of each thumbnail adjusts to its content.
+- In `left` or `right` positions, the height of each thumbnail adjusts to its content.
+
+<Canvas of={GalleryStories.ThumbAutosizeExample}/>
+
+
+## Disabling thumbnail clicks
+
+To prevent navigating to new items by clicking on thumbnails, use the following attribute:
+
+```html
+<gallery disableThumbs />
+```
+
+
+
+## Detaching thumbnails
+
+Typically, thumbnails adjust to centralize the active item. To disable this behavior `detachThumbs` as follows:
+
+<Canvas of={GalleryStories.ThumbDetachedExample}/>
+
+
+
+## Centralized thumbnails
+
+By default, the active thumbnail is centrally positioned in the slider. However, if it's located at the beginning or end, it remains in place. To enforce centralization, utilize the `thumbView` attribute:
+
+<Canvas of={GalleryStories.ThumbViewExample}/>
+
+
+
+## List of options related to gallery thumbnails
+
+- thumbs
+- thumbPosition
+- thumbWidth
+- thumbHeight
+- thumbAutosize
+- thumbCentralized
+- thumbImageSize
+- detachThumbs
+- disableThumbs
+- disableThumbMouseScroll
+- disableThumbMouseScroll
+
+The API table is available [here](/docs/documentations-gallery--lab).

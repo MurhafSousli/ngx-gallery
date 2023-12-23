@@ -1,0 +1,120 @@
+import {Meta, Canvas} from "@storybook/addon-docs";
+import * as GalleryStories from "./Lightbox.stories";
+
+<Meta of={GalleryStories}/>
+
+
+# Gallerize
+
+<Canvas of={GalleryStories.GallerizeExample}/>
+
+### Basic usage
+
+Wrap elements inside a `gallerize` directive
+
+```html
+<div class="container" gallerize>
+   <img src="assets/img/image-1">
+   <img src="assets/img/image-2">
+   <img src="assets/img/image-3">
+   <img src="assets/img/image-4">
+</div>
+```
+You can also use normal element background instead of `img`
+
+```html
+<div class="container" gallerize>
+   <div [style.background]="'url(assets/img/image-1)'"></div>
+   <div [style.background]="'url(assets/img/image-2)'"></div>
+   <div [style.background]="'url(assets/img/image-3)'"></div>
+   <div [style.background]="'url(assets/img/image-4)'"></div>
+</div>
+```
+
+### Define image's full and thumbnail sources
+
+Use the attributes `imageSrc` and `thumbSrc` to set image full size and thumbnail size
+
+```html
+<div class="container"
+     gallerize>
+  <img *ngFor="let image of images"
+       [src]="image.thumb"
+       [attr.imageSrc]="image.src"
+       [attr.thumbSrc]="image.thumb">
+</div>
+```
+
+### Gallerize specific elements
+
+Use the input `[selector]` to gallerize specific elements
+
+```html
+<div class="container"
+     gallerize
+     selector=".gallery-img">
+  <div *ngFor="let image of images"
+       class="gallery-img"
+       [style.backgroundImage]="'url(' + image.thumb + ')'"
+       [attr.imageSrc]="image.src"
+       [attr.thumbSrc]="image.thumb"></div>
+</div>
+```
+
+### Multiple galleries
+
+To use multiple galleries, just set a unique id, e.g. `gallerize="gallery-123"`
+
+```html
+<h3>Gallery 1</h3>
+
+<div class="container"
+     gallerize="gallery-1">
+<img *ngFor="let image of data"
+      [src]="image.previewUrl"
+      [attr.imageSrc]="image.srcUrl"
+      [attr.thumbSrc]="image.previewUrl">
+</div>
+
+<h3>Gallery 2</h3>
+
+<div class="container"
+     gallerize="gallery-2">
+<img *ngFor="let image of data2"
+      [src]="image.previewUrl"
+      [attr.imageSrc]="image.srcUrl"
+      [attr.thumbSrc]="image.previewUrl">
+</div>
+```
+
+Here is a [multiple gallerize stackblitz](https://stackblitz.com/edit/ngx-gallery-multiple-gallerize).
+
+***
+
+### Gallerize on `<gallery>` component
+
+**Gallerize** can also be used on `<gallery>` component, This will trigger the lightbox on a gallery item's click.
+
+<Canvas of={GalleryStories.GallerizeGalleryExample}/>
+
+Here is a [Gallerize on gallery stackblitz](https://stackblitz.com/edit/ngx-gallery-nqudkt?file=src%2Fapp%2Fhome%2Fhome.component.html)
+
+***
+
+### Set custom config when using `gallerize`
+
+
+```ts
+GalleryModule.withConfig({
+  thumbPosition: 'bottom'
+}),
+```
+Here is a demo https://stackblitz.com/edit/ngx-gallery-multiple-gallerize
+
+```ts
+constructor(gallery: Gallery) {
+  gallery.ref('gallery-1').setConfig({
+    thumbPosition: 'bottom'
+  })
+}
+```
