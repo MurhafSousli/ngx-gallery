@@ -80,3 +80,5 @@ export type VideoItemData = GalleryItemModel & {
 };
 
 export type GalleryItemData = ImageItemData | VideoItemData | IframeItemData | YoutubeItemData;
+
+export type ItemState = 'success' | 'loading' | 'failed';

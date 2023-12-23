@@ -1,0 +1,40 @@
+:host {
+  position: absolute;
+  left: 50%;
+  z-index: 99;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  top: var(--bullets-top);
+  bottom: var(--bullets-bottom);
+}
+
+:host,
+.g-bullet,
+.g-bullet-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.g-bullet {
+  cursor: var(--bullets-cursor);
+  z-index: 20;
+
+  &:hover .g-bullet-inner {
+    opacity: var(--bullets-hover-opacity);
+  }
+}
+
+.g-bullet-active .g-bullet-inner {
+  opacity: var(--bullets-active-opacity);
+}
+
+.g-bullet-inner {
+  background-color: var(--g-overlay-color);
+  opacity: var(--bullets-opacity);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transition: opacity linear 150ms;
+}

@@ -1,0 +1,43 @@
+import { Meta, Canvas } from "@storybook/addon-docs";
+import * as GalleryStories from "./Gallery.stories";
+
+<Meta of={GalleryStories}/>
+
+# Gallery Bullets
+
+The bullets offer a straightforward way to navigate in the gallery.
+
+<Canvas of={GalleryStories.BulletExample}/>
+
+## Bullets position
+
+There are 2 positioning choices are available for bullets: `top` and `bottom`.
+
+**Example**
+
+```html
+<gallery [items]="items" bullets bulletPosition="bottom" />
+```
+
+
+## Customizing bullet Size
+
+To change bullets size, use the `bulletSize` input
+
+
+## Disabling bullet Clicks
+
+To prevent navigating to new items by clicking on bullets, use the following attribute:
+
+```html
+<gallery bullets disableBullets />
+```
+
+
+
+## List of options related to gallery bullets
+
+- bullets
+- bulletSize
+- bulletPosition
+- disableBullets

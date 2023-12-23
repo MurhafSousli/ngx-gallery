@@ -1,0 +1,114 @@
+<div className="logo-container">
+  <img src="https://user-images.githubusercontent.com/8130692/36171173-ad0da54c-1112-11e8-85bf-843c5f70efdc.png"
+       alt="Gallery Logo"/>
+  <h1>Angular Gallery</h1>
+</div>
+
+
+# Getting Started
+
+This library consists of 2 packages:
+
+- **ng-gallery:** This package includes a `<gallery>` component and a gallery service.
+- **ng-gallery/lightbox:** Within this package, you'll find a lightbox service and a `[lightbox]` directive, designed to facilitate the opening of the gallery within a modal window.
+Additionally, this package offers a `[gallerize]` directive, which seamlessly integrates the images into the lightbox.
+
+## Installation
+
+The package can be installed alongside the `@angular/cdk` dependency using NPM. To do this, run the following command in your terminal:
+
+```bash
+npm i ng-gallery @angular/cdk
+```
+
+## Usage
+
+The `GalleryModule` can be imported either globally in your application configuration or directly in your component imports.
+It's important to note that importing the `provideAnimations` animation is required for the proper functioning of the gallery component.
+Below is an example of setting up your Angular application:
+
+```ts
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { GalleryModule } from 'ng-gallery';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideAnimations(),
+    importProvidersFrom(GalleryModule)
+  ]
+};
+```
+
+### Provide default options
+
+`DEFAULT_GALLERY_CONFIG` Injection token that can be used to provide the default options for the gallery.
+
+**Example**
+
+
+```ts
+import { ApplicationConfig } from '@angular/core';
+import { DEFAULT_GALLERY_CONFIG, GalleryConfig } from 'ng-gallery';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    {
+      provide: DEFAULT_GALLERY_CONFIG,
+      useValue: {
+        imageSize: 'cover'
+      } as GalleryConfig
+    }
+  ]
+};
+```
+
+## Mouse Sliding (optional)
+
+The gallery relies on HammerJS to support dragging the slider using the mouse, if you don't want this feature you can skip installing HammerJS.
+
+*You can add HammerJS to your application via [npm](https://www.npmjs.com/package/hammerjs), a CDN (such as the [Google CDN](https://developers.google.com/speed/libraries/#hammerjs)), or served directly from your app.*
+
+To install via npm, use the following command:
+
+**NPM**
+
+```bash
+npm i hammerjs
+```
+
+After installing, import it in `main.ts`
+
+```ts
+import 'hammerjs';
+```
+
+
+## Issues
+
+If you identify any errors in this module or have an idea for an improvement, please open an [issue](https://github.com/MurhafSousli/ngx-gallery/issues).
+
+
+
+<style>
+  {`
+  .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+  }
+  .logo-container img {
+    height: 150px;
+  }
+  .logo-container h1 {
+    text-align: center;
+    width: 100%;
+    font-size: 36px;
+    padding-bottom: 4px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid hsla(203, 50%, 30%, 0.15);
+  }
+`}
+</style>

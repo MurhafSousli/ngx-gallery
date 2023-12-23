@@ -1,0 +1,793 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>ng-gallery-project documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="./" class="navbar-brand">ng-gallery-project documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h1 id="changelog">Changelog</h1>
+<h2 id="1200-beta0">12.0.0-beta.0</h2>
+<ul>
+<li>All boolean inputs of <code>&lt;gallery&gt;</code> components can be set as string attributes<ul>
+<li>e.g. <code>&lt;gallery autoHeight&gt;</code>, <code>&lt;gallery autoHeight=&quot;true&quot;&gt;</code> and <code>&lt;gallery [autoHeight]=&quot;true&quot;&gt;</code> sets the option&#39;s value to true.</li>
+<li>e.g. <code>&lt;gallery autoHeight=&quot;false&quot;&gt;</code> and <code>&lt;gallery [autoHeight]=&quot;false&quot;&gt;</code> sets the option&#39;s value to false.</li>
+</ul>
+</li>
+<li>All number inputs of <code>&lt;gallery&gt;</code> components can be set as string attributes<ul>
+<li>e.g. <code>&lt;gallery playerInterval=&quot;2000&quot;&gt;</code> and <code>&lt;gallery [playerInterval]=&quot;2000&quot;&gt;</code> sets the option&#39;s value to 2000</li>
+</ul>
+</li>
+</ul>
+<p><strong>Improved performance</strong></p>
+<ul>
+<li>refactor: Replace the scroll event with intersection observer to detect the active item while scrolling.</li>
+</ul>
+<p><strong>ItemAutoSize, ThumbAutoSize features</strong></p>
+<ul>
+<li>enhance: Toggling <code>itemAutoSize</code> option is now reactive.</li>
+<li>fix: <code>[thumbAutosize]</code> causes random invalid starting thumbnail scroller position when scrolling possible, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/521">#521</a></li>
+<li>fix: <code>[ItemAutosize]</code> in website/safari browsers do not work as expected, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/543">#543</a></li>
+</ul>
+<p><strong>AutoHeight feature</strong></p>
+<ul>
+<li>enhance: Auto-height feature is not more precise and works well with or without height transition</li>
+<li>fix: Auto-height issue when screen size changes</li>
+</ul>
+<p><strong>Autoplay feature</strong></p>
+<ul>
+<li>fix: <code>autoplay</code> resets the timer after navigated.</li>
+<li>fix: <code>autoplay</code> only start the timer after the image is loaded.</li>
+</ul>
+<p><strong>Custom template</strong></p>
+<ul>
+<li>feature: <code>galleryImage</code> directive has been added, which allows user to set this directive on img element inside their custom templates.</li>
+</ul>
+<h3 id="breaking-changes">Breaking changes</h3>
+<ul>
+<li><code>autoPlay</code> option has been renamed to <code>autoplay</code> in small letters.</li>
+</ul>
+<h2 id="1100">11.0.0</h2>
+<ul>
+<li>feat: Add <code>GalleryThumbDef</code>, <code>GalleryImageDef</code>, <code>GalleryItemDef</code>, <code>GalleryBoxDef</code> to set custom templates.</li>
+<li>feat: Add <code>imageTemplate</code> property to <code>GalleryConfig</code>.</li>
+<li>feat: Add <code>args</code> property in case need to attach extra data with the gallery item.</li>
+<li>enhance: Improve overall typings.</li>
+</ul>
+<h3 id="breaking-changes-1">Breaking changes</h3>
+<ul>
+<li>Usage of setting custom template has been changed! see the <a href="https://github.com/MurhafSousli/ngx-gallery/wiki">wiki page</a> for more info.</li>
+<li>The inputs <code>itemTemplate</code>, <code>thumbTemplate</code> and <code>boxTemplate</code> has been removed from the gallery component, however they still exist in <code>GalleryConfig</code></li>
+</ul>
+<h2 id="1000">10.0.0</h2>
+<ul>
+<li>feat: Migrate to standalone components.</li>
+</ul>
+<h3 id="breaking-changes-2">Breaking Changes</h3>
+<ul>
+<li>Both <code>GalleryModule</code> and <code>LightboxModule</code> no longer provide the <code>withConfig()</code> method.</li>
+</ul>
+<h2 id="901">9.0.1</h2>
+<ul>
+<li>Remove <code>bezier-easing</code> package from dependencies, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/525">#525</a> and <a href="https://github.com/MurhafSousli/ngx-gallery/issues/551">#551</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/556/commits/6c47ecb59185909186f10a9860d1a98b326ad2d0">6c47ecb</a>.</li>
+</ul>
+<h2 id="900">9.0.0</h2>
+<ul>
+<li>Upgrade to Angular 16</li>
+</ul>
+<h2 id="804">8.0.4</h2>
+<ul>
+<li>fix(core): Fix <code>VideoItem</code> typo, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/529">#529</a>.</li>
+<li>enhance(lightbox): Allow multiple classes for <code>backdropPanel</code> and <code>panelClass</code> config, closes <a href="https://github.com/MurhafSousli/ngx-gallery/pull/542/commits/b9d36e31cbc05d258db21bdcfb857aaa70900ba3">31368ed</a> and <a href="https://github.com/MurhafSousli/ngx-gallery/issues/541">#541</a>.</li>
+</ul>
+<h2 id="803">8.0.3</h2>
+<ul>
+<li>fix(core): SSR error, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/532">532</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/533">#533</a>.</li>
+</ul>
+<h2 id="802">8.0.2</h2>
+<ul>
+<li>feat(core): Add <code>loadingAttr</code> option to img and iframe elements, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/513">#513</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/517/commits/093789b42cff86da957a09632c96705d42820085">093789b</a>.</li>
+<li>fix(core): Videos are unplayable if type not specified, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/515">#515</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/516/commits/11ba153401c9c87f2983b99b047cf57849399117">11ba153</a>.</li>
+</ul>
+<h2 id="801">8.0.1</h2>
+<ul>
+<li>fix(core): Gallery nav icons are not alignment properly, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/506/commits/d4dca8b4f68b4439471ed7f90ea4e23c27ff0c41">d4dca8b</a>.</li>
+<li>fox(core): Gallery dots is not horizontally centralized, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/506/commits/f2d691083350adb64ea4b9c205e6fa3c31f6c0a3">f2d6910</a>.</li>
+<li>fix(core): Fix lib&#39;s angular peerDependencies version to &gt;=15 in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/506/commits/9ea5ea34f77e6329f9385c7db056cc637557b1bc">9ea5ea3</a>.</li>
+</ul>
+<h2 id="800">8.0.0</h2>
+<ul>
+<li>feat(core): Add <code>isActive</code> to custom gallery template context, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/497/commits/0b3f8bf43e383a8ee3e53a3140e18b8bcf1c2d69">0b3f8bf</a>.</li>
+<li>refactor(core): Fix the iframe error regarding the <code>allow</code> attribute.</li>
+<li>refactor(core): Change default navigation icons.</li>
+<li>refactor(core): Change default dots size.</li>
+<li>refactor(core): Change default counter styles.</li>
+<li>regret(core): Remove<code>itemLoaded</code> output.</li>
+</ul>
+<h2 id="800-beta5">8.0.0-beta.5</h2>
+<ul>
+<li>regret(core): Remove<code>contentVisibilityAuto</code> option for version 8.</li>
+<li><del>feat(core): Add <code>itemLoaded</code> output which emits after an item is loaded, for image items it emits after the image is loaded.</del></li>
+<li>feat(core): Add <code>autoHeight</code> option, when set to true, the gallery height will fit the active item height.</li>
+<li>feat(core): Add <code>autoItemSize</code> option, when set to true, the item will fit its image aspect ratio.</li>
+<li>feat(core): Add <code>autoThumbSize</code> option, when set to true, the thumb will fit its image aspect ratio.</li>
+<li>feat(core): Add <code>scrollBehavior</code> option.</li>
+<li>feat(core): Add <code>navScrollBehavior</code> option.</li>
+<li>feat(core): Add <code>thumbImageSize</code> option.</li>
+<li>feat(core): Add more options to the video item.</li>
+<li>feat(core): Add <code>configSnapshot</code> to <code>GalleryRef</code> class.</li>
+<li>feat(core): Add an optional parameter <code>behavior</code> to all <code>next(behavior?)</code>, <code>prev(behavior?)</code>, <code>set(index, behavior?)</code> functions, fallbacks to the <code>scrollBehavior</code> config.</li>
+<li>refactor(core): Only display custom item template container when <code>itemTemplate</code> is provided.</li>
+</ul>
+<h2 id="800-beta4">8.0.0-beta.4</h2>
+<ul>
+<li><del>feat(core): Add <code>contentVisibilityAuto</code> option to set the proper <code>content-visibility</code> and <code>contain-intrinsic-size</code> value on all gallery items/thumbs, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/491/commits/73b20a9f996371e4a3ad52283b358263fd88546f">73b20a9</a>.</del></li>
+<li>feat(core): Use native <code>loading</code> attribute on all <code>img</code> and <code>iframe</code> for native lazy loading.</li>
+<li>refactor(core): Fix loop issue when sliding with using the mouse, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/491/commits/1572beae2bc58792fac94243f4f3e20c0a61e549">1572bea</a>.</li>
+<li>refactor(core): Remove <code>lazy-image</code> directive.</li>
+</ul>
+<h2 id="800-beta3">8.0.0-beta.3</h2>
+<ul>
+<li>fix(core): Set current index in sliding event does not work if slider size number has fraction, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/491/commits/58e89fb3ed0e3837ca08a8111d567d992717ba7a">58e89fb</a>.</li>
+</ul>
+<h2 id="800-beta2">8.0.0-beta.2</h2>
+<ul>
+<li>fix(lightbox): close button is not displayed, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/490/commits/506249bbc5877cd4ed54cf610a42b3a31abcb417">506249b</a>.</li>
+</ul>
+<h2 id="800-beta1">8.0.0-beta.1</h2>
+<ul>
+<li>feat(core): Use scrolling slider instead of transform method, allows touchpad scroll to slide the gallery as well as native sliding on mobile browser.</li>
+<li>feat(core): Add <code>resizeDebounceTime</code> option which is used to update the gallery on window resize event in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/34a27238eed6515fd748c43909c3fd0098b6a575">34a2723</a> and <a href="https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/d86763042553a340b3a367c56c0a2549b690f751">d867630</a>.</li>
+<li>feat(core): Add <code>slidingEase</code> and <code>slidingDuration</code> to customize sliding ease and duration in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/4c1db03afb3a27896cd6dad5d08f91612bfa75a2">4c1db03</a>.</li>
+<li>feat(core): Add <code>thumbDetached</code> to detach thumb slider, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/289">#289</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/1f474847f999b2f1b0c820d50bf7336bfe6b8a3c">1f47484</a>.</li>
+<li>feat(core): Add <code>boxTemplate</code> to the gallery, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/487">#487</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/f46e33abf231ab86bd0b906e4b20e02e4bbf7bf4">f46e33a</a>.</li>
+<li>feat(core): Add <code>slidingDisabled</code> and <code>thumbSlidingDisabled</code> options to enable/disable sliding on Mobile and Desktop using the touchpad. in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/2451581cee382a17f3a95671cf3950910a5122d3">2451581</a>.</li>
+<li>feat(core): Add <code>mouseSlidingDisabled</code> and <code>mouseThumbSlidingDisabled</code> options to enable/disable sliding on Desktop using the mouse. in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/2451581cee382a17f3a95671cf3950910a5122d3">2451581</a>.</li>
+<li>feat(core): Images not shown, when number of images get larger, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/484">#484</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/e819ebe3442f0cd37c1914bccf82a72d1fb2ce85">e819ebe</a>.</li>
+<li>fix(core): <code>thumbView=&quot;contain&quot;</code> Sliding thumbnails using gestures has an issue, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/417">#417</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/e819ebe3442f0cd37c1914bccf82a72d1fb2ce85">e819ebe</a>.</li>
+<li>refactor(core): Remove <code>thumbMode</code> option from the gallery, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/18f71e3599f7af1a20f1482307a6370c0c8b6f05">18f71e3</a></li>
+<li>refactor(core): Remove <code>tapClick</code> event and use native <code>click</code> event, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/3d960cca3b4954c999e10a86b0993d45d5c8462f">3d960cc</a>.</li>
+<li>refactor(core): Remove <code>ng-content</code> from the gallery, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/63e3b6b5110ee5eaab6452cf775c3488023bd7d9">63e3b6b</a>.</li>
+<li>refactor(core): Remove <code>panSensitivity</code> option, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/d1f8d342a597d88afe66681b4ae099362273e03c">d1f8d34</a>.</li>
+<li>refactor(core): Remove <code>gestures</code> option, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/70cb00c5aa808ea33aba1b674666ab0f99501a9d">70cb00c</a>.</li>
+<li>refactor(core): Remove <code>reserveGesturesAction</code> option, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/4b07fc7ca4ef3d50e59accfe11593ee3a84ee706">4b07fc7</a>.</li>
+<li>refactor(core): Remove <code>zoomOut</code> option, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/488/commits/19ba2b8c8d4402085c0b400b3e4c0e014d2e5abb">19ba2b8</a>.</li>
+</ul>
+<h3 id="breaking-changes-3">Breaking changes:</h3>
+<p>HammerJs is only used for sliding using the mouse on desktop only, Sliding on mobile devices is now native scroll.</p>
+<ul>
+<li><code>gestures</code> option has been deprecated.</li>
+<li><code>thumbMode</code> option has been deprecated, sliding thumbnails is free.</li>
+<li><code>zoomOut</code> has been deprecated.</li>
+<li><code>reserveGesturesAction</code> has been deprecated.</li>
+<li><code>panSensitivity</code> has been deprecated.</li>
+<li>Remove <code>ng-content</code> from the gallery, use <code>boxTemplate</code> option to add your custom layer.</li>
+<li>The default value for <code>loadingStrategy</code> option has changed to <code>LoadingStrategy.Preload</code>.</li>
+<li>Added new dependency <code>bezier-easing</code>.</li>
+</ul>
+<h2 id="712">7.1.2</h2>
+<ul>
+<li>fix(core): Fix <code>reserveGestureAction</code> input and its default value in the lightbox, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/481/commits/ba950362b3fd5378d929ef14b56b1cb602382c9e">ba95036</a>.</li>
+<li>fix(core): Update gallery sliding position properly on window resize, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/481/commits/f786d0a1ef44fd4a1c0a89126a57765131b5beba">f786d0a</a>.</li>
+<li>fix(core): Slide bug with touch scroll with gallery thumbnails, related to <a href="https://github.com/MurhafSousli/ngx-gallery/issues/465">#465</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/476/commits/eb1e60cd033d939485f4b2e4be30d95b49a3d7c5">eb1e60c</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/481/commits/a26d63fe2f04667eb6bd7e36aba960c066f95305">a26d63f</a>.</li>
+</ul>
+<h2 id="711">7.1.1</h2>
+<ul>
+<li>feat(core): New option <code>reserveGesturesAction</code> adds the ability to block the scrolling of page when sliding the gallery on mobile browser, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/477">#477</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/478/commits/c105f21fec747a71e849994d4e749f6e0c4b8b3f">c105f21</a>.</li>
+<li>fix(core): Slide bug with touch scroll, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/465">#465</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/476/commits/eb1e60cd033d939485f4b2e4be30d95b49a3d7c5">eb1e60c</a>.</li>
+</ul>
+<h2 id="710">7.1.0</h2>
+<ul>
+<li>feat(core): Settings change shouldn&#39;t require restart, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/466">#466</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/472/commits/ee71e528313f7780d82226aa1d849a6debc74ade">ee71e52</a>.</li>
+<li>fix(core): Unable to drag thumbnails properly, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/473">473</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/472/commits/86357014d140360cb110adb1d3115836c988e4c7">8635701</a>.</li>
+<li>fix(core): Setting gestures to false breaks the gallery, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/464">#464</a>, <a href="https://github.com/MurhafSousli/ngx-gallery/issues/467">#467</a> and <a href="https://github.com/MurhafSousli/ngx-gallery/issues/469">#469</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/472/commits/a374603d60e82518c5b9de11309e68be365c94bc">a374603</a>.</li>
+<li>fix(core): Set <code>alt</code> on gallery thumbnails and add <code>role=&quot;button&quot;</code> to gallery nav, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/468">#468</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/471/commits/57bebca657b160e3973fd1f73daf6b655dd25fa2">57bebca</a>.</li>
+<li>fix(lightbox): Close icon in lightbox container being re-rendered all the time due to bug in template, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/307">#307</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/472/commits/6bdc7a4add557a90043a665b73ea77f0d7d1979f">6bdc7a4</a>.</li>
+<li>enhance(core, lightbox): Remove deprecated usage, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/472/commits/23506eb52ebd2c2e5f1d124e77dc8c8695a7eafc">23506eb</a>.</li>
+</ul>
+<h2 id="704">7.0.4</h2>
+<ul>
+<li>fix(core): imageSize option when set to contain, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/462/commits/3ecf94e78d26378cc1330f2d432b59675526f63f">3ecf94e</a>.</li>
+</ul>
+<h2 id="703">7.0.3</h2>
+<ul>
+<li>enhance(core): Use <code>img</code> element instead of div background image to display images, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/460/commits/b6b512012a983699446d03481cb39f9739e1e67b">b6b5120</a>.</li>
+<li>feat(core): Add alt property to <code>GalleryImage</code>, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/460/commits/b6b512012a983699446d03481cb39f9739e1e67b">b6b5120</a>.</li>
+</ul>
+<h2 id="702">7.0.2</h2>
+<ul>
+<li>fix(core): Should not show sliding effect on initial state, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/458">#458</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/459/commits/c8100396e711b76cf350d69e706e472f63658209">c810039</a>.</li>
+</ul>
+<h2 id="701">7.0.1</h2>
+<ul>
+<li>feat(core): Avoid triggering change detection while dragging in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/456/commits/8ed5948b7e6a12624bb398ce6a70536190563778">8ed5948</a>.</li>
+<li>fix(core): Gallery thumbs vertical slider does not navigate when direction is up, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/454">#454</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/455/commits/4eb7d2fda10f5b3f10a049fa955377b3afb392fd">4eb7d2f</a>.</li>
+</ul>
+<h2 id="700">7.0.0</h2>
+<ul>
+<li>Update to Angular 14 in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/444/commits/64d5620c27ee7ea3caab8ad1cafc9eca7f0c7bf4">64d5620</a>.</li>
+</ul>
+<h2 id="601">6.0.1</h2>
+<ul>
+<li>fix: Downgrade rxjs peerDependencies to v6 in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/429/commits/35f58fde087fa4f01916eb4dfd3ff6a10f9c62cc">35f58fd</a>.</li>
+</ul>
+<h2 id="600">6.0.0</h2>
+<ul>
+<li>Update to Angular 13, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/322">#424</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/420">#420</a>.</li>
+</ul>
+<h2 id="511">5.1.1</h2>
+<p>Adds a new option to the global config as well as an input called <code>thumbView</code> which is expects a value of either <code>default</code> or <code>contain</code></p>
+<ul>
+<li>feat(core): Thumbnails should always use the available space, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/340">#340</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/409/commits/ad3e5143e86c922d5d5927bb527f83e9a99612d8">ad3e514</a> and <a href="https://github.com/MurhafSousli/ngx-gallery/pull/411/commits/5523b2e01c0a9263141854bb8b838d85ebf16cc9">5523b2e</a>.</li>
+<li>feat(core): Add <code>stateSnapshot</code> property to <code>GalleryRef</code> to get an instant snapshot of the gallery state observable.</li>
+<li>fix(core): Video item displays the application instead of video, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/398">#398</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/409/commits/f07c3047a2426293bc34bcf57765642df0bcc35a">f07c304</a>.</li>
+<li>fix(core): Issue with gallery.remove() function, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/405">#405</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/411#:~:text=removing%20an%20item-,f0fb1c3,-Merge%20state">f0fb1c3</a> and <a href="https://github.com/MurhafSousli/ngx-gallery/pull/411/commits/6e080b43e03448ce329253918ae51c2da56eafae">6e080b4</a>.</li>
+</ul>
+<blockquote>
+<p>Special thanks to @NexGenUA for his PR</p>
+</blockquote>
+<h2 id="500">5.0.0</h2>
+<ul>
+<li>Upgrade to Angular 10.</li>
+<li>feat(Lightbox): Add start/exit animation options, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/346">#346</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/326/commits/6799a1c5e895dbc0753dfbb9f068d02807adf358">6799a1c</a>.</li>
+<li>feat(video item): ability to disable video controls, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/326/commits/f6b48b13616d8999bc5c76bf44a6fa428191ce8b">f6b48b1</a>.</li>
+<li>feat(video item, youtube item): Ability to autoplay, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/304">#304</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/326/commits/9caf8bf7cbc8bf7cf580368cc5e3aefeb7d6daf5">9caf8bf</a>.</li>
+<li>feat(youtube item): Allow url parameters, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/302">#302</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/326/commits/37607895da4266b2ed4c297609db99f710d92b00">3760789</a>.</li>
+<li>fix(lightbox): Remove cdk styles import from the library.</li>
+<li>fix(video item): Cannot read property &#39;nativeElement&#39; of undefined, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/353">#353</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/326/commits/ff10363e03090d8dfc88fd44674b3cb655399c58">ff10363</a>.</li>
+<li>fix(video item): Sanitized urls not working in <video>, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/346">#346</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/326/commits/6799a1c5e895dbc0753dfbb9f068d02807adf358">6799a1c</a>.</li>
+</ul>
+<h2 id="500-beta1">5.0.0-beta.1</h2>
+<ul>
+<li>Upgrade to Angular 9.</li>
+<li>Combine all packages in one package.</li>
+<li>Remove import <code>HttpClientModule</code> from <code>GalleryModule</code>.</li>
+</ul>
+<h3 id="breaking-changes-4">Breaking changes</h3>
+<p><strong>Before:</strong></p>
+<ul>
+<li>The packages were published on <code>@ngx-gallery/core</code>, <code>@ngx-gallery/lightbox</code> and <code>@ngx-gallery/gallerize</code>.</li>
+</ul>
+<p><strong>After:</strong></p>
+<ul>
+<li>All the packages are now combined in <code>ng-gallery</code> (NOTE: it is not <code>ngx-gallery</code> that is a different package).</li>
+<li>Import <code>GalleryMlodule</code> from <code>ng-gallery</code> and <code>LightboxModule</code> from <code>ng-gallery/lightbox</code>.</li>
+<li>The module <code>GallerizeModule</code> has been removed, the <code>[gallerize]</code> directive can still be used from the <code>LightboxModule</code>.</li>
+</ul>
+<h2 id="500-beta0">5.0.0-beta.0</h2>
+<ul>
+<li>regret: Remove <code>mode=intermediate</code> option, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/309">#309</a> and <a href="https://github.com/MurhafSousli/ngx-gallery/issues/297">#297</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/311/commits/b1df18c6069ddabe02c0bee1e0653dd97692a96e">b1df18c</a>.</li>
+</ul>
+<h3 id="breaking-changes-there-could-be-more-breaking-changes-until-version-5-is-released-which-will-make-it-compatible-with-angular-9-and-ivy">Breaking changes (There could be more breaking changes until version 5 is released which will make it compatible with Angular 9 and ivy)</h3>
+<ul>
+<li>The <code>loadingMode</code> option has been removed from the gallery component&#39;s input and from the global options.</li>
+</ul>
+<h2 id="403">4.0.3</h2>
+<ul>
+<li>fix(core): Fix universal error, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/262">#262</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/282/commits/fc6c3f76730f90721bee99a2404a39310cccd0db">fc6c3f7</a>.</li>
+<li>fix(core): clean up state subject in <code>&lt;gallery-image&gt;</code> component in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/283/commits/7796b500b814bd43564e2284b2a937c9d0ec2229">7796b50</a>.</li>
+</ul>
+<h2 id="402-beta0">4.0.2-beta.0</h2>
+<ul>
+<li>feat(core): Add <code>thumbLoadingIcon</code> and <code>thumbLoadingError</code> to gallery config, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/241/commits/3f8cdca3fc84f0eef509a5c88ca3d2b5097966bf">3f8cdca</a> and <a href="https://github.com/MurhafSousli/ngx-gallery/pull/241/commits/f2cae9258eef599ca7821c1fb3a82179d4cf6fba">f2cae92</a>.</li>
+<li>refactor(core): refactor the if/else logic in gallery image template, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/247/commits/f7d6a22e3cc20c0977554f8d249bef6aa2076fa5">f7d6a22</a>.</li>
+</ul>
+<h2 id="401">4.0.1</h2>
+<ul>
+<li><strong>fix(core):</strong> Encapsulate the cache interceptor to gallery images only, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/237">#237</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/239/commits/4616eeca239d46d49995adb73ea5cae849ae3de4">4616eec</a>.</li>
+</ul>
+<h2 id="400">4.0.0</h2>
+<ul>
+<li><strong>feat(gallerize):</strong> Scan <code>imageSrc</code> and <code>thumbSrc</code> attributes for image sources, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/235/commits/4826d52cbaa349a4004d63f39677b436e1fe6496">4826d52</a>.</li>
+<li><strong>enhance(core, lightbox, gallerize)</strong>: Ability to lazy load the library.</li>
+<li><strong>enhance(core, lightbox):</strong> Export <code>GALLERY_CONFIG</code> and <code>LIGHTBOX_CONFIG</code> tokens, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/235/commits/56c704f7db55d87143e949ebdfe115efca852ae9">56c704f</a> and <a href="https://github.com/MurhafSousli/ngx-gallery/pull/235/commits/9cab04ba97f916b16d9c0becd060ec0f127bdbc2">9cab04b</a>.</li>
+<li><strong>fix(core, lightbox):</strong> Add <code>Optional()</code> on injected config in gallery and lightbox services, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/234">#234</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/235/commits/31624f998ede9fef4335bb170b69b3d54d846d11">31624f9</a>.</li>
+<li><strong>refactor(core, lightbox):</strong> Rename <code>forRoot(config?)</code> to <code>withConfig(config)</code>, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/235/commits/8446c1ae1417210698a244be6d30be81fa1eed88">8446c1a</a>.</li>
+<li><strong>refactor(lightbox):</strong> Remove <code>providedIn: &#39;root&#39;</code> from <code>Lightbox</code> service and provid it locally in its module, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/235/commits/7ba8dd9c539559d036e57fb19f01f067367970e5">7ba8dd9</a>.</li>
+</ul>
+<h3 id="breaking-changes-5">Breaking Changes</h3>
+<ul>
+<li>The function <code>forRoot()</code> has been removed from <code>GalleryModule</code> and <code>LightboxModule</code>.</li>
+<li>Use <code>GalleryModule.withConfig({ ... })</code> to set config that applies on a module and its children (same applies on <code>LightboxModule</code>).</li>
+<li>To set global config across the entire app while still lazy load the library, provide the <code>GALLERY_CONFIG</code> token with the config value in the root module (same applies on <code>LightboxModule</code> with <code>LIGHTBOX_CONFIG</code>).</li>
+</ul>
+<h5 id="example-lazy-load-the-library">Example: Lazy load the library</h5>
+<p>In this example, will set global config without importing the library in the main bundle</p>
+<ul>
+<li>Provide <code>GALLERY_CONFIG</code> value in the root module</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-ts">import { GALLERY_CONFIG } from &#39;&#64;ngx-gallery/core&#39;;
+
+&#64;NgModule({
+  providers: [
+    {
+      provide: GALLERY_CONFIG,
+      useValue: {
+        dots: true,
+        imageSize: &#39;cover&#39;
+      }
+    }
+  ]
+})
+export class AppModule { }</code></pre></div><ul>
+<li>Import <code>GalleryModule</code> in a feature module</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-ts">import { GalleryModule } from &#39;&#64;ngx-gallery/core&#39;;
+
+&#64;NgModule({
+  imports: [
+    GalleryModule
+  ]
+})
+export class FeatureModule { }</code></pre></div><h2 id="400-beta1">4.0.0-beta.1</h2>
+<ul>
+<li><strong>feat(core):</strong> Add indeterminate option to the radial progress, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/df682c4353f3795dd3f45f53dfa488b428fdb99f">df682c4</a>.</li>
+<li><strong>enhance(core):</strong> Enhance thumbnails loading styles, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/f34f90a542aa437fa12b996dc77f6b7dd9fd819c">f34f90a</a>.</li>
+<li><strong>fix(core):</strong> Expose <code>[dotSize]</code>, <code>[bulletsPosition]</code> and <code>[counterPosition]</code> options as inputs, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/946a85618acdc91692183f8f65765bbd137815cc">946a856</a>.</li>
+<li><strong>fix(core):</strong> Add <code>[loadingMode]</code> option to gallery images which accepts <code>determinate</code> or <code>indeterminate</code> , in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/e8bdfb2a28d485e3d89290dda1edb595ae3efecf">e8bdfb2</a>.</li>
+<li><strong>regression(core):</strong> Fix undisplayed thumb image when a custom thumb template is used, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/34f2cc6f7f5316a929a1efc2ceb6bde8d42d0551">34f2cc6</a>.</li>
+<li><strong>enhance(gallerize):</strong> Run gallerize detector outside angular zone, makes opening the lightbox smoother, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/284925dd53a67e6a2a2d0b208a30623783db37bc">284925d</a> and <a href="https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/98901b9136b4405a5d549fed08a36ec654279a26">98901b9</a>.</li>
+</ul>
+<h2 id="400-beta0">4.0.0-beta.0</h2>
+<ul>
+<li><p><strong>update(core, lightbox, gallerize)</strong>: Update peer dependencies, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/228">#228</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/bd8cdd302c55e285dc32a195e1d5f70b4312ac46">bd8cdd3</a>.</p>
+</li>
+<li><p><strong>feat(core):</strong> Add <code>bulletsPosition</code> option, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/211">#211</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/263d297ccc27692fc9fd9702f775dcf2b753d5de">263d297</a>.</p>
+</li>
+<li><p><strong>feat(core):</strong> Add <code>dotsSize</code> option, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/e2e58b62e4eb3cbcf5dd6f17417830bfc956f7eb">e2e58b6</a>.</p>
+</li>
+<li><p><strong>feat(core):</strong> Add <code>counterPosition</code> option, closes in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/ce7a8ad62816b3ba344a22e6e459cfdb06ad18ab">ce7a8ad</a>.</p>
+</li>
+<li><p><strong>feat(core):</strong> Use <code>HttpClient</code> to load and cache images in <code>[lazyImage]</code> directive, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/15c3e88d89434eb4860eabf3959a08ce746298e7">15c3e88</a>.</p>
+</li>
+<li><p><strong>feat(core):</strong> Replace icon loader with a new radial progress component to report image loading progress while keeping the svg loading icon as an option, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/a1028e84ae08d1e93c599f19aab32873d3dfea41">a1028e8</a>.</p>
+</li>
+<li><p><strong>feat(core):</strong> Add default error template to <code>&lt;gallery-image&gt;</code> in case if loading failed and add <code>loadingError</code> option for custom error template, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/cd258f5481a01eb8065fbbc931505ca71c421cd5">cd258f5</a> and <a href="https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/9dbf6c43e78f91dbb8b2ccbe21f4575a255cd55a">9dbf6c4</a>.</p>
+</li>
+<li><p><strong>enhance(core):</strong> Enhance gallery dots styles, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/de8d22bd6296d9c6a138152223ce6bffb91b6d63">de8d22b</a>.</p>
+</li>
+<li><p><strong>enhance(core):</strong> Allow gallery image to use unsafe URLs, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/218">#218</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/commit/da1ace1bd18dca476110da06627afbaaf9ec6a21">da1ace1</a>.</p>
+</li>
+<li><p><strong>enhance(core):</strong> Use <code>animationFrameScheduler</code> for smoother sliding animation, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/38b0aa67fd1b73cd69e85daab3d2b1ec69da2696">38b0aa6</a>.</p>
+</li>
+<li><p><strong>fix(core):</strong> Fix vertical scroll when using the gallery on touch devices, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/161">#161</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/230/commits/a239c294248e1028a79a9f99a60462131d3729fc">a239c29</a>. <strong>(kudos goes to <a href="https://github.com/harm-less">@harm-less</a>)</strong></p>
+</li>
+<li><p><strong>refactor(core):</strong> <code>[lazyImage]</code> directive =&gt; <code>(loaded)</code> event no longer emits on error.</p>
+</li>
+<li><p><strong>feat(lightbox):</strong> Set the focus back on the previously focused element when the lightbox is closed, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/266eddb5afdfe51bec533a857431ac8dca395a0f">266eddb</a>.</p>
+</li>
+<li><p><strong>feat(lightbox):</strong> Add <code>role</code>, <code>ariaLabel</code>, <code>ariaLabelledBy</code> and <code>ariaDescribedBy</code> attributes to the lightbox config <code>LightboxConfig</code>, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/a11d20d5d4fa1fd2dbe46c88a7aa26aab58b3d04">a11d20d</a>, <a href="https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/5b550e7ccb6dc6515e5b6284c69e0448bf181c91">5b550e7</a>.</p>
+</li>
+<li><p><strong>enhance(lightbox):</strong> Import overlay default styles from <code>@angular/cdk/overlay</code>, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/54c5d88b6a3639f2066fdb7e1e7f74d307f823b6">54c5d88</a>.</p>
+</li>
+<li><p><strong>enhance(lightbox):</strong> Improve lightbox styles, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/4a521618c8969edeb903b182de0b5ff235efe8cd">4a52161</a>.</p>
+</li>
+<li><p><strong>enhance(lightbox):</strong> Update lightbox overlay animation, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/224">#224</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/bec077f2335d47e65d6423a8eeda782dfb485f05">bec077f</a>.</p>
+</li>
+<li><p><strong>refactor(lightbox):</strong> Use <code>disposeOnNavigation</code> instead of <code>Location</code> service, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/22621648db640905482a58480a54b693b7894272">2262164</a>.</p>
+</li>
+</ul>
+<h2 id="331">3.3.1</h2>
+<ul>
+<li><strong>fix(core):</strong> Remove duplicate delete execution in the destroyer function, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/214/commits/ae541cafb22e6d5c976950eca2c7779a39693b77">ae541ca</a></li>
+<li><strong>fix(core):</strong> Check galleryRef exists before deleting, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/214/commits/a2b32e23ccffb77c50c1067f1abea2977c2f1286">a2b32e2</a></li>
+<li><strong>fix(core):</strong> Remove duplicate config set, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/213/commits/834c001a6cccee9955e6e9504e0a0d4cb5691d57">834c001</a></li>
+<li><strong>fix(core):</strong> Remove unnecessary <code>PortalModule</code> import from <code>GalleryModule</code>, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/215/commits/46ef735cf43aa51ae026a1898b02e67b5909e520">46ef735</a></li>
+<li><strong>refactor(core):</strong> Use <code>povidedIn: &#39;root&#39;</code> for the <code>Gallery</code> service, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/215/commits/86eeaa71203341a324c06a3555489a5c82b8eee9">86eeaa7</a></li>
+<li><strong>fix(core, lightbox):</strong> Fix peer dependencies, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/215/commits/236e540ceaaa906aec65af0fdb99f866b5374c8f">236e540</a>.</li>
+</ul>
+<h2 id="330">3.3.0</h2>
+<ul>
+<li><strong>refactor(core):</strong> Use <code>Map&lt;string, GalleryRef&gt;</code> for instances holder type instead of untyped object in <a href="https://github.com/MurhafSousli/ngx-gallery/commit/ac080772d7d05dd395811848cef174f31eaa622d">ac08077</a>.</li>
+<li><strong>refactor(core):</strong> Rename gallery <code>state$</code> and <code>config$</code> to <code>state</code> and <code>config</code> in <a href="https://github.com/MurhafSousli/ngx-gallery/commit/8de515be8a254125c0a551f25bc6ad790b1e0703">8de515b</a> and <a href="https://github.com/MurhafSousli/ngx-gallery/commit/1e4fd069dad4dd8b8edfac8a1a9dd97db72b770e">1e4fd06</a>.</li>
+<li><strong>enhance(core):</strong> Improve instance destroyer, gallery delete its instance on component destroy in <a href="https://github.com/MurhafSousli/ngx-gallery/commit/65f3358c035907039bf5d8199f9c14ec0e13de15">65f3358</a>.</li>
+</ul>
+<h3 id="breaking-changes-6">Breaking Changes</h3>
+<ul>
+<li>Gallery can now be destroyed using its instance <code>galleryRef.destroy()</code>.</li>
+<li>In <code>Gallery</code> service the function <code>destroy()</code> has been removed.</li>
+</ul>
+<h2 id="320">3.2.0</h2>
+<ul>
+<li><strong>feature(core):</strong> Do not require importing global styles, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/197">#197</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/commit/ea041a5930e1ecf184028d9444b2d7fa3faf80ae">ea041a5</a>.</li>
+<li><strong>feature(core):</strong> Set the video type attribute on videos items, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/199">#199</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/commit/06b3601d382bd51cfdae3470921bc6a74aff0af9">06b3601</a>.</li>
+<li><strong>feature(lightbox):</strong> Add a lightbox directive, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/200">#200</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/commit/ad2255be4abf44fb692bf2f90e29e5737cdf9ef1">ad2255b</a>.</li>
+<li><strong>fix(gallery):</strong> fix LazyImage error event, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/205">#205</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/commit/db231aa9b1b95da2971ed35b500edd3ae6c2f8e0">db231aa</a></li>
+</ul>
+<h3 id="breaking-changes-7">Breaking changes</h3>
+<ul>
+<li><p>No need to manually import the styles anymore, they are imported internally with the components.</p>
+</li>
+<li><p>Adding a video item with multiple url sources</p>
+<p><strong>Before:</strong></p>
+</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-ts">galleryRef.addVideo({
+  src: [&#39;MP4_URL&#39;, &#39;OGG_URL&#39;],
+  thumb: &#39;(OPTIONAL)VIDEO_THUMBNAIL_URL&#39;,
+  poster: &#39;(OPTIONAL)VIDEO_POSTER_URL&#39;
+});</code></pre></div><p><strong>After:</strong></p>
+<div><pre class="line-numbers"><code class="language-ts">galleryRef.addVideo({
+  src: [
+    { url: &#39;MP4_URL&#39;, type: &#39;video/mp4&#39; },
+    { url: &#39;OGG_URL&#39;, type: &#39;video/ogg&#39; }
+  ],
+  thumb: &#39;(OPTIONAL)VIDEO_THUMBNAIL_URL&#39;,
+  poster: &#39;(OPTIONAL)VIDEO_POSTER_URL&#39;
+});</code></pre></div><h2 id="312">3.1.2</h2>
+<ul>
+<li><strong>fix(Lightbox):</strong> Check if location is defined before subscribing, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/189">#189</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/190/commits/169b813bf1483e963b930666cbae902b83f24ef4">169b813</a>.</li>
+</ul>
+<h2 id="311">3.1.1</h2>
+<ul>
+<li><strong>refactor(core):</strong> Convert <code>imageSize</code> attribute to an input + add it to gallery config, this makes it possible to use it in lightbox mode, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/183">#183</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/184/commits/1fc70c4e12c06199e2ae4395f2d182b771561acd">1fc70c4</a>.</li>
+<li><strong>refactor(core):</strong> Make <code>contain</code> as the default value for <code>imageSize</code> option, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/185/commits/c7b3d39bfc257500c133cc954c8e72bc1d2ed672">c7b3d39</a>.</li>
+</ul>
+<h2 id="310">3.1.0</h2>
+<ul>
+<li><strong>feat(core):</strong> Add auto-play option, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/e7fc03f3abc8c516634231ff42750806d54d22f0">e7fc03f</a>.</li>
+<li><strong>feat(core):</strong> Add support for error handling, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/154">#154</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/177/commits/12f6e5eddd5a9c7607778b5af1f77ef782327930">12f6e5e</a>.</li>
+<li><strong>refactor(core):</strong> Remove opacity transition from <code>gallery-item</code>, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/a5b227eb72f9531d1884c07329b65b3c95fc0228">a5b227e</a>.</li>
+<li><strong>refactor(core):</strong> Use <code>imageSize</code> as an attribute, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/96c5c075bf41d765b7c4667abcb374c7a6f80f1a">96c5c07</a>.</li>
+<li><strong>refactor(core):</strong> Rename <code>(player)</code> output to <code>(playingChange)</code>, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/e2094937c4303fcc00f223155f2ad3d9cee29e17">e209493</a>.</li>
+<li><strong>enhance(core):</strong> Use default cursor when thumbnails are disabled, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/3582e95b0f3458c451f76580adda12f72220affb">3582e95</a>.</li>
+<li><strong>fix(core):</strong> fix vertical sliding direction, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/cba5d59074fbd37be9ee22abbef2f181364d2267">cba5d59</a>.</li>
+<li><strong>fix(core):</strong> fix thumbClick Output, in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/179/commits/a730116e5d2154910d9a16c6a464e58b59f2e7dd">a730116</a>.</li>
+</ul>
+<h2 id="310-beta0">3.1.0-beta.0</h2>
+<h4 id="gallery">Gallery</h4>
+<ul>
+<li><strong>feat(core):</strong> Add <code>thumbMode</code> option on thumbnails&#39; slider (free scroll thumbnails), closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/135">#135</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/159/commits/8c6c99db551a3ee31f5ab203babba6464acc7b83">8c6c99d</a>.</li>
+<li><strong>feat(core):</strong> Add slide show player option, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/152">#152</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/165/commits/a331f466ad4a2834a8de7f908d5e63fe1d3d5b41">a331f46</a>.</li>
+<li><strong>enhance(core):</strong> Ability to Import gallery styles individually <a href="https://github.com/MurhafSousli/ngx-gallery/issues/144">#144</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/162/commits/ebb6667955299df1f41690a4f4b587a9196bb4bf">ebb6667</a>.</li>
+<li><strong>enhance(core):</strong> Run HammerJS gestures outside angular zone <a href="https://github.com/MurhafSousli/ngx-gallery/commit/6fabf6ca2d421ea1cc478c1f6cd9a3b432ddd0da">6fabf6c</a>.</li>
+<li><strong>enhance(core):</strong> Put SCSS and CSS each in its own folder, close <a href="https://github.com/MurhafSousli/ngx-gallery/issues/153">#153</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/170/commits/9783fc3a614e2258c9363d316ea042fce8c86913">9783fc3</a>.</li>
+<li><strong>enhance(core):</strong> Check if loadingSvg is defined before embedding it, close <a href="https://github.com/MurhafSousli/ngx-gallery/issues/150">#150</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/171/commits/5286640de7ac3a5326d2d2c3d352a085b6dbc308">5286640</a>.</li>
+<li><strong>fix(core):</strong> fix wrong <code>(thumbClick)</code> emitter.</li>
+<li><strong>fix(core):</strong> fix gallery slider width which is set to 0 at the beginning, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/151">#151</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/commit/c26a286551aef4f0313295822f5a381a31479bcb">c26a286</a>.</li>
+<li><strong>refactor(core):</strong> Set <code>loop</code> option to <strong>true</strong> by default.</li>
+<li><strong>refactor(core):</strong> Remove <code>fluid</code> option from gallery config and use it as an attribute instead. fixed in <a href="https://github.com/MurhafSousli/ngx-gallery/pull/169/commits/ecf3f88f59ee0c2eaae68ebf1b93e580fc869a3a">ecf3f88</a>.</li>
+</ul>
+<h4 id="lightbox">Lightbox</h4>
+<ul>
+<li>feat(Lightbox): Close the lightbox when the location is changed, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/108">#108</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/commit/1543374c99b8d539f4e5df381ba9a7a60f3ccfa7">1543374</a>.</li>
+</ul>
+<h3 id="breaking-changes-8">Breaking changes:</h3>
+<h4 id="gallery-1">Gallery</h4>
+<ul>
+<li>Fluid option is now used as an attribute, not as an input.</li>
+</ul>
+<p><strong>Before:</strong></p>
+<div><pre class="line-numbers"><code class="language-html">&lt;gallery [fluid]=&quot;true&quot;&gt;&lt;/gallery&gt;</code></pre></div><p><strong>After:</strong></p>
+<div><pre class="line-numbers"><code class="language-html">&lt;gallery fluid&gt;&lt;/gallery&gt;</code></pre></div><ul>
+<li>Scss and css styles are put each in its own folder</li>
+</ul>
+<p><strong>Before:</strong></p>
+<div><pre class="line-numbers"><code class="language-scss">&#64;import &#39;~&#64;ngx-gallery/core/styles/gallery&#39;;</code></pre></div><p><strong>After:</strong></p>
+<div><pre class="line-numbers"><code class="language-scss">&#64;import &#39;~&#64;ngx-gallery/core/styles/scss/gallery&#39;;
+// or for css
+&#64;import &#39;~&#64;ngx-gallery/core/styles/css/gallery&#39;;</code></pre></div><h2 id="302">3.0.2</h2>
+<ul>
+<li>refactor(Lightbox): fix the close button small size on iphone browser.</li>
+<li>refactor(Lightbox): use <code>&lt;i&gt;</code> tag instead of <code>&lt;button&gt;</code> tag for the close button.</li>
+<li>fix(core): Check if loadingIcon is defined in <code>&lt;gallery-image&gt;</code>, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/133">#133</a> and <a href="https://github.com/MurhafSousli/ngx-gallery/issues/132">#132</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/commit/24e6e26fb2123b2db26e471f608efde86da553ff">24e6e26</a>.</li>
+</ul>
+<h2 id="301">3.0.1</h2>
+<ul>
+<li>feat(core): Allow using custom gallery item with custom template, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/125">#125</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/commit/7e4c3025276dd222f8592bc56694f5d278c8a6d6">7e4c302</a>.</li>
+</ul>
+<h2 id="300">3.0.0</h2>
+<ul>
+<li>fix(Lightbox): Close the lightbox when the active route is changed <a href="https://github.com/MurhafSousli/ngx-gallery/issues/108">#108</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/commit/d099abdf3b6a888c78dd3aa348c8b706ce43c8de">d099abd</a>.</li>
+</ul>
+<h2 id="300-beta1">3.0.0-beta.1</h2>
+<ul>
+<li>refactor(core): add the <code>loop</code> input to gallery component, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/98">#98</a> in <a href="https://github.com/MurhafSousli/ngx-gallery/commit/727a4ca7104db0ca62b03fa0fee66be0ee530fa0">727a4ca</a>.</li>
+</ul>
+<h2 id="300-beta0">3.0.0-beta.0</h2>
+<h3 id="features">Features:</h3>
+<ul>
+<li>Support Angular 6 and RxJS 6, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/91">#91</a>.</li>
+<li>feat(core): Add helper functions to add different gallery items on <code>&lt;gallery&gt;</code> and <code>GalleryRef</code>.</li>
+<li>feat(core): Add <code>fluid</code> option to gallery for full width size.</li>
+<li>feat(core): Add <code>navIcon</code> option to gallery config to set a custom nav icon.</li>
+<li>feat(core): Add<code>loadingStrategy</code> option to gallery which accepts one of the following: &#39;preload&#39;, &#39;lazy&#39; or &#39;default&#39;, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/87">#87</a>.</li>
+<li>feat(core): Add <code>itemClick</code> output which emits when an item is clicked, closes <a href="https://github.com/MurhafSousli/ngx-gallery/pull/106/files">#106</a>.</li>
+<li>feat(core): Support custom template inside the default item templates, add <code>itemTemplate</code> and <code>thumbTemplate</code> to gallery options.</li>
+<li>feat(core): Multiple video sources support.</li>
+<li>feat(core): Pause Video and Youtube items when active item changes.</li>
+<li>feat(Gallerize): Add support to detect Gallery component.</li>
+<li>feat(Gallerize): Add support to detect DOM background images.</li>
+</ul>
+<h3 id="bug-fixes">Bug fixes:</h3>
+<ul>
+<li>fix(core): Skip re-setting the config from <code>&lt;gallery&gt;</code> input in lightbox mode, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/104">#104</a>.</li>
+<li>fix(core): Fix wrong thumbnail position when <code>[thumbPosition]</code> is changed.</li>
+</ul>
+<h3 id="improvements">Improvements:</h3>
+<ul>
+<li>refactor(core): Improve icon rendering, use svg element instead of background-image to render the nav icon in <code>&lt;gallery-nav&gt;</code>.</li>
+<li>refactor(core): Add <code>.g-active-item</code> on current item and <code>.g-active-thumb</code> on current thumbnail.</li>
+<li>refactor(core): Add <code>.g-image-loaded</code> class on <code>&lt;gallery-image&gt;</code> to indicates that the image has been loaded.</li>
+<li>refactor(core): Replace <code>loading</code> output with <code>loaded</code>, which emits the image path after it loads.</li>
+<li>refactor(core): Set an initial height of <code>500px</code>.</li>
+<li>refactor(core): Replace <code>ImageItem</code> <code>VideoItem</code> <code>YoutubeItem</code> and <code>IframeItem</code> constructor parameters with a single data parameter.</li>
+<li>refactor(core, Lightbox): Set <code>aria-label</code> on all buttons.</li>
+<li>refactor(Gallerize): Remove <code>forClass</code> input and replace it for <code>selector</code> input.</li>
+<li>refactor(Gallerize): Remove <code>CommonModule</code> as it is not needed.</li>
+<li>refactor(Styles): Add a prefix to all classes used in the plugin.</li>
+<li>refactor(Styles): Add a transition for animate the opacity on current item and thumbnail.</li>
+</ul>
+<h3 id="breaking-changes-9">Breaking changes:</h3>
+<h4 id="gallery-2">Gallery</h4>
+<ul>
+<li>Before, To Create an image item, we used to pass the src and the thumbnail separate parameters.</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-ts">const item: GalleryItem = new ImageItem(&#39;IMAGE_SRC&#39;, &#39;THUMB_SRC&#39;);</code></pre></div><ul>
+<li>After, The parameters are replaced with a single data object.</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-ts">const item: GalleryItem = new ImageItem({ src: &#39;IMAGE_SRC&#39;, thumb: &#39;THUMB_SRC&#39; });</code></pre></div><h4 id="gallerize">Gallerize</h4>
+<ul>
+<li>Before, Limiting auto-detection to a specific class used to be done as in the following code:</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-html">&lt;div class=&quot;grid&quot; gallerize forClass=&quot;my-img-class&quot;&gt;
+  &lt;img class=&quot;my-img-class&quot; src=&quot;{{item.src}}&quot;&gt;
+&lt;/div&gt;</code></pre></div><ul>
+<li>After, Now <code>forClass</code> input has been replaced with <code>selector</code> input.</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-html">&lt;div class=&quot;grid&quot; gallerize selector=&quot;.my-img-class&quot;&gt;
+  &lt;img class=&quot;my-img-class&quot; src=&quot;{{imgSource1}}&quot;&gt;
+  &lt;div class=&quot;my-img-class&quot; [style.background]=&quot;&#39;url(&#39; + imgSource2 + &#39;)&#39;&quot;&gt;
+&lt;/div&gt;</code></pre></div><h2 id="211">2.1.1</h2>
+<ul>
+<li>refactor(Lightbox Style): Clean up.</li>
+<li>fix(HammerJS): Don&#39;t throw an error if hammer is not defined, just fallback to default.</li>
+<li>feat(VideoItem): add a 3rd parameter to <code>VideoItem</code> to set custom poster.</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-ts">const viewItem = new VideoItem(video.src, video.thumb, video.poster);</code></pre></div><ul>
+<li>refactor(core): rename <code>thumbSrc</code> to <code>thumb</code>.</li>
+</ul>
+<h3 id="breaking-changes-10">Breaking Changes</h3>
+<p>This won&#39;t effect the usage, but you might need to update </p>
+<p><code>GalleryItem</code> data object has changed the name of the thumbnail source property from <code>thumbSrc</code> to <code>thumb</code></p>
+<p>This would only effect your app if you display the thumbnails list of your gallery items</p>
+<p>Before</p>
+<div><pre class="line-numbers"><code class="language-html">&lt;div class=&quot;grid&quot;&gt;
+  &lt;div  class=&quot;grid-item&quot;
+        *ngFor=&quot;let item of galleryItems$ | async; let i = index&quot;
+        (click)=&quot;lightbox.open(i)&quot;&gt;
+    &lt;img class=&quot;grid-image&quot; [src]=&quot;item.data.thumbSrc&quot;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div><p>After</p>
+<div><pre class="line-numbers"><code class="language-html">&lt;div class=&quot;grid&quot;&gt;
+  &lt;div  class=&quot;grid-item&quot;
+        *ngFor=&quot;let item of galleryItems$ | async; let i = index&quot;
+        (click)=&quot;lightbox.open(i)&quot;&gt;
+    &lt;img class=&quot;grid-image&quot; [src]=&quot;item.data.thumb&quot;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></div><h2 id="204">2.0.4</h2>
+<ul>
+<li>feat(GalleryConfig): add <code>loadingIcon</code> to GalleryConfig that accepts inline image.</li>
+</ul>
+<h2 id="203">2.0.3</h2>
+<ul>
+<li>fix(Lightbox): Exit animation, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/73">#73</a>.</li>
+<li>fix(Lightbox): close button is clicking behind, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/54">#54</a>.</li>
+<li>refactor(Lightbox): Use the button tag instead of div for close button.</li>
+</ul>
+<h2 id="202">2.0.2</h2>
+<ul>
+<li>enhancement(Gallerize): Use <code>MutationObserver</code> instead of <code>ngAfterContentChecked</code> to prevent infinite loop in default change detection strategy, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/70">#70</a>.</li>
+</ul>
+<h2 id="201">2.0.1</h2>
+<ul>
+<li>feat(GallerySlider): Rearrange slider on window resize, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/67">#67</a>.</li>
+</ul>
+<h2 id="200">2.0.0</h2>
+<ul>
+<li>fix(Swiping): Remove ngZone, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/64">#64</a>.</li>
+</ul>
+<h2 id="200-beta4">2.0.0-beta.4</h2>
+<ul>
+<li>feat(LightboxConfig): Adds fullscreen option to the lightbox, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/43">#43</a>.</li>
+</ul>
+<p>By default fullscreen is obtained on small screen (mobile) but now you can make it as default for all screens</p>
+<div><pre class="line-numbers"><code class="language-ts">GalleryModule.forRoot()
+LightboxModule.forRoot({
+  panelClass: &#39;fullscreen&#39;
+})</code></pre></div><ul>
+<li>feat(Lightbox): Ability to define lightbox config using <code>lightbox.open()</code> method</li>
+</ul>
+<div><pre class="line-numbers"><code class="language-ts">openLightbox() {
+  this.lightbox.open(0, &#39;lightbox&#39;, {
+    panelClass: &#39;fullscreen&#39;
+  });
+}</code></pre></div><h2 id="200-beta3">2.0.0-beta.3</h2>
+<ul>
+<li>Prevents native click event bubbling, closes <a href="https://github.com/MurhafSousli/ngx-gallery/issues/57">#57</a></li>
+</ul>
+<h2 id="200-beta">2.0.0-beta</h2>
+<h3 id="written-from-scratch">Written from scratch</h3>
+<h2 id="101">1.0.1</h2>
+<ul>
+<li>fix double click on thumbnails and bullets, closes <a href="https://github.com/MurhafSousli/ng-gallery/issues/45">#45</a>.</li>
+</ul>
+<h2 id="100">1.0.0</h2>
+<p><strong>Fixes:</strong></p>
+<ul>
+<li>fix(GalleryNav): Hide navigation on panning.</li>
+<li>fix(GalleryPlayer): Wait until image is loaded before starting the timer.</li>
+</ul>
+<p> <strong>Features:</strong></p>
+<ul>
+<li>feat(GalleryPlayer): Add progressbar color option.</li>
+<li>feat(GalleryPlayer): Add progressbar thickness option.</li>
+<li>feat(GalleryPlayer): Add position option <code>top</code> and <code>bottom</code>.</li>
+<li>feat(GalleryActions): Add gallery events</li>
+<li>feat(GalleryNav): Add <code>prevClass</code> and <code>nextClass</code> options to customize navigation icons</li>
+<li>feat(classNames) Add <code>className</code> option to container, thumbnails, bullets</li>
+</ul>
+<p><strong>Performance Improvements:</strong></p>
+<ul>
+<li>refactor(GalleryThumbnail) improve performance</li>
+</ul>
+<p><strong>Breaking Changes:</strong></p>
+<ul>
+<li>refactor(GalleryConfig): rename <code>config.thumbnails.space</code> to <code>config.thumbnails.margin</code></li>
+<li>refactor(GalleryBullets): remove vertical positioning <code>right</code> and <code>left</code></li>
+</ul>
+<h2 id="100-beta8">1.0.0-beta.8</h2>
+<ul>
+<li>fix(keyboard listener in lightbox) closes <a href="https://github.com/MurhafSousli/ng-gallery/issues/24">#24</a>, <a href="https://github.com/MurhafSousli/ng-gallery/issues/33">#33</a>.</li>
+<li>refactor(Gallerize directive) Use MutationObserver instead of DOMSubtreeModified, closes <a href="https://github.com/MurhafSousli/ng-gallery/issues/26">#26</a>.</li>
+<li>fix(Universal support), closes <a href="https://github.com/MurhafSousli/ng-gallery/issues/9">#9</a>.</li>
+<li>fix Angular 5 warning, closes <a href="https://github.com/MurhafSousli/ng-gallery/issues/21">#21</a>.</li>
+<li>Improve gallery lightbox, closes <a href="https://github.com/MurhafSousli/ng-gallery/issues/20">#20</a>.</li>
+<li>Improve gallery lightbox slide animation, closes <a href="https://github.com/MurhafSousli/ng-gallery/issues/8">#8</a>.</li>
+<li>Use Angular CDK for the gallery lightbox.</li>
+<li>refactor(GalleryConfig)</li>
+<li>Remove image transition animation option because it was not implemented properly.</li>
+</ul>
+<h2 id="071">0.7.1</h2>
+<ul>
+<li>General refactor</li>
+<li>fix(GalleryDirective) apply gallerize only once when content changes</li>
+<li>decode gallery nav icons and close button from base64 to decrease the size</li>
+</ul>
+<h2 id="070">0.7.0</h2>
+<ul>
+<li>feat(LazyLoad) emit only last selected image.</li>
+<li>fix(GalleryImage) fade animation is working properly with image load.</li>
+<li>refactor(GalleryConfig)</li>
+</ul>
+<h2 id="063">0.6.3</h2>
+<ul>
+<li>fix(GalleryModal) close button is hidden on mobile, closes <a href="https://github.com/MurhafSousli/ng-gallery/issues/9">#9</a></li>
+<li>fix umd bundle for systemjs, closes <a href="https://github.com/MurhafSousli/ng-gallery/issues/10">#10</a></li>
+</ul>
+<h2 id="062">0.6.2</h2>
+<ul>
+<li>fix(gestures) remove navigation element on mobile which was blocking gestures events</li>
+<li>fix(gestures) enable/disable gestures using <code>config.gestures</code></li>
+<li>refactor(config) interfaces</li>
+</ul>
+<h2 id="060-beta">0.6.0 beta</h2>
+<ul>
+<li>Add popup animation for gallery modal</li>
+<li>Remove incorrect slide animation</li>
+<li>Make gestures optional, closes <a href="https://github.com/MurhafSousli/ng-gallery/issues/2">#2</a></li>
+<li>Remove thumbnail vertical position (right and left) positions, closes <a href="https://github.com/MurhafSousli/ng-gallery/issues/3">#3</a></li>
+</ul>
+<h2 id="052-beta">0.5.2 beta</h2>
+<ul>
+<li>(feat) gestures support</li>
+<li>(refactor) gallery config</li>
+</ul>
+<h2 id="050-beta">0.5.0 beta</h2>
+<ul>
+<li>Initial release</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'changelog.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+
+       <script src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

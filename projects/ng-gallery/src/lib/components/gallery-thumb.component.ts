@@ -1,4 +1,12 @@
-import { Component, Input, HostBinding, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  HostBinding,
+  EventEmitter,
+  ElementRef,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GalleryItemContext } from '../directives/gallery-item-def.directive';
 import { GalleryImageComponent } from './templates/gallery-image.component';
@@ -9,6 +17,7 @@ import { GalleryItemType } from '../models/constants';
 @Component({
   selector: 'gallery-thumb',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./gallery-thumb.scss'],
   template: `
     <gallery-image [src]="data.thumb"
                    [alt]="data.alt + '-thumbnail'"
@@ -43,10 +52,14 @@ export class GalleryThumbComponent {
   /** Item's data, this object contains the data required to display the content (e.g. src path) */
   @Input() data: ImageItemData;
 
-  @Output() error = new EventEmitter<ErrorEvent>();
+  @Output() error: EventEmitter<ErrorEvent> = new EventEmitter<ErrorEvent>();
 
   @HostBinding('class.g-active-thumb') get isActive() {
     return this.index === this.currIndex;
+  }
+
+  @HostBinding('attr.galleryIndex') get isIndexAttr(): number {
+    return this.index;
   }
 
   get imageContext(): GalleryItemContext<ImageItemData> {
@@ -59,5 +72,12 @@ export class GalleryThumbComponent {
       first: this.index === 0,
       last: this.index === this.count - 1
     }
+  }
+
+  get nativeElement(): HTMLElement {
+    return this.el.nativeElement;
+  }
+
+  constructor(private el: ElementRef<HTMLElement>) {
   }
 }

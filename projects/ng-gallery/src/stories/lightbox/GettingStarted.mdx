@@ -1,0 +1,49 @@
+import {Meta, Canvas} from "@storybook/addon-docs";
+import * as LightboxStories from "./Lightbox.stories";
+
+<Meta of={LightboxStories}/>
+
+## Installation
+
+**NPM**
+
+```bash
+npm i ng-gallery @angular/cdk
+```
+
+## Usage
+
+- Import the CDK overlay-prebuilt CSS file in your global styles.
+
+```css
+@import '~@angular/cdk/overlay-prebuilt.css';
+```
+
+ > If you're already using Material, you can skip importing the prebuilt overlay styles.
+
+- For lightbox usage, see [Lightbox Usage](https://github.com/MurhafSousli/ngx-gallery/wiki/Lightbox-Usage) | [Lightbox Usage Demo](https://ngx-gallery.netlify.app/#/lightbox).
+- For gallerize usage, see [Gallerize usage](https://github.com/MurhafSousli/ngx-gallery/wiki/Gallerize-Examples) | [Gallerize Usage Demo](https://ngx-gallery.netlify.app/#/gallerize).
+
+
+
+### Global Configuration
+
+To set global configuration that applies on all lightbox overlays across the app, set the config value using `LIGHTBOX_CONFIG` token
+
+**Example:**
+
+```ts
+import { LIGHTBOX_CONFIG, LightboxConfig } from 'ng-gallery/lightbox';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    {
+      provide: LIGHTBOX_CONFIG,
+      useValue: {
+        keyboardShortcuts: false,
+        exitAnimationTime: 1000
+      } as LightboxConfig
+    }
+  ]
+})
+```

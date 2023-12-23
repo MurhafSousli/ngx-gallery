@@ -1,0 +1,127 @@
+import {Meta, Canvas} from "@storybook/addon-docs";
+import * as GalleryStories from "./Gallery.stories";
+
+<Meta of={GalleryStories}/>
+
+# Slider
+
+In this section, we'll cover the main options of the main slider which contains the items
+
+<Canvas of={GalleryStories.SliderExample}/>
+
+
+The slider navigates through items using scrolling mechanism, it can be scrolled using the mouse wheel, touchpad on desktop or gestures on touch devices.
+
+### Slide using mouse drag
+
+The slider can be scrolled using mouse drag which requires hammerjs
+
+> Sliding using mouse drag is optional, the gallery doesn't depend on hammerjs
+> This feature is turned on by default when hammerjs is loaded in the app.
+> You can turn off this feature by adding `mouseSlidingDisabled` attribute.
+
+**Example**
+
+```html
+`<ng-gallery mouseSlidingDisabled />`
+```
+
+
+### Orientation
+
+There are two choices for the gallery orientation `horizontal` and `vertical`, the default is `horizontal`.
+
+**Example of a vertical orientation**
+
+<Canvas of={GalleryStories.SliderDirectionExample}/>
+
+
+
+
+### Loading strategy
+
+There are 3 choices for loading strategy of the main slider
+
+- `default` renders only the active item, the previous item and the next item
+- `lazy`: renders only the active item
+- `preload` renders all the items, this option is required for `thumbAutoSize` is enabled
+
+**Note**
+
+> `preload` should be chosen if `itemAutoSize` is turned on
+
+
+
+
+### Image size
+
+By default, the image in item is contained in the slide, to make the image covers the slide
+Sets the object-fit style applied on items' images
+
+<Canvas of={GalleryStories.ImageSizeExample}/>
+
+
+
+
+### Auto-height
+
+Automatically adjusts the gallery's height to fit the content
+
+<Canvas of={GalleryStories.AutoHeightExample}/>
+
+
+
+
+
+### Scroll behavior
+
+There are two distinct navigation modes to choose from:
+
+- **Smooth:** When you opt for the `smooth` mode which is the default, the gallery will smoothly scroll to the desired item,
+with the scrolling duration determined by the `slidingDuration`.
+- **Auto:** If you select the `auto` mode, the gallery will instantaneously transition to the desired item without any intermediate scrolling.
+
+**Example**
+
+<Canvas of={GalleryStories.SliderBehaviorExample}/>
+
+
+
+
+### Autosize feature
+
+When Use `autosize` attribute is set, it allows each thumbnail to fit its content size.
+
+
+**Example**
+
+<Canvas of={GalleryStories.ItemAutosizeExample}/>
+
+
+You can turn on this feature like `<gallery autosize loadingStrategy="preload" loadingAttr="eager"/>
+
+- In `horizontal` slide direction, item's width will automatically fit its content width.
+- In `vertical` slide direction, item's height will automatically fit its content height.
+
+> **Note**
+> - Does not work when `autoHeight` is on
+> - Does not work properly unless `loadingAttr="eager"`
+> - Does not work properly unless `loadingStrategy="preload"`
+
+
+
+
+## List of options related to gallery main slider
+
+- orientation
+- scrollEase
+- scrollBehavior
+- disableScroll
+- disableMouseScroll
+- loadingStrategy
+- imageSize
+- debug
+- resizeDebounceTime
+- autoHeight
+- autoItemSize
+- loop

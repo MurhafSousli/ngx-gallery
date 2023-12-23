@@ -1,0 +1,101 @@
+import { Meta, Canvas } from "@storybook/addon-docs";
+import * as GalleryStories from "./Gallery.stories";
+
+<Meta of={GalleryStories}/>
+
+# Gallery Player
+
+This feature facilitates automatic cycling through items like a slideshow.
+
+## Using the component inputs
+
+To initiate the player, use the `autoplay` input.
+You can specify the player's interval using the `autoplayInterval` input, which accepts a value in milliseconds. The default interval is set to 3000.
+
+<Canvas of={GalleryStories.AutoplayExample}/>
+
+
+You can also toggle playing by binding the input to a boolean value, as the following example:
+
+```html
+<gallery [autoplay]="isPlaying"/>
+```
+
+
+## Using `GalleryComponent` reference
+
+Obtain the gallery component reference using `ViewChild(GalleryComponent)`. This reference grants access to the component's functions.
+
+
+**Example**
+
+```ts
+import { Component, ViewChild } from '@angular/core';
+import { GalleryModule, GalleryComponent } from 'ng-gallery';
+
+@Component({
+  template: `
+    <gallery [items]="items"/>
+  `,
+  standalone: true,
+  imports: [GalleryModule]
+})
+export class AppComponent {
+
+  @ViewChild(GalleryComponent) myGallery: GalleryComponent;
+
+  play() {
+    this.myGallery.play();
+  }
+
+  stop() {
+    this.myGallery.stop();
+  }
+}
+```
+
+## Using `GalleryRef` reference
+
+Alternatively, you can access the `GalleryRef` by its identifier, providing a flexible means to start or stop the player from any part of your code.
+
+
+**Example**
+
+```ts
+import { Component, OnInit } from '@angular/core';
+import { GalleryModule, Gallery, GalleryRef } from 'ng-gallery';
+
+@Component({
+  template: `
+    <gallery id="myGallery"></gallery>
+  `,
+  standalone: true,
+  imports: [GalleryModule]
+})
+export class AppComponent implements OnInit {
+
+  myGalleryRef: GalleryRef;
+
+  constructor(private gallery: Gallery) {
+  }
+
+  ngOnInit() {
+    this.myGalleryRef = this.gallery.ref('myGallery');
+  }
+
+  play() {
+    this.myGalleryRef.play();
+  }
+
+  stop() {
+    this.myGalleryRef.stop();
+  }
+}
+```
+
+
+
+## List of options related to gallery player
+
+- autoplay
+- autoplayInterval

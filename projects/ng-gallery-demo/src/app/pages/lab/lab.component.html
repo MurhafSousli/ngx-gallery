@@ -7,35 +7,37 @@
 <div class="page-content">
   <div *ngIf="show$ | async" class="gallery-container">
     <gallery #gallery id="lab"
+             dir="rtl"
              [items]="photos$ | async"
              [autoHeight]="config.autoHeight"
              [itemAutosize]="config.itemAutosize"
              [thumbAutosize]="config.thumbAutosize"
+             [loadingAttr]="config.loadingAttr"
              [nav]="config.nav"
              [loop]="config.loop"
-             [dots]="config.dots"
+             [bullets]="config.bullets"
              [debug]="config.debug"
-             [thumb]="config.thumb"
+             [thumbs]="config.thumbs"
              [counter]="config.counter"
-             [autoPlay]="config.autoPlay"
+             [autoplay]="config.autoplay"
              [imageSize]="config.imageSize"
-             [thumbView]="config.thumbView"
+             [thumbImageSize]="config.thumbImageSize"
+             [thumbCentralized]="config.thumbCentralized"
              [thumbWidth]="config.thumbWidth"
              [thumbHeight]="config.thumbHeight"
-             [disableThumb]="config.disableThumb"
-             [dotsPosition]="config.dotsPosition"
+             [disableThumbs]="config.disableThumbs"
+             [bulletPosition]="config.bulletPosition"
              [thumbPosition]="config.thumbPosition"
-             [thumbDetached]="config.thumbDetached"
-             [playerInterval]="config.playerInterval"
+             [detachThumbs]="config.detachThumbs"
+             [autoplayInterval]="config.autoplayInterval"
              [counterPosition]="config.counterPosition"
              [loadingStrategy]="config.loadingStrategy"
-             [slidingDirection]="config.slidingDirection"
-             [slidingDuration]="config.slidingDuration"
-             [slidingDisabled]="config.slidingDisabled"
-             [thumbSlidingDisabled]="config.thumbSlidingDisabled"
-             [mouseSlidingDisabled]="config.mouseSlidingDisabled"
-             [thumbMouseSlidingDisabled]="config.thumbMouseSlidingDisabled"
-             [navScrollBehavior]="config.navScrollBehavior"
+             [orientation]="config.orientation"
+             [scrollDuration]="config.scrollDuration"
+             [disableScroll]="config.disableScroll"
+             [disableThumbScroll]="config.disableThumbScroll"
+             [disableMouseScroll]="config.disableMouseScroll"
+             [disableThumbMouseScroll]="config.disableThumbMouseScroll"
              [scrollBehavior]="config.scrollBehavior"
              (playingChange)="onPlayer($event)"
              (indexChange)="onIndexChange($event)"
@@ -94,10 +96,10 @@
             </mat-form-field>
           </div>
           <div>
-            <mat-form-field name="slidingDirection">
-              <mat-label>Sliding directions</mat-label>
-              <mat-select [(ngModel)]="config.slidingDirection">
-                <mat-option *ngFor="let direction of slidingDirections" [value]="direction">{{direction}}</mat-option>
+            <mat-form-field name="orientation">
+              <mat-label>Orientation</mat-label>
+              <mat-select [(ngModel)]="config.orientation">
+                <mat-option *ngFor="let orientation of orientations" [value]="orientation">{{orientation}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -113,9 +115,9 @@
 
           <div>
             <mat-form-field>
-              <mat-label>Thumbnails View</mat-label>
-              <mat-select [(ngModel)]="config.thumbView" [disabled]="!config.thumb">
-                <mat-option *ngFor="let view of thumbViews" [value]="view">{{view}}</mat-option>
+              <mat-label>Thumbnails image size</mat-label>
+              <mat-select [(ngModel)]="config.thumbImageSize">
+                <mat-option *ngFor="let size of imageSizes" [value]="size">{{size}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -123,7 +125,7 @@
           <div>
             <mat-form-field>
               <mat-label>Thumbnails Position</mat-label>
-              <mat-select [(ngModel)]="config.thumbPosition" [disabled]="!config.thumb">
+              <mat-select [(ngModel)]="config.thumbPosition" [disabled]="!config.thumbs">
                 <mat-option *ngFor="let position of thumbPositions" [value]="position">{{position}}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -141,7 +143,7 @@
           <div>
             <mat-form-field>
               <mat-label>Dots Position</mat-label>
-              <mat-select [(ngModel)]="config.dotsPosition" [disabled]="!config.dots">
+              <mat-select [(ngModel)]="config.bulletPosition" [disabled]="!config.bullets">
                 <mat-option *ngFor="let position of dotsCounterPositions" [value]="position">{{position}}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -160,20 +162,20 @@
             <mat-checkbox [(ngModel)]="config.itemAutosize" [disabled]="config.autoHeight">Item autosize</mat-checkbox>
           </div>
           <div>
-            <mat-checkbox [(ngModel)]="config.thumbAutosize" [disabled]="!config.thumb">Thumb autosize</mat-checkbox>
+            <mat-checkbox [(ngModel)]="config.thumbAutosize" [disabled]="!config.thumbs">Thumb autosize</mat-checkbox>
           </div>
 
           <div>
             <mat-form-field>
-              <mat-label>Sliding duration</mat-label>
-              <input matInput [(ngModel)]="config.slidingDuration">
+              <mat-label>Scroll duration</mat-label>
+              <input matInput [(ngModel)]="config.scrollDuration">
             </mat-form-field>
           </div>
 
           <div>
             <mat-form-field>
               <mat-label>Player interval</mat-label>
-              <input matInput [(ngModel)]="config.playerInterval">
+              <input matInput [(ngModel)]="config.autoplayInterval">
             </mat-form-field>
           </div>
           <div>
@@ -194,9 +196,11 @@
 
           <div>
             <mat-form-field>
-              <mat-label>Nav Scroll Behavior</mat-label>
-              <mat-select [(ngModel)]="config.navScrollBehavior" [disabled]="!config.nav">
-                <mat-option *ngFor="let behavior of scrollBehaviors" [value]="behavior">{{behavior}}</mat-option>
+              <mat-label>Loading Attr</mat-label>
+              <mat-select [(ngModel)]="config.loadingAttr" [disabled]="config.itemAutosize">
+                <mat-option *ngFor="let loadingAttr of loadingAttrs" [value]="loadingAttr">
+                  {{config.itemAutosize ? 'eager' : loadingAttr}}
+                </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
@@ -210,39 +214,42 @@
             <mat-checkbox [(ngModel)]="config.nav">Show navigation</mat-checkbox>
           </div>
           <div>
-            <mat-checkbox [(ngModel)]="config.dots">Show dots</mat-checkbox>
+            <mat-checkbox [(ngModel)]="config.bullets">Show dots</mat-checkbox>
           </div>
           <div>
             <mat-checkbox [(ngModel)]="config.counter">Show counter</mat-checkbox>
           </div>
           <div>
-            <mat-checkbox [(ngModel)]="config.thumb">Show thumbnails</mat-checkbox>
+            <mat-checkbox [(ngModel)]="config.thumbs">Show thumbnails</mat-checkbox>
           </div>
           <div>
-            <mat-checkbox [(ngModel)]="config.thumbDetached">Detach thumbnails</mat-checkbox>
+            <mat-checkbox [(ngModel)]="config.thumbCentralized">Centralize Thumbnails</mat-checkbox>
           </div>
           <div>
-            <mat-checkbox [(ngModel)]="config.disableThumb" [disabled]="!config.thumb">Disable thumbnails' clicks
+            <mat-checkbox [(ngModel)]="config.detachThumbs" [disabled]="!config.thumbs">Detach thumbnails</mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox [(ngModel)]="config.disableThumbs" [disabled]="!config.thumbs">Disable thumbnails' clicks
             </mat-checkbox>
           </div>
           <div>
-            <mat-checkbox [(ngModel)]="config.autoPlay" (change)="restart()">Auto-play</mat-checkbox>
+            <mat-checkbox [(ngModel)]="config.autoplay">Auto-play</mat-checkbox>
           </div>
 
           <div>
-            <mat-checkbox [(ngModel)]="config.slidingDisabled">Sliding Disabled</mat-checkbox>
+            <mat-checkbox [(ngModel)]="config.disableScroll">Disable Scroll</mat-checkbox>
           </div>
 
           <div>
-            <mat-checkbox [(ngModel)]="config.thumbSlidingDisabled">Thumb Sliding Disabled</mat-checkbox>
+            <mat-checkbox [(ngModel)]="config.disableThumbScroll">Disable Thumb Scroll</mat-checkbox>
           </div>
 
           <div>
-            <mat-checkbox [(ngModel)]="config.mouseSlidingDisabled">Mouse Sliding Disabled</mat-checkbox>
+            <mat-checkbox [(ngModel)]="config.disableMouseScroll">Disable Mouse Scroll</mat-checkbox>
           </div>
 
           <div>
-            <mat-checkbox [(ngModel)]="config.thumbMouseSlidingDisabled">Thumb Mouse Sliding Disabled</mat-checkbox>
+            <mat-checkbox [(ngModel)]="config.disableThumbMouseScroll">Disable Thumb Mouse Scroll</mat-checkbox>
           </div>
         </div>
       </div>

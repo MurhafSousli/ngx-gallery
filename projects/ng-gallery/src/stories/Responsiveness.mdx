@@ -1,0 +1,54 @@
+# Responsiveness
+
+To modify the gallery configuration for smaller screens, including adjustments to thumbnail positioning and size,
+[Angular CDK](https://material.angular.io/cdk/layout/overview) provides an effective solution.
+
+
+**Example**
+
+```ts
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { GalleryModule, GalleryConfig, ThumbnailPosition } from 'ng-gallery';
+import { Observable, map } from 'rxjs';
+
+@Component({
+  selector: 'gallery-example',
+  template: `
+      <gallery *ngIf="galleryConfig$ | async; let config"
+               [items]="images$ | async"
+               [thumbWidth]="config.thumbWidth"
+               [thumbHeight]="config.thumbHeight"
+               [thumbPosition]="config.thumbPosition" />
+  `,
+  standalone: true,
+  imports: [GalleryModule, CommonModule]
+})
+class MyComponent {
+
+  galleryConfig$: Observable<GalleryConfig>;
+
+  constructor(breakpointObserver: BreakpointObserver) {
+
+    this.galleryConfig$ = breakpointObserver.observe([
+      Breakpoints.HandsetPortrait
+    ]).pipe(
+      map(res => {
+        if (res.matches) {
+          return {
+            thumbPosition: ThumbnailPosition.Top,
+            thumbWidth: 80,
+            thumbHeight: 80
+          };
+        }
+        return {
+          thumbPosition: ThumbnailPosition.Left,
+          thumbWidth: 120,
+          thumbHeight: 90
+        };
+      })
+    );
+  }
+}
+```

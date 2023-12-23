@@ -1,0 +1,1030 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>ng-gallery-project documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">ng-gallery-project documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content directive">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Directives</li>
+  <li >GallerizeDirective</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/ng-gallery/lightbox/src/gallerize.directive.ts</code>
+        </p>
+
+
+
+            <p class="comment">
+                <h3>Implements</h3>
+            </p>
+            <p class="comment">
+                            <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+                            <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+            </p>
+
+
+        <section>
+            <h3>Metadata</h3>
+            <table class="table table-sm table-hover metadata">
+                <tbody>
+
+                    <tr>
+                        <td class="col-md-3">Selector</td>
+                        <td class="col-md-9"><code>[gallerize]</code></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </section>
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_detector$" >_detector$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_galleryId" >_galleryId</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_itemChange$" >_itemChange$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_itemClick$" >_itemClick$</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#_mode" >_mode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_observer$" >_observer$</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#detectorMode" >detectorMode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#galleryMode" >galleryMode</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#gallerize" >gallerize</a>
+                            </li>
+                            <li>
+                                <a href="#selector" >selector</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(_zone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>, _el: <a href="https://angular.io/api/core/ElementRef" target="_blank">ElementRef</a>, _gallery: <a href="../injectables/Gallery.html" target="_self">Gallery</a>, _lightbox: <a href="../injectables/Lightbox.html" target="_self">Lightbox</a>, _document: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, _galleryCmp: <a href="../injectables/Gallery.html" target="_self">GalleryComponent</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/ng-gallery/lightbox/src/gallerize.directive.ts:62</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>_zone</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/core/NgZone" target="_blank" >NgZone</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_el</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/core/ElementRef" target="_blank" >ElementRef</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_gallery</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/Gallery.html" target="_self" >Gallery</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_lightbox</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/Lightbox.html" target="_self" >Lightbox</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_document</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>_galleryCmp</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/Gallery.html" target="_self" >GalleryComponent</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="gallerize"></a>
+                        <b>gallerize</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">projects/ng-gallery/lightbox/src/gallerize.directive.ts:59</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>If set, it will become the gallery id</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selector"></a>
+                        <b>selector</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;img&#x27;</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">projects/ng-gallery/lightbox/src/gallerize.directive.ts:62</a></div>
+                            </td>
+                        </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>The selector used to query images elements</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="detectorMode"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>detectorMode</b></span>
+                        <a href="#detectorMode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>detectorMode(galleryRef: <a href="../injectables/Gallery.html" target="_self">GalleryRef</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="112"
+                            class="link-to-prism">projects/ng-gallery/lightbox/src/gallerize.directive.ts:112</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Detector mode: means <code>gallerize</code> directive is used on a normal HTMLElement
+ Detects images and adds a click event to each image, so it opens in the lightbox</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>galleryRef</td>
+                                    <td>
+                                                <code><a href="../injectables/Gallery.html" target="_self" >GalleryRef</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="galleryMode"></a>
+                    <span class="name">
+                        <span class="modifier">Private</span>
+                        <span ><b>galleryMode</b></span>
+                        <a href="#galleryMode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>galleryMode(galleryRef: <a href="../injectables/Gallery.html" target="_self">GalleryRef</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="104"
+                            class="link-to-prism">projects/ng-gallery/lightbox/src/gallerize.directive.ts:104</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Gallery mode: means <code>gallerize</code> directive is used on <code>&lt;gallery&gt;</code> component
+Adds a click event to each gallery item so it opens in lightbox</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>galleryRef</td>
+                                    <td>
+                                                <code><a href="../injectables/Gallery.html" target="_self" >GalleryRef</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="90"
+                            class="link-to-prism">projects/ng-gallery/lightbox/src/gallerize.directive.ts:90</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="75"
+                            class="link-to-prism">projects/ng-gallery/lightbox/src/gallerize.directive.ts:75</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_detector$"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>_detector$</b></span>
+                        <a href="#_detector$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subject&lt;void&gt;</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">projects/ng-gallery/lightbox/src/gallerize.directive.ts:48</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Stream that emits when image is discover</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_galleryId"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>_galleryId</b></span>
+                        <a href="#_galleryId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;lightbox&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">projects/ng-gallery/lightbox/src/gallerize.directive.ts:37</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Default gallery id</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_itemChange$"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>_itemChange$</b></span>
+                        <a href="#_itemChange$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">projects/ng-gallery/lightbox/src/gallerize.directive.ts:54</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_itemClick$"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>_itemClick$</b></span>
+                        <a href="#_itemClick$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Subscription</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">projects/ng-gallery/lightbox/src/gallerize.directive.ts:53</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Gallery events (if used on a gallery component)</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_mode"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>_mode</b></span>
+                        <a href="#_mode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/enumerations.html#GallerizeMode" target="_self" >GallerizeMode</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">projects/ng-gallery/lightbox/src/gallerize.directive.ts:40</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Gallerize mode</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_observer$"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>_observer$</b></span>
+                        <a href="#_observer$"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>MutationObserver</code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/ng-gallery/lightbox/src/gallerize.directive.ts:45</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Stream that emits to fire the detection stream the image elements has changed</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  Directive,
+  Input,
+  OnInit,
+  OnDestroy,
+  Inject,
+  Optional,
+  Self,
+  Host,
+  NgZone,
+  ElementRef,
+} from &#x27;@angular/core&#x27;;
+import { DOCUMENT } from &#x27;@angular/common&#x27;;
+import { Gallery, GalleryRef, ImageItem, GalleryComponent, GalleryState, GalleryItem } from &#x27;ng-gallery&#x27;;
+import { Subject, Subscription, from, tap, map, switchMap, finalize, debounceTime, EMPTY } from &#x27;rxjs&#x27;;
+
+import { Lightbox } from &#x27;./lightbox.service&#x27;;
+
+/**
+ * This directive has 2 modes:
+ * 1 - If host element is a HTMLElement, it detects the images and hooks their clicks to lightbox
+ * 2 - If host element is a GalleryComponent, it hooks the images click to the lightbox
+ */
+
+const enum GallerizeMode {
+  Detector &#x3D; &#x27;detector&#x27;,
+  Gallery &#x3D; &#x27;gallery&#x27;
+}
+
+@Directive({
+  selector: &#x27;[gallerize]&#x27;,
+  standalone: true
+})
+export class GallerizeDirective implements OnInit, OnDestroy {
+
+  /** Default gallery id */
+  private _galleryId: string &#x3D; &#x27;lightbox&#x27;;
+
+  /** Gallerize mode */
+  private readonly _mode: GallerizeMode;
+
+  /** If host element is a HTMLElement, will use the following variables: */
+
+  /** Stream that emits to fire the detection stream the image elements has changed */
+  private _observer$: MutationObserver;
+
+  /** Stream that emits when image is discover */
+  private _detector$: Subject&lt;void&gt;;
+
+  /** If host element is a GalleryComponent, will use the following variables: */
+
+  /** Gallery events (if used on a gallery component) */
+  private _itemClick$: Subscription;
+  private _itemChange$: Subscription;
+
+  // &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+
+  /** If set, it will become the gallery id */
+  @Input() gallerize: string;
+
+  /** The selector used to query images elements */
+  @Input() selector: string &#x3D; &#x27;img&#x27;;
+
+  constructor(private _zone: NgZone,
+              private _el: ElementRef,
+              private _gallery: Gallery,
+              private _lightbox: Lightbox,
+              @Inject(DOCUMENT) private _document: any,
+              @Host() @Self() @Optional() private _galleryCmp: GalleryComponent) {
+
+    // Set gallerize mode
+    this._mode &#x3D; _galleryCmp ? GallerizeMode.Gallery : GallerizeMode.Detector;
+  }
+
+  ngOnInit(): void {
+    this._zone.runOutsideAngular(() &#x3D;&gt; {
+      this._galleryId &#x3D; this.gallerize || this._galleryId;
+      const ref: GalleryRef &#x3D; this._gallery.ref(this._galleryId);
+
+      switch (this._mode) {
+        case GallerizeMode.Detector:
+          this.detectorMode(ref);
+          break;
+        case GallerizeMode.Gallery:
+          this.galleryMode(ref);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    switch (this._mode) {
+      case GallerizeMode.Detector:
+        this._detector$.complete();
+        this._observer$.disconnect();
+        break;
+      case GallerizeMode.Gallery:
+        this._itemClick$.unsubscribe();
+        this._itemChange$.unsubscribe();
+    }
+  }
+
+  /** Gallery mode: means &#x60;gallerize&#x60; directive is used on &#x60;&lt;gallery&gt;&#x60; component
+   * Adds a click event to each gallery item so it opens in lightbox */
+  private galleryMode(galleryRef: GalleryRef): void {
+    // Clone its items to the new gallery instance
+    this._itemClick$ &#x3D; this._galleryCmp.galleryRef.itemClick.subscribe((i: number) &#x3D;&gt; this._lightbox.open(i, this._galleryId));
+    this._itemChange$ &#x3D; this._galleryCmp.galleryRef.itemsChanged.subscribe((state: GalleryState) &#x3D;&gt; galleryRef.load(state.items));
+  }
+
+  /** Detector mode: means &#x60;gallerize&#x60; directive is used on a normal HTMLElement
+   *  Detects images and adds a click event to each image, so it opens in the lightbox */
+  private detectorMode(galleryRef: GalleryRef): void {
+    this._detector$ &#x3D; new Subject();
+    // Query image elements
+    this._detector$.pipe(
+      debounceTime(300),
+      switchMap(() &#x3D;&gt; {
+
+        /** get all img elements from content */
+        const imageElements &#x3D; this._el.nativeElement.querySelectorAll(this.selector);
+
+        if (imageElements &amp;&amp; imageElements.length) {
+
+          const images: GalleryItem[] &#x3D; [];
+
+          return from(imageElements).pipe(
+            map((el: HTMLElement, i: number) &#x3D;&gt; {
+              // Add click event to the image
+              el.style.cursor &#x3D; &#x27;pointer&#x27;;
+              el.addEventListener(&#x27;click&#x27;, () &#x3D;&gt; {
+                this._zone.run(() &#x3D;&gt; this._lightbox.open(i, this._galleryId));
+              });
+
+              if (el instanceof HTMLImageElement) {
+                // If element is type of img use the src property
+                return {
+                  src: el.getAttribute(&#x27;imageSrc&#x27;) || el.src,
+                  thumb: el.getAttribute(&#x27;thumbSrc&#x27;) || el.src
+                };
+              } else {
+                // Otherwise, use element background-image url
+                const elStyle &#x3D; this._document.defaultView.getComputedStyle(el, null);
+                const background &#x3D; elStyle.backgroundImage.slice(4, -1).replace(/&quot;/g, &#x27;&#x27;);
+                return {
+                  src: el.getAttribute(&#x27;imageSrc&#x27;) || background,
+                  thumb: el.getAttribute(&#x27;thumbSrc&#x27;) || background
+                };
+              }
+            }),
+            tap((data: any) &#x3D;&gt; images.push(new ImageItem(data))),
+            finalize(() &#x3D;&gt; galleryRef.load(images))
+          );
+        } else {
+          return EMPTY;
+        }
+      })
+    ).subscribe();
+
+    // Observe content changes
+    this._observer$ &#x3D; new MutationObserver(() &#x3D;&gt; this._detector$.next());
+    this._observer$.observe(this._el.nativeElement, { childList: true, subtree: true });
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'directive';
+            var COMPODOC_CURRENT_PAGE_URL = 'GallerizeDirective.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

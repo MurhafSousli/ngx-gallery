@@ -35,6 +35,7 @@ export class GallerizeExampleComponent implements OnInit {
       imageSize: 'cover',
       itemAutosize: false,
       thumbAutosize: false,
+      thumbs: true
       // thumbWidth: 120,
       // thumbHeight: 90,
       // thumbView: 'contain'
@@ -45,6 +46,7 @@ export class GallerizeExampleComponent implements OnInit {
       imageSize: 'cover',
       itemAutosize: false,
       thumbAutosize: false,
+      thumbs: true
       // thumbView: 'contain'
     });
   }
@@ -68,5 +70,5 @@ const code = {
        [attr.imageSrc]="image.src"
        [attr.thumbSrc]="image.thumb"></div>
 </div>`,
-  onGallery: `<gallery gallerize [items]="cameraImages"></gallery>`
+  onGallery: `<gallery thumbs gallerize [items]="cameraImages"></gallery>`
 };
