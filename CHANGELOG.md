@@ -1,6 +1,6 @@
 # Changelog
 
-## 12.0.0-beta.0
+## 12.0.0-beta.4
 
 > See the [storybook documentation](https://ngx-gallery-next.netlify.app/)
 

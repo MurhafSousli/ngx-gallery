@@ -137,18 +137,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ng-gallery-demo:build"
+            "buildTarget": "ng-gallery-demo:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ng-gallery-demo:build:production"
+              "buildTarget": "ng-gallery-demo:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ng-gallery-demo:build"
+            "buildTarget": "ng-gallery-demo:build"
           }
         },
         "test": {
@@ -211,7 +211,7 @@
           "defaultConfiguration": "production"
         },
         "serve-ssr": {
-          "builder": "@nguniversal/builders:ssr-dev-server",
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
           "configurations": {
             "development": {
               "browserTarget": "ng-gallery-demo:build",
@@ -225,7 +225,7 @@
           "defaultConfiguration": "development"
         },
         "prerender": {
-          "builder": "@nguniversal/builders:prerender",
+          "builder": "@angular-devkit/build-angular:prerender",
           "options": {
             "routes": [
               "/"

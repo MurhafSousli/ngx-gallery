@@ -2,11 +2,17 @@ import { GalleryConfig } from '../../models/config.model';
 import { SliderAdapter } from './base-adapter';
 import { SmoothScrollOptions } from '../../smooth-scroll';
 
-declare const Hammer: any;
+/**
+ * A clone of HammerJs constants
+ */
+export const DIRECTION_LEFT: number = 2;
+export const DIRECTION_RIGHT: number = 4;
+export const DIRECTION_UP: number = 8;
+export const DIRECTION_DOWN: number = 16;
 
 export class HorizontalAdapter implements SliderAdapter {
 
-  readonly hammerDirection: number = Hammer?.DIRECTION_HORIZONTAL;
+  readonly hammerDirection: number = DIRECTION_LEFT | DIRECTION_RIGHT;
 
   readonly scrollSnapType: string = 'x mandatory';
 
@@ -83,7 +89,7 @@ export class HorizontalAdapter implements SliderAdapter {
 
 export class VerticalAdapter implements SliderAdapter {
 
-  readonly hammerDirection: number = Hammer?.DIRECTION_VERTICAL;
+  readonly hammerDirection: number = DIRECTION_UP | DIRECTION_DOWN;
 
   readonly scrollSnapType: string = 'y mandatory';
 
