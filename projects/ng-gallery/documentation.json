@@ -2655,12 +2655,12 @@
         },
         {
             "name": "HorizontalAdapter",
-            "id": "class-HorizontalAdapter-eb710e0d3b83fd4b491767dfef480d144ffbdd900f8fd7afd235d91c9e823b114bf1d0cabd18feee71238affb19db805a660f75519c5489f4eb969418ec62fe3",
+            "id": "class-HorizontalAdapter-3daae6a8cc0b8e54bd405839b944d48041efbb99f2117571af80d5e3c88b5d81310f2ba88bbde52dbd371b5e501d1046a5d3a3351bade652e3ab629e9370cb35",
             "file": "projects/ng-gallery/src/lib/components/adapters/main-adapters.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "class",
-            "sourceCode": "import { GalleryConfig } from '../../models/config.model';\r\nimport { SliderAdapter } from './base-adapter';\r\nimport { SmoothScrollOptions } from '../../smooth-scroll';\r\n\r\ndeclare const Hammer: any;\r\n\r\nexport class HorizontalAdapter implements SliderAdapter {\r\n\r\n  readonly hammerDirection: number = Hammer?.DIRECTION_HORIZONTAL;\r\n\r\n  readonly scrollSnapType: string = 'x mandatory';\r\n\r\n  get scrollValue(): number {\r\n    return this.slider.scrollLeft;\r\n  }\r\n\r\n  get clientSize(): number {\r\n    return this.slider.clientWidth;\r\n  }\r\n\r\n  get isContentLessThanContainer(): boolean {\r\n    return this.clientSize >= this.slider.firstElementChild.clientWidth;\r\n  }\r\n\r\n  constructor(public slider: HTMLElement, public config: GalleryConfig) {\r\n  }\r\n\r\n  getScrollToValue(el: HTMLElement, behavior: ScrollBehavior): SmoothScrollOptions {\r\n    const position: number = el.offsetLeft - ((this.clientSize - el.clientWidth) / 2);\r\n    return {\r\n      behavior,\r\n      start: position\r\n    };\r\n  }\r\n\r\n  getRootMargin(): string {\r\n    return `1000px 1px 1000px 1px`;\r\n  }\r\n\r\n  getElementRootMargin(viewport: HTMLElement, el: HTMLElement): string {\r\n    const rootMargin: number = -1 * ((viewport.clientWidth - el.clientWidth) / 2) + 1;\r\n    return `0px ${ rootMargin }px 0px ${ rootMargin }px`;\r\n  }\r\n\r\n  getCentralizerStartSize(): number {\r\n    if (this.isContentLessThanContainer) {\r\n      const size: number = this.clientSize - this.slider.firstElementChild.clientWidth;\r\n      return size / 2;\r\n    }\r\n    return (this.clientSize / 2) - (this.slider.firstElementChild.firstElementChild?.clientWidth / 2);\r\n  }\r\n\r\n  getCentralizerEndSize(): number {\r\n    if (this.isContentLessThanContainer) {\r\n      const size: number = this.clientSize - this.slider.firstElementChild.clientWidth;\r\n      return size / 2;\r\n    }\r\n    return (this.clientSize / 2) - (this.slider.firstElementChild.lastElementChild?.clientWidth / 2);\r\n  }\r\n\r\n  getHammerVelocity(e: any): number {\r\n    return e.velocityX;\r\n  }\r\n\r\n  getHammerValue(value: number, e: any, behavior: ScrollBehavior): ScrollToOptions {\r\n    return {\r\n      behavior,\r\n      left: value - e.deltaX\r\n    };\r\n  }\r\n\r\n  // getDraggingProperty(e: MouseEvent): number {\r\n  //   return e.clientX;\r\n  // }\r\n\r\n  // getDraggingValue(value: number, delta: number, behavior: ScrollBehavior): ScrollToOptions {\r\n  //   return {\r\n  //     behavior,\r\n  //     left: value - delta\r\n  //   };\r\n  // }\r\n}\r\n\r\nexport class VerticalAdapter implements SliderAdapter {\r\n\r\n  readonly hammerDirection: number = Hammer?.DIRECTION_VERTICAL;\r\n\r\n  readonly scrollSnapType: string = 'y mandatory';\r\n\r\n  get scrollValue(): number {\r\n    return this.slider.scrollTop;\r\n  }\r\n\r\n  get clientSize(): number {\r\n    return this.slider.clientHeight;\r\n  }\r\n\r\n  get isContentLessThanContainer(): boolean {\r\n    return this.clientSize >= this.slider.firstElementChild.clientHeight;\r\n  }\r\n\r\n  constructor(public slider: HTMLElement, public config: GalleryConfig) {\r\n  }\r\n\r\n  getScrollToValue(el: HTMLElement, behavior: ScrollBehavior): SmoothScrollOptions {\r\n    const position: number = el.offsetTop - ((this.clientSize - el.clientHeight) / 2);\r\n    return {\r\n      behavior,\r\n      top: position\r\n    };\r\n  }\r\n\r\n  getRootMargin(): string {\r\n    return `1px 1000px 1px 1000px`;\r\n  }\r\n\r\n  getElementRootMargin(viewport: HTMLElement, el: HTMLElement): string {\r\n    const rootMargin: number = -1 * ((viewport.clientHeight - el.clientHeight) / 2) + 1;\r\n    return `${ rootMargin }px 0px ${ rootMargin }px 0px`;\r\n  }\r\n\r\n  getCentralizerStartSize(): number {\r\n    if (this.isContentLessThanContainer) {\r\n      const size = this.clientSize - this.slider.firstElementChild.clientHeight;\r\n      return size / 2;\r\n    }\r\n    return (this.clientSize / 2) - (this.slider.firstElementChild.firstElementChild?.clientHeight / 2);\r\n  }\r\n\r\n  getCentralizerEndSize(): number {\r\n    if (this.isContentLessThanContainer) {\r\n      const size = this.clientSize - this.slider.firstElementChild.clientHeight;\r\n      return size / 2;\r\n    }\r\n    return (this.clientSize / 2) - (this.slider.firstElementChild.lastElementChild?.clientHeight / 2);\r\n  }\r\n\r\n  getHammerVelocity(e: any): number {\r\n    return e.velocityY;\r\n  }\r\n\r\n  getHammerValue(value: number, e: any, behavior: ScrollBehavior): ScrollToOptions {\r\n    return {\r\n      behavior,\r\n      top: value - e.deltaY\r\n    };\r\n  }\r\n\r\n  // getDraggingProperty(e: MouseEvent): number {\r\n  //   return e.clientY;\r\n  // }\r\n\r\n  // getDraggingValue(value: number, delta: number, behavior: ScrollBehavior): ScrollToOptions {\r\n  //   return {\r\n  //     behavior,\r\n  //     top: value - delta\r\n  //   };\r\n  // }\r\n}\r\n",
+            "sourceCode": "import { GalleryConfig } from '../../models/config.model';\r\nimport { SliderAdapter } from './base-adapter';\r\nimport { SmoothScrollOptions } from '../../smooth-scroll';\r\n\r\n/**\r\n * A clone of HammerJs constants\r\n */\r\nexport const DIRECTION_LEFT: number = 2;\r\nexport const DIRECTION_RIGHT: number = 4;\r\nexport const DIRECTION_UP: number = 8;\r\nexport const DIRECTION_DOWN: number = 16;\r\n\r\nexport class HorizontalAdapter implements SliderAdapter {\r\n\r\n  readonly hammerDirection: number = DIRECTION_LEFT | DIRECTION_RIGHT;\r\n\r\n  readonly scrollSnapType: string = 'x mandatory';\r\n\r\n  get scrollValue(): number {\r\n    return this.slider.scrollLeft;\r\n  }\r\n\r\n  get clientSize(): number {\r\n    return this.slider.clientWidth;\r\n  }\r\n\r\n  get isContentLessThanContainer(): boolean {\r\n    return this.clientSize >= this.slider.firstElementChild.clientWidth;\r\n  }\r\n\r\n  constructor(public slider: HTMLElement, public config: GalleryConfig) {\r\n  }\r\n\r\n  getScrollToValue(el: HTMLElement, behavior: ScrollBehavior): SmoothScrollOptions {\r\n    const position: number = el.offsetLeft - ((this.clientSize - el.clientWidth) / 2);\r\n    return {\r\n      behavior,\r\n      start: position\r\n    };\r\n  }\r\n\r\n  getRootMargin(): string {\r\n    return `1000px 1px 1000px 1px`;\r\n  }\r\n\r\n  getElementRootMargin(viewport: HTMLElement, el: HTMLElement): string {\r\n    const rootMargin: number = -1 * ((viewport.clientWidth - el.clientWidth) / 2) + 1;\r\n    return `0px ${ rootMargin }px 0px ${ rootMargin }px`;\r\n  }\r\n\r\n  getCentralizerStartSize(): number {\r\n    if (this.isContentLessThanContainer) {\r\n      const size: number = this.clientSize - this.slider.firstElementChild.clientWidth;\r\n      return size / 2;\r\n    }\r\n    return (this.clientSize / 2) - (this.slider.firstElementChild.firstElementChild?.clientWidth / 2);\r\n  }\r\n\r\n  getCentralizerEndSize(): number {\r\n    if (this.isContentLessThanContainer) {\r\n      const size: number = this.clientSize - this.slider.firstElementChild.clientWidth;\r\n      return size / 2;\r\n    }\r\n    return (this.clientSize / 2) - (this.slider.firstElementChild.lastElementChild?.clientWidth / 2);\r\n  }\r\n\r\n  getHammerVelocity(e: any): number {\r\n    return e.velocityX;\r\n  }\r\n\r\n  getHammerValue(value: number, e: any, behavior: ScrollBehavior): ScrollToOptions {\r\n    return {\r\n      behavior,\r\n      left: value - e.deltaX\r\n    };\r\n  }\r\n\r\n  // getDraggingProperty(e: MouseEvent): number {\r\n  //   return e.clientX;\r\n  // }\r\n\r\n  // getDraggingValue(value: number, delta: number, behavior: ScrollBehavior): ScrollToOptions {\r\n  //   return {\r\n  //     behavior,\r\n  //     left: value - delta\r\n  //   };\r\n  // }\r\n}\r\n\r\nexport class VerticalAdapter implements SliderAdapter {\r\n\r\n  readonly hammerDirection: number = DIRECTION_UP | DIRECTION_DOWN;\r\n\r\n  readonly scrollSnapType: string = 'y mandatory';\r\n\r\n  get scrollValue(): number {\r\n    return this.slider.scrollTop;\r\n  }\r\n\r\n  get clientSize(): number {\r\n    return this.slider.clientHeight;\r\n  }\r\n\r\n  get isContentLessThanContainer(): boolean {\r\n    return this.clientSize >= this.slider.firstElementChild.clientHeight;\r\n  }\r\n\r\n  constructor(public slider: HTMLElement, public config: GalleryConfig) {\r\n  }\r\n\r\n  getScrollToValue(el: HTMLElement, behavior: ScrollBehavior): SmoothScrollOptions {\r\n    const position: number = el.offsetTop - ((this.clientSize - el.clientHeight) / 2);\r\n    return {\r\n      behavior,\r\n      top: position\r\n    };\r\n  }\r\n\r\n  getRootMargin(): string {\r\n    return `1px 1000px 1px 1000px`;\r\n  }\r\n\r\n  getElementRootMargin(viewport: HTMLElement, el: HTMLElement): string {\r\n    const rootMargin: number = -1 * ((viewport.clientHeight - el.clientHeight) / 2) + 1;\r\n    return `${ rootMargin }px 0px ${ rootMargin }px 0px`;\r\n  }\r\n\r\n  getCentralizerStartSize(): number {\r\n    if (this.isContentLessThanContainer) {\r\n      const size = this.clientSize - this.slider.firstElementChild.clientHeight;\r\n      return size / 2;\r\n    }\r\n    return (this.clientSize / 2) - (this.slider.firstElementChild.firstElementChild?.clientHeight / 2);\r\n  }\r\n\r\n  getCentralizerEndSize(): number {\r\n    if (this.isContentLessThanContainer) {\r\n      const size = this.clientSize - this.slider.firstElementChild.clientHeight;\r\n      return size / 2;\r\n    }\r\n    return (this.clientSize / 2) - (this.slider.firstElementChild.lastElementChild?.clientHeight / 2);\r\n  }\r\n\r\n  getHammerVelocity(e: any): number {\r\n    return e.velocityY;\r\n  }\r\n\r\n  getHammerValue(value: number, e: any, behavior: ScrollBehavior): ScrollToOptions {\r\n    return {\r\n      behavior,\r\n      top: value - e.deltaY\r\n    };\r\n  }\r\n\r\n  // getDraggingProperty(e: MouseEvent): number {\r\n  //   return e.clientY;\r\n  // }\r\n\r\n  // getDraggingValue(value: number, delta: number, behavior: ScrollBehavior): ScrollToOptions {\r\n  //   return {\r\n  //     behavior,\r\n  //     top: value - delta\r\n  //   };\r\n  // }\r\n}\r\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -2680,7 +2680,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 23,
+                "line": 29,
                 "jsdoctags": [
                     {
                         "name": "slider",
@@ -2710,20 +2710,20 @@
                     "type": "GalleryConfig",
                     "optional": false,
                     "description": "",
-                    "line": 25,
+                    "line": 31,
                     "modifierKind": [
                         123
                     ]
                 },
                 {
                     "name": "hammerDirection",
-                    "defaultValue": "Hammer?.DIRECTION_HORIZONTAL",
+                    "defaultValue": "DIRECTION_LEFT | DIRECTION_RIGHT",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 9,
+                    "line": 15,
                     "modifierKind": [
                         146
                     ]
@@ -2736,7 +2736,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 11,
+                    "line": 17,
                     "modifierKind": [
                         146
                     ]
@@ -2748,7 +2748,7 @@
                     "type": "HTMLElement",
                     "optional": false,
                     "description": "",
-                    "line": 25,
+                    "line": 31,
                     "modifierKind": [
                         123
                     ]
@@ -2761,7 +2761,7 @@
                     "optional": false,
                     "returnType": "number",
                     "typeParameters": [],
-                    "line": 53,
+                    "line": 59,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -2771,7 +2771,7 @@
                     "optional": false,
                     "returnType": "number",
                     "typeParameters": [],
-                    "line": 45,
+                    "line": 51,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -2794,7 +2794,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 40,
+                    "line": 46,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -2843,7 +2843,7 @@
                     "optional": false,
                     "returnType": "ScrollToOptions",
                     "typeParameters": [],
-                    "line": 65,
+                    "line": 71,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -2889,7 +2889,7 @@
                     "optional": false,
                     "returnType": "number",
                     "typeParameters": [],
-                    "line": 61,
+                    "line": 67,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -2910,7 +2910,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 36,
+                    "line": 42,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -2933,7 +2933,7 @@
                     "optional": false,
                     "returnType": "SmoothScrollOptions",
                     "typeParameters": [],
-                    "line": 28,
+                    "line": 34,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -2966,7 +2966,7 @@
                         "name": "scrollValue",
                         "type": "number",
                         "returnType": "number",
-                        "line": 13
+                        "line": 19
                     }
                 },
                 "clientSize": {
@@ -2975,7 +2975,7 @@
                         "name": "clientSize",
                         "type": "number",
                         "returnType": "number",
-                        "line": 17
+                        "line": 23
                     }
                 },
                 "isContentLessThanContainer": {
@@ -2984,7 +2984,7 @@
                         "name": "isContentLessThanContainer",
                         "type": "boolean",
                         "returnType": "boolean",
-                        "line": 21
+                        "line": 27
                     }
                 }
             },
@@ -3434,12 +3434,12 @@
         },
         {
             "name": "VerticalAdapter",
-            "id": "class-VerticalAdapter-eb710e0d3b83fd4b491767dfef480d144ffbdd900f8fd7afd235d91c9e823b114bf1d0cabd18feee71238affb19db805a660f75519c5489f4eb969418ec62fe3",
+            "id": "class-VerticalAdapter-3daae6a8cc0b8e54bd405839b944d48041efbb99f2117571af80d5e3c88b5d81310f2ba88bbde52dbd371b5e501d1046a5d3a3351bade652e3ab629e9370cb35",
             "file": "projects/ng-gallery/src/lib/components/adapters/main-adapters.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "class",
-            "sourceCode": "import { GalleryConfig } from '../../models/config.model';\r\nimport { SliderAdapter } from './base-adapter';\r\nimport { SmoothScrollOptions } from '../../smooth-scroll';\r\n\r\ndeclare const Hammer: any;\r\n\r\nexport class HorizontalAdapter implements SliderAdapter {\r\n\r\n  readonly hammerDirection: number = Hammer?.DIRECTION_HORIZONTAL;\r\n\r\n  readonly scrollSnapType: string = 'x mandatory';\r\n\r\n  get scrollValue(): number {\r\n    return this.slider.scrollLeft;\r\n  }\r\n\r\n  get clientSize(): number {\r\n    return this.slider.clientWidth;\r\n  }\r\n\r\n  get isContentLessThanContainer(): boolean {\r\n    return this.clientSize >= this.slider.firstElementChild.clientWidth;\r\n  }\r\n\r\n  constructor(public slider: HTMLElement, public config: GalleryConfig) {\r\n  }\r\n\r\n  getScrollToValue(el: HTMLElement, behavior: ScrollBehavior): SmoothScrollOptions {\r\n    const position: number = el.offsetLeft - ((this.clientSize - el.clientWidth) / 2);\r\n    return {\r\n      behavior,\r\n      start: position\r\n    };\r\n  }\r\n\r\n  getRootMargin(): string {\r\n    return `1000px 1px 1000px 1px`;\r\n  }\r\n\r\n  getElementRootMargin(viewport: HTMLElement, el: HTMLElement): string {\r\n    const rootMargin: number = -1 * ((viewport.clientWidth - el.clientWidth) / 2) + 1;\r\n    return `0px ${ rootMargin }px 0px ${ rootMargin }px`;\r\n  }\r\n\r\n  getCentralizerStartSize(): number {\r\n    if (this.isContentLessThanContainer) {\r\n      const size: number = this.clientSize - this.slider.firstElementChild.clientWidth;\r\n      return size / 2;\r\n    }\r\n    return (this.clientSize / 2) - (this.slider.firstElementChild.firstElementChild?.clientWidth / 2);\r\n  }\r\n\r\n  getCentralizerEndSize(): number {\r\n    if (this.isContentLessThanContainer) {\r\n      const size: number = this.clientSize - this.slider.firstElementChild.clientWidth;\r\n      return size / 2;\r\n    }\r\n    return (this.clientSize / 2) - (this.slider.firstElementChild.lastElementChild?.clientWidth / 2);\r\n  }\r\n\r\n  getHammerVelocity(e: any): number {\r\n    return e.velocityX;\r\n  }\r\n\r\n  getHammerValue(value: number, e: any, behavior: ScrollBehavior): ScrollToOptions {\r\n    return {\r\n      behavior,\r\n      left: value - e.deltaX\r\n    };\r\n  }\r\n\r\n  // getDraggingProperty(e: MouseEvent): number {\r\n  //   return e.clientX;\r\n  // }\r\n\r\n  // getDraggingValue(value: number, delta: number, behavior: ScrollBehavior): ScrollToOptions {\r\n  //   return {\r\n  //     behavior,\r\n  //     left: value - delta\r\n  //   };\r\n  // }\r\n}\r\n\r\nexport class VerticalAdapter implements SliderAdapter {\r\n\r\n  readonly hammerDirection: number = Hammer?.DIRECTION_VERTICAL;\r\n\r\n  readonly scrollSnapType: string = 'y mandatory';\r\n\r\n  get scrollValue(): number {\r\n    return this.slider.scrollTop;\r\n  }\r\n\r\n  get clientSize(): number {\r\n    return this.slider.clientHeight;\r\n  }\r\n\r\n  get isContentLessThanContainer(): boolean {\r\n    return this.clientSize >= this.slider.firstElementChild.clientHeight;\r\n  }\r\n\r\n  constructor(public slider: HTMLElement, public config: GalleryConfig) {\r\n  }\r\n\r\n  getScrollToValue(el: HTMLElement, behavior: ScrollBehavior): SmoothScrollOptions {\r\n    const position: number = el.offsetTop - ((this.clientSize - el.clientHeight) / 2);\r\n    return {\r\n      behavior,\r\n      top: position\r\n    };\r\n  }\r\n\r\n  getRootMargin(): string {\r\n    return `1px 1000px 1px 1000px`;\r\n  }\r\n\r\n  getElementRootMargin(viewport: HTMLElement, el: HTMLElement): string {\r\n    const rootMargin: number = -1 * ((viewport.clientHeight - el.clientHeight) / 2) + 1;\r\n    return `${ rootMargin }px 0px ${ rootMargin }px 0px`;\r\n  }\r\n\r\n  getCentralizerStartSize(): number {\r\n    if (this.isContentLessThanContainer) {\r\n      const size = this.clientSize - this.slider.firstElementChild.clientHeight;\r\n      return size / 2;\r\n    }\r\n    return (this.clientSize / 2) - (this.slider.firstElementChild.firstElementChild?.clientHeight / 2);\r\n  }\r\n\r\n  getCentralizerEndSize(): number {\r\n    if (this.isContentLessThanContainer) {\r\n      const size = this.clientSize - this.slider.firstElementChild.clientHeight;\r\n      return size / 2;\r\n    }\r\n    return (this.clientSize / 2) - (this.slider.firstElementChild.lastElementChild?.clientHeight / 2);\r\n  }\r\n\r\n  getHammerVelocity(e: any): number {\r\n    return e.velocityY;\r\n  }\r\n\r\n  getHammerValue(value: number, e: any, behavior: ScrollBehavior): ScrollToOptions {\r\n    return {\r\n      behavior,\r\n      top: value - e.deltaY\r\n    };\r\n  }\r\n\r\n  // getDraggingProperty(e: MouseEvent): number {\r\n  //   return e.clientY;\r\n  // }\r\n\r\n  // getDraggingValue(value: number, delta: number, behavior: ScrollBehavior): ScrollToOptions {\r\n  //   return {\r\n  //     behavior,\r\n  //     top: value - delta\r\n  //   };\r\n  // }\r\n}\r\n",
+            "sourceCode": "import { GalleryConfig } from '../../models/config.model';\r\nimport { SliderAdapter } from './base-adapter';\r\nimport { SmoothScrollOptions } from '../../smooth-scroll';\r\n\r\n/**\r\n * A clone of HammerJs constants\r\n */\r\nexport const DIRECTION_LEFT: number = 2;\r\nexport const DIRECTION_RIGHT: number = 4;\r\nexport const DIRECTION_UP: number = 8;\r\nexport const DIRECTION_DOWN: number = 16;\r\n\r\nexport class HorizontalAdapter implements SliderAdapter {\r\n\r\n  readonly hammerDirection: number = DIRECTION_LEFT | DIRECTION_RIGHT;\r\n\r\n  readonly scrollSnapType: string = 'x mandatory';\r\n\r\n  get scrollValue(): number {\r\n    return this.slider.scrollLeft;\r\n  }\r\n\r\n  get clientSize(): number {\r\n    return this.slider.clientWidth;\r\n  }\r\n\r\n  get isContentLessThanContainer(): boolean {\r\n    return this.clientSize >= this.slider.firstElementChild.clientWidth;\r\n  }\r\n\r\n  constructor(public slider: HTMLElement, public config: GalleryConfig) {\r\n  }\r\n\r\n  getScrollToValue(el: HTMLElement, behavior: ScrollBehavior): SmoothScrollOptions {\r\n    const position: number = el.offsetLeft - ((this.clientSize - el.clientWidth) / 2);\r\n    return {\r\n      behavior,\r\n      start: position\r\n    };\r\n  }\r\n\r\n  getRootMargin(): string {\r\n    return `1000px 1px 1000px 1px`;\r\n  }\r\n\r\n  getElementRootMargin(viewport: HTMLElement, el: HTMLElement): string {\r\n    const rootMargin: number = -1 * ((viewport.clientWidth - el.clientWidth) / 2) + 1;\r\n    return `0px ${ rootMargin }px 0px ${ rootMargin }px`;\r\n  }\r\n\r\n  getCentralizerStartSize(): number {\r\n    if (this.isContentLessThanContainer) {\r\n      const size: number = this.clientSize - this.slider.firstElementChild.clientWidth;\r\n      return size / 2;\r\n    }\r\n    return (this.clientSize / 2) - (this.slider.firstElementChild.firstElementChild?.clientWidth / 2);\r\n  }\r\n\r\n  getCentralizerEndSize(): number {\r\n    if (this.isContentLessThanContainer) {\r\n      const size: number = this.clientSize - this.slider.firstElementChild.clientWidth;\r\n      return size / 2;\r\n    }\r\n    return (this.clientSize / 2) - (this.slider.firstElementChild.lastElementChild?.clientWidth / 2);\r\n  }\r\n\r\n  getHammerVelocity(e: any): number {\r\n    return e.velocityX;\r\n  }\r\n\r\n  getHammerValue(value: number, e: any, behavior: ScrollBehavior): ScrollToOptions {\r\n    return {\r\n      behavior,\r\n      left: value - e.deltaX\r\n    };\r\n  }\r\n\r\n  // getDraggingProperty(e: MouseEvent): number {\r\n  //   return e.clientX;\r\n  // }\r\n\r\n  // getDraggingValue(value: number, delta: number, behavior: ScrollBehavior): ScrollToOptions {\r\n  //   return {\r\n  //     behavior,\r\n  //     left: value - delta\r\n  //   };\r\n  // }\r\n}\r\n\r\nexport class VerticalAdapter implements SliderAdapter {\r\n\r\n  readonly hammerDirection: number = DIRECTION_UP | DIRECTION_DOWN;\r\n\r\n  readonly scrollSnapType: string = 'y mandatory';\r\n\r\n  get scrollValue(): number {\r\n    return this.slider.scrollTop;\r\n  }\r\n\r\n  get clientSize(): number {\r\n    return this.slider.clientHeight;\r\n  }\r\n\r\n  get isContentLessThanContainer(): boolean {\r\n    return this.clientSize >= this.slider.firstElementChild.clientHeight;\r\n  }\r\n\r\n  constructor(public slider: HTMLElement, public config: GalleryConfig) {\r\n  }\r\n\r\n  getScrollToValue(el: HTMLElement, behavior: ScrollBehavior): SmoothScrollOptions {\r\n    const position: number = el.offsetTop - ((this.clientSize - el.clientHeight) / 2);\r\n    return {\r\n      behavior,\r\n      top: position\r\n    };\r\n  }\r\n\r\n  getRootMargin(): string {\r\n    return `1px 1000px 1px 1000px`;\r\n  }\r\n\r\n  getElementRootMargin(viewport: HTMLElement, el: HTMLElement): string {\r\n    const rootMargin: number = -1 * ((viewport.clientHeight - el.clientHeight) / 2) + 1;\r\n    return `${ rootMargin }px 0px ${ rootMargin }px 0px`;\r\n  }\r\n\r\n  getCentralizerStartSize(): number {\r\n    if (this.isContentLessThanContainer) {\r\n      const size = this.clientSize - this.slider.firstElementChild.clientHeight;\r\n      return size / 2;\r\n    }\r\n    return (this.clientSize / 2) - (this.slider.firstElementChild.firstElementChild?.clientHeight / 2);\r\n  }\r\n\r\n  getCentralizerEndSize(): number {\r\n    if (this.isContentLessThanContainer) {\r\n      const size = this.clientSize - this.slider.firstElementChild.clientHeight;\r\n      return size / 2;\r\n    }\r\n    return (this.clientSize / 2) - (this.slider.firstElementChild.lastElementChild?.clientHeight / 2);\r\n  }\r\n\r\n  getHammerVelocity(e: any): number {\r\n    return e.velocityY;\r\n  }\r\n\r\n  getHammerValue(value: number, e: any, behavior: ScrollBehavior): ScrollToOptions {\r\n    return {\r\n      behavior,\r\n      top: value - e.deltaY\r\n    };\r\n  }\r\n\r\n  // getDraggingProperty(e: MouseEvent): number {\r\n  //   return e.clientY;\r\n  // }\r\n\r\n  // getDraggingValue(value: number, delta: number, behavior: ScrollBehavior): ScrollToOptions {\r\n  //   return {\r\n  //     behavior,\r\n  //     top: value - delta\r\n  //   };\r\n  // }\r\n}\r\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -3459,7 +3459,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 100,
+                "line": 106,
                 "jsdoctags": [
                     {
                         "name": "slider",
@@ -3489,20 +3489,20 @@
                     "type": "GalleryConfig",
                     "optional": false,
                     "description": "",
-                    "line": 102,
+                    "line": 108,
                     "modifierKind": [
                         123
                     ]
                 },
                 {
                     "name": "hammerDirection",
-                    "defaultValue": "Hammer?.DIRECTION_VERTICAL",
+                    "defaultValue": "DIRECTION_UP | DIRECTION_DOWN",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "number",
                     "optional": false,
                     "description": "",
-                    "line": 86,
+                    "line": 92,
                     "modifierKind": [
                         146
                     ]
@@ -3515,7 +3515,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 88,
+                    "line": 94,
                     "modifierKind": [
                         146
                     ]
@@ -3527,7 +3527,7 @@
                     "type": "HTMLElement",
                     "optional": false,
                     "description": "",
-                    "line": 102,
+                    "line": 108,
                     "modifierKind": [
                         123
                     ]
@@ -3540,7 +3540,7 @@
                     "optional": false,
                     "returnType": "number",
                     "typeParameters": [],
-                    "line": 130,
+                    "line": 136,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3550,7 +3550,7 @@
                     "optional": false,
                     "returnType": "number",
                     "typeParameters": [],
-                    "line": 122,
+                    "line": 128,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3573,7 +3573,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 117,
+                    "line": 123,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -3622,7 +3622,7 @@
                     "optional": false,
                     "returnType": "ScrollToOptions",
                     "typeParameters": [],
-                    "line": 142,
+                    "line": 148,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -3668,7 +3668,7 @@
                     "optional": false,
                     "returnType": "number",
                     "typeParameters": [],
-                    "line": 138,
+                    "line": 144,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -3689,7 +3689,7 @@
                     "optional": false,
                     "returnType": "string",
                     "typeParameters": [],
-                    "line": 113,
+                    "line": 119,
                     "deprecated": false,
                     "deprecationMessage": ""
                 },
@@ -3712,7 +3712,7 @@
                     "optional": false,
                     "returnType": "SmoothScrollOptions",
                     "typeParameters": [],
-                    "line": 105,
+                    "line": 111,
                     "deprecated": false,
                     "deprecationMessage": "",
                     "jsdoctags": [
@@ -3745,7 +3745,7 @@
                         "name": "scrollValue",
                         "type": "number",
                         "returnType": "number",
-                        "line": 90
+                        "line": 96
                     }
                 },
                 "clientSize": {
@@ -3754,7 +3754,7 @@
                         "name": "clientSize",
                         "type": "number",
                         "returnType": "number",
-                        "line": 94
+                        "line": 100
                     }
                 },
                 "isContentLessThanContainer": {
@@ -3763,7 +3763,7 @@
                         "name": "isContentLessThanContainer",
                         "type": "boolean",
                         "returnType": "boolean",
-                        "line": 98
+                        "line": 104
                     }
                 }
             },
@@ -10740,7 +10740,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" counter />`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('patterns') }),\r\n  ]\r\n}"
+                "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" counter />`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('basketball') }),\r\n  ]\r\n}"
             },
             {
                 "name": "defaultConfig",
@@ -10763,6 +10763,48 @@
                 "defaultValue": "{\r\n  action: GalleryAction.INITIALIZED,\r\n  isPlaying: false,\r\n  hasNext: false,\r\n  hasPrev: false,\r\n  currIndex: 0,\r\n  items: []\r\n}",
                 "rawdescription": "Initial state",
                 "description": "<p>Initial state</p>\n"
+            },
+            {
+                "name": "DIRECTION_DOWN",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ng-gallery/src/lib/components/adapters/main-adapters.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "number",
+                "defaultValue": "16"
+            },
+            {
+                "name": "DIRECTION_LEFT",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ng-gallery/src/lib/components/adapters/main-adapters.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "number",
+                "defaultValue": "2",
+                "rawdescription": "A clone of HammerJs constants",
+                "description": "<p>A clone of HammerJs constants</p>\n"
+            },
+            {
+                "name": "DIRECTION_RIGHT",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ng-gallery/src/lib/components/adapters/main-adapters.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "number",
+                "defaultValue": "4"
+            },
+            {
+                "name": "DIRECTION_UP",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ng-gallery/src/lib/components/adapters/main-adapters.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "number",
+                "defaultValue": "8"
             },
             {
                 "name": "filterActions",
@@ -10828,15 +10870,6 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "projects/ng-gallery/src/lib/smooth-scroll/smooth-scroll.directive.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "any"
-            },
-            {
-                "name": "Hammer",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/ng-gallery/src/lib/components/adapters/main-adapters.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "any"
@@ -12300,7 +12333,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" counter />`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('patterns') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" counter />`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('basketball') }),\r\n  ]\r\n}"
                 },
                 {
                     "name": "ImageSizeExample",
@@ -12511,6 +12544,50 @@
                     "description": "<p>Initial state</p>\n"
                 }
             ],
+            "projects/ng-gallery/src/lib/components/adapters/main-adapters.ts": [
+                {
+                    "name": "DIRECTION_DOWN",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ng-gallery/src/lib/components/adapters/main-adapters.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "defaultValue": "16"
+                },
+                {
+                    "name": "DIRECTION_LEFT",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ng-gallery/src/lib/components/adapters/main-adapters.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "defaultValue": "2",
+                    "rawdescription": "A clone of HammerJs constants",
+                    "description": "<p>A clone of HammerJs constants</p>\n"
+                },
+                {
+                    "name": "DIRECTION_RIGHT",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ng-gallery/src/lib/components/adapters/main-adapters.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "defaultValue": "4"
+                },
+                {
+                    "name": "DIRECTION_UP",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ng-gallery/src/lib/components/adapters/main-adapters.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "defaultValue": "8"
+                }
+            ],
             "projects/ng-gallery/src/lib/services/gallery-ref.ts": [
                 {
                     "name": "filterActions",
@@ -12668,17 +12745,6 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "projects/ng-gallery/src/lib/smooth-scroll/smooth-scroll.directive.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "any"
-                }
-            ],
-            "projects/ng-gallery/src/lib/components/adapters/main-adapters.ts": [
-                {
-                    "name": "Hammer",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/ng-gallery/src/lib/components/adapters/main-adapters.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "any"
@@ -13922,7 +13988,37 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "Hammer",
+                "name": "DIRECTION_DOWN",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/components/adapters/main-adapters.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DIRECTION_LEFT",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/components/adapters/main-adapters.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DIRECTION_RIGHT",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/components/adapters/main-adapters.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DIRECTION_UP",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
