@@ -41,7 +41,7 @@
       <mat-tab label="GalleryComponent">
         <ng-template matTabContent>
           <p>Alternatively, The gallery can be accessed using the component reference.</p>
-          <p>Get the component using <code class="hljs">@ViewChild(GalleryComponent)</code> then add items</p>
+          <p>Get the component using <code class="hljs">&#64;ViewChild(GalleryComponent)</code> then add items</p>
           <hl-code [code]="code.galleryCmp"></hl-code>
         </ng-template>
       </mat-tab>
@@ -62,7 +62,8 @@
     <gallery id="basic"
              *ngIf="media$ | async; let config"
              [items]="fruits$ | async"
-             [dots]="true"
+             thumbs
+             bullets
              [thumbWidth]="config.thumbWidth"
              [thumbHeight]="config.thumbHeight"
              [thumbPosition]="config.thumbPosition">

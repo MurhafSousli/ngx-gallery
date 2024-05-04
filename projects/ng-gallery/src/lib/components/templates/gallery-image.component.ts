@@ -11,10 +11,13 @@ import { NgSwitch, NgSwitchCase, NgIf } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { imageFailedSvg } from './svg-assets';
+import { ImgRecognizer } from '../../utils/img-recognizer';
+import { ItemState } from './items.model';
 
 @Component({
   selector: 'gallery-image',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./gallery-image.scss'],
   animations: [
     trigger('fadeIn', [
       transition('* => success', [
@@ -25,14 +28,28 @@ import { imageFailedSvg } from './svg-assets';
   ],
   template: `
     <ng-container [ngSwitch]="state">
-      <img [@fadeIn]="state"
-           [src]="src"
-           [attr.alt]="alt"
-           [attr.loading]="loadingAttr"
-           [style.visibility]="state === 'success' ? 'visible' : 'hidden'"
-           class="g-image-item"
-           (load)="state = 'success'; loaded.emit()"
-           (error)="state = 'failed'; error.emit($event)"/>
+
+      <ng-container *ngIf="isThumbnail; else main">
+        <img [@fadeIn]="state"
+             [src]="src"
+             [attr.alt]="alt"
+             [attr.loading]="loadingAttr"
+             [style.visibility]="state === 'success' ? 'visible' : 'hidden'"
+             class="g-image-item"
+             (load)="state = 'success'"
+             (error)="state = 'failed'; error.emit($event)"/>
+      </ng-container>
+      <ng-template #main>
+        <img [galleryImage]="index"
+             [@fadeIn]="state"
+             [src]="src"
+             [attr.alt]="alt"
+             [attr.loading]="loadingAttr"
+             [style.visibility]="state === 'success' ? 'visible' : 'hidden'"
+             class="g-image-item"
+             (load)="state = 'success'"
+             (error)="state = 'failed'; error.emit($event)"/>
+      </ng-template>
 
       <div *ngSwitchCase="'failed'"
            class="g-image-error-message">
@@ -65,18 +82,17 @@ import { imageFailedSvg } from './svg-assets';
     </ng-container>
   `,
   standalone: true,
-  imports: [NgSwitch, NgSwitchCase, NgIf]
+  imports: [NgSwitch, NgSwitchCase, NgIf, ImgRecognizer]
 })
 
 export class GalleryImageComponent implements OnInit {
 
-  state: 'loading' | 'success' | 'failed' = 'loading';
-
-  /** Progress value */
-  progress: number = 0;
+  state: ItemState = 'loading';
 
   /** Is thumbnail */
   @Input() isThumbnail: boolean;
+
+  @Input() index: number;
 
   /** Image loading attribute */
   @Input() loadingAttr: 'eager' | 'lazy';
@@ -101,9 +117,7 @@ export class GalleryImageComponent implements OnInit {
   errorSvg: SafeHtml;
 
   /** Stream that emits when an error occurs */
-  @Output() error = new EventEmitter<ErrorEvent>();
-
-  @Output() loaded = new EventEmitter<void>();
+  @Output() error: EventEmitter<ErrorEvent> = new EventEmitter<ErrorEvent>();
 
   @HostBinding('attr.imageState') get imageState(): string {
     return this.state;

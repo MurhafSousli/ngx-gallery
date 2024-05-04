@@ -61,7 +61,6 @@ export class LightboxExampleComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.gallery.ref('lightbox').destroy();
   }
-
 }
 
 const code = {
@@ -74,7 +73,7 @@ galleryRef.load(items)`,
   <img [src]="item.data.thumbnail"/>
 </div>`,
   ex: `import { Component, OnInit } from '@angular/core';
-import { NgFor, AsyncPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { GalleryModule, Gallery, GalleryItem } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
 
@@ -90,7 +89,7 @@ import { LightboxModule } from 'ng-gallery/lightbox';
     </div>
   \`,
   standalone: true,
-  imports: [LightboxModule, NgFor, AsyncPipe]
+  imports: [CommonModule, LightboxModule]
 })
 export class AppComponent implements OnInit {
 

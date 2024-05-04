@@ -1,0 +1,144 @@
+import {Meta, Canvas} from "@storybook/addon-docs";
+import * as CustomTemplatesStories from "./CustomTemplates.stories";
+
+<Meta of={CustomTemplatesStories}/>
+
+# Custom Templates
+
+
+
+
+The directives are: `*galleryItemDef`, `*galleryImageDef`, `*galleryThumbDef`, `*galleryBoxDef`
+
+## GalleryImageDef
+
+`*galleryImageDef`: applies only on image items - the image will still be displayed, but this adds an custom inner template, useful to add text overlay on top of the image.
+
+
+<Canvas of={CustomTemplatesStories.ImageTemplateExample}/>
+
+**Example:**
+
+```html
+<gallery>
+  <ng-container *galleryImageDef="let item; let active = active">
+    <div *ngIf="active" class="item-text">
+      {{ item?.alt }}
+    </div>
+  </ng-container>
+</gallery>
+```
+
+## GalleryThumbDef
+
+`*galleryThumbDef`: applies on all thumbnails types, image will still displayed, but adds an custom inner template.
+
+
+<Canvas of={CustomTemplatesStories.ThumbTemplateExample}/>
+
+**Example:** the following adds a Youtube icon on Youtube thumbnail and video icon on video thumbnails:
+
+```html
+<gallery>
+  <ng-container *galleryThumbDef="let item; let type = type">
+    <span *ngIf="type === 'youtube'" class="item-type">
+      <fa-icon [icon]="youtubeIcon" size="lg"></fa-icon>
+    </span>
+    <span *ngIf="type === 'video'" class="item-type">
+      <fa-icon [icon]="videoIcon" size="lg"></fa-icon>
+    </span>
+  </ng-container>
+</gallery>
+```
+
+
+## GalleryItemDef
+
+`*galleryItemDef`: overrides gallery item template, useful if you want create your own gallery template for any type from scratch.
+
+<Canvas of={CustomTemplatesStories.ItemTemplateExample}/>
+
+**Example:**
+
+```html
+<gallery>
+  <div *galleryItemDef="let item; let type = type">
+    <div *ngIf="type === 'my-image-template'">
+      <img [src]="item.src">
+    </div>
+    <div *ngIf="type === 'my-video-template'">
+      <video>
+        <source src="item.src">
+      </video>
+    </div>
+  </div>
+</gallery>
+```
+
+ > When using `galleryItemDef` you will need to add the items differently
+
+```ts
+galleryRef.add({
+  type: 'my-image-template',
+  data: {
+    src: 'IMAGE_SRC_URL',
+    thumb: 'IMAGE_THUMBNAIL_URL'
+    alt: 'Test'
+  }
+})
+
+// or using items array
+const items: GalleryItem[] = [
+  {
+     type: 'my-image-template'
+     data: {
+       src: 'IMAGE_SRC_URL',
+       thumb: 'IMAGE_THUMBNAIL_URL'
+     }
+  }
+  // more items
+];
+```
+
+
+#### Additional context properties that comes with `GalleryItemDef`, `GalleryImageDef` and `GalleryThumbDef` are:
+
+```ts
+{
+  /** Index of the item. */
+  index?: number;
+
+  /** Type of the item, default ones are 'image', 'video', 'youtube', 'iframe' */
+  type?: string;
+
+  /** True if this item is the active one. */
+  active?: boolean;
+
+  /** The number of total items. */
+  count?: number;
+
+  /** True if this item is first. */
+  first?: boolean;
+
+  /** True if this item is last. */
+  last?: boolean;
+}
+```
+
+## GalleryBoxDef
+
+`*galleryBoxDef` Adds a single static template on top of the gallery items
+
+<Canvas of={CustomTemplatesStories.BoxTemplateExample}/>
+
+```html
+<gallery>
+  <div *galleryBoxDef="let state = state; let config = config">
+    {{ state.currIndex + 1 }} / {{ state.items.length }}
+  </div>
+</gallery>
+```
+
+Available context variables are `state` and `config`
+
+> You can use these directives on DOM elements and components or even `ng-container` and `ng-template`

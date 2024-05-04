@@ -26,9 +26,9 @@ export class Gallery {
    */
   ref(id = 'root', config?: GalleryConfig): GalleryRef {
     if (this._instances.has(id)) {
-      const galleryRef = this._instances.get(id);
+      const galleryRef: GalleryRef = this._instances.get(id);
       if (config) {
-        galleryRef.setConfig({ ...this.config, ...config });
+        galleryRef.setConfig(config);
       }
       return galleryRef;
     } else {

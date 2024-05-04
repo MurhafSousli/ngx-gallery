@@ -1,0 +1,23 @@
+.g-counter {
+  font-weight: bold;
+  user-select: none;
+  opacity: 0.6;
+  transition: opacity linear 150ms;
+  z-index: 50;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) perspective(1px);
+  font-size: 12px;
+  padding: 4px 10px;
+  color: var(--g-font-color);
+  background-color: var(--g-overlay-color);
+  box-shadow: var(--g-box-shadow);
+
+  top: var(--counter-top);
+  bottom: var(--counter-bottom);
+  border-radius: var(--counter-border-radius);
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

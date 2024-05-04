@@ -2,69 +2,75 @@ import {
   Component,
   Input,
   Output,
-  AfterViewInit,
-  AfterViewChecked,
-  OnDestroy,
-  OnChanges,
   ViewChild,
   ViewChildren,
+  EventEmitter,
+  AfterViewInit,
+  OnChanges,
   QueryList,
   SimpleChanges,
-  NgZone,
   ElementRef,
-  EventEmitter,
-  ChangeDetectorRef,
   ChangeDetectionStrategy
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Platform } from '@angular/cdk/platform';
-import { Subject, debounceTime, takeUntil, tap } from 'rxjs';
+import { Observable, Subject, map, startWith } from 'rxjs';
 import { GalleryConfig } from '../models/config.model';
 import { GalleryState, GalleryError } from '../models/gallery.model';
-import { ThumbnailsPosition, ThumbnailsView } from '../models/constants';
-import { ThumbSliderAdapter, HorizontalThumbAdapter, VerticalThumbAdapter } from './adapters';
-import { SmoothScrollManager } from '../smooth-scroll';
-import { resizeObservable } from '../utils/resize-observer';
+import { ThumbnailsPosition } from '../models/constants';
+import { VerticalAdapter, HorizontalAdapter, SliderAdapter } from './adapters';
+import { SmoothScroll, SmoothScrollOptions } from '../smooth-scroll';
 import { GalleryThumbComponent } from './gallery-thumb.component';
-
-declare const Hammer: any;
+import { HammerSliding } from '../gestures/hammer-sliding.directive';
+import { ThumbResizeObserver } from '../observers/thumb-resize-observer.directive';
 
 @Component({
   selector: 'gallery-thumbs',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./gallery-thumbs.scss'],
   template: `
     <div #slider
          class="g-slider"
-         [attr.centralised]="config.thumbView === thumbnailsView.Contain || adapter.isContentLessThanContainer">
+         [smoothScroll]="position$ | async"
+         [smoothScrollInterruptOnMousemove]="!config.disableThumbMouseScroll"
+         [attr.centralised]="config.thumbCentralized || adapter.isContentLessThanContainer"
+         [hammerSliding]="!config.disableThumbMouseScroll"
+         [galleryId]="galleryId"
+         [items]="items$ | async"
+         [state]="state"
+         [config]="config"
+         [adapter]="adapter"
+         (thumbResizeObserver)="scrollToIndex(state.currIndex, 'auto')"
+         (activeIndexChange)="onActiveIndexChange($event)">
       <div class="g-slider-content">
         <gallery-thumb *ngFor="let item of state.items; trackBy: trackByFn; index as i"
+                       [attr.galleryId]="galleryId"
                        [type]="item.type"
                        [config]="config"
                        [data]="item.data"
                        [currIndex]="state.currIndex"
                        [index]="i"
                        [count]="state.items.length"
-                       (click)="config.disableThumb ? null : thumbClick.emit(i)"
-                       (error)="error.emit({ itemIndex: i, error: $event })">
-        </gallery-thumb>
+                       (click)="config.disableThumbs ? null : thumbClick.emit(i)"
+                       (error)="error.emit({ itemIndex: i, error: $event })"/>
       </div>
     </div>
   `,
   standalone: true,
-  imports: [CommonModule, GalleryThumbComponent]
+  imports: [CommonModule, GalleryThumbComponent, SmoothScroll, HammerSliding, ThumbResizeObserver]
 })
-export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, OnChanges, OnDestroy {
+export class GalleryThumbsComponent implements AfterViewInit, OnChanges {
 
-  /** HammerJS instance */
-  private _hammer: any;
-
-  /** Thumbnails view enum */
-  readonly thumbnailsView = ThumbnailsView;
-
-  private readonly _destroyed$ = new Subject<void>();
+  /** Stream that emits the slider position */
+  readonly position$: Subject<SmoothScrollOptions> = new Subject<SmoothScrollOptions>();
 
   /** Slider adapter */
-  adapter: ThumbSliderAdapter;
+  adapter: SliderAdapter;
+
+  /** Stream that emits the thumb components once they're initialized */
+  items$: Observable<GalleryThumbComponent[]>;
+
+  /** Gallery ID */
+  @Input() galleryId: string;
 
   /** Gallery state */
   @Input() state: GalleryState;
@@ -73,25 +79,18 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
   @Input() config: GalleryConfig;
 
   /** Stream that emits when thumb is clicked */
-  @Output() thumbClick = new EventEmitter<number>();
+  @Output() thumbClick: EventEmitter<number> = new EventEmitter<number>();
 
   /** Stream that emits when an error occurs */
-  @Output() error = new EventEmitter<GalleryError>();
+  @Output() error: EventEmitter<GalleryError> = new EventEmitter<GalleryError>();
 
   /** Slider ElementRef */
   @ViewChild('slider', { static: true }) sliderEl: ElementRef;
 
-  @ViewChildren(GalleryThumbComponent, { read: ElementRef }) items = new QueryList<ElementRef<HTMLElement>>();
+  @ViewChildren(GalleryThumbComponent) items: QueryList<GalleryThumbComponent> = new QueryList<GalleryThumbComponent>();
 
   get slider(): HTMLElement {
     return this.sliderEl.nativeElement;
-  }
-
-  constructor(private _el: ElementRef,
-              private _zone: NgZone,
-              private _smoothScroll: SmoothScrollManager,
-              private _cd: ChangeDetectorRef,
-              private _platform: Platform) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -101,37 +100,24 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
         switch (this.config.thumbPosition) {
           case ThumbnailsPosition.Right:
           case ThumbnailsPosition.Left:
-            this.adapter = new VerticalThumbAdapter(this.slider, this.config);
+            this.adapter = new VerticalAdapter(this.slider, this.config);
             break;
           case ThumbnailsPosition.Top:
           case ThumbnailsPosition.Bottom:
-            this.adapter = new HorizontalThumbAdapter(this.slider, this.config);
+            this.adapter = new HorizontalAdapter(this.slider, this.config);
             break;
         }
 
-        if (this._platform.isBrowser) {
-          if (!changes.config.firstChange) {
-            // Keep the correct sliding position when direction changes
-            requestAnimationFrame(() => {
-              this.scrollToIndex(this.state.currIndex, 'auto');
-            });
-          }
-
-          // Reactivate gestures
-          this.enableDisableGestures();
+        if (!changes.config.firstChange) {
+          // Keep the correct sliding position when direction changes
+          requestAnimationFrame(() => {
+            this.scrollToIndex(this.state.currIndex, 'auto');
+          });
         }
-      }
-      if (this._platform.isBrowser) {
-        if (!changes.config.firstChange && changes.config.currentValue?.thumbMouseSlidingDisabled !== changes.config.previousValue?.thumbMouseSlidingDisabled) {
-          this.enableDisableGestures();
-        }
-
-        this.slider.style.setProperty('--thumb-height', `${ this.config.thumbHeight }px`);
-        this.slider.style.setProperty('--thumb-width', `${ this.config.thumbWidth }px`);
       }
     }
 
-    if (this._platform.isBrowser && changes.state && (changes.state.firstChange || !this.config.thumbDetached)) {
+    if (changes.state && (changes.state.firstChange || !this.config.detachThumbs)) {
       if (changes.state.currentValue?.currIndex !== changes.state.previousValue?.currIndex) {
         // Scroll slide to item when current index changes.
         requestAnimationFrame(() => {
@@ -142,101 +128,32 @@ export class GalleryThumbsComponent implements AfterViewInit, AfterViewChecked, 
   }
 
   ngAfterViewInit(): void {
-    if (this._platform.isBrowser) {
-      // Workaround: opening a lightbox (centralised) with last index active, show in wrong position
-      setTimeout(() => this.scrollToIndex(this.state.currIndex, 'auto'), 200);
-
-      this._zone.runOutsideAngular(() => {
-        // Update necessary calculation on host resize
-        resizeObservable(this._el.nativeElement).pipe(
-          debounceTime(this.config.resizeDebounceTime),
-          tap(() => {
-            // Update thumb centralize size
-            const el: HTMLElement = this.items.get(this.state.currIndex)?.nativeElement;
-            if (el) {
-              this.slider.style.setProperty('--thumb-centralize-start-size', this.adapter.getCentralizerStartSize() + 'px');
-              this.slider.style.setProperty('--thumb-centralize-end-size', this.adapter.getCentralizerEndSize() + 'px');
-            }
-            this._cd.detectChanges();
-            this.scrollToIndex(this.state.currIndex, 'auto');
-          }),
-          takeUntil(this._destroyed$)
-        ).subscribe();
-      });
-    }
-  }
-
-  ngAfterViewChecked(): void {
-    const el: HTMLElement = this.items.get(this.state.currIndex)?.nativeElement;
-    if (el && this._platform.isBrowser) {
-      this.slider.style.setProperty('--thumb-centralize-start-size', this.adapter.getCentralizerStartSize() + 'px');
-      this.slider.style.setProperty('--thumb-centralize-end-size', this.adapter.getCentralizerEndSize() + 'px');
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.deactivateGestures();
-    this._destroyed$.next();
-    this._destroyed$.complete();
+    this.items.notifyOnChanges();
+    this.items$ = this.items.changes.pipe(
+      // In some cases, items is not notified at first, need to force start the stream
+      startWith(null),
+      map(() => this.items.toArray())
+    );
   }
 
   trackByFn(index: number, item: any) {
     return item.type;
   }
 
-  private scrollToIndex(value: number, behavior: ScrollBehavior): void {
-    this._zone.runOutsideAngular(() => {
-      this.slider.style.scrollSnapType = 'unset';
-
-      const el: HTMLElement = this.items.get(value)?.nativeElement;
-      if (el) {
-        this._smoothScroll.scrollTo(this.slider, this.adapter.getScrollToValue(el, behavior)).then(() => {
-          this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
-        });
-      }
-    });
-  }
-
-  private enableDisableGestures(): void {
-    if (!this._platform.IOS && !this._platform.ANDROID) {
-      // Enable/Disable mouse sliding on desktop browser only
-      if (!this.config.thumbMouseSlidingDisabled) {
-        this.activateGestures();
-      } else {
-        this.deactivateGestures();
-      }
+  onActiveIndexChange(index: number): void {
+    if (index === -1) {
+      // Reset active index position
+      this.scrollToIndex(this.state.currIndex, 'smooth');
+    } else {
+      this.scrollToIndex(index, 'smooth');
     }
   }
 
-  private activateGestures(): void {
-    if (typeof Hammer !== 'undefined' && !this.config.disableThumb) {
-
-      const direction: number = this.adapter.panDirection;
-
-      // Activate gestures
-      this._zone.runOutsideAngular(() => {
-        this._hammer = new Hammer(this._el.nativeElement, { inputClass: Hammer.MouseInput });
-        this._hammer.get('pan').set({ direction });
-
-        let panOffset: number = 0;
-
-        this._hammer.on('panstart', () => {
-          panOffset = this.adapter.scrollValue;
-          // Disable scroll-snap-type functionality
-          this.slider.style.scrollSnapType = 'unset';
-          this.slider.classList.add('g-sliding');
-        });
-        this._hammer.on('panmove', (e) => this.slider.scrollTo(this.adapter.getPanValue(panOffset, e, 'auto')));
-        this._hammer.on('panend', () => {
-          // Enable scroll-snap-type functionality
-          this.slider.style.scrollSnapType = this.adapter.scrollSnapType;
-          this.slider.classList.remove('g-sliding');
-        });
-      });
+  scrollToIndex(value: number, behavior: ScrollBehavior): void {
+    const el: HTMLElement = this.items.get(value)?.nativeElement;
+    if (el) {
+      const pos: SmoothScrollOptions = this.adapter.getScrollToValue(el, behavior);
+      this.position$.next(pos);
     }
-  }
-
-  private deactivateGestures(): void {
-    this._hammer?.destroy();
   }
 }

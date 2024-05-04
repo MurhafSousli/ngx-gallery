@@ -29,7 +29,7 @@ export enum ThumbnailsPosition {
   Bottom = 'bottom'
 }
 
-export enum DotsPosition {
+export enum BulletsPosition {
   Top = 'top',
   Bottom = 'bottom'
 }
@@ -39,7 +39,7 @@ export enum CounterPosition {
   Bottom = 'bottom'
 }
 
-export enum SlidingDirection {
+export enum Orientation {
   Horizontal = 'horizontal',
   Vertical = 'vertical'
 }
@@ -50,11 +50,6 @@ export enum GalleryItemTypes {
   Youtube = 'youtube',
   Vimeo = 'vimeo',
   Iframe = 'iframe'
-}
-
-export enum ThumbnailsView {
-  Default = 'default',
-  Contain = 'contain',
 }
 
 export type GalleryItemType = GalleryItemTypes | string;

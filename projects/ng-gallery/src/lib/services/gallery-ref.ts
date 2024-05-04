@@ -1,4 +1,4 @@
-import { BehaviorSubject, Subject, Observable, of, EMPTY, delay, filter, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Subject, Observable, filter } from 'rxjs';
 import { defaultState } from '../utils/gallery.default';
 import { GalleryError, GalleryItem, GalleryState } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
@@ -29,13 +29,13 @@ export class GalleryRef {
   private readonly _config: BehaviorSubject<GalleryConfig>;
 
   /** Stream that emits on item click */
-  readonly itemClick = new Subject<number>();
+  readonly itemClick: Subject<number> = new Subject<number>();
 
   /** Stream that emits on thumbnail click */
-  readonly thumbClick = new Subject<number>();
+  readonly thumbClick: Subject<number> = new Subject<number>();
 
   /** Stream that emits on an error occurs */
-  readonly error = new Subject<GalleryError>();
+  readonly error: Subject<GalleryError> = new Subject<GalleryError>();
 
   /** Gallery Events */
 
@@ -73,30 +73,11 @@ export class GalleryRef {
     return this.state.pipe(filterActions([GalleryAction.PLAY, GalleryAction.STOP]));
   }
 
-  /** Stream that emits when the player should start or stop */
-  private get playerActions(): Observable<GalleryState> {
-    return this.state.pipe(filterActions([GalleryAction.PLAY, GalleryAction.STOP, GalleryAction.INDEX_CHANGED]));
-  }
-
   constructor(config: GalleryConfig, private deleteInstance: () => void) {
     this._state = new BehaviorSubject<GalleryState>(defaultState);
     this._config = new BehaviorSubject<GalleryConfig>(config);
     this.state = this._state.asObservable();
     this.config = this._config.asObservable();
-  }
-
-  /**
-   * Activate player actions listener
-   */
-  activatePlayer(): Observable<GalleryState> {
-    return this.playerActions.pipe(
-      switchMap((e: GalleryState) =>
-        e.isPlaying ? of({}).pipe(
-          delay(this._config.value.playerInterval),
-          tap(() => this.next(this._config.value.scrollBehavior))
-        ) : EMPTY
-      )
-    );
   }
 
   /**
@@ -239,9 +220,9 @@ export class GalleryRef {
    */
   play(interval?: number): void {
     if (interval) {
-      this.setConfig({ playerInterval: interval });
+      this.setConfig({ autoplayInterval: interval });
     }
-    this.setState({ action: GalleryAction.PLAY, isPlaying: true });
+    this.setState({ action: GalleryAction.PLAY, behavior: 'auto', isPlaying: true });
   }
 
   /**

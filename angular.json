@@ -28,6 +28,38 @@
             "tsConfig": "projects/ng-gallery/tsconfig.spec.json",
             "karmaConfig": "projects/ng-gallery/karma.conf.js"
           }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": "projects/ng-gallery/.storybook",
+            "browserTarget": "ng-gallery:build",
+            "styles": ["@angular/cdk/overlay-prebuilt.css"],
+            "compodoc": true,
+            "compodocArgs": [
+              "-e",
+              "json",
+              "-d",
+              "projects/ng-gallery"
+            ],
+            "port": 6006
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": "projects/ng-gallery/.storybook",
+            "browserTarget": "ng-gallery:build",
+            "styles": ["@angular/cdk/overlay-prebuilt.css"],
+            "compodoc": true,
+            "compodocArgs": [
+              "-e",
+              "json",
+              "-d",
+              "projects/ng-gallery"
+            ],
+            "outputDir": "dist/storybook/ng-gallery"
+          }
         }
       }
     },
@@ -45,7 +77,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ng-gallery-demo",
+            "outputPath": "dist/ng-gallery-demo/browser",
             "index": "projects/ng-gallery-demo/src/index.html",
             "main": "projects/ng-gallery-demo/src/main.ts",
             "polyfills": "projects/ng-gallery-demo/src/polyfills.ts",
@@ -105,18 +137,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ng-gallery-demo:build"
+            "buildTarget": "ng-gallery-demo:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ng-gallery-demo:build:production"
+              "buildTarget": "ng-gallery-demo:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ng-gallery-demo:build"
+            "buildTarget": "ng-gallery-demo:build"
           }
         },
         "test": {
@@ -147,6 +179,69 @@
               "devServerTarget": "ng-gallery-demo:serve:production"
             }
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/ng-gallery-demo/server",
+            "main": "projects/ng-gallery-demo/server.ts",
+            "tsConfig": "projects/ng-gallery-demo/tsconfig.server.json",
+            "buildOptimizer": false,
+            "optimization": false,
+            "sourceMap": true,
+            "extractLicenses": false,
+            "vendorChunk": true
+          },
+          "configurations": {
+            "production": {
+              "buildOptimizer": true,
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "projects/ng-gallery-demo/src/environments/environment.ts",
+                  "with": "projects/ng-gallery-demo/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "sourceMap": false,
+              "extractLicenses": true,
+              "vendorChunk": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "ng-gallery-demo:build",
+              "serverTarget": "ng-gallery-demo:server"
+            },
+            "production": {
+              "browserTarget": "ng-gallery-demo:build:production",
+              "serverTarget": "ng-gallery-demo:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ng-gallery-demo:build:production",
+              "serverTarget": "ng-gallery-demo:server:production"
+            },
+            "development": {
+              "browserTarget": "ng-gallery-demo:build:development",
+              "serverTarget": "ng-gallery-demo:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

@@ -1,0 +1,39 @@
+:host {
+  cursor: var(--g-thumb-cursor);
+  height: var(--g-thumb-height);
+  width: var(--g-thumb-width);
+  max-height: var(--g-thumb-height);
+  max-width: var(--g-thumb-width);
+  align-self: center;
+  background: black;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  // Disable highlighting the elements on mouse move or click
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  --g-thumb-opacity: 0.5;
+
+  &.g-active-thumb {
+    --g-thumb-opacity: 1;
+  }
+}
+
+.g-template {
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}

@@ -1,50 +1,56 @@
 import { GalleryConfig } from '../../models/config.model';
 import { SliderAdapter } from './base-adapter';
-import { HorizontalCommonAdapter, VerticalCommonAdapter } from './common-adapter';
-import { SmoothScrollToOptions } from '../../smooth-scroll';
+import { SmoothScrollOptions } from '../../smooth-scroll';
 
-export class HorizontalAdapter extends HorizontalCommonAdapter implements SliderAdapter {
+/**
+ * A clone of HammerJs constants
+ */
+export const DIRECTION_LEFT: number = 2;
+export const DIRECTION_RIGHT: number = 4;
+export const DIRECTION_UP: number = 8;
+export const DIRECTION_DOWN: number = 16;
 
-  get measureIndex(): number {
-    return this.slider.scrollLeft / this.slider.clientWidth;
+export class HorizontalAdapter implements SliderAdapter {
+
+  readonly hammerDirection: number = DIRECTION_LEFT | DIRECTION_RIGHT;
+
+  readonly scrollSnapType: string = 'x mandatory';
+
+  get scrollValue(): number {
+    return this.slider.scrollLeft;
+  }
+
+  get clientSize(): number {
+    return this.slider.clientWidth;
   }
 
   get isContentLessThanContainer(): boolean {
-    return this.slider.clientWidth >= this.slider.firstElementChild.clientWidth;
+    return this.clientSize >= this.slider.firstElementChild.clientWidth;
   }
 
   constructor(public slider: HTMLElement, public config: GalleryConfig) {
-    super(slider, config);
   }
 
-  getClientSize(el: HTMLElement): number {
-    return el.clientWidth;
-  }
-
-  getOffsetSize(el: HTMLElement): number {
-    return el.offsetLeft;
-  }
-
-  getScrollToValue(el: HTMLElement, behavior: ScrollBehavior): SmoothScrollToOptions {
-    const position = el.offsetLeft - ((this.clientSize - el.clientWidth) / 2);
+  getScrollToValue(el: HTMLElement, behavior: ScrollBehavior): SmoothScrollOptions {
+    const position: number = el.offsetLeft - ((this.clientSize - el.clientWidth) / 2);
     return {
-      start: position,
-      duration: behavior === 'smooth' ? this.config.slidingDuration : 0,
-      easing: this.config.slidingEase
+      behavior,
+      start: position
     };
   }
 
-  getPanDelta(e): number {
-    return e.deltaX;
+  getRootMargin(): string {
+    return `1000px 1px 1000px 1px`;
   }
 
-  getPanVelocity(e): number {
-    return e.velocityX;
+  getElementRootMargin(viewport: HTMLElement, el: HTMLElement): string {
+    const rootMargin: number = -1 * ((viewport.clientWidth - el.clientWidth) / 2) + 1;
+    return `0px ${ rootMargin }px 0px ${ rootMargin }px`;
   }
 
   getCentralizerStartSize(): number {
     if (this.isContentLessThanContainer) {
-      const size = this.clientSize - this.slider.firstElementChild.clientWidth;
+      const size: number = this.clientSize - this.slider.firstElementChild.clientWidth;
       return size / 2;
     }
     return (this.clientSize / 2) - (this.slider.firstElementChild.firstElementChild?.clientWidth / 2);
@@ -52,50 +58,71 @@ export class HorizontalAdapter extends HorizontalCommonAdapter implements Slider
 
   getCentralizerEndSize(): number {
     if (this.isContentLessThanContainer) {
-      const size = this.clientSize - this.slider.firstElementChild.clientWidth;
+      const size: number = this.clientSize - this.slider.firstElementChild.clientWidth;
       return size / 2;
     }
     return (this.clientSize / 2) - (this.slider.firstElementChild.lastElementChild?.clientWidth / 2);
   }
-}
 
-export class VerticalAdapter extends VerticalCommonAdapter implements SliderAdapter {
-
-  get measureIndex(): number {
-    return this.slider.scrollTop / this.slider.clientHeight;
+  getHammerVelocity(e: any): number {
+    return e.velocityX;
   }
 
-  get isContentLessThanContainer(): boolean {
-    return this.slider.clientHeight >= this.slider.firstElementChild.clientHeight;
-  }
-
-  constructor(public slider: HTMLElement, public config: GalleryConfig) {
-    super(slider, config);
-  }
-
-  getClientSize(el: HTMLElement): number {
-    return el.clientHeight;
-  }
-
-  getOffsetSize(el: HTMLElement): number {
-    return el.offsetTop;
-  }
-
-  getScrollToValue(el: HTMLElement, behavior: ScrollBehavior): SmoothScrollToOptions {
-    const position = el.offsetTop - ((this.clientSize - el.clientHeight) / 2);
+  getHammerValue(value: number, e: any, behavior: ScrollBehavior): ScrollToOptions {
     return {
-      top: position,
-      duration: behavior === 'smooth' ? this.config.slidingDuration : 0,
-      easing: this.config.slidingEase
+      behavior,
+      left: value - e.deltaX
     };
   }
 
-  getPanDelta(e): number {
-    return e.deltaY;
+  // getDraggingProperty(e: MouseEvent): number {
+  //   return e.clientX;
+  // }
+
+  // getDraggingValue(value: number, delta: number, behavior: ScrollBehavior): ScrollToOptions {
+  //   return {
+  //     behavior,
+  //     left: value - delta
+  //   };
+  // }
+}
+
+export class VerticalAdapter implements SliderAdapter {
+
+  readonly hammerDirection: number = DIRECTION_UP | DIRECTION_DOWN;
+
+  readonly scrollSnapType: string = 'y mandatory';
+
+  get scrollValue(): number {
+    return this.slider.scrollTop;
   }
 
-  getPanVelocity(e): number {
-    return e.velocityY;
+  get clientSize(): number {
+    return this.slider.clientHeight;
+  }
+
+  get isContentLessThanContainer(): boolean {
+    return this.clientSize >= this.slider.firstElementChild.clientHeight;
+  }
+
+  constructor(public slider: HTMLElement, public config: GalleryConfig) {
+  }
+
+  getScrollToValue(el: HTMLElement, behavior: ScrollBehavior): SmoothScrollOptions {
+    const position: number = el.offsetTop - ((this.clientSize - el.clientHeight) / 2);
+    return {
+      behavior,
+      top: position
+    };
+  }
+
+  getRootMargin(): string {
+    return `1px 1000px 1px 1000px`;
+  }
+
+  getElementRootMargin(viewport: HTMLElement, el: HTMLElement): string {
+    const rootMargin: number = -1 * ((viewport.clientHeight - el.clientHeight) / 2) + 1;
+    return `${ rootMargin }px 0px ${ rootMargin }px 0px`;
   }
 
   getCentralizerStartSize(): number {
@@ -113,4 +140,26 @@ export class VerticalAdapter extends VerticalCommonAdapter implements SliderAdap
     }
     return (this.clientSize / 2) - (this.slider.firstElementChild.lastElementChild?.clientHeight / 2);
   }
+
+  getHammerVelocity(e: any): number {
+    return e.velocityY;
+  }
+
+  getHammerValue(value: number, e: any, behavior: ScrollBehavior): ScrollToOptions {
+    return {
+      behavior,
+      top: value - e.deltaY
+    };
+  }
+
+  // getDraggingProperty(e: MouseEvent): number {
+  //   return e.clientY;
+  // }
+
+  // getDraggingValue(value: number, delta: number, behavior: ScrollBehavior): ScrollToOptions {
+  //   return {
+  //     behavior,
+  //     top: value - delta
+  //   };
+  // }
 }

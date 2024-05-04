@@ -56,7 +56,7 @@ export class VimeoItem implements GalleryItem {
       ...data,
       ...{
         src: `https://player.vimeo.com/video/${ data.src }`,
-        thumb: data.thumb ? data.thumb : this.getThumb(data.src as string)
+        thumb: data.thumb ? data.thumb : this.getVimeoThumb(data.src as string)
       }
     };
 
@@ -64,13 +64,8 @@ export class VimeoItem implements GalleryItem {
     this.type = GalleryItemTypes.Vimeo;
   }
 
-  private getThumb(videoId: string): string {
-    //This service requires a video ID to have 8 characters or it won't have an image
-    //https://github.com/ThatGuySam/vumbnail/issues/42
-    const minIdLen = 8;
-    if (videoId.length < minIdLen) {
-      videoId = videoId.padStart(minIdLen, '0');
-    }
+  private getVimeoThumb(videoId: string): string {
+    //Vimeo has no API for getting a thumbnail, but this project can do it: https://github.com/ThatGuySam/vumbnail
     return `//vumbnail.com/${ videoId }.jpg`
   }
 }
@@ -112,3 +107,5 @@ export type VideoItemData = GalleryItemModel & {
 };
 
 export type GalleryItemData = ImageItemData | VideoItemData | IframeItemData | YoutubeItemData | VimeoItemData;
+
+export type ItemState = 'success' | 'loading' | 'failed';

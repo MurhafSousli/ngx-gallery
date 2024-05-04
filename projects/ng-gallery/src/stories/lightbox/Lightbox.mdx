@@ -1,0 +1,123 @@
+import {Meta, Canvas} from "@storybook/addon-docs";
+import * as LightboxStories from "./Lightbox.stories";
+
+<Meta of={LightboxStories}/>
+
+# Lightbox
+
+<Canvas of={LightboxStories.LightboxExample} source={'hidden'}/>
+
+The usage of the lightbox is pretty straight forward
+
+### 1. Create gallery items
+
+```ts
+// Assume you have the following data
+const data = [
+  {
+    srcUrl: 'https://preview.ibb.co/jrsA6R/img12.jpg',
+    previewUrl: 'https://preview.ibb.co/jrsA6R/img12.jpg'
+  },
+  {
+    srcUrl: 'https://preview.ibb.co/kPE1D6/clouds.jpg',
+    previewUrl: 'https://preview.ibb.co/kPE1D6/clouds.jpg'
+  }
+];
+
+// Map the data to gallery image items
+let items = data.map(item =>
+  new ImageItem({ src: item.srcUrl, thumb: item.previewUrl })
+);
+```
+
+### 2. Load them in the gallery
+
+```ts
+this.gallery.ref().load(this.items);
+```
+
+### 3. Add `[lightbox]` on each thumbnail in your template
+
+```html
+<img *ngFor="let item of items; index as i"
+     [lightbox]="i"
+     [src]="item.data.thumb">
+```
+
+Now every image element click will open the lightbox to the proper item
+
+**Full example:**
+
+```ts
+import { Component, OnInit } from '@angular/core';
+import { Gallery, GalleryItem } from '@ngx-gallery/core';
+
+@Component({
+  template: `
+    <img *ngFor="let item of items; index as i"
+         [lightbox]="i"
+         [src]="item.data.thumb">
+  `
+})
+export class AppComponent implements OnInit {
+
+  // Map the data to gallery image items
+  items: GalleryItem[] = data.map(item =>
+    new ImageItem({ src: item.srcUrl, thumb: item.previewUrl })
+  );
+
+  constructor(public gallery: Gallery) {
+  }
+
+  ngOnInit() {
+    // Load items into the gallery
+    this.gallery.ref().load(this.items);
+  }
+}
+```
+
+See [Lightbox Example](https://murhafsousli.github.io/ngx-gallery/#/lightbox), [Lightbox Stackblitz](https://stackblitz.com/edit/ngx-gallery-lightbox)
+
+### Open the lightbox manually
+
+```ts
+import { Lightbox } from '@ngx-gallery/lightbox';
+
+constructor(public lightbox: Lightbox) {
+}
+
+openLightbox(index: number) {
+  this.lightbox.open(index);
+}
+```
+
+
+### For fullscreen mode
+
+By default fullscreen is obtained on small size screen (mobile) but you can set it as the default for all screen sizes
+
+**Example:**
+
+```ts
+GalleryModule,
+LightboxModule.withConfig({
+  panelClass: 'fullscreen'
+})
+```
+
+Or straight through the open function
+
+```ts
+openLightbox() {
+  this.lightbox.open(0, 'lightboxId', {
+    panelClass: 'fullscreen'
+  });
+}
+```
+See [Lightbox-API](https://github.com/MurhafSousli/ngx-gallery/wiki/Lightbox-API)
+
+***
+
+Moreover, There is a directive `[gallerize]` that loads the images from the template and opens the lightbox on thumbnails click, check [Galleries example](https://github.com/MurhafSousli/ngx-gallery/wiki/Gallerize-directive)
+
+

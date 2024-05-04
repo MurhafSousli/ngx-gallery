@@ -13,12 +13,13 @@
 
   <gallery id="mixed"
            *ngIf="media$ | async; let config"
+           thumbs
            [thumbWidth]="config.thumbWidth"
            [thumbHeight]="config.thumbHeight">
     <ng-container *galleryImageDef="let item; active as active">
-        <span *ngIf="active" @slideAnimation class="item-text">
-          {{ item?.alt }}
-        </span>
+      <span *ngIf="active" @slideAnimation class="item-text">
+        {{ item?.alt }}
+      </span>
     </ng-container>
 
     <ng-container *galleryThumbDef="let item; type as type">
@@ -29,8 +30,8 @@
         <fa-icon [icon]="vimeoIcon" size="lg"></fa-icon>
       </span>
       <span *ngIf="type === 'video'" class="item-type">
-          <fa-icon [icon]="videoIcon" size="lg"></fa-icon>
-        </span>
+        <fa-icon [icon]="videoIcon" size="lg"></fa-icon>
+      </span>
     </ng-container>
   </gallery>
 

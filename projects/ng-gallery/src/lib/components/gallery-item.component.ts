@@ -4,33 +4,33 @@ import {
   Input,
   Output,
   EventEmitter,
-  AfterViewChecked,
   ElementRef,
-  ChangeDetectorRef,
+  AfterViewInit,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { Platform } from '@angular/cdk/platform';
 import { CommonModule } from '@angular/common';
+import { BehaviorSubject } from 'rxjs';
 import { GalleryItemContext } from '../directives/gallery-item-def.directive';
 import { GalleryIframeComponent } from './templates/gallery-iframe.component';
 import { GalleryVideoComponent } from './templates/gallery-video.component';
 import { GalleryImageComponent } from './templates/gallery-image.component';
 import { GalleryConfig } from '../models/config.model';
-import { LoadingStrategy, GalleryItemType, GalleryItemTypes, ThumbnailsPosition } from '../models/constants';
-import { GalleryItemData, ImageItemData, VideoItemData, VimeoItemData, YoutubeItemData } from './templates/items.model';
+import { GalleryItemType, GalleryItemTypes, LoadingStrategy } from '../models/constants';
+import { GalleryItemData, ImageItemData, ItemState, VideoItemData, VimeoItemData, YoutubeItemData } from './templates/items.model';
 
 @Component({
   selector: 'gallery-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./gallery-item.scss'],
   template: `
     <ng-container *ngIf="load" [ngSwitch]="type">
       <ng-container *ngSwitchCase="Types.Image">
         <gallery-image [src]="imageData.src"
                        [alt]="imageData.alt"
+                       [index]="index"
                        [loadingAttr]="config.loadingAttr"
                        [loadingIcon]="config.loadingIcon"
                        [loadingError]="config.loadingError"
-                       (loaded)="onItemLoaded()"
                        (error)="error.emit($event)"></gallery-image>
 
         <div *ngIf="config.imageTemplate" class="g-template g-item-template">
@@ -75,12 +75,16 @@ import { GalleryItemData, ImageItemData, VideoItemData, VimeoItemData, YoutubeIt
   standalone: true,
   imports: [CommonModule, GalleryImageComponent, GalleryVideoComponent, GalleryIframeComponent]
 })
-export class GalleryItemComponent implements AfterViewChecked {
+export class GalleryItemComponent implements AfterViewInit {
 
   readonly Types = GalleryItemTypes;
 
-  /** A flag that ensure that the height was emitted after tbe image is loaded, used only for gallery image types */
-  private imageLoadingState: 'IN_PROGRESS' | 'DONE' = 'IN_PROGRESS';
+  /** A stream that indicates that the height was emitted after the image is loaded, used only for gallery image types */
+  readonly state$: BehaviorSubject<ItemState> = new BehaviorSubject<ItemState>('loading');
+
+  /** A flag that indicates if the item is type of image, it can be a custom template by the user,
+   * The img recognizer directive will set it to true*/
+  isItemContainImage: boolean;
 
   /** Gallery config */
   @Input() config: GalleryConfig;
@@ -101,7 +105,7 @@ export class GalleryItemComponent implements AfterViewChecked {
   @Input() data: GalleryItemData;
 
   /** Stream that emits when an error occurs */
-  @Output() error = new EventEmitter<ErrorEvent>();
+  @Output() error: EventEmitter<ErrorEvent> = new EventEmitter<ErrorEvent>();
 
   @HostBinding('class.g-active-item') get isActive(): boolean {
     return this.index === this.currIndex;
@@ -111,8 +115,8 @@ export class GalleryItemComponent implements AfterViewChecked {
     return this.index;
   }
 
-  @HostBinding('attr.imageState') get imageState(): 'IN_PROGRESS' | 'DONE' {
-    return this.imageLoadingState;
+  @HostBinding('attr.itemState') get itemState(): ItemState {
+    return this.state$.value;
   }
 
   get imageContext(): GalleryItemContext<ImageItemData> {
@@ -124,7 +128,7 @@ export class GalleryItemComponent implements AfterViewChecked {
       count: this.count,
       first: this.index === 0,
       last: this.index === this.count - 1
-    }
+    };
   }
 
   get itemContext(): GalleryItemContext<GalleryItemData> {
@@ -136,10 +140,10 @@ export class GalleryItemComponent implements AfterViewChecked {
       count: this.count,
       first: this.index === 0,
       last: this.index === this.count - 1
-    }
+    };
   }
 
-  get element(): HTMLElement {
+  get nativeElement(): HTMLElement {
     return this.el.nativeElement;
   }
 
@@ -156,7 +160,7 @@ export class GalleryItemComponent implements AfterViewChecked {
     if (this.isActive && this.type === GalleryItemTypes.Youtube && (this.data as YoutubeItemData).autoplay) {
       autoplay = 1;
     }
-    const url = new URL(this.data.src as string);
+    const url: URL = new URL(this.data.src as string);
     url.search = new URLSearchParams({
       wmode: 'transparent',
       ...(this.data as YoutubeItemData).params,
@@ -172,7 +176,7 @@ export class GalleryItemComponent implements AfterViewChecked {
         autoplay = 1;
       }
     }
-    const url = new URL(this.data.src as string);
+    const url:URL = new URL(this.data.src as string);
     url.search = new URLSearchParams({
       ...(this.data as VimeoItemData).params,
       autoplay,
@@ -199,61 +203,14 @@ export class GalleryItemComponent implements AfterViewChecked {
     return this.data;
   }
 
-  constructor(private el: ElementRef, private cd: ChangeDetectorRef, private _platform: Platform) {
+  constructor(private el: ElementRef) {
   }
 
-  ngAfterViewChecked(): void {
-    const height: number = this.getHeight();
-    if (this._platform.isBrowser) {
-      this.element.style.setProperty('--g-item-width', `${ this.getWidth() }px`);
-      this.element.style.setProperty('--g-item-height', `${ height }px`);
+  ngAfterViewInit(): void {
+    // If item does not contain an image, then set the state to DONE
+    if (!this.isItemContainImage) {
+      this.state$.next('success');
     }
-    if (this.currIndex === this.index) {
-      // Auto-height feature, only allowed when sliding direction is horizontal
-      const isThumbPositionHorizontal: boolean =
-        this.config.thumbPosition === ThumbnailsPosition.Top
-        || this.config.thumbPosition === ThumbnailsPosition.Bottom;
-
-      if (this.config.autoHeight && height && isThumbPositionHorizontal) {
-        // Change slider height
-        this.element.parentElement.parentElement.style.height = `${ height }px`;
-      }
-    }
-  }
-
-  onItemLoaded(): void {
-    if (this.imageLoadingState === 'IN_PROGRESS') {
-      this.imageLoadingState = 'DONE';
-      // Detect changes to re-calculate item size
-      this.cd.detectChanges();
-    }
-  }
-
-  private getWidth(): number {
-    if (this.config.slidingDirection === 'horizontal') {
-      const firstElementChild: Element = this.element?.firstElementChild;
-      if (this.config.itemAutosize && this.imageLoadingState === 'DONE' && firstElementChild?.clientWidth) {
-        return firstElementChild.clientWidth;
-      }
-    }
-    return this.element.parentElement.parentElement.clientWidth;
-  }
-
-  private getHeight(): number {
-    const firstElementChild: Element = this.element.firstElementChild;
-    if (firstElementChild) {
-      if (this.config.autoHeight) {
-        if (this.imageLoadingState === 'DONE' && firstElementChild.clientHeight) {
-          return firstElementChild.clientHeight;
-        }
-      }
-      if (this.config.slidingDirection === 'vertical') {
-        if (this.config.itemAutosize && this.imageLoadingState === 'DONE' && firstElementChild.clientHeight) {
-          return firstElementChild.clientHeight;
-        }
-      }
-    }
-    return this.element.parentElement.parentElement.clientHeight;
   }
 }
 

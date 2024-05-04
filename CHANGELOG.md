@@ -1,8 +1,79 @@
 # Changelog
 
+## 12.0.0-beta.4
+
+> See the [storybook documentation](https://ngx-gallery-next.netlify.app/)
+
+- feat: Add RTL support, closes [#540](https://github.com/MurhafSousli/ngx-gallery/issues/540).
+- All boolean inputs of `<gallery>` components can be used as string attributes
+  - e.g. `<gallery autoHeight>`, `<gallery autoHeight="true">` and `<gallery [autoHeight]="true">` sets the option's value to true.
+  - e.g. `<gallery autoHeight="false">` and `<gallery [autoHeight]="false">` sets the option's value to false.
+- All number inputs of `<gallery>` components can be used as string attributes
+  - e.g. `<gallery playerInterval="2000">` and `<gallery [playerInterval]="2000">` sets the option's value to 2000
+
+**Improved performance**
+
+- refactor: Replace the scroll event with intersection observer to detect the active item while scrolling.
+
+**ItemAutoSize, ThumbAutoSize features**
+
+- enhance: Toggling `itemAutoSize` option is now reactive.
+- fix: `[thumbAutosize]` causes random invalid starting thumbnail scroller position when scrolling possible, closes [#521](https://github.com/MurhafSousli/ngx-gallery/issues/521)
+- fix: `[ItemAutosize]` in website/safari browsers do not work as expected, closes [#543](https://github.com/MurhafSousli/ngx-gallery/issues/543)
+
+**AutoHeight feature**
+
+- enhance: Auto-height feature is not more precise and works well with or without height transition
+- fix: Auto-height issue when screen size changes
+
+**Autoplay feature**
+
+- fix: `autoplay` resets the timer after navigated.
+- fix: `autoplay` only start the timer after the image is loaded.
+
+**Bullets (previously named 'Dots')**
+
+- feat: `disableBullets` disable bullets' clicks
+
+**Custom template**
+
+- feature: Introduce `galleryImage` directive within `galleryItemDef`, to allow recognizing the img element in your custom item template.
+
+### Breaking changes
+
+#### Options renamed:
+
+**Core**
+- `slidingDirection` → `orientation`
+- `slidingEase` → `scrollEase`
+- `slidingDuration` → `scrollDuration`
+- `slidingDisabled` → `disableScroll`
+- `mouseSlidingDisabled` → `disableMouseScroll`
+- `autoPlay` → `autoplay`
+
+**Thumbs**
+- `thumb` → `thumbs`
+- `thumbMode` → `thumbCentralized`
+- `thumbMode` → `thumbCentralized`
+- `thumbDetached` → `detachThumbs`
+- `thumbSlidingDisabled` → `disableThumbMouseScroll`
+- `thumbMouseSlidingDisabled` → `disableThumbMouseScroll`
+
+**Bullets**
+- `dots` → `bullets`
+- `dotSize` → `bulletSize`
+- `dotPosition` → `bulletPosition`
+
+#### Input removed (no longer exist)
+
+- `navScrollBehavior` the option is now removed, use `scrollBehavior` instead.
+
+
+***
+
 ## 11.0.0
 
-- feat: Add `GalleryThumbDef`, `GalleryImageDef`, `GalleryItemDef`, `GalleryBoxDef` to set custom templates.
+- feat: Add `galleryThumbDef`, `galleryImageDef`, `galleryItemDef`, `galleryBoxDef` to set custom templates, closes [#487](https://github.com/MurhafSousli/ngx-gallery/issues/487).
 - feat: Add `imageTemplate` property to `GalleryConfig`.
 - feat: Add `args` property in case need to attach extra data with the gallery item.
 - enhance: Improve overall typings.
@@ -290,7 +361,7 @@ export class FeatureModule { }
 
 - **feat(core):** Add indeterminate option to the radial progress, in [df682c4](https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/df682c4353f3795dd3f45f53dfa488b428fdb99f).
 - **enhance(core):** Enhance thumbnails loading styles, in [f34f90a](https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/f34f90a542aa437fa12b996dc77f6b7dd9fd819c).
-- **fix(core):** Expose `[dotSize]`, `[dotsPosition]` and `[counterPosition]` options as inputs, in [946a856](https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/946a85618acdc91692183f8f65765bbd137815cc).
+- **fix(core):** Expose `[dotSize]`, `[bulletsPosition]` and `[counterPosition]` options as inputs, in [946a856](https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/946a85618acdc91692183f8f65765bbd137815cc).
 - **fix(core):** Add `[loadingMode]` option to gallery images which accepts `determinate` or `indeterminate` , in [e8bdfb2](https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/e8bdfb2a28d485e3d89290dda1edb595ae3efecf).
 - **regression(core):** Fix undisplayed thumb image when a custom thumb template is used, in [34f2cc6](https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/34f2cc6f7f5316a929a1efc2ceb6bde8d42d0551).
 - **enhance(gallerize):** Run gallerize detector outside angular zone, makes opening the lightbox smoother, in [284925d](https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/284925dd53a67e6a2a2d0b208a30623783db37bc) and [98901b9](https://github.com/MurhafSousli/ngx-gallery/pull/233/commits/98901b9136b4405a5d549fed08a36ec654279a26).
@@ -298,7 +369,7 @@ export class FeatureModule { }
 ## 4.0.0-beta.0
 
 - **update(core, lightbox, gallerize)**: Update peer dependencies, closes [#228](https://github.com/MurhafSousli/ngx-gallery/issues/228) in [bd8cdd3](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/bd8cdd302c55e285dc32a195e1d5f70b4312ac46).
-- **feat(core):** Add `dotsPosition` option, closes [#211](https://github.com/MurhafSousli/ngx-gallery/issues/211) in [263d297](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/263d297ccc27692fc9fd9702f775dcf2b753d5de).
+- **feat(core):** Add `bulletsPosition` option, closes [#211](https://github.com/MurhafSousli/ngx-gallery/issues/211) in [263d297](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/263d297ccc27692fc9fd9702f775dcf2b753d5de).
 - **feat(core):** Add `dotsSize` option, in [e2e58b6](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/e2e58b62e4eb3cbcf5dd6f17417830bfc956f7eb).
 - **feat(core):** Add `counterPosition` option, closes in [ce7a8ad](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/ce7a8ad62816b3ba344a22e6e459cfdb06ad18ab).
 - **feat(core):** Use `HttpClient` to load and cache images in `[lazyImage]` directive, in [15c3e88](https://github.com/MurhafSousli/ngx-gallery/pull/231/commits/15c3e88d89434eb4860eabf3959a08ce746298e7).
