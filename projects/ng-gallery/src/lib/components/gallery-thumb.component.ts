@@ -22,6 +22,7 @@ import { GalleryItemType } from '../models/constants';
     <gallery-image [src]="data.thumb"
                    [alt]="data.alt + '-thumbnail'"
                    [isThumbnail]="true"
+                   [loadingAttr]="config.loadingAttr"
                    [loadingIcon]="config.thumbLoadingIcon"
                    [loadingError]="config.thumbLoadingError"
                    (error)="error.emit($event)"></gallery-image>
