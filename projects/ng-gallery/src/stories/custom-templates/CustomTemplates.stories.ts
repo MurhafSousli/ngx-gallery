@@ -3,7 +3,10 @@ import { applicationConfig, moduleMetadata } from '@storybook/angular';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { GalleryModule } from 'ng-gallery';
 import { CustomTemplateComponent } from './custom-template.component';
-import { getHDImages, getHDImagesForCustomTemplate } from '../pixabay/pixabay.service';
+import {
+  getHDImages,
+  getHDImagesForCustomTemplate,
+} from '../pixabay/pixabay.service';
 
 import 'hammerjs';
 
@@ -23,7 +26,7 @@ const meta: Meta<CustomTemplateComponent> = {
     applicationConfig({
       providers: [provideAnimations()],
     }),
-  ]
+  ],
 };
 
 export default meta;
@@ -31,24 +34,21 @@ type Story = StoryObj<CustomTemplateComponent>;
 
 export const ImageTemplateExample: Story = {
   render: (args: CustomTemplateComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
+    props: { ...args, items },
     template: `
       <gallery [items]="items">
         <div *galleryImageDef="let item" class="my-image-overlay">
           {{ item?.alt }}
         </div>
       </gallery>
-    `
+    `,
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('sea') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('sea') })],
 };
-
 
 export const ItemTemplateExample: Story = {
   render: (args: CustomTemplateComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
+    props: { ...args, items },
     template: `
       <gallery [items]="items">
         <div *galleryItemDef="let item" class="my-item-template">
@@ -56,39 +56,39 @@ export const ItemTemplateExample: Story = {
         </div>
       </gallery>
     `,
-    styles: [`
+    styles: [
+      `
       img {
         object-fit: cover;
         border: 10px white solid;
         width: 400px;
         height: 400px;
       }
-    `]
+    `,
+    ],
   }),
   loaders: [
     async () => ({ items: await getHDImagesForCustomTemplate('sand') }),
-  ]
+  ],
 };
 
 export const ThumbTemplateExample: Story = {
   render: (args: CustomTemplateComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
+    props: { ...args, items },
     template: `
       <gallery [items]="items" thumbs>
         <div *galleryThumbDef="let thumb" class="my-thumb-overlay">
           {{ thumb?.alt }}
         </div>
       </gallery>
-    `
+    `,
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('sea') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('sea') })],
 };
 
 export const BoxTemplateExample: Story = {
   render: (args: CustomTemplateComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
+    props: { ...args, items },
     template: `
       <gallery [items]="items">
         <div *galleryBoxDef="let state; config" class="my-box">
@@ -97,7 +97,8 @@ export const BoxTemplateExample: Story = {
         </div>
       </gallery>
     `,
-    styles: [`
+    styles: [
+      `
       .my-box {
         width: 200px;
         height: 50px;
@@ -111,9 +112,8 @@ export const BoxTemplateExample: Story = {
         top: 20px;
         left: 20px;
       }
-    `]
+    `,
+    ],
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('sea') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('sea') })],
 };
