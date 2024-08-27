@@ -11,26 +11,32 @@
       and <code>*galleryBoxDef</code></p>
   </section>
 
-  <gallery id="mixed"
-           *ngIf="media$ | async; let config"
-           thumbs
-           [thumbWidth]="config.thumbWidth"
-           [thumbHeight]="config.thumbHeight">
-    <ng-container *galleryImageDef="let item; active as active">
-      <span *ngIf="active" @slideAnimation class="item-text">
-        {{ item?.alt }}
-      </span>
-    </ng-container>
+  @if (media$ | async; as config) {
+    <gallery id="mixed"
+             thumbs
+             [thumbWidth]="config.thumbWidth"
+             [thumbHeight]="config.thumbHeight">
+      <ng-container *galleryImageDef="let item; active as active">
+        @if (active) {
+          <span @slideAnimation class="item-text">
+            {{ item?.alt }}
+          </span>
+        }
+      </ng-container>
 
-    <ng-container *galleryThumbDef="let item; type as type">
-      <span *ngIf="type === 'youtube'" class="item-type">
-        <fa-icon [icon]="youtubeIcon" size="lg"></fa-icon>
-      </span>
-      <span *ngIf="type === 'video'" class="item-type">
-        <fa-icon [icon]="videoIcon" size="lg"></fa-icon>
-      </span>
-    </ng-container>
-  </gallery>
+      <ng-container *galleryThumbDef="let item; type as type">
+        @if (type === 'youtube') {
+          <span class="item-type">
+            <fa-icon [icon]="youtubeIcon" size="lg"/>
+          </span>
+        } @else if (type === 'video') {
+          <span class="item-type">
+            <fa-icon [icon]="videoIcon" size="lg"/>
+          </span>
+        }
+      </ng-container>
+    </gallery>
+  }
 
   <note>Please consider having a look at wiki docs as well
     <a mat-button class="inline-button" color="primary" target="_blank"
@@ -53,7 +59,7 @@
       template for any type from scratch.</p>
 
     <h3>Example:</h3>
-    <hl-code [code]="code.customItemTemplate"></hl-code>
+    <hl-code [code]="code.customItemTemplate"/>
   </section>
 
   <section>
@@ -63,7 +69,7 @@
       custom inner template, useful to add text overlay on top of the image.</p>
 
     <h3>Example:</h3>
-    <hl-code [code]="code.customImageTemplate"></hl-code>
+    <hl-code [code]="code.customImageTemplate"/>
   </section>
 
   <section>
@@ -75,7 +81,7 @@
     <h3>Example:</h3>
     <p>The following adds a Youtube icon on Youtube thumbnail and video icon on video thumbnails</p>
 
-    <hl-code [code]="code.customThumbTemplate"></hl-code>
+    <hl-code [code]="code.customThumbTemplate"/>
   </section>
 
   <section>
@@ -107,7 +113,7 @@
     <p><code>*galleryBoxDef</code> Adds a single static template on top of the gallery items.</p>
 
     <h3>Example:</h3>
-    <hl-code [code]="code.customBoxTemplate"></hl-code>
+    <hl-code [code]="code.customBoxTemplate"/>
 
     <h3>Available data:</h3>
 

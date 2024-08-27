@@ -1,20 +1,18 @@
-<ng-scrollbar appearance="compact"
-              [disabled]="disabled"
-              [autoHeightDisabled]="false"
-              barClass="code-scrollbar"
-              thumbClass="code-scrollbar-thumb">
+@if (disabled) {
   <div class="code-wrapper">
-    <pre *ngIf="disabled; else enabled">
+    <pre>
       <code class="hljs" [innerHTML]="code"></code>
     </pre>
-
-    <ng-template #enabled>
-      <pre>
-        <code [highlight]="code"></code>
-      </pre>
-    </ng-template>
   </div>
-</ng-scrollbar>
+} @else {
+  <ng-scrollbar>
+    <div class="code-wrapper">
+      <pre>
+        <code [highlightAuto]="code"></code>
+      </pre>
+    </div>
+  </ng-scrollbar>
+}
 
 <div class="copy-button-wrapper">
   <button mat-icon-button
