@@ -1,19 +1,19 @@
 @use '@angular/material' as mat;
 
-$primary-color: mat.get-color-from-palette(mat.define-palette(mat.$blue-palette));
-$accent-color: mat.get-color-from-palette(mat.define-palette(mat.$pink-palette));
-$danger-color: mat.get-color-from-palette(mat.define-palette(mat.$yellow-palette, 300));
+$primary-color: mat.m2-get-color-from-palette(mat.m2-define-palette(mat.$m2-blue-palette));
+$accent-color: mat.m2-get-color-from-palette(mat.m2-define-palette(mat.$m2-pink-palette));
+$danger-color: mat.m2-get-color-from-palette(mat.m2-define-palette(mat.$m2-yellow-palette, 300));
 
 $text-color: #354c6d;// mat-color(mat-palette($mat-blue, 800));
-$highlight-color: mat.get-color-from-palette(mat.define-palette(mat.$blue-palette, 200));
+$highlight-color: mat.m2-get-color-from-palette(mat.m2-define-palette(mat.$m2-blue-palette, 200));
 
-$note-bg: mat.get-color-from-palette(mat.define-palette(mat.$amber-palette, 100));
-$note-color: mat.get-color-from-palette(mat.define-palette(mat.$amber-palette, 600));
+$note-bg: mat.m2-get-color-from-palette(mat.m2-define-palette(mat.$m2-amber-palette, 100));
+$note-color: mat.m2-get-color-from-palette(mat.m2-define-palette(mat.$m2-amber-palette, 600));
 
-$code-color: mat.get-color-from-palette(mat.define-palette(mat.$blue-palette));
-$code-bg-color: mat.get-color-from-palette(mat.define-palette(mat.$blue-palette, 50));
+$code-color: mat.m2-get-color-from-palette(mat.m2-define-palette(mat.$m2-blue-palette));
+$code-bg-color: mat.m2-get-color-from-palette(mat.m2-define-palette(mat.$m2-blue-palette, 50));
 
-$scrollbar-color: mat.get-color-from-palette(mat.define-palette(mat.$yellow-palette));
+$scrollbar-color: mat.m2-get-color-from-palette(mat.m2-define-palette(mat.$m2-yellow-palette));
 
 $bg: #e8eff6;
 $demo-gray-color: #E8EAF6;
