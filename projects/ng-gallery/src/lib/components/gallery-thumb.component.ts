@@ -3,11 +3,12 @@ import {
   Input,
   Output,
   HostBinding,
+  inject,
   EventEmitter,
   ElementRef,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { GalleryItemContext } from '../directives/gallery-item-def.directive';
 import { GalleryImageComponent } from './templates/gallery-image.component';
 import { ImageItemData } from './templates/items.model';
@@ -15,9 +16,8 @@ import { GalleryConfig } from '../models/config.model';
 import { GalleryItemType } from '../models/constants';
 
 @Component({
+  standalone: true,
   selector: 'gallery-thumb',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./gallery-thumb.scss'],
   template: `
     <gallery-image [src]="data.thumb"
                    [alt]="data.alt + '-thumbnail'"
@@ -26,12 +26,15 @@ import { GalleryItemType } from '../models/constants';
                    [loadingError]="config.thumbLoadingError"
                    (error)="error.emit($event)"></gallery-image>
 
-    <div *ngIf="config.thumbTemplate" class="g-template g-thumb-template">
-      <ng-container *ngTemplateOutlet="config.thumbTemplate; context: imageContext"></ng-container>
-    </div>
+    @if (config.thumbTemplate) {
+      <div class="g-template g-thumb-template">
+        <ng-container *ngTemplateOutlet="config.thumbTemplate; context: imageContext"/>
+      </div>
+    }
   `,
-  standalone: true,
-  imports: [CommonModule, GalleryImageComponent]
+  styleUrl: './gallery-thumb.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [NgTemplateOutlet, GalleryImageComponent]
 })
 export class GalleryThumbComponent {
 
@@ -62,6 +65,8 @@ export class GalleryThumbComponent {
     return this.index;
   }
 
+  readonly nativeElement: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
+
   get imageContext(): GalleryItemContext<ImageItemData> {
     return {
       $implicit: this.data,
@@ -72,12 +77,5 @@ export class GalleryThumbComponent {
       first: this.index === 0,
       last: this.index === this.count - 1
     }
-  }
-
-  get nativeElement(): HTMLElement {
-    return this.el.nativeElement;
-  }
-
-  constructor(private el: ElementRef<HTMLElement>) {
   }
 }

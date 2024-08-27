@@ -1,32 +1,32 @@
-import { Component, Input, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { Component, Input, ViewChild, inject, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
+  standalone: true,
   selector: 'gallery-iframe',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <iframe *ngIf="autoplay; else default"
-            #iframe
-            [attr.loading]="loadingAttr"
-            allowfullscreen
-            allow
-            style="border:none"
-            [src]="iframeSrc">
-    </iframe>
-    <ng-template #default>
+    @if (autoplay) {
+      <iframe #iframe
+              [attr.loading]="loadingAttr"
+              allowfullscreen
+              allow
+              style="border:none"
+              [src]="iframeSrc">
+      </iframe>
+    } @else {
       <iframe #iframe
               [attr.loading]="loadingAttr"
               allowfullscreen
               style="border:none"
               [src]="iframeSrc">
       </iframe>
-    </ng-template>
+    }
   `,
-  standalone: true,
-  imports: [NgIf]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GalleryIframeComponent {
+
+  private _sanitizer: DomSanitizer = inject(DomSanitizer);
 
   iframeSrc: SafeResourceUrl;
   videoSrc: string;
@@ -54,7 +54,4 @@ export class GalleryIframeComponent {
   @Input() loadingAttr: 'eager' | 'lazy';
 
   @ViewChild('iframe') iframe: ElementRef;
-
-  constructor(private _sanitizer: DomSanitizer) {
-  }
 }

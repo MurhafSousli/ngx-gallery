@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Observable, map } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Gallery, GalleryItem } from 'ng-gallery';
-import { Lightbox, LIGHTBOX_CONFIG, LightboxModule } from 'ng-gallery/lightbox';
+import { Lightbox, LightboxModule, provideLightboxOptions } from 'ng-gallery/lightbox';
 import { Pixabay } from '../../service/pixabay.service';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { HlCodeComponent } from '../../shared/hl-code/hl-code.component';
@@ -23,12 +23,9 @@ import { SectionTitleComponent } from '../../shared/section-title/section-title.
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   providers: [
-    {
-      provide: LIGHTBOX_CONFIG,
-      useValue: {
-        keyboardShortcuts: false
-      }
-    }
+    provideLightboxOptions({
+      keyboardShortcuts: false
+    })
   ],
   imports: [CommonModule, LightboxModule, SectionTitleComponent, NoteComponent, MatButtonModule, RouterLink, HlCodeComponent, FontAwesomeModule, FooterComponent]
 })
@@ -59,7 +56,7 @@ export class LightboxExampleComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.gallery.ref('lightbox').destroy();
+    // this.gallery.ref('lightbox').destroy();
   }
 }
 

@@ -1,4 +1,4 @@
-import { ComponentRef, Inject, Injectable, Optional } from '@angular/core';
+import { ComponentRef, inject, Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Overlay, OverlayRef, OverlayConfig } from '@angular/cdk/overlay';
@@ -7,7 +7,6 @@ import { Gallery } from 'ng-gallery';
 import { Subject } from 'rxjs';
 
 import { LightboxConfig, LIGHTBOX_CONFIG } from './lightbox.model';
-import { defaultConfig } from './lightbox.default';
 import { LightboxComponent } from './lightbox.component';
 
 @Injectable({
@@ -18,18 +17,20 @@ export class Lightbox {
   /** Gallery overlay ref */
   private _overlayRef: OverlayRef;
 
+  private _gallery: Gallery = inject(Gallery);
+
+  private _overlay: Overlay = inject(Overlay);
+
+  private _sanitizer: DomSanitizer = inject(DomSanitizer);
+
   /** Global config */
-  private _config: LightboxConfig;
+  private _config: LightboxConfig = inject(LIGHTBOX_CONFIG);
 
   /** Stream that emits when lightbox is opened */
-  opened = new Subject<string>();
+  opened: Subject<string> = new Subject<string>();
 
   /** Stream that emits when lightbox is closed */
-  closed = new Subject<string>();
-
-  constructor(@Optional() @Inject(LIGHTBOX_CONFIG) config: LightboxConfig, private _gallery: Gallery, private _overlay: Overlay, private _sanitizer: DomSanitizer) {
-    this._config = config ? { ...defaultConfig, ...config } : defaultConfig;
-  }
+  closed: Subject<string> = new Subject<string>();
 
   /**
    * Set Lightbox Config

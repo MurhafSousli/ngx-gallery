@@ -1,106 +1,112 @@
 import {
   Directive,
-  Inject,
-  Input,
   Output,
-  OnChanges,
+  inject,
+  effect,
+  input,
+  EventEmitter,
   OnDestroy,
-  SimpleChanges,
   NgZone,
   ElementRef,
-  EventEmitter
+  InputSignal
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { HammerGestureConfig } from '@angular/platform-browser';
 import { Platform } from '@angular/cdk/platform';
 import { Directionality } from '@angular/cdk/bidi';
 import { SliderAdapter } from '../components/adapters';
-import { GalleryState } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
 import { Orientation } from '../models/constants';
 import { GalleryItemComponent } from '../components/gallery-item.component';
 import { GalleryThumbComponent } from '../components/gallery-thumb.component';
+import { GalleryRef } from '../services/gallery-ref';
 
-declare const Hammer: any;
+import { CustomHammerConfig, HammerInstance } from '../services/hammer';
 
 @Directive({
   selector: '[hammerSliding]',
+  providers: [{ provide: HammerGestureConfig, useClass: CustomHammerConfig }],
   standalone: true
 })
-export class HammerSliding implements OnChanges, OnDestroy {
+export class HammerSliding implements OnDestroy {
+
+  private readonly hammer: HammerGestureConfig = inject(HammerGestureConfig);
+
+  private readonly galleryRef: GalleryRef = inject(GalleryRef);
+
+  private readonly _viewport: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
+
+  private readonly _document: Document = inject(DOCUMENT);
+
+  private readonly _dir: Directionality = inject(Directionality);
+
+  private readonly _platform: Platform = inject(Platform);
+
+  private readonly _zone: NgZone = inject(NgZone);
 
   /** HammerJS instance */
-  private _hammer: any;
+  private _mc: HammerInstance;
 
-  get _viewport(): HTMLElement {
-    return this._el.nativeElement;
-  }
+  enabled: InputSignal<boolean> = input(false, { alias: 'hammerSliding' });
 
-  @Input('hammerSliding') enabled: boolean;
+  adapter: InputSignal<SliderAdapter> = input();
 
-  @Input() galleryId: string;
+  galleryId: InputSignal<string> = input();
 
-  @Input() items: GalleryItemComponent[] | GalleryThumbComponent[];
+  items: InputSignal<GalleryItemComponent[] | GalleryThumbComponent[]> = input();
 
-  @Input() adapter: SliderAdapter;
-
-  @Input() state: GalleryState;
-
-  @Input() config: GalleryConfig;
+  config: InputSignal<GalleryConfig> = input();
 
   @Output() activeIndexChange: EventEmitter<number> = new EventEmitter<number>();
 
   @Output() isSlidingChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(@Inject(DOCUMENT) private _document: Document,
-              private _el: ElementRef<HTMLElement>,
-              private _dir: Directionality,
-              private _platform: Platform,
-              private _zone: NgZone) {
-  }
-
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.enabled && changes.enabled?.currentValue !== changes.enabled?.previousValue) {
-      this.enabled ? this._subscribe() : this._unsubscribe();
-    }
-    if (!changes.adapter?.firstChange && changes.adapter?.currentValue !== changes.adapter?.previousValue) {
-      this.enabled ? this._subscribe() : this._unsubscribe();
-    }
+  constructor() {
+    effect(() => {
+      this.enabled() ? this._subscribe(this.adapter()) : this._unsubscribe();
+    });
   }
 
   ngOnDestroy(): void {
     this._unsubscribe();
   }
 
-  private _subscribe(): void {
+  private _subscribe(adapter: SliderAdapter): void {
     this._unsubscribe();
 
-    if (!this._platform.ANDROID && !this._platform.IOS && typeof Hammer !== 'undefined') {
+    if (!this._platform.ANDROID && !this._platform.IOS && (this._document.defaultView as any).Hammer) {
       this._zone.runOutsideAngular(() => {
 
-        const direction: number = this.adapter.hammerDirection;
-        this._hammer = new Hammer(this._el.nativeElement, { inputClass: Hammer.MouseInput });
-        this._hammer.get('pan').set({ direction });
+        const direction: number = adapter.hammerDirection;
+
+        // this.hammer.options =  { inputClass: Hammer.MouseInput };
+        this.hammer.overrides.pan = { direction };
+        this._mc = this.hammer.buildHammer(this._viewport);
+
+        // this._hammer = new Hammer(this._viewport, { inputClass: Hammer.MouseInput });
+        // this._mc.get('pan').set({ direction });
 
         let offset: number;
 
         // Set panOffset for sliding on pan start event
-        this._hammer.on('panstart', () => {
+        this._mc.on('panstart', () => {
           this._zone.run(() => {
             this.isSlidingChange.emit(true);
           });
 
-          offset = this.adapter.scrollValue;
+          offset = adapter.scrollValue;
           this._viewport.classList.add('g-sliding');
           this._viewport.style.setProperty('--slider-scroll-snap-type', 'none');
         });
 
-        this._hammer.on('panmove', (e: any) => this._viewport.scrollTo(this.adapter.getHammerValue(offset, e, 'auto')));
+        this._mc.on('panmove', (e: any) => {
+          this._viewport.scrollTo(adapter.getHammerValue(offset, e, 'auto'));
+        });
 
-        this._hammer.on('panend', (e: any) => {
+        this._mc.on('panend', (e: any) => {
           this._document.onselectstart = null;
           this._viewport.classList.remove('g-sliding');
-          const index: number = this.getIndexOnMouseUp(e);
+          const index: number = this.getIndexOnMouseUp(e, adapter);
 
           this._zone.run(() => {
             this.isSlidingChange.emit(false);
@@ -112,12 +118,13 @@ export class HammerSliding implements OnChanges, OnDestroy {
   }
 
   private _unsubscribe(): void {
-    this._hammer?.destroy();
+    this._mc?.destroy();
   }
 
-  private getIndexOnMouseUp(e: any): number {
+  private getIndexOnMouseUp(e: any, adapter: SliderAdapter): number {
+    const currIndex: number = this.galleryRef.currIndex();
     // Check if scrolled item is great enough to navigate
-    const currElement: Element = this.items[this.state.currIndex].nativeElement;
+    const currElement: Element = this.items()[currIndex].nativeElement;
 
     // Find the gallery item element in the center elements
     const elementAtCenter: Element = this.getElementFromViewportCenter();
@@ -127,16 +134,16 @@ export class HammerSliding implements OnChanges, OnDestroy {
       return +elementAtCenter.getAttribute('galleryIndex');
     }
 
-    const velocity: number = this.adapter.getHammerVelocity(e);
+    const velocity: number = adapter.getHammerVelocity(e);
     // Check if velocity is great enough to navigate
     if (Math.abs(velocity) > 0.3) {
-      if (this.config.orientation === Orientation.Horizontal) {
+      if (this.config().orientation === Orientation.Horizontal) {
         if (velocity > 0) {
-          return this._dir.value === 'rtl' ? this.state.currIndex + 1 : this.state.currIndex - 1;
+          return this._dir.value === 'rtl' ? currIndex + 1 : currIndex - 1;
         }
-        return this._dir.value === 'rtl' ? this.state.currIndex - 1 : this.state.currIndex + 1;
+        return this._dir.value === 'rtl' ? currIndex - 1 : currIndex + 1;
       } else {
-        return velocity > 0 ? this.state.currIndex - 1 : this.state.currIndex + 1;
+        return velocity > 0 ? currIndex - 1 : currIndex + 1;
       }
     }
 
@@ -154,7 +161,7 @@ export class HammerSliding implements OnChanges, OnDestroy {
     );
     // Find the gallery item element in the center elements
     return centerElements.find((element: Element) => {
-      return element.getAttribute('galleryId') === this.galleryId;
+      return element.getAttribute('galleryId') === this.galleryId();
     });
   }
 }

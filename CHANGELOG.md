@@ -1,5 +1,10 @@
 # Changelog
 
+## 12.0.0-beta.5
+
+- feat: Add `provideGalleryOptions` and `provideLightboxOptions` to set global options.
+- refactor: Use `useFactory` function to set the default options for `GALLERY_CONFIG` and `LIGHTBOX_CONFIG` token.
+
 ## 12.0.0-beta.4
 
 > See the [storybook documentation](https://ngx-gallery-next.netlify.app/)

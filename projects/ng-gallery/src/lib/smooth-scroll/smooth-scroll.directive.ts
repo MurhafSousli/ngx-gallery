@@ -1,16 +1,18 @@
 import {
   Directive,
-  Inject,
-  Input,
   Output,
+  inject,
+  effect,
+  input,
+  EventEmitter,
   NgZone,
   OnInit,
   OnDestroy,
   ElementRef,
-  EventEmitter
+  InputSignal
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { Dir } from '@angular/cdk/bidi';
+import { Dir, Directionality } from '@angular/cdk/bidi';
 import { _Bottom, _Left, _Right, _Top, _Without } from '@angular/cdk/scrolling';
 import { getRtlScrollAxisType, RtlScrollAxisType } from '@angular/cdk/platform';
 import {
@@ -42,6 +44,14 @@ declare const Hammer: any;
 })
 export class SmoothScroll implements OnInit, OnDestroy {
 
+  private readonly _zone: NgZone = inject(NgZone);
+
+  private readonly _dir: Directionality = inject(Directionality);
+
+  private readonly _el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
+
+  private readonly _w: Window = inject(DOCUMENT).defaultView;
+
   /** HammerJS instance */
   private _hammer: any;
 
@@ -49,15 +59,9 @@ export class SmoothScroll implements OnInit, OnDestroy {
 
   private readonly _finished: Subject<void> = new Subject<void>();
 
-  private readonly _el: HTMLElement;
-
   private _isInterruptedByMouse: boolean;
 
   private _subscription: Subscription;
-
-  private get _w(): Window {
-    return this._document.defaultView;
-  }
 
   /**
    * Timing method
@@ -66,28 +70,24 @@ export class SmoothScroll implements OnInit, OnDestroy {
     return this._w.performance?.now?.bind(this._w.performance) || Date.now;
   }
 
-  @Input()
-  set smoothScroll(value: SmoothScrollOptions) {
-    if (value) {
-      this._zone.runOutsideAngular(() => {
-        this.scrollTo(value);
-      });
-    }
-  }
+  position: InputSignal<SmoothScrollOptions> = input<SmoothScrollOptions>(null, { alias: 'smoothScroll' });
 
-  @Input() adapter: SliderAdapter;
+  adapter: InputSignal<SliderAdapter> = input<SliderAdapter>();
 
-  @Input() config: GalleryConfig;
+  config: InputSignal<GalleryConfig> = input<GalleryConfig>();
 
-  @Input('smoothScrollInterruptOnMousemove') interruptOnMousemove: boolean;
+  interruptOnMousemove: InputSignal<boolean> = input<boolean>(false, { alias: 'smoothScrollInterruptOnMousemove' });
 
   @Output() isScrollingChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(@Inject(DOCUMENT) private _document: Document,
-              private _zone: NgZone,
-              private _dir: Dir,
-              _el: ElementRef<HTMLElement>) {
-    this._el = _el.nativeElement;
+  constructor() {
+    effect(() => {
+      if (this.position()) {
+        this._zone.runOutsideAngular(() => {
+          this.scrollTo(this.position());
+        });
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -133,7 +133,7 @@ export class SmoothScroll implements OnInit, OnDestroy {
 
     this._el.classList.remove('g-scrolling');
     if (!this._isInterruptedByMouse) {
-      this._el.style.setProperty('--slider-scroll-snap-type', this.adapter.scrollSnapType);
+      this._el.style.setProperty('--slider-scroll-snap-type', this.adapter().scrollSnapType);
     }
     this._isInterruptedByMouse = false;
   }
@@ -154,9 +154,9 @@ export class SmoothScroll implements OnInit, OnDestroy {
    */
   private _interrupted(): Observable<Event | void> {
     let interrupt$: Observable<Event | void>;
-    if (this.interruptOnMousemove && typeof Hammer !== 'undefined') {
+    if (this.interruptOnMousemove() && typeof Hammer !== 'undefined') {
       this._hammer = new Hammer(this._el, { inputClass: Hammer.MouseInput });
-      this._hammer.get('pan').set({ direction: this.adapter.hammerDirection });
+      this._hammer.get('pan').set({ direction: this.adapter().hammerDirection });
 
       // For gallery thumb slider, dragging thumbnails should cancel the ongoing scroll
       interrupt$ = merge(
@@ -244,9 +244,9 @@ export class SmoothScroll implements OnInit, OnDestroy {
         // Rewrite start & end offsets as right or left offsets.
         left: params.left == null ? (isRtl ? params.end : params.start) : params.left,
         right: params.right == null ? (isRtl ? params.start : params.end) : params.right
-      } as _Without<_Bottom & _Top>),
-      duration: params.behavior === 'smooth' ? this.config.scrollDuration : 0,
-      easing: this.config.scrollEase,
+      }),
+      duration: params.behavior === 'smooth' ? this.config().scrollDuration : 0,
+      easing: this.config().scrollEase,
     };
 
     // Rewrite the bottom offset as a top offset.

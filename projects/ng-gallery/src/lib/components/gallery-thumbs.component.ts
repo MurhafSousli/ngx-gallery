@@ -4,6 +4,7 @@ import {
   Output,
   ViewChild,
   ViewChildren,
+  inject,
   EventEmitter,
   AfterViewInit,
   OnChanges,
@@ -15,18 +16,18 @@ import {
 import { CommonModule } from '@angular/common';
 import { Observable, Subject, map, startWith } from 'rxjs';
 import { GalleryConfig } from '../models/config.model';
-import { GalleryState, GalleryError } from '../models/gallery.model';
+import { GalleryError } from '../models/gallery.model';
 import { ThumbnailsPosition } from '../models/constants';
 import { VerticalAdapter, HorizontalAdapter, SliderAdapter } from './adapters';
 import { SmoothScroll, SmoothScrollOptions } from '../smooth-scroll';
 import { GalleryThumbComponent } from './gallery-thumb.component';
 import { HammerSliding } from '../gestures/hammer-sliding.directive';
 import { ThumbResizeObserver } from '../observers/thumb-resize-observer.directive';
+import { GalleryRef } from '../services/gallery-ref';
 
 @Component({
+  standalone: true,
   selector: 'gallery-thumbs',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./gallery-thumbs.scss'],
   template: `
     <div #slider
          class="g-slider"
@@ -36,29 +37,32 @@ import { ThumbResizeObserver } from '../observers/thumb-resize-observer.directiv
          [hammerSliding]="!config.disableThumbMouseScroll"
          [galleryId]="galleryId"
          [items]="items$ | async"
-         [state]="state"
          [config]="config"
          [adapter]="adapter"
-         (thumbResizeObserver)="scrollToIndex(state.currIndex, 'auto')"
+         (thumbResizeObserver)="scrollToIndex(galleryRef.currIndex(), 'auto')"
          (activeIndexChange)="onActiveIndexChange($event)">
       <div class="g-slider-content">
-        <gallery-thumb *ngFor="let item of state.items; trackBy: trackByFn; index as i"
-                       [attr.galleryId]="galleryId"
-                       [type]="item.type"
-                       [config]="config"
-                       [data]="item.data"
-                       [currIndex]="state.currIndex"
-                       [index]="i"
-                       [count]="state.items.length"
-                       (click)="config.disableThumbs ? null : thumbClick.emit(i)"
-                       (error)="error.emit({ itemIndex: i, error: $event })"/>
+        @for (item of galleryRef.items(); track item.data.src; let i = $index; let count = $count) {
+          <gallery-thumb [attr.galleryId]="galleryId"
+                         [type]="item.type"
+                         [config]="config"
+                         [data]="item.data"
+                         [currIndex]="galleryRef.currIndex()"
+                         [index]="i"
+                         [count]="count"
+                         (click)="config.disableThumbs ? null : thumbClick.emit(i)"
+                         (error)="error.emit({ itemIndex: i, error: $event })"/>
+        }
       </div>
     </div>
   `,
-  standalone: true,
+  styleUrl: './gallery-thumbs.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, GalleryThumbComponent, SmoothScroll, HammerSliding, ThumbResizeObserver]
 })
 export class GalleryThumbsComponent implements AfterViewInit, OnChanges {
+
+  galleryRef: GalleryRef = inject(GalleryRef);
 
   /** Stream that emits the slider position */
   readonly position$: Subject<SmoothScrollOptions> = new Subject<SmoothScrollOptions>();
@@ -72,9 +76,6 @@ export class GalleryThumbsComponent implements AfterViewInit, OnChanges {
   /** Gallery ID */
   @Input() galleryId: string;
 
-  /** Gallery state */
-  @Input() state: GalleryState;
-
   /** Gallery config */
   @Input() config: GalleryConfig;
 
@@ -85,7 +86,7 @@ export class GalleryThumbsComponent implements AfterViewInit, OnChanges {
   @Output() error: EventEmitter<GalleryError> = new EventEmitter<GalleryError>();
 
   /** Slider ElementRef */
-  @ViewChild('slider', { static: true }) sliderEl: ElementRef;
+  @ViewChild('slider', { static: true }) sliderEl: ElementRef<HTMLElement>;
 
   @ViewChildren(GalleryThumbComponent) items: QueryList<GalleryThumbComponent> = new QueryList<GalleryThumbComponent>();
 
@@ -111,7 +112,7 @@ export class GalleryThumbsComponent implements AfterViewInit, OnChanges {
         if (!changes.config.firstChange) {
           // Keep the correct sliding position when direction changes
           requestAnimationFrame(() => {
-            this.scrollToIndex(this.state.currIndex, 'auto');
+            this.scrollToIndex(this.galleryRef.currIndex(), 'auto');
           });
         }
       }
@@ -121,7 +122,7 @@ export class GalleryThumbsComponent implements AfterViewInit, OnChanges {
       if (changes.state.currentValue?.currIndex !== changes.state.previousValue?.currIndex) {
         // Scroll slide to item when current index changes.
         requestAnimationFrame(() => {
-          this.scrollToIndex(this.state.currIndex, changes.state?.firstChange ? 'auto' : 'smooth');
+          this.scrollToIndex(this.galleryRef.currIndex(), changes.state?.firstChange ? 'auto' : 'smooth');
         });
       }
     }
@@ -143,7 +144,7 @@ export class GalleryThumbsComponent implements AfterViewInit, OnChanges {
   onActiveIndexChange(index: number): void {
     if (index === -1) {
       // Reset active index position
-      this.scrollToIndex(this.state.currIndex, 'smooth');
+      this.scrollToIndex(this.galleryRef.currIndex(), 'smooth');
     } else {
       this.scrollToIndex(index, 'smooth');
     }
