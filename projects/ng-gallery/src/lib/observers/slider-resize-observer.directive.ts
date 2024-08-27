@@ -8,7 +8,7 @@ import {
   OnInit,
   OnChanges,
   OnDestroy,
-  EventEmitter
+  EventEmitter, inject
 } from '@angular/core';
 import {
   Observable,
@@ -28,16 +28,22 @@ import {
 import { ImgManager } from '../utils/img-manager';
 import { resizeObservable } from '../utils/resize-observer';
 import { SliderAdapter } from '../components/adapters';
-import { Gallery } from '../services/gallery.service';
 import { GalleryRef } from '../services/gallery-ref';
 import { GalleryConfig } from '../models/config.model';
-import { GalleryState } from '../models/gallery.model';
 
 @Directive({
   selector: '[sliderResizeObserver]',
   standalone: true
 })
 export class SliderResizeObserver implements AfterViewChecked, OnChanges, OnInit, OnDestroy {
+
+  private galleryRef: GalleryRef = inject(GalleryRef);
+
+  private _viewport: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
+
+  private _zone: NgZone = inject(NgZone);
+
+  private _imgManager: ImgManager
 
   private _resizeObserver: ResizeObserver;
 
@@ -50,12 +56,8 @@ export class SliderResizeObserver implements AfterViewChecked, OnChanges, OnInit
   // Stream that emits after the transition to the new height is completed
   private _afterHeightChanged$: Observable<any>;
 
-  private get _viewport(): HTMLElement {
-    return this._el.nativeElement;
-  }
-
   private get _galleryCore(): HTMLElement {
-    return this._el.nativeElement.parentElement.parentElement.parentElement;
+    return this._viewport.parentElement.parentElement.parentElement;
   }
 
   private get _isAutoHeight(): boolean {
@@ -73,15 +75,7 @@ export class SliderResizeObserver implements AfterViewChecked, OnChanges, OnInit
 
   @Output() isResizingChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(private _el: ElementRef<HTMLElement>,
-              private _zone: NgZone,
-              private _gallery: Gallery,
-              private _imgManager: ImgManager) {
-  }
-
   ngOnInit(): void {
-    const galleryRef: GalleryRef = this._gallery.ref(this.galleryId);
-
     // Check if height has transition for the auto-height feature
     const transitionDuration: string = getComputedStyle(this._viewport).getPropertyValue('transition-duration');
     if (parseFloat(transitionDuration) === 0) {
@@ -104,7 +98,7 @@ export class SliderResizeObserver implements AfterViewChecked, OnChanges, OnInit
           this.updateSliderSize();
 
           if (this._isAutoHeight) {
-            const img: HTMLImageElement = await firstValueFrom(this._imgManager.getActiveItem(galleryRef.state));
+            const img: HTMLImageElement = await firstValueFrom(this._imgManager.getActiveItem());
             // If img height is identical to the viewport height then skip
             if (img.height === this._viewport.clientHeight) {
               this.resetResizingState();
@@ -167,27 +161,25 @@ export class SliderResizeObserver implements AfterViewChecked, OnChanges, OnInit
     this._shouldSkip = false;
     this._zone.runOutsideAngular(() => {
 
-      const galleryRef: GalleryRef = this._gallery.ref(this.galleryId);
-
       // TODO: Why is galleryRef.state emits when screen size changes?
-      const state: Observable<GalleryState> = galleryRef.state.pipe(distinctUntilChanged((a: GalleryState, b: GalleryState) => a.currIndex === b.currIndex))
-      this._autoHeightSubscription = this._imgManager.getActiveItem(state).pipe(
-        switchMap((img: HTMLImageElement) => {
-          this.setResizingState({ unobserve: true });
-          this._galleryCore.style.setProperty('--slider-height', `${ img.clientHeight }px`);
-
-          // Check if the new item height is equal to the current height, there will be no transition,
-          // So reset resizing state
-          if (img.height === this._viewport.clientHeight) {
-            this.resetResizingState({ shouldSkip: true, observe: true });
-            return EMPTY;
-          }
-          return this._afterHeightChanged$.pipe(
-            tap(() => this.resetResizingState({ shouldSkip: true, observe: true })),
-            take(1)
-          );
-        })
-      ).subscribe();
+      // const state: Observable<GalleryState> = this.galleryRef.state.pipe(distinctUntilChanged((a: GalleryState, b: GalleryState) => a.currIndex === b.currIndex))
+      // this._autoHeightSubscription = this._imgManager.getActiveItem(state).pipe(
+      //   switchMap((img: HTMLImageElement) => {
+      //     this.setResizingState({ unobserve: true });
+      //     this._galleryCore.style.setProperty('--slider-height', `${ img.clientHeight }px`);
+      //
+      //     // Check if the new item height is equal to the current height, there will be no transition,
+      //     // So reset resizing state
+      //     if (img.height === this._viewport.clientHeight) {
+      //       this.resetResizingState({ shouldSkip: true, observe: true });
+      //       return EMPTY;
+      //     }
+      //     return this._afterHeightChanged$.pipe(
+      //       tap(() => this.resetResizingState({ shouldSkip: true, observe: true })),
+      //       take(1)
+      //     );
+      //   })
+      // ).subscribe();
     });
   }
 

@@ -1,52 +1,40 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, inject, computed, Signal, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Directionality } from '@angular/cdk/bidi';
-import { Gallery } from '../services/gallery.service';
-import { GalleryState } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
+import { GalleryRef } from '../services/gallery-ref';
+// import { Directionality } from '@angular/cdk/bidi';
 
 @Component({
-  selector: 'gallery-nav',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./gallery-nav.scss'],
-  template: `
-    <i *ngIf="config.loop || state.hasPrev"
-       class="g-nav-prev"
-       aria-label="Previous"
-       role="button"
-       (click)="gallery.ref(this.id).prev(config.scrollBehavior)"
-       [innerHtml]="navIcon"></i>
-
-    <i *ngIf="config.loop || state.hasNext"
-       class="g-nav-next"
-       aria-label="Next"
-       role="button"
-       (click)="gallery.ref(this.id).next(config.scrollBehavior)"
-       [innerHtml]="navIcon"></i>
-  `,
   standalone: true,
-  imports: [CommonModule]
+  selector: 'gallery-nav',
+  template: `
+    @if (config.loop || galleryRef.hasPrev()) {
+      <i class="g-nav-prev"
+         aria-label="Previous"
+         role="button"
+         (click)="galleryRef.prev(config.scrollBehavior)"
+         [innerHtml]="navIcon()"></i>
+    }
+    @if (config.loop || galleryRef.hasNext()) {
+      <i class="g-nav-next"
+         aria-label="Next"
+         role="button"
+         (click)="galleryRef.next(config.scrollBehavior)"
+         [innerHtml]="navIcon()"></i>
+    }
+  `,
+  styleUrl: './gallery-nav.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GalleryNavComponent implements OnInit {
+export class GalleryNavComponent {
 
-  navIcon: SafeHtml;
-  @Input('galleryId') id: string;
-  @Input() state: GalleryState;
+  private _sanitizer: DomSanitizer = inject(DomSanitizer);
+
+  // dir: Directionality = inject(Directionality);
+
+  galleryRef: GalleryRef = inject(GalleryRef);
+
+  navIcon: Signal<SafeHtml> = computed(() => this._sanitizer.bypassSecurityTrustHtml(this.config.navIcon));
+
   @Input() config: GalleryConfig;
-
-  constructor(public gallery: Gallery, private _sanitizer: DomSanitizer, public dir: Directionality) {
-  }
-
-  ngOnInit() {
-    this.navIcon = this._sanitizer.bypassSecurityTrustHtml(this.config.navIcon);
-  }
-
-  rightButton() {
-
-  }
-
-  leftButton(): void {
-
-  }
 }

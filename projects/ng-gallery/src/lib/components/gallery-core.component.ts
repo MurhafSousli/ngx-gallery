@@ -3,13 +3,14 @@ import {
   Input,
   Output,
   HostBinding,
+  inject,
   EventEmitter,
   OnChanges,
   SimpleChanges,
   ElementRef,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { coerceCssPixelValue } from '@angular/cdk/coercion';
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import { GalleryCounterComponent } from './gallery-counter.component';
@@ -19,52 +20,55 @@ import { GallerySliderComponent } from './gallery-slider.component';
 import { GalleryThumbsComponent } from './gallery-thumbs.component';
 import { GalleryError, GalleryState } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
+import { GalleryRef } from '../services/gallery-ref';
 
 @Component({
+  standalone: true,
   selector: 'gallery-core',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./gallery-core.scss', '../styles/debug.scss'],
   template: `
-    <gallery-thumbs *ngIf="config.thumbs"
-                    [state]="state"
-                    [config]="config"
-                    [galleryId]="galleryId"
-                    (thumbClick)="thumbClick.emit($event)"
-                    (error)="error.emit($event)"/>
+    @if (config.thumbs) {
+      <gallery-thumbs [config]="config"
+                      [galleryId]="galleryId"
+                      (thumbClick)="thumbClick.emit($event)"
+                      (error)="error.emit($event)"/>
+    }
 
     <div class="g-box">
       <gallery-slider [class.g-debug]="config.debug"
-                      [state]="state"
                       [config]="config"
                       [galleryId]="galleryId"
                       (itemClick)="itemClick.emit($event)"
                       (error)="error.emit($event)">
 
-        <gallery-nav *ngIf="config.nav && state.items.length > 1"
-                     [state]="state"
-                     [config]="config"
-                     [galleryId]="galleryId"/>
-
+        @if (config.nav && galleryRef.items().length > 1) {
+          <gallery-nav [config]="config"/>
+        }
       </gallery-slider>
 
-      <gallery-bullets *ngIf="config.bullets"
-                       [state]="state"
-                       [config]="config"
-                       [galleryId]="galleryId"/>
+      @if (config.bullets) {
+        <gallery-bullets [config]="config"/>
+      }
 
-      <gallery-counter *ngIf="config.counter"
-                       [state]="state"/>
+      @if (config.counter) {
+        <gallery-counter/>
+      }
 
       <div class="g-box-template">
-        <ng-container
-          *ngTemplateOutlet="config.boxTemplate; context: { state: state, config: config }"></ng-container>
+        <ng-container *ngTemplateOutlet="config.boxTemplate; context: { state: state, config: config }"/>
       </div>
     </div>
   `,
-  standalone: true,
-  imports: [CommonModule, GalleryThumbsComponent, GallerySliderComponent, GalleryNavComponent, GalleryBulletsComponent, GalleryCounterComponent]
+  styleUrls: ['./gallery-core.scss', '../styles/debug.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [NgTemplateOutlet, GalleryThumbsComponent, GallerySliderComponent, GalleryNavComponent, GalleryBulletsComponent, GalleryCounterComponent]
 })
 export class GalleryCoreComponent implements OnChanges {
+
+  galleryRef: GalleryRef = inject(GalleryRef);
+
+  readonly nativeElement: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
+
+  readonly dir: Directionality = inject(Directionality);
 
   @Input() galleryId: string;
   @Input() state: GalleryState;
@@ -148,16 +152,13 @@ export class GalleryCoreComponent implements OnChanges {
     return this.config.debug;
   }
 
-  constructor(private el: ElementRef<HTMLElement>, private dir: Directionality) {
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.config) {
       if (changes.config.currentValue?.thumbWidth !== changes.config.previousValue?.thumbWidth) {
-        this.el.nativeElement.style.setProperty('--g-thumb-width', coerceCssPixelValue(changes.config.currentValue.thumbWidth));
+        this.nativeElement.style.setProperty('--g-thumb-width', coerceCssPixelValue(changes.config.currentValue.thumbWidth));
       }
       if (changes.config.currentValue?.thumbHeight !== changes.config.previousValue?.thumbHeight) {
-        this.el.nativeElement.style.setProperty('--g-thumb-height', coerceCssPixelValue(changes.config.currentValue.thumbHeight));
+        this.nativeElement.style.setProperty('--g-thumb-height', coerceCssPixelValue(changes.config.currentValue.thumbHeight));
       }
     }
   }

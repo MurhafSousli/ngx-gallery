@@ -3,12 +3,13 @@ import {
   HostBinding,
   Input,
   Output,
+  inject,
   EventEmitter,
   ElementRef,
   AfterViewInit,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { GalleryItemContext } from '../directives/gallery-item-def.directive';
 import { GalleryIframeComponent } from './templates/gallery-iframe.component';
@@ -19,63 +20,69 @@ import { GalleryItemType, GalleryItemTypes, LoadingStrategy } from '../models/co
 import { GalleryItemData, ImageItemData, ItemState, VideoItemData, VimeoItemData, YoutubeItemData } from './templates/items.model';
 
 @Component({
+  standalone: true,
   selector: 'gallery-item',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./gallery-item.scss'],
   template: `
-    <ng-container *ngIf="load" [ngSwitch]="type">
-      <ng-container *ngSwitchCase="Types.Image">
-        <gallery-image [src]="imageData.src"
-                       [alt]="imageData.alt"
-                       [index]="index"
-                       [loadingAttr]="config.loadingAttr"
-                       [loadingIcon]="config.loadingIcon"
-                       [loadingError]="config.loadingError"
-                       (error)="error.emit($event)"></gallery-image>
-
-        <div *ngIf="config.imageTemplate" class="g-template g-item-template">
-          <ng-container *ngTemplateOutlet="config.imageTemplate; context: imageContext"></ng-container>
-        </div>
-      </ng-container>
-
-      <gallery-video *ngSwitchCase="Types.Video"
-                     [src]="videoData.src"
-                     [mute]="videoData.mute"
-                     [poster]="videoData.poster"
-                     [controls]="videoData.controls"
-                     [controlsList]="videoData.controlsList"
-                     [disablePictureInPicture]="videoData.disablePictureInPicture"
-                     [play]="isAutoPlay"
-                     [pause]="currIndex !== index"
-                     (error)="error.emit($event)"></gallery-video>
-
-      <gallery-iframe *ngSwitchCase="Types.Youtube"
-                      [src]="youtubeSrc"
-                      [autoplay]="isAutoPlay"
-                      [loadingAttr]="config.loadingAttr"
-                      [pause]="currIndex !== index"></gallery-iframe>
-
+    @if (load) {
+      @switch (type) {
+        @case (Types.Image) {
+          <gallery-image [src]="imageData.src"
+                         [alt]="imageData.alt"
+                         [index]="index"
+                         [loadingAttr]="config.loadingAttr"
+                         [loadingIcon]="config.loadingIcon"
+                         [loadingError]="config.loadingError"
+                         (error)="error.emit($event)"/>
+          @if (config.imageTemplate) {
+            <div class="g-template g-item-template">
+              <ng-container *ngTemplateOutlet="config.imageTemplate; context: imageContext"/>
+            </div>
+          }
+        }
+        @case (Types.Video) {
+          <gallery-video [src]="videoData.src"
+                         [mute]="videoData.mute"
+                         [poster]="videoData.poster"
+                         [controls]="videoData.controls"
+                         [controlsList]="videoData.controlsList"
+                         [disablePictureInPicture]="videoData.disablePictureInPicture"
+                         [play]="isAutoPlay"
+                         [pause]="currIndex !== index"
+                         (error)="error.emit($event)"/>
+        }
+        @case (Types.Youtube) {
+          <gallery-iframe [src]="youtubeSrc"
+                          [autoplay]="isAutoPlay"
+                          [loadingAttr]="config.loadingAttr"
+                          [pause]="currIndex !== index"/>
+        }
+        @case (Types.Iframe) {
+          <gallery-iframe [src]="data.src"
+                          [loadingAttr]="config.loadingAttr"/>
+        }
+        @default {
+          @if (config.itemTemplate) {
+            <div class="g-template g-item-template">
+              <ng-container *ngTemplateOutlet="config.itemTemplate; context: itemContext"/>
+            </div>
+          }
+        }
+      }
+    }
       <gallery-iframe *ngSwitchCase="Types.Vimeo"
                       [src]="vimeoSrc"
                       [autoplay]="isAutoPlay"
                       [loadingAttr]="config.loadingAttr"
                       [pause]="currIndex !== index"></gallery-iframe>
 
-      <gallery-iframe *ngSwitchCase="Types.Iframe"
-                      [src]="data.src"
-                      [loadingAttr]="config.loadingAttr"></gallery-iframe>
-
-      <ng-container *ngSwitchDefault>
-        <div *ngIf="config.itemTemplate" class="g-template g-item-template">
-          <ng-container *ngTemplateOutlet="config.itemTemplate; context: itemContext"></ng-container>
-        </div>
-      </ng-container>
-    </ng-container>
   `,
-  standalone: true,
-  imports: [CommonModule, GalleryImageComponent, GalleryVideoComponent, GalleryIframeComponent]
+  styleUrl: './gallery-item.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [NgTemplateOutlet, GalleryImageComponent, GalleryVideoComponent, GalleryIframeComponent]
 })
 export class GalleryItemComponent implements AfterViewInit {
+
+  readonly nativeElement: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
 
   readonly Types = GalleryItemTypes;
 
@@ -143,10 +150,6 @@ export class GalleryItemComponent implements AfterViewInit {
     };
   }
 
-  get nativeElement(): HTMLElement {
-    return this.el.nativeElement;
-  }
-
   get isAutoPlay(): boolean {
     if (this.isActive) {
       if (this.type === GalleryItemTypes.Video || this.type === GalleryItemTypes.Youtube || this.type === GalleryItemTypes.Vimeo) {
@@ -201,9 +204,6 @@ export class GalleryItemComponent implements AfterViewInit {
 
   get videoData(): VideoItemData {
     return this.data;
-  }
-
-  constructor(private el: ElementRef) {
   }
 
   ngAfterViewInit(): void {

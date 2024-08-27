@@ -5,6 +5,7 @@ import {
   ContentChild,
   booleanAttribute,
   numberAttribute,
+  inject,
   EventEmitter,
   OnInit,
   AfterContentInit,
@@ -16,11 +17,10 @@ import {
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { GalleryCoreComponent } from './gallery-core.component';
-import { Gallery } from '../services/gallery.service';
 import { GalleryRef } from '../services/gallery-ref';
 import { GalleryError, GalleryItem, GalleryState } from '../models/gallery.model';
 import { IframeItemData, ImageItemData, VideoItemData, VimeoItemData, YoutubeItemData } from './templates/items.model';
-import { GalleryConfig } from '../models/config.model';
+import { GALLERY_CONFIG, GalleryConfig } from '../models/config.model';
 import { BezierEasingOptions } from '../smooth-scroll';
 import { GalleryImageDef } from '../directives/gallery-image-def.directive';
 import { GalleryThumbDef } from '../directives/gallery-thumb-def.directive';
@@ -33,28 +33,32 @@ import { AutoplayDirective } from '../autoplay/autoplay.directive';
  * Gallery component
  */
 @Component({
+  standalone: true,
   selector: 'gallery',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./gallery.scss'],
   template: `
     <gallery-core autoplay
                   [galleryId]="id"
-                  [state]="galleryRef.state | async"
-                  [config]="galleryRef.config | async"
+                  [config]="galleryRef.config()"
                   (itemClick)="onItemClick($event)"
                   (thumbClick)="onThumbClick($event)"
                   (error)="onError($event)"/>
   `,
-  standalone: true,
+  styleUrl: './gallery.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, GalleryCoreComponent, AutoplayDirective],
-  providers: [ImgManager]
+  providers: [ImgManager, GalleryRef]
 })
 export class GalleryComponent implements OnInit, AfterContentInit, OnChanges, OnDestroy {
 
   /**
    * The gallery reference instance
    */
-  galleryRef: GalleryRef;
+  galleryRef: GalleryRef = inject(GalleryRef);
+
+  /**
+   * @ignore
+   */
+  private _config: GalleryConfig = inject(GALLERY_CONFIG);
 
   /**
    * The gallery instance unique id, required if more multiple gallery instances
@@ -69,43 +73,43 @@ export class GalleryComponent implements OnInit, AfterContentInit, OnChanges, On
   /**
    * Displays the navigation buttons
    */
-  @Input({ transform: booleanAttribute }) nav: boolean = this._gallery.config.nav;
+  @Input({ transform: booleanAttribute }) nav: boolean = this._config.nav;
 
   /**
    * Displays the navigation bullets
    */
-  @Input({ transform: booleanAttribute }) bullets: boolean = this._gallery.config.bullets;
+  @Input({ transform: booleanAttribute }) bullets: boolean = this._config.bullets;
 
   /**
    * Enables loop cycling
    */
-  @Input({ transform: booleanAttribute }) loop: boolean = this._gallery.config.loop;
+  @Input({ transform: booleanAttribute }) loop: boolean = this._config.loop;
 
   /**
    * Show visuals that helps debugging the component
    */
-  @Input({ transform: booleanAttribute }) debug: boolean = this._gallery.config.debug;
+  @Input({ transform: booleanAttribute }) debug: boolean = this._config.debug;
 
   /**
    * Displays the thumbnails
    */
-  @Input({ transform: booleanAttribute }) thumbs: boolean = this._gallery.config.thumbs;
+  @Input({ transform: booleanAttribute }) thumbs: boolean = this._config.thumbs;
 
   /**
    * Displays the counter or pagination
    */
-  @Input({ transform: booleanAttribute }) counter: boolean = this._gallery.config.counter;
+  @Input({ transform: booleanAttribute }) counter: boolean = this._config.counter;
 
   /**
    * De-attaching the thumbnails from the main slider
    * If enabled - thumbnails won't automatically scroll to the active thumbnails
    */
-  @Input({ transform: booleanAttribute }) detachThumbs: boolean = this._gallery.config.detachThumbs;
+  @Input({ transform: booleanAttribute }) detachThumbs: boolean = this._config.detachThumbs;
 
   /**
    * Fits each thumbnail size to its content
    */
-  @Input({ transform: booleanAttribute }) thumbAutosize: boolean = this._gallery.config.thumbAutosize;
+  @Input({ transform: booleanAttribute }) thumbAutosize: boolean = this._config.thumbAutosize;
 
   /**
    * Fits each item size to its content, This option should be used with:
@@ -113,122 +117,122 @@ export class GalleryComponent implements OnInit, AfterContentInit, OnChanges, On
    * - Does not work properly unless `loadingAttr="eager"`
    * - Does not work properly unless `loadingStrategy="preload"`
    */
-  @Input({ transform: booleanAttribute }) itemAutosize: boolean = this._gallery.config.itemAutosize;
+  @Input({ transform: booleanAttribute }) itemAutosize: boolean = this._config.itemAutosize;
 
   /**
    * Automatically adjusts the gallery's height to fit the content
    */
-  @Input({ transform: booleanAttribute }) autoHeight: boolean = this._gallery.config.autoHeight;
+  @Input({ transform: booleanAttribute }) autoHeight: boolean = this._config.autoHeight;
 
   /**
    * Automatically cycle through items at time interval
    */
-  @Input({ transform: booleanAttribute }) autoplay: boolean = this._gallery.config.autoplay;
+  @Input({ transform: booleanAttribute }) autoplay: boolean = this._config.autoplay;
 
   /**
    * Disables thumbnails' clicks
    */
-  @Input({ transform: booleanAttribute }) disableThumbs: boolean = this._gallery.config.disableThumbs;
+  @Input({ transform: booleanAttribute }) disableThumbs: boolean = this._config.disableThumbs;
 
   /**
    * Disables bullets' clicks
    */
-  @Input({ transform: booleanAttribute }) disableBullets: boolean = this._gallery.config.disableBullets;
+  @Input({ transform: booleanAttribute }) disableBullets: boolean = this._config.disableBullets;
 
   /**
    * Disables sliding using mousewheel, touchpad, scroll and gestures on touch devices
    */
-  @Input({ transform: booleanAttribute }) disableScroll: boolean = this._gallery.config.disableScroll;
+  @Input({ transform: booleanAttribute }) disableScroll: boolean = this._config.disableScroll;
 
   /**
    * Disables sliding of thumbnails using touchpad, scroll and gestures on touch devices
    */
-  @Input({ transform: booleanAttribute }) disableThumbScroll: boolean = this._gallery.config.disableThumbScroll;
+  @Input({ transform: booleanAttribute }) disableThumbScroll: boolean = this._config.disableThumbScroll;
 
   /**
    * Force centralizing the active thumbnail
    */
-  @Input({ transform: booleanAttribute }) thumbCentralized: boolean = this._gallery.config.thumbCentralized;
+  @Input({ transform: booleanAttribute }) thumbCentralized: boolean = this._config.thumbCentralized;
 
   /**
    * Disables sliding using the mouse
    */
-  @Input({ transform: booleanAttribute }) disableMouseScroll: boolean = this._gallery.config.disableMouseScroll;
+  @Input({ transform: booleanAttribute }) disableMouseScroll: boolean = this._config.disableMouseScroll;
 
   /**
    * Disables sliding of thumbnails using the mouse
    */
-  @Input({ transform: booleanAttribute }) disableThumbMouseScroll: boolean = this._gallery.config.disableThumbMouseScroll;
+  @Input({ transform: booleanAttribute }) disableThumbMouseScroll: boolean = this._config.disableThumbMouseScroll;
 
   /**
    * Sets the size of the bullets navigation
    */
-  @Input({ transform: numberAttribute }) bulletSize: number = this._gallery.config.bulletSize;
+  @Input({ transform: numberAttribute }) bulletSize: number = this._config.bulletSize;
 
   /**
    * Sets the thumbnail's width
    */
-  @Input({ transform: numberAttribute }) thumbWidth: number = this._gallery.config.thumbWidth;
+  @Input({ transform: numberAttribute }) thumbWidth: number = this._config.thumbWidth;
 
   /**
    * Sets the thumbnail's height
    */
-  @Input({ transform: numberAttribute }) thumbHeight: number = this._gallery.config.thumbHeight;
+  @Input({ transform: numberAttribute }) thumbHeight: number = this._config.thumbHeight;
 
   /**
    * Sets the interval used for the autoplay feature
    */
-  @Input({ transform: numberAttribute }) autoplayInterval: number = this._gallery.config.autoplayInterval;
+  @Input({ transform: numberAttribute }) autoplayInterval: number = this._config.autoplayInterval;
 
   /**
    * Sets the duration used for smooth navigation between the items
    */
-  @Input({ transform: numberAttribute }) scrollDuration: number = this._gallery.config.scrollDuration;
+  @Input({ transform: numberAttribute }) scrollDuration: number = this._config.scrollDuration;
 
   /**
    * Sets the debounce time used to throttle the gallery update after it is resized
    */
-  @Input({ transform: numberAttribute }) resizeDebounceTime: number = this._gallery.config.resizeDebounceTime;
+  @Input({ transform: numberAttribute }) resizeDebounceTime: number = this._config.resizeDebounceTime;
 
   /**
    * Sets the scroll behavior when the active item is changed
    */
-  @Input() scrollBehavior: ScrollBehavior = this._gallery.config.scrollBehavior;
+  @Input() scrollBehavior: ScrollBehavior = this._config.scrollBehavior;
 
   /**
    * Sets the ease function used for smooth navigation between the items
    */
-  @Input() scrollEase: BezierEasingOptions = this._gallery.config.scrollEase;
+  @Input() scrollEase: BezierEasingOptions = this._config.scrollEase;
 
   /**
    * Sets the object-fit style applied on items' images
    */
-  @Input() imageSize: 'cover' | 'contain' = this._gallery.config.imageSize;
+  @Input() imageSize: 'cover' | 'contain' = this._config.imageSize;
 
   /**
    * Sets the object-fit style applied on thumbnails' images
    */
-  @Input() thumbImageSize: 'cover' | 'contain' = this._gallery.config.thumbImageSize;
+  @Input() thumbImageSize: 'cover' | 'contain' = this._config.thumbImageSize;
 
   /**
    * Sets the bullets navigation position
    */
-  @Input() bulletPosition: 'top' | 'bottom' = this._gallery.config.bulletPosition;
+  @Input() bulletPosition: 'top' | 'bottom' = this._config.bulletPosition;
 
   /**
    * Sets the counter navigation position
    */
-  @Input() counterPosition: 'top' | 'bottom' = this._gallery.config.counterPosition;
+  @Input() counterPosition: 'top' | 'bottom' = this._config.counterPosition;
 
   /**
    * Sets the sliding direction
    */
-  @Input() orientation: 'horizontal' | 'vertical' = this._gallery.config.orientation;
+  @Input() orientation: 'horizontal' | 'vertical' = this._config.orientation;
 
   /**
    * Sets the loading attribute applied on the items' images
    */
-  @Input() loadingAttr: 'eager' | 'lazy' = this._gallery.config.loadingAttr;
+  @Input() loadingAttr: 'eager' | 'lazy' = this._config.loadingAttr;
 
   /**
    * Sets the loading strategy used for displaying the items
@@ -236,19 +240,12 @@ export class GalleryComponent implements OnInit, AfterContentInit, OnChanges, On
    * - `default` renders only the active item, the previous item and the next item
    * - `preload` renders all the items, this option is required for `thumbAutoSize` is enabled
    */
-  @Input() loadingStrategy: 'preload' | 'lazy' | 'default' = this._gallery.config.loadingStrategy;
+  @Input() loadingStrategy: 'preload' | 'lazy' | 'default' = this._config.loadingStrategy;
 
   /**
    * Sets the thumbnails position, it also sets the sliding direction of the thumbnails accordingly
    */
-  @Input() thumbPosition: 'top' | 'left' | 'right' | 'bottom' = this._gallery.config.thumbPosition;
-
-  /**
-   * Destroy gallery ref on component destroy event
-   * This intended to be used and disabled from the lightbox component
-   * @ignore
-   * */
-  @Input() destroyRef: boolean = true;
+  @Input() thumbPosition: 'top' | 'left' | 'right' | 'bottom' = this._config.thumbPosition;
 
   /**
    * Skip initializing the config with components inputs (Lightbox mode)
@@ -307,9 +304,6 @@ export class GalleryComponent implements OnInit, AfterContentInit, OnChanges, On
   /** @ignore */
   private _playingChange$: Subscription;
 
-  constructor(private _gallery: Gallery) {
-  }
-
   /** @ignore */
   private getConfig(): GalleryConfig {
     return {
@@ -366,24 +360,25 @@ export class GalleryComponent implements OnInit, AfterContentInit, OnChanges, On
   /** @ignore */
   ngOnInit(): void {
     // Get gallery instance by id
-    if (this.skipInitConfig) {
-      this.galleryRef = this._gallery.ref(this.id);
-    } else {
-      this.galleryRef = this._gallery.ref(this.id, this.getConfig());
-    }
+    // if (this.skipInitConfig) {
+    //   this.galleryRef = this.ref(this.id);
+    // } else {
+    //   this.galleryRef = this.ref(this.id, this.getConfig());
+    // }
 
     // Load gallery items
     this.load(this.items);
 
     // Subscribes to events on demand
     if (this.indexChange.observed) {
-      this._indexChange$ = this.galleryRef.indexChanged.subscribe((state: GalleryState) => this.indexChange.emit(state));
+      this._indexChange$ = this.galleryRef.indexChanged.subscribe(() => this.indexChange.emit());
     }
     if (this.itemsChange.observed) {
-      this._itemChange$ = this.galleryRef.itemsChanged.subscribe((state: GalleryState) => this.itemsChange.emit(state));
+      this._itemChange$ = this.galleryRef.itemsChanged.subscribe(() => this.itemsChange.emit());
     }
+    // TODO: _playingChange$ is broken
     if (this.playingChange.observed) {
-      this._playingChange$ = this.galleryRef.playingChanged.subscribe((state: GalleryState) => this.playingChange.emit(state));
+      this._playingChange$ = this.galleryRef.playingChanged.subscribe(() => this.playingChange.emit());
     }
   }
 
@@ -414,9 +409,6 @@ export class GalleryComponent implements OnInit, AfterContentInit, OnChanges, On
     this._itemChange$?.unsubscribe();
     this._indexChange$?.unsubscribe();
     this._playingChange$?.unsubscribe();
-    if (this.destroyRef) {
-      this.galleryRef?.destroy();
-    }
   }
 
   /** @ignore */

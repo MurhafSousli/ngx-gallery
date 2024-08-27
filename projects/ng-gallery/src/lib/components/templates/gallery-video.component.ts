@@ -14,12 +14,13 @@ import { NgFor, NgIf } from '@angular/common';
            [loop]="loop"
            [poster]="poster"
            (error)="error.emit($event)">
-      <ng-container *ngFor="let src of videoSources">
-        <source *ngIf="src?.type; else noType" [src]="src?.url" [type]="src.type"/>
-        <ng-template #noType>
+      @for (src of videoSources; track src.url) {
+        @if (src?.type) {
+          <source [src]="src?.url" [type]="src.type"/>
+        } @else {
           <source [src]="src?.url"/>
-        </ng-template>
-      </ng-container>
+        }
+      }
     </video>
   `,
   standalone: true,
@@ -61,7 +62,7 @@ export class GalleryVideoComponent implements OnInit {
 
   @ViewChild('video', { static: true }) video: ElementRef;
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.src instanceof Array) {
       // If video has multiple sources
       this.videoSources = [...this.src];

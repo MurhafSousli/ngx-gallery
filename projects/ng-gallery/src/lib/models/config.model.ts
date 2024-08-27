@@ -1,7 +1,18 @@
-import { InjectionToken, TemplateRef } from '@angular/core';
+import { InjectionToken, Provider, TemplateRef } from '@angular/core';
 import { BezierEasingOptions } from '../smooth-scroll';
+import { defaultConfig } from '../utils/gallery.default';
 
-export const GALLERY_CONFIG: InjectionToken<GalleryConfig> = new InjectionToken<GalleryConfig>('GALLERY_CONFIG');
+export const GALLERY_CONFIG: InjectionToken<GalleryConfig> = new InjectionToken<GalleryConfig>('GALLERY_CONFIG', {
+  providedIn: 'root',
+  factory: () => defaultConfig
+});
+
+export function provideGalleryOptions(options: GalleryConfig): Provider {
+  return {
+    provide: GALLERY_CONFIG,
+    useValue: { ...defaultConfig, ...options }
+  }
+}
 
 type ImageSize = 'contain' | 'cover';
 

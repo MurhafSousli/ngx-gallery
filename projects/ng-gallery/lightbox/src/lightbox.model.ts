@@ -1,6 +1,10 @@
-import { InjectionToken } from '@angular/core';
+import { InjectionToken, Provider } from '@angular/core';
+import { defaultConfig } from './lightbox.default';
 
-export const LIGHTBOX_CONFIG = new InjectionToken<LightboxConfig>('LIGHTBOX_CONFIG');
+export const LIGHTBOX_CONFIG: InjectionToken<LightboxConfig> = new InjectionToken<LightboxConfig>('LIGHTBOX_CONFIG', {
+  providedIn: 'root',
+  factory: () => defaultConfig
+});
 
 export interface LightboxConfig {
   backdropClass?: string | string[];
@@ -14,4 +18,11 @@ export interface LightboxConfig {
   ariaDescribedBy?: string;
   startAnimationTime?: number;
   exitAnimationTime?: number;
+}
+
+export function provideLightboxOptions(options: LightboxConfig): Provider {
+  return {
+    provide: LIGHTBOX_CONFIG,
+    useValue: { ...defaultConfig, ...options }
+  }
 }

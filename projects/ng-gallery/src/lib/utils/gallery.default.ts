@@ -8,18 +8,17 @@ import {
   CounterPosition,
   LoadingAttr
 } from '../models/constants';
-import { GalleryState } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
 
 /** Initial state */
-export const defaultState: GalleryState = {
-  action: GalleryAction.INITIALIZED,
-  isPlaying: false,
-  hasNext: false,
-  hasPrev: false,
-  currIndex: 0,
-  items: []
-};
+// export const defaultState: GalleryState = {
+//   action: GalleryAction.INITIALIZED,
+//   isPlaying: false,
+//   hasNext: false,
+//   hasPrev: false,
+//   currIndex: 0,
+//   items: []
+// };
 
 export const defaultConfig: GalleryConfig = {
   nav: true,
