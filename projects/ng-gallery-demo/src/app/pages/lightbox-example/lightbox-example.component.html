@@ -25,7 +25,7 @@
       <p>Create a gallery items array to load it in the gallery</p>
     </div>
 
-    <hl-code [code]="code.loadItems"></hl-code>
+    <hl-code [code]="code.loadItems"/>
 
     <div class="usage-title">
       <span class="section-number">3</span>
@@ -35,25 +35,26 @@
     </div>
 
     <h4>Example</h4>
-    <hl-code [code]="code.template"></hl-code>
+    <hl-code [code]="code.template"/>
 
     <p>If you are using multiple galleries in your app, then each gallery should have an id.</p>
 
     <h4>Full Example</h4>
 
-    <hl-code [code]="code.ex"></hl-code>
+    <hl-code [code]="code.ex"/>
 
     <h3>Demo</h3>
 
     <div class="grid">
-      <button mat-raised-button
-              class="grid-item"
-              *ngFor="let item of space$ | async; let i = index"
-              [lightbox]="i"
-              gallery="lightbox">
+      @for (item of space$ | async; track item.type; let i = $index) {
+        <button mat-raised-button
+                class="grid-item"
+                [lightbox]="i"
+                gallery="lightbox">
 
-        <img class="grid-image" loading="lazy" [src]="item.data.thumb"/>
-      </button>
+          <img class="grid-image" loading="lazy" [src]="item.data.thumb"/>
+        </button>
+      }
     </div>
 
     <p>Lightbox config can be set globally in <code class="hljs">LightboxModule.forRoot(config)</code> or directly
@@ -72,12 +73,12 @@
       mode
     </p>
 
-    <hl-code [code]="code.alt"></hl-code>
+    <hl-code [code]="code.alt"/>
 
     <p>List of lightbox options is available in the
       <a mat-button class="inline-button" color="primary" target="_blank"
          href="https://github.com/MurhafSousli/ngx-gallery/wiki/Lightbox-API">
-        <fa-icon icon="external-link-alt"></fa-icon>
+        <fa-icon icon="external-link-alt"/>
         Lightbox API
       </a>
     </p>

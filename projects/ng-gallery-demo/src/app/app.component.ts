@@ -6,7 +6,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { NgProgressModule } from 'ngx-progressbar';
+import { NgProgressbar } from 'ngx-progressbar';
+import { NgProgressRouter } from 'ngx-progressbar/router';
+import { NgProgressHttp } from 'ngx-progressbar/http';
+
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faGithub, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
@@ -23,7 +26,9 @@ import { MenuComponent } from './shared/menu/menu.component';
   animations: [fadeAnimation],
   standalone: true,
   imports: [
-    NgProgressModule,
+    NgProgressbar,
+    NgProgressRouter,
+    NgProgressHttp,
     RouterLink,
     RouterOutlet,
     MenuComponent,

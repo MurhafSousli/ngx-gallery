@@ -10,6 +10,10 @@
   box-sizing: border-box;
 }
 
+:root {
+  --ng-progress-color: #E91E63;
+}
+
 body {
   font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
   margin: 0;
