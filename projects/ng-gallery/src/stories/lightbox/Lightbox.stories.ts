@@ -17,12 +17,11 @@ const meta: Meta<LightboxExampleComponent> = {
     applicationConfig({
       providers: [provideAnimations()],
     }),
-  ]
+  ],
 };
 
 export default meta;
 type Story = StoryObj<LightboxExampleComponent>;
-
 
 export const LightboxExample: Story = {
   parameters: {
@@ -41,17 +40,14 @@ export const LightboxExample: Story = {
     },
   },
   render: (args: LightboxExampleComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
+    props: { ...args, items },
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('ship') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('ship') })],
 };
-
 
 export const GallerizeExample: Story = {
   render: (args: LightboxExampleComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
+    props: { ...args, items },
     template: `
       <div class="container" gallerize>
         <img *ngFor="let item of items"
@@ -59,7 +55,8 @@ export const GallerizeExample: Story = {
              [attr.imageSrc]="item.data.src">
       </div>
     `,
-    styles: [`
+    styles: [
+      `
       .container {
         display: flex;
         flex-wrap: wrap;
@@ -73,22 +70,18 @@ export const GallerizeExample: Story = {
         width: 125px;
         object-fit: cover;
       }
-    `]
+    `,
+    ],
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('ship') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('ship') })],
 };
-
 
 export const GallerizeGalleryExample: Story = {
   render: (args: LightboxExampleComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
+    props: { ...args, items },
     template: `
       <gallery [items]="items" gallerize />
-    `
+    `,
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('ship') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('ship') })],
 };

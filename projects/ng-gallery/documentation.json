@@ -10700,7 +10700,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" autoHeight />`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('tigers') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" autoHeight />`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('tigers') })],\n}"
             },
             {
                 "name": "AutoplayExample",
@@ -10710,7 +10710,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" autoplay />`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('airplane') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" autoplay />`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('airplane') })],\n}"
             },
             {
                 "name": "BoxTemplateExample",
@@ -10720,7 +10720,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  render: (args: CustomTemplateComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `\r\n      <gallery [items]=\"items\">\r\n        <div *galleryBoxDef=\"let state; config\" class=\"my-box\">\r\n          <div>This is fixed overlay template</div>\r\n          <img src=\"https://user-images.githubusercontent.com/8130692/36171173-ad0da54c-1112-11e8-85bf-843c5f70efdc.png\">\r\n        </div>\r\n      </gallery>\r\n    `,\r\n    styles: [`\r\n      .my-box {\r\n        width: 200px;\r\n        height: 50px;\r\n        color: white;\r\n      }\r\n      img {\r\n        position: absolute;\r\n        z-index: 999;\r\n        width: 40px;\r\n        height: 40px;\r\n        top: 20px;\r\n        left: 20px;\r\n      }\r\n    `]\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('sea') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  render: (args: CustomTemplateComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `\n      <gallery [items]=\"items\">\n        <div *galleryBoxDef=\"let state; config\" class=\"my-box\">\n          <div>This is fixed overlay template</div>\n          <img src=\"https://user-images.githubusercontent.com/8130692/36171173-ad0da54c-1112-11e8-85bf-843c5f70efdc.png\">\n        </div>\n      </gallery>\n    `,\n    styles: [\n      `\n      .my-box {\n        width: 200px;\n        height: 50px;\n        color: white;\n      }\n      img {\n        position: absolute;\n        z-index: 999;\n        width: 40px;\n        height: 40px;\n        top: 20px;\n        left: 20px;\n      }\n    `,\n    ],\n  }),\n  loaders: [async () => ({ items: await getHDImages('sea') })],\n}"
             },
             {
                 "name": "BulletExample",
@@ -10730,7 +10730,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" bullets />`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('football') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" bullets />`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('football') })],\n}"
             },
             {
                 "name": "CounterExample",
@@ -10740,7 +10740,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" counter />`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('basketball') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" counter />`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('basketball') })],\n}"
             },
             {
                 "name": "defaultConfig",
@@ -10834,7 +10834,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  render: (args: LightboxExampleComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `\r\n      <div class=\"container\" gallerize>\r\n        <img *ngFor=\"let item of items\"\r\n             [src]=\"item.data.thumb\"\r\n             [attr.imageSrc]=\"item.data.src\">\r\n      </div>\r\n    `,\r\n    styles: [`\r\n      .container {\r\n        display: flex;\r\n        flex-wrap: wrap;\r\n        gap: 3px;\r\n        margin: 0 auto;\r\n        padding: 20px;\r\n        max-width: 768px;\r\n      }\r\n      img {\r\n        height: 90px;\r\n        width: 125px;\r\n        object-fit: cover;\r\n      }\r\n    `]\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('ship') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  render: (args: LightboxExampleComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `\n      <div class=\"container\" gallerize>\n        <img *ngFor=\"let item of items\"\n             [src]=\"item.data.thumb\"\n             [attr.imageSrc]=\"item.data.src\">\n      </div>\n    `,\n    styles: [\n      `\n      .container {\n        display: flex;\n        flex-wrap: wrap;\n        gap: 3px;\n        margin: 0 auto;\n        padding: 20px;\n        max-width: 768px;\n      }\n      img {\n        height: 90px;\n        width: 125px;\n        object-fit: cover;\n      }\n    `,\n    ],\n  }),\n  loaders: [async () => ({ items: await getHDImages('ship') })],\n}"
             },
             {
                 "name": "GallerizeGalleryExample",
@@ -10844,7 +10844,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  render: (args: LightboxExampleComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `\r\n      <gallery [items]=\"items\" gallerize />\r\n    `\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('ship') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  render: (args: LightboxExampleComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `\n      <gallery [items]=\"items\" gallerize />\n    `,\n  }),\n  loaders: [async () => ({ items: await getHDImages('ship') })],\n}"
             },
             {
                 "name": "GALLERY_CONFIG",
@@ -10892,7 +10892,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" imageSize=\"cover\" />`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('tigers') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" imageSize=\"cover\" />`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('tigers') })],\n}"
             },
             {
                 "name": "ImageTemplateExample",
@@ -10902,7 +10902,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  render: (args: CustomTemplateComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `\r\n      <gallery [items]=\"items\">\r\n        <div *galleryImageDef=\"let item\" class=\"my-image-overlay\">\r\n          {{ item?.alt }}\r\n        </div>\r\n      </gallery>\r\n    `\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('sea') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  render: (args: CustomTemplateComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `\n      <gallery [items]=\"items\">\n        <div *galleryImageDef=\"let item\" class=\"my-image-overlay\">\n          {{ item?.alt }}\n        </div>\n      </gallery>\n    `,\n  }),\n  loaders: [async () => ({ items: await getHDImages('sea') })],\n}"
             },
             {
                 "name": "ItemAutosizeExample",
@@ -10912,7 +10912,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" itemAutosize loadingStrategy=\"preload\" loadingAttr=\"eager\" />`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('ship') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" itemAutosize loadingStrategy=\"preload\" loadingAttr=\"eager\" />`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('ship') })],\n}"
             },
             {
                 "name": "ItemTemplateExample",
@@ -10922,7 +10922,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  render: (args: CustomTemplateComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `\r\n      <gallery [items]=\"items\">\r\n        <div *galleryItemDef=\"let item\" class=\"my-item-template\">\r\n          <img [src]=\"item?.src\">\r\n        </div>\r\n      </gallery>\r\n    `,\r\n    styles: [`\r\n      img {\r\n        object-fit: cover;\r\n        border: 10px white solid;\r\n        width: 400px;\r\n        height: 400px;\r\n      }\r\n    `]\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImagesForCustomTemplate('sand') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  render: (args: CustomTemplateComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `\n      <gallery [items]=\"items\">\n        <div *galleryItemDef=\"let item\" class=\"my-item-template\">\n          <img [src]=\"item?.src\">\n        </div>\n      </gallery>\n    `,\n    styles: [\n      `\n      img {\n        object-fit: cover;\n        border: 10px white solid;\n        width: 400px;\n        height: 400px;\n      }\n    `,\n    ],\n  }),\n  loaders: [\n    async () => ({ items: await getHDImagesForCustomTemplate('sand') }),\n  ],\n}"
             },
             {
                 "name": "kSampleStepSize",
@@ -10952,7 +10952,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: {\r\n      ...args,\r\n      items,\r\n    },\r\n    template: `\r\n      <gallery [items]=\"items\"\r\n               [orientation]=\"orientation\"\r\n               [scrollBehavior]=\"scrollBehavior\"\r\n               [scrollDuration]=\"scrollDuration\"\r\n               [disableScroll]=\"disableScroll\"\r\n               [disableMouseScroll]=\"disableMouseScroll\"\r\n               [autoHeight]=\"autoHeight\"\r\n               [itemAutosize]=\"itemAutosize\"\r\n               [thumbs]=\"thumbs\"\r\n               [thumbImageSize]=\"thumbImageSize\"\r\n               [thumbPosition]=\"thumbPosition\"\r\n               [thumbCentralized]=\"thumbCentralized\"\r\n               [thumbWidth]=\"thumbWidth\"\r\n               [thumbHeight]=\"thumbHeight\"\r\n               [disableThumbs]=\"disableThumbs\"\r\n               [detachThumbs]=\"detachThumbs\"\r\n               [thumbAutosize]=\"thumbAutosize\"\r\n               [disableThumbScroll]=\"disableThumbScroll\"\r\n               [disableThumbMouseScroll]=\"disableThumbMouseScroll\"\r\n               [bullets]=\"bullets\"\r\n               [bulletPosition]=\"bulletPosition\"\r\n               [bulletSize]=\"bulletSize\"\r\n               [disableBullets]=\"disableBullets\"\r\n               [resizeDebounceTime]=\"resizeDebounceTime\"\r\n               [nav]=\"nav\"\r\n               [loop]=\"loop\"\r\n               [debug]=\"debug\"\r\n               [counter]=\"counter\"\r\n               [counterPosition]=\"counterPosition\"\r\n               [autoplay]=\"autoplay\"\r\n               [autoplayInterval]=\"autoplayInterval\"\r\n               [imageSize]=\"imageSize\"\r\n               [loadingAttr]=\"loadingAttr\"\r\n               [loadingStrategy]=\"loadingStrategy\"/>\r\n    `,\r\n  }),\r\n  loaders: [\r\n    async () => ({\r\n      items: await getHDImages('jet fighter')\r\n    }),\r\n  ]\r\n}",
+                "defaultValue": "{\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: {\n      ...args,\n      items,\n    },\n    template: `\n      <gallery [items]=\"items\"\n               [orientation]=\"orientation\"\n               [scrollBehavior]=\"scrollBehavior\"\n               [scrollDuration]=\"scrollDuration\"\n               [disableScroll]=\"disableScroll\"\n               [disableMouseScroll]=\"disableMouseScroll\"\n               [autoHeight]=\"autoHeight\"\n               [itemAutosize]=\"itemAutosize\"\n               [thumbs]=\"thumbs\"\n               [thumbImageSize]=\"thumbImageSize\"\n               [thumbPosition]=\"thumbPosition\"\n               [thumbCentralized]=\"thumbCentralized\"\n               [thumbWidth]=\"thumbWidth\"\n               [thumbHeight]=\"thumbHeight\"\n               [disableThumbs]=\"disableThumbs\"\n               [detachThumbs]=\"detachThumbs\"\n               [thumbAutosize]=\"thumbAutosize\"\n               [disableThumbScroll]=\"disableThumbScroll\"\n               [disableThumbMouseScroll]=\"disableThumbMouseScroll\"\n               [bullets]=\"bullets\"\n               [bulletPosition]=\"bulletPosition\"\n               [bulletSize]=\"bulletSize\"\n               [disableBullets]=\"disableBullets\"\n               [resizeDebounceTime]=\"resizeDebounceTime\"\n               [nav]=\"nav\"\n               [loop]=\"loop\"\n               [debug]=\"debug\"\n               [counter]=\"counter\"\n               [counterPosition]=\"counterPosition\"\n               [autoplay]=\"autoplay\"\n               [autoplayInterval]=\"autoplayInterval\"\n               [imageSize]=\"imageSize\"\n               [loadingAttr]=\"loadingAttr\"\n               [loadingStrategy]=\"loadingStrategy\"/>\n    `,\n  }),\n  loaders: [\n    async () => ({\n      items: await getHDImages('jet fighter'),\n    }),\n  ],\n}",
                 "rawdescription": "First Example for gallery",
                 "description": "<p>First Example for gallery</p>\n"
             },
@@ -10964,7 +10964,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  parameters: {\r\n    docs: {\r\n      source: {\r\n        code: `\r\n          <div class=\"container\">\r\n            <img *ngFor=\"let item of items; index as i\"\r\n               class=\"grid-image\"\r\n               [src]=\"item.data.thumb\"\r\n               [lightbox]=\"i\"\r\n               [gallery]=\"galleryId\"/>\r\n          </div>\r\n        `,\r\n      },\r\n    },\r\n  },\r\n  render: (args: LightboxExampleComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('ship') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  parameters: {\n    docs: {\n      source: {\n        code: `\n          <div class=\"container\">\n            <img *ngFor=\"let item of items; index as i\"\n               class=\"grid-image\"\n               [src]=\"item.data.thumb\"\n               [lightbox]=\"i\"\n               [gallery]=\"galleryId\"/>\n          </div>\n        `,\n      },\n    },\n  },\n  render: (args: LightboxExampleComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n  }),\n  loaders: [async () => ({ items: await getHDImages('ship') })],\n}"
             },
             {
                 "name": "meta",
@@ -10974,7 +10974,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<GalleryComponent>",
-                "defaultValue": "{\r\n  title: 'Documentations/Gallery',\r\n  component: GalleryComponent,\r\n  tags: ['autodocs'],\r\n  render: (args: GalleryComponent) => ({\r\n    props: {\r\n      ...args,\r\n    },\r\n  }),\r\n  decorators: [\r\n    applicationConfig({\r\n      providers: [provideAnimations()]\r\n    })\r\n  ],\r\n  args: {\r\n    id: 'root',\r\n    scrollBehavior: 'smooth',\r\n    imageSize: ImageSize.Contain,\r\n    thumbImageSize: ImageSize.Cover,\r\n    bulletPosition: BulletsPosition.Bottom,\r\n    counterPosition: CounterPosition.Top,\r\n    orientation: Orientation.Horizontal,\r\n    loadingAttr: LoadingAttr.Lazy,\r\n    loadingStrategy: LoadingStrategy.Default,\r\n    thumbPosition: ThumbnailsPosition.Bottom,\r\n    scrollEase: {\r\n      x1: 0.42,\r\n      y1: 0,\r\n      x2: 0.58,\r\n      y2: 1\r\n    },\r\n    bulletSize: 6,\r\n    thumbWidth: 120,\r\n    thumbHeight: 90,\r\n    autoplayInterval: 3000,\r\n    scrollDuration: 468,\r\n    resizeDebounceTime: 0,\r\n    nav: true,\r\n    bullets: true,\r\n    disableBullets: false,\r\n    loop: true,\r\n    debug: false,\r\n    thumbs: true,\r\n    counter: true,\r\n    autoplay: false,\r\n    autoHeight: false,\r\n    itemAutosize: false,\r\n    disableThumbs: false,\r\n    detachThumbs: false,\r\n    thumbAutosize: false,\r\n    disableScroll: false,\r\n    thumbCentralized: false,\r\n    disableThumbScroll: false,\r\n    disableMouseScroll: false,\r\n    disableThumbMouseScroll: false,\r\n  },\r\n  // Disables the long useless control description\r\n  argTypes: {\r\n    scrollBehavior: {\r\n      control: 'radio',\r\n      options: ['smooth', 'auto'],\r\n      table: {\r\n        defaultValue: { summary: 'smooth' }\r\n      }\r\n    },\r\n    imageSize: {\r\n      table: {\r\n        defaultValue: { summary: 'contain' }\r\n      }\r\n    },\r\n    thumbImageSize: {\r\n      table: {\r\n        defaultValue: { summary: 'cover' }\r\n      }\r\n    },\r\n    bulletPosition: {\r\n      table: {\r\n        defaultValue: { summary: 'bottom' }\r\n      }\r\n    },\r\n    counterPosition: {\r\n      table: {\r\n        defaultValue: { summary: 'top' }\r\n      }\r\n    },\r\n    orientation: {\r\n      table: {\r\n        defaultValue: { summary: 'horizontal' }\r\n      }\r\n    },\r\n    loadingAttr: {\r\n      table: {\r\n        defaultValue: { summary: 'lazy' }\r\n      }\r\n    },\r\n    loadingStrategy: {\r\n      table: {\r\n        defaultValue: { summary: 'default' }\r\n      }\r\n    },\r\n    thumbPosition: {\r\n      table: {\r\n        defaultValue: { summary: 'bottom' }\r\n      }\r\n    },\r\n    thumbCentralized: {\r\n      table: {\r\n        defaultValue: { summary: 'default' }\r\n      }\r\n    },\r\n    scrollEase: {\r\n      table: {\r\n        defaultValue: { summary: '{ x1: 0.42, y1: 0, x2: 0.58, y2: 1 }' }\r\n      }\r\n    },\r\n    nav: {\r\n      table: {\r\n        defaultValue: { summary: true }\r\n      }\r\n    },\r\n    thumbs: {\r\n      table: {\r\n        defaultValue: { summary: true }\r\n      }\r\n    },\r\n    loop: {\r\n      table: {\r\n        defaultValue: { summary: true }\r\n      }\r\n    },\r\n    counter: {\r\n      table: {\r\n        defaultValue: { summary: true }\r\n      }\r\n    },\r\n    bulletSize: {\r\n      table: {\r\n        defaultValue: { summary: 6 }\r\n      }\r\n    },\r\n    thumbWidth: {\r\n      table: {\r\n        defaultValue: { summary: 120 }\r\n      }\r\n    },\r\n    thumbHeight: {\r\n      table: {\r\n        defaultValue: { summary: 90 }\r\n      }\r\n    },\r\n    autoplayInterval: {\r\n      table: {\r\n        defaultValue: { summary: 3000 }\r\n      }\r\n    },\r\n    scrollDuration: {\r\n      table: {\r\n        defaultValue: { summary: 468 }\r\n      }\r\n    },\r\n    resizeDebounceTime: {\r\n      table: {\r\n        defaultValue: { summary: 0 }\r\n      }\r\n    },\r\n    error: {\r\n      control: false\r\n    },\r\n    indexChange: {\r\n      control: false\r\n    },\r\n    itemsChange: {\r\n      control: false\r\n    },\r\n    itemClick: {\r\n      control: false\r\n    },\r\n    thumbClick: {\r\n      control: false\r\n    },\r\n    playingChange: {\r\n      control: false\r\n    },\r\n    galleryRef: {\r\n      control: false\r\n    },\r\n    load: {\r\n      control: false\r\n    },\r\n    add: {\r\n      control: false\r\n    },\r\n    addImage: {\r\n      control: false\r\n    },\r\n    addVideo: {\r\n      control: false\r\n    },\r\n    addIframe: {\r\n      control: false\r\n    },\r\n    addYoutube: {\r\n      control: false\r\n    },\r\n    remove: {\r\n      control: false\r\n    },\r\n    next: {\r\n      control: false\r\n    },\r\n    prev: {\r\n      control: false\r\n    },\r\n    set: {\r\n      control: false\r\n    },\r\n    reset: {\r\n      control: false\r\n    },\r\n    play: {\r\n      control: false\r\n    },\r\n    stop: {\r\n      control: false\r\n    }\r\n  }\r\n}"
+                "defaultValue": "{\n  title: 'Documentations/Gallery',\n  component: GalleryComponent,\n  tags: ['autodocs'],\n  render: (args: GalleryComponent) => ({\n    props: {\n      ...args,\n    },\n  }),\n  decorators: [\n    applicationConfig({\n      providers: [provideAnimations()],\n    }),\n  ],\n  args: {\n    id: 'root',\n    scrollBehavior: 'smooth',\n    imageSize: ImageSize.Contain,\n    thumbImageSize: ImageSize.Cover,\n    bulletPosition: BulletsPosition.Bottom,\n    counterPosition: CounterPosition.Top,\n    orientation: Orientation.Horizontal,\n    loadingAttr: LoadingAttr.Lazy,\n    loadingStrategy: LoadingStrategy.Default,\n    thumbPosition: ThumbnailsPosition.Bottom,\n    scrollEase: {\n      x1: 0.42,\n      y1: 0,\n      x2: 0.58,\n      y2: 1,\n    },\n    bulletSize: 6,\n    thumbWidth: 120,\n    thumbHeight: 90,\n    autoplayInterval: 3000,\n    scrollDuration: 468,\n    resizeDebounceTime: 0,\n    nav: true,\n    bullets: true,\n    disableBullets: false,\n    loop: true,\n    debug: false,\n    thumbs: true,\n    counter: true,\n    autoplay: false,\n    autoHeight: false,\n    itemAutosize: false,\n    disableThumbs: false,\n    detachThumbs: false,\n    thumbAutosize: false,\n    disableScroll: false,\n    thumbCentralized: false,\n    disableThumbScroll: false,\n    disableMouseScroll: false,\n    disableThumbMouseScroll: false,\n  },\n  // Disables the long useless control description\n  argTypes: {\n    scrollBehavior: {\n      control: 'radio',\n      options: ['smooth', 'auto'],\n      table: {\n        defaultValue: { summary: 'smooth' },\n      },\n    },\n    imageSize: {\n      table: {\n        defaultValue: { summary: 'contain' },\n      },\n    },\n    thumbImageSize: {\n      table: {\n        defaultValue: { summary: 'cover' },\n      },\n    },\n    bulletPosition: {\n      table: {\n        defaultValue: { summary: 'bottom' },\n      },\n    },\n    counterPosition: {\n      table: {\n        defaultValue: { summary: 'top' },\n      },\n    },\n    orientation: {\n      table: {\n        defaultValue: { summary: 'horizontal' },\n      },\n    },\n    loadingAttr: {\n      table: {\n        defaultValue: { summary: 'lazy' },\n      },\n    },\n    loadingStrategy: {\n      table: {\n        defaultValue: { summary: 'default' },\n      },\n    },\n    thumbPosition: {\n      table: {\n        defaultValue: { summary: 'bottom' },\n      },\n    },\n    thumbCentralized: {\n      table: {\n        defaultValue: { summary: 'default' },\n      },\n    },\n    scrollEase: {\n      table: {\n        defaultValue: { summary: '{ x1: 0.42, y1: 0, x2: 0.58, y2: 1 }' },\n      },\n    },\n    nav: {\n      table: {\n        defaultValue: { summary: 'true' },\n      },\n    },\n    thumbs: {\n      table: {\n        defaultValue: { summary: 'true' },\n      },\n    },\n    loop: {\n      table: {\n        defaultValue: { summary: 'true' },\n      },\n    },\n    counter: {\n      table: {\n        defaultValue: { summary: 'true' },\n      },\n    },\n    bulletSize: {\n      table: {\n        defaultValue: { summary: '6' },\n      },\n    },\n    thumbWidth: {\n      table: {\n        defaultValue: { summary: '120' },\n      },\n    },\n    thumbHeight: {\n      table: {\n        defaultValue: { summary: '90' },\n      },\n    },\n    autoplayInterval: {\n      table: {\n        defaultValue: { summary: '3000' },\n      },\n    },\n    scrollDuration: {\n      table: {\n        defaultValue: { summary: '468' },\n      },\n    },\n    resizeDebounceTime: {\n      table: {\n        defaultValue: { summary: '0' },\n      },\n    },\n    error: {\n      control: false,\n    },\n    indexChange: {\n      control: false,\n    },\n    itemsChange: {\n      control: false,\n    },\n    itemClick: {\n      control: false,\n    },\n    thumbClick: {\n      control: false,\n    },\n    playingChange: {\n      control: false,\n    },\n    galleryRef: {\n      control: false,\n    },\n    load: {\n      control: false,\n    },\n    add: {\n      control: false,\n    },\n    addImage: {\n      control: false,\n    },\n    addVideo: {\n      control: false,\n    },\n    addIframe: {\n      control: false,\n    },\n    addYoutube: {\n      control: false,\n    },\n    remove: {\n      control: false,\n    },\n    next: {\n      control: false,\n    },\n    prev: {\n      control: false,\n    },\n    set: {\n      control: false,\n    },\n    reset: {\n      control: false,\n    },\n    play: {\n      control: false,\n    },\n    stop: {\n      control: false,\n    },\n  },\n}"
             },
             {
                 "name": "meta",
@@ -10984,7 +10984,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<CustomTemplateComponent>",
-                "defaultValue": "{\r\n  title: 'Documentations/CustomTemplates',\r\n  component: CustomTemplateComponent,\r\n  // tags: ['autodocs'],\r\n  render: (args: CustomTemplateComponent) => ({\r\n    props: {\r\n      ...args,\r\n    },\r\n  }),\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n    applicationConfig({\r\n      providers: [provideAnimations()],\r\n    }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  title: 'Documentations/CustomTemplates',\n  component: CustomTemplateComponent,\n  // tags: ['autodocs'],\n  render: (args: CustomTemplateComponent) => ({\n    props: {\n      ...args,\n    },\n  }),\n  decorators: [\n    moduleMetadata({\n      imports: [GalleryModule],\n    }),\n    applicationConfig({\n      providers: [provideAnimations()],\n    }),\n  ],\n}"
             },
             {
                 "name": "meta",
@@ -10994,7 +10994,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<LightboxExampleComponent>",
-                "defaultValue": "{\r\n  title: 'Documentations/Lightbox',\r\n  component: LightboxExampleComponent,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [LightboxModule],\r\n    }),\r\n    applicationConfig({\r\n      providers: [provideAnimations()],\r\n    }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  title: 'Documentations/Lightbox',\n  component: LightboxExampleComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [LightboxModule],\n    }),\n    applicationConfig({\n      providers: [provideAnimations()],\n    }),\n  ],\n}"
             },
             {
                 "name": "NavExample",
@@ -11004,7 +11004,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\"/>`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('lions') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\"/>`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('lions') })],\n}"
             },
             {
                 "name": "NavWithLoopExample",
@@ -11014,7 +11014,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" loop/>`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('tigers') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" loop/>`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('tigers') })],\n}"
             },
             {
                 "name": "NEWTON_ITERATIONS",
@@ -11046,7 +11046,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Preview",
-                "defaultValue": "{\n  parameters: {\n    layout: 'fullscreen',\n    actions: { argTypesRegex: \"^on[A-Z].*\" },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      }\n    }\n  },\n}"
+                "defaultValue": "{\r\n  parameters: {\r\n    layout: 'fullscreen',\r\n    actions: { argTypesRegex: \"^on[A-Z].*\" },\r\n    controls: {\r\n      matchers: {\r\n        color: /(background|color)$/i,\r\n        date: /Date$/i,\r\n      }\r\n    }\r\n  },\r\n}"
             },
             {
                 "name": "SliderBehaviorExample",
@@ -11056,7 +11056,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" scrollBehavior=\"auto\"/>`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('chips') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" scrollBehavior=\"auto\"/>`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('chips') })],\n}"
             },
             {
                 "name": "SliderDirectionExample",
@@ -11066,7 +11066,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" orientation=\"vertical\" />`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('tigers') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" orientation=\"vertical\" />`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('tigers') })],\n}"
             },
             {
                 "name": "SliderExample",
@@ -11076,7 +11076,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\"/>`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('chips') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\"/>`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('chips') })],\n}"
             },
             {
                 "name": "SUBDIVISION_MAX_ITERATIONS",
@@ -11106,7 +11106,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" thumbs thumbAutosize/>`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('roads') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" thumbs thumbAutosize/>`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('roads') })],\n}"
             },
             {
                 "name": "ThumbDetachedExample",
@@ -11116,7 +11116,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" thumbs detachThumbs/>`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('flowers') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" thumbs detachThumbs/>`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('flowers') })],\n}"
             },
             {
                 "name": "ThumbPositionExample",
@@ -11126,7 +11126,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" thumbs thumbPosition=\"bottom\"/>`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('street') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" thumbs thumbPosition=\"bottom\"/>`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('street') })],\n}"
             },
             {
                 "name": "ThumbTemplateExample",
@@ -11136,7 +11136,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  render: (args: CustomTemplateComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `\r\n      <gallery [items]=\"items\" thumbs>\r\n        <div *galleryThumbDef=\"let thumb\" class=\"my-thumb-overlay\">\r\n          {{ thumb?.alt }}\r\n        </div>\r\n      </gallery>\r\n    `\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('sea') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  render: (args: CustomTemplateComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `\n      <gallery [items]=\"items\" thumbs>\n        <div *galleryThumbDef=\"let thumb\" class=\"my-thumb-overlay\">\n          {{ thumb?.alt }}\n        </div>\n      </gallery>\n    `,\n  }),\n  loaders: [async () => ({ items: await getHDImages('sea') })],\n}"
             },
             {
                 "name": "ThumbViewExample",
@@ -11146,7 +11146,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" thumbs thumbCentralized/>`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('landscape') }),\r\n  ]\r\n}"
+                "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" thumbs thumbCentralized/>`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('landscape') })],\n}"
             }
         ],
         "functions": [
@@ -12303,7 +12303,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" autoHeight />`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('tigers') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" autoHeight />`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('tigers') })],\n}"
                 },
                 {
                     "name": "AutoplayExample",
@@ -12313,7 +12313,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" autoplay />`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('airplane') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" autoplay />`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('airplane') })],\n}"
                 },
                 {
                     "name": "BulletExample",
@@ -12323,7 +12323,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" bullets />`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('football') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" bullets />`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('football') })],\n}"
                 },
                 {
                     "name": "CounterExample",
@@ -12333,7 +12333,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" counter />`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('basketball') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" counter />`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('basketball') })],\n}"
                 },
                 {
                     "name": "ImageSizeExample",
@@ -12343,7 +12343,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" imageSize=\"cover\" />`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('tigers') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" imageSize=\"cover\" />`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('tigers') })],\n}"
                 },
                 {
                     "name": "ItemAutosizeExample",
@@ -12353,7 +12353,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" itemAutosize loadingStrategy=\"preload\" loadingAttr=\"eager\" />`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('ship') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" itemAutosize loadingStrategy=\"preload\" loadingAttr=\"eager\" />`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('ship') })],\n}"
                 },
                 {
                     "name": "Lab",
@@ -12363,7 +12363,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: {\r\n      ...args,\r\n      items,\r\n    },\r\n    template: `\r\n      <gallery [items]=\"items\"\r\n               [orientation]=\"orientation\"\r\n               [scrollBehavior]=\"scrollBehavior\"\r\n               [scrollDuration]=\"scrollDuration\"\r\n               [disableScroll]=\"disableScroll\"\r\n               [disableMouseScroll]=\"disableMouseScroll\"\r\n               [autoHeight]=\"autoHeight\"\r\n               [itemAutosize]=\"itemAutosize\"\r\n               [thumbs]=\"thumbs\"\r\n               [thumbImageSize]=\"thumbImageSize\"\r\n               [thumbPosition]=\"thumbPosition\"\r\n               [thumbCentralized]=\"thumbCentralized\"\r\n               [thumbWidth]=\"thumbWidth\"\r\n               [thumbHeight]=\"thumbHeight\"\r\n               [disableThumbs]=\"disableThumbs\"\r\n               [detachThumbs]=\"detachThumbs\"\r\n               [thumbAutosize]=\"thumbAutosize\"\r\n               [disableThumbScroll]=\"disableThumbScroll\"\r\n               [disableThumbMouseScroll]=\"disableThumbMouseScroll\"\r\n               [bullets]=\"bullets\"\r\n               [bulletPosition]=\"bulletPosition\"\r\n               [bulletSize]=\"bulletSize\"\r\n               [disableBullets]=\"disableBullets\"\r\n               [resizeDebounceTime]=\"resizeDebounceTime\"\r\n               [nav]=\"nav\"\r\n               [loop]=\"loop\"\r\n               [debug]=\"debug\"\r\n               [counter]=\"counter\"\r\n               [counterPosition]=\"counterPosition\"\r\n               [autoplay]=\"autoplay\"\r\n               [autoplayInterval]=\"autoplayInterval\"\r\n               [imageSize]=\"imageSize\"\r\n               [loadingAttr]=\"loadingAttr\"\r\n               [loadingStrategy]=\"loadingStrategy\"/>\r\n    `,\r\n  }),\r\n  loaders: [\r\n    async () => ({\r\n      items: await getHDImages('jet fighter')\r\n    }),\r\n  ]\r\n}",
+                    "defaultValue": "{\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: {\n      ...args,\n      items,\n    },\n    template: `\n      <gallery [items]=\"items\"\n               [orientation]=\"orientation\"\n               [scrollBehavior]=\"scrollBehavior\"\n               [scrollDuration]=\"scrollDuration\"\n               [disableScroll]=\"disableScroll\"\n               [disableMouseScroll]=\"disableMouseScroll\"\n               [autoHeight]=\"autoHeight\"\n               [itemAutosize]=\"itemAutosize\"\n               [thumbs]=\"thumbs\"\n               [thumbImageSize]=\"thumbImageSize\"\n               [thumbPosition]=\"thumbPosition\"\n               [thumbCentralized]=\"thumbCentralized\"\n               [thumbWidth]=\"thumbWidth\"\n               [thumbHeight]=\"thumbHeight\"\n               [disableThumbs]=\"disableThumbs\"\n               [detachThumbs]=\"detachThumbs\"\n               [thumbAutosize]=\"thumbAutosize\"\n               [disableThumbScroll]=\"disableThumbScroll\"\n               [disableThumbMouseScroll]=\"disableThumbMouseScroll\"\n               [bullets]=\"bullets\"\n               [bulletPosition]=\"bulletPosition\"\n               [bulletSize]=\"bulletSize\"\n               [disableBullets]=\"disableBullets\"\n               [resizeDebounceTime]=\"resizeDebounceTime\"\n               [nav]=\"nav\"\n               [loop]=\"loop\"\n               [debug]=\"debug\"\n               [counter]=\"counter\"\n               [counterPosition]=\"counterPosition\"\n               [autoplay]=\"autoplay\"\n               [autoplayInterval]=\"autoplayInterval\"\n               [imageSize]=\"imageSize\"\n               [loadingAttr]=\"loadingAttr\"\n               [loadingStrategy]=\"loadingStrategy\"/>\n    `,\n  }),\n  loaders: [\n    async () => ({\n      items: await getHDImages('jet fighter'),\n    }),\n  ],\n}",
                     "rawdescription": "First Example for gallery",
                     "description": "<p>First Example for gallery</p>\n"
                 },
@@ -12375,7 +12375,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<GalleryComponent>",
-                    "defaultValue": "{\r\n  title: 'Documentations/Gallery',\r\n  component: GalleryComponent,\r\n  tags: ['autodocs'],\r\n  render: (args: GalleryComponent) => ({\r\n    props: {\r\n      ...args,\r\n    },\r\n  }),\r\n  decorators: [\r\n    applicationConfig({\r\n      providers: [provideAnimations()]\r\n    })\r\n  ],\r\n  args: {\r\n    id: 'root',\r\n    scrollBehavior: 'smooth',\r\n    imageSize: ImageSize.Contain,\r\n    thumbImageSize: ImageSize.Cover,\r\n    bulletPosition: BulletsPosition.Bottom,\r\n    counterPosition: CounterPosition.Top,\r\n    orientation: Orientation.Horizontal,\r\n    loadingAttr: LoadingAttr.Lazy,\r\n    loadingStrategy: LoadingStrategy.Default,\r\n    thumbPosition: ThumbnailsPosition.Bottom,\r\n    scrollEase: {\r\n      x1: 0.42,\r\n      y1: 0,\r\n      x2: 0.58,\r\n      y2: 1\r\n    },\r\n    bulletSize: 6,\r\n    thumbWidth: 120,\r\n    thumbHeight: 90,\r\n    autoplayInterval: 3000,\r\n    scrollDuration: 468,\r\n    resizeDebounceTime: 0,\r\n    nav: true,\r\n    bullets: true,\r\n    disableBullets: false,\r\n    loop: true,\r\n    debug: false,\r\n    thumbs: true,\r\n    counter: true,\r\n    autoplay: false,\r\n    autoHeight: false,\r\n    itemAutosize: false,\r\n    disableThumbs: false,\r\n    detachThumbs: false,\r\n    thumbAutosize: false,\r\n    disableScroll: false,\r\n    thumbCentralized: false,\r\n    disableThumbScroll: false,\r\n    disableMouseScroll: false,\r\n    disableThumbMouseScroll: false,\r\n  },\r\n  // Disables the long useless control description\r\n  argTypes: {\r\n    scrollBehavior: {\r\n      control: 'radio',\r\n      options: ['smooth', 'auto'],\r\n      table: {\r\n        defaultValue: { summary: 'smooth' }\r\n      }\r\n    },\r\n    imageSize: {\r\n      table: {\r\n        defaultValue: { summary: 'contain' }\r\n      }\r\n    },\r\n    thumbImageSize: {\r\n      table: {\r\n        defaultValue: { summary: 'cover' }\r\n      }\r\n    },\r\n    bulletPosition: {\r\n      table: {\r\n        defaultValue: { summary: 'bottom' }\r\n      }\r\n    },\r\n    counterPosition: {\r\n      table: {\r\n        defaultValue: { summary: 'top' }\r\n      }\r\n    },\r\n    orientation: {\r\n      table: {\r\n        defaultValue: { summary: 'horizontal' }\r\n      }\r\n    },\r\n    loadingAttr: {\r\n      table: {\r\n        defaultValue: { summary: 'lazy' }\r\n      }\r\n    },\r\n    loadingStrategy: {\r\n      table: {\r\n        defaultValue: { summary: 'default' }\r\n      }\r\n    },\r\n    thumbPosition: {\r\n      table: {\r\n        defaultValue: { summary: 'bottom' }\r\n      }\r\n    },\r\n    thumbCentralized: {\r\n      table: {\r\n        defaultValue: { summary: 'default' }\r\n      }\r\n    },\r\n    scrollEase: {\r\n      table: {\r\n        defaultValue: { summary: '{ x1: 0.42, y1: 0, x2: 0.58, y2: 1 }' }\r\n      }\r\n    },\r\n    nav: {\r\n      table: {\r\n        defaultValue: { summary: true }\r\n      }\r\n    },\r\n    thumbs: {\r\n      table: {\r\n        defaultValue: { summary: true }\r\n      }\r\n    },\r\n    loop: {\r\n      table: {\r\n        defaultValue: { summary: true }\r\n      }\r\n    },\r\n    counter: {\r\n      table: {\r\n        defaultValue: { summary: true }\r\n      }\r\n    },\r\n    bulletSize: {\r\n      table: {\r\n        defaultValue: { summary: 6 }\r\n      }\r\n    },\r\n    thumbWidth: {\r\n      table: {\r\n        defaultValue: { summary: 120 }\r\n      }\r\n    },\r\n    thumbHeight: {\r\n      table: {\r\n        defaultValue: { summary: 90 }\r\n      }\r\n    },\r\n    autoplayInterval: {\r\n      table: {\r\n        defaultValue: { summary: 3000 }\r\n      }\r\n    },\r\n    scrollDuration: {\r\n      table: {\r\n        defaultValue: { summary: 468 }\r\n      }\r\n    },\r\n    resizeDebounceTime: {\r\n      table: {\r\n        defaultValue: { summary: 0 }\r\n      }\r\n    },\r\n    error: {\r\n      control: false\r\n    },\r\n    indexChange: {\r\n      control: false\r\n    },\r\n    itemsChange: {\r\n      control: false\r\n    },\r\n    itemClick: {\r\n      control: false\r\n    },\r\n    thumbClick: {\r\n      control: false\r\n    },\r\n    playingChange: {\r\n      control: false\r\n    },\r\n    galleryRef: {\r\n      control: false\r\n    },\r\n    load: {\r\n      control: false\r\n    },\r\n    add: {\r\n      control: false\r\n    },\r\n    addImage: {\r\n      control: false\r\n    },\r\n    addVideo: {\r\n      control: false\r\n    },\r\n    addIframe: {\r\n      control: false\r\n    },\r\n    addYoutube: {\r\n      control: false\r\n    },\r\n    remove: {\r\n      control: false\r\n    },\r\n    next: {\r\n      control: false\r\n    },\r\n    prev: {\r\n      control: false\r\n    },\r\n    set: {\r\n      control: false\r\n    },\r\n    reset: {\r\n      control: false\r\n    },\r\n    play: {\r\n      control: false\r\n    },\r\n    stop: {\r\n      control: false\r\n    }\r\n  }\r\n}"
+                    "defaultValue": "{\n  title: 'Documentations/Gallery',\n  component: GalleryComponent,\n  tags: ['autodocs'],\n  render: (args: GalleryComponent) => ({\n    props: {\n      ...args,\n    },\n  }),\n  decorators: [\n    applicationConfig({\n      providers: [provideAnimations()],\n    }),\n  ],\n  args: {\n    id: 'root',\n    scrollBehavior: 'smooth',\n    imageSize: ImageSize.Contain,\n    thumbImageSize: ImageSize.Cover,\n    bulletPosition: BulletsPosition.Bottom,\n    counterPosition: CounterPosition.Top,\n    orientation: Orientation.Horizontal,\n    loadingAttr: LoadingAttr.Lazy,\n    loadingStrategy: LoadingStrategy.Default,\n    thumbPosition: ThumbnailsPosition.Bottom,\n    scrollEase: {\n      x1: 0.42,\n      y1: 0,\n      x2: 0.58,\n      y2: 1,\n    },\n    bulletSize: 6,\n    thumbWidth: 120,\n    thumbHeight: 90,\n    autoplayInterval: 3000,\n    scrollDuration: 468,\n    resizeDebounceTime: 0,\n    nav: true,\n    bullets: true,\n    disableBullets: false,\n    loop: true,\n    debug: false,\n    thumbs: true,\n    counter: true,\n    autoplay: false,\n    autoHeight: false,\n    itemAutosize: false,\n    disableThumbs: false,\n    detachThumbs: false,\n    thumbAutosize: false,\n    disableScroll: false,\n    thumbCentralized: false,\n    disableThumbScroll: false,\n    disableMouseScroll: false,\n    disableThumbMouseScroll: false,\n  },\n  // Disables the long useless control description\n  argTypes: {\n    scrollBehavior: {\n      control: 'radio',\n      options: ['smooth', 'auto'],\n      table: {\n        defaultValue: { summary: 'smooth' },\n      },\n    },\n    imageSize: {\n      table: {\n        defaultValue: { summary: 'contain' },\n      },\n    },\n    thumbImageSize: {\n      table: {\n        defaultValue: { summary: 'cover' },\n      },\n    },\n    bulletPosition: {\n      table: {\n        defaultValue: { summary: 'bottom' },\n      },\n    },\n    counterPosition: {\n      table: {\n        defaultValue: { summary: 'top' },\n      },\n    },\n    orientation: {\n      table: {\n        defaultValue: { summary: 'horizontal' },\n      },\n    },\n    loadingAttr: {\n      table: {\n        defaultValue: { summary: 'lazy' },\n      },\n    },\n    loadingStrategy: {\n      table: {\n        defaultValue: { summary: 'default' },\n      },\n    },\n    thumbPosition: {\n      table: {\n        defaultValue: { summary: 'bottom' },\n      },\n    },\n    thumbCentralized: {\n      table: {\n        defaultValue: { summary: 'default' },\n      },\n    },\n    scrollEase: {\n      table: {\n        defaultValue: { summary: '{ x1: 0.42, y1: 0, x2: 0.58, y2: 1 }' },\n      },\n    },\n    nav: {\n      table: {\n        defaultValue: { summary: 'true' },\n      },\n    },\n    thumbs: {\n      table: {\n        defaultValue: { summary: 'true' },\n      },\n    },\n    loop: {\n      table: {\n        defaultValue: { summary: 'true' },\n      },\n    },\n    counter: {\n      table: {\n        defaultValue: { summary: 'true' },\n      },\n    },\n    bulletSize: {\n      table: {\n        defaultValue: { summary: '6' },\n      },\n    },\n    thumbWidth: {\n      table: {\n        defaultValue: { summary: '120' },\n      },\n    },\n    thumbHeight: {\n      table: {\n        defaultValue: { summary: '90' },\n      },\n    },\n    autoplayInterval: {\n      table: {\n        defaultValue: { summary: '3000' },\n      },\n    },\n    scrollDuration: {\n      table: {\n        defaultValue: { summary: '468' },\n      },\n    },\n    resizeDebounceTime: {\n      table: {\n        defaultValue: { summary: '0' },\n      },\n    },\n    error: {\n      control: false,\n    },\n    indexChange: {\n      control: false,\n    },\n    itemsChange: {\n      control: false,\n    },\n    itemClick: {\n      control: false,\n    },\n    thumbClick: {\n      control: false,\n    },\n    playingChange: {\n      control: false,\n    },\n    galleryRef: {\n      control: false,\n    },\n    load: {\n      control: false,\n    },\n    add: {\n      control: false,\n    },\n    addImage: {\n      control: false,\n    },\n    addVideo: {\n      control: false,\n    },\n    addIframe: {\n      control: false,\n    },\n    addYoutube: {\n      control: false,\n    },\n    remove: {\n      control: false,\n    },\n    next: {\n      control: false,\n    },\n    prev: {\n      control: false,\n    },\n    set: {\n      control: false,\n    },\n    reset: {\n      control: false,\n    },\n    play: {\n      control: false,\n    },\n    stop: {\n      control: false,\n    },\n  },\n}"
                 },
                 {
                     "name": "NavExample",
@@ -12385,7 +12385,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\"/>`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('lions') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\"/>`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('lions') })],\n}"
                 },
                 {
                     "name": "NavWithLoopExample",
@@ -12395,7 +12395,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" loop/>`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('tigers') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" loop/>`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('tigers') })],\n}"
                 },
                 {
                     "name": "SliderBehaviorExample",
@@ -12405,7 +12405,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" scrollBehavior=\"auto\"/>`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('chips') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" scrollBehavior=\"auto\"/>`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('chips') })],\n}"
                 },
                 {
                     "name": "SliderDirectionExample",
@@ -12415,7 +12415,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" orientation=\"vertical\" />`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('tigers') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" orientation=\"vertical\" />`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('tigers') })],\n}"
                 },
                 {
                     "name": "SliderExample",
@@ -12425,7 +12425,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\"/>`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('chips') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\"/>`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('chips') })],\n}"
                 },
                 {
                     "name": "ThumbAutosizeExample",
@@ -12435,7 +12435,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" thumbs thumbAutosize/>`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('roads') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" thumbs thumbAutosize/>`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('roads') })],\n}"
                 },
                 {
                     "name": "ThumbDetachedExample",
@@ -12445,7 +12445,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" thumbs detachThumbs/>`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('flowers') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" thumbs detachThumbs/>`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('flowers') })],\n}"
                 },
                 {
                     "name": "ThumbPositionExample",
@@ -12455,7 +12455,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" thumbs thumbPosition=\"bottom\"/>`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('street') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" thumbs thumbPosition=\"bottom\"/>`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('street') })],\n}"
                 },
                 {
                     "name": "ThumbViewExample",
@@ -12465,7 +12465,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  parameters:{ controls:{ exclude:/.*/g } },\r\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `<gallery [items]=\"items\" thumbs thumbCentralized/>`\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('landscape') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  parameters: { controls: { exclude: /.*/g } },\n  render: (args: GalleryComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `<gallery [items]=\"items\" thumbs thumbCentralized/>`,\n  }),\n  loaders: [async () => ({ items: await getHDImages('landscape') })],\n}"
                 }
             ],
             "projects/ng-gallery/src/stories/custom-templates/CustomTemplates.stories.ts": [
@@ -12477,7 +12477,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  render: (args: CustomTemplateComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `\r\n      <gallery [items]=\"items\">\r\n        <div *galleryBoxDef=\"let state; config\" class=\"my-box\">\r\n          <div>This is fixed overlay template</div>\r\n          <img src=\"https://user-images.githubusercontent.com/8130692/36171173-ad0da54c-1112-11e8-85bf-843c5f70efdc.png\">\r\n        </div>\r\n      </gallery>\r\n    `,\r\n    styles: [`\r\n      .my-box {\r\n        width: 200px;\r\n        height: 50px;\r\n        color: white;\r\n      }\r\n      img {\r\n        position: absolute;\r\n        z-index: 999;\r\n        width: 40px;\r\n        height: 40px;\r\n        top: 20px;\r\n        left: 20px;\r\n      }\r\n    `]\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('sea') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  render: (args: CustomTemplateComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `\n      <gallery [items]=\"items\">\n        <div *galleryBoxDef=\"let state; config\" class=\"my-box\">\n          <div>This is fixed overlay template</div>\n          <img src=\"https://user-images.githubusercontent.com/8130692/36171173-ad0da54c-1112-11e8-85bf-843c5f70efdc.png\">\n        </div>\n      </gallery>\n    `,\n    styles: [\n      `\n      .my-box {\n        width: 200px;\n        height: 50px;\n        color: white;\n      }\n      img {\n        position: absolute;\n        z-index: 999;\n        width: 40px;\n        height: 40px;\n        top: 20px;\n        left: 20px;\n      }\n    `,\n    ],\n  }),\n  loaders: [async () => ({ items: await getHDImages('sea') })],\n}"
                 },
                 {
                     "name": "ImageTemplateExample",
@@ -12487,7 +12487,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  render: (args: CustomTemplateComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `\r\n      <gallery [items]=\"items\">\r\n        <div *galleryImageDef=\"let item\" class=\"my-image-overlay\">\r\n          {{ item?.alt }}\r\n        </div>\r\n      </gallery>\r\n    `\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('sea') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  render: (args: CustomTemplateComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `\n      <gallery [items]=\"items\">\n        <div *galleryImageDef=\"let item\" class=\"my-image-overlay\">\n          {{ item?.alt }}\n        </div>\n      </gallery>\n    `,\n  }),\n  loaders: [async () => ({ items: await getHDImages('sea') })],\n}"
                 },
                 {
                     "name": "ItemTemplateExample",
@@ -12497,7 +12497,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  render: (args: CustomTemplateComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `\r\n      <gallery [items]=\"items\">\r\n        <div *galleryItemDef=\"let item\" class=\"my-item-template\">\r\n          <img [src]=\"item?.src\">\r\n        </div>\r\n      </gallery>\r\n    `,\r\n    styles: [`\r\n      img {\r\n        object-fit: cover;\r\n        border: 10px white solid;\r\n        width: 400px;\r\n        height: 400px;\r\n      }\r\n    `]\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImagesForCustomTemplate('sand') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  render: (args: CustomTemplateComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `\n      <gallery [items]=\"items\">\n        <div *galleryItemDef=\"let item\" class=\"my-item-template\">\n          <img [src]=\"item?.src\">\n        </div>\n      </gallery>\n    `,\n    styles: [\n      `\n      img {\n        object-fit: cover;\n        border: 10px white solid;\n        width: 400px;\n        height: 400px;\n      }\n    `,\n    ],\n  }),\n  loaders: [\n    async () => ({ items: await getHDImagesForCustomTemplate('sand') }),\n  ],\n}"
                 },
                 {
                     "name": "meta",
@@ -12507,7 +12507,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<CustomTemplateComponent>",
-                    "defaultValue": "{\r\n  title: 'Documentations/CustomTemplates',\r\n  component: CustomTemplateComponent,\r\n  // tags: ['autodocs'],\r\n  render: (args: CustomTemplateComponent) => ({\r\n    props: {\r\n      ...args,\r\n    },\r\n  }),\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n    applicationConfig({\r\n      providers: [provideAnimations()],\r\n    }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  title: 'Documentations/CustomTemplates',\n  component: CustomTemplateComponent,\n  // tags: ['autodocs'],\n  render: (args: CustomTemplateComponent) => ({\n    props: {\n      ...args,\n    },\n  }),\n  decorators: [\n    moduleMetadata({\n      imports: [GalleryModule],\n    }),\n    applicationConfig({\n      providers: [provideAnimations()],\n    }),\n  ],\n}"
                 },
                 {
                     "name": "ThumbTemplateExample",
@@ -12517,7 +12517,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  render: (args: CustomTemplateComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `\r\n      <gallery [items]=\"items\" thumbs>\r\n        <div *galleryThumbDef=\"let thumb\" class=\"my-thumb-overlay\">\r\n          {{ thumb?.alt }}\r\n        </div>\r\n      </gallery>\r\n    `\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('sea') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  render: (args: CustomTemplateComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `\n      <gallery [items]=\"items\" thumbs>\n        <div *galleryThumbDef=\"let thumb\" class=\"my-thumb-overlay\">\n          {{ thumb?.alt }}\n        </div>\n      </gallery>\n    `,\n  }),\n  loaders: [async () => ({ items: await getHDImages('sea') })],\n}"
                 }
             ],
             "projects/ng-gallery/src/lib/utils/gallery.default.ts": [
@@ -12683,7 +12683,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  render: (args: LightboxExampleComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `\r\n      <div class=\"container\" gallerize>\r\n        <img *ngFor=\"let item of items\"\r\n             [src]=\"item.data.thumb\"\r\n             [attr.imageSrc]=\"item.data.src\">\r\n      </div>\r\n    `,\r\n    styles: [`\r\n      .container {\r\n        display: flex;\r\n        flex-wrap: wrap;\r\n        gap: 3px;\r\n        margin: 0 auto;\r\n        padding: 20px;\r\n        max-width: 768px;\r\n      }\r\n      img {\r\n        height: 90px;\r\n        width: 125px;\r\n        object-fit: cover;\r\n      }\r\n    `]\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('ship') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  render: (args: LightboxExampleComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `\n      <div class=\"container\" gallerize>\n        <img *ngFor=\"let item of items\"\n             [src]=\"item.data.thumb\"\n             [attr.imageSrc]=\"item.data.src\">\n      </div>\n    `,\n    styles: [\n      `\n      .container {\n        display: flex;\n        flex-wrap: wrap;\n        gap: 3px;\n        margin: 0 auto;\n        padding: 20px;\n        max-width: 768px;\n      }\n      img {\n        height: 90px;\n        width: 125px;\n        object-fit: cover;\n      }\n    `,\n    ],\n  }),\n  loaders: [async () => ({ items: await getHDImages('ship') })],\n}"
                 },
                 {
                     "name": "GallerizeGalleryExample",
@@ -12693,7 +12693,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  render: (args: LightboxExampleComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n    template: `\r\n      <gallery [items]=\"items\" gallerize />\r\n    `\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('ship') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  render: (args: LightboxExampleComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n    template: `\n      <gallery [items]=\"items\" gallerize />\n    `,\n  }),\n  loaders: [async () => ({ items: await getHDImages('ship') })],\n}"
                 },
                 {
                     "name": "LightboxExample",
@@ -12703,7 +12703,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\r\n  parameters: {\r\n    docs: {\r\n      source: {\r\n        code: `\r\n          <div class=\"container\">\r\n            <img *ngFor=\"let item of items; index as i\"\r\n               class=\"grid-image\"\r\n               [src]=\"item.data.thumb\"\r\n               [lightbox]=\"i\"\r\n               [gallery]=\"galleryId\"/>\r\n          </div>\r\n        `,\r\n      },\r\n    },\r\n  },\r\n  render: (args: LightboxExampleComponent, { loaded: { items } }) => ({\r\n    props: { ...args, items, },\r\n  }),\r\n  loaders: [\r\n    async () => ({ items: await getHDImages('ship') }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  parameters: {\n    docs: {\n      source: {\n        code: `\n          <div class=\"container\">\n            <img *ngFor=\"let item of items; index as i\"\n               class=\"grid-image\"\n               [src]=\"item.data.thumb\"\n               [lightbox]=\"i\"\n               [gallery]=\"galleryId\"/>\n          </div>\n        `,\n      },\n    },\n  },\n  render: (args: LightboxExampleComponent, { loaded: { items } }) => ({\n    props: { ...args, items },\n  }),\n  loaders: [async () => ({ items: await getHDImages('ship') })],\n}"
                 },
                 {
                     "name": "meta",
@@ -12713,7 +12713,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<LightboxExampleComponent>",
-                    "defaultValue": "{\r\n  title: 'Documentations/Lightbox',\r\n  component: LightboxExampleComponent,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [LightboxModule],\r\n    }),\r\n    applicationConfig({\r\n      providers: [provideAnimations()],\r\n    }),\r\n  ]\r\n}"
+                    "defaultValue": "{\n  title: 'Documentations/Lightbox',\n  component: LightboxExampleComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [LightboxModule],\n    }),\n    applicationConfig({\n      providers: [provideAnimations()],\n    }),\n  ],\n}"
                 }
             ],
             "projects/ng-gallery/src/lib/models/config.model.ts": [
@@ -12771,7 +12771,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Preview",
-                    "defaultValue": "{\n  parameters: {\n    layout: 'fullscreen',\n    actions: { argTypesRegex: \"^on[A-Z].*\" },\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      }\n    }\n  },\n}"
+                    "defaultValue": "{\r\n  parameters: {\r\n    layout: 'fullscreen',\r\n    actions: { argTypesRegex: \"^on[A-Z].*\" },\r\n    controls: {\r\n      matchers: {\r\n        color: /(background|color)$/i,\r\n        date: /Date$/i,\r\n      }\r\n    }\r\n  },\r\n}"
                 }
             ]
         },

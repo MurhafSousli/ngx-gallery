@@ -9,12 +9,11 @@ import {
   LoadingAttr,
   LoadingStrategy,
   Orientation,
-  ThumbnailsPosition
+  ThumbnailsPosition,
 } from 'ng-gallery';
 import { getHDImages } from '../pixabay/pixabay.service';
 
 import 'hammerjs';
-
 
 const meta: Meta<GalleryComponent> = {
   title: 'Documentations/Gallery',
@@ -27,8 +26,8 @@ const meta: Meta<GalleryComponent> = {
   }),
   decorators: [
     applicationConfig({
-      providers: [provideAnimations()]
-    })
+      providers: [provideAnimations()],
+    }),
   ],
   args: {
     id: 'root',
@@ -45,7 +44,7 @@ const meta: Meta<GalleryComponent> = {
       x1: 0.42,
       y1: 0,
       x2: 0.58,
-      y2: 1
+      y2: 1,
     },
     bulletSize: 6,
     thumbWidth: 120,
@@ -78,175 +77,174 @@ const meta: Meta<GalleryComponent> = {
       control: 'radio',
       options: ['smooth', 'auto'],
       table: {
-        defaultValue: { summary: 'smooth' }
-      }
+        defaultValue: { summary: 'smooth' },
+      },
     },
     imageSize: {
       table: {
-        defaultValue: { summary: 'contain' }
-      }
+        defaultValue: { summary: 'contain' },
+      },
     },
     thumbImageSize: {
       table: {
-        defaultValue: { summary: 'cover' }
-      }
+        defaultValue: { summary: 'cover' },
+      },
     },
     bulletPosition: {
       table: {
-        defaultValue: { summary: 'bottom' }
-      }
+        defaultValue: { summary: 'bottom' },
+      },
     },
     counterPosition: {
       table: {
-        defaultValue: { summary: 'top' }
-      }
+        defaultValue: { summary: 'top' },
+      },
     },
     orientation: {
       table: {
-        defaultValue: { summary: 'horizontal' }
-      }
+        defaultValue: { summary: 'horizontal' },
+      },
     },
     loadingAttr: {
       table: {
-        defaultValue: { summary: 'lazy' }
-      }
+        defaultValue: { summary: 'lazy' },
+      },
     },
     loadingStrategy: {
       table: {
-        defaultValue: { summary: 'default' }
-      }
+        defaultValue: { summary: 'default' },
+      },
     },
     thumbPosition: {
       table: {
-        defaultValue: { summary: 'bottom' }
-      }
+        defaultValue: { summary: 'bottom' },
+      },
     },
     thumbCentralized: {
       table: {
-        defaultValue: { summary: 'default' }
-      }
+        defaultValue: { summary: 'default' },
+      },
     },
     scrollEase: {
       table: {
-        defaultValue: { summary: '{ x1: 0.42, y1: 0, x2: 0.58, y2: 1 }' }
-      }
+        defaultValue: { summary: '{ x1: 0.42, y1: 0, x2: 0.58, y2: 1 }' },
+      },
     },
     nav: {
       table: {
-        defaultValue: { summary: true }
-      }
+        defaultValue: { summary: 'true' },
+      },
     },
     thumbs: {
       table: {
-        defaultValue: { summary: true }
-      }
+        defaultValue: { summary: 'true' },
+      },
     },
     loop: {
       table: {
-        defaultValue: { summary: true }
-      }
+        defaultValue: { summary: 'true' },
+      },
     },
     counter: {
       table: {
-        defaultValue: { summary: true }
-      }
+        defaultValue: { summary: 'true' },
+      },
     },
     bulletSize: {
       table: {
-        defaultValue: { summary: 6 }
-      }
+        defaultValue: { summary: '6' },
+      },
     },
     thumbWidth: {
       table: {
-        defaultValue: { summary: 120 }
-      }
+        defaultValue: { summary: '120' },
+      },
     },
     thumbHeight: {
       table: {
-        defaultValue: { summary: 90 }
-      }
+        defaultValue: { summary: '90' },
+      },
     },
     autoplayInterval: {
       table: {
-        defaultValue: { summary: 3000 }
-      }
+        defaultValue: { summary: '3000' },
+      },
     },
     scrollDuration: {
       table: {
-        defaultValue: { summary: 468 }
-      }
+        defaultValue: { summary: '468' },
+      },
     },
     resizeDebounceTime: {
       table: {
-        defaultValue: { summary: 0 }
-      }
+        defaultValue: { summary: '0' },
+      },
     },
     error: {
-      control: false
+      control: false,
     },
     indexChange: {
-      control: false
+      control: false,
     },
     itemsChange: {
-      control: false
+      control: false,
     },
     itemClick: {
-      control: false
+      control: false,
     },
     thumbClick: {
-      control: false
+      control: false,
     },
     playingChange: {
-      control: false
+      control: false,
     },
     galleryRef: {
-      control: false
+      control: false,
     },
     load: {
-      control: false
+      control: false,
     },
     add: {
-      control: false
+      control: false,
     },
     addImage: {
-      control: false
+      control: false,
     },
     addVideo: {
-      control: false
+      control: false,
     },
     addIframe: {
-      control: false
+      control: false,
     },
     addYoutube: {
-      control: false
+      control: false,
     },
     remove: {
-      control: false
+      control: false,
     },
     next: {
-      control: false
+      control: false,
     },
     prev: {
-      control: false
+      control: false,
     },
     set: {
-      control: false
+      control: false,
     },
     reset: {
-      control: false
+      control: false,
     },
     play: {
-      control: false
+      control: false,
     },
     stop: {
-      control: false
-    }
-  }
+      control: false,
+    },
+  },
 };
 
 export default meta;
 type Story = StoryObj<GalleryComponent>;
-
 
 /** First Example for gallery */
 export const Lab: Story = {
@@ -294,177 +292,142 @@ export const Lab: Story = {
   }),
   loaders: [
     async () => ({
-      items: await getHDImages('jet fighter')
+      items: await getHDImages('jet fighter'),
     }),
-  ]
+  ],
 };
-
 
 export const ThumbPositionExample: Story = {
-  parameters:{ controls:{ exclude:/.*/g } },
+  parameters: { controls: { exclude: /.*/g } },
   render: (args: GalleryComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
-    template: `<gallery [items]="items" thumbs thumbPosition="bottom"/>`
+    props: { ...args, items },
+    template: `<gallery [items]="items" thumbs thumbPosition="bottom"/>`,
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('street') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('street') })],
 };
 
-
 export const ThumbAutosizeExample: Story = {
-  parameters:{ controls:{ exclude:/.*/g } },
+  parameters: { controls: { exclude: /.*/g } },
   render: (args: GalleryComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
-    template: `<gallery [items]="items" thumbs thumbAutosize/>`
+    props: { ...args, items },
+    template: `<gallery [items]="items" thumbs thumbAutosize/>`,
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('roads') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('roads') })],
 };
 
 export const ThumbDetachedExample: Story = {
-  parameters:{ controls:{ exclude:/.*/g } },
+  parameters: { controls: { exclude: /.*/g } },
   render: (args: GalleryComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
-    template: `<gallery [items]="items" thumbs detachThumbs/>`
+    props: { ...args, items },
+    template: `<gallery [items]="items" thumbs detachThumbs/>`,
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('flowers') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('flowers') })],
 };
 
 export const ThumbViewExample: Story = {
-  parameters:{ controls:{ exclude:/.*/g } },
+  parameters: { controls: { exclude: /.*/g } },
   render: (args: GalleryComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
-    template: `<gallery [items]="items" thumbs thumbCentralized/>`
+    props: { ...args, items },
+    template: `<gallery [items]="items" thumbs thumbCentralized/>`,
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('landscape') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('landscape') })],
 };
-
 
 export const AutoplayExample: Story = {
-  parameters:{ controls:{ exclude:/.*/g } },
+  parameters: { controls: { exclude: /.*/g } },
   render: (args: GalleryComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
-    template: `<gallery [items]="items" autoplay />`
+    props: { ...args, items },
+    template: `<gallery [items]="items" autoplay />`,
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('airplane') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('airplane') })],
 };
 
-
 export const BulletExample: Story = {
-  parameters:{ controls:{ exclude:/.*/g } },
+  parameters: { controls: { exclude: /.*/g } },
   render: (args: GalleryComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
-    template: `<gallery [items]="items" bullets />`
+    props: { ...args, items },
+    template: `<gallery [items]="items" bullets />`,
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('football') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('football') })],
 };
 
 export const CounterExample: Story = {
-  parameters:{ controls:{ exclude:/.*/g } },
+  parameters: { controls: { exclude: /.*/g } },
   render: (args: GalleryComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
-    template: `<gallery [items]="items" counter />`
+    props: { ...args, items },
+    template: `<gallery [items]="items" counter />`,
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('basketball') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('basketball') })],
 };
 
 export const NavExample: Story = {
-  parameters:{ controls:{ exclude:/.*/g } },
+  parameters: { controls: { exclude: /.*/g } },
   render: (args: GalleryComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
-    template: `<gallery [items]="items"/>`
+    props: { ...args, items },
+    template: `<gallery [items]="items"/>`,
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('lions') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('lions') })],
 };
 
 export const SliderExample: Story = {
-  parameters:{ controls:{ exclude:/.*/g } },
+  parameters: { controls: { exclude: /.*/g } },
   render: (args: GalleryComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
-    template: `<gallery [items]="items"/>`
+    props: { ...args, items },
+    template: `<gallery [items]="items"/>`,
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('chips') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('chips') })],
 };
 
 export const SliderBehaviorExample: Story = {
-  parameters:{ controls:{ exclude:/.*/g } },
+  parameters: { controls: { exclude: /.*/g } },
   render: (args: GalleryComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
-    template: `<gallery [items]="items" scrollBehavior="auto"/>`
+    props: { ...args, items },
+    template: `<gallery [items]="items" scrollBehavior="auto"/>`,
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('chips') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('chips') })],
 };
 
 export const NavWithLoopExample: Story = {
-  parameters:{ controls:{ exclude:/.*/g } },
+  parameters: { controls: { exclude: /.*/g } },
   render: (args: GalleryComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
-    template: `<gallery [items]="items" loop/>`
+    props: { ...args, items },
+    template: `<gallery [items]="items" loop/>`,
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('tigers') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('tigers') })],
 };
 
 export const SliderDirectionExample: Story = {
-  parameters:{ controls:{ exclude:/.*/g } },
+  parameters: { controls: { exclude: /.*/g } },
   render: (args: GalleryComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
-    template: `<gallery [items]="items" orientation="vertical" />`
+    props: { ...args, items },
+    template: `<gallery [items]="items" orientation="vertical" />`,
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('tigers') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('tigers') })],
 };
 
 export const ImageSizeExample: Story = {
-  parameters:{ controls:{ exclude:/.*/g } },
+  parameters: { controls: { exclude: /.*/g } },
   render: (args: GalleryComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
-    template: `<gallery [items]="items" imageSize="cover" />`
+    props: { ...args, items },
+    template: `<gallery [items]="items" imageSize="cover" />`,
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('tigers') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('tigers') })],
 };
 
 export const AutoHeightExample: Story = {
-  parameters:{ controls:{ exclude:/.*/g } },
+  parameters: { controls: { exclude: /.*/g } },
   render: (args: GalleryComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
-    template: `<gallery [items]="items" autoHeight />`
+    props: { ...args, items },
+    template: `<gallery [items]="items" autoHeight />`,
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('tigers') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('tigers') })],
 };
 
 export const ItemAutosizeExample: Story = {
-  parameters:{ controls:{ exclude:/.*/g } },
+  parameters: { controls: { exclude: /.*/g } },
   render: (args: GalleryComponent, { loaded: { items } }) => ({
-    props: { ...args, items, },
-    template: `<gallery [items]="items" itemAutosize loadingStrategy="preload" loadingAttr="eager" />`
+    props: { ...args, items },
+    template: `<gallery [items]="items" itemAutosize loadingStrategy="preload" loadingAttr="eager" />`,
   }),
-  loaders: [
-    async () => ({ items: await getHDImages('ship') }),
-  ]
+  loaders: [async () => ({ items: await getHDImages('ship') })],
 };
-
