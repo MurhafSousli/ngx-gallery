@@ -1,5 +1,5 @@
-import { computed, effect, inject, Injectable, OnDestroy, signal, Signal, WritableSignal } from '@angular/core';
-import { Subject } from 'rxjs';
+import { computed, inject, Injectable, OnDestroy, signal, Signal, WritableSignal } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { GalleryError, GalleryItem } from '../models/gallery.model';
 import { GALLERY_CONFIG, GalleryConfig } from '../models/config.model';
 import { GalleryAction } from '../models/constants';
@@ -13,6 +13,7 @@ import {
   YoutubeItem,
   YoutubeItemData
 } from '../components/templates/items.model';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Injectable()
 export class GalleryRef implements OnDestroy {
@@ -32,9 +33,6 @@ export class GalleryRef implements OnDestroy {
   /** Stream that emits on an error occurs */
   readonly error: Subject<GalleryError> = new Subject<GalleryError>();
 
-  /** Stream that emits when the player should start or stop */
-  readonly playingChanged: Subject<void> = new Subject<void>();
-
   /** Gallery Events */
 
   readonly items: WritableSignal<GalleryItem[]> = signal([]);
@@ -53,6 +51,9 @@ export class GalleryRef implements OnDestroy {
 
   /** Config signal */
   readonly config: WritableSignal<GalleryConfig> = signal(inject(GALLERY_CONFIG));
+
+  /** Stream that emits when the player should start or stop */
+  readonly playingChanged: Observable<boolean> = toObservable(this.isPlaying);
 
   setConfig(newConfig: GalleryConfig): void {
     this.config.update((config: GalleryConfig) => {

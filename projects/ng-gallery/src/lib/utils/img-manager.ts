@@ -4,14 +4,14 @@ import { ItemState } from '../components/templates/items.model';
 import { GalleryRef } from '../services/gallery-ref';
 
 interface ImageRegistry {
-  state: Observable<ItemState>;
+  state$: Observable<ItemState>;
   target: HTMLImageElement;
 }
 
 @Injectable()
 export class ImgManager {
 
-  galleryRef: GalleryRef = inject(GalleryRef);
+  private readonly galleryRef: GalleryRef = inject(GalleryRef);
 
   private readonly trigger$: BehaviorSubject<void> = new BehaviorSubject<void>(null);
 
@@ -22,7 +22,7 @@ export class ImgManager {
       switchMap(() => {
         const img: ImageRegistry = this.images.get(this.galleryRef.currIndex());
         if (img) {
-          return img.state.pipe(
+          return img.state$.pipe(
             filter((state: ItemState) => state !== 'loading'),
             map(() => img.target)
           )

@@ -1,18 +1,19 @@
 import {
   Component,
-  Output,
-  ViewChild,
   inject,
   signal,
-  effect,
   computed,
+  output,
+  effect,
+  untracked,
   viewChildren,
   input,
-  EventEmitter,
+  viewChild,
   Signal,
+  ElementRef,
   InputSignal,
   WritableSignal,
-  ElementRef,
+  OutputEmitterRef,
   ChangeDetectionStrategy
 } from '@angular/core';
 import { GalleryError } from '../models/gallery.model';
@@ -26,6 +27,7 @@ import { ItemIntersectionObserver } from '../observers/item-intersection-observe
 import { GalleryItemComponent } from './gallery-item.component';
 import { SliderResizeObserver } from '../observers/slider-resize-observer.directive';
 import { GalleryRef } from '../services/gallery-ref';
+import { ScrollSnapType } from '../services/scroll-snap-type';
 
 @Component({
   standalone: true,
@@ -33,15 +35,14 @@ import { GalleryRef } from '../services/gallery-ref';
   template: `
     <div #slider
          class="g-slider"
-         [attr.centralised]="config().itemAutosize"
+         scrollSnapType
+         [attr.centralised]="galleryRef.config().itemAutosize"
          [smoothScroll]="position()"
-         [smoothScrollInterruptOnMousemove]="!config().disableMouseScroll"
          sliderIntersectionObserver
          [sliderIntersectionObserverDisabled]="disableInteractionObserver()"
-         [hammerSliding]="!config().disableMouseScroll"
+         [hammerSliding]="!galleryRef.config().disableMouseScroll"
          [adapter]="adapter()"
          [items]="items()"
-         [config]="config()"
          [galleryId]="galleryId()"
          (isScrollingChange)="isScrolling.set($event)"
          (isSlidingChange)="isSliding.set($event)"
@@ -52,7 +53,6 @@ import { GalleryRef } from '../services/gallery-ref';
         @for (item of galleryRef.items(); track item.data.src; let i = $index; let count = $count) {
           <gallery-item [attr.galleryId]="galleryId()"
                         [type]="item.type"
-                        [config]="config()"
                         [data]="item.data"
                         [currIndex]="galleryRef.currIndex()"
                         [index]="i"
@@ -66,7 +66,7 @@ import { GalleryRef } from '../services/gallery-ref';
         }
       </div>
 
-      @if (config().debug) {
+      @if (galleryRef.config().debug) {
         <div class="g-slider-debug">
           <div class="g-slider-resizing">RESIZING</div>
           <div class="g-slider-scrolling">SCROLLING</div>
@@ -78,11 +78,11 @@ import { GalleryRef } from '../services/gallery-ref';
   `,
   styleUrl: './gallery-slider.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [GalleryItemComponent, SmoothScroll, HammerSliding, SliderIntersectionObserver, ItemIntersectionObserver, SliderResizeObserver]
+  imports: [GalleryItemComponent, SmoothScroll, HammerSliding, SliderIntersectionObserver, ItemIntersectionObserver, SliderResizeObserver, ScrollSnapType]
 })
 export class GallerySliderComponent {
 
-  galleryRef: GalleryRef = inject(GalleryRef);
+  readonly galleryRef: GalleryRef = inject(GalleryRef);
 
   /** Stream that emits the slider position */
   position: WritableSignal<SmoothScrollOptions> = signal(null);
@@ -96,45 +96,40 @@ export class GallerySliderComponent {
   });
 
   /** Gallery ID */
-  galleryId: InputSignal<string> = input();
-
-  /** Gallery config */
-  config: InputSignal<GalleryConfig> = input();
-
-  /** Stream that emits when item is clicked */
-  @Output() itemClick: EventEmitter<number> = new EventEmitter<number>();
-
-  /** Stream that emits when an error occurs */
-  @Output() error: EventEmitter<GalleryError> = new EventEmitter<GalleryError>();
+  galleryId: InputSignal<string> = input<string>();
 
   /** Slider ElementRef */
-  @ViewChild('slider', { static: true }) sliderEl: ElementRef<HTMLElement>;
+  sliderRef: Signal<ElementRef<HTMLElement>> = viewChild('slider');
+
+  slider: Signal<HTMLElement> = computed(() => this.sliderRef().nativeElement);
 
   items: Signal<ReadonlyArray<GalleryItemComponent>> = viewChildren<GalleryItemComponent>(GalleryItemComponent);
 
   /** Slider adapter */
   adapter: Signal<SliderAdapter> = computed(() => {
-    const config: GalleryConfig = this.config();
+    const config: GalleryConfig = this.galleryRef.config();
     return config.orientation === Orientation.Horizontal ?
-      new HorizontalAdapter(this.slider, config) :
-      new VerticalAdapter(this.slider, config);
+      new HorizontalAdapter(this.slider(), config) :
+      new VerticalAdapter(this.slider(), config);
   });
 
-  get slider(): HTMLElement {
-    return this.sliderEl.nativeElement;
-  }
+  /** Stream that emits when thumb is clicked */
+  itemClick: OutputEmitterRef<number> = output<number>();
+
+  /** Stream that emits when an error occurs */
+  error: OutputEmitterRef<GalleryError> = output<GalleryError>();
 
   constructor() {
     effect(() => {
-      // Scroll to index when current index changes
-      // requestAnimationFrame(() => {
-      this.scrollToIndex(this.galleryRef.currIndex(), this.galleryRef.scrollBehavior());
-      // });
-    }, { allowSignalWrites: true });
-
-    // effect(() => {
-    //   // this.scrollToIndex(this.galleryRef.currIndex(), 'auto');
-    // });
+      const currIndex: number = this.galleryRef.currIndex();
+      const behavior: ScrollBehavior = this.galleryRef.scrollBehavior()
+      if (behavior) {
+        // Scroll to index when current index changes
+        untracked(() => {
+          this.scrollToIndex(currIndex, behavior);
+        });
+      }
+    });
   }
 
   onActiveIndexChange(index: number): void {
@@ -149,7 +144,7 @@ export class GallerySliderComponent {
   private scrollToIndex(index: number, behavior: ScrollBehavior): void {
     const el: HTMLElement = this.items()[index]?.nativeElement;
     if (el) {
-      const pos: SmoothScrollOptions = this.adapter().getScrollToValue(el, behavior || this.config().scrollBehavior);
+      const pos: SmoothScrollOptions = this.adapter().getScrollToValue(el, behavior || this.galleryRef.config().scrollBehavior);
       this.position.set(pos);
     }
   }

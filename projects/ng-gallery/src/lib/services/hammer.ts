@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { HammerGestureConfig } from '@angular/platform-browser';
 
 export interface HammerInstance {
@@ -8,6 +9,7 @@ export interface HammerInstance {
 
 declare const Hammer: any;
 
+@Injectable()
 export class CustomHammerConfig extends HammerGestureConfig {
   overrides = {
     pinch: { enable: false },

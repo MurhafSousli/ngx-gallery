@@ -3,15 +3,17 @@ import {
   Output,
   inject,
   effect,
+  untracked,
   input,
   EventEmitter,
-  OnDestroy,
   NgZone,
   ElementRef,
-  InputSignal
+  InputSignal,
+  EffectCleanupRegisterFn
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { GalleryConfig } from '../models/config.model';
+import { GalleryRef } from '../services/gallery-ref';
 import { ActiveItemObserver } from './active-item-observer';
 import { SliderAdapter } from '../components/adapters';
 import { GalleryItemComponent } from '../components/gallery-item.component';
@@ -20,13 +22,13 @@ import { GalleryItemComponent } from '../components/gallery-item.component';
   standalone: true,
   selector: '[sliderIntersectionObserver]'
 })
-export class SliderIntersectionObserver implements OnDestroy {
+export class SliderIntersectionObserver {
 
   private _zone: NgZone = inject(NgZone);
 
-  private _viewport: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
+  readonly galleryRef: GalleryRef = inject(GalleryRef);
 
-  private _currentSubscription: Subscription;
+  private _viewport: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
 
   private _sensor: ActiveItemObserver = new ActiveItemObserver();
 
@@ -34,44 +36,39 @@ export class SliderIntersectionObserver implements OnDestroy {
 
   items: InputSignal<GalleryItemComponent[]> = input<GalleryItemComponent[]>();
 
-  config: InputSignal<GalleryConfig> = input<GalleryConfig>();
-
   disabled: InputSignal<boolean> = input<boolean>(false, { alias: 'sliderIntersectionObserverDisabled' });
 
   @Output() activeIndexChange: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() {
-    effect(() => {
-      (this.config().itemAutosize || this.disabled()) ? this._unsubscribe() : this._subscribe();
-    });
-  }
+    let sub$: Subscription;
+    effect((onCleanup: EffectCleanupRegisterFn) => {
+      const config: GalleryConfig = this.galleryRef.config();
+      const disabled: boolean = this.disabled();
+      const items: GalleryItemComponent[] = this.items();
+      const adapter: SliderAdapter = this.adapter();
 
-  ngOnDestroy(): void {
-    this._unsubscribe();
-  }
+      untracked(() => {
+        if (!config.itemAutosize && !disabled && adapter && items.length) {
+          const rootMargin: string = adapter.getRootMargin();
+          if (config.debug) {
+            this._viewport.style.setProperty('--intersection-margin', `"INTERSECTION(${ rootMargin })"`);
+          }
 
-  private _subscribe(): void {
-    this._unsubscribe();
+          this._zone.runOutsideAngular(() => {
+            sub$ = this._sensor.observe(
+              this._viewport,
+              items.map((item: GalleryItemComponent) => item.nativeElement),
+              rootMargin
+            ).subscribe((index: number) => {
+              console.log('😆', index);
+              this._zone.run(() => this.activeIndexChange.emit(index));
+            });
+          });
+        }
 
-    if (!!this.adapter() && !!this.items()?.length) {
-      const rootMargin: string = this.adapter().getRootMargin();
-      if (this.config().debug) {
-        this._viewport.style.setProperty('--intersection-margin', `"INTERSECTION(${ rootMargin })"`);
-      }
-
-      this._zone.runOutsideAngular(() => {
-        this._currentSubscription = this._sensor.observe(
-          this._viewport,
-          this.items().map((item: GalleryItemComponent) => item.nativeElement),
-          rootMargin
-        ).subscribe((index: number) => {
-          this._zone.run(() => this.activeIndexChange.emit(index));
-        });
+        onCleanup(() => sub$?.unsubscribe());
       });
-    }
-  }
-
-  private _unsubscribe(): void {
-    this._currentSubscription?.unsubscribe();
+    });
   }
 }

@@ -8,14 +8,13 @@ import {
   OnDestroy,
   NgZone,
   ElementRef,
-  InputSignal
+  InputSignal, WritableSignal, signal
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { HammerGestureConfig } from '@angular/platform-browser';
 import { Platform } from '@angular/cdk/platform';
 import { Directionality } from '@angular/cdk/bidi';
 import { SliderAdapter } from '../components/adapters';
-import { GalleryConfig } from '../models/config.model';
 import { Orientation } from '../models/constants';
 import { GalleryItemComponent } from '../components/gallery-item.component';
 import { GalleryThumbComponent } from '../components/gallery-thumb.component';
@@ -24,9 +23,12 @@ import { GalleryRef } from '../services/gallery-ref';
 import { CustomHammerConfig, HammerInstance } from '../services/hammer';
 
 @Directive({
+  standalone: true,
   selector: '[hammerSliding]',
-  providers: [{ provide: HammerGestureConfig, useClass: CustomHammerConfig }],
-  standalone: true
+  host: {
+    '[class.g-sliding]': 'sliding()'
+  },
+  providers: [{ provide: HammerGestureConfig, useClass: CustomHammerConfig }]
 })
 export class HammerSliding implements OnDestroy {
 
@@ -49,13 +51,13 @@ export class HammerSliding implements OnDestroy {
 
   enabled: InputSignal<boolean> = input(false, { alias: 'hammerSliding' });
 
-  adapter: InputSignal<SliderAdapter> = input();
+  adapter: InputSignal<SliderAdapter> = input<SliderAdapter>();
 
-  galleryId: InputSignal<string> = input();
+  galleryId: InputSignal<string> = input<string>();
 
-  items: InputSignal<GalleryItemComponent[] | GalleryThumbComponent[]> = input();
+  items: InputSignal<GalleryItemComponent[] | GalleryThumbComponent[]> = input<GalleryItemComponent[] | GalleryThumbComponent[]>();
 
-  config: InputSignal<GalleryConfig> = input();
+  sliding: WritableSignal<boolean> = signal<boolean>(false);
 
   @Output() activeIndexChange: EventEmitter<number> = new EventEmitter<number>();
 
@@ -92,11 +94,12 @@ export class HammerSliding implements OnDestroy {
         this._mc.on('panstart', () => {
           this._zone.run(() => {
             this.isSlidingChange.emit(true);
+            this.sliding.set(true);
           });
 
           offset = adapter.scrollValue;
-          this._viewport.classList.add('g-sliding');
-          this._viewport.style.setProperty('--slider-scroll-snap-type', 'none');
+          // this._viewport.classList.add('g-sliding');
+          // this._viewport.style.setProperty('--slider-scroll-snap-type', 'none');
         });
 
         this._mc.on('panmove', (e: any) => {
@@ -105,12 +108,16 @@ export class HammerSliding implements OnDestroy {
 
         this._mc.on('panend', (e: any) => {
           this._document.onselectstart = null;
-          this._viewport.classList.remove('g-sliding');
+          // this._viewport.classList.remove('g-sliding');
           const index: number = this.getIndexOnMouseUp(e, adapter);
 
           this._zone.run(() => {
             this.isSlidingChange.emit(false);
             this.activeIndexChange.emit(index);
+            console.log(index)
+            requestAnimationFrame(() => {
+              this.sliding.set(false);
+            })
           });
         });
       });
@@ -129,6 +136,7 @@ export class HammerSliding implements OnDestroy {
     // Find the gallery item element in the center elements
     const elementAtCenter: Element = this.getElementFromViewportCenter();
 
+    console.log(elementAtCenter)
     // Check if center item can be taken from element using
     if (elementAtCenter && elementAtCenter !== currElement) {
       return +elementAtCenter.getAttribute('galleryIndex');
@@ -137,7 +145,7 @@ export class HammerSliding implements OnDestroy {
     const velocity: number = adapter.getHammerVelocity(e);
     // Check if velocity is great enough to navigate
     if (Math.abs(velocity) > 0.3) {
-      if (this.config().orientation === Orientation.Horizontal) {
+      if (this.galleryRef.config().orientation === Orientation.Horizontal) {
         if (velocity > 0) {
           return this._dir.value === 'rtl' ? currIndex + 1 : currIndex - 1;
         }
@@ -159,6 +167,7 @@ export class HammerSliding implements OnDestroy {
       sliderRect.x + (sliderRect.width / 2),
       sliderRect.y + (sliderRect.height / 2)
     );
+    console.log(centerElements);
     // Find the gallery item element in the center elements
     return centerElements.find((element: Element) => {
       return element.getAttribute('galleryId') === this.galleryId();

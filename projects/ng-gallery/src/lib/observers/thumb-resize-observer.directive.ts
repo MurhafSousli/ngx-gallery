@@ -1,65 +1,62 @@
 import {
   Directive,
-  Input,
-  Output,
-  OnInit,
-  OnChanges,
-  OnDestroy,
+  effect,
+  inject,
+  output,
+  input,
   NgZone,
   ElementRef,
-  SimpleChanges,
-  EventEmitter
+  InputSignal,
+  OutputEmitterRef,
+  EffectCleanupRegisterFn
 } from '@angular/core';
-import { Subscription, tap, auditTime, animationFrameScheduler, debounceTime } from 'rxjs';
+import { Subscription, tap, debounceTime, animationFrameScheduler } from 'rxjs';
 import { resizeObservable } from '../utils/resize-observer';
 import { GalleryConfig } from '../models/config.model';
 import { SliderAdapter } from '../components/adapters';
 
 @Directive({
-  selector: '[thumbResizeObserver]',
-  standalone: true
+  standalone: true,
+  selector: '[thumbResizeObserver]'
 })
-export class ThumbResizeObserver implements OnChanges, OnInit, OnDestroy {
+export class ThumbResizeObserver {
 
-  private _resizeSubscription: Subscription;
+  private readonly _viewport: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
 
-  private get _viewport(): HTMLElement {
-    return this._el.nativeElement;
-  }
+  private readonly _zone: NgZone = inject(NgZone);
 
-  @Input() config: GalleryConfig;
+  config: InputSignal<GalleryConfig> = input<GalleryConfig>();
 
-  @Input() adapter: SliderAdapter;
+  adapter: InputSignal<SliderAdapter> = input<SliderAdapter>();
 
-  @Output('thumbResizeObserver') resized: EventEmitter<void> = new EventEmitter();
+  resized: OutputEmitterRef<void> = output<void>({ alias: 'thumbResizeObserver' });
 
-  constructor(private _el: ElementRef<HTMLElement>, private _zone: NgZone) {
-  }
+  constructor() {
+    let resizeSubscription$: Subscription;
 
-  ngOnInit(): void {
-    this._zone.runOutsideAngular(() => {
-      this._resizeSubscription = resizeObservable(this._viewport).pipe(
-        debounceTime(this.config.resizeDebounceTime, animationFrameScheduler),
-        tap(() => {
-          this.updateSliderSize();
-          this.resized.emit();
-        })
-      ).subscribe();
+    effect((onCleanup: EffectCleanupRegisterFn) => {
+      if (!resizeSubscription$) {
+        this.updateSliderSize();
+      } else {
+        resizeSubscription$?.unsubscribe();
+      }
+
+      this._zone.runOutsideAngular(() => {
+        resizeSubscription$ = resizeObservable(this._viewport).pipe(
+          debounceTime(this.config().resizeDebounceTime, animationFrameScheduler),
+          tap(() => {
+            this.updateSliderSize();
+            this.resized.emit();
+          })
+        ).subscribe();
+      });
+
+      onCleanup(() => resizeSubscription$?.unsubscribe());
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (!changes.config.firstChange) {
-      this.updateSliderSize();
-    }
-  }
-
-  ngOnDestroy(): void {
-    this._resizeSubscription?.unsubscribe();
-  }
-
   private updateSliderSize(): void {
-    this._viewport.style.setProperty('--thumb-centralize-start-size', this.adapter.getCentralizerStartSize() + 'px');
-    this._viewport.style.setProperty('--thumb-centralize-end-size', this.adapter.getCentralizerEndSize() + 'px');
+    this._viewport.style.setProperty('--thumb-centralize-start-size', this.adapter().getCentralizerStartSize() + 'px');
+    this._viewport.style.setProperty('--thumb-centralize-end-size', this.adapter().getCentralizerEndSize() + 'px');
   }
 }

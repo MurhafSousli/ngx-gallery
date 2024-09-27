@@ -1,24 +1,34 @@
-import { Component, Input, ViewChild, inject, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  inject,
+  computed,
+  input,
+  viewChild,
+  Signal,
+  ElementRef,
+  InputSignal,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   standalone: true,
   selector: 'gallery-iframe',
   template: `
-    @if (autoplay) {
+    @if (autoplay()) {
       <iframe #iframe
-              [attr.loading]="loadingAttr"
+              [attr.loading]="loadingAttr()"
               allowfullscreen
               allow
               style="border:none"
-              [src]="iframeSrc">
+              [src]="iframeSrc()">
       </iframe>
     } @else {
       <iframe #iframe
-              [attr.loading]="loadingAttr"
+              [attr.loading]="loadingAttr()"
               allowfullscreen
               style="border:none"
-              [src]="iframeSrc">
+              [src]="iframeSrc()">
       </iframe>
     }
   `,
@@ -28,30 +38,20 @@ export class GalleryIframeComponent {
 
   private _sanitizer: DomSanitizer = inject(DomSanitizer);
 
-  iframeSrc: SafeResourceUrl;
-  videoSrc: string;
-
-  @Input('src') set src(src: string) {
-    this.videoSrc = src;
-    this.iframeSrc = this._sanitizer.bypassSecurityTrustResourceUrl(src);
-  }
-
-  @Input('pause') set pauseVideo(shouldPause: boolean) {
-    if (this.iframe?.nativeElement) {
-      if (shouldPause) {
-        const iframe: HTMLIFrameElement = this.iframe.nativeElement;
-        iframe.src = null;
-
-        if (!this.autoplay && this.videoSrc) {
-          this.iframeSrc = this._sanitizer.bypassSecurityTrustResourceUrl(this.videoSrc);
-        }
-      }
+  iframeSrc: Signal<SafeResourceUrl> = computed(() => {
+    if (this.pause()) {
+      return null;
     }
-  }
+    return this._sanitizer.bypassSecurityTrustResourceUrl(this.src());
+  });
 
-  @Input() autoplay: boolean;
+  src: InputSignal<string> = input<string>();
 
-  @Input() loadingAttr: 'eager' | 'lazy';
+  pause: InputSignal<boolean> = input<boolean>();
 
-  @ViewChild('iframe') iframe: ElementRef;
+  autoplay: InputSignal<boolean> = input<boolean>();
+
+  loadingAttr: InputSignal<'eager' | 'lazy'> = input();
+
+  iframe: Signal<ElementRef<HTMLIFrameElement>> = viewChild<ElementRef<HTMLIFrameElement>>('iframe');
 }
