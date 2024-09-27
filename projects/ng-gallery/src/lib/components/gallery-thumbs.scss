@@ -40,11 +40,11 @@
     }
 
     &:before {
-      flex: 0 0 var(--thumb-centralize-start-size);
+      flex: 0 0 var(--centralize-start-size);
     }
 
     &:after {
-      flex: 0 0 var(--thumb-centralize-end-size);
+      flex: 0 0 var(--centralize-end-size);
     }
   }
 }

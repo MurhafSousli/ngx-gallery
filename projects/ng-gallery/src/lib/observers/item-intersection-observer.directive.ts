@@ -1,77 +1,83 @@
-import { Directive, Input, Output, OnChanges, OnDestroy, NgZone, EventEmitter } from '@angular/core';
+import {
+  Directive,
+  inject,
+  effect,
+  output,
+  input,
+  NgZone,
+  InputSignal,
+  OutputEmitterRef,
+  EffectCleanupRegisterFn
+} from '@angular/core';
 import { Subscription, combineLatest, filter, switchMap } from 'rxjs';
-import { GalleryConfig } from '../models/config.model';
 import { ActiveItemObserver } from './active-item-observer';
 import { resizeObservable } from '../utils/resize-observer';
 import { SliderAdapter } from '../components/adapters';
 import { GalleryItemComponent } from '../components/gallery-item.component';
 import { ItemState } from '../components/templates/items.model';
+import { GalleryRef } from '../services/gallery-ref';
+import { GalleryConfig } from '../models/config.model';
 
 @Directive({
-  selector: '[itemIntersectionObserver]',
-  standalone: true
+  standalone: true,
+  selector: '[itemIntersectionObserver]'
 })
-export class ItemIntersectionObserver implements OnChanges, OnDestroy {
+export class ItemIntersectionObserver {
 
-  private _currentSubscription: Subscription;
+  private _galleryRef: GalleryRef = inject(GalleryRef);
+
+  private _zone: NgZone = inject(NgZone);
+
+  private _item: GalleryItemComponent = inject(GalleryItemComponent);
 
   private _sensor: ActiveItemObserver = new ActiveItemObserver();
+
+  adapter: InputSignal<SliderAdapter> = input();
+
+  disabled: InputSignal<boolean> = input(false, { alias: 'itemIntersectionObserverDisabled' });
+
+  activeIndexChange: OutputEmitterRef<number> = output<number>();
 
   private get _viewport(): HTMLElement {
     return this._item.nativeElement.parentElement.parentElement;
   }
 
-  @Input() adapter: SliderAdapter;
+  constructor() {
+    let intersectionSub$: Subscription;
 
-  @Input() config: GalleryConfig;
+    effect((onCleanup: EffectCleanupRegisterFn) => {
+      const config: GalleryConfig = this._galleryRef.config();
+      const adapter: SliderAdapter = this.adapter();
 
-  @Input('itemIntersectionObserverDisabled') disabled: boolean;
+      intersectionSub$?.unsubscribe();
 
-  @Output() activeIndexChange: EventEmitter<number> = new EventEmitter<number>();
+      if (config.itemAutosize && !this.disabled() && adapter) {
+        this._zone.runOutsideAngular(() => {
+          intersectionSub$ = combineLatest([
+            resizeObservable(this._viewport),
+            resizeObservable(this._item.nativeElement)
+          ]).pipe(
+            switchMap(() => this._item.state$),
+            filter((state: ItemState) => state !== 'loading'),
+            switchMap(() => {
+                const rootMargin: string = adapter.getElementRootMargin(this._viewport, this._item.nativeElement);
+                if (config.debug) {
+                  this._item.nativeElement.style.setProperty('--item-intersection-margin', `"VIEWPORT(${ this._viewport.clientWidth }x${ this._viewport.clientHeight }) ITEM(${ this._item.nativeElement.clientWidth }x${ this._item.nativeElement.clientHeight }) INTERSECTION(${ rootMargin })"`);
+                }
 
-  constructor(private _zone: NgZone, private _item: GalleryItemComponent) {
-  }
-
-  ngOnChanges(): void {
-    (this.config.itemAutosize && !this.disabled) ? this._subscribe() : this._unsubscribe();
-  }
-
-  ngOnDestroy(): void {
-    this._unsubscribe();
-  }
-
-  private _subscribe(): void {
-    this._unsubscribe();
-
-    if (!!this.adapter) {
-      this._zone.runOutsideAngular(() => {
-        this._currentSubscription = combineLatest([
-          resizeObservable(this._viewport),
-          resizeObservable(this._item.nativeElement)
-        ]).pipe(
-          switchMap(() => this._item.state$),
-          filter((state: ItemState) => state !== 'loading'),
-          switchMap(() => {
-            const rootMargin: string = this.adapter.getElementRootMargin(this._viewport, this._item.nativeElement);
-            if (this.config.debug) {
-              this._item.nativeElement.style.setProperty('--item-intersection-margin', `"VIEWPORT(${ this._viewport.clientWidth }x${ this._viewport.clientHeight }) ITEM(${ this._item.nativeElement.clientWidth }x${ this._item.nativeElement.clientHeight }) INTERSECTION(${ rootMargin })"`);
-            }
-
-            return this._sensor.observe(
-              this._viewport,
-              [this._item.nativeElement],
-              rootMargin
-            );
-          }
-          )
-        ).subscribe((index: number) => {
-          this._zone.run(() => this.activeIndexChange.emit(index));
+                return this._sensor.observe(
+                  this._viewport,
+                  [this._item.nativeElement],
+                  rootMargin
+                );
+              }
+            )
+          ).subscribe((index: number) => {
+            this._zone.run(() => this.activeIndexChange.emit(index));
+          });
         });
-      });
-    }
-  }
-
-  private _unsubscribe(): void {
-    this._currentSubscription?.unsubscribe();
+      }
+      onCleanup(() => intersectionSub$?.unsubscribe());
+    });
   }
 }

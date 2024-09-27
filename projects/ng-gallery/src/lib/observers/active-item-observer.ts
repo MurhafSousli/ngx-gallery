@@ -18,14 +18,14 @@ export class ActiveItemObserver {
   }
 }
 
-function createIntersectionObserver(root: HTMLElement, elements: HTMLElement[], rootMargin: string): Observable<IntersectionObserverEntry> {
+function createIntersectionObserver(root: HTMLElement, elements: HTMLElement[], rootMargin: string, threshold: number = 1): Observable<IntersectionObserverEntry> {
   return new Observable((observer: Subscriber<IntersectionObserverEntry[]>) => {
     const intersectionObserver: IntersectionObserver = new IntersectionObserver(
       (entries: IntersectionObserverEntry[]) => observer.next(entries),
       {
         root,
         rootMargin,
-        threshold: 1
+        threshold
       }
     );
     elements.forEach((element: HTMLElement) => intersectionObserver.observe(element));
