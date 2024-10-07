@@ -82,6 +82,7 @@ interface SliderConfig {
   boxTemplate?: TemplateRef<any>;
   itemTemplate?: TemplateRef<any>;
   imageTemplate?: TemplateRef<any>;
+  centralized?: boolean;
 }
 
 export type GalleryConfig = SliderConfig

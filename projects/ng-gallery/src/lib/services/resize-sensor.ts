@@ -3,50 +3,89 @@ import {
   signal,
   inject,
   effect,
-  ElementRef,
+  computed,
+  untracked,
+  NgZone,
+  Signal,
   WritableSignal,
-  EffectCleanupRegisterFn, OutputEmitterRef, output
+  EffectCleanupRegisterFn
 } from '@angular/core';
-import { Observable, Subscriber, Subscription, debounceTime, mergeMap, animationFrameScheduler } from 'rxjs';
+import { SharedResizeObserver } from '@angular/cdk/observers/private';
+import { Subscription, animationFrameScheduler, throttleTime, combineLatest } from 'rxjs';
+import { GalleryConfig } from '../models/config.model';
 import { GalleryRef } from './gallery-ref';
-import { outputFromObservable, toObservable } from '@angular/core/rxjs-interop';
+import { SliderComponent } from '../components/slider/slider';
 
 @Directive({
   standalone: true,
-  selector: '[resizeSensor]'
+  selector: '[resizeSensor]',
+  host: {
+    '[style.--slider-width.px]': 'slideSize()?.width',
+    '[style.--slider-height.px]': 'slideSize()?.height',
+    '[style.--centralize-start-size.px]': 'centralizeStart()',
+    '[style.--centralize-end-size.px]': 'centralizeEnd()'
+  }
 })
 export class ResizeSensor {
 
-  private readonly nativeElement: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
+  private readonly sharedResizeObserver: SharedResizeObserver = inject(SharedResizeObserver)
+
+  private readonly slider: SliderComponent = inject(SliderComponent, { self: true });
+
+  private readonly zone: NgZone = inject(NgZone);
 
   private readonly galleryRef: GalleryRef = inject(GalleryRef);
 
-  size: WritableSignal<DOMRectReadOnly> = signal(null);
+  readonly slideSize: WritableSignal<DOMRectReadOnly> = signal(null);
 
-  // TODO: rethink if it is better to just emit to output directly without converting the signal to observable
-  resizeSensor: OutputEmitterRef<DOMRectReadOnly> = output<DOMRectReadOnly>();
+  readonly contentSize: WritableSignal<DOMRectReadOnly> = signal(null);
+
+  readonly centralizeStart: Signal<number> = computed(() => {
+    if (!this.slideSize() || !this.contentSize()) return;
+    return this.slider.adapter()?.getCentralizerStartSize();
+  });
+
+  readonly centralizeEnd: Signal<number> = computed(() => {
+    if (!this.slideSize() || !this.contentSize()) return;
+    return this.slider.adapter()?.getCentralizerEndSize();
+  });
 
   constructor() {
     let resizeSubscription$: Subscription;
 
     effect((onCleanup: EffectCleanupRegisterFn) => {
-      resizeSubscription$?.unsubscribe();
+      const config: GalleryConfig = this.galleryRef.config();
 
-      resizeSubscription$ = new Observable((subscriber: Subscriber<ResizeObserverEntry[]>) => {
-        const resizeObserver: ResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => subscriber.next(entries));
-        resizeObserver.observe(this.nativeElement);
-        return () => resizeObserver.disconnect();
-      }).pipe(
-        mergeMap((entries: ResizeObserverEntry[]) => entries),
-        debounceTime(this.galleryRef.config().resizeDebounceTime, animationFrameScheduler),
-      ).subscribe((entry: ResizeObserverEntry) => {
-        if (entry.contentRect.height) {
-          this.size.set(entry.contentRect);
-          this.resizeSensor.emit(entry.contentRect);
-        }
+      // Make sure items are rendered
+      if (!this.slider.items().length) return;
+
+      untracked(() => {
+        this.zone.runOutsideAngular(() => {
+          resizeSubscription$ = combineLatest([
+            this.sharedResizeObserver.observe(this.slider.nativeElement),
+            this.sharedResizeObserver.observe(this.slider.nativeElement.firstElementChild)
+          ]).pipe(
+            throttleTime(config.resizeDebounceTime, animationFrameScheduler, {
+              leading: true,
+              trailing: true
+            }),
+          ).subscribe(([sliderEntries, contentEntries]: [ResizeObserverEntry[], ResizeObserverEntry[]]) => {
+            this.zone.run(() => {
+              if (!sliderEntries || !contentEntries) return;
+
+              if (sliderEntries[0].contentRect.height) {
+                this.slideSize.set(sliderEntries[0].contentRect);
+              }
+
+              if (contentEntries[0].contentRect.height) {
+                this.contentSize.set(contentEntries[0].contentRect);
+              }
+            });
+          });
+        });
+
+        onCleanup(() => resizeSubscription$?.unsubscribe());
       });
-
-      onCleanup(() => resizeSubscription$?.unsubscribe());
     });
   }
 }

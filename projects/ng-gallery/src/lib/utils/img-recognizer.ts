@@ -1,4 +1,13 @@
-import { Directive, inject, effect, input, ElementRef, InputSignal, EffectCleanupRegisterFn } from '@angular/core';
+import {
+  Directive,
+  inject,
+  effect,
+  untracked,
+  input,
+  ElementRef,
+  InputSignal,
+  EffectCleanupRegisterFn
+} from '@angular/core';
 import { ImgManager } from './img-manager';
 import { GalleryItemComponent } from '../components/gallery-item.component';
 
@@ -31,14 +40,16 @@ export class ImgRecognizer {
     effect((onCleanup: EffectCleanupRegisterFn) => {
       const index: number = this.index();
 
-      if (index != null) {
-        this.manager.addItem(index, {
-          state$: this.item.state$,
-          target: this.nativeElement
-        });
+      untracked(() => {
+        if (index != null) {
+          this.manager.addItem(index, {
+            state$: this.item.state$,
+            target: this.nativeElement
+          });
 
-        onCleanup(() => this.manager.deleteItem(index));
-      }
+          onCleanup(() => this.manager.deleteItem(index));
+        }
+      });
     });
   }
 }

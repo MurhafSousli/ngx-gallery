@@ -1,7 +1,7 @@
-import { computed, Directive, effect, inject, input, InputSignal, Signal } from '@angular/core';
+import { computed, Directive, inject, Signal } from '@angular/core';
 import { HammerSliding } from '../gestures/hammer-sliding.directive';
 import { SmoothScroll } from '../smooth-scroll';
-import { SliderAdapter } from '../components/adapters';
+import { SliderComponent } from '../components/slider/slider';
 
 @Directive({
   standalone: true,
@@ -16,19 +16,12 @@ export class ScrollSnapType {
 
   private readonly hammerSliding: HammerSliding = inject(HammerSliding, { self: true });
 
-  adapter: InputSignal<SliderAdapter> = input<SliderAdapter>();
+  private readonly slider: SliderComponent = inject(SliderComponent, { self: true });
 
   scrollSnapType: Signal<string> = computed(() => {
     if (this.smoothScroll.scrolling() || this.hammerSliding.sliding()) {
       return 'none';
     }
-    return this.adapter().scrollSnapType;
+    return this.slider.adapter().scrollSnapType;
   });
-
-  constructor() {
-    effect(() => {
-      console.log(this.scrollSnapType())
-    });
-  }
-
 }

@@ -46,6 +46,7 @@ export const defaultConfig: GalleryConfig = {
     y2: 1
   },
   thumbCentralized: false,
+  centralized: false,
   thumbAutosize: false,
   itemAutosize: false,
   autoHeight: false,

@@ -13,7 +13,8 @@ import {
   InputSignal,
   OutputEmitterRef,
   ChangeDetectionStrategy,
-  InputSignalWithTransform, TemplateRef,
+  InputSignalWithTransform,
+  TemplateRef,
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { Directionality } from '@angular/cdk/bidi';
@@ -32,7 +33,6 @@ import { GalleryBulletsComponent } from './gallery-bullets.component';
 import { GalleryCounterComponent } from './gallery-counter.component';
 import { GalleryNavComponent } from './gallery-nav.component';
 import { GallerySliderComponent } from './gallery-slider.component';
-import { GalleryThumbsComponent } from './gallery-thumbs.component';
 
 /**
  * Gallery component
@@ -60,15 +60,10 @@ import { GalleryThumbsComponent } from './gallery-thumbs.component';
   },
   selector: 'gallery',
   template: `
-    @if (thumbs()) {
-      <gallery-thumbs [galleryId]="id()"
-                      (thumbClick)="thumbClick.emit($event)"
-                      (error)="error.emit($event)"/>
-    }
+    <ng-content select="gallery-thumbs"/>
 
     <div class="g-box">
       <gallery-slider [class.g-debug]="debug()"
-                      [galleryId]="id()"
                       (itemClick)="itemClick.emit($event)"
                       (error)="error.emit($event)">
 
@@ -86,7 +81,7 @@ import { GalleryThumbsComponent } from './gallery-thumbs.component';
       }
 
       <div class="g-box-template">
-<!--        <ng-container *ngTemplateOutlet="boxTemplate(); context: { state: state(), config: config() }"/>-->
+        <!--        <ng-container *ngTemplateOutlet="boxTemplate(); context: { state: state(), config: config() }"/>-->
         <ng-container *ngTemplateOutlet="boxTemplate(); context: {config: config() }"/>
       </div>
     </div>
@@ -100,7 +95,7 @@ import { GalleryThumbsComponent } from './gallery-thumbs.component';
     GalleryCounterComponent,
     GalleryNavComponent,
     GallerySliderComponent,
-    GalleryThumbsComponent,
+    // GalleryThumbs,
     NgTemplateOutlet
   ],
   providers: [ImgManager, GalleryRef]
@@ -161,14 +156,21 @@ export class GalleryComponent {
   /**
    * Displays the thumbnails
    */
-  thumbs: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(this._config.thumbs, {
-    transform: booleanAttribute
-  });
+  // thumbs: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(this._config.thumbs, {
+  //   transform: booleanAttribute
+  // });
 
   /**
    * Displays the counter or pagination
    */
   counter: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(this._config.counter, {
+    transform: booleanAttribute
+  });
+
+  /**
+   * Centralize slider
+   */
+  centralized: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(this._config.centralized, {
     transform: booleanAttribute
   });
 
@@ -394,6 +396,8 @@ export class GalleryComponent {
    */
   error: OutputEmitterRef<GalleryError> = output<GalleryError>();
 
+  // thumbs: Signal<GalleryThumbs> = contentChild(GalleryThumbs);
+
   /** @ignore */
   private _galleryItemDef: Signal<GalleryItemDef> = contentChild(GalleryItemDef);
   /** @ignore */
@@ -419,11 +423,12 @@ export class GalleryComponent {
       bullets: this.bullets(),
       loop: this.loop(),
       debug: this.debug(),
-      thumbs: this.thumbs(),
+      // thumbs: this.thumbs(),
       counter: this.counter(),
       autoplay: this.autoplay(),
       bulletSize: this.bulletSize(),
       imageSize: this.imageSize(),
+      centralized: this.centralized(),
       thumbImageSize: this.thumbImageSize(),
       scrollBehavior: this.scrollBehavior(),
       thumbCentralized: this.thumbCentralized(),

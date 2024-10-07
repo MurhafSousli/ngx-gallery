@@ -10,7 +10,7 @@ import {
   VideoItemData,
   YoutubeItemData,
   GalleryModule,
-  GalleryComponent
+  GalleryComponent,
   VimeoItemData
 } from 'ng-gallery';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
@@ -81,13 +81,13 @@ export class TemplatesExampleComponent {
             case GalleryItemTypes.Youtube:
               gallery.addYoutube(item);
               break;
+            case GalleryItemTypes.Vimeo:
+              gallery.addVimeo(item);
+              break;
             default:
               gallery.addIframe(item);
           }
         });
-        case GalleryItemTypes.Vimeo:
-          galleryRef.addVimeo(item);
-          break;
       }
     }, { allowSignalWrites: true });
   }

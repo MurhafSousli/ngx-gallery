@@ -26,9 +26,9 @@ import { GalleryRef } from '../services/gallery-ref';
 })
 export class GalleryNavComponent {
 
-  private _sanitizer: DomSanitizer = inject(DomSanitizer);
+  private readonly _sanitizer: DomSanitizer = inject(DomSanitizer);
 
-  galleryRef: GalleryRef = inject(GalleryRef);
+  readonly galleryRef: GalleryRef = inject(GalleryRef);
 
   navIcon: Signal<SafeHtml> = computed(() =>
     this._sanitizer.bypassSecurityTrustHtml(this.galleryRef.config().navIcon)

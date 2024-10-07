@@ -8,7 +8,8 @@ import {
   LoadingStrategy,
   Orientation,
   ThumbnailsPosition,
-  GalleryComponent
+  GalleryComponent,
+  GalleryThumbsComponent
 } from 'ng-gallery';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -32,7 +33,24 @@ import { FooterComponent } from '../../shared/footer/footer.component';
   styleUrls: ['./lab.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FlexLayoutModule, MatIconModule, NgIf, GalleryComponent, MatButtonModule, MatCardModule, MatFormFieldModule, MatSelectModule, FormsModule, NgFor, MatOptionModule, MatCheckboxModule, MatInputModule, FooterComponent, AsyncPipe]
+  imports: [
+    FlexLayoutModule,
+    MatIconModule,
+    NgIf,
+    GalleryComponent,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule,
+    NgFor,
+    MatOptionModule,
+    MatCheckboxModule,
+    MatInputModule,
+    FooterComponent,
+    AsyncPipe,
+    GalleryThumbsComponent
+  ]
 })
 export class LabComponent implements OnInit {
 
@@ -74,6 +92,7 @@ export class LabComponent implements OnInit {
       disableThumbScroll: false,
       disableMouseScroll: false,
       disableThumbMouseScroll: false,
+      centralized: false,
       thumbWidth: 120,
       thumbHeight: 90,
       imageSize: 'contain',

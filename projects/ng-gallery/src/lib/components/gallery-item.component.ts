@@ -28,8 +28,8 @@ import { GalleryRef } from '../services/gallery-ref';
   standalone: true,
   selector: 'gallery-item',
   host: {
-    '[class.g-active-item]': 'active()',
     '[attr.galleryIndex]': 'index()',
+    '[class.g-active-item]': 'active()',
     '[attr.itemState]': 'state()',
   },
   template: `
@@ -66,6 +66,12 @@ import { GalleryRef } from '../services/gallery-ref';
                           [loadingAttr]="galleryRef.config().loadingAttr"
                           [pause]="!active()"/>
         }
+        @case (Types.Vimeo) {
+          <gallery-iframe [src]="vimeoSrc()"
+                          [autoplay]="autoplay()"
+                          [loadingAttr]="galleryRef.config().loadingAttr"
+                          [pause]="!active()"/>
+        }
         @case (Types.Iframe) {
           <gallery-iframe [src]="data().src"
                           [loadingAttr]="galleryRef.config().loadingAttr"/>
@@ -79,12 +85,6 @@ import { GalleryRef } from '../services/gallery-ref';
         }
       }
     }
-      <gallery-iframe *ngSwitchCase="Types.Vimeo"
-                      [src]="vimeoSrc"
-                      [autoplay]="isAutoPlay"
-                      [loadingAttr]="config.loadingAttr"
-                      [pause]="currIndex !== index"></gallery-iframe>
-
   `,
   styleUrl: './gallery-item.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -145,7 +145,6 @@ export class GalleryItemComponent implements AfterViewInit {
 
 
   imageContext: Signal<GalleryItemContext<ImageItemData>> = computed(() => {
-    console.log('imageContext')
     return {
       $implicit: this.imageData,
       index: this.index(),
@@ -158,7 +157,6 @@ export class GalleryItemComponent implements AfterViewInit {
   });
 
   itemContext: Signal<GalleryItemContext<ImageItemData>> = computed(() => {
-    console.log('itemContext')
     return {
       $implicit: this.data(),
       index: this.index(),
@@ -184,23 +182,20 @@ export class GalleryItemComponent implements AfterViewInit {
     return url.href;
   });
 
-  /** Stream that emits when an error occurs */
-  error: OutputEmitterRef<ErrorEvent> = output<ErrorEvent>();
-  get vimeoSrc(): string {
+  vimeoSrc: Signal<string> = computed(() => {
     let autoplay: 1 | 0 = 0;
-    if (this.isActive && this.type === GalleryItemTypes.Vimeo) {
-    url.search = new URLSearchParams({
+    if (this.active() && this.type() === GalleryItemTypes.Vimeo) {
       if ((this.data as VimeoItemData).autoplay) {
         autoplay = 1;
       }
     }
-    const url:URL = new URL(this.data.src as string);
-      ...(this.data as VimeoItemData).params,
+    const url:URL = new URL(this.data().src as string);
+    url.search = new URLSearchParams({
+      ...(this.data() as VimeoItemData).params,
       autoplay,
     }).toString();
     return url.href;
-  }
-
+  });
 
   get imageData(): ImageItemData {
     return this.data();
@@ -209,6 +204,9 @@ export class GalleryItemComponent implements AfterViewInit {
   get videoData(): VideoItemData {
     return this.data();
   }
+
+  /** Stream that emits when an error occurs */
+  error: OutputEmitterRef<ErrorEvent> = output<ErrorEvent>();
 
   ngAfterViewInit(): void {
     // If item does not contain an image, then set the state to DONE

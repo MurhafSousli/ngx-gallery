@@ -22,7 +22,8 @@ import { GalleryRef } from '../services/gallery-ref';
   selector: 'gallery-thumb',
   host: {
     '[attr.galleryIndex]': 'index()',
-    '[class.g-active-thumb]': 'isActive()',
+    '[class.g-active-thumb]': 'active()',
+    '[class.g-visible-thumb]': 'visible()',
   },
   template: `
     <gallery-image [src]="data().thumb"
@@ -64,16 +65,19 @@ export class GalleryThumbComponent {
   type: InputSignal<GalleryItemType> = input<GalleryItemType>();
 
   /** Item's data, this object contains the data required to display the content (e.g. src path) */
-  data: InputSignal<ImageItemData> = input<ImageItemData>()
+  data: InputSignal<ImageItemData> = input<ImageItemData>();
 
-  isActive: Signal<boolean> = computed(() => this.index() === this.currIndex());
+  /** Whether the item is visible in the viewport */
+  visible: InputSignal<boolean> = input<boolean>();
+
+  active: Signal<boolean> = computed(() => this.index() === this.currIndex());
 
   imageContext: Signal<GalleryItemContext<ImageItemData>> = computed(() => {
     return {
       $implicit: this.data(),
       index: this.index(),
       type: this.type(),
-      active: this.isActive(),
+      active: this.active(),
       count: this.count(),
       first: this.index() === 0,
       last: this.index() === this.count() - 1

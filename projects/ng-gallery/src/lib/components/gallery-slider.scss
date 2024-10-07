@@ -21,12 +21,44 @@
 
   overflow: var(--slider-overflow);
   scroll-snap-type: var(--slider-scroll-snap-type);
+  scroll-snap-stop: always;
   flex-direction: var(--slider-flex-direction);
 
   scrollbar-width: none;
 
+  // Gallery items variables
+  --g-item-width: unset;
+  --g-item-height: unset;
+  --g-item-max-height: var(--slider-height);
+
+  &[orientation='horizontal'] {
+    --g-item-width: var(--slider-width);
+    --g-item-height: 100%;
+
+    &[autoSize='true'] {
+      --g-item-width: auto;
+    }
+  }
+
+  &[orientation='vertical'] {
+    --g-item-width: 100%;
+    --g-item-height: var(--slider-height);
+
+    &[autoSize='true'] {
+      --g-item-height: auto;
+    }
+  }
+
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  &.g-resizing {
+    ::ng-deep {
+      gallery-item {
+        visibility: hidden;
+      }
+    }
   }
 
   &.g-sliding, &.g-scrolling {
@@ -42,11 +74,11 @@
     }
 
     &:before {
-      flex: 0 0 var(--slider-centralize-start-size);
+      flex: 0 0 var(--centralize-start-size);
     }
 
     &:after {
-      flex: 0 0 var(--slider-centralize-end-size);
+      flex: 0 0 var(--centralize-end-size);
     }
   }
 }
@@ -55,7 +87,7 @@
   flex: 0 0 auto;
   display: flex;
   align-items: center;
-  gap: 1px;
+  //gap: 1px;
   width: var(--slider-content-width, unset);
   height: var(--slider-content-height, unset);
   flex-direction: var(--slider-flex-direction);
