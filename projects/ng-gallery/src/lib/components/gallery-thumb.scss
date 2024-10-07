@@ -22,6 +22,11 @@
   &.g-active-thumb {
     --g-thumb-opacity: 1;
   }
+
+  &.g-visible-thumb {
+    border: 1px solid red;
+    --g-thumb-opacity: 1;
+  }
 }
 
 .g-template {

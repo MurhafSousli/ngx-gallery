@@ -1,42 +1,23 @@
 import {
   ImageSize,
-  GalleryAction,
   LoadingStrategy,
   Orientation,
-  ThumbnailsPosition,
   BulletsPosition,
   CounterPosition,
   LoadingAttr
 } from '../models/constants';
 import { GalleryConfig } from '../models/config.model';
 
-/** Initial state */
-// export const defaultState: GalleryState = {
-//   action: GalleryAction.INITIALIZED,
-//   isPlaying: false,
-//   hasNext: false,
-//   hasPrev: false,
-//   currIndex: 0,
-//   items: []
-// };
-
 export const defaultConfig: GalleryConfig = {
-  nav: true,
   loop: false,
   bullets: false,
-  thumbs: false,
   debug: false,
   bulletSize: 6,
   counter: false,
   autoplay: false,
-  thumbWidth: 120,
-  thumbHeight: 90,
   disableBullets: false,
-  disableThumbs: false,
   disableScroll: false,
-  disableThumbScroll: false,
   disableMouseScroll: false,
-  disableThumbMouseScroll: false,
   autoplayInterval: 3000,
   scrollDuration: 468,
   scrollEase: {
@@ -45,18 +26,15 @@ export const defaultConfig: GalleryConfig = {
     x2: 0.58,
     y2: 1
   },
-  thumbCentralized: false,
-  thumbAutosize: false,
+  centralized: false,
   itemAutosize: false,
   autoHeight: false,
   scrollBehavior: 'smooth',
   resizeDebounceTime: 0,
   loadingAttr: LoadingAttr.Lazy,
   imageSize: ImageSize.Contain,
-  thumbImageSize: ImageSize.Cover,
   bulletPosition: BulletsPosition.Bottom,
   counterPosition: CounterPosition.Top,
-  thumbPosition: ThumbnailsPosition.Bottom,
   loadingStrategy: LoadingStrategy.Preload,
   orientation: Orientation.Horizontal,
   navIcon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M0 256C0 397.4 114.6 512 256 512s256-114.6 256-256S397.4 0 256 0S0 114.6 0 256zM241 377c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l87-87-87-87c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L345 239c9.4 9.4 9.4 24.6 0 33.9L241 377z"/></svg>`,

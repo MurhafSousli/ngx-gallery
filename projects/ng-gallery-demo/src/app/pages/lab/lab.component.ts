@@ -8,7 +8,8 @@ import {
   LoadingStrategy,
   Orientation,
   ThumbnailsPosition,
-  GalleryComponent
+  GalleryComponent,
+  GalleryThumbsComponent, GalleryNavComponent
 } from 'ng-gallery';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -32,13 +33,49 @@ import { FooterComponent } from '../../shared/footer/footer.component';
   styleUrls: ['./lab.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [FlexLayoutModule, MatIconModule, NgIf, GalleryComponent, MatButtonModule, MatCardModule, MatFormFieldModule, MatSelectModule, FormsModule, NgFor, MatOptionModule, MatCheckboxModule, MatInputModule, FooterComponent, AsyncPipe]
+  imports: [
+    FlexLayoutModule,
+    MatIconModule,
+    NgIf,
+    GalleryComponent,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule,
+    NgFor,
+    MatOptionModule,
+    MatCheckboxModule,
+    MatInputModule,
+    FooterComponent,
+    AsyncPipe,
+    GalleryThumbsComponent,
+    GalleryNavComponent,
+  ]
 })
 export class LabComponent implements OnInit {
 
   show$ = new BehaviorSubject<boolean>(true);
   photos$: Observable<GalleryItem[]>;
   config: GalleryConfig;
+
+  thumbConfig= {
+    thumbs: true,
+    disableScroll: false,
+    disableMouseScroll: false,
+    thumbWidth: 120,
+    thumbHeight: 90,
+    imageSize: 'cover',
+    disabled: false,
+    centralized: false,
+    position: ThumbnailsPosition.Bottom,
+    autosize: false,
+    detach: false
+  }
+
+  navConfig = {
+    nav: true
+  }
 
   imageSizes = ['cover', 'contain'];
   thumbPositions = ['top', 'left', 'right', 'bottom'];
@@ -60,33 +97,23 @@ export class LabComponent implements OnInit {
   ngOnInit() {
     this._title.setTitle('Lab | ng-gallery');
     this.config = {
-      nav: true,
       loop: true,
       bullets: true,
       bulletPosition: 'bottom',
       counterPosition: 'top',
       resizeDebounceTime: 0,
       scrollDuration: 468,
-      thumbs: true,
       counter: true,
       autoplay: false,
       disableScroll: false,
-      disableThumbScroll: false,
       disableMouseScroll: false,
-      disableThumbMouseScroll: false,
-      thumbWidth: 120,
-      thumbHeight: 90,
+      centralized: false,
       imageSize: 'contain',
-      thumbImageSize: 'cover',
-      disableThumbs: false,
       autoplayInterval: 3000,
-      thumbCentralized: false,
-      thumbPosition: ThumbnailsPosition.Bottom,
       loadingStrategy: LoadingStrategy.Preload,
       orientation: Orientation.Horizontal,
       autoHeight: false,
       itemAutosize: false,
-      thumbAutosize: false,
       scrollBehavior: 'smooth',
       loadingAttr: 'lazy',
       debug: true

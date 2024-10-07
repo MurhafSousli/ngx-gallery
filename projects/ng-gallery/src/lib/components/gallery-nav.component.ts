@@ -1,4 +1,4 @@
-import { Component, inject, computed, Signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, computed, input, Signal, InputSignal, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { GalleryRef } from '../services/gallery-ref';
 
@@ -10,14 +10,14 @@ import { GalleryRef } from '../services/gallery-ref';
       <i class="g-nav-prev"
          aria-label="Previous"
          role="button"
-         (click)="galleryRef.prev(galleryRef.config().scrollBehavior)"
+         (click)="galleryRef.prev(scrollBehavior())"
          [innerHtml]="navIcon()"></i>
     }
     @if (galleryRef.config().loop || galleryRef.hasNext()) {
       <i class="g-nav-next"
          aria-label="Next"
          role="button"
-         (click)="galleryRef.next(galleryRef.config().scrollBehavior)"
+         (click)="galleryRef.next(scrollBehavior())"
          [innerHtml]="navIcon()"></i>
     }
   `,
@@ -26,12 +26,14 @@ import { GalleryRef } from '../services/gallery-ref';
 })
 export class GalleryNavComponent {
 
-  private _sanitizer: DomSanitizer = inject(DomSanitizer);
+  private readonly _sanitizer: DomSanitizer = inject(DomSanitizer);
 
-  galleryRef: GalleryRef = inject(GalleryRef);
+  readonly galleryRef: GalleryRef = inject(GalleryRef);
 
   navIcon: Signal<SafeHtml> = computed(() =>
     this._sanitizer.bypassSecurityTrustHtml(this.galleryRef.config().navIcon)
   );
+
+  scrollBehavior: InputSignal<ScrollBehavior> = input<ScrollBehavior>('smooth');
 
 }

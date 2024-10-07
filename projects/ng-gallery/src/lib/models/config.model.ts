@@ -27,24 +27,12 @@ type LoadingStrategy = 'preload' | 'lazy' | 'default';
 type LoadingAttr = 'eager' | 'lazy';
 
 interface ThumbConfig {
-  thumbs?: boolean;
-  thumbWidth?: number;
-  thumbHeight?: number;
   thumbLoadingIcon?: string;
   thumbLoadingError?: string;
-  disableThumbs?: boolean;
-  detachThumbs?: boolean;
-  thumbAutosize?: boolean;
-  disableThumbScroll?: boolean;
-  disableThumbMouseScroll?: boolean;
-  thumbCentralized?: boolean;
-  thumbPosition?: ThumbsPosition;
-  thumbImageSize?: ImageSize;
   thumbTemplate?: TemplateRef<any>;
 }
 
 interface NavConfig {
-  nav?: boolean;
   navIcon?: string;
 }
 
@@ -82,6 +70,7 @@ interface SliderConfig {
   boxTemplate?: TemplateRef<any>;
   itemTemplate?: TemplateRef<any>;
   imageTemplate?: TemplateRef<any>;
+  centralized?: boolean;
 }
 
 export type GalleryConfig = SliderConfig

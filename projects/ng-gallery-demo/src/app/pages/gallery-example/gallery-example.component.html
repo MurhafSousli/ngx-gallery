@@ -62,11 +62,11 @@
     @if (media$ | async; as config) {
       <gallery id="basic"
                [items]="fruits$ | async"
-               thumbs
-               bullets
-               [thumbWidth]="config.thumbWidth"
-               [thumbHeight]="config.thumbHeight"
-               [thumbPosition]="config.thumbPosition"/>
+               bullets>
+        <gallery-thumbs [thumbWidth]="config.thumbWidth"
+                        [thumbHeight]="config.thumbHeight"
+                        [position]="config.thumbPosition"/>
+      </gallery>
     }
 
     <hl-code [code]="code.example"/>
