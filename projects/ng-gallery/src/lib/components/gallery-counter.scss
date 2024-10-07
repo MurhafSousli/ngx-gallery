@@ -1,3 +1,20 @@
+:host {
+  // Gallery position variables
+  --counter-top: unset;
+  --counter-bottom: unset;
+  --counter-border-radius: unset;
+
+  &[align='top'] {
+    --counter-top: 0;
+    --counter-border-radius: 0 0 4px 4px;
+  }
+
+  &[align='bottom'] {
+    --counter-bottom: 0;
+    --counter-border-radius: 4px 4px 0 0;
+  }
+}
+
 .g-counter {
   font-weight: bold;
   user-select: none;

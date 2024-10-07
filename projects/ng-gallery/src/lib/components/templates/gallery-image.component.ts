@@ -43,7 +43,7 @@ import { ItemState } from './items.model';
            (error)="state.set('failed'); error.emit($event)"/>
     } @else {
       <img [galleryImage]="index()"
-           [@fadeIn]="state"
+           [@fadeIn]="state()"
            [src]="src()"
            [attr.alt]="alt()"
            [attr.loading]="loadingAttr()"

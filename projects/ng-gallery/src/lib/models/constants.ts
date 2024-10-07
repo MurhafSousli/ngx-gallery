@@ -1,11 +1,3 @@
-export enum GalleryAction {
-  INITIALIZED = 'initialized',
-  ITEMS_CHANGED = 'itemsChanged',
-  INDEX_CHANGED = 'indexChanged',
-  PLAY = 'play',
-  STOP = 'stop'
-}
-
 export enum ImageSize {
   Cover = 'cover',
   Contain = 'contain'

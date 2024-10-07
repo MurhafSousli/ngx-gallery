@@ -10,8 +10,8 @@ import {
   VideoItemData,
   YoutubeItemData,
   GalleryModule,
-  GalleryComponent
-  VimeoItemData
+  GalleryComponent,
+  VimeoItemData, GalleryThumbsComponent
 } from 'ng-gallery';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Observable, map } from 'rxjs';
@@ -36,13 +36,13 @@ import { NoteComponent } from '../../shared/note/note.component';
   styleUrls: ['./templates-example.component.scss'],
   animations: [slideInAnimation],
   standalone: true,
-  imports: [CommonModule, SectionTitleComponent, GalleryModule, HlCodeComponent, FooterComponent, FontAwesomeModule, MatButtonModule, NoteComponent]
+  imports: [CommonModule, SectionTitleComponent, GalleryModule, HlCodeComponent, FooterComponent, FontAwesomeModule, MatButtonModule, NoteComponent, GalleryThumbsComponent]
 })
 export class TemplatesExampleComponent {
 
   readonly arr = data;
   readonly code = code;
-  readonly media$: Observable<GalleryConfig>;
+  readonly media$: Observable<any>;
   readonly youtubeIcon = faYoutube;
   readonly vimeoIcon = faVimeo;
   readonly videoIcon = faVideo;
@@ -81,13 +81,13 @@ export class TemplatesExampleComponent {
             case GalleryItemTypes.Youtube:
               gallery.addYoutube(item);
               break;
+            case GalleryItemTypes.Vimeo:
+              gallery.addVimeo(item);
+              break;
             default:
               gallery.addIframe(item);
           }
         });
-        case GalleryItemTypes.Vimeo:
-          galleryRef.addVimeo(item);
-          break;
       }
     }, { allowSignalWrites: true });
   }

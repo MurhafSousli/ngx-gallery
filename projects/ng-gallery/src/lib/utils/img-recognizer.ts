@@ -1,6 +1,15 @@
-import { Directive, inject, effect, input, ElementRef, InputSignal, EffectCleanupRegisterFn } from '@angular/core';
+import {
+  Directive,
+  inject,
+  effect,
+  untracked,
+  input,
+  ElementRef,
+  InputSignal,
+  EffectCleanupRegisterFn
+} from '@angular/core';
 import { ImgManager } from './img-manager';
-import { GalleryItemComponent } from '../components/gallery-item.component';
+import { SliderItem } from '../components/items/items';
 
 @Directive({
   standalone: true,
@@ -16,7 +25,7 @@ export class ImgRecognizer {
 
   private readonly manager: ImgManager = inject(ImgManager);
 
-  readonly item: GalleryItemComponent = inject(GalleryItemComponent);
+  readonly item: SliderItem = inject(SliderItem);
 
   index: InputSignal<number> = input(null, { alias: 'galleryImage' });
 
@@ -31,14 +40,16 @@ export class ImgRecognizer {
     effect((onCleanup: EffectCleanupRegisterFn) => {
       const index: number = this.index();
 
-      if (index != null) {
-        this.manager.addItem(index, {
-          state$: this.item.state$,
-          target: this.nativeElement
-        });
+      untracked(() => {
+        if (index != null) {
+          this.manager.addItem(index, {
+            state$: this.item.state$,
+            target: this.nativeElement
+          });
 
-        onCleanup(() => this.manager.deleteItem(index));
-      }
+          onCleanup(() => this.manager.deleteItem(index));
+        }
+      });
     });
   }
 }

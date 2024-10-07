@@ -5,7 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { GalleryModule, GalleryItem, GalleryConfig, ThumbnailsPosition } from 'ng-gallery';
+import { GalleryModule, GalleryItem, GalleryConfig, ThumbnailsPosition, GalleryThumbsComponent } from 'ng-gallery';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Observable, map } from 'rxjs';
 
@@ -24,13 +24,13 @@ import { SectionTitleComponent } from '../../shared/section-title/section-title.
   styleUrls: ['./gallery-example.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [SectionTitleComponent, NoteComponent, MatButtonModule, RouterLink, MatTabsModule, HlCodeComponent, NgIf, GalleryModule, FontAwesomeModule, FooterComponent, AsyncPipe]
+  imports: [SectionTitleComponent, NoteComponent, MatButtonModule, RouterLink, MatTabsModule, HlCodeComponent, NgIf, GalleryModule, FontAwesomeModule, FooterComponent, AsyncPipe, GalleryThumbsComponent]
 })
 export class GalleryExampleComponent implements OnInit {
 
   readonly code = code;
   readonly fruits$: Observable<GalleryItem[]>;
-  readonly media$: Observable<GalleryConfig>;
+  readonly media$: Observable<any>;
 
   constructor(pixabay: Pixabay, mediaObserver: MediaObserver, private _title: Title) {
     this.fruits$ = pixabay.getHDImages('vegetables');

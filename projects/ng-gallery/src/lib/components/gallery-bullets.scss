@@ -7,6 +7,27 @@
   gap: 6px;
   top: var(--bullets-top);
   bottom: var(--bullets-bottom);
+
+  // Gallery bullets variables
+  --bullets-top: unset;
+  --bullets-bottom: unset;
+  --bullets-cursor: pointer;
+  --bullets-opacity: 0.4;
+  --bullets-hover-opacity: 1;
+  --bullets-active-opacity: 1;
+
+  &[align='top'] {
+    --bullets-top: 15px;
+  }
+
+  &[align='bottom'] {
+    --bullets-bottom: 15px;
+  }
+
+  &[disabled='true'] {
+    --bullets-cursor: default;
+    --bullets-hover-opacity: var(--bullets-opacity);
+  }
 }
 
 :host,

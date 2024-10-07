@@ -1,8 +1,8 @@
-import { computed, inject, Injectable, OnDestroy, signal, Signal, WritableSignal } from '@angular/core';
+import { Injectable, computed, inject, signal, Signal, WritableSignal } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { Observable, Subject } from 'rxjs';
 import { GalleryError, GalleryItem } from '../models/gallery.model';
 import { GALLERY_CONFIG, GalleryConfig } from '../models/config.model';
-import { GalleryAction } from '../models/constants';
 import {
   IframeItem,
   IframeItemData,
@@ -15,10 +15,10 @@ import {
   YoutubeItem,
   YoutubeItemData
 } from '../components/templates/items.model';
-import { toObservable } from '@angular/core/rxjs-interop';
+import { IndexChange } from '../models/slider.model';
 
 @Injectable()
-export class GalleryRef implements OnDestroy {
+export class GalleryRef {
 
   /** Stream that emits on item click */
   readonly itemClick: Subject<number> = new Subject<number>();
@@ -37,6 +37,10 @@ export class GalleryRef implements OnDestroy {
 
   /** Gallery Events */
 
+  readonly visibleItems: WritableSignal<Record<number, IntersectionObserverEntry>> = signal({});
+
+  readonly visibleThumbs: WritableSignal<Record<number, IntersectionObserverEntry>> = signal({});
+
   readonly items: WritableSignal<GalleryItem[]> = signal([]);
 
   readonly currIndex: WritableSignal<number> = signal(0);
@@ -45,11 +49,11 @@ export class GalleryRef implements OnDestroy {
 
   readonly scrollBehavior: WritableSignal<ScrollBehavior> = signal(null);
 
-  readonly action: WritableSignal<GalleryAction> = signal(null);
-
-  readonly hasNext: Signal<boolean> = computed(() => this.currIndex() < this.items().length);
+  readonly hasNext: Signal<boolean> = computed(() => this.currIndex() < this.items().length - 1);
 
   readonly hasPrev: Signal<boolean> = computed(() => this.currIndex() > 0);
+
+  readonly indexChange: Subject<IndexChange> = new Subject<IndexChange>();
 
   /** Config signal */
   readonly config: WritableSignal<GalleryConfig> = signal(inject(GALLERY_CONFIG));
@@ -143,11 +147,11 @@ export class GalleryRef implements OnDestroy {
       console.error(`[NgGallery]: Unable to set the active item because the given index (${ i }) is outside the items range!`);
       return;
     }
-    this.currIndex.set(i);
+    // this.currIndex.set(i);
     if (behavior) {
       this.scrollBehavior.set(behavior);
     }
-    this.indexChanged.next();
+    this.indexChange.next({ index: i, behavior });
   }
 
   /**
@@ -196,14 +200,6 @@ export class GalleryRef implements OnDestroy {
    */
   reset(): void {
     this.items.set([]);
-  }
-
-  /**
-   * Destroy gallery
-   */
-  ngOnDestroy(): void {
-    this.itemClick.complete();
-    this.thumbClick.complete();
   }
 
 }

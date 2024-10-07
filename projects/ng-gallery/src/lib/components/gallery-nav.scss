@@ -1,3 +1,33 @@
+:host {
+  // Gallery nav variables
+  --nav-space: 8px;
+  --nav-hover-space: 6.4px;
+  --nav-next-right: unset;
+  --nav-next-hover-right: unset;
+  --nav-next-left: unset;
+  --nav-next-hover-left: unset;
+
+  &[dir='ltr'] {
+    --nav-next-transform: translateY(-50%) perspective(1px);
+    --nav-next-right: var(--nav-space);
+    --nav-next-hover-right: var(--nav-hover-space);
+
+    --nav-prev-transform: translateY(-50%) perspective(1px) scale(-1, -1);
+    --nav-prev-left: var(--nav-space);
+    --nav-prev-hover-left: var(--nav-hover-space);
+  }
+
+  &[dir='rtl'] {
+    --nav-next-transform: translateY(-50%) perspective(1px) scale(-1, -1);
+    --nav-next-left: var(--nav-space);
+    --nav-next-hover-left: var(--nav-hover-space);
+
+    --nav-prev-transform: translateY(-50%) perspective(1px);
+    --nav-prev-right: var(--nav-space);
+    --nav-prev-hover-right: var(--nav-hover-space);
+  }
+}
+
 .g-nav-next,
 .g-nav-prev {
   position: absolute;

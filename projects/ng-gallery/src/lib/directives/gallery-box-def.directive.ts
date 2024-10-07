@@ -1,5 +1,4 @@
 import { Directive, TemplateRef } from '@angular/core';
-import { GalleryState } from '../models/gallery.model';
 import { GalleryConfig } from '../models/config.model';
 
 
@@ -23,6 +22,5 @@ export class GalleryBoxDef {
 }
 
 export interface GalleryStateContext {
-  state?: GalleryState;
   config?: GalleryConfig;
 }

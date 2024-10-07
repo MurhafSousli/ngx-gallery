@@ -45,7 +45,7 @@ export class LightboxExampleComponent implements OnInit, OnDestroy {
       map((items: GalleryItem[]) => {
         // Load items manually into the lightbox gallery ref
         this.gallery.ref('lightbox', {
-          thumbPosition: 'top',
+          // thumbPosition: 'top',
           imageSize: 'cover',
           autoHeight: false
         }).load(items);

@@ -16,5 +16,5 @@ export class CustomHammerConfig extends HammerGestureConfig {
     rotate: { enable: false }
   };
 
-  options = { inputClass: Hammer.MouseInput };
+  options = { inputClass: typeof Hammer !== 'undefined' ? Hammer.MouseInput : null };
 }

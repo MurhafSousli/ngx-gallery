@@ -3,6 +3,46 @@
   max-width: 100%;
   display: block;
   z-index: 100;
+
+  &[position='top'],
+  &[position='bottom'] {
+    --thumb-slider-top: 0;
+    --thumb-slider-overflow: auto hidden;
+    --thumb-slider-flex-direction: row;
+    --g-thumb-height: 100%;
+
+    &[autosize="true"] {
+      --g-thumb-width: auto !important;
+    }
+  }
+
+  &[position='left'],
+  &[position='right'] {
+    --thumb-slider-left: 0;
+    --thumb-slider-overflow: hidden auto;
+    --thumb-slider-flex-direction: column;
+    --g-thumb-width: 100%;
+
+    &[autosize="true"] {
+      --g-thumb-height: auto !important;
+    }
+  }
+
+  &[disabled='true'] {
+    --g-thumb-cursor: default;
+  }
+
+  &[scrollDisabled='true'] {
+    --thumb-slider-overflow: hidden !important;
+  }
+
+  &[imageSize='contain'] {
+    --image-object-fit: contain;
+  }
+
+  &[imageSize='cover'] {
+    --image-object-fit: cover;
+  }
 }
 
 .g-slider {
@@ -26,7 +66,6 @@
     display: none;
   }
 
-  // Disable mouse click on gallery items/thumbnails when the slider is being dragged using the mouse
   &.g-sliding {
     // Disable mouse click on gallery items/thumbnails when the slider is being dragged using the mouse
     .g-slider-content {
@@ -54,5 +93,5 @@
   display: flex;
   flex-direction: var(--thumb-slider-flex-direction);
   align-items: center;
-  gap: 1px;
+  //gap: 1px;
 }

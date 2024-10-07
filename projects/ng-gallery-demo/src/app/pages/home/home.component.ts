@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule, MediaChange, MediaObserver } from '@angular/flex-layout';
-import { GalleryComponent, GalleryConfig, GalleryItem } from 'ng-gallery';
+import { GalleryComponent, GalleryConfig, GalleryItem, GalleryThumbsComponent } from 'ng-gallery';
 import { Observable, map } from 'rxjs';
 import { Pixabay } from '../../service/pixabay.service';
 import { FooterComponent } from '../../shared/footer/footer.component';
@@ -19,12 +19,12 @@ import { BadgesComponent } from '../../shared/badges/badges.component';
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [MatButtonModule, RouterLink, BadgesComponent, NgIf, GalleryComponent, FooterComponent, AsyncPipe, FlexLayoutModule]
+  imports: [MatButtonModule, RouterLink, BadgesComponent, NgIf, GalleryComponent, FooterComponent, AsyncPipe, FlexLayoutModule, GalleryThumbsComponent]
 })
 export class HomeComponent implements OnInit {
 
   readonly camel$: Observable<GalleryItem[]>;
-  readonly media$: Observable<GalleryConfig>;
+  readonly media$: Observable<any>;
 
   constructor(pixabay: Pixabay, mediaObserver: MediaObserver, private _title: Title) {
     this.camel$ = pixabay.getHDImages('mountain');

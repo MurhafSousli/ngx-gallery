@@ -9,16 +9,16 @@
     <gallery id="basic"
              *ngIf="media$ | async; let config"
              [items]="camel$ | async"
-             [thumbWidth]="config.thumbWidth"
-             [thumbHeight]="config.thumbHeight"
              ngStyle.lg="height: 540px"
              itemAutosize="true"
              imageSize="contain"
-             thumbPosition="top"
-             thumbs
              loop
-             thumbCentralized
-             autoplay/>
+             autoplay>
+      <gallery-thumbs position="top"
+                      centralized
+                      [thumbWidth]="config.thumbWidth"
+                      [thumbHeight]="config.thumbHeight"/>
+    </gallery>
   </div>
   <footer></footer>
 </div>
