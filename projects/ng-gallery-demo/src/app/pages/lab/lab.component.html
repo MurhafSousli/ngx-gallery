@@ -8,6 +8,7 @@
   <div *ngIf="show$ | async" class="gallery-container">
     <gallery #gallery id="lab"
              [items]="photos$ | async"
+             [centralized]="config.centralized"
              [autoHeight]="config.autoHeight"
              [itemAutosize]="config.itemAutosize"
              [thumbAutosize]="config.thumbAutosize"
@@ -221,6 +222,9 @@
           </div>
           <div>
             <mat-checkbox [(ngModel)]="config.thumbs">Show thumbnails</mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox [(ngModel)]="config.centralized">Centralize Slider</mat-checkbox>
           </div>
           <div>
             <mat-checkbox [(ngModel)]="config.thumbCentralized">Centralize Thumbnails</mat-checkbox>

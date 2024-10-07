@@ -74,6 +74,7 @@ export class LabComponent implements OnInit {
       disableThumbScroll: false,
       disableMouseScroll: false,
       disableThumbMouseScroll: false,
+      centralized: false,
       thumbWidth: 120,
       thumbHeight: 90,
       imageSize: 'contain',

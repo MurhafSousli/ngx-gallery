@@ -1,18 +1,16 @@
 import {
   Directive,
-  Output,
   inject,
   effect,
+  signal,
+  untracked,
   input,
-  EventEmitter,
   NgZone,
   OnInit,
   OnDestroy,
   ElementRef,
   InputSignal,
-  signal,
-  WritableSignal,
-  untracked
+  WritableSignal
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Directionality } from '@angular/cdk/bidi';
@@ -35,8 +33,12 @@ import {
 } from 'rxjs';
 import BezierEasing from './bezier-easing';
 import { SmoothScrollOptions, SmoothScrollStep, SmoothScrollToOptions } from './index';
-import { SliderAdapter } from '../components/adapters';
 import { GalleryRef } from '../services/gallery-ref';
+import { Adapter } from '../components/adapters/adapter';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { IndexChange } from '../models/slider.model';
+import { GalleryItemComponent } from '../components/gallery-item.component';
+import { GalleryThumbComponent } from '../components/gallery-thumb.component';
 
 declare const Hammer: any;
 
@@ -81,32 +83,49 @@ export class SmoothScroll implements OnInit, OnDestroy {
 
   scrolling: WritableSignal<boolean> = signal<boolean>(false);
 
-  position: InputSignal<SmoothScrollOptions> = input<SmoothScrollOptions>(null, { alias: 'smoothScroll' });
+  items: InputSignal<GalleryItemComponent[] | GalleryThumbComponent[]> = input<GalleryItemComponent[] | GalleryThumbComponent[]>();
 
-  adapter: InputSignal<SliderAdapter> = input<SliderAdapter>();
-
-  // Whether mouse sliding is enabled
-  hammerSliding: InputSignal<boolean> = input<boolean>();
-
-  @Output() isScrollingChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  adapter: Adapter = inject(Adapter);
 
   constructor() {
-    effect(() => {
-      if (this.position()) {
-        untracked(() => {
-          this._zone.runOutsideAngular(() => {
-            this.scrollTo(this.position());
-          });
-        });
-      }
+    this._zone.runOutsideAngular(() => {
+      this.galleryRef.indexChange.pipe(takeUntilDestroyed()).subscribe((change: IndexChange) => {
+        const el: HTMLElement = this.items()[change.index]?.nativeElement;
+        if (el) {
+          const pos: SmoothScrollOptions = this.adapter.adapter().getScrollToValue(el, change.behavior || this.galleryRef.config().scrollBehavior);
+          // this.position.set(pos);
+          this.scrollTo(pos);
+        }
+        // this.scrollToIndex(change.index, change.behavior);
+      });
     });
   }
+
+  // private scrollToIndex(index: number, behavior: ScrollBehavior): void {
+  //   const el: HTMLElement = this.items()[index]?.nativeElement;
+  //   if (el) {
+  //     const pos: SmoothScrollOptions = this.adapter().adapter().getScrollToValue(el, behavior || this.galleryRef.config().scrollBehavior);
+  //     this.position.set(pos);
+  //   }
+  // }
+
+  // constructor() {
+  //   effect(() => {
+  //     if (this.position()) {
+  //       untracked(() => {
+  //         this._zone.runOutsideAngular(() => {
+  //           this.scrollTo(this.position());
+  //         });
+  //       });
+  //     }
+  //   });
+  // }
 
   ngOnInit(): void {
     this._subscription = this._scrollController.pipe(
       switchMap((context: SmoothScrollStep) => {
         this._zone.run(() => {
-          this.isScrollingChange.emit(true);
+          // this.isScrollingChange.emit(true);
           this.scrolling.set(true);
         });
 
@@ -141,7 +160,6 @@ export class SmoothScroll implements OnInit, OnDestroy {
 
   private resetElement(): void {
     this._zone.run(() => {
-      this.isScrollingChange.emit(false);
       this.scrolling.set(false);
       // this.isInterruptedByMouse.set(false);
     });
@@ -169,9 +187,9 @@ export class SmoothScroll implements OnInit, OnDestroy {
    */
   private _interrupted(): Observable<Event | void> {
     let interrupt$: Observable<Event | void>;
-    if (this.hammerSliding() && typeof Hammer !== 'undefined') {
+    if (!this.galleryRef.config().disableMouseScroll && typeof Hammer !== 'undefined') {
       this._hammer = new Hammer(this._el, { inputClass: Hammer.MouseInput });
-      this._hammer.get('pan').set({ direction: this.adapter().hammerDirection });
+      this._hammer.get('pan').set({ direction: this.adapter.adapter().hammerDirection });
 
       // For gallery thumb slider, dragging thumbnails should cancel the ongoing scroll
       interrupt$ = merge(

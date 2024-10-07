@@ -13,7 +13,8 @@ import {
   InputSignal,
   OutputEmitterRef,
   ChangeDetectionStrategy,
-  InputSignalWithTransform, TemplateRef,
+  InputSignalWithTransform,
+  TemplateRef,
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { Directionality } from '@angular/cdk/bidi';
@@ -60,15 +61,13 @@ import { GalleryThumbsComponent } from './gallery-thumbs.component';
   },
   selector: 'gallery',
   template: `
-    @if (thumbs()) {
-      <gallery-thumbs [galleryId]="id()"
-                      (thumbClick)="thumbClick.emit($event)"
-                      (error)="error.emit($event)"/>
-    }
+<!--    @if (thumbs()) {-->
+<!--      <gallery-thumbs (thumbClick)="thumbClick.emit($event)"-->
+<!--                      (error)="error.emit($event)"/>-->
+<!--    }-->
 
     <div class="g-box">
       <gallery-slider [class.g-debug]="debug()"
-                      [galleryId]="id()"
                       (itemClick)="itemClick.emit($event)"
                       (error)="error.emit($event)">
 
@@ -169,6 +168,13 @@ export class GalleryComponent {
    * Displays the counter or pagination
    */
   counter: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(this._config.counter, {
+    transform: booleanAttribute
+  });
+
+  /**
+   * Centralize slider
+   */
+  centralized: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(this._config.centralized, {
     transform: booleanAttribute
   });
 
@@ -424,6 +430,7 @@ export class GalleryComponent {
       autoplay: this.autoplay(),
       bulletSize: this.bulletSize(),
       imageSize: this.imageSize(),
+      centralized: this.centralized(),
       thumbImageSize: this.thumbImageSize(),
       scrollBehavior: this.scrollBehavior(),
       thumbCentralized: this.thumbCentralized(),

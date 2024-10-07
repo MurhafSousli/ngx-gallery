@@ -10,7 +10,7 @@ export abstract class SliderAdapter {
 
   abstract get isContentLessThanContainer(): boolean;
 
-  abstract getScrollToValue(el: Element, behavior: ScrollBehavior): ScrollToOptions;
+  abstract getScrollToValue(target: Element, behavior: ScrollBehavior): ScrollToOptions;
 
   abstract getCentralizerStartSize(): number;
 

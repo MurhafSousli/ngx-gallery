@@ -129,29 +129,6 @@
     --slider-overflow: hidden !important;
   }
 
-  // Gallery items variables
-  --g-item-width: unset;
-  --g-item-height: unset;
-  --g-item-max-height: var(--slider-height);
-
-  &[orientation='horizontal'] {
-    --g-item-width: var(--slider-width);
-    --g-item-height: 100%;
-
-    &[itemAutoSize='true'] {
-      --g-item-width: auto;
-    }
-  }
-
-  &[orientation='vertical'] {
-    --g-item-width: 100%;
-    --g-item-height: var(--slider-height);
-
-    &[itemAutoSize='true'] {
-      --g-item-height: auto;
-    }
-  }
-
   // Gallery bullets variables
   --bullets-top: unset;
   --bullets-bottom: unset;

@@ -1,11 +1,11 @@
 import {
   Directive,
-  Output,
   inject,
   effect,
+  computed,
   untracked,
   input,
-  EventEmitter,
+  Signal,
   NgZone,
   ElementRef,
   InputSignal,
@@ -14,60 +14,125 @@ import {
 import { Subscription } from 'rxjs';
 import { GalleryConfig } from '../models/config.model';
 import { GalleryRef } from '../services/gallery-ref';
-import { ActiveItemObserver } from './active-item-observer';
 import { SliderAdapter } from '../components/adapters';
 import { GalleryItemComponent } from '../components/gallery-item.component';
+import { createIntersectionObserver } from './active-item-observer';
+import { Adapter } from '../components/adapters/adapter';
+import { SmoothScroll } from '../smooth-scroll';
+import { HammerSliding } from '../gestures/hammer-sliding.directive';
 
+/**
+ * This observer used to detect when a slider element reaches the active soon
+ */
 @Directive({
   standalone: true,
   selector: '[sliderIntersectionObserver]'
 })
 export class SliderIntersectionObserver {
 
-  private _zone: NgZone = inject(NgZone);
+  private readonly zone: NgZone = inject(NgZone);
 
-  readonly galleryRef: GalleryRef = inject(GalleryRef);
+  private readonly smoothScroll: SmoothScroll = inject(SmoothScroll);
 
-  private _viewport: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
+  private readonly hammerSlider: HammerSliding = inject(HammerSliding);
 
-  private _sensor: ActiveItemObserver = new ActiveItemObserver();
+  private readonly galleryRef: GalleryRef = inject(GalleryRef);
 
-  adapter: InputSignal<SliderAdapter> = input<SliderAdapter>();
+  private readonly nativeElement: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
+
+  adapter: Adapter = inject(Adapter);
 
   items: InputSignal<GalleryItemComponent[]> = input<GalleryItemComponent[]>();
 
-  disabled: InputSignal<boolean> = input<boolean>(false, { alias: 'sliderIntersectionObserverDisabled' });
-
-  @Output() activeIndexChange: EventEmitter<number> = new EventEmitter<number>();
+  readonly disableInteractionObserver: Signal<boolean> = computed(() => {
+    return this.smoothScroll.scrolling() || this.hammerSlider.sliding(); // || this.resizeSensor.isResizing();
+  });
 
   constructor() {
-    let sub$: Subscription;
+    let visibleItemsObserver$: Subscription;
+    let activeItemObserver$: Subscription;
+
     effect((onCleanup: EffectCleanupRegisterFn) => {
       const config: GalleryConfig = this.galleryRef.config();
-      const disabled: boolean = this.disabled();
       const items: GalleryItemComponent[] = this.items();
-      const adapter: SliderAdapter = this.adapter();
+      const adapter: SliderAdapter = this.adapter.adapter();
+
+      if (!adapter || !items.length) return;
 
       untracked(() => {
-        if (!config.itemAutosize && !disabled && adapter && items.length) {
-          const rootMargin: string = adapter.getRootMargin();
-          if (config.debug) {
-            this._viewport.style.setProperty('--intersection-margin', `"INTERSECTION(${ rootMargin })"`);
-          }
-
-          this._zone.runOutsideAngular(() => {
-            sub$ = this._sensor.observe(
-              this._viewport,
-              items.map((item: GalleryItemComponent) => item.nativeElement),
-              rootMargin
-            ).subscribe((index: number) => {
-              console.log('😆', index);
-              this._zone.run(() => this.activeIndexChange.emit(index));
-            });
-          });
+        const rootMargin: string = adapter.getRootMargin();
+        if (config.debug) {
+          this.nativeElement.style.setProperty('--intersection-margin', `"INTERSECTION(${ rootMargin })"`);
         }
 
-        onCleanup(() => sub$?.unsubscribe());
+        this.zone.runOutsideAngular(() => {
+          const options: IntersectionObserverInit = { root: this.nativeElement, threshold: 0, rootMargin };
+          const elements: HTMLElement[] = items.map((item: GalleryItemComponent) => item.nativeElement);
+
+          visibleItemsObserver$ = createIntersectionObserver(options, elements).subscribe((entries: IntersectionObserverEntry[]) => {
+            console.log(entries)
+            const visibleItems: Record<number, IntersectionObserverEntry> = this.galleryRef.visibleItems();
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('g-item-highlight');
+                visibleItems[+entry.target.getAttribute('galleryIndex')] = entry;
+              } else {
+                entry.target.classList.remove('g-item-highlight');
+                delete visibleItems[+entry.target.getAttribute('galleryIndex')];
+              }
+            });
+            this.zone.run(() => {
+              this.galleryRef.visibleItems.set({ ...visibleItems });
+            });
+          });
+        });
+
+        onCleanup(() => visibleItemsObserver$?.unsubscribe());
+      });
+    });
+
+    effect((onCleanup) => {
+      const disabled: boolean = this.disableInteractionObserver();
+      const visibleElements: Record<number, IntersectionObserverEntry> = this.galleryRef.visibleItems();
+
+      if (disabled) return;
+
+      untracked(() => {
+
+        const elements = Object.values(visibleElements).map(x => x.target);
+
+        // Get the diff between the viewport size and the smallest visible item size
+        const diffSize: number = Object.values(this.galleryRef.visibleItems()).reduce((total: number, entry: IntersectionObserverEntry) => {
+          return Math.min(total, (this.nativeElement.clientWidth - entry.boundingClientRect.width) / 2);
+        }, 0);
+
+        const options: IntersectionObserverInit = {
+          root: this.nativeElement,
+          threshold: .99,
+          rootMargin: `0px ${ -diffSize }px 0px ${ -diffSize }px`
+        };
+
+        this.zone.runOutsideAngular(() => {
+          activeItemObserver$ = createIntersectionObserver(options, elements).subscribe((entries: IntersectionObserverEntry[]) => {
+
+            const centerElement: IntersectionObserverEntry = entries
+              .filter((entry: IntersectionObserverEntry) => entry.isIntersecting)
+              .reduce((acc: IntersectionObserverEntry, entry: IntersectionObserverEntry) => {
+                return acc ? acc.intersectionRatio > entry.intersectionRatio ? acc : entry : entry;
+              }, null);
+
+            if (!centerElement) return;
+
+            const index: number = +centerElement.target.getAttribute('galleryIndex');
+
+            if (index === this.galleryRef.currIndex()) return;
+
+            // Set the new current index
+            this.zone.run(() => this.galleryRef.currIndex.set(index));
+          });
+        });
+
+        onCleanup(() => activeItemObserver$?.unsubscribe())
       });
     });
   }

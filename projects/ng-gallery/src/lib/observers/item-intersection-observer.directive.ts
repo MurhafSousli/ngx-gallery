@@ -10,13 +10,14 @@ import {
   EffectCleanupRegisterFn
 } from '@angular/core';
 import { Subscription, combineLatest, filter, switchMap } from 'rxjs';
-import { ActiveItemObserver } from './active-item-observer';
+// import { ActiveItemObserver } from './active-item-observer';
 import { resizeObservable } from '../utils/resize-observer';
 import { SliderAdapter } from '../components/adapters';
 import { GalleryItemComponent } from '../components/gallery-item.component';
 import { ItemState } from '../components/templates/items.model';
 import { GalleryRef } from '../services/gallery-ref';
 import { GalleryConfig } from '../models/config.model';
+import { Adapter } from '../components/adapters/adapter';
 
 @Directive({
   standalone: true,
@@ -30,9 +31,9 @@ export class ItemIntersectionObserver {
 
   private _item: GalleryItemComponent = inject(GalleryItemComponent);
 
-  private _sensor: ActiveItemObserver = new ActiveItemObserver();
+  // private _sensor: ActiveItemObserver = new ActiveItemObserver();
 
-  adapter: InputSignal<SliderAdapter> = input();
+  adapter: Adapter = inject(Adapter);
 
   disabled: InputSignal<boolean> = input(false, { alias: 'itemIntersectionObserverDisabled' });
 
@@ -45,39 +46,39 @@ export class ItemIntersectionObserver {
   constructor() {
     let intersectionSub$: Subscription;
 
-    effect((onCleanup: EffectCleanupRegisterFn) => {
-      const config: GalleryConfig = this._galleryRef.config();
-      const adapter: SliderAdapter = this.adapter();
-
-      intersectionSub$?.unsubscribe();
-
-      if (config.itemAutosize && !this.disabled() && adapter) {
-        this._zone.runOutsideAngular(() => {
-          intersectionSub$ = combineLatest([
-            resizeObservable(this._viewport),
-            resizeObservable(this._item.nativeElement)
-          ]).pipe(
-            switchMap(() => this._item.state$),
-            filter((state: ItemState) => state !== 'loading'),
-            switchMap(() => {
-                const rootMargin: string = adapter.getElementRootMargin(this._viewport, this._item.nativeElement);
-                if (config.debug) {
-                  this._item.nativeElement.style.setProperty('--item-intersection-margin', `"VIEWPORT(${ this._viewport.clientWidth }x${ this._viewport.clientHeight }) ITEM(${ this._item.nativeElement.clientWidth }x${ this._item.nativeElement.clientHeight }) INTERSECTION(${ rootMargin })"`);
-                }
-
-                return this._sensor.observe(
-                  this._viewport,
-                  [this._item.nativeElement],
-                  rootMargin
-                );
-              }
-            )
-          ).subscribe((index: number) => {
-            this._zone.run(() => this.activeIndexChange.emit(index));
-          });
-        });
-      }
-      onCleanup(() => intersectionSub$?.unsubscribe());
-    });
+    // effect((onCleanup: EffectCleanupRegisterFn) => {
+    //   const config: GalleryConfig = this._galleryRef.config();
+    //   const adapter: SliderAdapter = this.adapter();
+    //
+    //   intersectionSub$?.unsubscribe();
+    //
+    //   if (config.itemAutosize && !this.disabled() && adapter) {
+    //     this._zone.runOutsideAngular(() => {
+    //       intersectionSub$ = combineLatest([
+    //         resizeObservable(this._viewport),
+    //         resizeObservable(this._item.nativeElement)
+    //       ]).pipe(
+    //         switchMap(() => this._item.state$),
+    //         filter((state: ItemState) => state !== 'loading'),
+    //         switchMap(() => {
+    //             const rootMargin: string = adapter.getElementRootMargin(this._viewport, this._item.nativeElement);
+    //             if (config.debug) {
+    //               this._item.nativeElement.style.setProperty('--item-intersection-margin', `"VIEWPORT(${ this._viewport.clientWidth }x${ this._viewport.clientHeight }) ITEM(${ this._item.nativeElement.clientWidth }x${ this._item.nativeElement.clientHeight }) INTERSECTION(${ rootMargin })"`);
+    //             }
+    //
+    //             return this._sensor.observe(
+    //               this._viewport,
+    //               [this._item.nativeElement],
+    //               rootMargin
+    //             );
+    //           }
+    //         )
+    //       ).subscribe((index: number) => {
+    //         this._zone.run(() => this.activeIndexChange.emit(index));
+    //       });
+    //     });
+    //   }
+    //   onCleanup(() => intersectionSub$?.unsubscribe());
+    // });
   }
 }
