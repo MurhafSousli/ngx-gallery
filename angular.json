@@ -75,12 +75,15 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/ng-gallery-demo/browser",
+            "outputPath": {
+              "base": "dist/ng-gallery-demo"
+            },
             "index": "projects/ng-gallery-demo/src/index.html",
-            "main": "projects/ng-gallery-demo/src/main.ts",
-            "polyfills": "projects/ng-gallery-demo/src/polyfills.ts",
+            "polyfills": [
+              "projects/ng-gallery-demo/src/polyfills.ts"
+            ],
             "tsConfig": "projects/ng-gallery-demo/tsconfig.app.json",
             "assets": [
               "projects/ng-gallery-demo/src/favicon.ico",
@@ -96,12 +99,16 @@
               "@fortawesome/free-solid-svg-icons"
             ],
             "scripts": [],
-            "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "browser": "projects/ng-gallery-demo/src/main.ts",
+            "server": "projects/ng-gallery-demo/src/main.server.ts",
+            "prerender": true,
+            "ssr": {
+              "entry": "projects/ng-gallery-demo/server.ts"
+            }
           },
           "configurations": {
             "production": {
@@ -116,8 +123,6 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -179,69 +184,6 @@
               "devServerTarget": "ng-gallery-demo:serve:production"
             }
           }
-        },
-        "server": {
-          "builder": "@angular-devkit/build-angular:server",
-          "options": {
-            "outputPath": "dist/ng-gallery-demo/server",
-            "main": "projects/ng-gallery-demo/server.ts",
-            "tsConfig": "projects/ng-gallery-demo/tsconfig.server.json",
-            "buildOptimizer": false,
-            "optimization": false,
-            "sourceMap": true,
-            "extractLicenses": false,
-            "vendorChunk": true
-          },
-          "configurations": {
-            "production": {
-              "buildOptimizer": true,
-              "outputHashing": "media",
-              "fileReplacements": [
-                {
-                  "replace": "projects/ng-gallery-demo/src/environments/environment.ts",
-                  "with": "projects/ng-gallery-demo/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "sourceMap": false,
-              "extractLicenses": true,
-              "vendorChunk": false
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve-ssr": {
-          "builder": "@angular-devkit/build-angular:ssr-dev-server",
-          "configurations": {
-            "development": {
-              "browserTarget": "ng-gallery-demo:build",
-              "serverTarget": "ng-gallery-demo:server"
-            },
-            "production": {
-              "browserTarget": "ng-gallery-demo:build:production",
-              "serverTarget": "ng-gallery-demo:server:production"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
-        "prerender": {
-          "builder": "@angular-devkit/build-angular:prerender",
-          "options": {
-            "routes": [
-              "/"
-            ]
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "ng-gallery-demo:build:production",
-              "serverTarget": "ng-gallery-demo:server:production"
-            },
-            "development": {
-              "browserTarget": "ng-gallery-demo:build:development",
-              "serverTarget": "ng-gallery-demo:server:development"
-            }
-          },
-          "defaultConfiguration": "production"
         }
       }
     }
