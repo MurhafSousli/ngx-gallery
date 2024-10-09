@@ -10,6 +10,8 @@ import {
   ImageItemData,
   VideoItem,
   VideoItemData,
+  VimeoItem,
+  VimeoItemData,
   YoutubeItem,
   YoutubeItemData
 } from '../components/templates/items.model';
@@ -131,6 +133,13 @@ export class GalleryRef {
    */
   addYoutube(data: YoutubeItemData, active?: boolean): void {
     this.add(new YoutubeItem(data), active);
+  }
+
+  /**
+   * Add Vimeo item
+   */
+  addVimeo(data: VimeoItemData, active?: boolean): void {
+    this.add(new VimeoItem(data), active);
   }
 
   /**
