@@ -10,12 +10,14 @@ import {
   ImageItemData,
   VideoItemData,
   YoutubeItemData,
-  GalleryModule
+  GalleryModule,
+  VimeoItemData
 } from 'ng-gallery';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Observable, map } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faYoutube } from '@fortawesome/free-brands-svg-icons/faYoutube';
+import { faVimeo } from '@fortawesome/free-brands-svg-icons/faVimeo';
 import { faVideo } from '@fortawesome/free-solid-svg-icons/faVideo';
 
 import { slideInAnimation } from './slide-text.animation';
@@ -42,6 +44,7 @@ export class TemplatesExampleComponent implements OnInit {
   readonly code = code;
   readonly media$: Observable<GalleryConfig>;
   readonly youtubeIcon = faYoutube;
+  readonly vimeoIcon = faVimeo;
   readonly videoIcon = faVideo;
 
   constructor(private _gallery: Gallery, mediaObserver: MediaObserver, private _title: Title) {
@@ -75,6 +78,9 @@ export class TemplatesExampleComponent implements OnInit {
           break;
         case GalleryItemTypes.Youtube:
           galleryRef.addYoutube(item);
+          break;
+        case GalleryItemTypes.Vimeo:
+          galleryRef.addVimeo(item);
           break;
         default:
           galleryRef.addIframe(item);
@@ -129,6 +135,11 @@ const data: GalleryItemData[] = [
     src: 'b7Cl7S0pLRw'
   } as YoutubeItemData,
   {
+    type: 'vimeo',
+    autoplay: false,
+    src: '124139626'
+  } as VimeoItemData,
+  {
     type: 'iframe',
     src: 'https://ngx-scrollbar.netlify.com/',
     thumb: 'https://user-images.githubusercontent.com/8130692/64606830-d4006f00-d3cf-11e9-9874-c75269fa3a9c.png'
@@ -159,6 +170,9 @@ const code = {
   <ng-container *galleryThumbDef="let item; let type = type">
     <span *ngIf="type === 'youtube'" class="item-type">
       <fa-icon [icon]="youtubeIcon" size="lg"></fa-icon>
+    </span>
+    <span *ngIf="type === 'vimeo'" class="item-type">
+      <fa-icon [icon]="vimeoIcon" size="lg"></fa-icon>
     </span>
     <span *ngIf="type === 'video'" class="item-type">
       <fa-icon [icon]="videoIcon" size="lg"></fa-icon>
@@ -212,6 +226,10 @@ export class ExampleComponent implements OnInit {
     });
 
     galleryRef.addYoutube({
+      src: 'VIDEO_ID'
+    });
+
+    galleryRef.addVimeo({
       src: 'VIDEO_ID'
     });
 

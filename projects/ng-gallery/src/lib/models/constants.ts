@@ -48,6 +48,7 @@ export enum GalleryItemTypes {
   Image = 'image',
   Video = 'video',
   Youtube = 'youtube',
+  Vimeo = 'vimeo',
   Iframe = 'iframe'
 }
 

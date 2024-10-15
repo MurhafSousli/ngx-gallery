@@ -47,6 +47,29 @@ export class YoutubeItem implements GalleryItem {
   }
 }
 
+export class VimeoItem implements GalleryItem {
+  readonly type: GalleryItemType;
+  readonly data: VimeoItemData;
+
+  constructor(data: VimeoItemData) {
+    this.data = {
+      ...data,
+      ...{
+        src: `https://player.vimeo.com/video/${ data.src }`,
+        thumb: data.thumb ? data.thumb : this.getVimeoThumb(data.src as string)
+      }
+    };
+
+
+    this.type = GalleryItemTypes.Vimeo;
+  }
+
+  private getVimeoThumb(videoId: string): string {
+    //Vimeo has no API for getting a thumbnail, but this project can do it: https://github.com/ThatGuySam/vumbnail
+    return `//vumbnail.com/${ videoId }.jpg`
+  }
+}
+
 type GalleryItemModel = {
   type?: GalleryItemType;
   src?: string | { url: string, type: string }[];
@@ -66,6 +89,10 @@ export type YoutubeItemData = IframeItemData & {
   autoplay?: boolean;
 };
 
+export type VimeoItemData = IframeItemData & {
+  autoplay?: boolean;
+};
+
 export type VideoItemData = GalleryItemModel & {
   poster?: string;
   loop?: boolean;
@@ -79,6 +106,6 @@ export type VideoItemData = GalleryItemModel & {
   disableRemotePlayback?: boolean;
 };
 
-export type GalleryItemData = ImageItemData | VideoItemData | IframeItemData | YoutubeItemData;
+export type GalleryItemData = ImageItemData | VideoItemData | IframeItemData | YoutubeItemData | VimeoItemData;
 
 export type ItemState = 'success' | 'loading' | 'failed';

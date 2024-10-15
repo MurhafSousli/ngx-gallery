@@ -19,7 +19,7 @@ import { GalleryCoreComponent } from './gallery-core.component';
 import { Gallery } from '../services/gallery.service';
 import { GalleryRef } from '../services/gallery-ref';
 import { GalleryError, GalleryItem, GalleryState } from '../models/gallery.model';
-import { IframeItemData, ImageItemData, VideoItemData, YoutubeItemData } from './templates/items.model';
+import { IframeItemData, ImageItemData, VideoItemData, VimeoItemData, YoutubeItemData } from './templates/items.model';
 import { GalleryConfig } from '../models/config.model';
 import { BezierEasingOptions } from '../smooth-scroll';
 import { GalleryImageDef } from '../directives/gallery-image-def.directive';
@@ -478,6 +478,13 @@ export class GalleryComponent implements OnInit, AfterContentInit, OnChanges, On
    */
   addYoutube(data: YoutubeItemData, active?: boolean): void {
     this.galleryRef.addYoutube(data, active);
+  }
+
+  /**
+   * Add Vimeo item
+   */
+  addVimeo(data: VimeoItemData, active?: boolean): void {
+    this.galleryRef.addVimeo(data, active);
   }
 
   /**

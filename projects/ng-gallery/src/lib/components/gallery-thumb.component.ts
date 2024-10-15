@@ -46,7 +46,7 @@ export class GalleryThumbComponent {
   /** Gallery current index */
   @Input() currIndex: number;
 
-  /** Item's type 'image', 'video', 'youtube', 'iframe' */
+  /** Item's type 'image', 'video', 'youtube', 'Vimeo', 'iframe' */
   @Input() type: GalleryItemType;
 
   /** Item's data, this object contains the data required to display the content (e.g. src path) */
