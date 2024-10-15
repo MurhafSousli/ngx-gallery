@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.0.0
+
+- Add vimeo support in [#575](https://github.com/MurhafSousli/ngx-gallery/pull/575).
+
 ## 12.0.0-beta.4
 
 > See the [storybook documentation](https://ngx-gallery-next.netlify.app/)

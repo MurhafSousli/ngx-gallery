@@ -18,9 +18,9 @@ ___
 
 ### Explore ngx-gallery Documentation
 
-- **For stable version (v11):** Visit our [wiki page](https://github.com/MurhafSousli/ngx-gallery/wiki) 📚.
+- For **v11:** use the [wiki page](https://github.com/MurhafSousli/ngx-gallery/wiki) 📚.
 
-- **For the latest features (v12 Beta):** Check out our [storybook documentation](https://ngx-gallery-next.netlify.app/)
+- For **v12:** use the [storybook documentation](https://ngx-gallery-next.netlify.app/)
 
 We value your feedback and appreciate your support in testing this beta release!
 
