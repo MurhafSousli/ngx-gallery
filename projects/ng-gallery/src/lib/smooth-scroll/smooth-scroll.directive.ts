@@ -1,23 +1,21 @@
 import {
   Directive,
-  Inject,
-  Input,
-  Output,
+  inject,
+  signal,
+  effect,
   NgZone,
-  OnInit,
-  OnDestroy,
   ElementRef,
-  EventEmitter
+  WritableSignal
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { Dir } from '@angular/cdk/bidi';
+import { Directionality } from '@angular/cdk/bidi';
 import { _Bottom, _Left, _Right, _Top, _Without } from '@angular/cdk/scrolling';
 import { getRtlScrollAxisType, RtlScrollAxisType } from '@angular/cdk/platform';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   Observable,
   Subject,
   Subscriber,
-  Subscription,
   of,
   take,
   merge,
@@ -29,35 +27,38 @@ import {
   finalize
 } from 'rxjs';
 import BezierEasing from './bezier-easing';
-import { GalleryConfig } from '../models/config.model';
 import { SmoothScrollOptions, SmoothScrollStep, SmoothScrollToOptions } from './index';
-import { SliderAdapter } from '../components/adapters';
-
-declare const Hammer: any;
+import { GalleryRef } from '../services/gallery-ref';
+import { IndexChange } from '../models/slider.model';
+import { SliderComponent } from '../components/slider/slider';
+import { HammerSliding } from '../gestures/hammer-sliding.directive';
 
 @Directive({
-  selector: '[smoothScroll]',
   standalone: true,
-  providers: [Dir]
+  selector: '[smoothScroll]',
+  host: {
+    '[class.g-scrolling]': 'scrolling()'
+  }
 })
-export class SmoothScroll implements OnInit, OnDestroy {
+export class SmoothScroll {
 
-  /** HammerJS instance */
-  private _hammer: any;
+  private readonly galleryRef: GalleryRef = inject(GalleryRef);
+
+  private readonly slider: SliderComponent = inject(SliderComponent, { self: true });
+
+  private readonly hammerSlider: HammerSliding = inject(HammerSliding, { self: true });
+
+  private readonly _zone: NgZone = inject(NgZone);
+
+  private readonly _dir: Directionality = inject(Directionality);
+
+  private readonly _el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
+
+  private readonly _w: Window = inject(DOCUMENT).defaultView;
 
   private readonly _scrollController: Subject<SmoothScrollStep> = new Subject<SmoothScrollStep>();
 
   private readonly _finished: Subject<void> = new Subject<void>();
-
-  private readonly _el: HTMLElement;
-
-  private _isInterruptedByMouse: boolean;
-
-  private _subscription: Subscription;
-
-  private get _w(): Window {
-    return this._document.defaultView;
-  }
 
   /**
    * Timing method
@@ -66,56 +67,45 @@ export class SmoothScroll implements OnInit, OnDestroy {
     return this._w.performance?.now?.bind(this._w.performance) || Date.now;
   }
 
-  @Input()
-  set smoothScroll(value: SmoothScrollOptions) {
-    if (value) {
-      this._zone.runOutsideAngular(() => {
-        this.scrollTo(value);
+  private readonly interruptedByMouse$: Subject<void> = new Subject<void>();
+
+  scrolling: WritableSignal<boolean> = signal<boolean>(false);
+
+  constructor() {
+    effect(() => {
+      if (!this.hammerSlider.sliding()) return;
+      this.interruptedByMouse$.next();
+    });
+
+    this._zone.runOutsideAngular(() => {
+      this.galleryRef.indexChange.pipe(takeUntilDestroyed()).subscribe((change: IndexChange) => {
+        const el: HTMLElement = this.slider.items()[change.index]?.nativeElement;
+        const scrollBehavior: ScrollBehavior = this.galleryRef.config().scrollBehavior;
+        if (el) {
+          const pos: SmoothScrollOptions = this.slider.adapter().getScrollToValue(el, change.behavior || scrollBehavior);
+          this.scrollTo(pos);
+        }
       });
-    }
-  }
 
-  @Input() adapter: SliderAdapter;
+      this._scrollController.pipe(
+        takeUntilDestroyed(),
+        switchMap((context: SmoothScrollStep) => {
+          this._zone.run(() => {
+            this.scrolling.set(true);
+          });
 
-  @Input() config: GalleryConfig;
-
-  @Input('smoothScrollInterruptOnMousemove') interruptOnMousemove: boolean;
-
-  @Output() isScrollingChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  constructor(@Inject(DOCUMENT) private _document: Document,
-              private _zone: NgZone,
-              private _dir: Dir,
-              _el: ElementRef<HTMLElement>) {
-    this._el = _el.nativeElement;
-  }
-
-  ngOnInit(): void {
-    this._subscription = this._scrollController.pipe(
-      switchMap((context: SmoothScrollStep) => {
-        this._zone.run(() => {
-          this.isScrollingChange.emit(true);
-        });
-
-        this._el.classList.add('g-scrolling');
-        this._el.style.setProperty('--slider-scroll-snap-type', 'none');
-
-        // Scroll each step recursively
-        return of(null).pipe(
-          expand(() => this._step(context).pipe(
-            takeWhile((currContext: SmoothScrollStep) => this._isFinished(currContext)),
-            takeUntil(this._finished)
-          )),
-          finalize(() => this.resetElement()),
-          takeUntil(this._interrupted()),
-        );
-      })
-    ).subscribe();
-  }
-
-  ngOnDestroy(): void {
-    this._subscription?.unsubscribe();
-    this._scrollController.complete();
+          // Scroll each step recursively
+          return of(null).pipe(
+            expand(() => this._step(context).pipe(
+              takeWhile((currContext: SmoothScrollStep) => this._isFinished(currContext)),
+              takeUntil(this._finished)
+            )),
+            finalize(() => this.resetElement()),
+            takeUntil(this._interrupted()),
+          );
+        })
+      ).subscribe();
+    });
   }
 
   /**
@@ -128,14 +118,8 @@ export class SmoothScroll implements OnInit, OnDestroy {
 
   private resetElement(): void {
     this._zone.run(() => {
-      this.isScrollingChange.emit(false);
+      this.scrolling.set(false);
     });
-
-    this._el.classList.remove('g-scrolling');
-    if (!this._isInterruptedByMouse) {
-      this._el.style.setProperty('--slider-scroll-snap-type', this.adapter.scrollSnapType);
-    }
-    this._isInterruptedByMouse = false;
   }
 
   /**
@@ -153,33 +137,11 @@ export class SmoothScroll implements OnInit, OnDestroy {
    * Terminates an ongoing smooth scroll
    */
   private _interrupted(): Observable<Event | void> {
-    let interrupt$: Observable<Event | void>;
-    if (this.interruptOnMousemove && typeof Hammer !== 'undefined') {
-      this._hammer = new Hammer(this._el, { inputClass: Hammer.MouseInput });
-      this._hammer.get('pan').set({ direction: this.adapter.hammerDirection });
-
-      // For gallery thumb slider, dragging thumbnails should cancel the ongoing scroll
-      interrupt$ = merge(
-        new Observable<void>((subscriber: Subscriber<void>) => {
-          this._hammer.on('panstart', () => {
-            this._isInterruptedByMouse = true;
-            subscriber.next();
-            subscriber.complete();
-          });
-          return () => {
-            this._hammer.destroy();
-          }
-        }),
-        fromEvent(this._el, 'wheel', { passive: true, capture: true }),
-        fromEvent(this._el, 'touchmove', { passive: true, capture: true }),
-      )
-    } else {
-      interrupt$ = merge(
-        fromEvent(this._el, 'wheel', { passive: true, capture: true }),
-        fromEvent(this._el, 'touchmove', { passive: true, capture: true }),
-      )
-    }
-    return interrupt$.pipe(take(1));
+    return merge(
+      this.interruptedByMouse$,
+      fromEvent(this._el, 'wheel', { passive: true, capture: true }),
+      fromEvent(this._el, 'touchmove', { passive: true, capture: true }),
+    ).pipe(take(1));
   }
 
   /**
@@ -244,9 +206,9 @@ export class SmoothScroll implements OnInit, OnDestroy {
         // Rewrite start & end offsets as right or left offsets.
         left: params.left == null ? (isRtl ? params.end : params.start) : params.left,
         right: params.right == null ? (isRtl ? params.start : params.end) : params.right
-      } as _Without<_Bottom & _Top>),
-      duration: params.behavior === 'smooth' ? this.config.scrollDuration : 0,
-      easing: this.config.scrollEase,
+      }),
+      duration: params.behavior === 'smooth' ? this.galleryRef.config().scrollDuration : 0,
+      easing: this.galleryRef.config().scrollEase,
     };
 
     // Rewrite the bottom offset as a top offset.

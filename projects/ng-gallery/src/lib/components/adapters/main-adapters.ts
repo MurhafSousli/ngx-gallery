@@ -31,8 +31,8 @@ export class HorizontalAdapter implements SliderAdapter {
   constructor(public slider: HTMLElement, public config: GalleryConfig) {
   }
 
-  getScrollToValue(el: HTMLElement, behavior: ScrollBehavior): SmoothScrollOptions {
-    const position: number = el.offsetLeft - ((this.clientSize - el.clientWidth) / 2);
+  getScrollToValue(target: HTMLElement, behavior: ScrollBehavior): SmoothScrollOptions {
+    const position: number = target.offsetLeft - ((this.clientSize - target.clientWidth) / 2);
     return {
       behavior,
       start: position
@@ -40,7 +40,8 @@ export class HorizontalAdapter implements SliderAdapter {
   }
 
   getRootMargin(): string {
-    return `1000px 1px 1000px 1px`;
+    // return `1000px 1px 1000px 1px`;
+    return `1000px 0px 1000px 0px`;
   }
 
   getElementRootMargin(viewport: HTMLElement, el: HTMLElement): string {
@@ -108,8 +109,8 @@ export class VerticalAdapter implements SliderAdapter {
   constructor(public slider: HTMLElement, public config: GalleryConfig) {
   }
 
-  getScrollToValue(el: HTMLElement, behavior: ScrollBehavior): SmoothScrollOptions {
-    const position: number = el.offsetTop - ((this.clientSize - el.clientHeight) / 2);
+  getScrollToValue(target: HTMLElement, behavior: ScrollBehavior): SmoothScrollOptions {
+    const position: number = target.offsetTop - ((this.clientSize - target.clientHeight) / 2);
     return {
       behavior,
       top: position
@@ -117,7 +118,7 @@ export class VerticalAdapter implements SliderAdapter {
   }
 
   getRootMargin(): string {
-    return `1px 1000px 1px 1000px`;
+    return `0px 1000px 0px 1000px`;
   }
 
   getElementRootMargin(viewport: HTMLElement, el: HTMLElement): string {

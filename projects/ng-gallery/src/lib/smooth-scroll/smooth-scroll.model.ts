@@ -1,10 +1,10 @@
 import { _XAxis, _YAxis } from '@angular/cdk/scrolling';
 
-export type SmoothScrollOptions = _XAxis & _YAxis & {
+export type SmoothScrollOptions = Partial<Pick<_XAxis, keyof _XAxis> & Pick<_YAxis, keyof _YAxis>> & {
   behavior?: ScrollBehavior;
 }
 
-export type SmoothScrollToOptions = _XAxis & _YAxis & {
+export type SmoothScrollToOptions = SmoothScrollOptions & {
   duration?: number;
   easing?: BezierEasingOptions;
 };

@@ -26,7 +26,6 @@
     display: none;
   }
 
-  // Disable mouse click on gallery items/thumbnails when the slider is being dragged using the mouse
   &.g-sliding {
     // Disable mouse click on gallery items/thumbnails when the slider is being dragged using the mouse
     .g-slider-content {
@@ -40,11 +39,11 @@
     }
 
     &:before {
-      flex: 0 0 var(--thumb-centralize-start-size);
+      flex: 0 0 var(--centralize-start-size);
     }
 
     &:after {
-      flex: 0 0 var(--thumb-centralize-end-size);
+      flex: 0 0 var(--centralize-end-size);
     }
   }
 }

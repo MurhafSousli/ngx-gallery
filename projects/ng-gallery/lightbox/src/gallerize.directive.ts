@@ -104,7 +104,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
   private galleryMode(galleryRef: GalleryRef): void {
     // Clone its items to the new gallery instance
     this._itemClick$ = this._galleryCmp.galleryRef.itemClick.subscribe((i: number) => this._lightbox.open(i, this._galleryId));
-    this._itemChange$ = this._galleryCmp.galleryRef.itemsChanged.subscribe((state: GalleryState) => galleryRef.load(state.items));
+    this._itemChange$ = this._galleryCmp.galleryRef.itemsChanged.subscribe(() => galleryRef.load(this._galleryCmp.galleryRef.items()));
   }
 
   /** Detector mode: means `gallerize` directive is used on a normal HTMLElement
