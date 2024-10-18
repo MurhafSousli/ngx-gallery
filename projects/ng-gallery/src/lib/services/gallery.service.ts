@@ -1,8 +1,7 @@
-import { Inject, Injectable, Optional } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { GalleryRef } from './gallery-ref';
 import { GalleryConfig, GALLERY_CONFIG } from '../models/config.model';
-import { defaultConfig } from '../utils/gallery.default';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +12,7 @@ export class Gallery {
   private readonly _instances = new Map<string, GalleryRef>();
 
   /** Global config */
-  config: GalleryConfig;
-
-  constructor(@Optional() @Inject(GALLERY_CONFIG) config: GalleryConfig) {
-    this.config = config ? { ...defaultConfig, ...config } : defaultConfig;
-  }
+  config: GalleryConfig = inject(GALLERY_CONFIG);
 
   /**
    * Get or create gallery by ID
@@ -25,22 +20,23 @@ export class Gallery {
    * @param config
    */
   ref(id = 'root', config?: GalleryConfig): GalleryRef {
-    if (this._instances.has(id)) {
-      const galleryRef: GalleryRef = this._instances.get(id);
-      if (config) {
-        galleryRef.setConfig(config);
-      }
-      return galleryRef;
-    } else {
-      return this._instances.set(id, new GalleryRef({ ...this.config, ...config }, this.deleteInstance(id))).get(id);
-    }
+    // if (this._instances.has(id)) {
+    //   const galleryRef: GalleryRef = this._instances.get(id);
+    //   if (config) {
+    //     galleryRef.setConfig(config);
+    //   }
+    //   return galleryRef;
+    // } else {
+    //   return this._instances.set(id, new GalleryRef({ ...this.config, ...config }, this.deleteInstance(id))).get(id);
+    // }
+    return null;
   }
 
   /**
    * Destroy all gallery instances
    */
   destroyAll() {
-    this._instances.forEach((ref: GalleryRef) => ref.destroy());
+    // this._instances.forEach((ref: GalleryRef) => ref.destroy());
   }
 
   /**

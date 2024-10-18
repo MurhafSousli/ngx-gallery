@@ -31,22 +31,22 @@ export class GallerizeExampleComponent implements OnInit {
   constructor(private _pixabay: Pixabay, gallery: Gallery, private _title: Title) {
     this.code = code;
     gallery.ref('lightbox').setConfig({
-      thumbPosition: 'bottom',
+      // thumbPosition: 'bottom',
       imageSize: 'cover',
       itemAutosize: false,
-      thumbAutosize: false,
-      thumbs: true
+      // thumbAutosize: false,
+      // thumbs: true
       // thumbWidth: 120,
       // thumbHeight: 90,
       // thumbView: 'contain'
     });
     gallery.ref('auto-detect').setConfig({
-      thumbPosition: 'top',
+      // thumbPosition: 'top',
       autoHeight: true,
       imageSize: 'cover',
       itemAutosize: false,
-      thumbAutosize: false,
-      thumbs: true
+      // thumbAutosize: false,
+      // thumbs: true
       // thumbView: 'contain'
     });
   }

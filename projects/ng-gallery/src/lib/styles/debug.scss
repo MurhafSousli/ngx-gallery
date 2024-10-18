@@ -62,6 +62,10 @@
       }
     }
 
+    .g-slider-observed {
+      display: block !important;
+    }
+
     .g-slider-debug {
       position: absolute;
       top: 0;
@@ -80,6 +84,10 @@
 
       .g-slider-sliding {
         background: rgb(31, 108, 185);
+      }
+
+      .g-slider-observed {
+        background: rgb(31, 185, 139);
       }
 
       div, &:before {

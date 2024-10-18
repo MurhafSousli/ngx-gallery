@@ -1,160 +1,168 @@
 import {
   Directive,
-  Inject,
-  Input,
-  Output,
-  OnChanges,
-  OnDestroy,
-  SimpleChanges,
+  inject,
+  signal,
+  effect,
+  untracked,
+  input,
   NgZone,
   ElementRef,
-  EventEmitter
+  InputSignal,
+  WritableSignal,
+  EffectCleanupRegisterFn
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { HammerGestureConfig } from '@angular/platform-browser';
 import { Platform } from '@angular/cdk/platform';
 import { Directionality } from '@angular/cdk/bidi';
-import { SliderAdapter } from '../components/adapters';
-import { GalleryState } from '../models/gallery.model';
-import { GalleryConfig } from '../models/config.model';
-import { Orientation } from '../models/constants';
-import { GalleryItemComponent } from '../components/gallery-item.component';
-import { GalleryThumbComponent } from '../components/gallery-thumb.component';
+import { take } from 'rxjs';
 
-declare const Hammer: any;
+import { Orientation } from '../models/constants';
+import { GalleryRef } from '../services/gallery-ref';
+import { GalleryConfig } from '../models/config.model';
+import { SliderAdapter } from '../components/adapters';
+import { CustomHammerConfig, HammerInstance } from '../services/hammer';
+import { createIntersectionObserver } from '../observers/active-item-observer';
+import { SliderComponent } from '../components/slider/slider';
 
 @Directive({
+  standalone: true,
   selector: '[hammerSliding]',
-  standalone: true
+  host: {
+    '[class.g-sliding]': 'sliding()'
+  },
+  providers: [{ provide: HammerGestureConfig, useClass: CustomHammerConfig }]
 })
-export class HammerSliding implements OnChanges, OnDestroy {
+export class HammerSliding {
 
-  /** HammerJS instance */
-  private _hammer: any;
+  private readonly hammer: HammerGestureConfig = inject(HammerGestureConfig);
 
-  get _viewport(): HTMLElement {
-    return this._el.nativeElement;
-  }
+  private readonly galleryRef: GalleryRef = inject(GalleryRef);
 
-  @Input('hammerSliding') enabled: boolean;
+  private readonly _viewport: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
 
-  @Input() galleryId: string;
+  private readonly _document: Document = inject(DOCUMENT);
 
-  @Input() items: GalleryItemComponent[] | GalleryThumbComponent[];
+  private readonly _dir: Directionality = inject(Directionality);
 
-  @Input() adapter: SliderAdapter;
+  private readonly _platform: Platform = inject(Platform);
 
-  @Input() state: GalleryState;
+  private readonly _zone: NgZone = inject(NgZone);
 
-  @Input() config: GalleryConfig;
+  private readonly slider: SliderComponent = inject(SliderComponent, { self: true });
 
-  @Output() activeIndexChange: EventEmitter<number> = new EventEmitter<number>();
+  sliding: WritableSignal<boolean> = signal<boolean>(false);
 
-  @Output() isSlidingChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  constructor() {
+    if (this._platform.ANDROID || this._platform.IOS || !(this._document.defaultView as any).Hammer) return;
 
-  constructor(@Inject(DOCUMENT) private _document: Document,
-              private _el: ElementRef<HTMLElement>,
-              private _dir: Directionality,
-              private _platform: Platform,
-              private _zone: NgZone) {
-  }
+    // HammerJS instance
+    let mc: HammerInstance;
 
+    effect((onCleanup: EffectCleanupRegisterFn) => {
+      const config: GalleryConfig = this.galleryRef.config();
+      const adapter: SliderAdapter = this.slider.adapter();
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.enabled && changes.enabled?.currentValue !== changes.enabled?.previousValue) {
-      this.enabled ? this._subscribe() : this._unsubscribe();
-    }
-    if (!changes.adapter?.firstChange && changes.adapter?.currentValue !== changes.adapter?.previousValue) {
-      this.enabled ? this._subscribe() : this._unsubscribe();
-    }
-  }
+      if (!adapter && !config.disableMouseScroll) return;
 
-  ngOnDestroy(): void {
-    this._unsubscribe();
-  }
+      untracked(() => {
+        this._zone.runOutsideAngular(() => {
+          const direction: number = adapter.hammerDirection;
 
-  private _subscribe(): void {
-    this._unsubscribe();
+          this.hammer.overrides.pan = { direction };
+          mc = this.hammer.buildHammer(this._viewport);
 
-    if (!this._platform.ANDROID && !this._platform.IOS && typeof Hammer !== 'undefined') {
-      this._zone.runOutsideAngular(() => {
+          let offset: number;
 
-        const direction: number = this.adapter.hammerDirection;
-        this._hammer = new Hammer(this._el.nativeElement, { inputClass: Hammer.MouseInput });
-        this._hammer.get('pan').set({ direction });
+          // Set panOffset for sliding on pan start event
+          mc.on('panstart', () => {
+            this._zone.run(() => {
+              this.sliding.set(true);
+            });
 
-        let offset: number;
-
-        // Set panOffset for sliding on pan start event
-        this._hammer.on('panstart', () => {
-          this._zone.run(() => {
-            this.isSlidingChange.emit(true);
+            offset = adapter.scrollValue;
           });
 
-          offset = this.adapter.scrollValue;
-          this._viewport.classList.add('g-sliding');
-          this._viewport.style.setProperty('--slider-scroll-snap-type', 'none');
-        });
+          mc.on('panmove', (e: any) => {
+            this._viewport.scrollTo(adapter.getHammerValue(offset, e, 'auto'));
+          });
 
-        this._hammer.on('panmove', (e: any) => this._viewport.scrollTo(this.adapter.getHammerValue(offset, e, 'auto')));
+          mc.on('panend', (e: any) => {
+            this._document.onselectstart = null;
 
-        this._hammer.on('panend', (e: any) => {
-          this._document.onselectstart = null;
-          this._viewport.classList.remove('g-sliding');
-          const index: number = this.getIndexOnMouseUp(e);
+            const index: number = this.getIndexOnMouseUp(e, this.slider.adapter());
+            if (index !== -1) {
+              this._zone.run(() => {
+                // this.isSlidingChange.emit(false);
+                this.galleryRef.set(index);
+                // Tiny delay is needed to avoid flicker positioning when scroll-snap is toggled
+                requestAnimationFrame(() => {
+                  this.sliding.set(false);
+                });
+              });
+              return;
+            }
 
-          this._zone.run(() => {
-            this.isSlidingChange.emit(false);
-            this.activeIndexChange.emit(index);
+            const visibleEntries: IntersectionObserverEntry[] = Object.values(this.slider.visibleEntries());
+
+            const visibleElements: Element[] = visibleEntries.map((entry: IntersectionObserverEntry) => entry.target);
+
+            // Get the diff between the viewport size and the smallest visible item size
+            const diffSize: number = visibleEntries.reduce((total: number, entry: IntersectionObserverEntry) => {
+              return Math.max(total, (this._viewport.clientWidth - entry.boundingClientRect.width) / 2);
+            }, 0);
+
+            const options: IntersectionObserverInit = {
+              root: this._viewport,
+              threshold: 0,
+              rootMargin: `0px ${ -diffSize }px 0px ${ -diffSize }px`
+            };
+
+            createIntersectionObserver(options, visibleElements).pipe(
+              take(1)
+            ).subscribe((entries: IntersectionObserverEntry[]) => {
+
+              const centerElement: IntersectionObserverEntry = entries
+                .filter((entry: IntersectionObserverEntry) => entry.isIntersecting)
+                .reduce((acc: IntersectionObserverEntry, entry: IntersectionObserverEntry) => {
+                  return acc ? acc.intersectionRatio > entry.intersectionRatio ? acc : entry : entry;
+                }, null);
+
+              this._zone.run(() => {
+                // this.isSlidingChange.emit(false);
+                const index: number = +centerElement.target.getAttribute('galleryIndex');
+                this.galleryRef.set(index);
+                // Tiny delay is needed to avoid flicker positioning when scroll-snap is toggled
+                requestAnimationFrame(() => {
+                  this.sliding.set(false);
+                });
+              });
+            })
           });
         });
+
+        onCleanup(() => mc?.destroy());
       });
-    }
+    });
   }
 
-  private _unsubscribe(): void {
-    this._hammer?.destroy();
-  }
+  private getIndexOnMouseUp(e: any, adapter: SliderAdapter): number {
+    const currIndex: number = this.galleryRef.currIndex();
 
-  private getIndexOnMouseUp(e: any): number {
-    // Check if scrolled item is great enough to navigate
-    const currElement: Element = this.items[this.state.currIndex].nativeElement;
-
-    // Find the gallery item element in the center elements
-    const elementAtCenter: Element = this.getElementFromViewportCenter();
-
-    // Check if center item can be taken from element using
-    if (elementAtCenter && elementAtCenter !== currElement) {
-      return +elementAtCenter.getAttribute('galleryIndex');
-    }
-
-    const velocity: number = this.adapter.getHammerVelocity(e);
+    const velocity: number = adapter.getHammerVelocity(e);
     // Check if velocity is great enough to navigate
     if (Math.abs(velocity) > 0.3) {
-      if (this.config.orientation === Orientation.Horizontal) {
+      if (this.galleryRef.config().orientation === Orientation.Horizontal) {
         if (velocity > 0) {
-          return this._dir.value === 'rtl' ? this.state.currIndex + 1 : this.state.currIndex - 1;
+          return this._dir.value === 'rtl' ? currIndex + 1 : currIndex - 1;
         }
-        return this._dir.value === 'rtl' ? this.state.currIndex - 1 : this.state.currIndex + 1;
+        return this._dir.value === 'rtl' ? currIndex - 1 : currIndex + 1;
       } else {
-        return velocity > 0 ? this.state.currIndex - 1 : this.state.currIndex + 1;
+        return velocity > 0 ? currIndex - 1 : currIndex + 1;
       }
     }
 
     // Reset position to the current index
     return -1;
-  }
-
-  private getElementFromViewportCenter(): Element {
-    // Get slider position relative to the document
-    const sliderRect: DOMRect = this._viewport.getBoundingClientRect();
-    // Try look for the center item using `elementsFromPoint` function
-    const centerElements: Element[] = this._document.elementsFromPoint(
-      sliderRect.x + (sliderRect.width / 2),
-      sliderRect.y + (sliderRect.height / 2)
-    );
-    // Find the gallery item element in the center elements
-    return centerElements.find((element: Element) => {
-      return element.getAttribute('galleryId') === this.galleryId;
-    });
   }
 }

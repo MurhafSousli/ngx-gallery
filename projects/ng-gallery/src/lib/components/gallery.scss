@@ -1,12 +1,4 @@
 :host {
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: black;
-
   --g-height-transition: height 468ms cubic-bezier(0.42, 0, 0.58, 1);
   --g-nav-drop-shadow: drop-shadow(0 0 2px rgba(0, 0, 0, 0.6));
   --g-box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
@@ -14,7 +6,162 @@
   --g-overlay-color: #fff;
   --g-gutter-size: 1px;
 
+  z-index: 1;
+  position: relative;
+  overflow: hidden;
+
+  gap: var(--g-gutter-size);
+  width: 100%;
+  height: 500px;
+  min-height: 100%;
+  max-height: 100%;
+  background-color: black;
+
+
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    ". top ."
+    "left center right"
+    ". bottom .";
+
   &[gallerize] {
     --g-item-cursor: pointer;
   }
+
+  // Gallery auto-height variables
+  &[autoHeight='true'][itemAutoSize='false'][orientation='horizontal'] {
+    &[thumbPosition='top'], &[thumbPosition='bottom'] {
+      // if auto-height, use fit-content
+      height: fit-content;
+      --g-item-height: auto !important;
+      --g-item-max-height: auto;
+    }
+  }
+
+  // Gallery image variables
+  --image-object-fit: unset;
+
+  &[imageSize='contain'] gallery-slider  {
+    --image-object-fit: contain;
+  }
+
+  &[imageSize='cover'] gallery-slider  {
+    --image-object-fit: cover;
+  }
+
+  // Gallery thumbs variables
+  --slider-thumb-height: unset;
+  --slider-thumb-width: unset;
+  --thumb-slider-left: unset;
+  --thumb-slider-overflow: unset;
+  --thumb-slider-flex-direction: unset;
+  --g-thumb-width: unset;
+  --g-thumb-height: unset;
+  --g-thumb-cursor: pointer;
+
+  // Gallery slider variables
+  --slider-scroll-snap-type: unset;
+  --slider-overflow: unset;
+  --slider-flex-direction: unset;
+  --slider-width: unset;
+  --slider-height: unset;
+  --slider-content-width: unset;
+  --slider-content-height: unset;
+
+  &[orientation='horizontal'] {
+    --slider-overflow: auto hidden;
+    --slider-scroll-snap-type: x mandatory;
+    --slider-flex-direction: row;
+    --slider-content-height: 100%;
+  }
+
+  &[orientation='vertical'] {
+    --slider-overflow: hidden auto;
+    --slider-scroll-snap-type: y mandatory;
+    --slider-flex-direction: column;
+    --slider-content-width: 100%;
+  }
+
+  &[scrollDisabled='true'] {
+    --slider-overflow: hidden !important;
+  }
+
+  // Gallery bullets variables
+  --bullets-top: unset;
+  --bullets-bottom: unset;
+  --bullets-cursor: pointer;
+  --bullets-opacity: 0.4;
+  --bullets-hover-opacity: 1;
+  --bullets-active-opacity: 1;
+
+  &[bulletPosition='top'] {
+    --bullets-top: 15px;
+  }
+
+  &[bulletPosition='bottom'] {
+    --bullets-bottom: 15px;
+  }
+
+  &[bulletDisabled='true'] {
+    --bullets-cursor: default;
+    --bullets-hover-opacity: var(--bullets-opacity);
+  }
+
+  // Gallery position variables
+  --counter-top: unset;
+  --counter-bottom: unset;
+  --counter-border-radius: unset;
+
+  &[counterPosition='top'] {
+    --counter-top: 0;
+    --counter-border-radius: 0 0 4px 4px;
+  }
+
+  &[counterPosition='bottom'] {
+    --counter-bottom: 0;
+    --counter-border-radius: 4px 4px 0 0;
+  }
+
+  // Gallery nav variables
+  --nav-space: 8px;
+  --nav-hover-space: 6.4px;
+  --nav-next-right: unset;
+  --nav-next-hover-right: unset;
+  --nav-next-left: unset;
+  --nav-next-hover-left: unset;
+
+  &[dir='ltr'] {
+    --nav-next-transform: translateY(-50%) perspective(1px);
+    --nav-next-right: var(--nav-space);
+    --nav-next-hover-right: var(--nav-hover-space);
+
+    --nav-prev-transform: translateY(-50%) perspective(1px) scale(-1, -1);
+    --nav-prev-left: var(--nav-space);
+    --nav-prev-hover-left: var(--nav-hover-space);
+  }
+
+  &[dir='rtl'] {
+    --nav-next-transform: translateY(-50%) perspective(1px) scale(-1, -1);
+    --nav-next-left: var(--nav-space);
+    --nav-next-hover-left: var(--nav-hover-space);
+
+    --nav-prev-transform: translateY(-50%) perspective(1px);
+    --nav-prev-right: var(--nav-space);
+    --nav-prev-hover-right: var(--nav-hover-space);
+  }
+}
+
+.g-box {
+  grid-area: center;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.g-box-template {
+  position: absolute;
+  z-index: 10;
 }

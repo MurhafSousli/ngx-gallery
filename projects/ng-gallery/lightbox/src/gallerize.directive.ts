@@ -11,7 +11,7 @@ import {
   ElementRef,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { Gallery, GalleryRef, ImageItem, GalleryComponent, GalleryState, GalleryItem } from 'ng-gallery';
+import { Gallery, GalleryRef, ImageItem, GalleryComponent, GalleryItem } from 'ng-gallery';
 import { Subject, Subscription, from, tap, map, switchMap, finalize, debounceTime, EMPTY } from 'rxjs';
 
 import { Lightbox } from './lightbox.service';
@@ -104,7 +104,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
   private galleryMode(galleryRef: GalleryRef): void {
     // Clone its items to the new gallery instance
     this._itemClick$ = this._galleryCmp.galleryRef.itemClick.subscribe((i: number) => this._lightbox.open(i, this._galleryId));
-    this._itemChange$ = this._galleryCmp.galleryRef.itemsChanged.subscribe((state: GalleryState) => galleryRef.load(state.items));
+    this._itemChange$ = this._galleryCmp.galleryRef.itemsChanged.subscribe(() => galleryRef.load(this._galleryCmp.galleryRef.items()));
   }
 
   /** Detector mode: means `gallerize` directive is used on a normal HTMLElement

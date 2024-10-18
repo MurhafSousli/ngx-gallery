@@ -1,8 +1,8 @@
-import { BehaviorSubject, Subject, Observable, filter } from 'rxjs';
-import { defaultState } from '../utils/gallery.default';
-import { GalleryError, GalleryItem, GalleryState } from '../models/gallery.model';
-import { GalleryConfig } from '../models/config.model';
-import { GalleryAction } from '../models/constants';
+import { Injectable, computed, inject, signal, Signal, WritableSignal } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { Observable, Subject } from 'rxjs';
+import { GalleryError, GalleryItem } from '../models/gallery.model';
+import { GALLERY_CONFIG, GalleryConfig } from '../models/config.model';
 import {
   IframeItem,
   IframeItemData,
@@ -15,18 +15,10 @@ import {
   YoutubeItem,
   YoutubeItemData
 } from '../components/templates/items.model';
+import { IndexChange } from '../models/slider.model';
 
-const filterActions = (actions: string[]) => {
-  return filter((state: GalleryState) => actions.indexOf(state.action) > -1);
-};
-
+@Injectable()
 export class GalleryRef {
-
-  /** Stream that emits gallery state */
-  private readonly _state: BehaviorSubject<GalleryState>;
-
-  /** Stream that emits gallery config */
-  private readonly _config: BehaviorSubject<GalleryConfig>;
 
   /** Stream that emits on item click */
   readonly itemClick: Subject<number> = new Subject<number>();
@@ -34,77 +26,58 @@ export class GalleryRef {
   /** Stream that emits on thumbnail click */
   readonly thumbClick: Subject<number> = new Subject<number>();
 
+  /** Stream that emits when items is changed (items loaded, item added, item removed) */
+  readonly itemsChanged: Subject<void> = new Subject<void>();
+
+  /** Stream that emits when current index is changed */
+  readonly indexChanged: Subject<void> = new Subject<void>();
+
   /** Stream that emits on an error occurs */
   readonly error: Subject<GalleryError> = new Subject<GalleryError>();
 
   /** Gallery Events */
 
-  /** Stream that emits gallery state */
-  readonly state: Observable<GalleryState>;
+  readonly visibleItems: WritableSignal<Record<number, IntersectionObserverEntry>> = signal({});
 
-  /** Stream that emits gallery config */
-  readonly config: Observable<GalleryConfig>;
+  readonly visibleThumbs: WritableSignal<Record<number, IntersectionObserverEntry>> = signal({});
 
-  get stateSnapshot(): GalleryState {
-    return this._state.value;
-  }
+  readonly items: WritableSignal<GalleryItem[]> = signal([]);
 
-  get configSnapshot(): GalleryConfig {
-    return this._config.value;
-  }
+  readonly currIndex: WritableSignal<number> = signal(0);
 
-  /** Stream that emits when gallery is initialized/reset */
-  get initialized(): Observable<GalleryState> {
-    return this.state.pipe(filterActions([GalleryAction.INITIALIZED]));
-  }
+  readonly isPlaying: WritableSignal<boolean> = signal(false);
 
-  /** Stream that emits when items is changed (items loaded, item added, item removed) */
-  get itemsChanged(): Observable<GalleryState> {
-    return this.state.pipe(filterActions([GalleryAction.ITEMS_CHANGED]));
-  }
+  readonly scrollBehavior: WritableSignal<ScrollBehavior> = signal(null);
 
-  /** Stream that emits when current item is changed */
-  get indexChanged(): Observable<GalleryState> {
-    return this.state.pipe(filterActions([GalleryAction.INDEX_CHANGED]));
-  }
+  readonly hasNext: Signal<boolean> = computed(() => this.currIndex() < this.items().length - 1);
+
+  readonly hasPrev: Signal<boolean> = computed(() => this.currIndex() > 0);
+
+  readonly indexChange: Subject<IndexChange> = new Subject<IndexChange>();
+
+  /** Config signal */
+  readonly config: WritableSignal<GalleryConfig> = signal(inject(GALLERY_CONFIG));
 
   /** Stream that emits when the player should start or stop */
-  get playingChanged(): Observable<GalleryState> {
-    return this.state.pipe(filterActions([GalleryAction.PLAY, GalleryAction.STOP]));
-  }
+  readonly playingChanged: Observable<boolean> = toObservable(this.isPlaying);
 
-  constructor(config: GalleryConfig, private deleteInstance: () => void) {
-    this._state = new BehaviorSubject<GalleryState>(defaultState);
-    this._config = new BehaviorSubject<GalleryConfig>(config);
-    this.state = this._state.asObservable();
-    this.config = this._config.asObservable();
-  }
-
-  /**
-   * Set gallery state
-   */
-  private setState(state: GalleryState): void {
-    this._state.next({ ...this.stateSnapshot, ...state });
-  }
-
-  /**
-   * Set gallery config
-   */
-  setConfig(config: GalleryConfig): void {
-    this._config.next({ ...this._config.value, ...config });
+  setConfig(newConfig: GalleryConfig): void {
+    this.config.update((config: GalleryConfig) => {
+      return { ...config, ...newConfig };
+    });
   }
 
   /**
    * Add gallery item
    */
-  add(item: GalleryItem, active?: boolean): void {
-    const items: GalleryItem[] = [...this.stateSnapshot.items, item];
-    this.setState({
-      action: GalleryAction.ITEMS_CHANGED,
-      items,
-      hasNext: items.length > 1,
-      currIndex: active ? items.length - 1 : this.stateSnapshot.currIndex
+  add(newItem: GalleryItem, active?: boolean): void {
+    this.items.update((items: GalleryItem[]) => {
+      return [...items, newItem];
     });
+    if (active) {
+      this.currIndex.set(this.items().length - 1);
+    }
+    this.itemsChanged.next();
   }
 
   /**
@@ -146,18 +119,14 @@ export class GalleryRef {
    * Remove gallery item
    */
   remove(i: number): void {
-    const state: GalleryState = this.stateSnapshot;
-    const items: GalleryItem[] = [
-      ...state.items.slice(0, i),
-      ...state.items.slice(i + 1, state.items.length)
-    ];
-    this.setState({
-      action: GalleryAction.ITEMS_CHANGED,
-      currIndex: i < 1 ? state.currIndex : i - 1,
-      items,
-      hasNext: items.length > 1,
-      hasPrev: i > 0
+    this.items.update((items: GalleryItem[]) => {
+      return [
+        ...items.slice(0, i),
+        ...items.slice(i + 1, items.length)
+      ];
     });
+    this.currIndex.update((currIndex: number): number => i < 1 ? currIndex : i - 1);
+    this.itemsChanged.next();
   }
 
   /**
@@ -165,41 +134,33 @@ export class GalleryRef {
    */
   load(items: GalleryItem[]): void {
     if (items) {
-      this.setState({
-        action: GalleryAction.ITEMS_CHANGED,
-        items,
-        hasNext: items.length > 1,
-        hasPrev: false
-      });
+      this.items.set(items);
+      this.itemsChanged.next();
     }
   }
 
   /**
    * Set active item
    */
-  set(i: number, behavior: ScrollBehavior = this._config.value.scrollBehavior): void {
-    if (i < 0 || i >= this.stateSnapshot.items.length) {
+  set(i: number, behavior?: ScrollBehavior): void {
+    if (i < 0 || i >= this.items().length) {
       console.error(`[NgGallery]: Unable to set the active item because the given index (${ i }) is outside the items range!`);
       return;
     }
-    if (i !== this.stateSnapshot.currIndex) {
-      this.setState({
-        behavior,
-        action: GalleryAction.INDEX_CHANGED,
-        currIndex: i,
-        hasNext: i < this.stateSnapshot.items.length - 1,
-        hasPrev: i > 0
-      });
+    // this.currIndex.set(i);
+    if (behavior) {
+      this.scrollBehavior.set(behavior);
     }
+    this.indexChange.next({ index: i, behavior });
   }
 
   /**
    * Next item
    */
-  next(behavior: ScrollBehavior = this._config.value.scrollBehavior, loop: boolean = true): void {
-    if (this.stateSnapshot.hasNext) {
-      this.set(this.stateSnapshot.currIndex + 1, behavior);
-    } else if (loop && this._config.value.loop) {
+  next(behavior?: ScrollBehavior, loop: boolean = true): void {
+    if (this.hasNext()) {
+      this.set(this.currIndex() + 1, behavior);
+    } else if (loop && this.config().loop) {
       this.set(0, behavior);
     }
   }
@@ -207,11 +168,11 @@ export class GalleryRef {
   /**
    * Prev item
    */
-  prev(behavior: ScrollBehavior = this._config.value.scrollBehavior, loop: boolean = true): void {
-    if (this.stateSnapshot.hasPrev) {
-      this.set(this.stateSnapshot.currIndex - 1, behavior);
-    } else if (loop && this._config.value.loop) {
-      this.set(this.stateSnapshot.items.length - 1, behavior);
+  prev(behavior?: ScrollBehavior, loop: boolean = true): void {
+    if (this.hasPrev()) {
+      this.set(this.currIndex() - 1, behavior);
+    } else if (loop && this.config().loop) {
+      this.set(this.items().length - 1, behavior);
     }
   }
 
@@ -220,34 +181,25 @@ export class GalleryRef {
    */
   play(interval?: number): void {
     if (interval) {
-      this.setConfig({ autoplayInterval: interval });
+      this.config.update((config: GalleryConfig) => {
+        return { ...config, autoplayInterval: interval };
+      });
     }
-    this.setState({ action: GalleryAction.PLAY, behavior: 'auto', isPlaying: true });
+    this.isPlaying.set(true);
   }
 
   /**
    * Stop gallery player
    */
   stop(): void {
-    this.setState({ action: GalleryAction.STOP, isPlaying: false });
+    this.isPlaying.set(false);
   }
 
   /**
    * Reset gallery to initial state
    */
   reset(): void {
-    this.setState(defaultState);
-  }
-
-  /**
-   * Destroy gallery
-   */
-  destroy(): void {
-    this._state.complete();
-    this._config.complete();
-    this.itemClick.complete();
-    this.thumbClick.complete();
-    this.deleteInstance();
+    this.items.set([]);
   }
 
 }

@@ -1,5 +1,7 @@
 export * from './lib/services/gallery.service';
 export * from './lib/services/gallery-ref';
+export * from './lib/components/gallery-nav.component';
+export * from './lib/components/gallery-thumbs.component';
 export * from './lib/components/gallery.component';
 export * from './lib/components/templates/items.model';
 export * from './lib/components/templates/gallery-iframe.component';

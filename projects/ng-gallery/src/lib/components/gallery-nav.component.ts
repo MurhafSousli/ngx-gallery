@@ -1,52 +1,39 @@
-import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, computed, input, Signal, InputSignal, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Directionality } from '@angular/cdk/bidi';
-import { Gallery } from '../services/gallery.service';
-import { GalleryState } from '../models/gallery.model';
-import { GalleryConfig } from '../models/config.model';
+import { GalleryRef } from '../services/gallery-ref';
 
 @Component({
-  selector: 'gallery-nav',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./gallery-nav.scss'],
-  template: `
-    <i *ngIf="config.loop || state.hasPrev"
-       class="g-nav-prev"
-       aria-label="Previous"
-       role="button"
-       (click)="gallery.ref(this.id).prev(config.scrollBehavior)"
-       [innerHtml]="navIcon"></i>
-
-    <i *ngIf="config.loop || state.hasNext"
-       class="g-nav-next"
-       aria-label="Next"
-       role="button"
-       (click)="gallery.ref(this.id).next(config.scrollBehavior)"
-       [innerHtml]="navIcon"></i>
-  `,
   standalone: true,
-  imports: [CommonModule]
+  selector: 'gallery-nav',
+  template: `
+    @if (galleryRef.config().loop || galleryRef.hasPrev()) {
+      <i class="g-nav-prev"
+         aria-label="Previous"
+         role="button"
+         (click)="galleryRef.prev(scrollBehavior())"
+         [innerHtml]="navIcon()"></i>
+    }
+    @if (galleryRef.config().loop || galleryRef.hasNext()) {
+      <i class="g-nav-next"
+         aria-label="Next"
+         role="button"
+         (click)="galleryRef.next(scrollBehavior())"
+         [innerHtml]="navIcon()"></i>
+    }
+  `,
+  styleUrl: './gallery-nav.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GalleryNavComponent implements OnInit {
+export class GalleryNavComponent {
 
-  navIcon: SafeHtml;
-  @Input('galleryId') id: string;
-  @Input() state: GalleryState;
-  @Input() config: GalleryConfig;
+  private readonly _sanitizer: DomSanitizer = inject(DomSanitizer);
 
-  constructor(public gallery: Gallery, private _sanitizer: DomSanitizer, public dir: Directionality) {
-  }
+  readonly galleryRef: GalleryRef = inject(GalleryRef);
 
-  ngOnInit() {
-    this.navIcon = this._sanitizer.bypassSecurityTrustHtml(this.config.navIcon);
-  }
+  navIcon: Signal<SafeHtml> = computed(() =>
+    this._sanitizer.bypassSecurityTrustHtml(this.galleryRef.config().navIcon)
+  );
 
-  rightButton() {
+  scrollBehavior: InputSignal<ScrollBehavior> = input<ScrollBehavior>('smooth');
 
-  }
-
-  leftButton(): void {
-
-  }
 }

@@ -2,7 +2,7 @@ import { ApplicationConfig } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideRouter, withHashLocation } from '@angular/router';
-import { GALLERY_CONFIG, GalleryConfig } from 'ng-gallery';
+import { provideGalleryOptions } from 'ng-gallery';
 import { provideScrollbarOptions } from 'ngx-scrollbar';
 import { provideHighlightOptions } from 'ngx-highlightjs';
 import { progressInterceptor } from 'ngx-progressbar/http';
@@ -11,12 +11,9 @@ import { provideNgProgressRouter } from 'ngx-progressbar/router';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    {
-      provide: GALLERY_CONFIG,
-      useValue: {
-        imageSize: 'cover'
-      } as GalleryConfig
-    },
+    provideGalleryOptions({
+      imageSize: 'cover'
+    }),
     provideRouter(appRoutes, withHashLocation()),
     provideHighlightOptions({
       coreLibraryLoader: () => import('highlight.js/lib/core'),

@@ -1,83 +1,86 @@
 import {
   Component,
-  Input,
-  Output,
-  HostBinding,
-  EventEmitter,
-  ElementRef,
+  inject,
+  output,
+  computed,
+  input,
+  Signal,
+  InputSignal,
+  OutputEmitterRef,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { GalleryItemContext } from '../directives/gallery-item-def.directive';
 import { GalleryImageComponent } from './templates/gallery-image.component';
 import { ImageItemData } from './templates/items.model';
-import { GalleryConfig } from '../models/config.model';
 import { GalleryItemType } from '../models/constants';
+import { GalleryRef } from '../services/gallery-ref';
+import { SliderItem } from './items/items';
 
 @Component({
+  standalone: true,
   selector: 'gallery-thumb',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./gallery-thumb.scss'],
+  host: {
+    '[attr.galleryIndex]': 'index()',
+    '[class.g-active-thumb]': 'active()',
+    '[class.g-visible-thumb]': 'visible()',
+  },
+  providers: [{ provide: SliderItem, useExisting: GalleryThumbComponent }],
   template: `
-    <gallery-image [src]="data.thumb"
-                   [alt]="data.alt + '-thumbnail'"
+    <gallery-image [src]="data().thumb"
+                   [alt]="data().alt + '-thumbnail'"
                    [isThumbnail]="true"
-                   [loadingIcon]="config.thumbLoadingIcon"
-                   [loadingError]="config.thumbLoadingError"
+                   [loadingIcon]="galleryRef.config().thumbLoadingIcon"
+                   [loadingError]="galleryRef.config().thumbLoadingError"
                    (error)="error.emit($event)"></gallery-image>
 
-    <div *ngIf="config.thumbTemplate" class="g-template g-thumb-template">
-      <ng-container *ngTemplateOutlet="config.thumbTemplate; context: imageContext"></ng-container>
-    </div>
+    @if (galleryRef.config().thumbTemplate) {
+      <div class="g-template g-thumb-template">
+        <ng-container *ngTemplateOutlet="galleryRef.config().thumbTemplate; context: imageContext()"/>
+      </div>
+    }
   `,
-  standalone: true,
-  imports: [CommonModule, GalleryImageComponent]
+  styleUrl: './gallery-thumb.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [NgTemplateOutlet, GalleryImageComponent]
 })
-export class GalleryThumbComponent {
-
-  @Input() config: GalleryConfig;
+export class GalleryThumbComponent extends SliderItem {
+  /**
+   * The gallery reference instance
+   */
+  readonly galleryRef: GalleryRef = inject(GalleryRef);
 
   /** Item's index in the gallery */
-  @Input() index: number;
+  index: InputSignal<number> = input<number>();
 
   /** The number of total items */
-  @Input() count: number;
+  count: InputSignal<number> = input<number>();
 
   /** Gallery current index */
-  @Input() currIndex: number;
+  currIndex: InputSignal<number> = input<number>();
 
   /** Item's type 'image', 'video', 'youtube', 'Vimeo', 'iframe' */
-  @Input() type: GalleryItemType;
+  type: InputSignal<GalleryItemType> = input<GalleryItemType>();
 
   /** Item's data, this object contains the data required to display the content (e.g. src path) */
-  @Input() data: ImageItemData;
+  data: InputSignal<ImageItemData> = input<ImageItemData>();
 
-  @Output() error: EventEmitter<ErrorEvent> = new EventEmitter<ErrorEvent>();
+  /** Whether the item is visible in the viewport */
+  visible: InputSignal<boolean> = input<boolean>();
 
-  @HostBinding('class.g-active-thumb') get isActive() {
-    return this.index === this.currIndex;
-  }
+  active: Signal<boolean> = computed(() => this.index() === this.currIndex());
 
-  @HostBinding('attr.galleryIndex') get isIndexAttr(): number {
-    return this.index;
-  }
-
-  get imageContext(): GalleryItemContext<ImageItemData> {
+  imageContext: Signal<GalleryItemContext<ImageItemData>> = computed(() => {
     return {
-      $implicit: this.data,
-      index: this.index,
-      type: this.type,
-      active: this.isActive,
-      count: this.count,
-      first: this.index === 0,
-      last: this.index === this.count - 1
+      $implicit: this.data(),
+      index: this.index(),
+      type: this.type(),
+      active: this.active(),
+      count: this.count(),
+      first: this.index() === 0,
+      last: this.index() === this.count() - 1
     }
-  }
+  });
 
-  get nativeElement(): HTMLElement {
-    return this.el.nativeElement;
-  }
-
-  constructor(private el: ElementRef<HTMLElement>) {
-  }
+  error: OutputEmitterRef<ErrorEvent> = output<ErrorEvent>();
 }

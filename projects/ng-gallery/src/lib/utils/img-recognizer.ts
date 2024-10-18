@@ -1,42 +1,55 @@
-import { Directive, Input, HostListener, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import {
+  Directive,
+  inject,
+  effect,
+  untracked,
+  input,
+  ElementRef,
+  InputSignal,
+  EffectCleanupRegisterFn
+} from '@angular/core';
 import { ImgManager } from './img-manager';
-import { GalleryItemComponent } from '../components/gallery-item.component';
+import { SliderItem } from '../components/items/items';
 
 @Directive({
+  standalone: true,
   selector: 'img[galleryImage]',
-  standalone: true
+  host: {
+    '(load)': 'item.state.set("success")',
+    '(error)': 'item.state.set("failed")'
+  }
 })
-export class ImgRecognizer implements OnInit, OnDestroy {
+export class ImgRecognizer {
 
-  @Input('galleryImage') index: number;
+  private readonly nativeElement: HTMLImageElement = inject(ElementRef<HTMLImageElement>).nativeElement;
 
-  @HostListener('load', ['$event'])
-  onLoad() {
-    this.item.state$.next('success');
-  }
+  private readonly manager: ImgManager = inject(ImgManager);
 
-  @HostListener('error', ['$event'])
-  onError() {
-    this.item.state$.next('failed');
-  }
+  readonly item: SliderItem = inject(SliderItem);
 
-  constructor(private el: ElementRef<HTMLImageElement>, private manager: ImgManager, private item: GalleryItemComponent) {
-    if (item) {
+  index: InputSignal<number> = input(null, { alias: 'galleryImage' });
+
+  constructor() {
+    if (this.item) {
       // Mark the gallery-item component as an image item
-      item.isItemContainImage = true;
+      this.item.isItemContainImage = true;
     } else {
       throw new Error('[NgGallery]: galleryImage directive should be only used inside gallery item templates!')
     }
-  }
 
-  ngOnInit(): void {
-    this.manager.addItem(this.index, {
-      state: this.item.state$.asObservable(),
-      target: this.el.nativeElement
+    effect((onCleanup: EffectCleanupRegisterFn) => {
+      const index: number = this.index();
+
+      untracked(() => {
+        if (index != null) {
+          this.manager.addItem(index, {
+            state$: this.item.state$,
+            target: this.nativeElement
+          });
+
+          onCleanup(() => this.manager.deleteItem(index));
+        }
+      });
     });
-  }
-
-  ngOnDestroy(): void {
-    this.manager.deleteItem(this.index);
   }
 }

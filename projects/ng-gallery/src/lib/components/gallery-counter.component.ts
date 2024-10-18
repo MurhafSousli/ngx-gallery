@@ -1,15 +1,20 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { GalleryState } from '../models/gallery.model';
+import { Component, inject, computed, Signal, ChangeDetectionStrategy } from '@angular/core';
+import { GalleryRef } from '../services/gallery-ref';
 
 @Component({
+  standalone: true,
   selector: 'gallery-counter',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./gallery-counter.scss'],
   template: `
-    <div class="g-counter">{{ (state.currIndex + 1) + ' / ' + state.items.length }}</div>
+    <div class="g-counter">{{ counter() }}</div>
   `,
-  standalone: true
+  styleUrl: './gallery-counter.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GalleryCounterComponent {
-  @Input() state: GalleryState;
+
+  galleryRef: GalleryRef = inject(GalleryRef);
+
+  counter: Signal<string> = computed(() => {
+    return (this.galleryRef.currIndex() + 1) + ' / ' + this.galleryRef.items().length;
+  });
 }

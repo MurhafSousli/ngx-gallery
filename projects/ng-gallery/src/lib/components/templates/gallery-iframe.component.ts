@@ -1,60 +1,57 @@
-import { Component, Input, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
-import { NgIf } from '@angular/common';
+import {
+  Component,
+  inject,
+  computed,
+  input,
+  viewChild,
+  Signal,
+  ElementRef,
+  InputSignal,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
+  standalone: true,
   selector: 'gallery-iframe',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <iframe *ngIf="autoplay; else default"
-            #iframe
-            [attr.loading]="loadingAttr"
-            allowfullscreen
-            allow
-            style="border:none"
-            [src]="iframeSrc">
-    </iframe>
-    <ng-template #default>
+    @if (autoplay()) {
       <iframe #iframe
-              [attr.loading]="loadingAttr"
+              [attr.loading]="loadingAttr()"
+              allowfullscreen
+              allow
+              style="border:none"
+              [src]="iframeSrc()">
+      </iframe>
+    } @else {
+      <iframe #iframe
+              [attr.loading]="loadingAttr()"
               allowfullscreen
               style="border:none"
-              [src]="iframeSrc">
+              [src]="iframeSrc()">
       </iframe>
-    </ng-template>
+    }
   `,
-  standalone: true,
-  imports: [NgIf]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GalleryIframeComponent {
 
-  iframeSrc: SafeResourceUrl;
-  videoSrc: string;
+  private _sanitizer: DomSanitizer = inject(DomSanitizer);
 
-  @Input('src') set src(src: string) {
-    this.videoSrc = src;
-    this.iframeSrc = this._sanitizer.bypassSecurityTrustResourceUrl(src);
-  }
-
-  @Input('pause') set pauseVideo(shouldPause: boolean) {
-    if (this.iframe?.nativeElement) {
-      if (shouldPause) {
-        const iframe: HTMLIFrameElement = this.iframe.nativeElement;
-        iframe.src = null;
-
-        if (!this.autoplay && this.videoSrc) {
-          this.iframeSrc = this._sanitizer.bypassSecurityTrustResourceUrl(this.videoSrc);
-        }
-      }
+  iframeSrc: Signal<SafeResourceUrl> = computed(() => {
+    if (this.pause()) {
+      return null;
     }
-  }
+    return this._sanitizer.bypassSecurityTrustResourceUrl(this.src());
+  });
 
-  @Input() autoplay: boolean;
+  src: InputSignal<string> = input<string>();
 
-  @Input() loadingAttr: 'eager' | 'lazy';
+  pause: InputSignal<boolean> = input<boolean>();
 
-  @ViewChild('iframe') iframe: ElementRef;
+  autoplay: InputSignal<boolean> = input<boolean>();
 
-  constructor(private _sanitizer: DomSanitizer) {
-  }
+  loadingAttr: InputSignal<'eager' | 'lazy'> = input();
+
+  iframe: Signal<ElementRef<HTMLIFrameElement>> = viewChild<ElementRef<HTMLIFrameElement>>('iframe');
 }

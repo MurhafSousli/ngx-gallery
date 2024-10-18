@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, OnInit, Signal, viewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import {
-  Gallery,
   GalleryConfig,
   GalleryItemData,
   GalleryItemTypes,
@@ -11,7 +10,8 @@ import {
   VideoItemData,
   YoutubeItemData,
   GalleryModule,
-  VimeoItemData
+  GalleryComponent,
+  VimeoItemData, GalleryThumbsComponent
 } from 'ng-gallery';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Observable, map } from 'rxjs';
@@ -36,18 +36,22 @@ import { NoteComponent } from '../../shared/note/note.component';
   styleUrls: ['./templates-example.component.scss'],
   animations: [slideInAnimation],
   standalone: true,
-  imports: [CommonModule, SectionTitleComponent, GalleryModule, HlCodeComponent, FooterComponent, FontAwesomeModule, MatButtonModule, NoteComponent]
+  imports: [CommonModule, SectionTitleComponent, GalleryModule, HlCodeComponent, FooterComponent, FontAwesomeModule, MatButtonModule, NoteComponent, GalleryThumbsComponent]
 })
-export class TemplatesExampleComponent implements OnInit {
+export class TemplatesExampleComponent {
 
   readonly arr = data;
   readonly code = code;
-  readonly media$: Observable<GalleryConfig>;
+  readonly media$: Observable<any>;
   readonly youtubeIcon = faYoutube;
   readonly vimeoIcon = faVimeo;
   readonly videoIcon = faVideo;
 
-  constructor(private _gallery: Gallery, mediaObserver: MediaObserver, private _title: Title) {
+  gallery: Signal<GalleryComponent> = viewChild(GalleryComponent);
+
+  constructor(mediaObserver: MediaObserver, private _title: Title) {
+    this._title.setTitle('Custom Templates | ng-gallery');
+
     this.media$ = mediaObserver.asObservable().pipe(
       map((res: MediaChange[]) => {
         if (res.some((x => x.mqAlias === 'sm' || x.mqAlias === 'xs'))) {
@@ -62,30 +66,30 @@ export class TemplatesExampleComponent implements OnInit {
         };
       })
     );
-  }
 
-  ngOnInit() {
-    this._title.setTitle('Custom Templates | ng-gallery');
-    const galleryRef = this._gallery.ref('mixed');
-
-    this.arr.map((item: GalleryItemData) => {
-      switch (item.type) {
-        case GalleryItemTypes.Image:
-          galleryRef.addImage(item);
-          break;
-        case GalleryItemTypes.Video:
-          galleryRef.addVideo(item);
-          break;
-        case GalleryItemTypes.Youtube:
-          galleryRef.addYoutube(item);
-          break;
-        case GalleryItemTypes.Vimeo:
-          galleryRef.addVimeo(item);
-          break;
-        default:
-          galleryRef.addIframe(item);
+    effect(() => {
+      const gallery: GalleryComponent = this.gallery();
+      if (gallery) {
+        this.arr.map((item: GalleryItemData) => {
+          switch (item.type) {
+            case GalleryItemTypes.Image:
+              gallery.addImage(item);
+              break;
+            case GalleryItemTypes.Video:
+              gallery.addVideo(item);
+              break;
+            case GalleryItemTypes.Youtube:
+              gallery.addYoutube(item);
+              break;
+            case GalleryItemTypes.Vimeo:
+              gallery.addVimeo(item);
+              break;
+            default:
+              gallery.addIframe(item);
+          }
+        });
       }
-    });
+    }, { allowSignalWrites: true });
   }
 }
 
@@ -141,7 +145,7 @@ const data: GalleryItemData[] = [
   } as VimeoItemData,
   {
     type: 'iframe',
-    src: 'https://ngx-scrollbar.netlify.com/',
+    src: 'https://ngx-scrollbar.netlify.app/',
     thumb: 'https://user-images.githubusercontent.com/8130692/64606830-d4006f00-d3cf-11e9-9874-c75269fa3a9c.png'
   } as IframeItemData
 ];
