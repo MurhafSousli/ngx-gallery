@@ -16,6 +16,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { imageFailedSvg } from './svg-assets';
 import { ImgRecognizer } from '../../utils/img-recognizer';
 import { ItemState } from './items.model';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   standalone: true,
@@ -34,7 +35,8 @@ import { ItemState } from './items.model';
   template: `
     @if (isThumbnail()) {
       <img [@fadeIn]="state()"
-           [src]="src()"
+           [ngSrc]="src()"
+           fill
            [attr.alt]="alt()"
            [attr.loading]="loadingAttr()"
            [style.visibility]="state() === 'success' ? 'visible' : 'hidden'"
@@ -42,13 +44,12 @@ import { ItemState } from './items.model';
            (load)="state.set('success')"
            (error)="state.set('failed'); error.emit($event)"/>
     } @else {
-      <img [galleryImage]="index()"
+      <img galleryImage
            [@fadeIn]="state()"
-           [src]="src()"
+           [ngSrc]="src()"
+           fill
            [attr.alt]="alt()"
            [attr.loading]="loadingAttr()"
-           [style.visibility]="state() === 'success' ? 'visible' : 'hidden'"
-           class="g-image-item"
            (load)="state.set('success')"
            (error)="state.set('failed'); error.emit($event)"/>
     }
@@ -82,7 +83,7 @@ import { ItemState } from './items.model';
   `,
   styleUrl: './gallery-image.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ImgRecognizer]
+  imports: [ImgRecognizer, NgOptimizedImage]
 })
 
 export class GalleryImageComponent {

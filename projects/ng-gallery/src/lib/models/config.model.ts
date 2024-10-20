@@ -1,6 +1,7 @@
 import { InjectionToken, Provider, TemplateRef } from '@angular/core';
 import { BezierEasingOptions } from '../smooth-scroll';
 import { defaultConfig } from '../utils/gallery.default';
+import { GalleryItemData } from '../components/templates/items.model';
 
 export const GALLERY_CONFIG: InjectionToken<GalleryConfig> = new InjectionToken<GalleryConfig>('GALLERY_CONFIG', {
   providedIn: 'root',
@@ -56,7 +57,7 @@ interface SliderConfig {
   loadingStrategy?: LoadingStrategy;
   loadingAttr?: LoadingAttr;
   boxTemplate?: TemplateRef<any>;
-  itemTemplate?: TemplateRef<any>;
+  itemTemplate?: TemplateRef<GalleryItemData>;
   imageTemplate?: TemplateRef<any>;
   centralized?: boolean;
 }

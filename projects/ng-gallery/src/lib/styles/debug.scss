@@ -2,7 +2,7 @@
   ::ng-deep {
     .g-sliding, .g-resizing, .g-scrolling {
       gallery-item.g-item-highlight {
-        visibility: hidden;
+        //visibility: hidden;
       }
     }
   }
@@ -28,7 +28,7 @@
       }
 
       gallery-item {
-        outline: 1px solid darkorange;
+        //outline: 1px solid darkorange;
 
         &.g-item-highlight {
           &:after {

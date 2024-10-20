@@ -4,7 +4,8 @@
   --g-box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
   --g-font-color: #000;
   --g-overlay-color: #fff;
-  --g-gutter-size: 1px;
+  --g-gutter-size: 0px;
+  //--g-gutter-size: 1px;
 
   z-index: 1;
   position: relative;
@@ -12,11 +13,11 @@
 
   gap: var(--g-gutter-size);
   width: 100%;
+  width: 776px;
   height: 500px;
   min-height: 100%;
   max-height: 100%;
   background-color: black;
-
 
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
@@ -26,18 +27,24 @@
     "left center right"
     ". bottom .";
 
+
+  // Gallery items variables
+  --g-item-width: 100%;
+  --g-item-height: 100%;
+  --g-item-max-height: var(--slider-height);
+
   &[gallerize] {
     --g-item-cursor: pointer;
   }
 
   // Gallery auto-height variables
   &[autoHeight='true'][itemAutoSize='false'][orientation='horizontal'] {
-    &[thumbPosition='top'], &[thumbPosition='bottom'] {
+    //&[thumbPosition='top'], &[thumbPosition='bottom'] {
       // if auto-height, use fit-content
       height: fit-content;
       --g-item-height: auto !important;
       --g-item-max-height: auto;
-    }
+    //}
   }
 
   // Gallery image variables

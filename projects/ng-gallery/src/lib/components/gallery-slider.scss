@@ -26,22 +26,17 @@
 
   scrollbar-width: none;
 
-  // Gallery items variables
-  --g-item-width: unset;
-  --g-item-height: unset;
-  --g-item-max-height: var(--slider-height);
-
   &[orientation='horizontal'] {
     --g-item-width: var(--slider-width);
-    --g-item-height: 100%;
+    //--g-item-height: 100%;
 
-    &[autoSize='true'] {
+    &[autosize='true'] {
       --g-item-width: auto;
     }
   }
 
   &[orientation='vertical'] {
-    --g-item-width: 100%;
+    //--g-item-width: 100%;
     --g-item-height: var(--slider-height);
 
     &[autoSize='true'] {

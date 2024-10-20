@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { NgIf, NgFor, AsyncPipe, NgOptimizedImage } from '@angular/common';
 import {
   GalleryItem,
   GalleryConfig,
@@ -9,7 +9,12 @@ import {
   Orientation,
   ThumbnailsPosition,
   GalleryComponent,
-  GalleryThumbsComponent, GalleryNavComponent, GalleryBulletsComponent, GalleryCounterComponent
+  GalleryThumbsComponent,
+  GalleryNavComponent,
+  GalleryBulletsComponent,
+  GalleryCounterComponent,
+  GalleryItemDef,
+  ImgRecognizer
 } from 'ng-gallery';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -53,6 +58,9 @@ import { FooterComponent } from '../../shared/footer/footer.component';
     GalleryNavComponent,
     GalleryBulletsComponent,
     GalleryCounterComponent,
+    GalleryItemDef,
+    ImgRecognizer,
+    NgOptimizedImage
   ]
 })
 export class LabComponent implements OnInit {

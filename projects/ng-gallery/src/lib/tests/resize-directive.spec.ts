@@ -71,7 +71,7 @@ describe('Resize sensor directive', () => {
   });
 
   it('should update the size signal when component size changes', async () => {
-    await afterTimeout(0);
+    await afterTimeout(16);
     expect(resizeSensorDirective.slideSize().width).toBe(500);
     expect(resizeSensorDirective.slideSize().height).toBe(300);
     expect(sliderComponent.nativeElement.style.getPropertyValue('--slider-width')).toBe('500px');

@@ -1,4 +1,4 @@
-import { Directive, TemplateRef } from '@angular/core';
+import { Directive, inject, TemplateRef } from '@angular/core';
 import { GalleryItemData } from '../components/templates/items.model';
 import { GalleryItemType } from '../models/constants';
 
@@ -7,14 +7,13 @@ import { GalleryItemType } from '../models/constants';
   selector: '[galleryItemDef]'
 })
 export class GalleryItemDef {
-  constructor(public templateRef: TemplateRef<GalleryItemContext<GalleryItemDef>>) {
-  }
+  templateRef: TemplateRef<GalleryItemContext<GalleryItemDef>> = inject(TemplateRef<GalleryItemContext<GalleryItemDef>>)
 
   // Make sure the template checker knows the type of the context with which the
   // template of this directive will be rendered
   static ngTemplateContextGuard(
     directive: GalleryItemDef,
-    context: unknown
+    context: GalleryItemContext<GalleryItemData>
   ): context is GalleryItemContext<GalleryItemData> {
     return true;
   }

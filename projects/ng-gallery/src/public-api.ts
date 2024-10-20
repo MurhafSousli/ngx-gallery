@@ -4,6 +4,7 @@ export * from './lib/components/gallery-nav.component';
 export * from './lib/components/gallery-thumbs.component';
 export * from './lib/components/gallery-bullets.component';
 export * from './lib/components/gallery-counter.component';
+export * from './lib/utils/img-recognizer';
 export * from './lib/components/gallery.component';
 export * from './lib/components/templates/items.model';
 export * from './lib/components/templates/gallery-iframe.component';

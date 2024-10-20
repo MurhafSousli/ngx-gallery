@@ -38,7 +38,7 @@ import { SliderComponent } from './slider/slider';
   selector: 'gallery-thumbs',
   template: `
     <g-slider [orientation]="orientation()"
-              [autoSize]="autosize()"
+              [autosize]="autosize()"
               [centralized]="centralized()"
               isThumbs
               resizeSensor
@@ -49,7 +49,6 @@ import { SliderComponent } from './slider/slider';
         @for (item of galleryRef.items(); track item.data.src; let i = $index; let count = $count) {
           <gallery-thumb [type]="item.type"
                          [data]="item.data"
-                         [visible]="!!galleryRef.visibleItems()[i]"
                          [currIndex]="galleryRef.currIndex()"
                          [index]="i"
                          [count]="count"

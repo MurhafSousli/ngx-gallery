@@ -27,6 +27,12 @@
              (itemClick)="onItemClick($event)"
              (thumbClick)="onThumbClick($event)">
 
+      <img *galleryItemDef="let item"
+           galleryImage
+           [src]="item.src"
+           fill
+           [attr.alt]="item.alt"/>
+
       @if (navConfig.nav) {
         <gallery-nav/>
       }
@@ -173,7 +179,8 @@
             <mat-checkbox [(ngModel)]="config.itemAutosize" [disabled]="config.autoHeight">Item autosize</mat-checkbox>
           </div>
           <div>
-            <mat-checkbox [(ngModel)]="thumbConfig.autosize" [disabled]="!thumbConfig.thumbs">Thumb autosize</mat-checkbox>
+            <mat-checkbox [(ngModel)]="thumbConfig.autosize" [disabled]="!thumbConfig.thumbs">Thumb autosize
+            </mat-checkbox>
           </div>
 
           <div>
@@ -240,7 +247,8 @@
             <mat-checkbox [(ngModel)]="thumbConfig.centralized">Centralize Thumbnails</mat-checkbox>
           </div>
           <div>
-            <mat-checkbox [(ngModel)]="thumbConfig.detach" [disabled]="!thumbConfig.thumbs">Detach thumbnails</mat-checkbox>
+            <mat-checkbox [(ngModel)]="thumbConfig.detach" [disabled]="!thumbConfig.thumbs">Detach thumbnails
+            </mat-checkbox>
           </div>
           <div>
             <mat-checkbox [(ngModel)]="thumbConfig.disabled" [disabled]="!thumbConfig.thumbs">Disable thumbnails' clicks

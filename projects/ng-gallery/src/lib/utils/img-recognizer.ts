@@ -3,9 +3,7 @@ import {
   inject,
   effect,
   untracked,
-  input,
   ElementRef,
-  InputSignal,
   EffectCleanupRegisterFn
 } from '@angular/core';
 import { ImgManager } from './img-manager';
@@ -15,6 +13,8 @@ import { SliderItem } from '../components/items/items';
   standalone: true,
   selector: 'img[galleryImage]',
   host: {
+    '[class.g-image-item]': 'true',
+    // '[style.visibility]': 'item.state() === "success" ? "visible" : "hidden"',
     '(load)': 'item.state.set("success")',
     '(error)': 'item.state.set("failed")'
   }
@@ -27,8 +27,6 @@ export class ImgRecognizer {
 
   readonly item: SliderItem = inject(SliderItem);
 
-  index: InputSignal<number> = input(null, { alias: 'galleryImage' });
-
   constructor() {
     if (this.item) {
       // Mark the gallery-item component as an image item
@@ -38,7 +36,7 @@ export class ImgRecognizer {
     }
 
     effect((onCleanup: EffectCleanupRegisterFn) => {
-      const index: number = this.index();
+      const index: number = this.item.index();
 
       untracked(() => {
         if (index != null) {

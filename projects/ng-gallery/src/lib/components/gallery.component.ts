@@ -14,7 +14,7 @@ import {
   TemplateRef,
   OutputEmitterRef,
   ChangeDetectionStrategy,
-  InputSignalWithTransform,
+  InputSignalWithTransform
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { Directionality } from '@angular/cdk/bidi';

@@ -93,6 +93,7 @@ export class IntersectionSensor {
 
       if (disabled) return;
 
+      // TODO: Should handle vertical orientation
       untracked(() => {
         const elements: Element[] = visibleElements.map((entry: IntersectionObserverEntry) => entry.target);
 
@@ -103,8 +104,8 @@ export class IntersectionSensor {
 
         const options: IntersectionObserverInit = {
           root: this.nativeElement,
-          threshold: .99,
-          rootMargin: `0px ${ -diffSize }px 0px ${ -diffSize }px`
+          threshold: .999,
+          rootMargin: `1000px ${ -diffSize }px 1000px ${ -diffSize }px`
         };
 
         this.zone.runOutsideAngular(() => {
@@ -120,6 +121,8 @@ export class IntersectionSensor {
 
             const index: number = +elementWithHighestIntersectionRatio.target.getAttribute('galleryIndex');
 
+            // TODO: There is a bug where index becomes 1 then goes back to 0
+            console.log('intersection observer index', index, entries)
             if (index === this.galleryRef.currIndex()) return;
 
             // Set the new current index

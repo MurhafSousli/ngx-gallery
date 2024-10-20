@@ -1,11 +1,15 @@
 import { Component, Signal, viewChild } from '@angular/core';
-import { GalleryComponent, GalleryItem, ImageItem } from 'ng-gallery';
+import { GalleryComponent, GalleryItem, GalleryItemDef, ImageItem, ImgRecognizer } from 'ng-gallery';
 
 @Component({
   standalone: true,
-  imports: [GalleryComponent],
+  imports: [GalleryComponent, GalleryItemDef, ImgRecognizer],
   template: `
-    <gallery [items]="items" [style.width.px]="width" [style.height.px]="height"/>
+    <gallery [items]="items" [style.width.px]="width" [style.height.px]="height">
+      <img *galleryItemDef="let item"
+           galleryImage
+           [src]="item.src"/>
+    </gallery>
   `
 })
 export class TestComponent {

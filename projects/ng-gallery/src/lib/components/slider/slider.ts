@@ -24,7 +24,7 @@ import { SliderItem } from '../items/items';
     '[class.g-slider]': 'true',
     '[attr.centralised]': 'centralized()',
     '[attr.orientation]': 'orientation()',
-    '[attr.autoSize]': 'autoSize()',
+    '[attr.autosize]': 'autosize()',
   },
   selector: 'g-slider',
   template: `
@@ -39,7 +39,7 @@ export class SliderComponent {
 
   readonly orientation: InputSignal<Orientation> = input<Orientation>();
 
-  readonly autoSize: InputSignal<boolean> = input<boolean>();
+  readonly autosize: InputSignal<boolean> = input<boolean>();
 
   readonly centralized: InputSignal<boolean> = input<boolean>();
 

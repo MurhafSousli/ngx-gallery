@@ -65,13 +65,13 @@ export class SliderResizeObserver implements AfterViewChecked, OnInit {
   // Stream that emits after the transition to the new height is completed
   private _afterHeightChanged$: Observable<any>;
 
-  private _isAutoHeight: Signal<boolean> = computed(() => {
-    const config: GalleryConfig = this._galleryRef.config();
-    return config.autoHeight &&
-      !config.itemAutosize &&
-      config.orientation === 'horizontal' &&
-      (config.thumbPosition === 'top' || config.thumbPosition === 'bottom');
-  });
+  // private _isAutoHeight: Signal<boolean> = computed(() => {
+  //   const config: GalleryConfig = this._galleryRef.config();
+  //   return config.autoHeight &&
+  //     !config.itemAutosize &&
+  //     config.orientation === 'horizontal' &&
+  //     (config.thumbPosition === 'top' || config.thumbPosition === 'bottom');
+  // });
 
   adapter: InputSignal<SliderAdapter> = input<SliderAdapter>();
 
@@ -84,7 +84,7 @@ export class SliderResizeObserver implements AfterViewChecked, OnInit {
 
     effect((onCleanup: EffectCleanupRegisterFn) => {
       const config = this._galleryRef.config();
-      const isAutoHeight = this._isAutoHeight();
+      // const isAutoHeight = this._isAutoHeight();
 
       untracked(() => {
         this._zone.runOutsideAngular(() => {
@@ -100,7 +100,7 @@ export class SliderResizeObserver implements AfterViewChecked, OnInit {
               // Update CSS variables with the proper values
               this.updateSliderSize();
 
-              if (isAutoHeight) {
+              // if (isAutoHeight) {
                 const img: HTMLImageElement = await firstValueFrom(this._imgManager.getActiveItem());
                 // If img height is identical to the viewport height then skip
                 if (img.height === this._viewport.clientHeight) {
@@ -118,9 +118,9 @@ export class SliderResizeObserver implements AfterViewChecked, OnInit {
                     observe: true
                   });
                 }
-              } else {
-                requestAnimationFrame(() => this.resetResizingState({ shouldSkip: true }));
-              }
+              // } else {
+              //   requestAnimationFrame(() => this.resetResizingState({ shouldSkip: true }));
+              // }
             })
           ).subscribe();
         });

@@ -8,14 +8,16 @@ import { GalleryItemComponent } from './gallery-item.component';
 import { ScrollSnapType } from '../services/scroll-snap-type';
 import { ResizeSensor } from '../services/resize-sensor';
 import { SliderComponent } from './slider/slider';
+import { AutoHeight } from '../observers/auto-height';
 
 @Component({
   standalone: true,
   selector: 'gallery-slider',
   template: `
     <g-slider [orientation]="galleryRef.config().orientation"
-              [autoSize]="galleryRef.config().itemAutosize"
+              [autosize]="galleryRef.config().itemAutosize"
               [centralized]="galleryRef.config().centralized"
+
               resizeSensor
               smoothScroll
               intersectionSensor
@@ -53,7 +55,8 @@ import { SliderComponent } from './slider/slider';
     HammerSliding,
     ScrollSnapType,
     GalleryItemComponent,
-    SliderComponent
+    SliderComponent,
+    AutoHeight
   ]
 })
 export class GallerySliderComponent {

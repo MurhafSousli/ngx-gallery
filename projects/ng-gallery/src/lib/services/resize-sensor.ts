@@ -27,7 +27,7 @@ import { SliderComponent } from '../components/slider/slider';
   }
 })
 export class ResizeSensor {
-
+  // TODO: This directive is used in both slider and thumbs, maybe we can only observe the root element once
   private readonly sharedResizeObserver: SharedResizeObserver = inject(SharedResizeObserver)
 
   private readonly slider: SliderComponent = inject(SliderComponent, { self: true });
