@@ -13,7 +13,7 @@
 
   gap: var(--g-gutter-size);
   width: 100%;
-  width: 776px;
+  //width: 776px;
   height: 500px;
   min-height: 100%;
   max-height: 100%;
@@ -32,6 +32,16 @@
   --g-item-width: 100%;
   --g-item-height: 100%;
   --g-item-max-height: var(--slider-height);
+
+  &.g-resizing {
+    // Changes the height of the slider to match the active item height
+    //--slider-height: var(--slider-auto-height) !important;
+    //::ng-deep {
+    //  .g-slider {
+    //    height: var(--slider-auto-height) !important;
+    //  }
+    //}
+  }
 
   &[gallerize] {
     --g-item-cursor: pointer;

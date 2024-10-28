@@ -1,5 +1,5 @@
-import { GalleryItem } from '../../models/gallery.model';
-import { GalleryItemType, GalleryItemTypes } from '../../models/constants';
+import { GalleryItem } from '../models/gallery.model';
+import { GalleryItemType, GalleryItemTypes } from '../models/constants';
 
 export class ImageItem implements GalleryItem {
   readonly type: GalleryItemType;

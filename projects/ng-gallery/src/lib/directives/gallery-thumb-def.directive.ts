@@ -1,5 +1,5 @@
 import { Directive, TemplateRef } from '@angular/core';
-import { ImageItemData } from '../components/templates/items.model';
+import { ImageItemData } from '../templates/items.model';
 import { GalleryItemContext } from './gallery-item-def.directive';
 
 @Directive({

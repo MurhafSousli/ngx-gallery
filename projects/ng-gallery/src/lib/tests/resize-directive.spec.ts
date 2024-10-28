@@ -2,6 +2,8 @@ import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
+import { GalleryRef } from 'ng-gallery';
+import { firstValueFrom } from 'rxjs';
 import { afterTimeout, TestComponent } from './common';
 import { SliderComponent } from '../components/slider/slider';
 import { ResizeSensor } from '../services/resize-sensor';
@@ -11,6 +13,7 @@ describe('Resize sensor directive', () => {
   let component: TestComponent;
   let resizeSensorDirective: ResizeSensor;
   let sliderComponent: SliderComponent;
+  let galleryRef: GalleryRef;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -29,6 +32,7 @@ describe('Resize sensor directive', () => {
 
     const resizeSensorElement: DebugElement = fixture.debugElement.query(By.directive(ResizeSensor));
     resizeSensorDirective = resizeSensorElement.injector.get(ResizeSensor);
+    galleryRef = resizeSensorElement.injector.get(GalleryRef);
 
     const sliderComponentElement: DebugElement = fixture.debugElement.query(By.directive(SliderComponent));
     sliderComponent = sliderComponentElement.componentInstance;
@@ -39,7 +43,7 @@ describe('Resize sensor directive', () => {
   });
 
   it('should compute "centralizeStart" size when content >= viewport', async () => {
-    await afterTimeout(16);
+    await firstValueFrom(galleryRef.afterItemsVisible);
     expect(resizeSensorDirective.centralizeStart()).toBe(0);
     expect(resizeSensorDirective.centralizeStart()).toBe(0);
     expect(sliderComponent.nativeElement.style.getPropertyValue('--centralize-start-size')).toBe('0px');
@@ -52,7 +56,8 @@ describe('Resize sensor directive', () => {
       centralized: true
     });
     component.width = 800;
-    component.height = 200;
+    component.height = 200
+
     // TODO: Find a promise that resolves when all items are loaded and displayed
     await afterTimeout(200);
 
@@ -63,7 +68,7 @@ describe('Resize sensor directive', () => {
   });
 
   it('should compute "centralizeStart" size when content >= viewport', async () => {
-    await afterTimeout(16);
+    await firstValueFrom(galleryRef.afterItemsVisible);
     expect(resizeSensorDirective.centralizeStart()).toBe(0);
     expect(resizeSensorDirective.centralizeStart()).toBe(0);
     expect(sliderComponent.nativeElement.style.getPropertyValue('--centralize-start-size')).toBe('0px');
@@ -71,7 +76,7 @@ describe('Resize sensor directive', () => {
   });
 
   it('should update the size signal when component size changes', async () => {
-    await afterTimeout(16);
+    await firstValueFrom(galleryRef.afterItemsVisible);
     expect(resizeSensorDirective.slideSize().width).toBe(500);
     expect(resizeSensorDirective.slideSize().height).toBe(300);
     expect(sliderComponent.nativeElement.style.getPropertyValue('--slider-width')).toBe('500px');

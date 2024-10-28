@@ -5,6 +5,7 @@ import { DebugElement } from '@angular/core';
 import { GalleryRef } from 'ng-gallery';
 import { afterTimeout, TestComponent } from './common';
 import { SmoothScroll, SmoothScrollOptions } from '../smooth-scroll';
+import { filter, firstValueFrom, Observable } from 'rxjs';
 
 describe('Smooth scroll directive', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -54,14 +55,17 @@ describe('Smooth scroll directive', () => {
 
   it('should scroll instantly to target item on gallery index changes', async () => {
     const scrollToSpy: jasmine.Spy = spyOn(smoothScrollDirective, 'scrollTo').and.callThrough();
-    await afterTimeout(16);
+    await firstValueFrom(galleryRef.afterItemsVisible);
 
     // Trigger index change
     galleryRef.set(1, 'auto');
 
     expect(smoothScrollDirective.scrolling()).toBe(true);
 
-    await afterTimeout(50);
+    const arrivedToNextItem$: Observable<any> = galleryRef.indexChanged.pipe(
+      filter((currIndex: number) => currIndex === 1)
+    );
+    await firstValueFrom(arrivedToNextItem$);
 
     const pos: SmoothScrollOptions = {
       start: 500,
@@ -75,14 +79,17 @@ describe('Smooth scroll directive', () => {
 
   it('should scroll smoothly to target item on gallery index changes', async () => {
     const scrollToSpy: jasmine.Spy = spyOn(smoothScrollDirective, 'scrollTo').and.callThrough();
-    await afterTimeout(16);
+    await firstValueFrom(galleryRef.afterItemsVisible);
 
     // Trigger index change
     galleryRef.set(2, 'smooth');
 
     expect(smoothScrollDirective.scrolling()).toBe(true);
 
-    await afterTimeout(500);
+    const arrivedToNextItem$: Observable<any> = galleryRef.indexChanged.pipe(
+      filter((currIndex: number) => currIndex === 2)
+    );
+    await firstValueFrom(arrivedToNextItem$);
 
     const pos: SmoothScrollOptions = {
       start: 1000,
@@ -92,5 +99,4 @@ describe('Smooth scroll directive', () => {
     expect(galleryRef.currIndex()).toBe(2);
     expect(smoothScrollDirective.scrolling()).toBe(false);
   });
-
 });

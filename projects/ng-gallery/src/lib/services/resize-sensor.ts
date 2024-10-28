@@ -8,7 +8,7 @@ import {
   NgZone,
   Signal,
   WritableSignal,
-  EffectCleanupRegisterFn
+  EffectCleanupRegisterFn, ElementRef
 } from '@angular/core';
 import { SharedResizeObserver } from '@angular/cdk/observers/private';
 import { Subscription, animationFrameScheduler, throttleTime, combineLatest } from 'rxjs';
@@ -27,14 +27,16 @@ import { SliderComponent } from '../components/slider/slider';
   }
 })
 export class ResizeSensor {
-  // TODO: This directive is used in both slider and thumbs, maybe we can only observe the root element once
-  private readonly sharedResizeObserver: SharedResizeObserver = inject(SharedResizeObserver)
 
-  private readonly slider: SliderComponent = inject(SliderComponent, { self: true });
+  nativeElement:HTMLElement = inject(ElementRef).nativeElement;
+
+  private readonly sharedResizeObserver: SharedResizeObserver = inject(SharedResizeObserver);
 
   private readonly zone: NgZone = inject(NgZone);
 
   private readonly galleryRef: GalleryRef = inject(GalleryRef);
+
+  private readonly slider: SliderComponent = inject(SliderComponent, { self: true });
 
   readonly slideSize: WritableSignal<DOMRectReadOnly> = signal(null);
 
@@ -50,6 +52,8 @@ export class ResizeSensor {
     return this.slider.adapter()?.getCentralizerEndSize();
   });
 
+  disabled: WritableSignal<boolean> = signal(false);
+
   constructor() {
     let resizeSubscription$: Subscription;
 
@@ -57,7 +61,7 @@ export class ResizeSensor {
       const config: GalleryConfig = this.galleryRef.config();
 
       // Make sure items are rendered
-      if (!this.slider.items().length) return;
+      if (!this.slider.items().length || this.disabled()) return;
 
       untracked(() => {
         this.zone.runOutsideAngular(() => {
@@ -74,6 +78,7 @@ export class ResizeSensor {
               if (!sliderEntries || !contentEntries) return;
 
               if (sliderEntries[0].contentRect.height) {
+                console.log('🔥', sliderEntries[0].contentRect.height)
                 this.slideSize.set(sliderEntries[0].contentRect);
               }
 

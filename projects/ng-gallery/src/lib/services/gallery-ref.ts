@@ -14,11 +14,13 @@ import {
   VimeoItemData,
   YoutubeItem,
   YoutubeItemData
-} from '../components/templates/items.model';
+} from '../templates/items.model';
 import { IndexChange } from '../models/slider.model';
 
 @Injectable()
 export class GalleryRef {
+
+  readonly afterItemsVisible: Subject<void> = new Subject();
 
   /** Stream that emits on item click */
   readonly itemClick: Subject<number> = new Subject<number>();
@@ -28,9 +30,6 @@ export class GalleryRef {
 
   /** Stream that emits when items is changed (items loaded, item added, item removed) */
   readonly itemsChanged: Subject<void> = new Subject<void>();
-
-  /** Stream that emits when current index is changed */
-  readonly indexChanged: Subject<void> = new Subject<void>();
 
   /** Stream that emits on an error occurs */
   readonly error: Subject<GalleryError> = new Subject<GalleryError>();
@@ -54,6 +53,9 @@ export class GalleryRef {
   readonly hasPrev: Signal<boolean> = computed(() => this.currIndex() > 0);
 
   readonly indexChange: Subject<IndexChange> = new Subject<IndexChange>();
+
+  /** Stream that emits when current index is changed */
+  readonly indexChanged: Observable<number> = toObservable(this.currIndex);
 
   /** Config signal */
   readonly config: WritableSignal<GalleryConfig> = signal(inject(GALLERY_CONFIG));

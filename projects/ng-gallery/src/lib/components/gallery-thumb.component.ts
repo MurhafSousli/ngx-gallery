@@ -11,8 +11,8 @@ import {
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { GalleryItemContext } from '../directives/gallery-item-def.directive';
-import { GalleryImageComponent } from './templates/gallery-image.component';
-import { ImageItemData } from './templates/items.model';
+import { GalleryImageComponent } from '../templates/gallery-image.component';
+import { ImageItemData } from '../templates/items.model';
 import { GalleryItemType } from '../models/constants';
 import { GalleryRef } from '../services/gallery-ref';
 import { SliderItem } from './items/items';

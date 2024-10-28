@@ -2,17 +2,14 @@ import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { GalleryRef } from 'ng-gallery';
-import { afterTimeout, TestComponent } from './common';
+import { TestComponent } from './common';
 import { HammerSliding } from '../gestures/hammer-sliding.directive';
 import 'hammerjs';
 
 describe('Hammer slider directive', () => {
   let fixture: ComponentFixture<TestComponent>;
-  let nativeElement: HTMLElement;
   let hammerSliderElement: DebugElement
   let hammerSliderDirective: HammerSliding;
-  let galleryRef: GalleryRef;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -30,9 +27,6 @@ describe('Hammer slider directive', () => {
 
     hammerSliderElement = fixture.debugElement.query(By.directive(HammerSliding));
     hammerSliderDirective = hammerSliderElement.injector.get(HammerSliding);
-    nativeElement = hammerSliderElement.nativeElement;
-
-    galleryRef = hammerSliderElement.injector.get(GalleryRef);
   });
 
   it('should create [hammerSlider] directive', () => {

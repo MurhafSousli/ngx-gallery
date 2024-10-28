@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, filter, map, switchMap, EMPTY, merge, Subject, tap } from 'rxjs';
-import { ItemState } from '../components/templates/items.model';
-import { GalleryRef } from '../services/gallery-ref';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { Observable, Subject, EMPTY, filter, map, switchMap, merge } from 'rxjs';
+import { ItemState } from '../templates/items.model';
+import { GalleryRef } from '../services/gallery-ref';
 
 interface ImageRegistry {
   state$: Observable<ItemState>;
@@ -21,7 +21,7 @@ export class ImgManager {
   private readonly images: Map<number, ImageRegistry> = new Map<number, ImageRegistry>();
 
   getActiveItem(): Observable<HTMLImageElement> {
-    return merge(this.currIndex$.pipe(tap((x) => console.log('index', x))), this.trigger$.pipe(tap(() => console.log('trigger!')))).pipe(
+    return merge(this.currIndex$, this.trigger$).pipe(
       switchMap(() => {
         const img: ImageRegistry = this.images.get(this.galleryRef.currIndex());
         if (img) {

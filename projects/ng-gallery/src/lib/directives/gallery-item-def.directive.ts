@@ -1,5 +1,5 @@
 import { Directive, inject, TemplateRef } from '@angular/core';
-import { GalleryItemData } from '../components/templates/items.model';
+import { GalleryItemData } from '../templates/items.model';
 import { GalleryItemType } from '../models/constants';
 
 @Directive({

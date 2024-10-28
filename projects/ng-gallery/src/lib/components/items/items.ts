@@ -1,17 +1,18 @@
 import {
-  computed,
   Directive,
-  ElementRef,
-  inject, Injector,
-  input,
-  InputSignal,
-  Signal,
+  inject,
   signal,
+  computed,
+  input,
+  Signal,
+  Injector,
+  ElementRef,
+  InputSignal,
   WritableSignal
 } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
-import { ItemState } from '../templates/items.model';
+import { ItemState } from '../../templates/items.model';
 import { GalleryRef } from '../../services/gallery-ref';
 
 @Directive()

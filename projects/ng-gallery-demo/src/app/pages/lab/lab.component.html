@@ -9,7 +9,6 @@
     <gallery #gallery id="lab"
              [items]="photos$ | async"
              [centralized]="config.centralized"
-             [autoHeight]="config.autoHeight"
              [itemAutosize]="config.itemAutosize"
              [loadingAttr]="config.loadingAttr"
              [resizeDebounceTime]="config.resizeDebounceTime"
@@ -47,17 +46,18 @@
         <gallery-counter [align]="counterConfig.align"/>
       }
 
-      <gallery-thumbs [autosize]="thumbConfig.autosize"
-                      [imageSize]="thumbConfig.imageSize"
-                      [centralized]="thumbConfig.centralized"
-                      [thumbWidth]="thumbConfig.thumbWidth"
-                      [thumbHeight]="thumbConfig.thumbHeight"
-                      [disabled]="thumbConfig.disabled"
-                      [disableScroll]="thumbConfig.disableScroll"
-                      [disableMouseScroll]="thumbConfig.disableMouseScroll"
-                      [position]="thumbConfig.position"
-                      [detach]="thumbConfig.detach"/>
-
+      @if (thumbConfig.thumbs) {
+        <gallery-thumbs [autosize]="thumbConfig.autosize"
+                        [imageSize]="thumbConfig.imageSize"
+                        [centralized]="thumbConfig.centralized"
+                        [thumbWidth]="thumbConfig.thumbWidth"
+                        [thumbHeight]="thumbConfig.thumbHeight"
+                        [disabled]="thumbConfig.disabled"
+                        [disableScroll]="thumbConfig.disableScroll"
+                        [disableMouseScroll]="thumbConfig.disableMouseScroll"
+                        [position]="thumbConfig.position"
+                        [detach]="thumbConfig.detach"/>
+      }
     </gallery>
 
     <div class="buttons-container">
@@ -244,7 +244,8 @@
             <mat-checkbox [(ngModel)]="config.centralized">Centralize Slider</mat-checkbox>
           </div>
           <div>
-            <mat-checkbox [(ngModel)]="thumbConfig.centralized">Centralize Thumbnails</mat-checkbox>
+            <mat-checkbox [(ngModel)]="thumbConfig.centralized" [disabled]="!thumbConfig.thumbs">Centralize Thumbnails
+            </mat-checkbox>
           </div>
           <div>
             <mat-checkbox [(ngModel)]="thumbConfig.detach" [disabled]="!thumbConfig.thumbs">Detach thumbnails
@@ -263,7 +264,9 @@
           </div>
 
           <div>
-            <mat-checkbox [(ngModel)]="thumbConfig.disableScroll">Disable Thumb Scroll</mat-checkbox>
+            <mat-checkbox [(ngModel)]="thumbConfig.disableScroll" [disabled]="!thumbConfig.thumbs">Disable Thumb
+              Scroll
+            </mat-checkbox>
           </div>
 
           <div>
@@ -271,7 +274,9 @@
           </div>
 
           <div>
-            <mat-checkbox [(ngModel)]="thumbConfig.disableMouseScroll">Disable Thumb Mouse Scroll</mat-checkbox>
+            <mat-checkbox [(ngModel)]="thumbConfig.disableMouseScroll" [disabled]="!thumbConfig.thumbs">Disable Thumb
+              Mouse Scroll
+            </mat-checkbox>
           </div>
         </div>
       </div>

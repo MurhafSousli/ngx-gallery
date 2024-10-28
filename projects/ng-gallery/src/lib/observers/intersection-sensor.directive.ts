@@ -14,7 +14,7 @@ import { GalleryConfig } from '../models/config.model';
 import { GalleryRef } from '../services/gallery-ref';
 import { SliderAdapter } from '../components/adapters';
 import { GalleryItemComponent } from '../components/gallery-item.component';
-import { createIntersectionObserver } from './active-item-observer';
+import { createIntersectionObserver } from './intersection-observer';
 import { SmoothScroll } from '../smooth-scroll';
 import { HammerSliding } from '../gestures/hammer-sliding.directive';
 import { SliderComponent } from '../components/slider/slider';
@@ -78,6 +78,7 @@ export class IntersectionSensor {
               }
             });
             this.zone.run(() => {
+              this.galleryRef.afterItemsVisible.next();
               this.slider.visibleEntries.set({ ...visibleItems });
             });
           });

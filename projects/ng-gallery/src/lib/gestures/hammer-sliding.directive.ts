@@ -4,12 +4,13 @@ import {
   signal,
   effect,
   untracked,
+  booleanAttribute,
   input,
   NgZone,
   ElementRef,
-  InputSignal,
   WritableSignal,
-  EffectCleanupRegisterFn
+  EffectCleanupRegisterFn,
+  InputSignalWithTransform
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { HammerGestureConfig } from '@angular/platform-browser';
@@ -22,7 +23,7 @@ import { GalleryRef } from '../services/gallery-ref';
 import { GalleryConfig } from '../models/config.model';
 import { SliderAdapter } from '../components/adapters';
 import { CustomHammerConfig, HammerInstance } from '../services/hammer';
-import { createIntersectionObserver } from '../observers/active-item-observer';
+import { createIntersectionObserver } from '../observers/intersection-observer';
 import { SliderComponent } from '../components/slider/slider';
 
 @Directive({
@@ -52,6 +53,10 @@ export class HammerSliding {
   private readonly slider: SliderComponent = inject(SliderComponent, { self: true });
 
   sliding: WritableSignal<boolean> = signal<boolean>(false);
+
+  isThumbs: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(false, {
+    transform: booleanAttribute
+  });
 
   constructor() {
     if (this._platform.ANDROID || this._platform.IOS || !(this._document.defaultView as any).Hammer) return;
@@ -90,10 +95,14 @@ export class HammerSliding {
           mc.on('panend', (e: any) => {
             this._document.onselectstart = null;
 
+            if (this.isThumbs()) {
+              this.sliding.set(false);
+              return;
+            }
+
             const index: number = this.getIndexOnMouseUp(e, this.slider.adapter());
             if (index !== -1) {
               this._zone.run(() => {
-                // this.isSlidingChange.emit(false);
                 this.galleryRef.set(index);
                 // Tiny delay is needed to avoid flicker positioning when scroll-snap is toggled
                 requestAnimationFrame(() => {
@@ -129,7 +138,6 @@ export class HammerSliding {
                 }, null);
 
               this._zone.run(() => {
-                // this.isSlidingChange.emit(false);
                 const index: number = +centerElement.target.getAttribute('galleryIndex');
                 this.galleryRef.set(index);
                 // Tiny delay is needed to avoid flicker positioning when scroll-snap is toggled

@@ -3,8 +3,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { GalleryRef } from 'ng-gallery';
-import { afterTimeout, TestComponent } from './common';
+import { getObservableFromContext, TestComponent } from './common';
 import { IntersectionSensor } from '../observers/intersection-sensor.directive';
+import { filter, firstValueFrom, Observable } from 'rxjs';
 
 describe('Intersection directive', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -35,7 +36,7 @@ describe('Intersection directive', () => {
   });
 
   it('should observe when items become visible as soon as possible', async () => {
-    await afterTimeout(16);
+    await firstValueFrom(galleryRef.afterItemsVisible);
 
     const visibleItems: Record<number, IntersectionObserverEntry> = galleryRef.visibleItems();
     const element: Element = visibleItems[0].target;
@@ -48,11 +49,18 @@ describe('Intersection directive', () => {
   });
 
   it('should detect when next item becomes visible on scroll then detect the previous leave after scroll', async () => {
-    await afterTimeout(16);
+    await firstValueFrom(galleryRef.afterItemsVisible);
+
     expect(galleryRef.currIndex()).toBe(0);
     galleryRef.next();
 
-    await afterTimeout(200);
+    // Wait for scroll starts and the next item is detected, at this point both previous and next items are visible
+
+    const visibleItemIsTwo$: Observable<any> = getObservableFromContext(galleryRef.visibleItems).pipe(
+      filter((obj: Record<number, IntersectionObserverEntry>) => Object.keys(obj).length === 2)
+    );
+    await firstValueFrom(visibleItemIsTwo$);
+
     const visibleItems: Record<number, IntersectionObserverEntry> = galleryRef.visibleItems();
     const queryElements: DebugElement[] = fixture.debugElement.queryAll(By.css('gallery-item.g-item-highlight'));
 
@@ -60,7 +68,13 @@ describe('Intersection directive', () => {
     expect(visibleItems[0].target).toBe(queryElements[0].nativeElement);
     expect(visibleItems[1].target).toBe(queryElements[1].nativeElement);
 
-    await afterTimeout(300);
+    // Wait until scroll is ended and the new active item is set
+
+    const arrivedToNextItem$: Observable<any> = galleryRef.indexChanged.pipe(
+      filter((currIndex: number) => currIndex === 1)
+    );
+    await firstValueFrom(arrivedToNextItem$);
+
     const visibleItemsAfter: Record<number, IntersectionObserverEntry> = galleryRef.visibleItems();
     const queryElementsAfter: DebugElement[] = fixture.debugElement.queryAll(By.css('gallery-item.g-item-highlight'));
 

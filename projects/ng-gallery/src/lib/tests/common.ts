@@ -1,5 +1,8 @@
 import { Component, Signal, viewChild } from '@angular/core';
 import { GalleryComponent, GalleryItem, GalleryItemDef, ImageItem, ImgRecognizer } from 'ng-gallery';
+import { Observable } from 'rxjs';
+import { TestBed } from '@angular/core/testing';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   standalone: true,
@@ -33,4 +36,12 @@ export class TestComponent {
 export async function afterTimeout(timeout: number): Promise<void> {
   // Use await with a setTimeout promise
   await new Promise<void>((resolve) => setTimeout(resolve, timeout));
+}
+
+export function getObservableFromContext<T = unknown>(signal: Signal<T>): Observable<T> {
+  let obs;
+  TestBed.runInInjectionContext(() => {
+    obs = toObservable(signal);
+  });
+  return obs;
 }

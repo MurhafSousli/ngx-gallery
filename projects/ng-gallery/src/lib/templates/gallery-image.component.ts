@@ -14,7 +14,7 @@ import {
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { imageFailedSvg } from './svg-assets';
-import { ImgRecognizer } from '../../utils/img-recognizer';
+import { ImgRecognizer } from '../utils/img-recognizer';
 import { ItemState } from './items.model';
 import { NgOptimizedImage } from '@angular/common';
 

@@ -27,8 +27,7 @@ import { SliderItem } from '../items/items';
     '[attr.autosize]': 'autosize()',
   },
   selector: 'g-slider',
-  template: `
-    <ng-content/>`,
+  template: '<ng-content/>',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SliderComponent {

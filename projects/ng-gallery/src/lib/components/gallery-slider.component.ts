@@ -1,4 +1,4 @@
-import { Component, inject, output, OutputEmitterRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, output, OutputEmitterRef, ChangeDetectionStrategy, viewChild } from '@angular/core';
 import { GalleryError } from '../models/gallery.model';
 import { GalleryRef } from '../services/gallery-ref';
 import { SmoothScroll } from '../smooth-scroll';
@@ -8,7 +8,6 @@ import { GalleryItemComponent } from './gallery-item.component';
 import { ScrollSnapType } from '../services/scroll-snap-type';
 import { ResizeSensor } from '../services/resize-sensor';
 import { SliderComponent } from './slider/slider';
-import { AutoHeight } from '../observers/auto-height';
 
 @Component({
   standalone: true,
@@ -17,7 +16,6 @@ import { AutoHeight } from '../observers/auto-height';
     <g-slider [orientation]="galleryRef.config().orientation"
               [autosize]="galleryRef.config().itemAutosize"
               [centralized]="galleryRef.config().centralized"
-
               resizeSensor
               smoothScroll
               intersectionSensor
@@ -55,13 +53,15 @@ import { AutoHeight } from '../observers/auto-height';
     HammerSliding,
     ScrollSnapType,
     GalleryItemComponent,
-    SliderComponent,
-    AutoHeight
+    SliderComponent
   ]
 })
 export class GallerySliderComponent {
 
   readonly galleryRef: GalleryRef = inject(GalleryRef);
+
+  // TODO: Allow auto-height to access resize sensor
+  resizeSensor = viewChild(ResizeSensor);
 
   /** Stream that emits when thumb is clicked */
   itemClick: OutputEmitterRef<number> = output<number>();

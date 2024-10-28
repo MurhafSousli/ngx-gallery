@@ -14,7 +14,7 @@ import {
   GalleryBulletsComponent,
   GalleryCounterComponent,
   GalleryItemDef,
-  ImgRecognizer
+  ImgRecognizer, AutoHeight
 } from 'ng-gallery';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -39,6 +39,7 @@ import { FooterComponent } from '../../shared/footer/footer.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
+    AutoHeight,
     FlexLayoutModule,
     MatIconModule,
     NgIf,
@@ -113,7 +114,7 @@ export class LabComponent implements OnInit {
   indexChange$ = new BehaviorSubject<any>({ active: false });
 
   constructor(pixabay: Pixabay, private _title: Title) {
-    this.photos$ = pixabay.getHDImages('jet fighter');
+    this.photos$ = pixabay.getHDImages('tropical');
   }
 
   ngOnInit() {
@@ -130,7 +131,7 @@ export class LabComponent implements OnInit {
       autoplayInterval: 3000,
       loadingStrategy: LoadingStrategy.Preload,
       orientation: Orientation.Horizontal,
-      autoHeight: false,
+      autoHeight: true,
       itemAutosize: false,
       scrollBehavior: 'smooth',
       loadingAttr: 'lazy',

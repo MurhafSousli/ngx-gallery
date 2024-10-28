@@ -1,7 +1,7 @@
 import { InjectionToken, Provider, TemplateRef } from '@angular/core';
 import { BezierEasingOptions } from '../smooth-scroll';
 import { defaultConfig } from '../utils/gallery.default';
-import { GalleryItemData } from '../components/templates/items.model';
+import { GalleryItemData } from '../templates/items.model';
 
 export const GALLERY_CONFIG: InjectionToken<GalleryConfig> = new InjectionToken<GalleryConfig>('GALLERY_CONFIG', {
   providedIn: 'root',

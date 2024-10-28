@@ -14,13 +14,13 @@ import {
   TemplateRef,
   OutputEmitterRef,
   ChangeDetectionStrategy,
-  InputSignalWithTransform
+  InputSignalWithTransform, viewChild
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { Directionality } from '@angular/cdk/bidi';
 import { GalleryRef } from '../services/gallery-ref';
 import { GalleryError, GalleryItem } from '../models/gallery.model';
-import { IframeItemData, ImageItemData, VideoItemData, VimeoItemData, YoutubeItemData } from './templates/items.model';
+import { IframeItemData, ImageItemData, VideoItemData, VimeoItemData, YoutubeItemData } from '../templates/items.model';
 import { GALLERY_CONFIG, GalleryConfig } from '../models/config.model';
 import { BezierEasingOptions } from '../smooth-scroll';
 import { GalleryImageDef } from '../directives/gallery-image-def.directive';
@@ -41,7 +41,7 @@ import { GallerySliderComponent } from './gallery-slider.component';
     '[attr.dir]': 'dir.value',
     '[attr.debug]': 'debug()',
     '[attr.imageSize]': 'imageSize()',
-    '[attr.autoHeight]': 'autoHeight()',
+    // '[attr.autoHeight]': 'autoHeight()',
     '[attr.orientation]': 'orientation()',
     '[attr.itemAutosize]': 'itemAutosize()',
     '[attr.scrollDisabled]': 'disableScroll()'
@@ -70,6 +70,8 @@ import { GallerySliderComponent } from './gallery-slider.component';
   providers: [ImgManager, GalleryRef]
 })
 export class GalleryComponent {
+
+  slider = viewChild(GallerySliderComponent);
 
   /**
    * The gallery reference instance
@@ -128,9 +130,9 @@ export class GalleryComponent {
   /**
    * Automatically adjusts the gallery's height to fit the content
    */
-  autoHeight: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(this._config.autoHeight, {
-    transform: booleanAttribute
-  });
+  // autoHeight: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(this._config.autoHeight, {
+  //   transform: booleanAttribute
+  // });
 
   /**
    * Automatically cycle through items at time interval
@@ -283,7 +285,7 @@ export class GalleryComponent {
       disableScroll: this.disableScroll(),
       disableMouseScroll: this.disableMouseScroll(),
       itemAutosize: this.itemAutosize(),
-      autoHeight: this.autoHeight()
+      // autoHeight: this.autoHeight()
     };
   });
 

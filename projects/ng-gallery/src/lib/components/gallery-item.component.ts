@@ -20,7 +20,7 @@ import {
   GalleryItemData,
   ItemState,
   VideoItemData,
-} from './templates/items.model';
+} from '../templates/items.model';
 import { SliderItem } from './items/items';
 
 @Component({
