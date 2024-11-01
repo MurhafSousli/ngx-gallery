@@ -1,7 +1,7 @@
 import { Component, inject, computed, input, Signal, InputSignal, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { GalleryRef } from '../services/gallery-ref';
 import { Directionality } from '@angular/cdk/bidi';
+import { GalleryRef } from '../services/gallery-ref';
 
 @Component({
   standalone: true,

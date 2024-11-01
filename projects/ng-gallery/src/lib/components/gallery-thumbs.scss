@@ -4,8 +4,8 @@
   display: block;
   z-index: 100;
 
-  &[position='top'],
-  &[position='bottom'] {
+  &[position="top"],
+  &[position="bottom"] {
     --thumb-slider-top: 0;
     --thumb-slider-overflow: auto hidden;
     --thumb-slider-flex-direction: row;
@@ -16,8 +16,8 @@
     }
   }
 
-  &[position='left'],
-  &[position='right'] {
+  &[position="left"],
+  &[position="right"] {
     --thumb-slider-left: 0;
     --thumb-slider-overflow: hidden auto;
     --thumb-slider-flex-direction: column;
@@ -28,19 +28,19 @@
     }
   }
 
-  &[disabled='true'] {
+  &[disabled="true"] {
     --g-thumb-cursor: default;
   }
 
-  &[scrollDisabled='true'] {
+  &[scrollDisabled="true"] {
     --thumb-slider-overflow: hidden !important;
   }
 
-  &[imageSize='contain'] {
+  &[imageSize="contain"] {
     --image-object-fit: contain;
   }
 
-  &[imageSize='cover'] {
+  &[imageSize="cover"] {
     --image-object-fit: cover;
   }
 }
@@ -75,7 +75,7 @@
 
   &[centralised="true"] {
     &:before, &:after {
-      content: '';
+      content: "";
     }
 
     &:before {
@@ -89,6 +89,8 @@
 }
 
 .g-slider-content {
+  // Never set min-width to 100%, content wrapper should always match content size to measure centralize size
+  min-width: 100%;
   flex: 0 0 auto;
   display: flex;
   flex-direction: var(--thumb-slider-flex-direction);

@@ -8,19 +8,19 @@ import {
   effect,
   untracked,
   input,
+  viewChild,
   contentChild,
   Signal,
   InputSignal,
   TemplateRef,
   OutputEmitterRef,
   ChangeDetectionStrategy,
-  InputSignalWithTransform, viewChild
+  InputSignalWithTransform
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { Directionality } from '@angular/cdk/bidi';
 import { GalleryRef } from '../services/gallery-ref';
-import { GalleryError, GalleryItem } from '../models/gallery.model';
-import { IframeItemData, ImageItemData, VideoItemData, VimeoItemData, YoutubeItemData } from '../templates/items.model';
+import { GalleryItem } from '../models/gallery.model';
 import { GALLERY_CONFIG, GalleryConfig } from '../models/config.model';
 import { BezierEasingOptions } from '../smooth-scroll';
 import { GalleryImageDef } from '../directives/gallery-image-def.directive';
@@ -41,7 +41,6 @@ import { GallerySliderComponent } from './gallery-slider.component';
     '[attr.dir]': 'dir.value',
     '[attr.debug]': 'debug()',
     '[attr.imageSize]': 'imageSize()',
-    // '[attr.autoHeight]': 'autoHeight()',
     '[attr.orientation]': 'orientation()',
     '[attr.itemAutosize]': 'itemAutosize()',
     '[attr.scrollDisabled]': 'disableScroll()'
@@ -52,8 +51,7 @@ import { GallerySliderComponent } from './gallery-slider.component';
     <div class="g-box">
 
       <gallery-slider [class.g-debug]="debug()"
-                      (itemClick)="itemClick.emit($event)"
-                      (error)="error.emit($event)">
+                      (itemClick)="itemClick.emit($event)">
         <ng-content select="gallery-nav, gallery-counter"/>
       </gallery-slider>
 
@@ -63,7 +61,7 @@ import { GallerySliderComponent } from './gallery-slider.component';
       </div>
     </div>
   `,
-  styleUrls: ['./gallery.scss', '../styles/debug.scss'],
+  styleUrls: ['./gallery.scss', '../debug/debug.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [AutoplayDirective],
   imports: [AutoplayDirective, GallerySliderComponent, NgTemplateOutlet],
@@ -71,7 +69,7 @@ import { GallerySliderComponent } from './gallery-slider.component';
 })
 export class GalleryComponent {
 
-  slider = viewChild(GallerySliderComponent);
+  slider: Signal<GallerySliderComponent> = viewChild(GallerySliderComponent);
 
   /**
    * The gallery reference instance
@@ -126,13 +124,6 @@ export class GalleryComponent {
   itemAutosize: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(this._config.itemAutosize, {
     transform: booleanAttribute
   });
-
-  /**
-   * Automatically adjusts the gallery's height to fit the content
-   */
-  // autoHeight: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(this._config.autoHeight, {
-  //   transform: booleanAttribute
-  // });
 
   /**
    * Automatically cycle through items at time interval
@@ -243,11 +234,6 @@ export class GalleryComponent {
    */
   // itemsChange: OutputEmitterRef<GalleryState> = output<GalleryState>();
 
-  /**
-   * Stream that emits when an error occurs, this would emit for loading errors of image and video items only
-   */
-  error: OutputEmitterRef<GalleryError> = output<GalleryError>();
-
   /** @ignore */
   private _galleryItemDef: Signal<GalleryItemDef> = contentChild(GalleryItemDef);
   /** @ignore */
@@ -284,8 +270,7 @@ export class GalleryComponent {
       resizeDebounceTime: this.resizeDebounceTime(),
       disableScroll: this.disableScroll(),
       disableMouseScroll: this.disableMouseScroll(),
-      itemAutosize: this.itemAutosize(),
-      // autoHeight: this.autoHeight()
+      itemAutosize: this.itemAutosize()
     };
   });
 
@@ -297,83 +282,8 @@ export class GalleryComponent {
 
     effect(() => {
       const items = this.items();
-      untracked(() => this.load(items));
+      untracked(() => this.galleryRef.load(items));
     });
-  }
-
-  /** @ignore */
-  onItemClick(i: number): void {
-    this.itemClick.emit(i);
-    this.galleryRef.itemClick.next(i);
-  }
-
-  /** @ignore */
-  onThumbClick(i: number): void {
-    this.galleryRef.set(i);
-    this.thumbClick.emit(i);
-    this.galleryRef.thumbClick.next(i);
-  }
-
-  /** @ignore */
-  onError(err: GalleryError): void {
-    this.error.emit(err);
-    this.galleryRef.error.next(err);
-  }
-
-  /**
-   * Load items and reset the state
-   */
-  load(items: GalleryItem[]): void {
-    this.galleryRef.load(items);
-  }
-
-  /**
-   * Add gallery item, it can be any item, suitable to add item with a custom template
-   */
-  add(item: GalleryItem, active?: boolean): void {
-    this.galleryRef.add(item, active);
-  }
-
-  /**
-   * Add image item
-   */
-  addImage(data: ImageItemData, active?: boolean): void {
-    this.galleryRef.addImage(data, active);
-  }
-
-  /**
-   * Add video item
-   */
-  addVideo(data: VideoItemData, active?: boolean): void {
-    this.galleryRef.addVideo(data, active);
-  }
-
-  /**
-   * Add iframe item
-   */
-  addIframe(data: IframeItemData, active?: boolean): void {
-    this.galleryRef.addIframe(data, active);
-  }
-
-  /**
-   * Add Youtube item
-   */
-  addYoutube(data: YoutubeItemData, active?: boolean): void {
-    this.galleryRef.addYoutube(data, active);
-  }
-
-  /**
-   * Add Vimeo item
-   */
-  addVimeo(data: VimeoItemData, active?: boolean): void {
-    this.galleryRef.addVimeo(data, active);
-  }
-
-  /**
-   * Remove gallery item by index
-   */
-  remove(i: number): void {
-    this.galleryRef.remove(i);
   }
 
   /**

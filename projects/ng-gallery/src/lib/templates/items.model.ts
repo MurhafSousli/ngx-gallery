@@ -1,5 +1,9 @@
-import { GalleryItem } from '../models/gallery.model';
 import { GalleryItemType, GalleryItemTypes } from '../models/constants';
+
+interface GalleryItem {
+  type: GalleryItemType;
+  data: any;
+}
 
 export class ImageItem implements GalleryItem {
   readonly type: GalleryItemType;
@@ -71,7 +75,7 @@ export class VimeoItem implements GalleryItem {
 }
 
 type GalleryItemModel = {
-  type?: GalleryItemType;
+  // type?: GalleryItemType;
   src?: string | { url: string, type: string }[];
   thumb?: string;
   args?: any;
@@ -106,6 +110,4 @@ export type VideoItemData = GalleryItemModel & {
   disableRemotePlayback?: boolean;
 };
 
-export type GalleryItemData = ImageItemData | VideoItemData | IframeItemData | YoutubeItemData | VimeoItemData;
-
-export type ItemState = 'success' | 'loading' | 'failed';
+export type GalleryItemData = GalleryItemModel;

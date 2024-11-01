@@ -16,7 +16,7 @@ import { GalleryRef } from '../../services/gallery-ref';
 import { GalleryConfig } from '../../models/config.model';
 import { Orientation } from '../../models/constants';
 import { HorizontalAdapter, SliderAdapter, VerticalAdapter } from '../adapters';
-import { SliderItem } from '../items/items';
+import { SliderItem } from '../slider-item/slider-item';
 
 @Component({
   standalone: true,

@@ -1,5 +1,5 @@
 import { Component, Signal, viewChild } from '@angular/core';
-import { GalleryComponent, GalleryItem, GalleryItemDef, ImageItem, ImgRecognizer } from 'ng-gallery';
+import { GalleryComponent, GalleryItem, GalleryItemDef, ImgRecognizer } from 'ng-gallery';
 import { Observable } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 import { toObservable } from '@angular/core/rxjs-interop';
@@ -17,15 +17,15 @@ import { toObservable } from '@angular/core/rxjs-interop';
 })
 export class TestComponent {
   items: GalleryItem[] = [
-    new ImageItem({
+    {
       src: 'https://loremflickr.com/200/200?random=1',
-    }),
-    new ImageItem({
+    },
+    {
       src: 'https://loremflickr.com/200/200?random=2',
-    }),
-    new ImageItem({
+    },
+    {
       src: 'https://loremflickr.com/200/200?random=3',
-    })
+    }
   ];
   width: number = 500;
   height: number = 300;

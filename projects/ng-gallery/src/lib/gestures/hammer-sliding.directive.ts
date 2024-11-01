@@ -105,9 +105,9 @@ export class HammerSliding {
               this._zone.run(() => {
                 this.galleryRef.set(index);
                 // Tiny delay is needed to avoid flicker positioning when scroll-snap is toggled
-                requestAnimationFrame(() => {
+                // requestAnimationFrame(() => {
                   this.sliding.set(false);
-                });
+                // });
               });
               return;
             }
@@ -141,9 +141,9 @@ export class HammerSliding {
                 const index: number = +centerElement.target.getAttribute('galleryIndex');
                 this.galleryRef.set(index);
                 // Tiny delay is needed to avoid flicker positioning when scroll-snap is toggled
-                requestAnimationFrame(() => {
+                // requestAnimationFrame(() => {
                   this.sliding.set(false);
-                });
+                // });
               });
             })
           });

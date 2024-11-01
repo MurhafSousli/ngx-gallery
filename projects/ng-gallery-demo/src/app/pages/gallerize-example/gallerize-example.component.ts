@@ -42,7 +42,6 @@ export class GallerizeExampleComponent implements OnInit {
     });
     gallery.ref('auto-detect').setConfig({
       // thumbPosition: 'top',
-      autoHeight: true,
       imageSize: 'cover',
       itemAutosize: false,
       // thumbAutosize: false,

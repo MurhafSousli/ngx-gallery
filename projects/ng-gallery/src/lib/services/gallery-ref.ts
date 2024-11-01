@@ -1,7 +1,7 @@
 import { Injectable, computed, inject, signal, Signal, WritableSignal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { Observable, Subject } from 'rxjs';
-import { GalleryError, GalleryItem } from '../models/gallery.model';
+import { GalleryItem } from '../models/gallery.model';
 import { GALLERY_CONFIG, GalleryConfig } from '../models/config.model';
 import {
   IframeItem,
@@ -30,9 +30,6 @@ export class GalleryRef {
 
   /** Stream that emits when items is changed (items loaded, item added, item removed) */
   readonly itemsChanged: Subject<void> = new Subject<void>();
-
-  /** Stream that emits on an error occurs */
-  readonly error: Subject<GalleryError> = new Subject<GalleryError>();
 
   /** Gallery Events */
 

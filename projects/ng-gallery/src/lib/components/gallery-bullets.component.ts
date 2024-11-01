@@ -18,7 +18,7 @@ import { GalleryRef } from '../services/gallery-ref';
     '[attr.disabled]': 'disabled()'
   },
   template: `
-    @for (item of galleryRef.items(); track item.data.src; let i = $index) {
+    @for (item of galleryRef.items(); track i; let i = $index) {
       <div class="g-bullet"
            [class.g-bullet-active]="i === galleryRef.currIndex()"
            [style.width.px]="size()"

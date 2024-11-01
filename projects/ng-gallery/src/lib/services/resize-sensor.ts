@@ -78,7 +78,6 @@ export class ResizeSensor {
               if (!sliderEntries || !contentEntries) return;
 
               if (sliderEntries[0].contentRect.height) {
-                console.log('🔥', sliderEntries[0].contentRect.height)
                 this.slideSize.set(sliderEntries[0].contentRect);
               }
 

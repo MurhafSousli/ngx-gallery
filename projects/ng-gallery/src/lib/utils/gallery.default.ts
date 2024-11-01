@@ -22,7 +22,6 @@ export const defaultConfig: GalleryConfig = {
   },
   centralized: false,
   itemAutosize: false,
-  autoHeight: false,
   scrollBehavior: 'smooth',
   resizeDebounceTime: 0,
   loadingAttr: LoadingAttr.Lazy,

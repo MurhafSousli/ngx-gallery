@@ -46,14 +46,14 @@
     <h3>Demo</h3>
 
     <div class="grid">
-      @for (item of space$ | async; track item.type; let i = $index) {
+      @for (item of space$ | async; track i; let i = $index) {
         <button mat-raised-button
                 class="grid-item"
                 [lightbox]="i"
                 gallery="lightbox">
-
-          <img class="grid-image" loading="lazy" [src]="item.data.thumb"/>
         </button>
+
+        <!--          <img class="grid-image" loading="lazy" [src]="item.data.thumb"/>-->
       }
     </div>
 

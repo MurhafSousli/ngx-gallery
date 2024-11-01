@@ -7,7 +7,7 @@ import {
   EffectCleanupRegisterFn
 } from '@angular/core';
 import { ImgManager } from './img-manager';
-import { SliderItem } from '../components/items/items';
+import { SliderItem } from '../components/slider-item/slider-item';
 
 @Directive({
   standalone: true,

@@ -1,5 +1,4 @@
 import { Component, inject, output, OutputEmitterRef, ChangeDetectionStrategy, viewChild } from '@angular/core';
-import { GalleryError } from '../models/gallery.model';
 import { GalleryRef } from '../services/gallery-ref';
 import { SmoothScroll } from '../smooth-scroll';
 import { HammerSliding } from '../gestures/hammer-sliding.directive';
@@ -22,14 +21,12 @@ import { SliderComponent } from './slider/slider';
               hammerSliding
               scrollSnapType>
       <div class="g-slider-content">
-        @for (item of galleryRef.items(); track item.data.src; let i = $index; let count = $count) {
-          <gallery-item [type]="item.type"
-                        [data]="item.data"
+        @for (item of galleryRef.items(); track i; let i = $index; let count = $count) {
+          <gallery-item [data]="item"
                         [currIndex]="galleryRef.currIndex()"
                         [index]="i"
                         [count]="count"
-                        (click)="itemClick.emit(i)"
-                        (error)="error.emit({ itemIndex: i, error: $event })"/>
+                        (click)="itemClick.emit(i)"/>
         }
       </div>
 
@@ -65,7 +62,4 @@ export class GallerySliderComponent {
 
   /** Stream that emits when thumb is clicked */
   itemClick: OutputEmitterRef<number> = output<number>();
-
-  /** Stream that emits when an error occurs */
-  error: OutputEmitterRef<GalleryError> = output<GalleryError>();
 }

@@ -12,8 +12,8 @@ import {
 } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
-import { ItemState } from '../../templates/items.model';
 import { GalleryRef } from '../../services/gallery-ref';
+import { ItemState } from '../../models/item.model';
 
 @Directive()
 export abstract class SliderItem {

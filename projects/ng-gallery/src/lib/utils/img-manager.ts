@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { Observable, Subject, EMPTY, filter, map, switchMap, merge } from 'rxjs';
-import { ItemState } from '../templates/items.model';
 import { GalleryRef } from '../services/gallery-ref';
+import { ItemState } from '../models/item.model';
 
 interface ImageRegistry {
   state$: Observable<ItemState>;
@@ -16,7 +16,7 @@ export class ImgManager {
 
   private readonly trigger$: Subject<void> = new Subject<void>();
 
-  private readonly currIndex$ = toObservable(this.galleryRef.currIndex);
+  private readonly currIndex$: Observable<number> = toObservable(this.galleryRef.currIndex);
 
   private readonly images: Map<number, ImageRegistry> = new Map<number, ImageRegistry>();
 

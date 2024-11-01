@@ -1,18 +1,15 @@
 import {
   Component,
   inject,
-  output,
   computed,
   numberAttribute,
   booleanAttribute,
   input,
   Signal,
   InputSignal,
-  OutputEmitterRef,
   ChangeDetectionStrategy,
   InputSignalWithTransform
 } from '@angular/core';
-import { GalleryError } from '../models/gallery.model';
 import { Orientation } from '../models/constants';
 import { SmoothScroll } from '../smooth-scroll';
 import { GalleryThumbComponent } from './gallery-thumb.component';
@@ -46,14 +43,12 @@ import { SliderComponent } from './slider/slider';
               hammerSliding
               scrollSnapType>
       <div class="g-slider-content">
-        @for (item of galleryRef.items(); track item.data.src; let i = $index; let count = $count) {
-          <gallery-thumb [type]="item.type"
-                         [data]="item.data"
+        @for (item of galleryRef.items(); track i; let i = $index; let count = $count) {
+          <gallery-thumb [data]="item"
                          [currIndex]="galleryRef.currIndex()"
                          [index]="i"
                          [count]="count"
-                         (click)="onThumbClick(i)"
-                         (error)="error.emit({ itemIndex: i, error: $event })"/>
+                         (click)="disabled() || galleryRef.set(i)"/>
         }
       </div>
     </g-slider>
@@ -149,16 +144,4 @@ export class GalleryThumbsComponent {
     return (this.position() === 'top' || this.position() === 'bottom') ? Orientation.Horizontal : Orientation.Vertical;
   });
 
-  /** Stream that emits when thumb is clicked */
-  thumbClick: OutputEmitterRef<number> = output<number>();
-
-  /** Stream that emits when an error occurs */
-  error: OutputEmitterRef<GalleryError> = output<GalleryError>();
-
-  onThumbClick(index: number): void {
-    if (this.disabled()) return;
-
-    this.galleryRef.set(index);
-    this.thumbClick.emit(index)
-  }
 }

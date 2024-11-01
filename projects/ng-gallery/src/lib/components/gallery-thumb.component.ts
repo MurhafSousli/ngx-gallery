@@ -1,12 +1,10 @@
 import {
   Component,
   inject,
-  output,
   computed,
   input,
   Signal,
   InputSignal,
-  OutputEmitterRef,
   ChangeDetectionStrategy
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
@@ -15,7 +13,7 @@ import { GalleryImageComponent } from '../templates/gallery-image.component';
 import { ImageItemData } from '../templates/items.model';
 import { GalleryItemType } from '../models/constants';
 import { GalleryRef } from '../services/gallery-ref';
-import { SliderItem } from './items/items';
+import { SliderItem } from './slider-item/slider-item';
 
 @Component({
   standalone: true,
@@ -31,8 +29,7 @@ import { SliderItem } from './items/items';
                    [alt]="data().alt + '-thumbnail'"
                    [isThumbnail]="true"
                    [loadingIcon]="galleryRef.config().thumbLoadingIcon"
-                   [loadingError]="galleryRef.config().thumbLoadingError"
-                   (error)="error.emit($event)"></gallery-image>
+                   [loadingError]="galleryRef.config().thumbLoadingError"/>
 
     @if (galleryRef.config().thumbTemplate) {
       <div class="g-template g-thumb-template">
@@ -81,6 +78,4 @@ export class GalleryThumbComponent extends SliderItem {
       last: this.index() === this.count() - 1
     }
   });
-
-  error: OutputEmitterRef<ErrorEvent> = output<ErrorEvent>();
 }

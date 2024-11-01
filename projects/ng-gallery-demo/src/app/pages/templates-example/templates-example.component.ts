@@ -67,29 +67,29 @@ export class TemplatesExampleComponent {
       })
     );
 
-    effect(() => {
-      const gallery: GalleryComponent = this.gallery();
-      if (gallery) {
-        this.arr.map((item: GalleryItemData) => {
-          switch (item.type) {
-            case GalleryItemTypes.Image:
-              gallery.addImage(item);
-              break;
-            case GalleryItemTypes.Video:
-              gallery.addVideo(item);
-              break;
-            case GalleryItemTypes.Youtube:
-              gallery.addYoutube(item);
-              break;
-            case GalleryItemTypes.Vimeo:
-              gallery.addVimeo(item);
-              break;
-            default:
-              gallery.addIframe(item);
-          }
-        });
-      }
-    }, { allowSignalWrites: true });
+    // effect(() => {
+    //   const gallery: GalleryComponent = this.gallery();
+    //   if (gallery) {
+      //   this.arr.map((item: GalleryItemData) => {
+      //     switch (item.type) {
+      //       case GalleryItemTypes.Image:
+      //         gallery.addImage(item);
+      //         break;
+      //       case GalleryItemTypes.Video:
+      //         gallery.addVideo(item);
+      //         break;
+      //       case GalleryItemTypes.Youtube:
+      //         gallery.addYoutube(item);
+      //         break;
+      //       case GalleryItemTypes.Vimeo:
+      //         gallery.addVimeo(item);
+      //         break;
+      //       default:
+      //         gallery.addIframe(item);
+      //     }
+      //   });
+      // }
+  //   }, { allowSignalWrites: true });
   }
 }
 

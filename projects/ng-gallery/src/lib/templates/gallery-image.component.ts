@@ -13,10 +13,10 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { NgOptimizedImage } from '@angular/common';
 import { imageFailedSvg } from './svg-assets';
 import { ImgRecognizer } from '../utils/img-recognizer';
-import { ItemState } from './items.model';
-import { NgOptimizedImage } from '@angular/common';
+import { ItemState } from '../models/item.model';
 
 @Component({
   standalone: true,

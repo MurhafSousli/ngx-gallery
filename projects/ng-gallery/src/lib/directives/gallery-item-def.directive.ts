@@ -1,13 +1,12 @@
 import { Directive, inject, TemplateRef } from '@angular/core';
 import { GalleryItemData } from '../templates/items.model';
-import { GalleryItemType } from '../models/constants';
 
 @Directive({
   standalone: true,
   selector: '[galleryItemDef]'
 })
 export class GalleryItemDef {
-  templateRef: TemplateRef<GalleryItemContext<GalleryItemDef>> = inject(TemplateRef<GalleryItemContext<GalleryItemDef>>)
+  templateRef: TemplateRef<GalleryItemDef> = inject(TemplateRef<GalleryItemDef>)
 
   // Make sure the template checker knows the type of the context with which the
   // template of this directive will be rendered
@@ -25,9 +24,6 @@ export interface GalleryItemContext<T> {
 
   /** Index of the item. */
   index?: number;
-
-  /** The type of the item. */
-  type?: GalleryItemType;
 
   /** True if this item is the active one. */
   active?: boolean;

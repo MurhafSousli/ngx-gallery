@@ -18,7 +18,7 @@ import { createIntersectionObserver } from './intersection-observer';
 import { SmoothScroll } from '../smooth-scroll';
 import { HammerSliding } from '../gestures/hammer-sliding.directive';
 import { SliderComponent } from '../components/slider/slider';
-import { SliderItem } from '../components/items/items';
+import { SliderItem } from '../components/slider-item/slider-item';
 
 /**
  * This observer used to detect when a slider element reaches the active soon
@@ -123,7 +123,7 @@ export class IntersectionSensor {
             const index: number = +elementWithHighestIntersectionRatio.target.getAttribute('galleryIndex');
 
             // TODO: There is a bug where index becomes 1 then goes back to 0
-            console.log('intersection observer index', index, entries)
+            // console.log('intersection observer index', index, entries)
             if (index === this.galleryRef.currIndex()) return;
 
             // Set the new current index

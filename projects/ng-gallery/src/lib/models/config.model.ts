@@ -47,7 +47,6 @@ interface SliderConfig {
   disableScroll?: boolean;
   disableMouseScroll?: boolean;
   itemAutosize?: boolean;
-  autoHeight?: boolean;
   loadingIcon?: string;
   loadingError?: string;
   scrollDuration?: number;

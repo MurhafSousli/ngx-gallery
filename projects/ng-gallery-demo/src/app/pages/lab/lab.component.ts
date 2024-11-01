@@ -28,6 +28,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Pixabay } from '../../service/pixabay.service';
 import { FooterComponent } from '../../shared/footer/footer.component';
+import { BasicExampleComponent } from '../examples/basic-example/basic-example';
 
 @Component({
   host: {
@@ -61,7 +62,8 @@ import { FooterComponent } from '../../shared/footer/footer.component';
     GalleryCounterComponent,
     GalleryItemDef,
     ImgRecognizer,
-    NgOptimizedImage
+    NgOptimizedImage,
+    BasicExampleComponent
   ]
 })
 export class LabComponent implements OnInit {
@@ -131,7 +133,6 @@ export class LabComponent implements OnInit {
       autoplayInterval: 3000,
       loadingStrategy: LoadingStrategy.Preload,
       orientation: Orientation.Horizontal,
-      autoHeight: true,
       itemAutosize: false,
       scrollBehavior: 'smooth',
       loadingAttr: 'lazy',

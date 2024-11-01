@@ -5,6 +5,8 @@
   </h1>
 </div>
 <div class="page-content">
+  <basic-example/>
+
   <div *ngIf="show$ | async" class="gallery-container">
     <gallery #gallery id="lab"
              [items]="photos$ | async"
@@ -65,8 +67,8 @@
       <button mat-button color="accent" (click)="gallery.stop()">Stop</button>
       <button mat-button color="primary" (click)="gallery.prev()">Prev</button>
       <button mat-button color="primary" (click)="gallery.next()">Next</button>
-      <button mat-button color="primary" (click)="gallery.remove(gallery.galleryRef.currIndex())">Remove
-      </button>
+<!--      <button mat-button color="primary" (click)="gallery.remove(gallery.galleryRef.currIndex())">Remove-->
+<!--      </button>-->
     </div>
   </div>
 
@@ -172,11 +174,11 @@
           <div>
             <mat-checkbox [(ngModel)]="config.debug">Debug</mat-checkbox>
           </div>
+<!--          <div>-->
+<!--            <mat-checkbox [(ngModel)]="config.autoHeight" [disabled]="config.itemAutosize">Auto-height</mat-checkbox>-->
+<!--          </div>-->
           <div>
-            <mat-checkbox [(ngModel)]="config.autoHeight" [disabled]="config.itemAutosize">Auto-height</mat-checkbox>
-          </div>
-          <div>
-            <mat-checkbox [(ngModel)]="config.itemAutosize" [disabled]="config.autoHeight">Item autosize</mat-checkbox>
+            <mat-checkbox [(ngModel)]="config.itemAutosize">Item autosize</mat-checkbox>
           </div>
           <div>
             <mat-checkbox [(ngModel)]="thumbConfig.autosize" [disabled]="!thumbConfig.thumbs">Thumb autosize
