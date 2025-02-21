@@ -5,10 +5,10 @@ import { By } from '@angular/platform-browser';
 import {
   GalleryThumbsComponent,
   GalleryComponent,
-  GalleryItem,
   GalleryItemDef,
   GalleryRef,
-  ImgRecognizer
+  ImgRecognizer,
+  GalleryItemData
 } from 'ng-gallery';
 import { img1, img2, img3 } from './test-images';
 
@@ -32,7 +32,7 @@ import { img1, img2, img3 } from './test-images';
   `
 })
 export class TestComponent {
-  items: GalleryItem[] = [
+  items: GalleryItemData[] = [
     { src: img1, thumb: img1 },
     { src: img2, thumb: img2 },
     { src: img3, thumb: img3 }
@@ -151,7 +151,9 @@ describe('Gallery thumbs component', () => {
     component.thumbWidth = 100;
     component.thumbHeight = 100;
     fixture.detectChanges();
-    expect((thumbsComponentElement.nativeElement as HTMLElement).style.getPropertyValue('--g-thumb-width')).toBe('100px');
-    expect((thumbsComponentElement.nativeElement as HTMLElement).style.getPropertyValue('--g-thumb-height')).toBe('100px');
+    // expect((thumbsComponentElement.nativeElement as HTMLElement).style.getPropertyValue('--g-thumb-width')).toBe('100px');
+    // expect((thumbsComponentElement.nativeElement as HTMLElement).style.getPropertyValue('--g-thumb-height')).toBe('100px');
+    expect((thumbsComponentElement.nativeElement as HTMLElement).style.getPropertyValue('--g-item-width')).toBe('100px');
+    expect((thumbsComponentElement.nativeElement as HTMLElement).style.getPropertyValue('--g-item-height')).toBe('100px');
   });
 });

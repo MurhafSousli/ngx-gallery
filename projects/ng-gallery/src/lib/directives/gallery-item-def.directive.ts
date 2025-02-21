@@ -5,7 +5,7 @@ import { GalleryItemData } from '../templates/items.model';
   selector: '[galleryItemDef]'
 })
 export class GalleryItemDef {
-  templateRef: TemplateRef<GalleryItemDef> = inject(TemplateRef<GalleryItemDef>)
+  templateRef: TemplateRef<GalleryItemContext<GalleryItemData>> = inject(TemplateRef<GalleryItemContext<GalleryItemData>>)
 
   // Make sure the template checker knows the type of the context with which the
   // template of this directive will be rendered

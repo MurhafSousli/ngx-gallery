@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {
   GalleryComponent,
   GalleryConfig,
-  GalleryItem,
+  GalleryItemData,
   GalleryItemDef,
   GalleryThumbsComponent,
   ImgRecognizer
@@ -40,7 +40,7 @@ import { BadgesComponent } from '../../shared/badges/badges.component';
 })
 export class HomeComponent implements OnInit {
 
-  readonly camel$: Observable<GalleryItem[]>;
+  readonly camel$: Observable<GalleryItemData[]>;
   readonly media$: Observable<any>;
 
   constructor(pixabay: Pixabay, private _title: Title) {

@@ -5,6 +5,7 @@
     "start-demo": "ng serve ngx-gallery-demo --host 0.0.0.0",
     "build-demo": "ng build ngx-gallery-demo --configuration production",
     "build-lib": "ng build ngx-gallery --configuration production",
+    "lint-lib": "ng lint ngx-gallery",
     "test-lib": "ng test ngx-gallery",
     "test-lib-headless": "ng test ngx-gallery --watch=false --no-progress --browsers=ChromeHeadless --code-coverage",
     "publish-lib": "npm publish ./dist/ng-gallery",

@@ -60,7 +60,13 @@
                           [disableScroll]="thumbConfig.disableScroll"
                           [disableMouseScroll]="thumbConfig.disableMouseScroll"
                           [position]="thumbConfig.position"
-                          [detach]="thumbConfig.detach"/>
+                          [detach]="thumbConfig.detach">
+            <img *galleryItemDef="let item"
+                 galleryImage
+                 [src]="item.thumb"
+                 fill
+                 [attr.alt]="item.alt + '_thumb'"/>
+          </gallery-thumbs>
         }
       </gallery>
 

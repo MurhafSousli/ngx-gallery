@@ -20,7 +20,7 @@ import {
   animationFrameScheduler
 } from 'rxjs';
 import { ImgManager } from '../utils/img-manager';
-import { GalleryComponent } from '../components/gallery.component';
+import { GalleryComponent } from '../core/gallery.component';
 import { ResizeSensor } from '../services/resize-sensor';
 
 /**

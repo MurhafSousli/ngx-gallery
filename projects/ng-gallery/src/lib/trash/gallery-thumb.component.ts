@@ -10,8 +10,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import { GalleryItemContext } from '../directives/gallery-item-def.directive';
 import { GalleryImageComponent } from '../templates/gallery-image.component';
 import { ImageItemData } from '../templates/items.model';
-import { GalleryItemType } from '../models/constants';
-import { SliderItem } from './slider-item/slider-item';
+import { SliderItem } from '../slider/slider-item/slider-item';
 
 @Component({
   selector: 'gallery-thumb',
@@ -49,9 +48,6 @@ export class GalleryThumbComponent extends SliderItem {
   /** Gallery current index */
   currIndex: InputSignal<number> = input<number>();
 
-  /** Item's type 'image', 'video', 'youtube', 'Vimeo', 'iframe' */
-  type: InputSignal<GalleryItemType> = input<GalleryItemType>();
-
   /** Item's data, this object contains the data required to display the content (e.g. src path) */
   data: InputSignal<ImageItemData> = input<ImageItemData>();
 
@@ -61,7 +57,6 @@ export class GalleryThumbComponent extends SliderItem {
     return {
       $implicit: this.data(),
       index: this.index(),
-      type: this.type(),
       active: this.active(),
       count: this.count(),
       first: this.index() === 0,

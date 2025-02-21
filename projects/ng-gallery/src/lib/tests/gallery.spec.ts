@@ -2,7 +2,7 @@ import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { GalleryItemComponent } from '../components/gallery-item.component';
+import { SliderItem } from '../slider/slider-item/slider-item';
 import { TestComponent } from './common';
 import { GalleryRef } from 'ng-gallery';
 
@@ -31,7 +31,7 @@ describe('Gallery component', () => {
 
   it('should load and render items in the gallery', () => {
     expect(component.gallery().galleryRef.items()).toBe(component.items);
-    const items: DebugElement[] = fixture.debugElement.queryAll(By.directive(GalleryItemComponent));
+    const items: DebugElement[] = fixture.debugElement.queryAll(By.directive(SliderItem));
     expect(items.length).toBe(3);
   });
 

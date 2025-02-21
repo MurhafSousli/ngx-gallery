@@ -11,7 +11,7 @@ import {
   ElementRef,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { GalleryRef, GalleryComponent, GalleryItem } from 'ng-gallery';
+import { GalleryRef, GalleryComponent, GalleryItemData } from 'ng-gallery';
 import { Subject, Subscription, from, map, switchMap, finalize, debounceTime, EMPTY } from 'rxjs';
 
 import { Lightbox } from './lightbox.service';
@@ -121,7 +121,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
 
         if (imageElements && imageElements.length) {
 
-          const images: GalleryItem[] = [];
+          const images: GalleryItemData[] = [];
 
           return from(imageElements).pipe(
             map((el: HTMLElement, i: number) => {

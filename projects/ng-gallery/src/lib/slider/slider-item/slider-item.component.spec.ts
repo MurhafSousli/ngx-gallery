@@ -2,11 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { signal, WritableSignal } from '@angular/core';
 import { GalleryConfig, GalleryRef } from 'ng-gallery';
 import { GalleryItemData } from 'ng-gallery';
-import { GalleryItemComponent } from './gallery-item.component';
+import { SliderItem } from './slider-item';
 
 describe('GalleryItemComponent', () => {
-  let component: GalleryItemComponent;
-  let fixture: ComponentFixture<GalleryItemComponent>;
+  let component: SliderItem;
+  let fixture: ComponentFixture<SliderItem>;
   let mockGalleryRef: jasmine.SpyObj<GalleryRef>;
 
   beforeEach(async () => {
@@ -15,13 +15,13 @@ describe('GalleryItemComponent', () => {
     mockGalleryRef.config.and.returnValue(config());
 
     await TestBed.configureTestingModule({
-      imports: [GalleryItemComponent],
+      imports: [SliderItem],
       providers: [
         { provide: GalleryRef, useValue: mockGalleryRef }
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(GalleryItemComponent);
+    fixture = TestBed.createComponent(SliderItem);
     component = fixture.componentInstance;
     // Assume the item has an image
     component.isItemContainImage = true;

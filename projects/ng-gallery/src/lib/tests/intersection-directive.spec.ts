@@ -40,7 +40,7 @@ describe('Intersection directive', () => {
 
     const visibleItems: Record<number, IntersectionObserverEntry> = galleryRef.visibleItems();
     const element: Element = visibleItems[0].target;
-    const queryElement: DebugElement = fixture.debugElement.query(By.css('gallery-item.g-item-highlight'));
+    const queryElement: DebugElement = fixture.debugElement.query(By.css('slider-item.g-item-highlight'));
 
     expect(Object.keys(visibleItems).length).toBe(1);
     expect(element).toBe(queryElement.nativeElement);
@@ -62,7 +62,7 @@ describe('Intersection directive', () => {
     await firstValueFrom(visibleItemIsTwo$);
 
     const visibleItems: Record<number, IntersectionObserverEntry> = galleryRef.visibleItems();
-    const queryElements: DebugElement[] = fixture.debugElement.queryAll(By.css('gallery-item.g-item-highlight'));
+    const queryElements: DebugElement[] = fixture.debugElement.queryAll(By.css('slider-item.g-item-highlight'));
 
     expect(Object.keys(visibleItems).length).toBe(2);
     expect(visibleItems[0].target).toBe(queryElements[0].nativeElement);
@@ -76,7 +76,7 @@ describe('Intersection directive', () => {
     await firstValueFrom(arrivedToNextItem$);
 
     const visibleItemsAfter: Record<number, IntersectionObserverEntry> = galleryRef.visibleItems();
-    const queryElementsAfter: DebugElement[] = fixture.debugElement.queryAll(By.css('gallery-item.g-item-highlight'));
+    const queryElementsAfter: DebugElement[] = fixture.debugElement.queryAll(By.css('slider-item.g-item-highlight'));
 
     expect(Object.keys(visibleItems).length).toBe(1);
     expect(visibleItemsAfter[1].target).toBe(queryElementsAfter[0].nativeElement);

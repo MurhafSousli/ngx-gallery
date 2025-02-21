@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, shareReplay, map } from 'rxjs';
 
-import { ImageItem, GalleryItem } from 'ng-gallery';
+import { ImageItem, GalleryItemData } from 'ng-gallery';
 
 import { Hit2, PixabayHDModel } from './pixabay.model';
 
@@ -15,7 +15,7 @@ export class Pixabay {
 
   private _http: HttpClient = inject(HttpClient);
 
-  getHDImages(key: string): Observable<GalleryItem[]> {
+  getHDImages(key: string): Observable<GalleryItemData[]> {
     const URL = `https://pixabay.com/api/?key=${ this.API_KEY }&q=${ encodeURIComponent(key) }&response_group=high_resolution&editors_choice=true&per_page=18&image_type=photo`;
     return this._http.get(URL).pipe(
       map((res: PixabayHDModel) => {

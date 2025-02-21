@@ -6,7 +6,7 @@ import { firstValueFrom } from 'rxjs';
 import {
   GalleryComponent,
   GalleryCounterComponent,
-  GalleryItem,
+  GalleryItemData,
   GalleryItemDef,
   GalleryRef,
   ImgRecognizer
@@ -27,7 +27,7 @@ import { afterTimeout } from './common';
   `
 })
 export class TestComponent {
-  items: GalleryItem[] = [
+  items: GalleryItemData[] = [
     { src: img1 },
     { src: img2 },
     { src: img3 }

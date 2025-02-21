@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
-  GalleryItem,
+  GalleryItemData,
   GalleryConfig,
   LoadingStrategy,
   Orientation,
@@ -69,7 +69,7 @@ export class LabComponent implements OnInit {
 
   show: WritableSignal<boolean> = signal(true);
 
-  photos: Signal<GalleryItem[]> = toSignal(this.pixabay.getHDImages('tropical'));
+  photos: Signal<GalleryItemData[]> = toSignal(this.pixabay.getHDImages('tropical'));
 
   config: GalleryConfig = {
     loop: true,

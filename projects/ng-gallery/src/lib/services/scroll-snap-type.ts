@@ -1,7 +1,7 @@
 import { computed, Directive, inject, Signal } from '@angular/core';
 import { HammerSliding } from '../gestures/hammer-sliding.directive';
 import { SmoothScroll } from '../smooth-scroll';
-import { SliderComponent } from '../components/slider/slider';
+import { SliderComponent } from '../slider/slider/slider';
 
 @Directive({
   selector: '[scrollSnapType]',

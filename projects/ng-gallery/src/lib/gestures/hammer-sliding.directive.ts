@@ -21,10 +21,10 @@ import { take } from 'rxjs';
 import { Orientation } from '../models/constants';
 import { GalleryRef } from '../services/gallery-ref';
 import { GalleryConfig } from '../models/config.model';
-import { SliderAdapter } from '../components/adapters';
+import { SliderAdapter } from '../slider/adapters';
 import { CustomHammerConfig, HammerInstance } from '../services/hammer';
 import { createIntersectionObserver } from '../observers/intersection-observer';
-import { SliderComponent } from '../components/slider/slider';
+import { SliderComponent } from '../slider/slider/slider';
 
 @Directive({
   selector: '[hammerSliding]',

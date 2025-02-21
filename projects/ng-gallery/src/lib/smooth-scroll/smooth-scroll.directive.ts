@@ -34,7 +34,7 @@ import BezierEasing from './bezier-easing';
 import { SmoothScrollOptions, SmoothScrollStep, SmoothScrollToOptions } from './index';
 import { GalleryRef } from '../services/gallery-ref';
 import { IndexChange } from '../models/slider.model';
-import { SliderComponent } from '../components/slider/slider';
+import { SliderComponent } from '../slider/slider/slider';
 import { HammerSliding } from '../gestures/hammer-sliding.directive';
 
 @Directive({

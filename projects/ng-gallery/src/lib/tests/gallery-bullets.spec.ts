@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 import {
   GalleryBulletsComponent,
   GalleryComponent,
-  GalleryItem,
+  GalleryItemData,
   GalleryItemDef,
   GalleryRef,
   ImgRecognizer
@@ -25,7 +25,7 @@ import { img1, img2, img3 } from './test-images';
   `
 })
 export class TestComponent {
-  items: GalleryItem[] = [
+  items: GalleryItemData[] = [
     { src: img1 },
     { src: img2 },
     { src: img3 }

@@ -15,7 +15,7 @@ import { SharedResizeObserver } from '@angular/cdk/observers/private';
 import { Subscription, animationFrameScheduler, throttleTime, combineLatest } from 'rxjs';
 import { GalleryConfig } from '../models/config.model';
 import { GalleryRef } from './gallery-ref';
-import { SliderComponent } from '../components/slider/slider';
+import { SliderComponent } from '../slider/slider/slider';
 
 @Directive({
   selector: '[resizeSensor]',

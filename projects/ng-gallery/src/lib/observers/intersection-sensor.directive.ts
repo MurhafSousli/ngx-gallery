@@ -12,13 +12,12 @@ import {
 import { Subscription } from 'rxjs';
 import { GalleryConfig } from '../models/config.model';
 import { GalleryRef } from '../services/gallery-ref';
-import { SliderAdapter } from '../components/adapters';
-import { GalleryItemComponent } from '../components/gallery-item.component';
+import { SliderAdapter } from '../slider/adapters';
+import { SliderItem } from '../slider/slider-item/slider-item';
 import { createIntersectionObserver } from './intersection-observer';
 import { SmoothScroll } from '../smooth-scroll';
 import { HammerSliding } from '../gestures/hammer-sliding.directive';
-import { SliderComponent } from '../components/slider/slider';
-import { SliderItem } from '../components/slider-item/slider-item';
+import { SliderComponent } from '../slider/slider/slider';
 
 /**
  * This observer used to detect when a slider element reaches the active soon
@@ -63,7 +62,7 @@ export class IntersectionSensor {
 
         this.zone.runOutsideAngular(() => {
           const options: IntersectionObserverInit = { root: this.nativeElement, threshold: 0.1, rootMargin };
-          const elements: HTMLElement[] = items.map((item: GalleryItemComponent) => item.nativeElement);
+          const elements: HTMLElement[] = items.map((item: SliderItem) => item.nativeElement);
 
           visibleItemsObserver$ = createIntersectionObserver(options, elements).subscribe((entries: IntersectionObserverEntry[]) => {
             const visibleItems: Record<number, IntersectionObserverEntry> = this.slider.visibleEntries();

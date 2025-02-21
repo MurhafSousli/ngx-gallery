@@ -1,12 +1,24 @@
-import { Component, inject, output, viewChild, OutputEmitterRef, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  inject,
+  output,
+  input,
+  viewChild,
+  InputSignal,
+  TemplateRef,
+  OutputEmitterRef,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { GalleryRef } from '../services/gallery-ref';
 import { SmoothScroll } from '../smooth-scroll';
 import { HammerSliding } from '../gestures/hammer-sliding.directive';
 import { IntersectionSensor } from '../observers/intersection-sensor.directive';
-import { GalleryItemComponent } from './gallery-item.component';
+import { SliderItem } from './slider-item/slider-item';
 import { ScrollSnapType } from '../services/scroll-snap-type';
 import { ResizeSensor } from '../services/resize-sensor';
 import { SliderComponent } from './slider/slider';
+import { GalleryItemContext } from '../directives/gallery-item-def.directive';
+import { GalleryItemData } from '../templates/items.model';
 
 @Component({
   selector: 'gallery-slider',
@@ -21,11 +33,12 @@ import { SliderComponent } from './slider/slider';
               scrollSnapType>
       <div class="g-slider-content">
         @for (item of galleryRef.items(); track i; let i = $index; let count = $count) {
-          <gallery-item [data]="item"
-                        [currIndex]="galleryRef.currIndex()"
-                        [index]="i"
-                        [count]="count"
-                        (click)="itemClick.emit(i)"/>
+          <slider-item [data]="item"
+                       [template]="template()"
+                       [currIndex]="galleryRef.currIndex()"
+                       [index]="i"
+                       [count]="count"
+                       (click)="itemClick.emit(i)"/>
         }
       </div>
 
@@ -48,7 +61,7 @@ import { SliderComponent } from './slider/slider';
     SmoothScroll,
     HammerSliding,
     ScrollSnapType,
-    GalleryItemComponent,
+    SliderItem,
     SliderComponent
   ]
 })
@@ -58,6 +71,8 @@ export class GallerySliderComponent {
 
   // TODO: Allow auto-height to access resize sensor
   resizeSensor = viewChild(ResizeSensor);
+
+  template: InputSignal<TemplateRef<GalleryItemContext<GalleryItemData>>> = input<TemplateRef<GalleryItemContext<GalleryItemData>>>();
 
   /** Stream that emits when thumb is clicked */
   itemClick: OutputEmitterRef<number> = output<number>();

@@ -1,10 +1,8 @@
 import { Injectable, computed, inject, signal, Signal, WritableSignal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { Observable, Subject } from 'rxjs';
-import { GalleryItem } from '../models/gallery.model';
 import { GALLERY_CONFIG, GalleryConfig } from '../models/config.model';
-import { IframeItemData, ImageItemData, VideoItemData, VimeoItemData, YoutubeItemData } from '../templates/items.model';
-import { IframeItem, ImageItem, VideoItem, VimeoItem, YoutubeItem } from '../utils/item.class';
+import { GalleryItemData } from '../templates/items.model';
 import { IndexChange } from '../models/slider.model';
 
 @Injectable()
@@ -27,7 +25,7 @@ export class GalleryRef {
 
   readonly visibleThumbs: WritableSignal<Record<number, IntersectionObserverEntry>> = signal({});
 
-  readonly items: WritableSignal<GalleryItem[]> = signal([]);
+  readonly items: WritableSignal<GalleryItemData[]> = signal([]);
 
   readonly currIndex: WritableSignal<number> = signal(0);
 
@@ -59,8 +57,8 @@ export class GalleryRef {
   /**
    * Add gallery item
    */
-  add(newItem: GalleryItem, active?: boolean): void {
-    this.items.update((items: GalleryItem[]) => {
+  add(newItem: GalleryItemData, active?: boolean): void {
+    this.items.update((items: GalleryItemData[]) => {
       return [...items, newItem];
     });
     if (active) {
@@ -70,45 +68,10 @@ export class GalleryRef {
   }
 
   /**
-   * Add image item
-   */
-  addImage(data: ImageItemData, active?: boolean): void {
-    this.add(new ImageItem(data), active);
-  }
-
-  /**
-   * Add video item
-   */
-  addVideo(data: VideoItemData, active?: boolean): void {
-    this.add(new VideoItem(data), active);
-  }
-
-  /**
-   * Add iframe item
-   */
-  addIframe(data: IframeItemData, active?: boolean): void {
-    this.add(new IframeItem(data), active);
-  }
-
-  /**
-   * Add Youtube item
-   */
-  addYoutube(data: YoutubeItemData, active?: boolean): void {
-    this.add(new YoutubeItem(data), active);
-  }
-
-  /**
-   * Add Vimeo item
-   */
-  addVimeo(data: VimeoItemData, active?: boolean): void {
-    this.add(new VimeoItem(data), active);
-  }
-
-  /**
    * Remove gallery item
    */
   remove(i: number): void {
-    this.items.update((items: GalleryItem[]) => {
+    this.items.update((items: GalleryItemData[]) => {
       return [
         ...items.slice(0, i),
         ...items.slice(i + 1, items.length)
@@ -121,7 +84,7 @@ export class GalleryRef {
   /**
    * Load items and reset the state
    */
-  load(items: GalleryItem[]): void {
+  load(items: GalleryItemData[]): void {
     if (items) {
       this.items.set(items);
       this.itemsChanged.next();

@@ -20,16 +20,16 @@ import {
 import { NgTemplateOutlet } from '@angular/common';
 import { Directionality } from '@angular/cdk/bidi';
 import { GalleryRef } from '../services/gallery-ref';
-import { GalleryItem } from '../models/gallery.model';
 import { GALLERY_CONFIG, GalleryConfig } from '../models/config.model';
 import { BezierEasingOptions } from '../smooth-scroll';
 import { GalleryImageDef } from '../directives/gallery-image-def.directive';
 import { GalleryThumbDef } from '../directives/gallery-thumb-def.directive';
-import { GalleryItemDef } from '../directives/gallery-item-def.directive';
+import { GalleryItemContext, GalleryItemDef } from '../directives/gallery-item-def.directive';
 import { GalleryBoxDef, GalleryStateContext } from '../directives/gallery-box-def.directive';
 import { ImgManager } from '../utils/img-manager';
 import { AutoplayDirective } from '../autoplay/autoplay.directive';
-import { GallerySliderComponent } from './gallery-slider.component';
+import { GallerySliderComponent } from '../slider/gallery-slider.component';
+import { GalleryItemData } from '../templates/items.model';
 
 /**
  * Gallery component
@@ -50,6 +50,7 @@ import { GallerySliderComponent } from './gallery-slider.component';
     <div class="g-box">
 
       <gallery-slider [class.g-debug]="debug()"
+                      [template]="itemTemplate()"
                       (itemClick)="itemClick.emit($event)">
         <ng-content select="gallery-nav, gallery-counter"/>
       </gallery-slider>
@@ -91,7 +92,7 @@ export class GalleryComponent {
   /**
    * Loads the items array into the gallery
    */
-  items: InputSignal<GalleryItem[]> = input<GalleryItem[]>();
+  items: InputSignal<GalleryItemData[]> = input<GalleryItemData[]>();
 
   /**
    * Enables loop cycling
@@ -236,24 +237,14 @@ export class GalleryComponent {
   /** @ignore */
   private _galleryItemDef: Signal<GalleryItemDef> = contentChild(GalleryItemDef);
   /** @ignore */
-  private _galleryImageDef: Signal<GalleryImageDef> = contentChild(GalleryImageDef);
-  /** @ignore */
-  private _galleryThumbDef: Signal<GalleryThumbDef> = contentChild(GalleryThumbDef);
-  /** @ignore */
   private _galleryBoxDef: Signal<GalleryBoxDef> = contentChild(GalleryBoxDef);
 
-  itemTemplate: Signal<TemplateRef<GalleryStateContext>> = computed(() => this._galleryItemDef()?.templateRef)
-  thumbTemplate: Signal<TemplateRef<GalleryStateContext>> = computed(() => this._galleryImageDef()?.templateRef)
-  imageTemplate: Signal<TemplateRef<GalleryStateContext>> = computed(() => this._galleryThumbDef()?.templateRef)
+  itemTemplate: Signal<TemplateRef<GalleryItemContext<GalleryItemData>>> = computed(() => this._galleryItemDef()?.templateRef)
   boxTemplate: Signal<TemplateRef<GalleryStateContext>> = computed(() => this._galleryBoxDef()?.templateRef)
 
   /** @ignore */
   config: Signal<GalleryConfig> = computed(() => {
     return {
-      itemTemplate: this.itemTemplate(),
-      imageTemplate: this.thumbTemplate(),
-      thumbTemplate: this.imageTemplate(),
-      boxTemplate: this.boxTemplate(),
       loop: this.loop(),
       debug: this.debug(),
       autoplay: this.autoplay(),

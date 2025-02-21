@@ -1,5 +1,5 @@
 import { Component, Signal, viewChild } from '@angular/core';
-import { GalleryComponent, GalleryItem, GalleryItemDef, ImgRecognizer } from 'ng-gallery';
+import { GalleryComponent, GalleryItemData, GalleryItemDef, ImgRecognizer } from 'ng-gallery';
 import { Observable } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 import { toObservable } from '@angular/core/rxjs-interop';
@@ -16,7 +16,7 @@ import { img1, img2, img3 } from './test-images';
   `
 })
 export class TestComponent {
-  items: GalleryItem[] = [
+  items: GalleryItemData[] = [
     {
       // src: 'https://loremflickr.com/200/200?random=1',
       src: img1

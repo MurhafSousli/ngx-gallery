@@ -5,40 +5,38 @@
  */
 
 // These values are established by empiricism with tests (tradeoff: performance VS precision)
-const NEWTON_ITERATIONS = 4;
-const NEWTON_MIN_SLOPE = 0.001;
-const SUBDIVISION_PRECISION = 0.0000001;
-const SUBDIVISION_MAX_ITERATIONS = 10;
+const NEWTON_ITERATIONS: number = 4;
+const NEWTON_MIN_SLOPE: number = 0.001;
+const SUBDIVISION_PRECISION: number = 0.0000001;
+const SUBDIVISION_MAX_ITERATIONS: number = 10;
 
-const kSplineTableSize = 11;
-const kSampleStepSize = 1.0 / (kSplineTableSize - 1.0);
+const kSplineTableSize: number = 11;
+const kSampleStepSize: number = 1.0 / (kSplineTableSize - 1.0);
 
-const float32ArraySupported = typeof Float32Array === 'function';
-
-function A(aA1, aA2) {
+function A(aA1: number, aA2: number): number {
   return 1.0 - 3.0 * aA2 + 3.0 * aA1;
 }
 
-function B(aA1, aA2) {
+function B(aA1: number, aA2: number): number {
   return 3.0 * aA2 - 6.0 * aA1;
 }
 
-function C(aA1) {
+function C(aA1: number): number {
   return 3.0 * aA1;
 }
 
 // Returns x(t) given t, x1, and x2, or y(t) given t, y1, and y2.
-function calcBezier(aT, aA1, aA2) {
+function calcBezier(aT: number, aA1: number, aA2: number): number {
   return ((A(aA1, aA2) * aT + B(aA1, aA2)) * aT + C(aA1)) * aT;
 }
 
 // Returns dx/dt given t, x1, and x2, or dy/dt given t, y1, and y2.
-function getSlope(aT, aA1, aA2) {
+function getSlope(aT: number, aA1: number, aA2: number): number {
   return 3.0 * A(aA1, aA2) * aT * aT + 2.0 * B(aA1, aA2) * aT + C(aA1);
 }
 
-function binarySubdivide(aX, aA, aB, mX1, mX2) {
-  let currentX, currentT, i = 0;
+function binarySubdivide(aX: number, aA: number, aB: number, mX1: number, mX2: number) {
+  let currentX, currentT, i: number = 0;
   do {
     currentT = aA + (aB - aA) / 2.0;
     currentX = calcBezier(currentT, mX1, mX2) - aX;
@@ -51,23 +49,23 @@ function binarySubdivide(aX, aA, aB, mX1, mX2) {
   return currentT;
 }
 
-function newtonRaphsonIterate(aX, aGuessT, mX1, mX2) {
-  for (let i = 0; i < NEWTON_ITERATIONS; ++i) {
-    let currentSlope = getSlope(aGuessT, mX1, mX2);
+function newtonRaphsonIterate(aX: number, aGuessT: number, mX1: number, mX2: number): number {
+  for (let i: number = 0; i < NEWTON_ITERATIONS; ++i) {
+    const currentSlope: number = getSlope(aGuessT, mX1, mX2);
     if (currentSlope === 0.0) {
       return aGuessT;
     }
-    let currentX = calcBezier(aGuessT, mX1, mX2) - aX;
+    const currentX: number = calcBezier(aGuessT, mX1, mX2) - aX;
     aGuessT -= currentX / currentSlope;
   }
   return aGuessT;
 }
 
-function LinearEasing(x) {
+function LinearEasing(x: number): number {
   return x;
 }
 
-export default function bezier(mX1, mY1, mX2, mY2) {
+export default function bezier(mX1: number, mY1: number, mX2: number, mY2: number) {
   if (!(0 <= mX1 && mX1 <= 1 && 0 <= mX2 && mX2 <= 1)) {
     throw new Error('bezier x values must be in [0, 1] range');
   }
@@ -77,15 +75,15 @@ export default function bezier(mX1, mY1, mX2, mY2) {
   }
 
   // Precompute samples table
-  let sampleValues = float32ArraySupported ? new Float32Array(kSplineTableSize) : new Array(kSplineTableSize);
-  for (let i = 0; i < kSplineTableSize; ++i) {
+  const sampleValues:Float32Array = new Float32Array(kSplineTableSize);
+  for (let i: number = 0; i < kSplineTableSize; ++i) {
     sampleValues[i] = calcBezier(i * kSampleStepSize, mX1, mX2);
   }
 
-  function getTForX(aX) {
-    let intervalStart = 0.0;
-    let currentSample = 1;
-    let lastSample = kSplineTableSize - 1;
+  function getTForX(aX: number): number {
+    let intervalStart: number = 0.0;
+    let currentSample: number = 1;
+    const lastSample: number = kSplineTableSize - 1;
 
     for (; currentSample !== lastSample && sampleValues[currentSample] <= aX; ++currentSample) {
       intervalStart += kSampleStepSize;
@@ -93,10 +91,10 @@ export default function bezier(mX1, mY1, mX2, mY2) {
     --currentSample;
 
     // Interpolate to provide an initial guess for t
-    let dist = (aX - sampleValues[currentSample]) / (sampleValues[currentSample + 1] - sampleValues[currentSample]);
-    let guessForT = intervalStart + dist * kSampleStepSize;
+    const dist: number = (aX - sampleValues[currentSample]) / (sampleValues[currentSample + 1] - sampleValues[currentSample]);
+    const guessForT: number = intervalStart + dist * kSampleStepSize;
 
-    let initialSlope = getSlope(guessForT, mX1, mX2);
+    const initialSlope: number = getSlope(guessForT, mX1, mX2);
     if (initialSlope >= NEWTON_MIN_SLOPE) {
       return newtonRaphsonIterate(aX, guessForT, mX1, mX2);
     } else if (initialSlope === 0.0) {
@@ -106,7 +104,7 @@ export default function bezier(mX1, mY1, mX2, mY2) {
     }
   }
 
-  return function BezierEasing(x) {
+  return function BezierEasing(x: number): number {
     // Because JavaScript number are imprecise, we should guarantee the extremes are right.
     if (x === 0) {
       return 0;
@@ -116,4 +114,4 @@ export default function bezier(mX1, mY1, mX2, mY2) {
     }
     return calcBezier(getTForX(x), mY1, mY2);
   };
-};
+}

@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 import {
   GalleryNavComponent,
   GalleryComponent,
-  GalleryItem,
+  GalleryItemData,
   GalleryItemDef,
   GalleryRef,
   ImgRecognizer
@@ -26,7 +26,7 @@ import { Dir, Direction } from '@angular/cdk/bidi';
   `
 })
 export class TestComponent {
-  items: GalleryItem[] = [
+  items: GalleryItemData[] = [
     { src: img1 },
     { src: img2 },
     { src: img3 }

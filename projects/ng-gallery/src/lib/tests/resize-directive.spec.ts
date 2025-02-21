@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 import { GalleryRef } from 'ng-gallery';
 import { firstValueFrom } from 'rxjs';
 import { afterTimeout, TestComponent } from './common';
-import { SliderComponent } from '../components/slider/slider';
+import { SliderComponent } from '../slider/slider/slider';
 import { ResizeSensor } from '../services/resize-sensor';
 
 describe('Resize sensor directive', () => {

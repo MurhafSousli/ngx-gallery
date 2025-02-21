@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
-import { GalleryModule, GalleryItem, GalleryConfig, ThumbnailsPosition, GalleryThumbsComponent } from 'ng-gallery';
+import { GalleryModule, GalleryItemData, GalleryConfig, ThumbnailsPosition, GalleryThumbsComponent } from 'ng-gallery';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Observable, map } from 'rxjs';
 
@@ -39,7 +39,7 @@ import { SectionTitleComponent } from '../../shared/section-title/section-title.
 export class GalleryExampleComponent implements OnInit {
 
   readonly code = code;
-  readonly fruits$: Observable<GalleryItem[]>;
+  readonly fruits$: Observable<GalleryItemData[]>;
   readonly media$: Observable<any>;
 
   constructor(pixabay: Pixabay, private _title: Title) {
@@ -71,7 +71,7 @@ export class GalleryExampleComponent implements OnInit {
 const code = {
   example: '<gallery [items]="items" thumbPosition="left"></gallery>',
   basic: `import { Component, OnInit } from '@angular/core';
-import { GalleryModule, GalleryItem, ImageItem } from 'ng-gallery';
+import { GalleryModule, GalleryItemData, ImageItem } from 'ng-gallery';
 
 @Component({
   template: \`
@@ -81,7 +81,7 @@ import { GalleryModule, GalleryItem, ImageItem } from 'ng-gallery';
 })
 export class AppComponent implements OnInit {
 
-  images: GalleryItem[];
+  images: GalleryItemData[];
 
   ngOnInit() {
     // Set items array

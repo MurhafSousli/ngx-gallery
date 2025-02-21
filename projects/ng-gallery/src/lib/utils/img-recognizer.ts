@@ -7,7 +7,7 @@ import {
   EffectCleanupRegisterFn
 } from '@angular/core';
 import { ImgManager } from './img-manager';
-import { SliderItem } from '../components/slider-item/slider-item';
+import { SliderItem } from '../slider/slider-item/slider-item';
 
 /**
  * A directive used to register an img element in the ImgManager service to track img loading state

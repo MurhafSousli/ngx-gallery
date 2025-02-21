@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { By } from '@angular/platform-browser';
 import { signal } from '@angular/core';
 import { GalleryRef, ImgRecognizer } from 'ng-gallery';
-import { SliderItem } from '../components/slider-item/slider-item';
+import { SliderItem } from '../slider/slider-item/slider-item';
 import { GalleryImageComponent } from './gallery-image.component';
 import { ImgManager } from '../utils/img-manager';
 

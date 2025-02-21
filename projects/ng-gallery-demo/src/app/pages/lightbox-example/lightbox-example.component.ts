@@ -5,7 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import { Observable, map } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { GalleryItem } from 'ng-gallery';
+import { GalleryItemData } from 'ng-gallery';
 import { Lightbox, LightboxModule, provideLightboxOptions } from 'ng-gallery/lightbox';
 import { Pixabay } from '../../service/pixabay.service';
 import { FooterComponent } from '../../shared/footer/footer.component';
@@ -41,7 +41,7 @@ import { SectionTitleComponent } from '../../shared/section-title/section-title.
 export class LightboxExampleComponent implements OnInit, OnDestroy {
 
   code: any;
-  space$: Observable<GalleryItem[]>;
+  space$: Observable<GalleryItemData[]>;
   images: string[] = [];
 
   constructor( public lightbox: Lightbox, public _pixabay: Pixabay, private _title: Title) {
@@ -51,7 +51,7 @@ export class LightboxExampleComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._title.setTitle('Lightbox | ng-gallery');
     this.space$ = this._pixabay.getHDImages('sea').pipe(
-      map((items: GalleryItem[]) => {
+      map((items: GalleryItemData[]) => {
         // Load items manually into the lightbox gallery ref
         // this.gallery.ref('lightbox', {
         //   // thumbPosition: 'top',
@@ -69,7 +69,7 @@ export class LightboxExampleComponent implements OnInit, OnDestroy {
 }
 
 const code = {
-  loadItems: `items: GalleryItem[] = [...];
+  loadItems: `items: GalleryItemData[] = [...];
 const galleryRef = this.gallery.ref();
 galleryRef.load(items)`,
   template: `<div class="grid-item"
@@ -79,7 +79,7 @@ galleryRef.load(items)`,
 </div>`,
   ex: `import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GalleryModule, Gallery, GalleryItem } from 'ng-gallery';
+import { GalleryModule, Gallery, GalleryItemData } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
 
 @Component({
@@ -98,7 +98,7 @@ import { LightboxModule } from 'ng-gallery/lightbox';
 export class AppComponent implements OnInit {
 
   galleryId = 'myLightbox';
-  items: GalleryItem[];
+  items: GalleryItemData[];
 
   constructor(public gallery: Gallery) { }
 
@@ -109,7 +109,7 @@ export class AppComponent implements OnInit {
   }
 }`,
   alt: `import { Component, OnInit } from '@angular/core';
-import { Gallery, GalleryItem } from 'ng-gallery';
+import { Gallery, GalleryItemData } from 'ng-gallery';
 import { Lightbox } from 'ng-gallery/lightbox';
 
 @Component({
@@ -121,7 +121,7 @@ import { Lightbox } from 'ng-gallery/lightbox';
 export class AppComponent implements OnInit {
 
   galleryId = 'myLightbox';
-  items: GalleryItem[];
+  items: GalleryItemData[];
 
   constructor(public gallery: Gallery, private lightbox: Lightbox) { }
 

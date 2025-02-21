@@ -30,7 +30,6 @@ type LoadingAttr = 'eager' | 'lazy';
 interface ThumbConfig {
   thumbLoadingIcon?: string;
   thumbLoadingError?: string;
-  thumbTemplate?: TemplateRef<any>;
 }
 
 interface NavConfig {
@@ -55,9 +54,6 @@ interface SliderConfig {
   imageSize?: ImageSize;
   loadingStrategy?: LoadingStrategy;
   loadingAttr?: LoadingAttr;
-  boxTemplate?: TemplateRef<any>;
-  itemTemplate?: TemplateRef<GalleryItemData>;
-  imageTemplate?: TemplateRef<any>;
   centralized?: boolean;
 }
 

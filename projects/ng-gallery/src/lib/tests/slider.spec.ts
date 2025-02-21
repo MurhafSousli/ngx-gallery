@@ -2,10 +2,10 @@ import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { GalleryItemComponent } from '../components/gallery-item.component';
+import { SliderItem } from '../slider/slider-item/slider-item';
 import { TestComponent } from './common';
-import { SliderComponent } from '../components/slider/slider';
-import { HorizontalAdapter, VerticalAdapter } from '../components/adapters';
+import { SliderComponent } from '../slider/slider/slider';
+import { HorizontalAdapter, VerticalAdapter } from '../slider/adapters';
 
 describe('Gallery slider', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -60,7 +60,7 @@ describe('Gallery slider', () => {
   });
 
   it('should render the items loaded in the gallery', () => {
-    const items: DebugElement[] = fixture.debugElement.queryAll(By.directive(GalleryItemComponent));
+    const items: DebugElement[] = fixture.debugElement.queryAll(By.directive(SliderItem));
     expect(items.length).toBe(component.gallery().galleryRef.items().length);
   });
 });

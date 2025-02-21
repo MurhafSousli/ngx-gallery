@@ -5,20 +5,24 @@ import {
   numberAttribute,
   booleanAttribute,
   input,
+  contentChild,
   Signal,
   InputSignal,
+  TemplateRef,
   ChangeDetectionStrategy,
   InputSignalWithTransform
 } from '@angular/core';
-import { Orientation } from '../models/constants';
 import { SmoothScroll } from '../smooth-scroll';
-import { GalleryThumbComponent } from './gallery-thumb.component';
-import { HammerSliding } from '../gestures/hammer-sliding.directive';
+import { Orientation } from '../models/constants';
 import { GalleryRef } from '../services/gallery-ref';
 import { ResizeSensor } from '../services/resize-sensor';
+import { SliderComponent } from '../slider/slider/slider';
 import { ScrollSnapType } from '../services/scroll-snap-type';
+import { HammerSliding } from '../gestures/hammer-sliding.directive';
+import { SliderItem } from '../slider/slider-item/slider-item';
+import { GalleryItemContext, GalleryItemDef } from '../directives/gallery-item-def.directive';
+import { GalleryItemData } from '../templates/items.model';
 // import { IntersectionSensor } from '../observers/intersection-sensor.directive';
-import { SliderComponent } from './slider/slider';
 
 @Component({
   host: {
@@ -28,8 +32,10 @@ import { SliderComponent } from './slider/slider';
     '[attr.imageSize]': 'imageSize()',
     '[attr.position]': 'position()',
     '[style.grid-area]': 'position()',
-    '[style.--g-thumb-width.px]': 'thumbWidth()',
-    '[style.--g-thumb-height.px]': 'thumbHeight()'
+    // '[style.--g-thumb-width.px]': 'thumbWidth()',
+    // '[style.--g-thumb-height.px]': 'thumbHeight()',
+    '[style.--g-item-width.px]': 'thumbWidth()',
+    '[style.--g-item-height.px]': 'thumbHeight()'
   },
   selector: 'gallery-thumbs',
   template: `
@@ -43,11 +49,12 @@ import { SliderComponent } from './slider/slider';
               scrollSnapType>
       <div class="g-slider-content">
         @for (item of galleryRef.items(); track i; let i = $index; let count = $count) {
-          <gallery-thumb [data]="item"
-                         [currIndex]="galleryRef.currIndex()"
-                         [index]="i"
-                         [count]="count"
-                         (click)="disabled() || galleryRef.set(i)"/>
+          <slider-item [data]="item"
+                       [template]="template()"
+                       [currIndex]="galleryRef.currIndex()"
+                       [index]="i"
+                       [count]="count"
+                       (click)="disabled() || galleryRef.set(i)"/>
         }
       </div>
     </g-slider>
@@ -56,39 +63,39 @@ import { SliderComponent } from './slider/slider';
   styleUrl: './gallery-thumbs.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    GalleryThumbComponent,
+    // IntersectionSensor,
     SmoothScroll,
     HammerSliding,
     ResizeSensor,
     ScrollSnapType,
-    // IntersectionSensor,
-    SliderComponent
+    SliderComponent,
+    SliderItem
   ]
 })
 export class GalleryThumbsComponent {
 
-  readonly galleryRef: GalleryRef = inject(GalleryRef, { host: true, skipSelf: true });
+  readonly galleryRef: GalleryRef = inject(GalleryRef);
 
   // readonly align: InputSignal<'start' | 'end'> = input<'start' | 'end'>();
 
   /**
    * Fits each thumbnail size to its content
    */
-  readonly autosize: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(false, {
+  autosize: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(false, {
     transform: booleanAttribute
   });
 
   /**
    * Centralize active thumb
    */
-  readonly centralized: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(false, {
+  centralized: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(false, {
     transform: booleanAttribute
   });
 
   /**
    * Disables thumbnails' clicks
    */
-  readonly disabled: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(false, {
+  disabled: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(false, {
     transform: booleanAttribute
   });
 
@@ -139,8 +146,12 @@ export class GalleryThumbsComponent {
     transform: numberAttribute
   });
 
-  readonly orientation: Signal<Orientation> = computed(() => {
+  orientation: Signal<Orientation> = computed(() => {
     return (this.position() === 'top' || this.position() === 'bottom') ? Orientation.Horizontal : Orientation.Vertical;
   });
 
+  /** @ignore */
+  private itemDef: Signal<GalleryItemDef> = contentChild(GalleryItemDef);
+
+  template: Signal<TemplateRef<GalleryItemContext<GalleryItemData>>> = computed(() => this.itemDef()?.templateRef)
 }

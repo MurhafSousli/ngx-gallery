@@ -6,7 +6,7 @@ import { TestComponent } from './common';
 import { ScrollSnapType } from '../services/scroll-snap-type';
 import { SmoothScroll } from '../smooth-scroll';
 import { HammerSliding } from '../gestures/hammer-sliding.directive';
-import { SliderComponent } from '../components/slider/slider';
+import { SliderComponent } from '../slider/slider/slider';
 
 describe('Scroll snap type directive', () => {
   let fixture: ComponentFixture<TestComponent>;
