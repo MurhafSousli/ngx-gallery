@@ -11,8 +11,8 @@ import {
   ElementRef,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { GalleryRef, ImageItem, GalleryComponent, GalleryItem } from 'ng-gallery';
-import { Subject, Subscription, from, tap, map, switchMap, finalize, debounceTime, EMPTY } from 'rxjs';
+import { GalleryRef, GalleryComponent, GalleryItem } from 'ng-gallery';
+import { Subject, Subscription, from, map, switchMap, finalize, debounceTime, EMPTY } from 'rxjs';
 
 import { Lightbox } from './lightbox.service';
 
@@ -147,7 +147,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
                 };
               }
             }),
-            tap((data: any) => images.push(new ImageItem(data))),
+            // tap((data: any) => images.push(new ImageItem(data))),
             finalize(() => galleryRef.load(images))
           );
         } else {
