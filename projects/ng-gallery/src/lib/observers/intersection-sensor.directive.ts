@@ -24,7 +24,6 @@ import { SliderItem } from '../components/slider-item/slider-item';
  * This observer used to detect when a slider element reaches the active soon
  */
 @Directive({
-  standalone: true,
   selector: '[intersectionSensor]'
 })
 export class IntersectionSensor {
@@ -123,7 +122,6 @@ export class IntersectionSensor {
             const index: number = +elementWithHighestIntersectionRatio.target.getAttribute('galleryIndex');
 
             // TODO: There is a bug where index becomes 1 then goes back to 0
-            // console.log('intersection observer index', index, entries)
             if (index === this.galleryRef.currIndex()) return;
 
             // Set the new current index
@@ -131,7 +129,7 @@ export class IntersectionSensor {
           });
         });
 
-        onCleanup(() => activeItemObserver$?.unsubscribe())
+        onCleanup(() => activeItemObserver$?.unsubscribe());
       });
     });
   }

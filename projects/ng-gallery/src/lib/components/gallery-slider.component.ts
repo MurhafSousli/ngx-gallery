@@ -1,4 +1,4 @@
-import { Component, inject, output, OutputEmitterRef, ChangeDetectionStrategy, viewChild } from '@angular/core';
+import { Component, inject, output, viewChild, OutputEmitterRef, ChangeDetectionStrategy } from '@angular/core';
 import { GalleryRef } from '../services/gallery-ref';
 import { SmoothScroll } from '../smooth-scroll';
 import { HammerSliding } from '../gestures/hammer-sliding.directive';
@@ -9,7 +9,6 @@ import { ResizeSensor } from '../services/resize-sensor';
 import { SliderComponent } from './slider/slider';
 
 @Component({
-  standalone: true,
   selector: 'gallery-slider',
   template: `
     <g-slider [orientation]="galleryRef.config().orientation"

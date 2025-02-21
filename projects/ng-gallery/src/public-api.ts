@@ -1,4 +1,3 @@
-export * from './lib/services/gallery.service';
 export * from './lib/services/gallery-ref';
 export * from './lib/components/gallery-nav.component';
 export * from './lib/components/gallery-thumbs.component';
@@ -8,9 +7,9 @@ export * from './lib/utils/img-recognizer';
 export * from './lib/auto-height/auto-height';
 export * from './lib/components/gallery.component';
 export * from './lib/templates/items.model';
-export * from './lib/templates/gallery-iframe.component';
+// export * from './lib/templates/gallery-iframe.component';
 export * from './lib/templates/gallery-image.component';
-export * from './lib/templates/gallery-video.component';
+// export * from './lib/templates/gallery-video.component';
 export * from './lib/models/config.model';
 export * from './lib/models/gallery.model';
 export * from './lib/models/constants';

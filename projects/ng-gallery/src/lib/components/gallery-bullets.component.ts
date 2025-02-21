@@ -11,7 +11,6 @@ import {
 import { GalleryRef } from '../services/gallery-ref';
 
 @Component({
-  standalone: true,
   selector: 'gallery-bullets',
   host: {
     '[attr.align]': 'align()',
@@ -29,7 +28,7 @@ import { GalleryRef } from '../services/gallery-ref';
     }
   `,
   styleUrl: './gallery-bullets.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GalleryBulletsComponent {
 

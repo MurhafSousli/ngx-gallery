@@ -35,15 +35,3 @@ export const appRoutes: Routes = [
     loadComponent: () => import('./pages/not-found/not-found.component').then(m => m.NotFoundComponent)
   }
 ];
-
-// @NgModule({
-//   imports: [
-//     RouterModule.forRoot(appRoutes, {useHash: true})
-//   ],
-//   exports: [
-//     RouterModule
-//   ]
-// })
-//
-// export class AppRoutingModule {
-// }

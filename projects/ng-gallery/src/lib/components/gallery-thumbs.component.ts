@@ -17,11 +17,10 @@ import { HammerSliding } from '../gestures/hammer-sliding.directive';
 import { GalleryRef } from '../services/gallery-ref';
 import { ResizeSensor } from '../services/resize-sensor';
 import { ScrollSnapType } from '../services/scroll-snap-type';
-import { IntersectionSensor } from '../observers/intersection-sensor.directive';
+// import { IntersectionSensor } from '../observers/intersection-sensor.directive';
 import { SliderComponent } from './slider/slider';
 
 @Component({
-  standalone: true,
   host: {
     '[attr.autosize]': 'autosize()',
     '[attr.disabled]': 'disabled()',
@@ -62,7 +61,7 @@ import { SliderComponent } from './slider/slider';
     HammerSliding,
     ResizeSensor,
     ScrollSnapType,
-    IntersectionSensor,
+    // IntersectionSensor,
     SliderComponent
   ]
 })

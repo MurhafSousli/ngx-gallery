@@ -27,7 +27,6 @@ import { createIntersectionObserver } from '../observers/intersection-observer';
 import { SliderComponent } from '../components/slider/slider';
 
 @Directive({
-  standalone: true,
   selector: '[hammerSliding]',
   host: {
     '[class.g-sliding]': 'sliding()'

@@ -37,7 +37,6 @@ import { GalleryModule, GalleryComponent } from 'ng-gallery';
   template: `
     <gallery [items]="items"/>
   `,
-  standalone: true,
   imports: [GalleryModule]
 })
 export class AppComponent {
@@ -69,7 +68,6 @@ import { GalleryModule, Gallery, GalleryRef } from 'ng-gallery';
   template: `
     <gallery id="myGallery"></gallery>
   `,
-  standalone: true,
   imports: [GalleryModule]
 })
 export class AppComponent implements OnInit {

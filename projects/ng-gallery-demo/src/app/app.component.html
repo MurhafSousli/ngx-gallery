@@ -3,10 +3,10 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav>
     <div class="logo">
-      <mat-icon svgIcon="logo"></mat-icon>
+      <mat-icon svgIcon="logo"/>
     </div>
     <h3>Ng-gallery</h3>
-    <app-menu [toolbar]="false"></app-menu>
+    <app-menu [toolbar]="false"/>
   </mat-sidenav>
 
   <div fxLayout="column" class="main-wrapper">
@@ -15,22 +15,22 @@
 
     <mat-toolbar color="primary">
       <a fxHide fxShow.lt-sm mat-icon-button class="toggle-button" (click)="sidenav.open()">
-        <mat-icon>menu</mat-icon>
+        <mat-icon fontIcon="menu"/>
       </a>
 
       <a class="toolbar-logo" routerLink=".">
-        <mat-icon svgIcon="logo"></mat-icon>
+        <mat-icon svgIcon="logo"/>
         <h1>Ng-gallery</h1>
       </a>
 
       <span fxFlex></span>
-      <app-menu fxHide.lt-sm></app-menu>
+      <app-menu fxHide.lt-sm/>
     </mat-toolbar>
 
     <!-- ROUTER OUTLET -->
 
-    <main fxFlex [@sideAnimation]="getState(o)">
-      <router-outlet #o="outlet"></router-outlet>
+    <main style="flex: 1" [@sideAnimation]="getState(o)">
+      <router-outlet #o="outlet"/>
     </main>
   </div>
 

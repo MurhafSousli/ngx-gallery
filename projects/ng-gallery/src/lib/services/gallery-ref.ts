@@ -3,18 +3,8 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { Observable, Subject } from 'rxjs';
 import { GalleryItem } from '../models/gallery.model';
 import { GALLERY_CONFIG, GalleryConfig } from '../models/config.model';
-import {
-  IframeItem,
-  IframeItemData,
-  ImageItem,
-  ImageItemData,
-  VideoItem,
-  VideoItemData,
-  VimeoItem,
-  VimeoItemData,
-  YoutubeItem,
-  YoutubeItemData
-} from '../templates/items.model';
+import { IframeItemData, ImageItemData, VideoItemData, VimeoItemData, YoutubeItemData } from '../templates/items.model';
+import { IframeItem, ImageItem, VideoItem, VimeoItem, YoutubeItem } from '../utils/item.class';
 import { IndexChange } from '../models/slider.model';
 
 @Injectable()

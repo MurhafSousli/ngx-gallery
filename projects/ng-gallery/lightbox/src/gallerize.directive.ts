@@ -11,7 +11,7 @@ import {
   ElementRef,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { Gallery, GalleryRef, ImageItem, GalleryComponent, GalleryItem } from 'ng-gallery';
+import { GalleryRef, ImageItem, GalleryComponent, GalleryItem } from 'ng-gallery';
 import { Subject, Subscription, from, tap, map, switchMap, finalize, debounceTime, EMPTY } from 'rxjs';
 
 import { Lightbox } from './lightbox.service';
@@ -63,9 +63,9 @@ export class GallerizeDirective implements OnInit, OnDestroy {
 
   constructor(private _zone: NgZone,
               private _el: ElementRef,
-              private _gallery: Gallery,
+              // private _gallery: Gallery,
               private _lightbox: Lightbox,
-              @Inject(DOCUMENT) private _document: any,
+              @Inject(DOCUMENT) private _document: Document,
               @Host() @Self() @Optional() private _galleryCmp: GalleryComponent) {
 
     // Set gallerize mode
@@ -75,15 +75,15 @@ export class GallerizeDirective implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._zone.runOutsideAngular(() => {
       this._galleryId = this.gallerize || this._galleryId;
-      const ref: GalleryRef = this._gallery.ref(this._galleryId);
+      // const ref: GalleryRef = this._gallery.ref(this._galleryId);
 
-      switch (this._mode) {
-        case GallerizeMode.Detector:
-          this.detectorMode(ref);
-          break;
-        case GallerizeMode.Gallery:
-          this.galleryMode(ref);
-      }
+      // switch (this._mode) {
+      //   case GallerizeMode.Detector:
+      //     this.detectorMode(ref);
+      //     break;
+      //   case GallerizeMode.Gallery:
+      //     this.galleryMode(ref);
+      // }
     });
   }
 

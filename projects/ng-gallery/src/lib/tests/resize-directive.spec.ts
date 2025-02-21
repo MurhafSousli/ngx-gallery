@@ -51,15 +51,15 @@ describe('Resize sensor directive', () => {
   });
 
   it('should compute "centralizeStart" size when content < viewport', async () => {
+    await firstValueFrom(galleryRef.afterItemsVisible);
     sliderComponent.galleryRef.setConfig({
       itemAutosize: true,
       centralized: true
     });
     component.width = 800;
-    component.height = 200
+    component.height = 200;
 
-    // TODO: Find a promise that resolves when all items are loaded and displayed
-    await afterTimeout(200);
+    fixture.detectChanges();
 
     expect(resizeSensorDirective.centralizeStart()).toBe(100);
     expect(resizeSensorDirective.centralizeStart()).toBe(100);
@@ -84,7 +84,7 @@ describe('Resize sensor directive', () => {
 
     component.width = 400;
     fixture.detectChanges();
-    await afterTimeout(30);
+    await afterTimeout(40);
 
     expect(resizeSensorDirective.slideSize().width).toBe(400);
     expect(sliderComponent.nativeElement.style.getPropertyValue('--slider-width')).toBe('400px');

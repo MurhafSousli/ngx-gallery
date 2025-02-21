@@ -16,8 +16,7 @@ import { Component } from '@angular/core';
       text-decoration: none;
       margin-left: 0.3em;
     }
-  `],
-  standalone: true
+  `]
 })
 export class BadgesComponent {
 

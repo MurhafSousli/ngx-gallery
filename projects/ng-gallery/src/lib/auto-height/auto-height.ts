@@ -20,7 +20,6 @@ import {
   animationFrameScheduler
 } from 'rxjs';
 import { ImgManager } from '../utils/img-manager';
-import { GalleryRef } from '../services/gallery-ref';
 import { GalleryComponent } from '../components/gallery.component';
 import { ResizeSensor } from '../services/resize-sensor';
 
@@ -31,7 +30,6 @@ import { ResizeSensor } from '../services/resize-sensor';
  */
 
 @Directive({
-  standalone: true,
   selector: 'gallery[autoHeight]',
   host: {
     '[attr.autoHeight]': 'true',
@@ -68,6 +66,7 @@ export class AutoHeight {
       // const currIndex = this.galleryRef.currIndex();
       untracked(() => {
         sub$ = this.manager.getActiveItem().pipe(
+          filter((img: HTMLImageElement) => !!img),
           // Wait for item image to be rendered
           debounceTime(0, animationFrameScheduler),
           // Skip if img height is equal the slider height

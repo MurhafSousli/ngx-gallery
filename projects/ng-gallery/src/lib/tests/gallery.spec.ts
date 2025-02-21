@@ -1,9 +1,10 @@
 import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { GalleryItemComponent } from '../components/gallery-item.component';
 import { TestComponent } from './common';
+import { GalleryRef } from 'ng-gallery';
 
 
 describe('Gallery component', () => {
@@ -12,11 +13,9 @@ describe('Gallery component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        TestComponent
-      ],
+      imports: [TestComponent],
       providers: [
+        provideNoopAnimations(),
         { provide: ComponentFixtureAutoDetect, useValue: true }
       ]
     }).compileComponents();
@@ -34,6 +33,34 @@ describe('Gallery component', () => {
     expect(component.gallery().galleryRef.items()).toBe(component.items);
     const items: DebugElement[] = fixture.debugElement.queryAll(By.directive(GalleryItemComponent));
     expect(items.length).toBe(3);
+  });
+
+  it('should trigger forward galleryRef functions', () => {
+    const galleryRef: GalleryRef = component.gallery().galleryRef;
+
+    spyOn(component.gallery().galleryRef, 'next');
+    component.gallery().next('auto', true);
+    expect(galleryRef.next).toHaveBeenCalledOnceWith('auto', true);
+
+    spyOn(component.gallery().galleryRef, 'prev');
+    component.gallery().prev('auto', true);
+    expect(galleryRef.prev).toHaveBeenCalledOnceWith('auto', true);
+
+    spyOn(component.gallery().galleryRef, 'set');
+    component.gallery().set(5, 'auto');
+    expect(galleryRef.set).toHaveBeenCalledOnceWith(5, 'auto');
+
+    spyOn(component.gallery().galleryRef, 'reset');
+    component.gallery().reset();
+    expect(galleryRef.reset).toHaveBeenCalled();
+
+    spyOn(component.gallery().galleryRef, 'play');
+    component.gallery().play(3000);
+    expect(galleryRef.play).toHaveBeenCalledOnceWith(3000);
+
+    spyOn(component.gallery().galleryRef, 'stop');
+    component.gallery().stop();
+    expect(galleryRef.stop).toHaveBeenCalled();
   });
 });
 

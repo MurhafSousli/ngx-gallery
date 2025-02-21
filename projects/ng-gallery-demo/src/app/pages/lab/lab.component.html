@@ -5,100 +5,103 @@
   </h1>
 </div>
 <div class="page-content">
-  <basic-example/>
+<!--  <basic-example/>-->
 
-  <div *ngIf="show$ | async" class="gallery-container">
-    <gallery #gallery id="lab"
-             [items]="photos$ | async"
-             [centralized]="config.centralized"
-             [itemAutosize]="config.itemAutosize"
-             [loadingAttr]="config.loadingAttr"
-             [resizeDebounceTime]="config.resizeDebounceTime"
-             [loop]="config.loop"
-             [debug]="config.debug"
-             [autoplay]="config.autoplay"
-             [imageSize]="config.imageSize"
-             [autoplayInterval]="config.autoplayInterval"
-             [loadingStrategy]="config.loadingStrategy"
-             [orientation]="config.orientation"
-             [scrollDuration]="config.scrollDuration"
-             [disableScroll]="config.disableScroll"
-             [disableMouseScroll]="config.disableMouseScroll"
-             [scrollBehavior]="config.scrollBehavior"
-             (itemClick)="onItemClick($event)"
-             (thumbClick)="onThumbClick($event)">
+  @if (show()) {
+    <div class="gallery-container">
+      <gallery #gallery id="lab"
+               [dir]="dir"
+               [items]="photos()"
+               [centralized]="config.centralized"
+               [itemAutosize]="config.itemAutosize"
+               [loadingAttr]="config.loadingAttr"
+               [resizeDebounceTime]="config.resizeDebounceTime"
+               [loop]="config.loop"
+               [debug]="config.debug"
+               [autoplay]="config.autoplay"
+               [imageSize]="config.imageSize"
+               [autoplayInterval]="config.autoplayInterval"
+               [loadingStrategy]="config.loadingStrategy"
+               [orientation]="config.orientation"
+               [scrollDuration]="config.scrollDuration"
+               [disableScroll]="config.disableScroll"
+               [disableMouseScroll]="config.disableMouseScroll"
+               [scrollBehavior]="config.scrollBehavior"
+               (itemClick)="onItemClick($event)"
+               (thumbClick)="onThumbClick($event)">
 
-      <img *galleryItemDef="let item"
-           galleryImage
-           [src]="item.src"
-           fill
-           [attr.alt]="item.alt"/>
+        <img *galleryItemDef="let item"
+             galleryImage
+             [src]="item.src"
+             fill
+             [attr.alt]="item.alt"/>
 
-      @if (navConfig.nav) {
-        <gallery-nav/>
-      }
+        @if (navConfig.nav) {
+          <gallery-nav/>
+        }
 
-      @if (bulletConfig.bullet) {
-        <gallery-bullets [align]="bulletConfig.align"
-                         [scrollBehavior]="bulletConfig.scrollBehavior"
-                         [disabled]="bulletConfig.disabled"/>
-      }
+        @if (bulletConfig.bullet) {
+          <gallery-bullets [align]="bulletConfig.align"
+                           [scrollBehavior]="bulletConfig.scrollBehavior"
+                           [disabled]="bulletConfig.disabled"/>
+        }
 
-      @if (counterConfig.counter) {
-        <gallery-counter [align]="counterConfig.align"/>
-      }
+        @if (counterConfig.counter) {
+          <gallery-counter [align]="counterConfig.align"/>
+        }
 
-      @if (thumbConfig.thumbs) {
-        <gallery-thumbs [autosize]="thumbConfig.autosize"
-                        [imageSize]="thumbConfig.imageSize"
-                        [centralized]="thumbConfig.centralized"
-                        [thumbWidth]="thumbConfig.thumbWidth"
-                        [thumbHeight]="thumbConfig.thumbHeight"
-                        [disabled]="thumbConfig.disabled"
-                        [disableScroll]="thumbConfig.disableScroll"
-                        [disableMouseScroll]="thumbConfig.disableMouseScroll"
-                        [position]="thumbConfig.position"
-                        [detach]="thumbConfig.detach"/>
-      }
-    </gallery>
+        @if (thumbConfig.thumbs) {
+          <gallery-thumbs [autosize]="thumbConfig.autosize"
+                          [imageSize]="thumbConfig.imageSize"
+                          [centralized]="thumbConfig.centralized"
+                          [thumbWidth]="thumbConfig.thumbWidth"
+                          [thumbHeight]="thumbConfig.thumbHeight"
+                          [disabled]="thumbConfig.disabled"
+                          [disableScroll]="thumbConfig.disableScroll"
+                          [disableMouseScroll]="thumbConfig.disableMouseScroll"
+                          [position]="thumbConfig.position"
+                          [detach]="thumbConfig.detach"/>
+        }
+      </gallery>
 
-    <div class="buttons-container">
-      <button mat-flat-button (click)="gallery.play()">Play</button>
-      <button mat-button color="accent" (click)="gallery.stop()">Stop</button>
-      <button mat-button color="primary" (click)="gallery.prev()">Prev</button>
-      <button mat-button color="primary" (click)="gallery.next()">Next</button>
-<!--      <button mat-button color="primary" (click)="gallery.remove(gallery.galleryRef.currIndex())">Remove-->
-<!--      </button>-->
+      <div class="buttons-container">
+        <button mat-flat-button (click)="gallery.play()">Play</button>
+        <button mat-button color="accent" (click)="gallery.stop()">Stop</button>
+        <button mat-button color="primary" (click)="gallery.prev()">Prev</button>
+        <button mat-button color="primary" (click)="gallery.next()">Next</button>
+        <!--      <button mat-button color="primary" (click)="gallery.remove(gallery.galleryRef.currIndex())">Remove-->
+        <!--      </button>-->
+      </div>
     </div>
-  </div>
+  }
 
   <mat-card>
     <mat-card-content>
 
       <div class="outputs-container">
-        <ng-container *ngIf="indexChange$ | async; let indexChange">
+        @if (indexChange(); as indexChange) {
           <span class="chip" [class.changed]="indexChange.active">
             <strong>indexChange {{ indexChange.e?.currIndex }}</strong>
           </span>
-        </ng-container>
+        }
 
-        <ng-container *ngIf="thumbClick$ | async; let thumbClick">
+        @if (thumbClick(); as thumbClick) {
           <span class="chip" [class.changed]="thumbClick.active">
             <strong>thumbClick {{ thumbClick.e }}</strong>
           </span>
-        </ng-container>
+        }
 
-        <ng-container *ngIf="itemClick$ | async; let itemClick">
+        @if (itemClick(); as itemClick) {
           <span class="chip" [class.changed]="itemClick.active">
             <strong>itemClick {{ itemClick.e }}</strong>
           </span>
-        </ng-container>
+        }
 
-        <ng-container *ngIf="player$ | async; let player">
+        @if (player(); as player) {
           <span class="chip" [class.changed]="player.active">
             <strong>playingChange {{ player.e?.isPlaying }}</strong>
           </span>
-        </ng-container>
+        }
       </div>
 
       <div class="row">
@@ -109,7 +112,9 @@
             <mat-form-field>
               <mat-label>Loading strategy</mat-label>
               <mat-select [(ngModel)]="config.loadingStrategy">
-                <mat-option *ngFor="let strategy of loadingStrategies" [value]="strategy">{{ strategy }}</mat-option>
+                @for (option of loadingStrategies; track option) {
+                  <mat-option [value]="option">{{ option }}</mat-option>
+                }
               </mat-select>
             </mat-form-field>
           </div>
@@ -117,8 +122,9 @@
             <mat-form-field name="orientation">
               <mat-label>Orientation</mat-label>
               <mat-select [(ngModel)]="config.orientation">
-                <mat-option *ngFor="let orientation of orientations" [value]="orientation">{{ orientation }}
-                </mat-option>
+                @for (option of orientations; track option) {
+                  <mat-option [value]="option">{{ option }}</mat-option>
+                }
               </mat-select>
             </mat-form-field>
           </div>
@@ -127,7 +133,9 @@
             <mat-form-field>
               <mat-label>Image size</mat-label>
               <mat-select [(ngModel)]="config.imageSize">
-                <mat-option *ngFor="let size of imageSizes" [value]="size">{{ size }}</mat-option>
+                @for (option of imageSizes; track option) {
+                  <mat-option [value]="option">{{ option }}</mat-option>
+                }
               </mat-select>
             </mat-form-field>
           </div>
@@ -136,7 +144,9 @@
             <mat-form-field>
               <mat-label>Thumbnails image size</mat-label>
               <mat-select [(ngModel)]="thumbConfig.imageSize">
-                <mat-option *ngFor="let size of imageSizes" [value]="size">{{ size }}</mat-option>
+                @for (option of imageSizes; track option) {
+                  <mat-option [value]="option">{{ option }}</mat-option>
+                }
               </mat-select>
             </mat-form-field>
           </div>
@@ -145,7 +155,9 @@
             <mat-form-field>
               <mat-label>Thumbnails Position</mat-label>
               <mat-select [(ngModel)]="thumbConfig.position" [disabled]="!thumbConfig.thumbs">
-                <mat-option *ngFor="let position of thumbPositions" [value]="position">{{ position }}</mat-option>
+                @for (option of thumbPositions; track option) {
+                  <mat-option [value]="option">{{ option }}</mat-option>
+                }
               </mat-select>
             </mat-form-field>
           </div>
@@ -154,7 +166,9 @@
             <mat-form-field>
               <mat-label>Counter Position</mat-label>
               <mat-select [(ngModel)]="counterConfig.align" [disabled]="!counterConfig.counter">
-                <mat-option *ngFor="let position of dotsCounterPositions" [value]="position">{{ position }}</mat-option>
+                @for (option of dotsCounterPositions; track option) {
+                  <mat-option [value]="option">{{ option }}</mat-option>
+                }
               </mat-select>
             </mat-form-field>
           </div>
@@ -163,7 +177,9 @@
             <mat-form-field>
               <mat-label>Dots Position</mat-label>
               <mat-select [(ngModel)]="bulletConfig.align" [disabled]="!bulletConfig.bullet">
-                <mat-option *ngFor="let position of dotsCounterPositions" [value]="position">{{ position }}</mat-option>
+                @for (option of dotsCounterPositions; track option) {
+                  <mat-option [value]="option">{{ option }}</mat-option>
+                }
               </mat-select>
             </mat-form-field>
           </div>
@@ -174,9 +190,9 @@
           <div>
             <mat-checkbox [(ngModel)]="config.debug">Debug</mat-checkbox>
           </div>
-<!--          <div>-->
-<!--            <mat-checkbox [(ngModel)]="config.autoHeight" [disabled]="config.itemAutosize">Auto-height</mat-checkbox>-->
-<!--          </div>-->
+          <!--          <div>-->
+          <!--            <mat-checkbox [(ngModel)]="config.autoHeight" [disabled]="config.itemAutosize">Auto-height</mat-checkbox>-->
+          <!--          </div>-->
           <div>
             <mat-checkbox [(ngModel)]="config.itemAutosize">Item autosize</mat-checkbox>
           </div>
@@ -209,7 +225,9 @@
             <mat-form-field>
               <mat-label>Scroll Behavior</mat-label>
               <mat-select [(ngModel)]="config.scrollBehavior">
-                <mat-option *ngFor="let behavior of scrollBehaviors" [value]="behavior">{{ behavior }}</mat-option>
+                @for (option of scrollBehaviors; track option) {
+                  <mat-option [value]="option">{{ option }}</mat-option>
+                }
               </mat-select>
             </mat-form-field>
           </div>
@@ -218,9 +236,20 @@
             <mat-form-field>
               <mat-label>Loading Attr</mat-label>
               <mat-select [(ngModel)]="config.loadingAttr" [disabled]="config.itemAutosize">
-                <mat-option *ngFor="let loadingAttr of loadingAttrs" [value]="loadingAttr">
-                  {{ config.itemAutosize ? 'eager' : loadingAttr }}
-                </mat-option>
+                @for (option of loadingAttrs; track option) {
+                  <mat-option [value]="option">{{ config.itemAutosize ? 'eager' : option }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field>
+              <mat-label>Direction</mat-label>
+              <mat-select [(ngModel)]="dir">
+                @for (option of directions; track option) {
+                  <mat-option [value]="option">{{ option }}</mat-option>
+                }
               </mat-select>
             </mat-form-field>
           </div>

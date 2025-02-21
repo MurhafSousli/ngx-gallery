@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { GalleryComponent, GalleryItemDef } from 'ng-gallery';
 
 @Component({
-  standalone: true,
   selector: 'basic-example',
   template: `
     <gallery [items]="items" [style.color]="'white'">

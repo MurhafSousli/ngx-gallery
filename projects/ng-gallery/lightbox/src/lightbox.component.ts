@@ -27,7 +27,6 @@ import { lightboxAnimation } from './lightbox.animation';
     '[@lightbox]': '{ value: state, params: { startAnimationTime: startAnimationTime, exitAnimationTime: exitAnimationTime } }',
     '(@lightbox.done)': 'onAnimationDone($event)',
   },
-  standalone: true,
   imports: [GalleryComponent]
 })
 export class LightboxComponent {

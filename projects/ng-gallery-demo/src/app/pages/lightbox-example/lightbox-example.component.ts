@@ -5,7 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import { Observable, map } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { Gallery, GalleryItem } from 'ng-gallery';
+import { GalleryItem } from 'ng-gallery';
 import { Lightbox, LightboxModule, provideLightboxOptions } from 'ng-gallery/lightbox';
 import { Pixabay } from '../../service/pixabay.service';
 import { FooterComponent } from '../../shared/footer/footer.component';
@@ -21,13 +21,22 @@ import { SectionTitleComponent } from '../../shared/section-title/section-title.
   templateUrl: './lightbox-example.component.html',
   styleUrls: ['./lightbox-example.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   providers: [
     provideLightboxOptions({
       keyboardShortcuts: false
     })
   ],
-  imports: [CommonModule, LightboxModule, SectionTitleComponent, NoteComponent, MatButtonModule, RouterLink, HlCodeComponent, FontAwesomeModule, FooterComponent]
+  imports: [
+    CommonModule,
+    LightboxModule,
+    SectionTitleComponent,
+    NoteComponent,
+    MatButtonModule,
+    RouterLink,
+    HlCodeComponent,
+    FontAwesomeModule,
+    FooterComponent
+  ]
 })
 export class LightboxExampleComponent implements OnInit, OnDestroy {
 
@@ -35,7 +44,7 @@ export class LightboxExampleComponent implements OnInit, OnDestroy {
   space$: Observable<GalleryItem[]>;
   images: string[] = [];
 
-  constructor(public gallery: Gallery, public lightbox: Lightbox, public _pixabay: Pixabay, private _title: Title) {
+  constructor( public lightbox: Lightbox, public _pixabay: Pixabay, private _title: Title) {
     this.code = code;
   }
 
@@ -44,10 +53,10 @@ export class LightboxExampleComponent implements OnInit, OnDestroy {
     this.space$ = this._pixabay.getHDImages('sea').pipe(
       map((items: GalleryItem[]) => {
         // Load items manually into the lightbox gallery ref
-        this.gallery.ref('lightbox', {
-          // thumbPosition: 'top',
-          imageSize: 'cover',
-        }).load(items);
+        // this.gallery.ref('lightbox', {
+        //   // thumbPosition: 'top',
+        //   imageSize: 'cover',
+        // }).load(items);
 
         return items;
       })
@@ -84,7 +93,6 @@ import { LightboxModule } from 'ng-gallery/lightbox';
       </div>
     </div>
   \`,
-  standalone: true,
   imports: [CommonModule, LightboxModule]
 })
 export class AppComponent implements OnInit {

@@ -13,7 +13,6 @@ import { GalleryItemData, } from '../templates/items.model';
 import { SliderItem } from './slider-item/slider-item';
 
 @Component({
-  standalone: true,
   selector: 'gallery-item',
   host: {
     '[attr.galleryIndex]': 'index()',

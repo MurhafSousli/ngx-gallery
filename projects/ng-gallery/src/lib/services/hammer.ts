@@ -11,10 +11,10 @@ declare const Hammer: any;
 
 @Injectable()
 export class CustomHammerConfig extends HammerGestureConfig {
-  overrides = {
+  override overrides = {
     pinch: { enable: false },
     rotate: { enable: false }
   };
 
-  options = { inputClass: typeof Hammer !== 'undefined' ? Hammer.MouseInput : null };
+  override options = { inputClass: typeof Hammer !== 'undefined' ? Hammer.MouseInput : null };
 }

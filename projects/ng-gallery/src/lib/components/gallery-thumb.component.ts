@@ -1,6 +1,5 @@
 import {
   Component,
-  inject,
   computed,
   input,
   Signal,
@@ -12,11 +11,9 @@ import { GalleryItemContext } from '../directives/gallery-item-def.directive';
 import { GalleryImageComponent } from '../templates/gallery-image.component';
 import { ImageItemData } from '../templates/items.model';
 import { GalleryItemType } from '../models/constants';
-import { GalleryRef } from '../services/gallery-ref';
 import { SliderItem } from './slider-item/slider-item';
 
 @Component({
-  standalone: true,
   selector: 'gallery-thumb',
   host: {
     '[attr.galleryIndex]': 'index()',
@@ -25,8 +22,8 @@ import { SliderItem } from './slider-item/slider-item';
   },
   providers: [{ provide: SliderItem, useExisting: GalleryThumbComponent }],
   template: `
-    <gallery-image [src]="data().thumb"
-                   [alt]="data().alt + '-thumbnail'"
+    <gallery-image [src]="data()?.thumb"
+                   [alt]="data()?.alt + '-thumbnail'"
                    [isThumbnail]="true"
                    [loadingIcon]="galleryRef.config().thumbLoadingIcon"
                    [loadingError]="galleryRef.config().thumbLoadingError"/>
@@ -42,13 +39,9 @@ import { SliderItem } from './slider-item/slider-item';
   imports: [NgTemplateOutlet, GalleryImageComponent]
 })
 export class GalleryThumbComponent extends SliderItem {
-  /**
-   * The gallery reference instance
-   */
-  readonly galleryRef: GalleryRef = inject(GalleryRef);
 
-  /** Item's index in the gallery */
-  index: InputSignal<number> = input<number>();
+  /** Whether the item is visible in the viewport */
+  override visible: InputSignal<boolean> = input<boolean>();
 
   /** The number of total items */
   count: InputSignal<number> = input<number>();
@@ -61,9 +54,6 @@ export class GalleryThumbComponent extends SliderItem {
 
   /** Item's data, this object contains the data required to display the content (e.g. src path) */
   data: InputSignal<ImageItemData> = input<ImageItemData>();
-
-  /** Whether the item is visible in the viewport */
-  visible: InputSignal<boolean> = input<boolean>();
 
   active: Signal<boolean> = computed(() => this.index() === this.currIndex());
 

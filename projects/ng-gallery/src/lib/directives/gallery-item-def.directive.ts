@@ -2,7 +2,6 @@ import { Directive, inject, TemplateRef } from '@angular/core';
 import { GalleryItemData } from '../templates/items.model';
 
 @Directive({
-  standalone: true,
   selector: '[galleryItemDef]'
 })
 export class GalleryItemDef {

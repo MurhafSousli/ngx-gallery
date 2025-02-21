@@ -3,7 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Overlay, OverlayRef, OverlayConfig } from '@angular/cdk/overlay';
 import { LEFT_ARROW, RIGHT_ARROW, ESCAPE } from '@angular/cdk/keycodes';
-import { Gallery } from 'ng-gallery';
+// import { Gallery } from 'ng-gallery';
 import { Subject } from 'rxjs';
 
 import { LightboxConfig, LIGHTBOX_CONFIG } from './lightbox.model';
@@ -17,7 +17,7 @@ export class Lightbox {
   /** Gallery overlay ref */
   private _overlayRef: OverlayRef;
 
-  private _gallery: Gallery = inject(Gallery);
+  // private _gallery: Gallery = inject(Gallery);
 
   private _overlay: Overlay = inject(Overlay);
 
@@ -59,8 +59,8 @@ export class Lightbox {
       disposeOnNavigation: true
     };
 
-    const galleryRef = this._gallery.ref(id);
-    galleryRef.set(i);
+    // const galleryRef = this._gallery.ref(id);
+    // galleryRef.set(i);
 
     this._overlayRef = this._overlay.create(overlayConfig);
 
@@ -93,10 +93,10 @@ export class Lightbox {
       this._overlayRef.keydownEvents().subscribe((event: any) => {
         switch (event.keyCode) {
           case LEFT_ARROW:
-            galleryRef.prev();
+            // galleryRef.prev();
             break;
           case RIGHT_ARROW:
-            galleryRef.next();
+            // galleryRef.next();
             break;
           case ESCAPE:
             this.close();

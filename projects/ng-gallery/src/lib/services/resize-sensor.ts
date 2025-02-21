@@ -2,13 +2,14 @@ import {
   Directive,
   signal,
   inject,
-  effect,
   computed,
   untracked,
+  afterRenderEffect,
   NgZone,
   Signal,
+  ElementRef,
   WritableSignal,
-  EffectCleanupRegisterFn, ElementRef
+  EffectCleanupRegisterFn
 } from '@angular/core';
 import { SharedResizeObserver } from '@angular/cdk/observers/private';
 import { Subscription, animationFrameScheduler, throttleTime, combineLatest } from 'rxjs';
@@ -17,7 +18,6 @@ import { GalleryRef } from './gallery-ref';
 import { SliderComponent } from '../components/slider/slider';
 
 @Directive({
-  standalone: true,
   selector: '[resizeSensor]',
   host: {
     '[style.--slider-width.px]': 'slideSize()?.width',
@@ -42,13 +42,15 @@ export class ResizeSensor {
 
   readonly contentSize: WritableSignal<DOMRectReadOnly> = signal(null);
 
+  readonly undefinedSizes: Signal<boolean> = computed(() => !this.slideSize() || !this.contentSize());
+
   readonly centralizeStart: Signal<number> = computed(() => {
-    if (!this.slideSize() || !this.contentSize()) return;
+    if (this.undefinedSizes()) return 0;
     return this.slider.adapter()?.getCentralizerStartSize();
   });
 
   readonly centralizeEnd: Signal<number> = computed(() => {
-    if (!this.slideSize() || !this.contentSize()) return;
+    if (this.undefinedSizes()) return 0;
     return this.slider.adapter()?.getCentralizerEndSize();
   });
 
@@ -57,39 +59,41 @@ export class ResizeSensor {
   constructor() {
     let resizeSubscription$: Subscription;
 
-    effect((onCleanup: EffectCleanupRegisterFn) => {
-      const config: GalleryConfig = this.galleryRef.config();
+    afterRenderEffect({
+      earlyRead: (onCleanup: EffectCleanupRegisterFn) => {
+        const config: GalleryConfig = this.galleryRef.config();
 
-      // Make sure items are rendered
-      if (!this.slider.items().length || this.disabled()) return;
+        // Make sure items are rendered
+        if (!this.slider.items().length || this.disabled()) return;
 
-      untracked(() => {
-        this.zone.runOutsideAngular(() => {
-          resizeSubscription$ = combineLatest([
-            this.sharedResizeObserver.observe(this.slider.nativeElement),
-            this.sharedResizeObserver.observe(this.slider.nativeElement.firstElementChild)
-          ]).pipe(
-            throttleTime(config.resizeDebounceTime, animationFrameScheduler, {
-              leading: true,
-              trailing: true
-            }),
-          ).subscribe(([sliderEntries, contentEntries]: [ResizeObserverEntry[], ResizeObserverEntry[]]) => {
-            this.zone.run(() => {
-              if (!sliderEntries || !contentEntries) return;
+        untracked(() => {
+          this.zone.runOutsideAngular(() => {
+            resizeSubscription$ = combineLatest([
+              this.sharedResizeObserver.observe(this.slider.nativeElement),
+              this.sharedResizeObserver.observe(this.slider.nativeElement.firstElementChild)
+            ]).pipe(
+              throttleTime(config.resizeDebounceTime, animationFrameScheduler, {
+                leading: true,
+                trailing: true
+              }),
+            ).subscribe(([sliderEntries, contentEntries]: [ResizeObserverEntry[], ResizeObserverEntry[]]) => {
+              this.zone.run(() => {
+                if (!sliderEntries || !contentEntries) return;
 
-              if (sliderEntries[0].contentRect.height) {
-                this.slideSize.set(sliderEntries[0].contentRect);
-              }
+                if (sliderEntries[0].contentRect.height) {
+                  this.slideSize.set(sliderEntries[0].contentRect);
+                }
 
-              if (contentEntries[0].contentRect.height) {
-                this.contentSize.set(contentEntries[0].contentRect);
-              }
+                if (contentEntries[0].contentRect.height) {
+                  this.contentSize.set(contentEntries[0].contentRect);
+                }
+              });
             });
           });
-        });
 
-        onCleanup(() => resizeSubscription$?.unsubscribe());
-      });
+          onCleanup(() => resizeSubscription$?.unsubscribe());
+        });
+      }
     });
   }
 }

@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, Signal, signal, WritableSignal } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { NgIf, NgFor, AsyncPipe, NgOptimizedImage } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 import {
   GalleryItem,
   GalleryConfig,
@@ -14,7 +14,7 @@ import {
   GalleryBulletsComponent,
   GalleryCounterComponent,
   GalleryItemDef,
-  ImgRecognizer, AutoHeight
+  ImgRecognizer
 } from 'ng-gallery';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -24,11 +24,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { Pixabay } from '../../service/pixabay.service';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { BasicExampleComponent } from '../examples/basic-example/basic-example';
+import { Dir, Direction } from '@angular/cdk/bidi';
 
 @Component({
   host: {
@@ -36,43 +35,61 @@ import { BasicExampleComponent } from '../examples/basic-example/basic-example';
   },
   selector: 'lab',
   templateUrl: './lab.component.html',
-  styleUrls: ['./lab.component.scss'],
+  styleUrl: './lab.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
-    AutoHeight,
-    FlexLayoutModule,
+    // AutoHeight,
     MatIconModule,
-    NgIf,
     GalleryComponent,
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
     MatSelectModule,
     FormsModule,
-    NgFor,
     MatOptionModule,
     MatCheckboxModule,
     MatInputModule,
     FooterComponent,
-    AsyncPipe,
     GalleryThumbsComponent,
     GalleryNavComponent,
     GalleryBulletsComponent,
     GalleryCounterComponent,
     GalleryItemDef,
     ImgRecognizer,
-    NgOptimizedImage,
-    BasicExampleComponent
+    Dir
+    // NgOptimizedImage,
+    // BasicExampleComponent
   ]
 })
 export class LabComponent implements OnInit {
 
-  show$ = new BehaviorSubject<boolean>(true);
-  photos$: Observable<GalleryItem[]>;
-  config: GalleryConfig;
+  private pixabay: Pixabay = inject(Pixabay);
 
-  thumbConfig= {
+  private _title: Title = inject(Title);
+
+  show: WritableSignal<boolean> = signal(true);
+
+  photos: Signal<GalleryItem[]> = toSignal(this.pixabay.getHDImages('tropical'));
+
+  config: GalleryConfig = {
+    loop: true,
+    resizeDebounceTime: 0,
+    scrollDuration: 468,
+    autoplay: false,
+    disableScroll: false,
+    disableMouseScroll: false,
+    centralized: false,
+    imageSize: 'contain',
+    autoplayInterval: 3000,
+    loadingStrategy: LoadingStrategy.Preload,
+    orientation: Orientation.Horizontal,
+    itemAutosize: false,
+    scrollBehavior: 'smooth',
+    loadingAttr: 'lazy',
+    debug: true
+  };
+
+  thumbConfig = {
     thumbs: true,
     disableScroll: false,
     disableMouseScroll: false,
@@ -102,6 +119,9 @@ export class LabComponent implements OnInit {
     align: 'top'
   }
 
+  dir: Direction = 'ltr';
+
+  directions: Direction[] = ['ltr', 'rtl']
   imageSizes = ['cover', 'contain'];
   thumbPositions = ['top', 'left', 'right', 'bottom'];
   loadingStrategies = ['default', 'lazy', 'preload'];
@@ -110,70 +130,40 @@ export class LabComponent implements OnInit {
   scrollBehaviors = ['auto', 'smooth'];
   loadingAttrs = ['eager', 'lazy'];
 
-  player$ = new BehaviorSubject<any>({ active: false });
-  itemClick$ = new BehaviorSubject<any>({ active: false });
-  thumbClick$ = new BehaviorSubject<any>({ active: false });
-  indexChange$ = new BehaviorSubject<any>({ active: false });
+  player: WritableSignal<any> = signal<any>({ active: false });
+  itemClick: WritableSignal<any> = signal<any>({ active: false });
+  thumbClick: WritableSignal<any> = signal<any>({ active: false });
+  indexChange: WritableSignal<any> = signal<any>({ active: false });
 
-  constructor(pixabay: Pixabay, private _title: Title) {
-    this.photos$ = pixabay.getHDImages('tropical');
-  }
-
-  ngOnInit() {
+  ngOnInit(): void {
     this._title.setTitle('Lab | ng-gallery');
-    this.config = {
-      loop: true,
-      resizeDebounceTime: 0,
-      scrollDuration: 468,
-      autoplay: false,
-      disableScroll: false,
-      disableMouseScroll: false,
-      centralized: false,
-      imageSize: 'contain',
-      autoplayInterval: 3000,
-      loadingStrategy: LoadingStrategy.Preload,
-      orientation: Orientation.Horizontal,
-      itemAutosize: false,
-      scrollBehavior: 'smooth',
-      loadingAttr: 'lazy',
-      debug: true
-    };
   }
 
-  restart() {
-    this.show$.next(false);
-    setTimeout(() => this.show$.next(true), 300);
+  restart(): void {
+    this.show.set(false);
+    setTimeout(() => this.show.set(true), 300);
   }
 
-  onPlayer(e) {
-    this.updateEvent(this.player$, { active: true, e });
+  onPlayer(e): void {
+    this.updateEvent(this.player, e);
+  }
+
+  onItemClick(e): void {
+    this.updateEvent(this.itemClick, e);
+  }
+
+  onThumbClick(e): void {
+    this.updateEvent(this.thumbClick, e);
+  }
+
+  onIndexChange(e): void {
+    this.updateEvent(this.indexChange, e);
+  }
+
+  private updateEvent(eventState: WritableSignal<any>, e?: any): void {
+    eventState.update(value => ({ ...value, ...{ active: true, e } }));
     setTimeout(() => {
-      this.updateEvent(this.player$, { active: false });
+      eventState.update(value => ({ ...value, ...{ active: false } }));
     }, 800);
-  }
-
-  onItemClick(e) {
-    this.updateEvent(this.itemClick$, { active: true, e });
-    setTimeout(() => {
-      this.updateEvent(this.itemClick$, { active: false });
-    }, 800);
-  }
-
-  onThumbClick(e) {
-    this.updateEvent(this.thumbClick$, { active: true, e });
-    setTimeout(() => {
-      this.updateEvent(this.thumbClick$, { active: false });
-    }, 800);
-  }
-
-  onIndexChange(e) {
-    this.updateEvent(this.indexChange$, { active: true, e });
-    setTimeout(() => {
-      this.updateEvent(this.indexChange$, { active: false });
-    }, 800);
-  }
-
-  private updateEvent(eventState: BehaviorSubject<any>, args) {
-    eventState.next({ ...eventState.value, ...args });
   }
 }

@@ -3,9 +3,9 @@ import { GalleryComponent, GalleryItem, GalleryItemDef, ImgRecognizer } from 'ng
 import { Observable } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { img1, img2, img3 } from './test-images';
 
 @Component({
-  standalone: true,
   imports: [GalleryComponent, GalleryItemDef, ImgRecognizer],
   template: `
     <gallery [items]="items" [style.width.px]="width" [style.height.px]="height">
@@ -18,13 +18,16 @@ import { toObservable } from '@angular/core/rxjs-interop';
 export class TestComponent {
   items: GalleryItem[] = [
     {
-      src: 'https://loremflickr.com/200/200?random=1',
+      // src: 'https://loremflickr.com/200/200?random=1',
+      src: img1
     },
     {
-      src: 'https://loremflickr.com/200/200?random=2',
+      src: img2
+      // src: 'https://loremflickr.com/200/200?random=2',
     },
     {
-      src: 'https://loremflickr.com/200/200?random=3',
+      src: img3
+      // src: 'https://loremflickr.com/200/200?random=3',
     }
   ];
   width: number = 500;

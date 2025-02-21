@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { Observable, Subject, EMPTY, filter, map, switchMap, merge } from 'rxjs';
+import { Observable, Subject, EMPTY, filter, map, switchMap, merge, take, of } from 'rxjs';
 import { GalleryRef } from '../services/gallery-ref';
 import { ItemState } from '../models/item.model';
 
@@ -9,6 +9,10 @@ interface ImageRegistry {
   target: HTMLImageElement;
 }
 
+/**
+ * A service used to notify when the active image is loaded
+ * Used for auto-height feature, autoplay feature
+ */
 @Injectable()
 export class ImgManager {
 
@@ -30,7 +34,7 @@ export class ImgManager {
             map(() => img.target)
           )
         }
-        return EMPTY;
+        return of(null);
       })
     );
   }

@@ -1,5 +1,4 @@
-@import '../assets/variables';
-@import "../assets/mixin";
+@use "../mixin";
 
 :host {
   display: block;
@@ -17,7 +16,7 @@ h3 {
   transition: all linear 0.3s;
   display: flex;
   flex-direction: column;
-  background-color: $bg;
+  background-color: var(--bg);
 }
 
 .logo {
@@ -81,7 +80,7 @@ main {
 }
 
 .mat-sidenav {
-  background-color: $primary-color;
+  background-color: var(--primary-color);
 
   h3, menu {
     color: white;

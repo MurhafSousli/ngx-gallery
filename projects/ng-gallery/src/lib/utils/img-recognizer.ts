@@ -9,8 +9,10 @@ import {
 import { ImgManager } from './img-manager';
 import { SliderItem } from '../components/slider-item/slider-item';
 
+/**
+ * A directive used to register an img element in the ImgManager service to track img loading state
+ */
 @Directive({
-  standalone: true,
   selector: 'img[galleryImage]',
   host: {
     '[class.g-image-item]': 'true',
@@ -21,7 +23,7 @@ import { SliderItem } from '../components/slider-item/slider-item';
 })
 export class ImgRecognizer {
 
-  private readonly nativeElement: HTMLImageElement = inject(ElementRef<HTMLImageElement>).nativeElement;
+  readonly nativeElement: HTMLImageElement = inject(ElementRef<HTMLImageElement>).nativeElement;
 
   private readonly manager: ImgManager = inject(ImgManager);
 

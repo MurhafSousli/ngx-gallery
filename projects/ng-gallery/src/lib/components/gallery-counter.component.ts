@@ -10,7 +10,6 @@ import {
 import { GalleryRef } from '../services/gallery-ref';
 
 @Component({
-  standalone: true,
   selector: 'gallery-counter',
   host: {
     '[attr.align]': 'align()'

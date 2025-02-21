@@ -4,7 +4,6 @@ import { SmoothScroll } from '../smooth-scroll';
 import { SliderComponent } from '../components/slider/slider';
 
 @Directive({
-  standalone: true,
   selector: '[scrollSnapType]',
   host: {
     '[style.--slider-scroll-snap-type]': 'scrollSnapType()'

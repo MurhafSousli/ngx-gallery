@@ -35,7 +35,6 @@ import { GallerySliderComponent } from './gallery-slider.component';
  * Gallery component
  */
 @Component({
-  standalone: true,
   selector: 'gallery',
   host: {
     '[attr.dir]': 'dir.value',
@@ -64,7 +63,7 @@ import { GallerySliderComponent } from './gallery-slider.component';
   styleUrls: ['./gallery.scss', '../debug/debug.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [AutoplayDirective],
-  imports: [AutoplayDirective, GallerySliderComponent, NgTemplateOutlet],
+  imports: [GallerySliderComponent, NgTemplateOutlet],
   providers: [ImgManager, GalleryRef]
 })
 export class GalleryComponent {

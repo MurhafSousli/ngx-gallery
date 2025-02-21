@@ -11,9 +11,9 @@ import {
   YoutubeItemData,
   GalleryModule,
   GalleryComponent,
-  VimeoItemData, GalleryThumbsComponent
+  VimeoItemData,
+  GalleryThumbsComponent
 } from 'ng-gallery';
-import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Observable, map } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faYoutube } from '@fortawesome/free-brands-svg-icons/faYoutube';
@@ -33,10 +33,19 @@ import { NoteComponent } from '../../shared/note/note.component';
   },
   selector: 'templates-example',
   templateUrl: './templates-example.component.html',
-  styleUrls: ['./templates-example.component.scss'],
+  styleUrl: './templates-example.component.scss',
   animations: [slideInAnimation],
-  standalone: true,
-  imports: [CommonModule, SectionTitleComponent, GalleryModule, HlCodeComponent, FooterComponent, FontAwesomeModule, MatButtonModule, NoteComponent, GalleryThumbsComponent]
+  imports: [
+    CommonModule,
+    SectionTitleComponent,
+    GalleryModule,
+    HlCodeComponent,
+    FooterComponent,
+    FontAwesomeModule,
+    MatButtonModule,
+    NoteComponent,
+    GalleryThumbsComponent
+  ]
 })
 export class TemplatesExampleComponent {
 
@@ -49,73 +58,73 @@ export class TemplatesExampleComponent {
 
   gallery: Signal<GalleryComponent> = viewChild(GalleryComponent);
 
-  constructor(mediaObserver: MediaObserver, private _title: Title) {
+  constructor(private _title: Title) {
     this._title.setTitle('Custom Templates | ng-gallery');
 
-    this.media$ = mediaObserver.asObservable().pipe(
-      map((res: MediaChange[]) => {
-        if (res.some((x => x.mqAlias === 'sm' || x.mqAlias === 'xs'))) {
-          return {
-            thumbWidth: 80,
-            thumbHeight: 80
-          };
-        }
-        return {
-          thumbWidth: 120,
-          thumbHeight: 90
-        };
-      })
-    );
+    // this.media$ = mediaObserver.asObservable().pipe(
+    //   map((res: MediaChange[]) => {
+    //     if (res.some((x => x.mqAlias === 'sm' || x.mqAlias === 'xs'))) {
+    //       return {
+    //         thumbWidth: 80,
+    //         thumbHeight: 80
+    //       };
+    //     }
+    //     return {
+    //       thumbWidth: 120,
+    //       thumbHeight: 90
+    //     };
+    //   })
+    // );
 
     // effect(() => {
     //   const gallery: GalleryComponent = this.gallery();
     //   if (gallery) {
-      //   this.arr.map((item: GalleryItemData) => {
-      //     switch (item.type) {
-      //       case GalleryItemTypes.Image:
-      //         gallery.addImage(item);
-      //         break;
-      //       case GalleryItemTypes.Video:
-      //         gallery.addVideo(item);
-      //         break;
-      //       case GalleryItemTypes.Youtube:
-      //         gallery.addYoutube(item);
-      //         break;
-      //       case GalleryItemTypes.Vimeo:
-      //         gallery.addVimeo(item);
-      //         break;
-      //       default:
-      //         gallery.addIframe(item);
-      //     }
-      //   });
-      // }
-  //   }, { allowSignalWrites: true });
+    //   this.arr.map((item: GalleryItemData) => {
+    //     switch (item.type) {
+    //       case GalleryItemTypes.Image:
+    //         gallery.addImage(item);
+    //         break;
+    //       case GalleryItemTypes.Video:
+    //         gallery.addVideo(item);
+    //         break;
+    //       case GalleryItemTypes.Youtube:
+    //         gallery.addYoutube(item);
+    //         break;
+    //       case GalleryItemTypes.Vimeo:
+    //         gallery.addVimeo(item);
+    //         break;
+    //       default:
+    //         gallery.addIframe(item);
+    //     }
+    //   });
+    // }
+    //   }, { allowSignalWrites: true });
   }
 }
 
 const data: GalleryItemData[] = [
   {
     type: 'image',
-    src: 'assets/img/img13.jpg',
-    thumb: 'assets/img/thumb/img13.jpg',
+    src: 'img/img13.jpg',
+    thumb: 'img/thumb/img13.jpg',
     alt: '🐓Scelerisque dapibus fringilla consequat scelerisque torquent senectus porttitor, placerat fames convallis molestie lobortis diam aliquam'
   } as ImageItemData,
   {
     type: 'image',
-    src: 'assets/img/img11.jpg',
-    thumb: 'assets/img/thumb/img11.jpg',
+    src: 'img/img11.jpg',
+    thumb: 'img/thumb/img11.jpg',
     alt: '🐦Lorem ipsum curabitur auctor netus facilisis inceptos vivamus fusce inceptos, ullamcorper ipsum id pharetra curabitur leo curabitur.'
   } as ImageItemData,
   {
     type: 'image',
-    src: 'assets/img/img3.jpg',
-    thumb: 'assets/img/thumb/img3.jpg',
+    src: 'img/img3.jpg',
+    thumb: 'img/thumb/img3.jpg',
     alt: '🐯Iaculis eros leo interdum erat tellus primis pharetra pulvinar, elit risus blandit tempus praesent himenaeos porta, neque elit neque ullamcorper ipsum curabitur at tempus aliquet quam fringilla.'
   } as ImageItemData,
   {
     type: 'image',
-    src: 'assets/img/img4.jpg',
-    thumb: 'assets/img/thumb/img4.jpg',
+    src: 'img/img4.jpg',
+    thumb: 'img/thumb/img4.jpg',
     alt: '🐅Morbi etiam interdum velit lacinia platea magna libero curae auctor'
   } as ImageItemData,
   {
@@ -195,7 +204,6 @@ import { GalleryModule, Gallery, GalleryRef } from 'ng-gallery';
 @Component({
   selector: 'example-component',
   templateUrl: './example-templates.html',
-  standalone: true,
   imports: [CommonModule, GalleryModule]
 })
 export class ExampleComponent implements OnInit {

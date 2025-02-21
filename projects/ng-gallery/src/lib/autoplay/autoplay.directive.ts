@@ -11,7 +11,6 @@ import { GalleryRef } from '../services/gallery-ref';
 import { GalleryConfig } from '../models/config.model';
 
 @Directive({
-  standalone: true,
   selector: 'gallery[autoplay]'
 })
 export class AutoplayDirective {

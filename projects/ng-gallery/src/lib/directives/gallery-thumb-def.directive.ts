@@ -3,7 +3,6 @@ import { ImageItemData } from '../templates/items.model';
 import { GalleryItemContext } from './gallery-item-def.directive';
 
 @Directive({
-  standalone: true,
   selector: '[galleryThumbDef]'
 })
 export class GalleryThumbDef {

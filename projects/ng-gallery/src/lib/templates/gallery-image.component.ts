@@ -13,13 +13,11 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { NgOptimizedImage } from '@angular/common';
 import { imageFailedSvg } from './svg-assets';
 import { ImgRecognizer } from '../utils/img-recognizer';
 import { ItemState } from '../models/item.model';
 
 @Component({
-  standalone: true,
   selector: 'gallery-image',
   host: {
     '[attr.imageState]': 'state()'
@@ -35,7 +33,7 @@ import { ItemState } from '../models/item.model';
   template: `
     @if (isThumbnail()) {
       <img [@fadeIn]="state()"
-           [ngSrc]="src()"
+           [src]="src()"
            fill
            [attr.alt]="alt()"
            [attr.loading]="loadingAttr()"
@@ -46,7 +44,7 @@ import { ItemState } from '../models/item.model';
     } @else {
       <img galleryImage
            [@fadeIn]="state()"
-           [ngSrc]="src()"
+           [src]="src()"
            fill
            [attr.alt]="alt()"
            [attr.loading]="loadingAttr()"
@@ -83,7 +81,7 @@ import { ItemState } from '../models/item.model';
   `,
   styleUrl: './gallery-image.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ImgRecognizer, NgOptimizedImage]
+  imports: [ImgRecognizer]
 })
 
 export class GalleryImageComponent {

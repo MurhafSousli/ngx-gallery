@@ -4,7 +4,6 @@ import { Directionality } from '@angular/cdk/bidi';
 import { GalleryRef } from '../services/gallery-ref';
 
 @Component({
-  standalone: true,
   host: {
     '[attr.dir]': 'dir.value'
   },

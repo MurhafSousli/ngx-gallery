@@ -36,7 +36,6 @@ import { Observable } from 'rxjs';
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [CommonModule, GalleryModule]
 })
 export class CustomTemplateComponent {

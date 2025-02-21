@@ -1,10 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @use '@angular/material' as mat;
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-@import 'assets/theme';
-@import 'assets/mixin';
-@import 'assets/variables';
+@use 'theme';
+@use 'mixin';
 
 * {
   box-sizing: border-box;
@@ -12,6 +9,25 @@
 
 :root {
   --ng-progress-color: #E91E63;
+
+  --primary-color: #2196f3;
+  --accent-color: mat.m2-get-color-from-palette(mat.m2-define-palette(mat.$m2-pink-palette));
+  --danger-color: mat.m2-get-color-from-palette(mat.m2-define-palette(mat.$m2-yellow-palette, 300));
+
+  --text-color: #354c6d;// mat-color(mat-palette($mat-blue, 800));
+  --highlight-color: mat.m2-get-color-from-palette(mat.m2-define-palette(mat.$m2-blue-palette, 200));
+
+  --note-bg: mat.m2-get-color-from-palette(mat.m2-define-palette(mat.$m2-amber-palette, 100));
+  --note-color: mat.m2-get-color-from-palette(mat.m2-define-palette(mat.$m2-amber-palette, 600));
+
+  --code-color: var(--primary-color);
+  --code-bg-color: mat.m2-get-color-from-palette(mat.m2-define-palette(mat.$m2-blue-palette, 50));
+
+  --scrollbar-color: mat.m2-get-color-from-palette(mat.m2-define-palette(mat.$m2-yellow-palette));
+
+  --bg: #e8eff6;
+  --demo-gray-color: #E8EAF6;
+  --g-options-width: 300px;
 }
 
 body {
@@ -83,12 +99,12 @@ code {
 }
 
 .hljs {
-  color: $text-color;
+  color: var(--text-color);
 }
 
 a {
   text-decoration: none;
-  color: $accent-color;
+  color: var(--accent-color);
 }
 
 .usage-title {
@@ -102,7 +118,7 @@ a {
 .section-number {
   flex: 0 0 auto;
   border-radius: 50%;
-  color: $primary-color;
+  color: var(--primary-color);
   box-shadow: 0 3px 10px rgb(0 0 0 / 10%);
   width: 30px;
   height: 30px;
@@ -120,7 +136,7 @@ a {
 
 .page-title {
   box-shadow: inset 0 -3px 8px 0 rgba(0, 0, 0, 0.08);
-  background-color: $primary-color;
+  background-color: var(--primary-color);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -143,7 +159,7 @@ a {
 
 // code
 .hljs-attr {
-  color: $primary-color;
+  color: var(--primary-color);
 }
 
 // Used in for features in Home page and Gallerize page
@@ -172,5 +188,5 @@ a {
 .separator {
   height: 120px;
   width: 20%;
-  background-color: rgba($primary-color, 0.2);
+  background-color: rgba(var(--primary-color), 0.2);
 }

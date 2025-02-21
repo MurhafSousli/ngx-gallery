@@ -19,7 +19,6 @@ import { HorizontalAdapter, SliderAdapter, VerticalAdapter } from '../adapters';
 import { SliderItem } from '../slider-item/slider-item';
 
 @Component({
-  standalone: true,
   host: {
     '[class.g-slider]': 'true',
     '[attr.centralised]': 'centralized()',

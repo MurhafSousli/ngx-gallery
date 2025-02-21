@@ -38,7 +38,6 @@ import { SliderComponent } from '../components/slider/slider';
 import { HammerSliding } from '../gestures/hammer-sliding.directive';
 
 @Directive({
-  standalone: true,
   selector: '[smoothScroll]',
   host: {
     '[class.g-scrolling]': 'scrolling()'

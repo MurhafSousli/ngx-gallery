@@ -1,10 +1,9 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
-import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { GalleryModule, GalleryItem, GalleryConfig, ThumbnailsPosition, GalleryThumbsComponent } from 'ng-gallery';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Observable, map } from 'rxjs';
@@ -21,10 +20,21 @@ import { SectionTitleComponent } from '../../shared/section-title/section-title.
   },
   selector: 'gallery-example',
   templateUrl: './gallery-example.component.html',
-  styleUrls: ['./gallery-example.component.scss'],
+  styleUrl: './gallery-example.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [SectionTitleComponent, NoteComponent, MatButtonModule, RouterLink, MatTabsModule, HlCodeComponent, NgIf, GalleryModule, FontAwesomeModule, FooterComponent, AsyncPipe, GalleryThumbsComponent]
+  imports: [
+    SectionTitleComponent,
+    NoteComponent,
+    MatButtonModule,
+    RouterLink,
+    MatTabsModule,
+    HlCodeComponent,
+    GalleryModule,
+    FontAwesomeModule,
+    FooterComponent,
+    AsyncPipe,
+    GalleryThumbsComponent
+  ]
 })
 export class GalleryExampleComponent implements OnInit {
 
@@ -32,24 +42,24 @@ export class GalleryExampleComponent implements OnInit {
   readonly fruits$: Observable<GalleryItem[]>;
   readonly media$: Observable<any>;
 
-  constructor(pixabay: Pixabay, mediaObserver: MediaObserver, private _title: Title) {
+  constructor(pixabay: Pixabay, private _title: Title) {
     this.fruits$ = pixabay.getHDImages('vegetables');
-    this.media$ = mediaObserver.asObservable().pipe(
-      map((res: MediaChange[]) => {
-        if (res.some((x => x.mqAlias === 'sm' || x.mqAlias === 'xs'))) {
-          return {
-            thumbPosition: ThumbnailsPosition.Top,
-            thumbWidth: 80,
-            thumbHeight: 80
-          };
-        }
-        return {
-          thumbPosition: ThumbnailsPosition.Left,
-          thumbWidth: 120,
-          thumbHeight: 90
-        };
-      })
-    );
+    // this.media$ = mediaObserver.asObservable().pipe(
+    //   map((res: MediaChange[]) => {
+    //     if (res.some((x => x.mqAlias === 'sm' || x.mqAlias === 'xs'))) {
+    //       return {
+    //         thumbPosition: ThumbnailsPosition.Top,
+    //         thumbWidth: 80,
+    //         thumbHeight: 80
+    //       };
+    //     }
+    //     return {
+    //       thumbPosition: ThumbnailsPosition.Left,
+    //       thumbWidth: 120,
+    //       thumbHeight: 90
+    //     };
+    //   })
+    // );
   }
 
   ngOnInit() {
@@ -67,7 +77,6 @@ import { GalleryModule, GalleryItem, ImageItem } from 'ng-gallery';
   template: \`
     <gallery [items]="images"></gallery>
   \`,
-  standalone: true,
   imports: [GalleryModule]
 })
 export class AppComponent implements OnInit {
@@ -89,7 +98,6 @@ import { GalleryModule, GalleryComponent, ImageItem } from 'ng-gallery';
   template: \`
     <gallery></gallery>
   \`,
-  standalone: true,
   imports: [GalleryModule]
 })
 export class AppComponent implements OnInit {
@@ -114,7 +122,6 @@ import { GalleryModule, Gallery, GalleryRef, ImageItem } from 'ng-gallery';
   template: \`
     <gallery id="myGallery"></gallery>
   \`,
-  standalone: true,
   imports: [GalleryModule]
 })
 export class AppComponent implements OnInit {

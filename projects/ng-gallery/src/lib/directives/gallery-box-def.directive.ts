@@ -3,7 +3,6 @@ import { GalleryConfig } from '../models/config.model';
 
 
 @Directive({
-  standalone: true,
   selector: '[galleryBoxDef]'
 })
 export class GalleryBoxDef {
