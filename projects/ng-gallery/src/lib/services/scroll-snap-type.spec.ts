@@ -2,8 +2,8 @@ import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { TestComponent } from './common';
-import { ScrollSnapType } from '../services/scroll-snap-type';
+import { TestComponent } from '../tests/common';
+import { ScrollSnapType } from './scroll-snap-type';
 import { SmoothScroll } from '../smooth-scroll';
 import { HammerSliding } from '../gestures/hammer-sliding.directive';
 import { SliderComponent } from '../slider/slider/slider';

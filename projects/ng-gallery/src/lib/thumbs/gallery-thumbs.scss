@@ -4,6 +4,11 @@
   display: block;
   z-index: 100;
 
+  // Forward thumb variables
+  --g-item-cursor: var(--g-thumb-cursor);
+  --g-item-height: var(--g-thumb-height);
+  --g-item-width: var(--g-thumb-width);
+
   &[position="top"],
   &[position="bottom"] {
     --thumb-slider-top: 0;
@@ -12,7 +17,7 @@
     --g-thumb-height: 100%;
 
     &[autosize="true"] {
-      --g-thumb-width: auto !important;
+      --g-item-width: auto !important;
     }
   }
 

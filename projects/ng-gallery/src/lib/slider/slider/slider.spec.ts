@@ -2,10 +2,10 @@ import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { SliderItem } from '../slider/slider-item/slider-item';
-import { TestComponent } from './common';
-import { SliderComponent } from '../slider/slider/slider';
-import { HorizontalAdapter, VerticalAdapter } from '../slider/adapters';
+import { SliderItem } from '../slider-item/slider-item';
+import { TestComponent } from '../../tests/common';
+import { SliderComponent } from './slider';
+import { HorizontalAdapter, VerticalAdapter } from '../adapters';
 
 describe('Gallery slider', () => {
   let fixture: ComponentFixture<TestComponent>;

@@ -20,14 +20,12 @@ import {
 import { NgTemplateOutlet } from '@angular/common';
 import { Directionality } from '@angular/cdk/bidi';
 import { GalleryRef } from '../services/gallery-ref';
-import { GALLERY_CONFIG, GalleryConfig } from '../models/config.model';
+import { GALLERY_CONFIG, GalleryConfig, Orientation } from '../models/config.model';
 import { BezierEasingOptions } from '../smooth-scroll';
-import { GalleryImageDef } from '../directives/gallery-image-def.directive';
-import { GalleryThumbDef } from '../directives/gallery-thumb-def.directive';
 import { GalleryItemContext, GalleryItemDef } from '../directives/gallery-item-def.directive';
 import { GalleryBoxDef, GalleryStateContext } from '../directives/gallery-box-def.directive';
 import { ImgManager } from '../utils/img-manager';
-import { AutoplayDirective } from '../autoplay/autoplay.directive';
+// import { AutoplayDirective } from '../autoplay/autoplay.directive';
 import { GallerySliderComponent } from '../slider/gallery-slider.component';
 import { GalleryItemData } from '../templates/items.model';
 
@@ -63,7 +61,7 @@ import { GalleryItemData } from '../templates/items.model';
   `,
   styleUrls: ['./gallery.scss', '../debug/debug.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  hostDirectives: [AutoplayDirective],
+  // hostDirectives: [AutoplayDirective],
   imports: [GallerySliderComponent, NgTemplateOutlet],
   providers: [ImgManager, GalleryRef]
 })
@@ -185,7 +183,7 @@ export class GalleryComponent {
   /**
    * Sets the sliding direction
    */
-  orientation: InputSignal<'horizontal' | 'vertical'> = input<'horizontal' | 'vertical'>(this._config.orientation);
+  orientation: InputSignal<Orientation> = input<Orientation>(this._config.orientation);
 
   /**
    * Sets the loading attribute applied on the items' images

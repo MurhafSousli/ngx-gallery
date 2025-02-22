@@ -1,24 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { signal, WritableSignal } from '@angular/core';
-import { GalleryConfig, GalleryRef } from 'ng-gallery';
 import { GalleryItemData } from 'ng-gallery';
 import { SliderItem } from './slider-item';
 
 describe('GalleryItemComponent', () => {
   let component: SliderItem;
   let fixture: ComponentFixture<SliderItem>;
-  let mockGalleryRef: jasmine.SpyObj<GalleryRef>;
 
   beforeEach(async () => {
-    mockGalleryRef = jasmine.createSpyObj('GalleryRef', ['config']);
-    const config: WritableSignal<GalleryConfig> = signal({});
-    mockGalleryRef.config.and.returnValue(config());
-
     await TestBed.configureTestingModule({
       imports: [SliderItem],
-      providers: [
-        { provide: GalleryRef, useValue: mockGalleryRef }
-      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SliderItem);

@@ -4,6 +4,7 @@
   width: var(--g-item-width);
   max-height: var(--g-item-max-height);
   max-width: var(--slider-width);
+  //max-width: var(--g-item-width);
   z-index: 10;
   position: relative;
   overflow: hidden;
@@ -11,6 +12,7 @@
   flex-direction: column;
   flex: 0 0 auto;
   scroll-snap-align: center;
+  //align-self: center;
 
   // Disable highlighting the elements on mouse move or click
   user-select: none;

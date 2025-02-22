@@ -22,6 +22,7 @@ import { HammerSliding } from '../gestures/hammer-sliding.directive';
 import { SliderItem } from '../slider/slider-item/slider-item';
 import { GalleryItemContext, GalleryItemDef } from '../directives/gallery-item-def.directive';
 import { GalleryItemData } from '../templates/items.model';
+import { ImageSize, ThumbsPosition } from '../models/config.model';
 // import { IntersectionSensor } from '../observers/intersection-sensor.directive';
 
 @Component({
@@ -32,10 +33,8 @@ import { GalleryItemData } from '../templates/items.model';
     '[attr.imageSize]': 'imageSize()',
     '[attr.position]': 'position()',
     '[style.grid-area]': 'position()',
-    // '[style.--g-thumb-width.px]': 'thumbWidth()',
-    // '[style.--g-thumb-height.px]': 'thumbHeight()',
-    '[style.--g-item-width.px]': 'thumbWidth()',
-    '[style.--g-item-height.px]': 'thumbHeight()'
+    '[style.--g-thumb-width.px]': 'thumbWidth()',
+    '[style.--g-thumb-height.px]': 'thumbHeight()'
   },
   selector: 'gallery-thumbs',
   template: `
@@ -125,12 +124,12 @@ export class GalleryThumbsComponent {
    * TODO: Rename this to align and add start and end options to work with RTL
    * Sets the thumbnails position, it also sets the sliding direction of the thumbnails accordingly
    */
-  position: InputSignal<'top' | 'left' | 'right' | 'bottom'> = input<'top' | 'left' | 'right' | 'bottom'>('bottom');
+  position: InputSignal<ThumbsPosition> = input<ThumbsPosition>('bottom');
 
   /**
    * Sets the object-fit style applied on items' images
    */
-  imageSize: InputSignal<'cover' | 'contain'> = input<'cover' | 'contain'>('cover');
+  imageSize: InputSignal<ImageSize> = input<ImageSize>('cover');
 
   /**
    * Sets the thumbnail's width

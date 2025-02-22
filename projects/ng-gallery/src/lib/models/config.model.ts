@@ -15,11 +15,11 @@ export function provideGalleryOptions(options: GalleryConfig): Provider {
   }
 }
 
-type ImageSize = 'contain' | 'cover';
+export type ImageSize = 'contain' | 'cover';
 
-type Orientation = 'horizontal' | 'vertical';
+export type Orientation = 'horizontal' | 'vertical';
 
-type ThumbsPosition = 'top' | 'left' | 'right' | 'bottom';
+export type ThumbsPosition = 'top' | 'left' | 'right' | 'bottom';
 
 type HorizontalPosition = 'top' | 'bottom';
 

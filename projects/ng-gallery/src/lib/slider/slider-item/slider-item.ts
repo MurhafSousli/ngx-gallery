@@ -18,7 +18,6 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
 import { GalleryItemContext } from '../../directives/gallery-item-def.directive';
 import { GalleryItemData, } from '../../templates/items.model';
-import { GalleryRef } from '../../services/gallery-ref';
 import { ItemState } from '../../models/item.model';
 
 @Component({
@@ -42,8 +41,6 @@ import { ItemState } from '../../models/item.model';
 export class SliderItem implements AfterViewInit {
 
   readonly injector: Injector = inject(Injector);
-
-  readonly galleryRef: GalleryRef = inject(GalleryRef);
 
   readonly nativeElement: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
 

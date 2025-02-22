@@ -11,8 +11,8 @@ import {
   GalleryRef,
   ImgRecognizer
 } from 'ng-gallery';
-import { img1, img2, img3 } from './test-images';
-import { afterTimeout } from './common';
+import { img1, img2, img3 } from '../tests/test-images';
+import { afterTimeout } from '../tests/common';
 
 @Component({
   imports: [GalleryComponent, GalleryCounterComponent, GalleryItemDef, ImgRecognizer],

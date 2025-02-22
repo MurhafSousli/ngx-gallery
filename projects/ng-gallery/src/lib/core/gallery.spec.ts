@@ -3,7 +3,7 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { SliderItem } from '../slider/slider-item/slider-item';
-import { TestComponent } from './common';
+import { TestComponent } from '../tests/common';
 import { GalleryRef } from 'ng-gallery';
 
 

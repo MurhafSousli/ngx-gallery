@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { Observable, Subject, EMPTY, filter, map, switchMap, merge, take, of } from 'rxjs';
+import { Observable, Subject, filter, map, switchMap, merge, of } from 'rxjs';
 import { GalleryRef } from '../services/gallery-ref';
 import { ItemState } from '../models/item.model';
 

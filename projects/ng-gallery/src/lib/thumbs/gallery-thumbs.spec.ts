@@ -10,7 +10,7 @@ import {
   ImgRecognizer,
   GalleryItemData
 } from 'ng-gallery';
-import { img1, img2, img3 } from './test-images';
+import { img1, img2, img3 } from '../tests/test-images';
 
 @Component({
   imports: [GalleryComponent, GalleryThumbsComponent, GalleryItemDef, ImgRecognizer],
@@ -151,9 +151,7 @@ describe('Gallery thumbs component', () => {
     component.thumbWidth = 100;
     component.thumbHeight = 100;
     fixture.detectChanges();
-    // expect((thumbsComponentElement.nativeElement as HTMLElement).style.getPropertyValue('--g-thumb-width')).toBe('100px');
-    // expect((thumbsComponentElement.nativeElement as HTMLElement).style.getPropertyValue('--g-thumb-height')).toBe('100px');
-    expect((thumbsComponentElement.nativeElement as HTMLElement).style.getPropertyValue('--g-item-width')).toBe('100px');
-    expect((thumbsComponentElement.nativeElement as HTMLElement).style.getPropertyValue('--g-item-height')).toBe('100px');
+    expect((thumbsComponentElement.nativeElement as HTMLElement).style.getPropertyValue('--g-thumb-width')).toBe('100px');
+    expect((thumbsComponentElement.nativeElement as HTMLElement).style.getPropertyValue('--g-thumb-height')).toBe('100px');
   });
 });

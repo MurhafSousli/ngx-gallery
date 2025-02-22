@@ -10,7 +10,7 @@ import {
   GalleryRef,
   ImgRecognizer
 } from 'ng-gallery';
-import { img1, img2, img3 } from './test-images';
+import { img1, img2, img3 } from '../tests/test-images';
 import { Dir, Direction } from '@angular/cdk/bidi';
 
 @Component({

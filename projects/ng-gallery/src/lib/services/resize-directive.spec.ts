@@ -4,9 +4,9 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { GalleryRef } from 'ng-gallery';
 import { firstValueFrom } from 'rxjs';
-import { afterTimeout, TestComponent } from './common';
+import { afterTimeout, TestComponent } from '../tests/common';
 import { SliderComponent } from '../slider/slider/slider';
-import { ResizeSensor } from '../services/resize-sensor';
+import { ResizeSensor } from './resize-sensor';
 
 describe('Resize sensor directive', () => {
   let fixture: ComponentFixture<TestComponent>;

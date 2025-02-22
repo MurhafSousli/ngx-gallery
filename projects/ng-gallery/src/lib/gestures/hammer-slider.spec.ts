@@ -2,8 +2,8 @@ import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { TestComponent } from './common';
-import { HammerSliding } from '../gestures/hammer-sliding.directive';
+import { TestComponent } from '../tests/common';
+import { HammerSliding } from './hammer-sliding.directive';
 import 'hammerjs';
 
 describe('Hammer slider directive', () => {

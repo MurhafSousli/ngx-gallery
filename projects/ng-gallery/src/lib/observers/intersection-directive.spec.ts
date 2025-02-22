@@ -3,8 +3,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { GalleryRef } from 'ng-gallery';
-import { getObservableFromContext, TestComponent } from './common';
-import { IntersectionSensor } from '../observers/intersection-sensor.directive';
+import { getObservableFromContext, TestComponent } from '../tests/common';
+import { IntersectionSensor } from './intersection-sensor.directive';
 import { filter, firstValueFrom, Observable } from 'rxjs';
 
 describe('Intersection directive', () => {

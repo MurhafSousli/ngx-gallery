@@ -3,8 +3,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { GalleryRef } from 'ng-gallery';
-import { afterTimeout, TestComponent } from './common';
-import { SmoothScroll, SmoothScrollOptions } from '../smooth-scroll';
+import { afterTimeout, TestComponent } from '../tests/common';
+import { SmoothScroll, SmoothScrollOptions } from './index';
 import { filter, firstValueFrom, Observable } from 'rxjs';
 
 describe('Smooth scroll directive', () => {
