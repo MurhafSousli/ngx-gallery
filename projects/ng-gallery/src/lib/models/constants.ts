@@ -1,20 +1,20 @@
-export enum ImageSize {
+export enum IMAGE_SIZE {
   Cover = 'cover',
   Contain = 'contain'
 }
 
-export enum LoadingStrategy {
+export enum LOADING_STRATEGY {
   Preload = 'preload',
   Lazy = 'lazy',
   Default = 'default'
 }
 
-export enum LoadingAttr {
+export enum LOADING_ATTR {
   Eager= 'eager',
   Lazy = 'lazy'
 }
 
-export enum ThumbnailsPosition {
+export enum THUMB_POSITION {
   Top = 'top',
   Left = 'left',
   Right = 'right',
@@ -31,12 +31,12 @@ export enum CounterPosition {
   Bottom = 'bottom'
 }
 
-export enum Orientation {
+export enum ORIENTATION {
   Horizontal = 'horizontal',
   Vertical = 'vertical'
 }
 
-export enum GalleryItemTypes {
+export enum ITEM_TYPE {
   Image = 'image',
   Video = 'video',
   Youtube = 'youtube',
@@ -44,4 +44,4 @@ export enum GalleryItemTypes {
   Iframe = 'iframe'
 }
 
-export type GalleryItemType = GalleryItemTypes | string;
+export type GalleryItemType = ITEM_TYPE | string;

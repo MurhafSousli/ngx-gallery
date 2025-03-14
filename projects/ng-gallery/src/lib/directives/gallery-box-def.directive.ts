@@ -1,4 +1,4 @@
-import { Directive, TemplateRef } from '@angular/core';
+import { Directive, inject, TemplateRef } from '@angular/core';
 import { GalleryConfig } from '../models/config.model';
 
 
@@ -7,7 +7,7 @@ import { GalleryConfig } from '../models/config.model';
 })
 export class GalleryBoxDef {
 
-  templateRef: TemplateRef<GalleryStateContext>;
+  templateRef: TemplateRef<GalleryStateContext> = inject(TemplateRef<GalleryStateContext>);
 
   // Make sure the template checker knows the type of the context with which the
   // template of this directive will be rendered

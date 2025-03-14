@@ -21,11 +21,7 @@ export type Orientation = 'horizontal' | 'vertical';
 
 export type ThumbsPosition = 'top' | 'left' | 'right' | 'bottom';
 
-type HorizontalPosition = 'top' | 'bottom';
-
-type LoadingStrategy = 'preload' | 'lazy' | 'default';
-
-type LoadingAttr = 'eager' | 'lazy';
+export type HorizontalPosition = 'top' | 'bottom';
 
 interface ThumbConfig {
   thumbLoadingIcon?: string;
@@ -52,8 +48,6 @@ interface SliderConfig {
   scrollEase?: BezierEasingOptions;
   orientation?: Orientation;
   imageSize?: ImageSize;
-  loadingStrategy?: LoadingStrategy;
-  loadingAttr?: LoadingAttr;
   centralized?: boolean;
 }
 

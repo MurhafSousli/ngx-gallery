@@ -5,9 +5,9 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import {
   GalleryItemData,
   GalleryConfig,
-  LoadingStrategy,
-  Orientation,
-  ThumbnailsPosition,
+  LOADING_STRATEGY,
+  ORIENTATION,
+  THUMB_POSITION,
   GalleryComponent,
   GalleryThumbsComponent,
   GalleryNavComponent,
@@ -81,11 +81,9 @@ export class LabComponent implements OnInit {
     centralized: false,
     imageSize: 'contain',
     autoplayInterval: 3000,
-    loadingStrategy: LoadingStrategy.Preload,
-    orientation: Orientation.Horizontal,
+    orientation: ORIENTATION.Horizontal,
     itemAutosize: false,
     scrollBehavior: 'smooth',
-    loadingAttr: 'lazy',
     debug: true
   };
 
@@ -98,7 +96,7 @@ export class LabComponent implements OnInit {
     imageSize: 'cover',
     disabled: false,
     centralized: false,
-    position: ThumbnailsPosition.Bottom,
+    position: THUMB_POSITION.Bottom,
     autosize: false,
     detach: false
   }

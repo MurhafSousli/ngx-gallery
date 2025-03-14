@@ -74,16 +74,6 @@ export class Lightbox {
     const galleryPortal = new ComponentPortal(LightboxComponent);
     const lightboxRef: ComponentRef<LightboxComponent> = this._overlayRef.attach(galleryPortal);
 
-    lightboxRef.instance.id = id;
-    lightboxRef.instance.overlayRef = this._overlayRef;
-    lightboxRef.instance.closeIcon = this._sanitizer.bypassSecurityTrustHtml(this._config.closeIcon);
-    lightboxRef.instance.role = this._config.role;
-    lightboxRef.instance.ariaLabel = this._config.ariaLabel;
-    lightboxRef.instance.ariaLabelledBy = this._config.ariaLabelledBy;
-    lightboxRef.instance.ariaDescribedBy = this._config.ariaDescribedBy;
-    lightboxRef.instance.startAnimationTime = this._config.startAnimationTime;
-    lightboxRef.instance.exitAnimationTime = this._config.exitAnimationTime;
-
     if (_config.hasBackdrop) {
       this._overlayRef.backdropClick().subscribe(() => this.close());
     }

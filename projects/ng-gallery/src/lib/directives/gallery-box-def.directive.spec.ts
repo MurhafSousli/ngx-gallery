@@ -1,8 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, viewChild } from '@angular/core';
 import { JsonPipe } from '@angular/common';
-import { GalleryItemData, GalleryBoxDef } from 'ng-gallery';
-import { GalleryItemContext } from './gallery-item-def.directive';
+import { GalleryBoxDef, GalleryStateContext } from 'ng-gallery';
 
 @Component({
   template: `
@@ -34,8 +33,7 @@ describe('GalleryBoxDef Directive', () => {
   });
 
   it('should guard the template context type', () => {
-    const context: GalleryItemContext<GalleryItemData> = {} as GalleryItemContext<GalleryItemData>;
-
+    const context: GalleryStateContext = {};
     expect(GalleryBoxDef.ngTemplateContextGuard(component.galleryBoxDef(), context)).toBeTrue();
   });
 });

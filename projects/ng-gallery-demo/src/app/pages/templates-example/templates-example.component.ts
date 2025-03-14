@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import {
   GalleryConfig,
   GalleryItemData,
-  GalleryItemTypes,
+  ITEM_TYPE,
   IframeItemData,
   ImageItemData,
   VideoItemData,

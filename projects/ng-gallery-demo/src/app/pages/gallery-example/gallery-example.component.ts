@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
-import { GalleryModule, GalleryItemData, GalleryConfig, ThumbnailsPosition, GalleryThumbsComponent } from 'ng-gallery';
+import { GalleryModule, GalleryItemData, GalleryConfig, THUMB_POSITION, GalleryThumbsComponent } from 'ng-gallery';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Observable, map } from 'rxjs';
 

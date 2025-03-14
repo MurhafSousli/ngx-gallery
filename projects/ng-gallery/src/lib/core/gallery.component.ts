@@ -83,11 +83,6 @@ export class GalleryComponent {
   private _config: GalleryConfig = inject(GALLERY_CONFIG);
 
   /**
-   * The gallery instance unique id, required if more multiple gallery instances
-   */
-  id: InputSignal<string> = input<string>('root');
-
-  /**
    * Loads the items array into the gallery
    */
   items: InputSignal<GalleryItemData[]> = input<GalleryItemData[]>();
@@ -186,19 +181,6 @@ export class GalleryComponent {
   orientation: InputSignal<Orientation> = input<Orientation>(this._config.orientation);
 
   /**
-   * Sets the loading attribute applied on the items' images
-   */
-  loadingAttr: InputSignal<'eager' | 'lazy'> = input<'eager' | 'lazy'>(this._config.loadingAttr);
-
-  /**
-   * Sets the loading strategy used for displaying the items
-   * - `lazy` renders only the active item
-   * - `default` renders only the active item, the previous item and the next item
-   * - `preload` renders all the items, this option is required for `thumbAutoSize` is enabled
-   */
-  loadingStrategy: InputSignal<'preload' | 'lazy' | 'default'> = input<'preload' | 'lazy' | 'default'>(this._config.loadingStrategy);
-
-  /**
    * Skip initializing the config with components inputs (Lightbox mode)
    * This intended to be used and enabled from the lightbox component
    * @ignore
@@ -250,9 +232,7 @@ export class GalleryComponent {
       centralized: this.centralized(),
       scrollBehavior: this.scrollBehavior(),
       scrollEase: this.scrollEase(),
-      loadingAttr: this.loadingAttr(),
       autoplayInterval: this.autoplayInterval(),
-      loadingStrategy: this.loadingStrategy(),
       scrollDuration: this.scrollDuration(),
       orientation: this.orientation(),
       resizeDebounceTime: this.resizeDebounceTime(),
@@ -264,12 +244,12 @@ export class GalleryComponent {
 
   constructor() {
     effect(() => {
-      const config = this.config();
+      const config: GalleryConfig = this.config();
       untracked(() => this.galleryRef.setConfig(config));
     });
 
     effect(() => {
-      const items = this.items();
+      const items: GalleryItemData[] = this.items();
       untracked(() => this.galleryRef.load(items));
     });
   }

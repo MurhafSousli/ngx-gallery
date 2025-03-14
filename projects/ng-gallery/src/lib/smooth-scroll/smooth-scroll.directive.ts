@@ -79,7 +79,7 @@ export class SmoothScroll {
   constructor() {
     // This directive should not do anything if was used by gallery-thumbs and detached option is true
     let indexChangeSub$: Subscription;
-    let scrollSub$: Subscription
+    let scrollSub$: Subscription;
 
     effect(() => {
       if (!this.hammerSlider.sliding() || this.disabled()) return;
@@ -93,10 +93,20 @@ export class SmoothScroll {
         this._zone.runOutsideAngular(() => {
           indexChangeSub$ = this.galleryRef.indexChange.subscribe((change: IndexChange) => {
             const el: HTMLElement = this.slider.items()[change.index]?.nativeElement;
-            const scrollBehavior: ScrollBehavior = this.galleryRef.config().scrollBehavior;
+            const scrollBehavior: ScrollBehavior = change.behavior || this.galleryRef.config().scrollBehavior;
+
             if (el) {
-              const pos: SmoothScrollOptions = this.slider.adapter().getScrollToValue(el, change.behavior || scrollBehavior);
-              this.scrollTo(pos);
+              if (scrollBehavior === 'auto') {
+                // When setting initial index, the viewport isn't scrollable. we need to wait for the gallery to be rendered.
+                requestAnimationFrame(() => {
+                  const params: SmoothScrollOptions = this.slider.adapter().getScrollToValue(el, scrollBehavior);
+                  const options: SmoothScrollToOptions = this._prepareParams(params);
+                  this.scrollElement(options.left, options.top);
+                });
+              } else {
+                const params: SmoothScrollOptions = this.slider.adapter().getScrollToValue(el, scrollBehavior);
+                this.scrollTo(params);
+              }
             }
           });
 
@@ -117,11 +127,11 @@ export class SmoothScroll {
               );
             })
           ).subscribe();
+        });
 
-          onCleanup(() => {
-            scrollSub$?.unsubscribe();
-            indexChangeSub$?.unsubscribe();
-          });
+        onCleanup(() => {
+          scrollSub$?.unsubscribe();
+          indexChangeSub$?.unsubscribe();
         });
       });
     });
@@ -130,7 +140,7 @@ export class SmoothScroll {
   /**
    * changes scroll position inside an element
    */
-  private _scrollElement(x: number, y: number): void {
+  scrollElement(x: number, y: number): void {
     this._el.scrollLeft = x;
     this._el.scrollTop = y;
   }
@@ -179,7 +189,7 @@ export class SmoothScroll {
       context.currentX = context.startX + (context.x - context.startX) * value;
       context.currentY = context.startY + (context.y - context.startY) * value;
 
-      this._scrollElement(context.currentX, context.currentY);
+      this.scrollElement(context.currentX, context.currentY);
       // Proceed to the step
       requestAnimationFrame(() => {
         subscriber.next(context);
@@ -189,10 +199,6 @@ export class SmoothScroll {
   }
 
   private _applyScrollToOptions(options: SmoothScrollToOptions): void {
-    if (!options.duration) {
-      this._scrollElement(options.left, options.top);
-    }
-
     const context: SmoothScrollStep = {
       scrollable: this._el,
       startTime: this._now(),
@@ -207,15 +213,7 @@ export class SmoothScroll {
     this._scrollController.next(context);
   }
 
-  /**
-   * Scrolls to the specified offsets. This is a normalized version of the browser's native scrollTo
-   * method, since browsers are not consistent about what scrollLeft means in RTL. For this method
-   * left and right always refer to the left and right side of the scrolling container irrespective
-   * of the layout direction. start and end refer to left and right in an LTR context and vice-versa
-   * in an RTL context.
-   * @param params specified the offsets to scroll to.
-   */
-  scrollTo(params: SmoothScrollOptions): void {
+  private _prepareParams(params: SmoothScrollOptions): SmoothScrollToOptions {
     const isRtl: boolean = this._dir.value === 'rtl';
     const rtlScrollAxisType: RtlScrollAxisType = getRtlScrollAxisType();
 
@@ -251,6 +249,19 @@ export class SmoothScroll {
         (options as _Without<_Right> & _Left).left = this._el.scrollWidth - this._el.clientWidth - options.right;
       }
     }
+    return options;
+  }
+
+  /**
+   * Scrolls to the specified offsets. This is a normalized version of the browser's native scrollTo
+   * method, since browsers are not consistent about what scrollLeft means in RTL. For this method
+   * left and right always refer to the left and right side of the scrolling container irrespective
+   * of the layout direction. start and end refer to left and right in an LTR context and vice versa
+   * in an RTL context.
+   * @param params specified the offsets to scroll to.
+   */
+  scrollTo(params: SmoothScrollOptions): void {
+    const options: SmoothScrollToOptions = this._prepareParams(params);
     return this._applyScrollToOptions(options);
   }
 }

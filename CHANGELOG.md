@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.0.0
+
+ - Use native dialog to display the lightbox instead of Angular CDK overlay.  
+
 ## 12.0.0-beta.5
 
 - feat: Add `provideGalleryOptions` and `provideLightboxOptions` to set global options.

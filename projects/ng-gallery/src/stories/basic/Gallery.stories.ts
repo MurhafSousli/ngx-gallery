@@ -5,11 +5,11 @@ import {
   CounterPosition,
   BulletsPosition,
   GalleryComponent,
-  ImageSize,
-  LoadingAttr,
-  LoadingStrategy,
-  Orientation,
-  ThumbnailsPosition,
+  IMAGE_SIZE,
+  LOADING_ATTR,
+  LOADING_STRATEGY,
+  ORIENTATION,
+  THUMB_POSITION,
 } from 'ng-gallery';
 import { getHDImages } from '../pixabay/pixabay.service';
 
@@ -32,14 +32,14 @@ const meta: Meta<GalleryComponent> = {
   args: {
     id: 'root',
     scrollBehavior: 'smooth',
-    imageSize: ImageSize.Contain,
-    thumbImageSize: ImageSize.Cover,
+    imageSize: IMAGE_SIZE.Contain,
+    thumbImageSize: IMAGE_SIZE.Cover,
     bulletPosition: BulletsPosition.Bottom,
     counterPosition: CounterPosition.Top,
-    orientation: Orientation.Horizontal,
-    loadingAttr: LoadingAttr.Lazy,
-    loadingStrategy: LoadingStrategy.Default,
-    thumbPosition: ThumbnailsPosition.Bottom,
+    orientation: ORIENTATION.Horizontal,
+    loadingAttr: LOADING_ATTR.Lazy,
+    loadingStrategy: LOADING_STRATEGY.Default,
+    thumbPosition: THUMB_POSITION.Bottom,
     scrollEase: {
       x1: 0.42,
       y1: 0,

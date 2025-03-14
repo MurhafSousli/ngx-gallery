@@ -8,6 +8,7 @@ import {
   ChangeDetectionStrategy
 } from '@angular/core';
 import { GalleryRef } from '../services/gallery-ref';
+import { HorizontalPosition } from '../models/config.model';
 
 @Component({
   selector: 'gallery-counter',
@@ -24,7 +25,7 @@ export class GalleryCounterComponent {
 
   readonly galleryRef: GalleryRef = inject(GalleryRef);
 
-  readonly align: InputSignal<'top' | 'bottom'> = input<'top' | 'bottom'>('top');
+  readonly align: InputSignal<HorizontalPosition> = input<HorizontalPosition>('top');
 
   readonly counter: Signal<string> = computed(() => {
     return `${ this.galleryRef.currIndex() + 1 } / ${ this.galleryRef.items().length }`;

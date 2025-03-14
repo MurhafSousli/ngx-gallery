@@ -3,54 +3,76 @@
 </div>
 <div class="page-content">
 
-  <section>
-    <section-title>Overview</section-title>
-    <p>Use the directive <code class="hljs">[lightbox]</code> to open the lightbox on elements clicks</p>
-    <p>Alternatively, you can still use the <code class="hljs">Lightbox</code> service to open the lightbox
-      programmatically.</p>
-  </section>
+  <!--  <section>-->
+  <!--    <section-title>Overview</section-title>-->
+  <!--    <p>Use the directive <code class="hljs">[lightbox]</code> to open the lightbox on elements clicks</p>-->
+  <!--    <p>Alternatively, you can still use the <code class="hljs">Lightbox</code> service to open the lightbox-->
+  <!--      programmatically.</p>-->
+  <!--  </section>-->
 
   <section>
-    <section-title>Usage</section-title>
+    <!--    <section-title>Usage</section-title>-->
 
-    <note class="info" style="margin-top: -4em">
-      <p>If you haven't installed the module in step <span class="section-number inline-number">1</span>
-        see the <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent"
-                   [routerLink]="['/getting-started/lightbox']">Getting
-          Started Guide</a></p>
-    </note>
+    <!--    <note class="info" style="margin-top: -4em">-->
+    <!--      <p>If you haven't installed the module in step <span class="section-number inline-number">1</span>-->
+    <!--        see the <a mat-button class="inline-button" style="padding: 0 0.5em" color="accent"-->
+    <!--                   [routerLink]="['/getting-started/lightbox']">Getting-->
+    <!--          Started Guide</a></p>-->
+    <!--    </note>-->
 
-    <div class="usage-title">
-      <span class="section-number">2</span>
-      <p>Create a gallery items array to load it in the gallery</p>
-    </div>
+    <!--    <div class="usage-title">-->
+    <!--      <span class="section-number">2</span>-->
+    <!--      <p>Create a gallery items array to load it in the gallery</p>-->
+    <!--    </div>-->
 
-    <hl-code [code]="code.loadItems"/>
+    <!--    <hl-code [code]="code.loadItems"/>-->
 
-    <div class="usage-title">
-      <span class="section-number">3</span>
-      <p>Now that you have gallery items, display their thumbnails in the template and add the directive <code
-        class="hljs">[lightbox]</code>
-        on each item so the clicks open the lightbox.</p>
-    </div>
+    <!--    <div class="usage-title">-->
+    <!--      <span class="section-number">3</span>-->
+    <!--      <p>Now that you have gallery items, display their thumbnails in the template and add the directive <code-->
+    <!--        class="hljs">[lightbox]</code>-->
+    <!--        on each item so the clicks open the lightbox.</p>-->
+    <!--    </div>-->
 
-    <h4>Example</h4>
-    <hl-code [code]="code.template"/>
+    <!--    <h4>Example</h4>-->
+    <!--    <hl-code [code]="code.template"/>-->
 
-    <p>If you are using multiple galleries in your app, then each gallery should have an id.</p>
+    <!--    <p>If you are using multiple galleries in your app, then each gallery should have an id.</p>-->
 
-    <h4>Full Example</h4>
+    <!--    <h4>Full Example</h4>-->
 
-    <hl-code [code]="code.ex"/>
+    <!--    <hl-code [code]="code.ex"/>-->
 
     <h3>Demo</h3>
 
+    <lightbox #lightbox>
+      <gallery [items]="photos()">
+        <img *galleryItemDef="let item"
+             galleryImage
+             [src]="item.src"
+             fill
+             [attr.alt]="item.alt"/>
+
+        <gallery-nav/>
+
+        <gallery-counter/>
+
+        <gallery-thumbs>
+          <img *galleryItemDef="let item"
+               galleryImage
+               [src]="item.thumb"
+               fill
+               [attr.alt]="item.alt + '_thumb'"/>
+        </gallery-thumbs>
+      </gallery>
+    </lightbox>
+
     <div class="grid">
-      @for (item of space$ | async; track i; let i = $index) {
+      @for (item of photos(); track i; let i = $index) {
         <button mat-raised-button
                 class="grid-item"
-                [lightbox]="i"
-                gallery="lightbox">
+                (click)="lightbox.showModal(i)">
+          <img class="grid-image" loading="lazy" [src]="item.thumb"/>
         </button>
 
         <!--          <img class="grid-image" loading="lazy" [src]="item.data.thumb"/>-->
@@ -65,13 +87,13 @@
         full screen style on large screens too.</p>
     </note>
 
-    <p>For example, open the lightbox in
-      <button mat-button class="inline-button" color="accent"
-              (click)="lightbox.open(0, 'lightbox', {panelClass: 'fullscreen'})">
-        Full Screen
-      </button>
-      mode
-    </p>
+    <!--    <p>For example, open the lightbox in-->
+    <!--      <button mat-button class="inline-button" color="accent"-->
+    <!--              (click)="lightbox.open(0, 'lightbox', {panelClass: 'fullscreen'})">-->
+    <!--        Full Screen-->
+    <!--      </button>-->
+    <!--      mode-->
+    <!--    </p>-->
 
     <hl-code [code]="code.alt"/>
 

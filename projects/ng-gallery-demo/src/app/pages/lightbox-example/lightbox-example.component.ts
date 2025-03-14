@@ -1,17 +1,23 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, Signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
-import { Observable, map } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { GalleryItemData } from 'ng-gallery';
-import { Lightbox, LightboxModule, provideLightboxOptions } from 'ng-gallery/lightbox';
+import {
+  GalleryBulletsComponent,
+  GalleryCounterComponent,
+  GalleryItemData,
+  GalleryNavComponent,
+  GalleryThumbsComponent, ImgRecognizer
+} from 'ng-gallery';
+import { LightboxComponent, LightboxModule, provideLightboxOptions } from 'ng-gallery/lightbox';
 import { Pixabay } from '../../service/pixabay.service';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { HlCodeComponent } from '../../shared/hl-code/hl-code.component';
 import { NoteComponent } from '../../shared/note/note.component';
 import { SectionTitleComponent } from '../../shared/section-title/section-title.component';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   host: {
@@ -19,7 +25,7 @@ import { SectionTitleComponent } from '../../shared/section-title/section-title.
   },
   selector: 'lightbox-example',
   templateUrl: './lightbox-example.component.html',
-  styleUrls: ['./lightbox-example.component.scss'],
+  styleUrl: './lightbox-example.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     provideLightboxOptions({
@@ -35,36 +41,26 @@ import { SectionTitleComponent } from '../../shared/section-title/section-title.
     RouterLink,
     HlCodeComponent,
     FontAwesomeModule,
-    FooterComponent
+    FooterComponent,
+    GalleryBulletsComponent,
+    GalleryCounterComponent,
+    GalleryNavComponent,
+    GalleryThumbsComponent,
+    ImgRecognizer,
+    LightboxComponent,
   ]
 })
-export class LightboxExampleComponent implements OnInit, OnDestroy {
+export class LightboxExampleComponent implements OnInit {
 
-  code: any;
-  space$: Observable<GalleryItemData[]>;
-  images: string[] = [];
+  private pixabay: Pixabay = inject(Pixabay);
 
-  constructor( public lightbox: Lightbox, public _pixabay: Pixabay, private _title: Title) {
-    this.code = code;
-  }
+  private _title: Title = inject(Title);
 
-  ngOnInit() {
+  code: any = code;
+  photos: Signal<GalleryItemData[]> = toSignal(this.pixabay.getHDImages('sea'));
+
+  ngOnInit(): void {
     this._title.setTitle('Lightbox | ng-gallery');
-    this.space$ = this._pixabay.getHDImages('sea').pipe(
-      map((items: GalleryItemData[]) => {
-        // Load items manually into the lightbox gallery ref
-        // this.gallery.ref('lightbox', {
-        //   // thumbPosition: 'top',
-        //   imageSize: 'cover',
-        // }).load(items);
-
-        return items;
-      })
-    );
-  }
-
-  ngOnDestroy() {
-    // this.gallery.ref('lightbox').destroy();
   }
 }
 

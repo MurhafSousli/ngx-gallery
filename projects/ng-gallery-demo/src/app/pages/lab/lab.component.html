@@ -14,14 +14,12 @@
                [items]="photos()"
                [centralized]="config.centralized"
                [itemAutosize]="config.itemAutosize"
-               [loadingAttr]="config.loadingAttr"
                [resizeDebounceTime]="config.resizeDebounceTime"
                [loop]="config.loop"
                [debug]="config.debug"
                [autoplay]="config.autoplay"
                [imageSize]="config.imageSize"
                [autoplayInterval]="config.autoplayInterval"
-               [loadingStrategy]="config.loadingStrategy"
                [orientation]="config.orientation"
                [scrollDuration]="config.scrollDuration"
                [disableScroll]="config.disableScroll"
@@ -114,16 +112,16 @@
 
         <div class="column">
 
-          <div>
-            <mat-form-field>
-              <mat-label>Loading strategy</mat-label>
-              <mat-select [(ngModel)]="config.loadingStrategy">
-                @for (option of loadingStrategies; track option) {
-                  <mat-option [value]="option">{{ option }}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-          </div>
+<!--          <div>-->
+<!--            <mat-form-field>-->
+<!--              <mat-label>Loading strategy</mat-label>-->
+<!--              <mat-select [(ngModel)]="config.loadingStrategy">-->
+<!--                @for (option of loadingStrategies; track option) {-->
+<!--                  <mat-option [value]="option">{{ option }}</mat-option>-->
+<!--                }-->
+<!--              </mat-select>-->
+<!--            </mat-form-field>-->
+<!--          </div>-->
           <div>
             <mat-form-field name="orientation">
               <mat-label>Orientation</mat-label>
@@ -233,17 +231,6 @@
               <mat-select [(ngModel)]="config.scrollBehavior">
                 @for (option of scrollBehaviors; track option) {
                   <mat-option [value]="option">{{ option }}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-          </div>
-
-          <div>
-            <mat-form-field>
-              <mat-label>Loading Attr</mat-label>
-              <mat-select [(ngModel)]="config.loadingAttr" [disabled]="config.itemAutosize">
-                @for (option of loadingAttrs; track option) {
-                  <mat-option [value]="option">{{ config.itemAutosize ? 'eager' : option }}</mat-option>
                 }
               </mat-select>
             </mat-form-field>

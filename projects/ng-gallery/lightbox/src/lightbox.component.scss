@@ -1,88 +1,149 @@
 @mixin fullscreen() {
   width: 100%;
+
+  gallery {
+    max-width: unset;
+    max-height: unset;
+    //position: fixed;
+    //top: 0;
+    //left: 0;
+    //bottom: 0;
+    //right: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 0;
+  }
+}
+
+:host {
+  display: contents;
+
   ::ng-deep {
-    lightbox {
-      max-width: unset;
-      max-height: unset;
-      position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      height: 100%;
-      width: 100%;
-      border-radius: 0;
+    gallery {
+      position: relative;
+      display: block;
+      width: 1100px;
+      //height: 800px;
+      max-width: 94vw;
+      max-height: 90vh;
+      margin: 0;
     }
   }
 }
 
-::ng-deep {
-  lightbox {
-    position: relative;
+dialog {
+  border: none;
+  padding: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 11px 15px -7px rgba(0, 0, 0, .2), 0 24px 38px 3px rgba(0, 0, 0, .14), 0 9px 46px 8px rgba(0, 0, 0, .12);
+  max-width: 80%;
+  animation: vanish 400ms cubic-bezier(0, 0, 0.2, 1);
+
+  &::backdrop {
+    animation: backdropVanish 400ms cubic-bezier(0, 0, 0.2, 1);
+    background-image: linear-gradient(
+        45deg,
+        magenta,
+        rebeccapurple,
+        dodgerblue,
+        green
+    );
+    opacity: 0.75;
+  }
+
+  &[open] {
+    opacity: 1;
+    animation: appear 400ms cubic-bezier(0, 0, 0.2, 1);
+
+    &::backdrop {
+      animation: backdropAppear 400ms cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    scale: 0.7;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes vanish {
+  from {
     display: block;
-    width: 1100px;
-    height: 800px;
-    max-width: 94vw;
-    max-height: 90vh;
-    border-radius: 4px;
-    overflow: hidden;
-    box-shadow: 0 11px 15px -7px rgba(0, 0, 0, .2), 0 24px 38px 3px rgba(0, 0, 0, .14), 0 9px 46px 8px rgba(0, 0, 0, .12);
-
-    &:focus {
-      outline: none;
-    }
-
-    gallery {
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-      margin: 0;
-
-      //gallery-core {
-      //  height: 100% !important;
-      //}
-    }
+    opacity: 1;
+    scale: 1;
   }
-
-  .g-backdrop {
-    background-color: rgba(0, 0, 0, .32);
+  to {
+    display: none;
+    opacity: 0;
+    scale: 0.7;
   }
+}
 
-  .fullscreen {
+@keyframes backdropAppear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.75;
+  }
+}
+
+@keyframes backdropVanish {
+  from {
+    display: block;
+    opacity: 0.75;
+  }
+  to {
+    display: none;
+    opacity: 0;
+  }
+}
+
+.g-backdrop {
+  background-color: rgba(0, 0, 0, .32);
+}
+
+.fullscreen {
+  @include fullscreen();
+}
+
+.g-overlay {
+  margin: auto;
+
+  @media only screen and (max-width: 480px) {
     @include fullscreen();
   }
+}
 
-  .g-overlay {
-    margin: auto;
+.g-btn-close {
+  position: absolute;
+  right: 0.9em;
+  top: 0.9em;
+  z-index: 60;
+  //cursor: pointer;
+  //width: 20px;
+  //height: 20px;
+  //@media only screen and (max-width: 480px) {
+  //  right: 0.7em;
+  //  top: 0.7em;
+  //}
 
-    @media only screen and (max-width: 480px) {
-      @include fullscreen();
-    }
-  }
-
-  .g-btn-close {
-    position: absolute;
-    right: 0.9em;
-    top: 0.9em;
-    z-index: 60;
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
-    @media only screen and (max-width: 480px) {
-      right: 0.7em;
-      top: 0.7em;
-    }
-
-    svg {
-      width: 100%;
-      height: 100%;
-      opacity: 0.6;
-      transition: opacity linear 150ms;
-      filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.8));
-
-      &:hover {
-        opacity: 1;
-      }
-    }
-  }
+  //svg {
+  //  width: 100%;
+  //  height: 100%;
+  //  opacity: 0.6;
+  //  transition: opacity linear 150ms;
+  //  filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.8));
+  //
+  //  &:hover {
+  //    opacity: 1;
+  //  }
+  //}
 }

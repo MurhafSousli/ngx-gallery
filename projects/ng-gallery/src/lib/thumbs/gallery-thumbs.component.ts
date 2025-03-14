@@ -13,7 +13,7 @@ import {
   InputSignalWithTransform
 } from '@angular/core';
 import { SmoothScroll } from '../smooth-scroll';
-import { Orientation } from '../models/constants';
+import { ORIENTATION } from '../models/constants';
 import { GalleryRef } from '../services/gallery-ref';
 import { ResizeSensor } from '../services/resize-sensor';
 import { SliderComponent } from '../slider/slider/slider';
@@ -74,8 +74,6 @@ import { ImageSize, ThumbsPosition } from '../models/config.model';
 export class GalleryThumbsComponent {
 
   readonly galleryRef: GalleryRef = inject(GalleryRef);
-
-  // readonly align: InputSignal<'start' | 'end'> = input<'start' | 'end'>();
 
   /**
    * Fits each thumbnail size to its content
@@ -145,8 +143,8 @@ export class GalleryThumbsComponent {
     transform: numberAttribute
   });
 
-  orientation: Signal<Orientation> = computed(() => {
-    return (this.position() === 'top' || this.position() === 'bottom') ? Orientation.Horizontal : Orientation.Vertical;
+  orientation: Signal<ORIENTATION> = computed(() => {
+    return (this.position() === 'top' || this.position() === 'bottom') ? ORIENTATION.Horizontal : ORIENTATION.Vertical;
   });
 
   /** @ignore */

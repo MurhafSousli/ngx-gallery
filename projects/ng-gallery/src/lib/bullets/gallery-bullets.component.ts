@@ -9,6 +9,7 @@ import {
   InputSignalWithTransform
 } from '@angular/core';
 import { GalleryRef } from '../services/gallery-ref';
+import { HorizontalPosition } from '../models/config.model';
 
 @Component({
   selector: 'gallery-bullets',
@@ -39,7 +40,7 @@ export class GalleryBulletsComponent {
   /**
    * Align bullets
    */
-  readonly align: InputSignal<'top' | 'bottom'> = input<'top' | 'bottom'>('top');
+  readonly align: InputSignal<HorizontalPosition> = input<HorizontalPosition>('top');
 
   /**
    * Disables thumbnails' clicks
@@ -47,7 +48,6 @@ export class GalleryBulletsComponent {
   readonly disabled: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(false, {
     transform: booleanAttribute
   });
-
 
   /**
    * Disables thumbnails' clicks

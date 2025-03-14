@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { GalleryRef } from '../../services/gallery-ref';
 import { GalleryConfig } from '../../models/config.model';
-import { Orientation } from '../../models/constants';
+import { ORIENTATION } from '../../models/constants';
 import { HorizontalAdapter, SliderAdapter, VerticalAdapter } from '../adapters';
 import { SliderItem } from '../slider-item/slider-item';
 
@@ -35,7 +35,7 @@ export class SliderComponent {
 
   readonly nativeElement: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
 
-  readonly orientation: InputSignal<Orientation> = input<Orientation>();
+  readonly orientation: InputSignal<ORIENTATION> = input<ORIENTATION>();
 
   readonly autosize: InputSignal<boolean> = input<boolean>();
 
@@ -49,7 +49,7 @@ export class SliderComponent {
 
   readonly adapter: Signal<SliderAdapter> = computed(() => {
     const config: GalleryConfig = this.galleryRef.config();
-    return this.orientation() === Orientation.Horizontal
+    return this.orientation() === ORIENTATION.Horizontal
       ? new HorizontalAdapter(this.nativeElement, config)
       : new VerticalAdapter(this.nativeElement, config);
   });

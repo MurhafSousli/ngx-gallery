@@ -1,4 +1,4 @@
-import { GalleryItemType, GalleryItemTypes } from '../models/constants';
+import { GalleryItemType, ITEM_TYPE } from '../models/constants';
 import { IframeItemData, ImageItemData, VideoItemData, VimeoItemData, YoutubeItemData } from '../templates/items.model';
 
 interface GalleryItem {
@@ -12,7 +12,7 @@ export class ImageItem implements GalleryItem {
 
   constructor(data: ImageItemData) {
     this.data = data;
-    this.type = GalleryItemTypes.Image;
+    this.type = ITEM_TYPE.Image;
   }
 }
 
@@ -22,7 +22,7 @@ export class VideoItem implements GalleryItem {
 
   constructor(data: VideoItemData) {
     this.data = data;
-    this.type = GalleryItemTypes.Video;
+    this.type = ITEM_TYPE.Video;
   }
 }
 
@@ -32,7 +32,7 @@ export class IframeItem implements GalleryItem {
 
   constructor(data: IframeItemData) {
     this.data = data;
-    this.type = GalleryItemTypes.Iframe;
+    this.type = ITEM_TYPE.Iframe;
   }
 }
 
@@ -48,7 +48,7 @@ export class YoutubeItem implements GalleryItem {
         thumb: data.thumb ?? `//img.youtube.com/vi/${ data.src }/default.jpg`
       }
     };
-    this.type = GalleryItemTypes.Youtube;
+    this.type = ITEM_TYPE.Youtube;
   }
 }
 
@@ -66,7 +66,7 @@ export class VimeoItem implements GalleryItem {
     };
 
 
-    this.type = GalleryItemTypes.Vimeo;
+    this.type = ITEM_TYPE.Vimeo;
   }
 
   private getVimeoThumb(videoId: string): string {

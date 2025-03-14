@@ -18,7 +18,7 @@ import { Platform } from '@angular/cdk/platform';
 import { Directionality } from '@angular/cdk/bidi';
 import { take } from 'rxjs';
 
-import { Orientation } from '../models/constants';
+import { ORIENTATION } from '../models/constants';
 import { GalleryRef } from '../services/gallery-ref';
 import { GalleryConfig } from '../models/config.model';
 import { SliderAdapter } from '../slider/adapters';
@@ -159,7 +159,7 @@ export class HammerSliding {
     const velocity: number = adapter.getHammerVelocity(e);
     // Check if velocity is great enough to navigate
     if (Math.abs(velocity) > 0.3) {
-      if (this.galleryRef.config().orientation === Orientation.Horizontal) {
+      if (this.galleryRef.config().orientation === ORIENTATION.Horizontal) {
         if (velocity > 0) {
           return this._dir.value === 'rtl' ? currIndex + 1 : currIndex - 1;
         }

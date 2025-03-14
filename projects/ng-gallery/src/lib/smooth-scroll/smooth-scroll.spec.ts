@@ -39,40 +39,39 @@ describe('Smooth scroll directive', () => {
   });
 
   it('should toggle scrolling class with scrolling signal', async () => {
+    await firstValueFrom(galleryRef.afterItemsVisible);
+
     expect(smoothScrollDirective.scrolling()).toBe(false);
     expect(nativeElement.classList.contains('g-scrolling')).toBeFalse();
 
     // Trigger index change
-    galleryRef.set(1, 'auto');
+    galleryRef.set(1, 'smooth');
     fixture.detectChanges();
     expect(smoothScrollDirective.scrolling()).toBe(true);
     expect(nativeElement.classList.contains('g-scrolling')).toBeTrue();
-
-    await afterTimeout(20);
-    expect(smoothScrollDirective.scrolling()).toBe(false);
-    expect(nativeElement.classList.contains('g-scrolling')).toBeFalse();
-  });
-
-  it('should scroll instantly to target item on gallery index changes', async () => {
-    const scrollToSpy: jasmine.Spy = spyOn(smoothScrollDirective, 'scrollTo').and.callThrough();
-    await firstValueFrom(galleryRef.afterItemsVisible);
-
-    // Trigger index change
-    galleryRef.set(1, 'auto');
-
-    expect(smoothScrollDirective.scrolling()).toBe(true);
 
     const arrivedToNextItem$: Observable<any> = galleryRef.indexChanged.pipe(
       filter((currIndex: number) => currIndex === 1)
     );
     await firstValueFrom(arrivedToNextItem$);
 
-    const pos: SmoothScrollOptions = {
-      start: 500,
-      behavior: 'auto'
-    };
+    expect(smoothScrollDirective.scrolling()).toBe(false);
+    expect(nativeElement.classList.contains('g-scrolling')).toBeFalse();
+  });
 
-    expect(scrollToSpy).toHaveBeenCalledWith(pos);
+  it('should scroll instantly to target item on gallery index changes', async () => {
+    const scrollToSpy: jasmine.Spy = spyOn(smoothScrollDirective, 'scrollElement').and.callThrough();
+    await firstValueFrom(galleryRef.afterItemsVisible);
+
+    // Trigger index change
+    galleryRef.set(1, 'auto');
+
+    const arrivedToNextItem$: Observable<any> = galleryRef.indexChanged.pipe(
+      filter((currIndex: number) => currIndex === 1)
+    );
+    await firstValueFrom(arrivedToNextItem$);
+
+    expect(scrollToSpy).toHaveBeenCalledWith(500, undefined);
     expect(galleryRef.currIndex()).toBe(1);
     expect(smoothScrollDirective.scrolling()).toBe(false);
   });
