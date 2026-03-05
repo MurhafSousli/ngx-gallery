@@ -1,0 +1,45 @@
+import { GalleryOptions } from './models/config.model';
+
+export const defaultOptions: GalleryOptions = {
+  itemSize: null,
+  itemsPerView: 1,
+  gap: 1,
+  steps: 1,
+  thumbSteps: 1,
+  loop: false,
+  autoplay: false,
+  disableScroll: false,
+  disableMouseScroll: false,
+  autoplayInterval: 3000,
+  scrollDuration: 268,
+  scrollEase: {
+    x1: 0.42,
+    y1: 0,
+    x2: 0.58,
+    y2: 1
+  },
+  forceSnap: false,
+  snapAlign: 'center',
+  scrollBehavior: 'smooth',
+  autoplayScrollBehavior: 'smooth',
+  resizeDebounceTime: 0,
+  resizeTransitionDuration: 468,
+  orientation: 'horizontal',
+  counterAlign: 'top',
+  thumbPerView: 5,
+  thumbSize: 120,
+  thumbGap: 1,
+  thumbSnapAlign: 'center',
+  thumbThickness: 90,
+  thumbDisabled: false,
+  detachThumbs: false,
+  thumbForceSnap: false,
+  disableThumbScroll: false,
+  disableThumbMouseScroll: false,
+  thumbPosition: 'bottom',
+  thumbScrollBehavior: 'smooth',
+  navOutside: false,
+  counterText: (active: string, total: string) => {
+    return `${ active } / ${ total }`;
+  },
+};

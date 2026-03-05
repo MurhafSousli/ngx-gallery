@@ -3,5 +3,9 @@
   "dest": "../../dist/ng-gallery",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "assets": [
+    "_index.scss",
+    "glass-theme.css"
+  ]
 }

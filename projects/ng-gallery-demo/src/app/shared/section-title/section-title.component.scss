@@ -1,13 +1,14 @@
+@use '../../../variables' as vars;
+
 :host {
   width: 100%;
 }
-
 h2 {
   flex: 1;
   margin: 2em 0 1em;
 }
 
 fa-icon {
-  color: var(--accent-color);
+  color: vars.$accent-color;
   margin-right: 10px;
 }

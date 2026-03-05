@@ -1,267 +1,107 @@
-import {
-  Directive,
-  inject,
-  signal,
-  effect,
-  untracked,
-  input,
-  NgZone,
-  ElementRef,
-  InputSignal,
-  WritableSignal,
-  EffectCleanupRegisterFn
-} from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Directive, inject, effect, untracked, afterRenderEffect, ElementRef } from '@angular/core';
 import { Directionality } from '@angular/cdk/bidi';
-import { _Bottom, _Left, _Right, _Top, _Without } from '@angular/cdk/scrolling';
-import { getRtlScrollAxisType, RtlScrollAxisType } from '@angular/cdk/platform';
-import {
-  Observable,
-  Subject,
-  Subscriber,
-  Subscription,
-  of,
-  take,
-  merge,
-  expand,
-  fromEvent,
-  switchMap,
-  takeUntil,
-  takeWhile,
-  finalize
-} from 'rxjs';
-import BezierEasing from './bezier-easing';
-import { SmoothScrollOptions, SmoothScrollStep, SmoothScrollToOptions } from './index';
-import { GalleryRef } from '../services/gallery-ref';
-import { IndexChange } from '../models/slider.model';
-import { SliderComponent } from '../slider/slider/slider';
-import { HammerSliding } from '../gestures/hammer-sliding.directive';
+import { GalleryRef } from '../gallery-ref';
+import { SmoothScrollManager } from './animate-scroll';
+import { NavigationTarget } from '../models/slider.model';
+import { SliderContext } from '../slider/slider.token';
+import { ResizeSensorContext } from '../resize-sensor/resize-sensor.token';
 
 @Directive({
-  selector: '[smoothScroll]',
-  host: {
-    '[class.g-scrolling]': 'scrolling()'
-  }
+  selector: '[smoothScroll]'
 })
 export class SmoothScroll {
 
+  private readonly dir: Directionality = inject(Directionality);
+
   private readonly galleryRef: GalleryRef = inject(GalleryRef);
 
-  private readonly slider: SliderComponent = inject(SliderComponent, { self: true });
+  private readonly nativeElement: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
 
-  private readonly hammerSlider: HammerSliding = inject(HammerSliding, { self: true });
+  private readonly slider: SliderContext = inject(SliderContext, { self: true });
 
-  private readonly _zone: NgZone = inject(NgZone);
+  private readonly resizeSensor: ResizeSensorContext = inject(ResizeSensorContext, { self: true });
 
-  private readonly _dir: Directionality = inject(Directionality);
+  private scrollTaskCount: number = 0;
 
-  private readonly _el: HTMLElement = inject(ElementRef<HTMLElement>).nativeElement;
-
-  private readonly _w: Window = inject(DOCUMENT).defaultView;
-
-  private readonly _scrollController: Subject<SmoothScrollStep> = new Subject<SmoothScrollStep>();
-
-  private readonly _finished: Subject<void> = new Subject<void>();
-
-  /**
-   * Timing method
-   */
-  private get _now(): () => number {
-    return this._w.performance?.now?.bind(this._w.performance) || Date.now;
-  }
-
-  private readonly interruptedByMouse$: Subject<void> = new Subject<void>();
-
-  scrolling: WritableSignal<boolean> = signal<boolean>(false);
-
-  disabled: InputSignal<boolean> = input<boolean>(false, { alias: 'smoothScroll' });
+  private activeManager: SmoothScrollManager;
 
   constructor() {
-    // This directive should not do anything if was used by gallery-thumbs and detached option is true
-    let indexChangeSub$: Subscription;
-    let scrollSub$: Subscription;
-
-    effect(() => {
-      if (!this.hammerSlider.sliding() || this.disabled()) return;
-      this.interruptedByMouse$.next();
+    // The normal effect doesn't work with the initial index, because it runs before the right conditions are met
+    afterRenderEffect({
+      read: () => {
+        const state: NavigationTarget = this.galleryRef.navigationState();
+        if (state.source !== 'init' || !this.resizeSensor.isScrollable()) return;
+        this.scrollToIndex(state.index, { duration: 0 });
+      }
     });
 
-    effect((onCleanup: EffectCleanupRegisterFn) => {
-      if (this.disabled()) return;
+    /**
+     *  Do NOT use afterNextRender here.
+     *  It introduces a render frame where neither mouseSliding nor smoothScrolling
+     *  is true, re-enabling scroll-snap and causing jumpy navigation.
+     *  `effect()` must run before render to keep snap disabled.
+     */
+    effect(() => {
+      const state: NavigationTarget = this.galleryRef.navigationState();
+      // Only start scrolling if the viewport is scrollable, this ensures scrolling to the initial index
+      if (state.source === 'init'
+        // Avoid navigation source that sync from touch navigation
+        || state.source === 'sync'
+        || !this.resizeSensor.isScrollable()) return;
+
+      const scrollBehavior: ScrollBehavior = state.behavior || this.galleryRef.scrollBehavior();
 
       untracked(() => {
-        this._zone.runOutsideAngular(() => {
-          indexChangeSub$ = this.galleryRef.indexChange.subscribe((change: IndexChange) => {
-            const el: HTMLElement = this.slider.items()[change.index]?.nativeElement;
-            const scrollBehavior: ScrollBehavior = change.behavior || this.galleryRef.config().scrollBehavior;
+        if (scrollBehavior === 'auto') {
+          this.scrollToIndex(state.index, { duration: 0 });
+          return;
+        }
 
-            if (el) {
-              if (scrollBehavior === 'auto') {
-                // When setting initial index, the viewport isn't scrollable. we need to wait for the gallery to be rendered.
-                requestAnimationFrame(() => {
-                  const params: SmoothScrollOptions = this.slider.adapter().getScrollToValue(el, scrollBehavior);
-                  const options: SmoothScrollToOptions = this._prepareParams(params);
-                  this.scrollElement(options.left, options.top);
-                });
-              } else {
-                const params: SmoothScrollOptions = this.slider.adapter().getScrollToValue(el, scrollBehavior);
-                this.scrollTo(params);
-              }
-            }
-          });
-
-          scrollSub$ = this._scrollController.pipe(
-            switchMap((context: SmoothScrollStep) => {
-              this._zone.run(() => {
-                this.scrolling.set(true);
-              });
-
-              // Scroll each step recursively
-              return of(null).pipe(
-                expand(() => this._step(context).pipe(
-                  takeWhile((currContext: SmoothScrollStep) => this._isFinished(currContext)),
-                  takeUntil(this._finished)
-                )),
-                finalize(() => this.resetElement()),
-                takeUntil(this._interrupted()),
-              );
-            })
-          ).subscribe();
-        });
-
-        onCleanup(() => {
-          scrollSub$?.unsubscribe();
-          indexChangeSub$?.unsubscribe();
+        this.scrollToIndex(state.index, {
+          duration: this.galleryRef.scrollDuration()
         });
       });
     });
   }
 
-  /**
-   * changes scroll position inside an element
-   */
-  scrollElement(x: number, y: number): void {
-    this._el.scrollLeft = x;
-    this._el.scrollTop = y;
-  }
+  async scrollToIndex(index: number, options: { duration: number }): Promise<void> {
+    const el: HTMLElement = this.galleryRef.renderedItems()[index]?.nativeElement;
+    if (!el) return;
 
-  private resetElement(): void {
-    this._zone.run(() => {
-      this.scrolling.set(false);
-    });
-  }
+    // Cancel any existing scroll immediately
+    this.stop();
 
-  /**
-   * Checks if smooth scroll has reached, cleans up the smooth scroll stream and resolves its promise
-   */
-  private _isFinished(context: SmoothScrollStep): boolean {
-    if (context.currentX !== context.x || context.currentY !== context.y) {
-      return true;
-    }
-    this._finished.next();
-    return false;
-  }
+    // Increment task ID to track the most recent request
+    const taskId: number = ++this.scrollTaskCount;
+    this.slider.scrolling.set(true);
 
-  /**
-   * Terminates an ongoing smooth scroll
-   */
-  private _interrupted(): Observable<Event | void> {
-    return merge(
-      this.interruptedByMouse$,
-      fromEvent(this._el, 'wheel', { passive: true, capture: true }),
-      fromEvent(this._el, 'touchmove', { passive: true, capture: true }),
-    ).pipe(take(1));
-  }
+    this.activeManager = new SmoothScrollManager(
+      this.nativeElement,
+      this.dir.valueSignal(),
+      this.galleryRef.scrollEase()
+    );
 
-  /**
-   * A function called recursively that, given a context, steps through scrolling
-   */
-  private _step(context: SmoothScrollStep): Observable<SmoothScrollStep> {
-    return new Observable((subscriber: Subscriber<SmoothScrollStep>) => {
-      let elapsed: number = (this._now() - context.startTime) / context.duration;
-
-      // avoid elapsed times higher than one
-      elapsed = elapsed > 1 ? 1 : elapsed;
-
-      // apply easing to elapsed time
-      const value: number = context.easing(elapsed);
-
-      context.currentX = context.startX + (context.x - context.startX) * value;
-      context.currentY = context.startY + (context.y - context.startY) * value;
-
-      this.scrollElement(context.currentX, context.currentY);
-      // Proceed to the step
-      requestAnimationFrame(() => {
-        subscriber.next(context);
-        subscriber.complete();
+    try {
+      const snapAlign = this.galleryRef.snapAlign();
+      await this.activeManager.scrollToElement(el, {
+        duration: options.duration,
+        start: snapAlign === 'start' ? 0 : undefined,
+        end: snapAlign === 'end' ? 0 : undefined,
+        center: snapAlign === 'center'
       });
-    });
-  }
-
-  private _applyScrollToOptions(options: SmoothScrollToOptions): void {
-    const context: SmoothScrollStep = {
-      scrollable: this._el,
-      startTime: this._now(),
-      startX: this._el.scrollLeft,
-      startY: this._el.scrollTop,
-      x: options.left == null ? this._el.scrollLeft : ~~options.left,
-      y: options.top == null ? this._el.scrollTop : ~~options.top,
-      duration: options.duration,
-      easing: BezierEasing(options.easing.x1, options.easing.y1, options.easing.x2, options.easing.y2)
-    };
-
-    this._scrollController.next(context);
-  }
-
-  private _prepareParams(params: SmoothScrollOptions): SmoothScrollToOptions {
-    const isRtl: boolean = this._dir.value === 'rtl';
-    const rtlScrollAxisType: RtlScrollAxisType = getRtlScrollAxisType();
-
-    const options: SmoothScrollToOptions = {
-      ...params,
-      ...({
-        // Rewrite start & end offsets as right or left offsets.
-        left: params.left == null ? (isRtl ? params.end : params.start) : params.left,
-        right: params.right == null ? (isRtl ? params.start : params.end) : params.right
-      }),
-      duration: params.behavior === 'smooth' ? this.galleryRef.config().scrollDuration : 0,
-      easing: this.galleryRef.config().scrollEase,
-    };
-
-    // Rewrite the bottom offset as a top offset.
-    if (options.bottom != null) {
-      (options as _Without<_Bottom> & _Top).top = this._el.scrollHeight - this._el.clientHeight - options.bottom;
-    }
-
-    // Rewrite the right offset as a left offset.
-    if (isRtl && rtlScrollAxisType !== RtlScrollAxisType.NORMAL) {
-      if (options.left != null) {
-        (options as _Without<_Left> & _Right).right = this._el.scrollWidth - this._el.clientWidth - options.left;
-      }
-
-      if (rtlScrollAxisType === RtlScrollAxisType.INVERTED) {
-        options.left = options.right;
-      } else if (rtlScrollAxisType === RtlScrollAxisType.NEGATED) {
-        options.left = options.right ? -options.right : options.right;
-      }
-    } else {
-      if (options.right != null) {
-        (options as _Without<_Right> & _Left).left = this._el.scrollWidth - this._el.clientWidth - options.right;
+    } finally {
+      // Only set idle if no other scroll task has started since
+      if (taskId === this.scrollTaskCount) {
+        this.slider.scrolling.set(false);
+        this.activeManager = null;
       }
     }
-    return options;
   }
 
-  /**
-   * Scrolls to the specified offsets. This is a normalized version of the browser's native scrollTo
-   * method, since browsers are not consistent about what scrollLeft means in RTL. For this method
-   * left and right always refer to the left and right side of the scrolling container irrespective
-   * of the layout direction. start and end refer to left and right in an LTR context and vice versa
-   * in an RTL context.
-   * @param params specified the offsets to scroll to.
-   */
-  scrollTo(params: SmoothScrollOptions): void {
-    const options: SmoothScrollToOptions = this._prepareParams(params);
-    return this._applyScrollToOptions(options);
+  stop(): void {
+    if (this.activeManager) {
+      this.activeManager.stop();
+      this.activeManager = null;
+    }
   }
 }

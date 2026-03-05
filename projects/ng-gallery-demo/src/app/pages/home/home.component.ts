@@ -1,18 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
+import { HttpResourceRef } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
-// import { FlexLayoutModule, MediaChange, MediaObserver } from '@angular/flex-layout';
-import {
-  GalleryComponent,
-  GalleryConfig,
-  GalleryItemData,
-  GalleryItemDef,
-  GalleryThumbsComponent,
-  ImgRecognizer
-} from 'ng-gallery';
-import { Observable, map } from 'rxjs';
+import { GalleryItemData, GalleryModule } from 'ng-gallery';
 import { Pixabay } from '../../service/pixabay.service';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { BadgesComponent } from '../../shared/badges/badges.component';
@@ -29,39 +20,18 @@ import { BadgesComponent } from '../../shared/badges/badges.component';
     MatButtonModule,
     RouterLink,
     BadgesComponent,
-    GalleryComponent,
     FooterComponent,
-    AsyncPipe,
-    // FlexLayoutModule,
-    GalleryThumbsComponent,
-    GalleryItemDef,
-    ImgRecognizer
+    GalleryModule
   ]
 })
 export class HomeComponent implements OnInit {
 
-  readonly camel$: Observable<GalleryItemData[]>;
-  readonly media$: Observable<any>;
+  private readonly title: Title = inject(Title);
+  private readonly pixabay: Pixabay = inject(Pixabay);
 
-  constructor(pixabay: Pixabay, private _title: Title) {
-    this.camel$ = pixabay.getHDImages('mountain');
-    // this.media$ = mediaObserver.asObservable().pipe(
-    //   map((res: MediaChange[]) => {
-    //     if (res.some((x => x.mqAlias === 'sm' || x.mqAlias === 'xs'))) {
-    //       return {
-    //         thumbWidth: 80,
-    //         thumbHeight: 80
-    //       };
-    //     }
-    //     return {
-    //       thumbWidth: 120,
-    //       thumbHeight: 90
-    //     };
-    //   })
-    // );
-  }
+  readonly images: HttpResourceRef<GalleryItemData[]> = this.pixabay.getImages('mountain');
 
   ngOnInit() {
-    this._title.setTitle('Home | ng-gallery');
+    this.title.setTitle('Home | ng-gallery');
   }
 }

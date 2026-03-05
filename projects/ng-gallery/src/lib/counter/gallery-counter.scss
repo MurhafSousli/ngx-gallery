@@ -1,40 +1,27 @@
 :host {
-  // Gallery position variables
-  --counter-top: unset;
-  --counter-bottom: unset;
-  --counter-border-radius: unset;
+  /* --- LAYOUT & ALIGNMENT --- */
+  z-index: 3;
+  grid-area: center;
+  justify-self: center;
+  margin: 1rem;
 
+  /* Alignment within the gallery grid */
   &[align='top'] {
-    --counter-top: 0;
-    --counter-border-radius: 0 0 4px 4px;
+    align-self: start;
   }
 
   &[align='bottom'] {
-    --counter-bottom: 0;
-    --counter-border-radius: 4px 4px 0 0;
+    align-self: end;
   }
-}
 
-.g-counter {
-  font-weight: bold;
+  /* --- TYPOGRAPHY --- */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums; /* Essential for stable numbering */
   user-select: none;
-  opacity: 0.6;
-  transition: opacity linear 150ms;
-  z-index: 50;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%) perspective(1px);
-  font-size: 12px;
-  padding: 4px 10px;
-  color: var(--g-font-color);
-  background-color: var(--g-overlay-color);
-  box-shadow: var(--g-box-shadow);
 
-  top: var(--counter-top);
-  bottom: var(--counter-bottom);
-  border-radius: var(--counter-border-radius);
-
-  &:hover {
-    opacity: 0.8;
-  }
+  /* --- UNIQUE PANEL OVERRIDES --- */
+  /* The .g-panel global class should be applied to the host */
+  padding: 6px 20px;
 }

@@ -1,0 +1,106 @@
+import {Canvas, Meta, ArgTypes} from '@storybook/addon-docs/blocks';
+import * as ThumbnailsStories from './Thumbnails.stories';
+
+<Meta title="Thumbnails" of={ThumbnailsStories}/>
+
+# Thumbnails
+
+Thumbnails are an integral part of the gallery component, offering multiple customization options for appearance and behavior.
+
+
+## Thumbnail position
+
+There are four positioning choices are available for thumbnails: `top`, `bottom`, `start` and `end`.
+
+The orientation is automatically selected for the: horizontal for `top` and `bottom`, and vertical for `start` and `end`.
+
+<Canvas of={ThumbnailsStories.ThumbPositionExample}/>
+
+<Canvas of={ThumbnailsStories.ThumbDotsExample}/>
+
+By default, the thumbnails are docked to the gallery, but it can overlap the gallery using the `floating` option.
+
+```html
+<gallery-thumbs position="bottom" floating>
+```
+
+<Canvas of={ThumbnailsStories.BasicThumbExample}/>
+
+## Thumbnails Navigation
+
+<Canvas of={ThumbnailsStories.ThumbNavExample}/>
+
+
+## Thumbnails thickness
+
+
+If the thumbnails are horizontal, `thickness` controls the height of the strip.
+
+If the thumbnails are vertical, `thickness` controls the width of the strip.
+
+
+```html
+<gallery-thumbs [thickness]="80">
+```
+
+
+## Customizing thumbnail size
+
+Thumbnails can be resized using the `itemSize` and `thickness`.
+
+
+```html
+<gallery-thumbs itemSize="100" thickness="100">
+```
+
+
+## Automatic thumbnail sizing
+
+The `autosize` attribute enables automatic inline thumbnail sizing, ensuring each thumbnail fits its content size.
+
+<Canvas of={ThumbnailsStories.ThumbAutosizeExample}/>
+
+
+## Centralize active thumbnail
+
+To keep the active thumbnail centered, use the `centralized` attribute.
+
+```html
+<gallery-thumbs forceSnap>
+```
+
+## Scroll behavior
+
+To disable smooth scrolling of thumbnails, set the `scrollBehavior` attribute to `auto`.
+
+```html
+<gallery-thumbs scrollBehavior="auto">
+```
+
+## Detaching thumbnails
+
+Typically, thumbnails adjust to centralize the active item. To disable this behavior `detachThumbs` as follows:
+
+
+```html
+<gallery-thumbs detach>
+```
+
+## Disabling scrolling
+
+To prevent scrolling using wheel, trackpad and touch, use the attribute `disableScroll`
+
+```html
+<gallery-thumbs disableScroll>
+```
+
+## Disabling mouse scrolling
+
+To prevent dragging using the mouse, use the attribute `disableMouseScroll`
+
+```html
+<gallery-thumbs disableMouseScroll>
+```
+
+
+<ArgTypes of={ThumbnailsStories.Thumbnails}/>

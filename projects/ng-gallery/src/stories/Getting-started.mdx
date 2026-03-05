@@ -1,0 +1,80 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentations/Getting Started" />
+
+# Getting Started
+
+## Installation
+
+Install the package via npm:
+
+```bash
+npm i ng-gallery @angular/cdk
+```
+
+## Basic Usage
+
+To get started, pass an array of items to the `<gallery>` component. Use `*galleryItemDef` to define the item template.
+
+```html
+<gallery [items]="items">
+  <div *galleryItemDef="let item; index as i">
+    Slide {{ i + 1 }}
+  </div>
+</gallery>
+```
+
+ > Learn more about [Item Templates](?path=/docs/documentations-item-templates--docs).
+
+
+## Features and Layout Extensions
+
+You can extend the gallery interface by nesting specific components and directives inside the main container
+
+**UI Components**
+
+`<gallery-nav>`: Renders next and previous navigation arrows.
+
+`<gallery-thumbs>`: Adds a thumbnail navigation track. Requires a `*galleryItemDef` to render the thumb images.
+
+`<gallery-counter>`: Displays the current slide index and total count.
+
+`gallerySlot`: Used for "static" content (like watermarks or static buttons) that stays in place while the slides transition.
+
+**Example:**
+
+```html
+<gallery [items]="items">
+  <img *galleryItemDef="let item"
+       galleryImage
+       [src]="item.src"
+       [alt]="item.alt"/>
+
+  <div gallerySlot>Optional Fixed Template</div>
+
+  <gallery-nav/>
+
+  <gallery-counter/>
+
+  <gallery-thumbs>
+    <img *galleryItemDef="let item"
+         galleryImage
+         [src]="item.thumb"
+         [alt]="item.alt + '_thumb'"/>
+  </gallery-thumbs>
+</gallery>
+```
+
+You can provide global settings for your gallery using `provideGalleryOptions` within your application providers.
+
+```ts
+import { provideGalleryOptions } from 'ng-gallery';
+
+export const appConfig = {
+  providers: [
+    provideGalleryOptions({
+      // Configuration options
+    })
+  ]
+};
+```

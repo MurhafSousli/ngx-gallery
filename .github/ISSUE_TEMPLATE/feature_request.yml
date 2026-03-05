@@ -1,0 +1,65 @@
+name: 🚀 Feature Request
+description: Suggest an idea or enhancement for ngx-gallery
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: "Have an idea to make ngx-gallery better? We would love to hear it!"
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: What is the expected behavior?
+      placeholder: A clear and concise explanation of what you want to happen...
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: What is the current behavior?
+      placeholder: Describe any current limitations or how the existing behavior works...
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: What is the use-case or motivation for changing an existing behavior?
+      placeholder: Explain why the current design presents an obstacle for your project...
+    validations:
+      required: true
+
+  - type: textarea
+    id: implementation-ideas
+    attributes:
+      label: What are the steps to reproduce?
+      description: If this is an enhancement to an existing workflow, explain the ideal steps or API design you'd prefer.
+      placeholder: "e.g., Adding a custom config token to control structural layout animations..."
+    validations:
+      required: true
+
+  - type: input
+    id: angular-version
+    attributes:
+      label: Angular Version
+      placeholder: "e.g., 21.0.0"
+    validations:
+      required: true
+
+  - type: input
+    id: gallery-version
+    attributes:
+      label: Gallery Package Version
+      placeholder: "e.g., 13.0.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Is there anything else we should know?
+      description: Mockups, architectural references, or link examples.
+    validations:
+      required: false

@@ -1,101 +1,128 @@
-import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { GalleryRef } from 'ng-gallery';
+import { Direction } from '@angular/cdk/bidi';
+import { Gallery, GalleryOrientation } from 'ng-gallery';
 import { afterTimeout, TestComponent } from '../tests/common';
-import { SmoothScroll, SmoothScrollOptions } from './index';
-import { filter, firstValueFrom, Observable } from 'rxjs';
+import { SmoothScroll } from './smooth-scroll.directive';
+import { Slider } from '../slider/slider';
 
 describe('Smooth scroll directive', () => {
   let fixture: ComponentFixture<TestComponent>;
-  let nativeElement: HTMLElement;
+  let component: TestComponent;
+  let sliderElement: HTMLElement;
   let smoothScrollDirective: SmoothScroll;
-  let galleryRef: GalleryRef;
+  let sliderComponent: Slider;
+  let gallery: Gallery;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        TestComponent
-      ],
-      providers: [
-        { provide: ComponentFixtureAutoDetect, useValue: true }
-      ]
-    }).compileComponents();
-
     fixture = TestBed.createComponent(TestComponent);
-    fixture.detectChanges();
+    fixture.autoDetectChanges();
+    component = fixture.componentInstance;
+    gallery = component.gallery();
 
     const smoothScrollElement: DebugElement = fixture.debugElement.query(By.directive(SmoothScroll));
     smoothScrollDirective = smoothScrollElement.injector.get(SmoothScroll);
-    nativeElement = smoothScrollElement.nativeElement;
 
-    galleryRef = smoothScrollElement.injector.get(GalleryRef);
+    sliderComponent = fixture.debugElement.query(By.directive(Slider)).componentInstance;
+    sliderElement = sliderComponent.nativeElement;
   });
 
-  it('should create [smoothScroll] directive', () => {
-    expect(smoothScrollDirective).toBeTruthy();
-  });
-
-  it('should toggle scrolling class with scrolling signal', async () => {
-    await firstValueFrom(galleryRef.afterItemsVisible);
-
-    expect(smoothScrollDirective.scrolling()).toBe(false);
-    expect(nativeElement.classList.contains('g-scrolling')).toBeFalse();
+  async function testSmoothScrollTo(index: number, position: number, orientation: GalleryOrientation, dir: Direction = 'ltr'): Promise<void> {
+    component.orientation.set(orientation);
+    component.dir.set(dir);
+    await vi.waitUntil(() => gallery.hasVisibleItems());
 
     // Trigger index change
-    galleryRef.set(1, 'smooth');
+    gallery.goTo({ index });
     fixture.detectChanges();
-    expect(smoothScrollDirective.scrolling()).toBe(true);
-    expect(nativeElement.classList.contains('g-scrolling')).toBeTrue();
+    expect(sliderComponent.status()).toBe('scrolling');
 
-    const arrivedToNextItem$: Observable<any> = galleryRef.indexChanged.pipe(
-      filter((currIndex: number) => currIndex === 1)
-    );
-    await firstValueFrom(arrivedToNextItem$);
+    await vi.waitFor(() => {
+      expect(gallery.activeIndex()).toBe(index);
+    });
+    expect(sliderComponent.status()).toBe('idle');
+    expect(orientation === 'horizontal' ? sliderElement.scrollLeft : sliderElement.scrollTop).toBe(position);
+  }
 
-    expect(smoothScrollDirective.scrolling()).toBe(false);
-    expect(nativeElement.classList.contains('g-scrolling')).toBeFalse();
+  it('should create [smoothScroll] directive', async () => {
+    expect(smoothScrollDirective).toBeDefined();
+    expect(sliderComponent.status()).toBe('idle');
   });
 
   it('should scroll instantly to target item on gallery index changes', async () => {
-    const scrollToSpy: jasmine.Spy = spyOn(smoothScrollDirective, 'scrollElement').and.callThrough();
-    await firstValueFrom(galleryRef.afterItemsVisible);
-
+    await vi.waitUntil(() => gallery.hasVisibleItems());
     // Trigger index change
-    galleryRef.set(1, 'auto');
+    gallery.goTo({ index: 1, behavior: 'auto' });
+    fixture.detectChanges();
 
-    const arrivedToNextItem$: Observable<any> = galleryRef.indexChanged.pipe(
-      filter((currIndex: number) => currIndex === 1)
-    );
-    await firstValueFrom(arrivedToNextItem$);
+    // Verify the scrolling signal is set to true
+    expect(sliderComponent.status()).toBe('scrolling');
 
-    expect(scrollToSpy).toHaveBeenCalledWith(500, undefined);
-    expect(galleryRef.currIndex()).toBe(1);
-    expect(smoothScrollDirective.scrolling()).toBe(false);
+    await vi.waitFor(() => {
+      expect(gallery.activeIndex()).toBe(1);
+    });
+    expect(sliderComponent.status()).toBe('idle');
+    const scrollPosition: number = component.width();
+    expect(sliderElement.scrollLeft).toBe(scrollPosition);
   });
 
   it('should scroll smoothly to target item on gallery index changes', async () => {
-    const scrollToSpy: jasmine.Spy = spyOn(smoothScrollDirective, 'scrollTo').and.callThrough();
-    await firstValueFrom(galleryRef.afterItemsVisible);
+    await testSmoothScrollTo(1, component.width(), 'horizontal');
+  });
+
+  it('[RTL] should scroll smoothly to target item on gallery index changes', async () => {
+    await testSmoothScrollTo(1, -component.width(), 'horizontal', 'rtl');
+  });
+
+  it('[Vertical] should scroll smoothly to target item on gallery index changes', async () => {
+    await testSmoothScrollTo(1, component.height(), 'vertical');
+  });
+
+  it('should not set status signal to "idle" if another scroll is triggered before the first animation is done', async () => {
+    await vi.waitUntil(() => gallery.hasVisibleItems());
 
     // Trigger index change
-    galleryRef.set(2, 'smooth');
+    gallery.goTo({ index: 1 });
+    fixture.detectChanges();
 
-    expect(smoothScrollDirective.scrolling()).toBe(true);
+    // Verify status is set to scrolling
+    expect(sliderComponent.status()).toBe('scrolling');
 
-    const arrivedToNextItem$: Observable<any> = galleryRef.indexChanged.pipe(
-      filter((currIndex: number) => currIndex === 2)
-    );
-    await firstValueFrom(arrivedToNextItem$);
+    // Wait a bit but before the scroll animation ends
+    await afterTimeout(200);
+    // Trigger another scroll
+    gallery.goTo({ index: 2 });
+    fixture.detectChanges();
 
-    const pos: SmoothScrollOptions = {
-      start: 1000,
-      behavior: 'smooth'
-    };
-    expect(scrollToSpy).toHaveBeenCalledWith(pos);
-    expect(galleryRef.currIndex()).toBe(2);
-    expect(smoothScrollDirective.scrolling()).toBe(false);
+    // Verify status is still scrolling
+    expect(sliderComponent.status()).toBe('scrolling');
+
+    await vi.waitFor(() => {
+      expect(gallery.activeIndex()).toBe(2);
+    });
+    expect(sliderComponent.status()).toBe('idle');
+    const scrollPosition: number = component.width() * 2;
+    expect(sliderElement.scrollLeft).toBe(scrollPosition);
+  });
+
+
+  it('should cancel any ongoing scroll if user interrupted the scroll with sliding', async () => {
+    await vi.waitUntil(() => gallery.hasVisibleItems());
+
+    // Trigger index change
+    gallery.goTo({ index: 1 });
+    fixture.detectChanges();
+
+    expect(sliderComponent.status()).toBe('scrolling');
+
+    // Wait a bit but before the scroll animation ends
+    await afterTimeout(200);
+
+    sliderElement.dispatchEvent(new MouseEvent('mousedown', { clientX: 500, buttons: 1 }));
+    document.dispatchEvent(new MouseEvent('mousemove', { clientX: 400, buttons: 1 }));
+
+    fixture.detectChanges();
+    expect(sliderComponent.status()).toBe('dragging');
   });
 });

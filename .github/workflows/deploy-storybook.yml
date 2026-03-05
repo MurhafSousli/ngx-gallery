@@ -1,0 +1,62 @@
+name: Deploy Storybook to GitHub Pages
+
+on:
+  push:
+    branches: [ master ]
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6 # Node 24 Native
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v6 # Node 24 Native
+        with:
+          node-version: 24
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Reads the major version from package.json and stores it as an environment variable
+      # Example: If your version is "13.0.1", this extracts "v13"
+      - name: Extract Major Version
+        id: get-version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          MAJOR_VERSION="v$(echo $VERSION | cut -d. -f1)"
+          echo "major_version=$MAJOR_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Build Storybook
+        run: npm run storybook-build
+
+      # Generates a root landing page inside the build folder that forwards traffic to the newest release folder
+      - name: Create Base Redirect Landing Page
+        run: |
+          cat <<EOF > ./dist/storybook/ng-gallery/index.html
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta http-equiv="refresh" content="0; url=./${{ steps.get-version.outputs.major_version }}/" />
+              <script>window.location.href = "./${{ steps.get-version.outputs.major_version }}/"</script>
+            </head>
+            <body>
+              <p>Redirecting to documentation... <a href="./${{ steps.get-version.outputs.major_version }}/">Click here</a></p>
+            </body>
+          </html>
+          EOF
+
+      # Deploys your assets non-destructively into a versioned subfolder
+      # Keeps old major releases intact on the server
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ./dist/storybook/ng-gallery
+          branch: gh-pages
+          target-folder: ${{ steps.get-version.outputs.major_version }}
+          clean: false # CRITICAL: Stops GitHub from deleting older versions!

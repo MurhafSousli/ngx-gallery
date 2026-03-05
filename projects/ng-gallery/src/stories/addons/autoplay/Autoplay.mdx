@@ -1,0 +1,50 @@
+import { Meta, ArgTypes } from '@storybook/addon-docs/blocks';
+import * as AutoplayStories from './Autoplay.stories';
+
+<Meta title="Addons/Autoplay" of={AutoplayStories}/>
+
+# Autoplay
+
+Enables automatic progression through gallery items, similar to a slideshow.
+
+### Usage
+
+Add the `autoplay` attribute to the `<gallery>` component:
+
+```html
+<gallery autoplay/>
+```
+
+This will enable autoplay for the gallery.
+
+### Behavior
+
+  - Playback begins only after the current item reaches the ready state.
+  - Playback pauses when:
+    - The pointer is hovering over the gallery.
+    - The gallery is being scrolled (e.g., user interaction).
+
+### Configuration
+
+The interval between item transitions is configured using the autoplayInterval input (milliseconds).
+
+  - Type: `number`
+  - Default: `3000`
+
+Example with a custom interval and scroll behavior:
+
+```html
+<gallery [items]="items"
+         [autoplay]="autoplay"
+         autoplayInterval="2500"
+         autoplayScrollBehavior="auto">
+  <img *galleryItemDef="let item" galleryImage [src]="item.src" [alt]="item.alt"/>
+</gallery>
+
+<button (click)="autoplay = true">Play</button>
+<button (click)="autoplay = false">Stop</button>
+```
+
+## API
+
+<ArgTypes of={AutoplayStories.Autoplay}/>

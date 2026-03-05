@@ -1,0 +1,175 @@
+:host {
+  /* --- MASTER DIMENSIONS & SHAPE --- */
+  width: 1100px;
+  height: 800px;
+  max-width: 94vw;
+  max-height: 90vh;
+
+  /* --- CORE LAYOUT --- */
+  margin: auto;
+  padding: 0;
+  border: none;
+  overflow: hidden; /* Clips the gallery perfectly to the glass corners */
+  display: none;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  /* Elevation Shadow */
+  box-shadow: var(--lb-container-elevation-shadow, light-dark(
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 20px 25px -5px rgba(0, 0, 0, 0.5)
+  ));
+  border-radius: var(--lb-container-shape, 26px);
+
+  /* --- ANIMATION CUSTOMIZATION VARIABLES --- */
+  /* Duration (Closing) */
+  --lb-duration-in: 300ms;
+  --lb-duration-out: 300ms;
+
+  /* Timing Functions */
+  --lb-timing-in: ease;
+  --lb-timing-out: ease;
+
+  /* Initial Transform States */
+  --lb-opacity-start: 0;
+  --lb-scale-start: 0.95;
+  --lb-translate-start: 0, 20px;
+  --lb-rotate-start: 0deg;
+
+  /* Applied Transforms */
+  opacity: var(--lb-opacity-start);
+  scale: var(--lb-scale-start);
+  translate: var(--lb-translate-start);
+  rotate: var(--lb-rotate-start);
+
+  transition:
+    opacity var(--lb-duration-out) var(--lb-timing-out),
+    scale var(--lb-duration-out) var(--lb-timing-out),
+    translate var(--lb-duration-out) var(--lb-timing-out),
+    rotate var(--lb-duration-out) var(--lb-timing-out),
+    display var(--lb-duration-out) allow-discrete,
+    overlay var(--lb-duration-out) allow-discrete;
+}
+
+/* --- OPEN STATE --- */
+:host[open] {
+  display: flex;
+  opacity: 1;
+  scale: 1;
+  translate: 0 0;
+  rotate: 0deg;
+
+  @starting-style {
+    opacity: var(--lb-opacity-start);
+    scale: var(--lb-scale-start);
+    translate: var(--lb-translate-start);
+    rotate: var(--lb-rotate-start);
+  }
+}
+
+/* --- OPENING ANIMATION (ENTER) --- */
+:host[open] {
+  transition:
+    opacity var(--lb-duration-in) var(--lb-timing-in),
+    scale var(--lb-duration-in) var(--lb-timing-in),
+    translate var(--lb-duration-in) var(--lb-timing-in),
+    rotate var(--lb-duration-in) var(--lb-timing-in),
+    display var(--lb-duration-in) allow-discrete,
+    overlay var(--lb-duration-in) allow-discrete;
+}
+
+/* --- BACKDROP (Full-Surface Diffusion) --- */
+:host::backdrop {
+  /* Initial state: Transparent and Sharp */
+  background-color: rgba(0, 0, 0, 0);
+  backdrop-filter: var(--lb-backdrop-filter-start, blur(0px) saturate(100%));
+
+  transition:
+    background-color var(--lb-duration-out) ease,
+    backdrop-filter var(--lb-duration-out) ease,
+    display var(--lb-duration-out) allow-discrete,
+    overlay var(--lb-duration-out) allow-discrete;
+}
+
+:host[open]::backdrop {
+  /* Final state: Semi-dark and Frosted */
+  background-color: var(--lb-backdrop-color, rgba(0, 0, 0, 0.4));
+  backdrop-filter: var(--lb-backdrop-filter, blur(0px) saturate(100%));
+
+  transition:
+    background-color var(--lb-duration-in) ease,
+    backdrop-filter var(--lb-duration-in) ease,
+    display var(--lb-duration-in) allow-discrete,
+    overlay var(--lb-duration-in) allow-discrete;
+
+  @starting-style {
+    background-color: rgba(0, 0, 0, 0);
+    backdrop-filter: var(--lb-backdrop-filter-start, blur(0px) saturate(100%));
+  }
+}
+
+/* --- ACCESSIBILITY: DIALOG & BACKDROP MOTION KILL --- */
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    --lb-opacity-start: 1 !important;
+    --lb-scale-start: 1 !important;
+    --lb-translate-start: 0, 0 !important;
+    --lb-rotate-start: 0deg !important;
+    transition: none !important;
+  }
+
+  :host[open] {
+    transition: none !important;
+  }
+
+  :host::backdrop {
+    transition: none !important;
+    backdrop-filter: blur(12px) saturate(160%) !important;
+    background-color: rgba(0, 0, 0, 0.4) !important;
+  }
+
+  :host[open]::backdrop {
+    transition: none !important;
+  }
+}
+
+:host[animationDisabled] {
+  --lb-opacity-start: 1 !important;
+  --lb-scale-start: 1 !important;
+  --lb-translate-start: 0, 0 !important;
+  --lb-rotate-start: 0deg !important;
+  transition: none !important;
+}
+
+:host[animationDisabled][open] {
+  transition: none !important;
+}
+
+:host[animationDisabled]::backdrop {
+  transition: none !important;
+  backdrop-filter: blur(12px) saturate(160%) !important;
+  background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+:host[animationDisabled][open]::backdrop {
+  transition: none !important;
+}
+
+/* --- INTERNAL ELEMENTS --- */
+:host {
+  ::ng-deep gallery {
+    width: 100%;  /* Fills the 1100px parent strictly */
+    height: 100%; /* Fills the 800px parent strictly */
+    background-color: color-mix(in srgb, Canvas, CanvasText 5%);
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .g-close-button {
+    position: absolute;
+    top: 1rem;
+    inset-inline-end: 1rem;
+    z-index: 10;
+  }
+}

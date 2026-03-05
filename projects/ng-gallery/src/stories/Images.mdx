@@ -1,0 +1,61 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentations/Using Images"/>
+
+# Using Images
+
+The `galleryImage` directive is applied to `<img>` elements within a `galleryItemDef`. It handles layout styling and
+synchronization between the browser's native loading events and the gallery's internal Signal-based state.
+
+### Usage
+
+
+```html
+<gallery [items]="items">
+  <img *galleryItemDef="let item"
+       galleryImage
+       [src]="item.src"
+       [alt]="img.alt"/>
+</gallery>
+```
+
+### Image Fit Customization
+
+Control the image `object-fit` via Sass overrides:
+
+
+```css
+@include gallery.ng-gallery-overrides((
+  item-image-size: 'cover',
+  thumb-image-size: 'contain'
+));
+```
+
+Or with CSS variables `--g-item-image-size` and `--g-thumb-image-size`.
+
+### The directive is also compatible with `NgOptimizedImage`
+
+```html
+<gallery [items]="items" [itemSize]="500" [style.height.px]="300">
+  <img *galleryItemDef="let item"
+       galleryImage
+       [ngSrc]="item.src"
+       [placeholder]="item.placeholder"
+       width="500"
+       height="300"
+       [alt]="img.alt"/>
+</gallery>
+```
+
+Or
+
+```html
+<gallery [items]="items">
+  <img *galleryItemDef="let item"
+       galleryImage
+       [ngSrc]="item.src"
+       [placeholder]="item.placeholder"
+       fill
+       [alt]="img.alt"/>
+</gallery>
+```

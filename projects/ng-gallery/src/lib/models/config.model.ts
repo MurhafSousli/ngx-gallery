@@ -1,62 +1,90 @@
-import { InjectionToken, Provider, TemplateRef } from '@angular/core';
-import { BezierEasingOptions } from '../smooth-scroll';
-import { defaultConfig } from '../utils/gallery.default';
-import { GalleryItemData } from '../templates/items.model';
+import { BezierEasingOptions } from '../smooth-scroll/smooth-scroll.model';
 
-export const GALLERY_CONFIG: InjectionToken<GalleryConfig> = new InjectionToken<GalleryConfig>('GALLERY_CONFIG', {
-  providedIn: 'root',
-  factory: () => defaultConfig
-});
+export type GalleryItemState = 'ready' | 'loading' | 'error';
 
-export function provideGalleryOptions(options: GalleryConfig): Provider {
-  return {
-    provide: GALLERY_CONFIG,
-    useValue: { ...defaultConfig, ...options }
-  }
+export type GalleryOrientation = 'horizontal' | 'vertical';
+
+export type GalleryCounterPosition = 'top' | 'bottom';
+
+export type GalleryDock =
+  | 'top'
+  | 'bottom'
+  | 'start'
+  | 'end';
+
+export type GalleryPosition =
+  | GalleryDock
+  | 'center';
+
+
+export type GalleryAlign =
+  | 'start'
+  | 'end'
+  | 'center'
+  | 'stretch';
+
+export type GallerySnapAlign =
+  | 'start'
+  | 'end'
+  | 'center'
+
+interface SliderOptions {
+  gap?: number;
+  loop?: boolean;
+  forceSnap?: boolean;
+  itemsPerView?: number;
+  steps?: number | 'page';
+  scrollDuration?: number;
+  disableScroll?: boolean;
+  orientation?: GalleryOrientation;
+  itemSize?: number | 'auto';
+  disableMouseScroll?: boolean;
+  snapAlign?: GallerySnapAlign;
+  scrollEase?: BezierEasingOptions;
+  resizeTransitionDuration?: number;
 }
 
-export type ImageSize = 'contain' | 'cover';
-
-export type Orientation = 'horizontal' | 'vertical';
-
-export type ThumbsPosition = 'top' | 'left' | 'right' | 'bottom';
-
-export type HorizontalPosition = 'top' | 'bottom';
-
-interface ThumbConfig {
-  thumbLoadingIcon?: string;
-  thumbLoadingError?: string;
+export interface ThumbOptions {
+  thumbDisabled?: boolean;
+  detachThumbs?: boolean;
+  thumbFloating?: boolean;
+  thumbForceSnap?: boolean;
+  disableThumbScroll?: boolean;
+  disableThumbMouseScroll?: boolean;
+  thumbLoop?: boolean;
+  thumbSteps?: number | 'page';
+  thumbSize?: number | 'auto';
+  thumbGap?: number;
+  thumbThickness?: number;
+  thumbPerView?: number;
+  thumbPosition?: GalleryDock;
+  thumbSnapAlign?: GallerySnapAlign;
+  thumbScrollBehavior?: ScrollBehavior;
 }
 
-interface NavConfig {
-  navIcon?: string;
+interface NavOptions {
+  showNavDisabledButtons?: boolean;
+  navOutside?: boolean;
 }
 
-interface PlayerConfig {
+interface CounterOptions {
+  counterAlign?: GalleryCounterPosition;
+  counterText?: (active: string, total: string) => string;
+}
+
+interface PlayerOptions {
   autoplay?: boolean;
   autoplayInterval?: number;
+  autoplayPauseOnHover?: boolean;
+  autoplayScrollBehavior?: ScrollBehavior;
 }
 
-interface SliderConfig {
-  loop?: boolean;
-  disableScroll?: boolean;
-  disableMouseScroll?: boolean;
-  itemAutosize?: boolean;
-  loadingIcon?: string;
-  loadingError?: string;
-  scrollDuration?: number;
-  scrollEase?: BezierEasingOptions;
-  orientation?: Orientation;
-  imageSize?: ImageSize;
-  centralized?: boolean;
-}
-
-export type GalleryConfig = SliderConfig
-  & ThumbConfig
-  & NavConfig
-  & PlayerConfig
+export type GalleryOptions = SliderOptions
+  & ThumbOptions
+  & NavOptions
+  & PlayerOptions
+  & CounterOptions
   & {
   scrollBehavior?: ScrollBehavior;
   resizeDebounceTime?: number;
-  debug?: boolean;
 }

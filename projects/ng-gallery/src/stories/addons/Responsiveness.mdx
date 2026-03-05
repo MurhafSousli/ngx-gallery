@@ -1,0 +1,54 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Addons/Responsiveness" />
+
+
+# Responsiveness
+
+To modify the gallery configuration for smaller screens, including adjustments to thumbnail positioning and size,
+[Angular CDK Layout](https://material.angular.dev/cdk/layout/overview) provides an effective solution.
+
+
+**Example**
+
+```html
+<gallery>
+  <img *galleryItemDef="let item" galleryImage [src]="item.src" [alt]="item.alt"/>
+
+  <gallery-thumbs [position]="layout().thumbPosition"
+                  [width]="layout().thumbWidth"
+                  [height]="layout().thumbHeight">
+    <button *galleryItemDef="let item" galleryThumbClick>
+      <img galleryImage [src]="item.thumb" [alt]="item.alt"/>
+    </button>
+  </gallery-thumbs>
+</gallery>
+```
+
+```ts
+@Component({ ... })
+export class ResponsiveLayoutComponent {
+
+  private isSmallScreen$ = inject(BreakpointObserver)
+    .observe([Breakpoints.Handset, Breakpoints.TabletPortrait])
+    .pipe(map(result => result.matches));
+
+  private isSmallScreen = toSignal(this.isSmallScreen$, { initialValue: false });
+
+  layout = computed(() => {
+    if (this.isSmallScreen()) {
+      return {
+        thumbPosition: 'bottom',
+        thumbWidth: 80,
+        thumbHeight: 80
+      };
+    }
+    return {
+      thumbPosition: 'start',
+      thumbWidth: 120,
+      thumbHeight: 90
+    };
+  })
+}
+````
+

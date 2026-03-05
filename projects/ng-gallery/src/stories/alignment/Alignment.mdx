@@ -1,0 +1,64 @@
+import {Meta, Canvas} from '@storybook/addon-docs/blocks';
+import * as AlignmentStories from './Alignment.stories';
+
+<Meta title="Documentations/Alignment"/>
+
+## Snap Alignment & Index Accuracy
+
+The gallery determines the `activeIndex` based on a **Snap Anchor**. The `snapAlign` property defines where that anchor sits in the viewport.
+
+### Properties
+
+| Input       | Type                           | Default    | Description                                                              |
+|:------------|:-------------------------------|:-----------|:-------------------------------------------------------------------------|
+| `snapAlign` | `'start' \| 'center' \| 'end'` | `'center'` | Sets the target "Anchor" point in the viewport.                          |
+| `forceSnap` | `boolean`                      | `false`    | When true, adds dynamic padding to ensure every item can hit the Anchor. |
+
+---
+
+### How it Works: The "Anchor" Concept
+
+To understand why `snapAlign` is necessary, imagine a physical "Target" or "Anchor" positioned in your gallery viewport:
+
+* **`start`**: The Anchor is the **left edge** (or right in RTL).
+* **`center`**: The Anchor is the **exact middle**.
+* **`end`**: The Anchor is the **right edge** (or left in RTL).
+
+An item only becomes "active" (`activeIndex`) when it physically reaches that Anchor.
+
+#### The "Edge" Problem
+By default, a scroll container stops as soon as the last item touches the end of the viewport.
+
+* **In `start` mode**, the last item's *start edge* may never reach the *left edge* of the screen because there is no more content to scroll.
+* **Result:** The last item can never be "active," and your `activeIndex` will stay stuck on a previous item.
+
+
+
+---
+
+### The `forceSnap` Solution
+
+When you enable `forceSnap`, the gallery calculates the exact amount of "ghost space" (padding) needed at the boundaries.
+
+1.  **Start Alignment + `forceSnap`**: Adds padding to the **end** of the gallery. This allows the last item to travel all the way to the start anchor.
+2.  **End Alignment + `forceSnap`**: Adds padding to the **start** of the gallery. This allows the first item to travel all the way to the end anchor.
+3.  **Center Alignment + `forceSnap`**: Adds padding to **both** sides. This ensures every item—from first to last—can be perfectly centered.
+
+#### When should I use `forceSnap`?
+* **Use it** if you need an accurate `activeIndex` for every item (e.g., for paginators or thumbnails).
+* **Disable it** if you want a "standard" list feel where the scroll simply stops at the natural boundaries of the content.
+
+## Examples
+
+
+Example using `snapAlign="center"` and `forceSnap`:
+
+<Canvas of={AlignmentStories.CenterAlingmentExample}/>
+
+Example using `snapAlign="start"` and `forceSnap`:
+
+<Canvas of={AlignmentStories.StartAlingmentExample}/>
+
+Example using `snapAlign="end"` and `forceSnap`:
+
+<Canvas of={AlignmentStories.EndAlingmentExample}/>

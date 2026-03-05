@@ -1,16 +1,26 @@
-import type { StorybookConfig } from "@storybook/angular";
+import { defineMain } from '@storybook/angular/node';
+import remarkGfm from 'remark-gfm';
 
-const config: StorybookConfig = {
-  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
-  addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions"
+export default defineMain({
+  stories: [
+    '../src/**/*.mdx',
+    '../src/**/*.stories.@(ts|tsx)'
   ],
-  framework: {
-    name: "@storybook/angular",
-    options: {},
-  },
-  docs: {}
-};
-export default config;
+  addons: [
+    '@storybook/addon-a11y',
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        mdxPluginOptions: {
+          mdxCompileOptions: {
+            remarkPlugins: [remarkGfm],
+          }
+        }
+      }
+    }
+  ],
+  framework: '@storybook/angular',
+  staticDirs: [
+    '../src', // 👈 serves mockServiceWorker.js
+  ],
+});

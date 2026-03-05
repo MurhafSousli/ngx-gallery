@@ -1,0 +1,53 @@
+import {ArgTypes, Canvas, Meta} from '@storybook/addon-docs/blocks';
+import * as GalleryStories from './Gallery.stories';
+
+<Meta title="Usage" of={GalleryStories}/>
+
+# Usage
+
+The slider navigates through items using scrolling mechanism, it can be scrolled using the mouse wheel, touchpad on desktop or gestures on touch devices.
+
+
+Things to know:
+
+
+The slider supports native navigation via touch devices, wheel and keyboard; however, dragging by mouse is supported via mouse events.
+
+To disable native navigation, use `disableScroll` attribute. and to disable mouse dragging, use `disableMouseScroll` attribute.
+
+
+<Canvas of={GalleryStories.BasicExample}/>
+
+## TEST
+
+<Canvas of={GalleryStories.GapExample}/>
+
+<Canvas of={GalleryStories.MultipleExample}/>
+
+
+### Scroll behavior
+
+There are two distinct navigation modes to choose from:
+
+- **Smooth:** When you opt for the `smooth` mode which is the default, the gallery will smoothly scroll to the desired item,
+with the scrolling duration determined by the `slidingDuration`.
+- **Auto:** If you select the `auto` mode, the gallery will instantaneously transition to the desired item without any intermediate scrolling.
+
+**Example**
+
+[//]: # (<Canvas of={GalleryStories.SliderBehaviorExample}/>)
+
+
+### Layout
+
+For layout configuration, see the [Layout](/docs/documentations-layout--docs) section.
+
+### Orientation
+
+- In `horizontal` slide direction, item's width will automatically fit its content width.
+- In `vertical` slide direction, item's height will automatically fit its content height.
+
+
+## API
+
+<ArgTypes of={GalleryStories.GalleryExample}/>

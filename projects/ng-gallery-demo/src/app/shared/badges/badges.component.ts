@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'badges',
   templateUrl: './badges.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [`
     :host {
       margin-bottom: 2em;

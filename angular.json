@@ -1,9 +1,12 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
+  "cli": {
+    "packageManager": "npm"
+  },
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-gallery-demo": {
+    "ng-gallery-demo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -15,16 +18,9 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular/build:application",
           "options": {
-            "allowedCommonJsDependencies": [
-            ],
-            "outputPath": "dist/ngx-gallery-demo",
-            "index": "projects/ng-gallery-demo/src/index.html",
             "browser": "projects/ng-gallery-demo/src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
             "tsConfig": "projects/ng-gallery-demo/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -34,11 +30,16 @@
               }
             ],
             "styles": [
+              "projects/ng-gallery-demo/src/tailwind.css",
               "projects/ng-gallery-demo/src/styles.scss"
             ],
-            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "projects"
+              ]
+            },
             "server": "projects/ng-gallery-demo/src/main.server.ts",
-            "prerender": true,
+            "outputMode": "server",
             "ssr": {
               "entry": "projects/ng-gallery-demo/src/server.ts"
             }
@@ -48,13 +49,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "3mb"
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "15kb",
-                  "maximumError": "15kb"
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
                 }
               ],
               "outputHashing": "all"
@@ -68,57 +69,30 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ngx-gallery-demo:build:production"
+              "buildTarget": "ng-gallery-demo:build:production"
             },
             "development": {
-              "buildTarget": "ngx-gallery-demo:build:development"
+              "buildTarget": "ng-gallery-demo:build:development"
             }
           },
           "defaultConfiguration": "development"
         },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "buildTarget": "ngx-gallery-demo:build"
-          }
-        },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "tsConfig": "projects/ng-gallery-demo/tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "projects/ng-gallery-demo/public"
-              }
-            ],
-            "styles": [
-              "projects/ng-gallery-demo/src/styles.scss"
-            ],
-            "scripts": []
-          }
+          "builder": "@angular/build:unit-test"
         }
       }
     },
-    "ngx-gallery": {
+    "ng-gallery": {
       "projectType": "library",
       "root": "projects/ng-gallery",
-      "sourceRoot": "projects/ng-gallery/src",
+      "sourceRoot": "projects/ng-gallery",
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/ng-gallery/ng-package.json"
-          },
+          "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
               "tsConfig": "projects/ng-gallery/tsconfig.lib.prod.json"
@@ -130,14 +104,68 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/ng-gallery/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
+            "browsers": [
+              "ChromiumHeadless"
             ],
-            "karmaConfig": "projects/ng-gallery/karma.conf.js"
+            "coverage": true,
+            "coverageExclude": [
+              "projects/ng-gallery/src/lib/tests/**"
+            ],
+            "coverageReporters": [
+              "text",
+              "json",
+              "html",
+              "cobertura"
+            ]
+          }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "styles": [
+              "projects/ng-gallery/.storybook/styles.scss",
+              "projects/ng-gallery/glass-theme.css"
+            ],
+            "configDir": "projects/ng-gallery/.storybook",
+            "browserTarget": "ng-gallery:build",
+            "compodoc": true,
+            "compodocArgs": [
+              "-e",
+              "json",
+              "-d",
+              "projects/ng-gallery",
+              "--disablePrivate",
+              "--disableProtected",
+              "--disableInternal",
+              "--minimal"
+            ],
+            "port": 6006
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "styles": [
+              "projects/ng-gallery/.storybook/styles.scss",
+              "projects/ng-gallery/glass-theme.css"
+            ],
+            "configDir": "projects/ng-gallery/.storybook",
+            "browserTarget": "ng-gallery:build",
+            "compodoc": true,
+            "compodocArgs": [
+              "-e",
+              "json",
+              "-d",
+              "projects/ng-gallery",
+              "--disablePrivate",
+              "--disableProtected",
+              "--disableInternal",
+              "--minimal"
+            ],
+            "outputDir": "dist/storybook/ng-gallery"
           }
         },
         "lint": {
@@ -146,15 +174,11 @@
             "lintFilePatterns": [
               "projects/ng-gallery/**/*.ts",
               "projects/ng-gallery/**/*.html"
-            ]
+            ],
+            "eslintConfig": "projects/ng-gallery/eslint.config.js"
           }
         }
       }
     }
-  },
-  "cli": {
-    "schematicCollections": [
-      "@angular-eslint/schematics"
-    ]
   }
 }

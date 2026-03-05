@@ -10,14 +10,12 @@ export type SmoothScrollToOptions = SmoothScrollOptions & {
 };
 
 export interface SmoothScrollStep {
-  scrollable: HTMLElement;
-  startTime: number;
   startX: number;
   startY: number;
   x: number;
   y: number;
   duration: number;
-  easing: (k: number) => number;
+  easing: BezierEasingOptions;
   currentX?: number;
   currentY?: number;
 }
@@ -28,3 +26,8 @@ export interface BezierEasingOptions {
   x2: number;
   y2: number;
 }
+
+/**
+ * Interface for options provided for smooth scrolling to an element.
+ */
+export type SmoothScrollToElementOptions = SmoothScrollToOptions & { center?: boolean };

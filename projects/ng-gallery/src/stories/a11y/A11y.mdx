@@ -1,0 +1,66 @@
+import { Meta, ArgTypes } from '@storybook/addon-docs/blocks';
+import * as A11yStories from './A11y.stories';
+
+<Meta title="Documentations/Accessibility" of={A11yStories}/>
+
+# Accessibility
+
+The gallery component provides several options to enhance its accessibility. You can customize the ARIA roles, labels, and role descriptions for the gallery container, items, and thumbnails.
+
+## Configuration
+
+You can provide global accessibility options using the `provideGalleryA11yOptions` function.
+
+```ts
+import { provideGalleryA11yOptions } from 'ng-gallery';
+
+provideGalleryA11yOptions({
+  containerLabel: 'Product Gallery',
+  itemLabel: (index, total) => `Image ${index + 1} of ${total}`
+});
+```
+
+## Options
+
+<ArgTypes of={A11yStories.APIReference}/>
+
+
+## Default ARIA Structure
+
+The following example demonstrates how the gallery translates configuration options into the DOM.
+
+```html
+<ng-gallery role="region"
+            aria-label="Gallery"
+            aria-roledescription="carousel">
+  <g-slider>
+    <ul class="g-slider-content">
+      <li aria-roledescription="slide"
+          aria-current="{ current }"
+          aria-label="{ index + 1 } / { total }">
+        <img src="..." alt="..." />
+      </li>
+    </ul>
+  </g-slider>
+
+  <div role="status" aria-live="polite" aria-atomic="true" class="sr-only">
+    Slide ${ current } of ${ total }
+  </div>
+
+  <gallery-thumbs role="group"
+                  aria-label="Gallery thumbnails"
+                  aria-roledescription="carousel">
+    <g-slider>
+      <ul class="g-slider-content">
+        <li>
+          <button aria-roledescription="thumbnail"
+                  aria-current="{ current }"
+                  aria-label="Go to { index + 1 }">
+            <img src="..." alt="" />
+          </button>
+        </li>
+      </ul>
+    </g-slider>
+  </gallery-thumbs>
+</ng-gallery>
+```

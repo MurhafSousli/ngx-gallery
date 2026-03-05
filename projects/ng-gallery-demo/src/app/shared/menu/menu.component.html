@@ -1,4 +1,4 @@
-<div class="menu" [class.menu-toolbar]="toolbar">
+<div class="menu" [class.menu-toolbar]="toolbar()">
   <a mat-button routerLink="." routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
   <a mat-button routerLink="getting-started" routerLinkActive="active">Getting Started</a>
   <a mat-button routerLink="gallery" routerLinkActive="active">Gallery</a>
@@ -7,6 +7,6 @@
   <a mat-button routerLink="custom-templates" routerLinkActive="active">Custom Templates</a>
   <a mat-button routerLink="lab" routerLinkActive="active">Lab</a>
   <a mat-button href="https://github.com/MurhafSousli/ng-gallery">
-    <fa-icon [icon]="['fab', 'github']" size="lg"></fa-icon>
+    <fa-icon [icon]="['fab', 'github']" size="lg"/>
   </a>
 </div>

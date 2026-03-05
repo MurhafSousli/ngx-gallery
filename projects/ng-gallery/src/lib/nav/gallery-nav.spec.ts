@@ -1,27 +1,30 @@
-import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Component, DebugElement, Signal, viewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, DebugElement, signal, Signal, viewChild, WritableSignal } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { Dir, Direction } from '@angular/cdk/bidi';
 import {
-  GalleryNavComponent,
-  GalleryComponent,
+  Gallery,
+  GalleryNav,
+  GalleryModule,
   GalleryItemData,
-  GalleryItemDef,
-  GalleryRef,
-  ImgRecognizer
+  GalleryOrientation
 } from 'ng-gallery';
 import { img1, img2, img3 } from '../tests/test-images';
-import { Dir, Direction } from '@angular/cdk/bidi';
 
 @Component({
-  imports: [GalleryComponent, Dir, GalleryNavComponent, GalleryItemDef, ImgRecognizer],
+  imports: [GalleryModule, Dir],
   template: `
-    <gallery [dir]="dir" [items]="items" [style.width.px]="width" [style.height.px]="height">
-      <img *galleryItemDef="let item"
-           galleryImage
-           [src]="item.src"/>
+    <gallery [dir]="dir()"
+             [items]="items"
+             [scrollBehavior]="scrollBehavior()"
+             [style.width.px]="width"
+             [style.height.px]="height"
+             [loop]="loop()"
+             [orientation]="orientation()">
+      <div *galleryItemDef="let item"></div>
 
-      <gallery-nav [scrollBehavior]="scrollBehavior"/>
+      <gallery-nav [showDisabledButtons]="showDisabledButtons()"
+                   [outside]="outside()"/>
     </gallery>
   `
 })
@@ -34,62 +37,162 @@ export class TestComponent {
   width: number = 500;
   height: number = 300;
 
-  scrollBehavior: ScrollBehavior = 'smooth';
-  dir: Direction = 'ltr';
+  scrollBehavior: WritableSignal<ScrollBehavior> = signal('smooth');
+  showDisabledButtons: WritableSignal<boolean> = signal(false);
+  dir: WritableSignal<Direction> = signal('ltr');
+  orientation: WritableSignal<GalleryOrientation> = signal('horizontal');
+  loop: WritableSignal<boolean> = signal(false);
+  outside: WritableSignal<boolean> = signal(false);
 
-  gallery: Signal<GalleryComponent> = viewChild(GalleryComponent);
+  gallery: Signal<Gallery> = viewChild(Gallery);
 }
 
 describe('Gallery nav component', () => {
   let fixture: ComponentFixture<TestComponent>;
   let component: TestComponent;
-  let navComponent: GalleryNavComponent;
-  let galleryRef: GalleryRef;
+  let navComponent: GalleryNav;
   let navComponentElement: DebugElement;
+  let navElement: HTMLElement;
+  let gallery: Gallery;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        TestComponent
-      ],
-      providers: [
-        { provide: ComponentFixtureAutoDetect, useValue: true }
-      ]
-    }).compileComponents();
-
+  beforeEach(async () => {
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    component.scrollBehavior.set('auto');
+    fixture.autoDetectChanges();
+    gallery = component.gallery();
 
-    navComponentElement = fixture.debugElement.query(By.directive(GalleryNavComponent));
-    navComponent = navComponentElement.injector.get(GalleryNavComponent);
-    galleryRef = navComponentElement.injector.get(GalleryRef);
+    navComponentElement = fixture.debugElement.query(By.directive(GalleryNav));
+    navComponent = navComponentElement.injector.get(GalleryNav);
+    navElement = navComponentElement.nativeElement;
+    await vi.waitUntil(() => gallery.hasVisibleItems());
   });
 
   it('should create gallery-nav component', () => {
-    expect(navComponent).toBeTruthy();
-    expect(galleryRef).toBeTruthy();
-    expect(navComponent.dir).toBeTruthy();
-    expect(navComponent.navIcon()).toBeTruthy();
+    expect(navComponent).toBeDefined();
+  });
+
+  it('should place inside', async () => {
+    const nextButton: Element = fixture.debugElement.query(By.css('[galleryNavButton="next"]')).parent.nativeElement;
+    const prevButton: Element = fixture.debugElement.query(By.css('[galleryNavButton="prev"]')).parent.nativeElement;
+
+    expect(nextButton).toHaveStyle({
+      gridArea: 'center',
+      justifySelf: 'end',
+      alignSelf: 'center'
+    });
+    expect(prevButton).toHaveStyle({
+      gridArea: 'center',
+      justifySelf: 'start',
+      alignSelf: 'center'
+    });
+
+    component.orientation.set('vertical');
+    fixture.detectChanges();
+
+    expect(nextButton).toHaveStyle({
+      gridArea: 'center',
+      justifySelf: 'center',
+      alignSelf: 'end'
+    });
+    expect(prevButton).toHaveStyle({
+      gridArea: 'center',
+      justifySelf: 'center',
+      alignSelf: 'start'
+    });
+  });
+
+  it('should place outside', () => {
+    component.outside.set(true);
+    fixture.detectChanges();
+    const nextButton: Element = fixture.debugElement.query(By.css('[galleryNavButton="next"]')).parent.nativeElement;
+    const prevButton: Element = fixture.debugElement.query(By.css('[galleryNavButton="prev"]')).parent.nativeElement;
+
+    expect(nextButton).toHaveStyle({
+      gridArea: 'end',
+      justifySelf: 'center',
+      alignSelf: 'center'
+    });
+    expect(prevButton).toHaveStyle({
+      gridArea: 'start',
+      justifySelf: 'center',
+      alignSelf: 'center'
+    });
+
+    component.orientation.set('vertical');
+    fixture.detectChanges();
+
+    expect(nextButton).toHaveStyle({
+      gridArea: 'bottom',
+      justifySelf: 'center',
+      alignSelf: 'center'
+    });
+    expect(prevButton).toHaveStyle({
+      gridArea: 'top',
+      justifySelf: 'center',
+      alignSelf: 'center'
+    });
   });
 
   it('should set dir attribute', () => {
-    expect((navComponentElement.nativeElement as HTMLElement).getAttribute('dir')).toBe('ltr');
+    expect(navElement).toHaveAttribute('dir', 'ltr');
 
-    component.dir = 'rtl';
+    component.dir.set('rtl');
     fixture.detectChanges();
 
-    expect((navComponentElement.nativeElement as HTMLElement).getAttribute('dir')).toBe('rtl');
+    expect(navElement).toHaveAttribute('dir', 'rtl');
   });
 
-  it('should set the scrollBehavior input', () => {
-    expect(navComponent.scrollBehavior()).toBe('smooth');
+  it('should navigate to next item on next button click', () => {
+    const clickSpy = vi.spyOn(gallery, 'next');
 
-    // Change size value
-    component.scrollBehavior = 'auto';
+    const button: DebugElement = fixture.debugElement.query(By.css('[galleryNavButton="next"]'));
+    button.nativeElement.dispatchEvent(new MouseEvent('click'));
+
+    expect(clickSpy).toHaveBeenCalledOnce();
+  });
+
+  it('should navigate to previous item on previous button click', () => {
+    component.loop.set(true);
     fixture.detectChanges();
 
-    expect(navComponent.scrollBehavior()).toBe('auto');
+    const clickSpy = vi.spyOn(gallery, 'prev');
+
+    const button: DebugElement = fixture.debugElement.query(By.css('[galleryNavButton="prev"]'));
+    button.nativeElement.dispatchEvent(new MouseEvent('click'));
+
+    expect(clickSpy).toHaveBeenCalledOnce();
+  });
+
+  it('should hide the previous button from the DOM when loop is disabled at the start boundary', async () => {
+    const button: DebugElement = fixture.debugElement.query(By.css('[galleryNavButton="prev"]'));
+    await vi.waitFor(() => expect(button.nativeElement).toHaveStyle({ visibility: 'hidden' }));
+  });
+
+  it('should hide the next button from the DOM when loop is disabled at the end boundary', async () => {
+    gallery.goTo({ index: gallery.itemsCount() - 1 });
+    await vi.waitUntil(() => gallery.activeIndex() === gallery.items().length - 1);
+
+    const button: DebugElement = fixture.debugElement.query(By.css('[galleryNavButton="next"]'));
+    await vi.waitFor(() => expect(button.nativeElement).toHaveStyle({ visibility: 'hidden' }));
+  });
+
+  it('should disable the previous button at the start boundary when loop is inactive', () => {
+    component.showDisabledButtons.set(true);
+    fixture.detectChanges();
+
+    const button: DebugElement = fixture.debugElement.query(By.css('[galleryNavButton="prev"]'));
+    expect(button.componentInstance).toBeDefined();
+    expect(button.nativeElement).toHaveAttribute('disabled');
+  });
+
+  it('should disable the next button at the end boundary when loop is inactive', async () => {
+    component.showDisabledButtons.set(true);
+    gallery.goTo({ index: gallery.itemsCount() - 1 });
+    await vi.waitUntil(() => gallery.activeIndex() === gallery.items().length - 1);
+
+    const button: DebugElement = fixture.debugElement.query(By.css('[galleryNavButton="next"]'));
+    expect(button.componentInstance).toBeDefined();
+    expect(button.nativeElement).toHaveAttribute('disabled');
   });
 });

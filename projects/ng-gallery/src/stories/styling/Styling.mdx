@@ -1,0 +1,26 @@
+import {ArgTypes, Meta} from '@storybook/addon-docs/blocks';
+import * as StylingStories from './Styling.stories';
+
+<Meta title="Documentations/Styling" of={StylingStories}/>
+
+# 🎨 Gallery Customization Guide
+
+You can customize the appearance and behavior of the gallery using CSS variables. We provide a SCSS mixin for a clean integration, or you can override the variables directly.
+
+#### Using the SCSS Mixin
+
+The recommended way to apply these overrides globally is by using the `ng-gallery-overrides` mixin.
+
+```css
+@use 'ng-gallery' as gallery;
+
+:root {
+  @include gallery.ng-gallery-overrides((
+    layout-gap: 4px,
+    button-size: 60px
+  ));
+}
+```
+
+
+<ArgTypes of={StylingStories.StylingExample}/>

@@ -1,0 +1,71 @@
+name: 🐛 Bug Report
+description: Create a report to help us improve ngx-gallery
+title: "[Bug]: "
+labels: ["needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: "Thanks for taking the time to fill out this bug report! Please provide detailed info so we can help you quickly."
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: What is the expected behavior?
+      placeholder: Describe what you expected to happen with your components...
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: What is the current behavior?
+      placeholder: Describe what is actually happening...
+    validations:
+      required: true
+
+  - type: input
+    id: stackblitz-reproduction
+    attributes:
+      label: 🔗 Mandatory Minimal Reproduction Link
+      description: |
+        Providing a functional minimal reproduction is required to open an issue. This helps distinguish framework bugs from configuration problems.
+        Use our starter template: https://stackblitz.com/edit/ngx-gallery
+      placeholder: "https://stackblitz.com/edit/..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: What are the steps to reproduce?
+      description: Clear instructions on how to trigger the bug inside your reproduction link.
+      placeholder: |
+        1. Open the StackBlitz reproduction link
+        2. Click on the third gallery item
+        3. See the console error
+    validations:
+      required: true
+
+  - type: input
+    id: angular-version
+    attributes:
+      label: Angular Version
+      placeholder: "e.g., 21.0.0"
+    validations:
+      required: true
+
+  - type: input
+    id: gallery-version
+    attributes:
+      label: Gallery Package Version
+      placeholder: "e.g., 13.0.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Is there anything else we should know?
+      description: Append logs, extra error call stacks, or drag screenshots directly here.
+    validations:
+      required: false

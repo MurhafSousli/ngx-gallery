@@ -1,0 +1,66 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentations/Introduction" />
+
+<div className="logo-container">
+  <img src="https://user-images.githubusercontent.com/8130692/36171173-ad0da54c-1112-11e8-85bf-843c5f70efdc.png"
+       alt="Gallery Logo"/>
+  <h1>Angular Gallery</h1>
+</div>
+
+
+[![npm](https://img.shields.io/badge/stackblitz-online-orange.svg)](https://stackblitz.com/edit/ngx-gallery)
+[![npm](https://img.shields.io/npm/v/ng-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ng-gallery)
+[![CI Build](https://github.com/MurhafSousli/ngx-gallery/actions/workflows/integrate.yml/badge.svg)](https://github.com/MurhafSousli/ngx-gallery/actions/workflows/integrate.yml)
+[![codecov](https://codecov.io/gh/MurhafSousli/ngx-gallery/graph/badge.svg?token=krc4nTzgGR)](https://codecov.io/gh/MurhafSousli/ngx-gallery)
+[![npm](https://img.shields.io/npm/dt/ng-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ng-gallery)
+[![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](https://github.com/MurhafSousli/ngx-gallery/blob/master/LICENSE)
+
+
+A flexible and extensible gallery library for Angular applications.
+
+It provides a solid foundation for building sliders, and media viewers with high performance, reliability, and full design control.
+
+
+## Technical Overview
+
+`ng-gallery` is a modular, template-driven gallery designed for modern Angular (Signals-first, zoneless compatible).
+
+### Key Characteristics
+
+  - Extensible architecture — features can be composed and expanded without modifying core behavior
+  - High performance — built on native scrolling and reactive Signals
+  - Deterministic state management — clear separation between live and stable navigation state
+  - Template-driven rendering — structural directives define slides and UI elements explicitly
+  - Well-tested interaction model — reliable handling of dragging, scrolling, and idle states
+
+### Design Principles
+
+  - Native scroll-based behavior for accessibility and performance
+  - Reactive internal state using Angular Signals
+  - Modular directives for observation, navigation, and layout control
+  - Clear separation between presentation and state logic
+
+
+<style>
+  {`
+  .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+  }
+  .logo-container img {
+    height: 150px;
+  }
+  .logo-container h1 {
+    text-align: center;
+    width: 100%;
+    font-size: 36px;
+    padding-bottom: 4px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid hsla(203, 50%, 30%, 0.15);
+  }
+`}
+</style>

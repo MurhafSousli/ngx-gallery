@@ -1,0 +1,42 @@
+name: 🚀 Publish Library Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+  id-token: write # 👈 CRITICAL: Allows GitHub to request temporary OIDC tokens from npm
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'npm'
+          # registry-url is no longer required here since npm handles authentication natively via OIDC
+
+      # ... install, test, and build steps remain exactly the same ...
+
+      - name: Check if Beta Release
+        id: check-tag
+        run: |
+          TAG_NAME="${{ github.ref_name }}"
+          if [[ "$TAG_NAME" == *"-beta"* ]]; then
+            echo "NPM_TAG=beta" >> $GITHUB_OUTPUT
+          else
+            echo "NPM_TAG=latest" >> $GITHUB_OUTPUT
+          fi
+
+      # 🟢 Submits the package directly to your npm holding queue
+      - name: Stage Publish to NPM via Trusted Publishing
+        run: |
+          cd dist/ng-gallery
+          npm stage publish --tag ${{ steps.check-tag.outputs.NPM_TAG }} --provenance

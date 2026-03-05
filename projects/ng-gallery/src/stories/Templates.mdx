@@ -1,0 +1,100 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentations/Item Templates"/>
+
+# Item Templates
+
+Use item template directives to control how gallery items are rendered.
+
+The gallery supports three template directives:
+
+
+| Directive               | Purpose                                            | Required |
+|-------------------------|----------------------------------------------------|----------|
+| `*galleryItemDef`       | Template for rendering gallery and thumbnail items | Yes      |
+| `*galleryItemLoaderDef` | Template shown while an item is loading            | No       |
+| `*galleryItemErrorDef`  | Template shown when an item fails to load          | No       |
+
+## Shared Template Context
+
+All item template directives expose the same template context:
+
+- `let item` — the current entry from the `items` input
+- `index` — item index
+- `count` — total number of items
+- `state` — `'loading' | 'ready' | 'error'`
+- `active` — whether this item is the currently snapped item (updates after movement ends).
+- `anchor` — whether this item is aligned with the snap anchor (updates in real-time during movement).
+- `visible` — whether the item is currently visible
+- `first` — whether it is the first item
+- `last` — whether it is the last item
+
+This means loader and error templates can access the same contextual information as the primary item template.
+
+## Primary Item Template Example
+
+```html
+<gallery [items]="items">
+  <div *galleryItemDef="let item">
+    <img galleryImage [src]="item.imgUrl" [alt]="img.alt"/>
+  </div>
+</gallery>
+```
+
+> Learn more about [Using Images](?path=/docs/documentations-using-images--docs)
+
+## Mixed Content Example
+
+```html
+<gallery [items]="items">
+  <ng-container *galleryItemDef="let item">
+    @if (item.type === 'image') {
+      <img galleryImage [src]="item.src" [alt]="item.alt" />
+    } @else if (item.type === 'video') {
+      <video controls [poster]="item.poster" width="100%" height="100%">
+        <source [src]="item.src" type="video/mp4" />
+      </video>
+    } @else {
+      Other types
+    }
+  </ng-container>
+</gallery>
+```
+
+
+## Loader and Error Templates
+
+Use loader and error templates to customize item states inside each gallery item.
+
+```html
+<gallery [items]="items">
+  <img *galleryItemDef="let item" galleryImage [src]="item.src" [alt]="item.alt"/>
+
+  <!-- loading indicator -->
+  <div *galleryItemLoaderDef="let item; index as i">
+    Loading item {{ i + 1 }}...
+  </div>
+
+  <!-- error fallback -->
+  <div *galleryItemErrorDef="let item; index as i">
+    ⚠️ Unable to load item {{ i + 1 }}
+  </div>
+</gallery>
+```
+
+
+## Global Overlay Loader
+
+If you want a single gallery-level loader instead of per-item state templates, use a projected slot.
+
+```html
+<gallery #gallery="gallery" [items]="items">
+  <img *galleryItemDef="let item" galleryImage [src]="item.src" [alt]="item.alt"/>
+
+  @if (gallery.activeItem().state() === 'loading') {
+    <my-loader gallerySlot />
+  }
+</gallery>
+```
+
+Use this approach when the loading UI should stay fixed in the gallery layout rather than being rendered inside each item.

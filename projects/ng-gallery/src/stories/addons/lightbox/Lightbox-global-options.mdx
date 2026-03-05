@@ -1,0 +1,33 @@
+import { Meta, ArgTypes } from '@storybook/addon-docs/blocks';
+import * as OptionsStories from './Lightbox-global-options.stories';
+
+<Meta of={OptionsStories} />
+
+# Lightbox Global Options
+
+All configuration options for the Lightbox addon can be managed globally in one place. These settings control the behavior of the overlay, the backdrop, and the dialog closing policies.
+
+## Global Configuration
+
+You can define the default behavior for all Lightbox instances across your application using the `provideLightboxOptions` provider. This ensures consistent modal behavior without repeating configuration on every open call.
+
+```ts
+import { provideLightboxOptions } from 'ng-gallery/lightbox';
+
+export const appConfig = {
+  providers: [
+    provideLightboxOptions({
+      // Configure lightbox behavior in one place
+      hasBackdrop: true,
+      closedBy: 'any',
+      hideCloseButton: false
+    })
+  ]
+};
+```
+
+## Options Reference
+
+The following table details the available configuration properties for the Lightbox addon.
+
+<ArgTypes of={OptionsStories.APIReference} />

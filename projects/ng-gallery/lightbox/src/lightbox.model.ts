@@ -1,28 +1,31 @@
 import { InjectionToken, Provider } from '@angular/core';
-import { defaultConfig } from './lightbox.default';
+import { defaultOptions } from './lightbox.default';
 
-export const LIGHTBOX_CONFIG: InjectionToken<LightboxConfig> = new InjectionToken<LightboxConfig>('LIGHTBOX_CONFIG', {
+export const LIGHTBOX_OPTIONS: InjectionToken<LightboxOptions> = new InjectionToken<LightboxOptions>('LIGHTBOX_OPTIONS', {
   providedIn: 'root',
-  factory: () => defaultConfig
+  factory: () => defaultOptions
 });
 
-export interface LightboxConfig {
-  backdropClass?: string | string[];
-  panelClass?: string | string[];
-  hasBackdrop?: boolean;
-  keyboardShortcuts?: boolean;
-  closeIcon?: string;
-  role?: string;
-  ariaLabelledBy?: string;
-  ariaLabel?: string;
-  ariaDescribedBy?: string;
-  startAnimationTime?: number;
-  exitAnimationTime?: number;
+export type DialogClosePolicy = 'any' | 'closerequest' | 'none';
+
+export interface LightboxRef {
+  hasCustomCloseButton: boolean;
+  dialogElement: HTMLDialogElement;
 }
 
-export function provideLightboxOptions(options: LightboxConfig): Provider {
+export const LIGHTBOX_DIALOG = new InjectionToken<LightboxRef>('LIGHTBOX_DIALOG');
+
+export interface LightboxOptions {
+  panelClass?: string | string[];
+  hasBackdrop?: boolean;
+  hideCloseButton?: boolean;
+  closedBy?: DialogClosePolicy;
+  disableAnimation?: boolean;
+}
+
+export function provideLightboxOptions(options: LightboxOptions): Provider {
   return {
-    provide: LIGHTBOX_CONFIG,
-    useValue: { ...defaultConfig, ...options }
+    provide: LIGHTBOX_OPTIONS,
+    useValue: { ...defaultOptions, ...options }
   }
 }
