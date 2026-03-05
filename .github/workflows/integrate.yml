@@ -1,21 +1,57 @@
-name: tests
+name: CI Build
 
 on:
   pull_request:
+    branches: [ master ]
+  push:
     branches: [ master ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@master
+
       - name: Use Node.js 20
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@master
         with:
           node-version: 20
+
       - name: Install dependencies
         run: npm ci
+
       - name: Build
         run: npm run build-lib
-      - name: Build Demo
-        run: npm run build-demo
+
+#      - name: Lint
+#        run: npm run lint-lib
+
+      - name: Test
+        run: npm run test-lib-headless
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@main
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: MurhafSousli/ngx-gallery
+
+      - name: Code Coverage Report
+        uses: irongut/CodeCoverageSummary@master
+        with:
+          filename: coverage/**/cobertura-coverage.xml
+          badge: true
+          fail_below_min: true
+          format: markdown
+          hide_branch_rate: false
+          hide_complexity: true
+          indicators: true
+          output: both
+          thresholds: '60 80'
+
+      - name: Add Coverage PR Comment
+        uses: marocchino/sticky-pull-request-comment@main
+        if: github.event_name == 'pull_request'
+        with:
+          recreate: true
+          path: code-coverage-results.md
+        continue-on-error: true  # Allow this step to fail

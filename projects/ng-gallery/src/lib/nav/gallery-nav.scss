@@ -1,0 +1,76 @@
+:host {
+  // Gallery nav variables
+  --nav-space: 8px;
+  --nav-hover-space: 6.4px;
+  --nav-next-right: unset;
+  --nav-next-hover-right: unset;
+  --nav-next-left: unset;
+  --nav-next-hover-left: unset;
+
+  &[dir='ltr'] {
+    --nav-next-transform: translateY(-50%) perspective(1px);
+    --nav-next-right: var(--nav-space);
+    --nav-next-hover-right: var(--nav-hover-space);
+
+    --nav-prev-transform: translateY(-50%) perspective(1px) scale(-1, -1);
+    --nav-prev-left: var(--nav-space);
+    --nav-prev-hover-left: var(--nav-hover-space);
+  }
+
+  &[dir='rtl'] {
+    --nav-next-transform: translateY(-50%) perspective(1px) scale(-1, -1);
+    --nav-next-left: var(--nav-space);
+    --nav-next-hover-left: var(--nav-hover-space);
+
+    --nav-prev-transform: translateY(-50%) perspective(1px);
+    --nav-prev-right: var(--nav-space);
+    --nav-prev-hover-right: var(--nav-hover-space);
+  }
+}
+
+.g-nav-next,
+.g-nav-prev {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  padding: 16px 8px;
+  cursor: pointer;
+  z-index: 999;
+  opacity: 0.6;
+  transition: opacity linear 150ms, right linear 150ms, left linear 150ms;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  ::ng-deep {
+    svg {
+      filter: var(--g-nav-drop-shadow);
+      width: 28px;
+      height: 28px;
+      fill: #fff;
+    }
+  }
+}
+
+.g-nav-next {
+  left: var(--nav-next-left);
+  right: var(--nav-next-right);
+  transform: var(--nav-next-transform);
+
+  &:hover {
+    left: var(--nav-next-hover-left);
+    right: var(--nav-next-hover-right);
+  }
+}
+
+.g-nav-prev {
+  left: var(--nav-prev-left);
+  right: var(--nav-prev-right);
+  transform: var(--nav-prev-transform);
+
+  &:hover {
+    left: var(--nav-prev-hover-left);
+    right: var(--nav-prev-hover-right);
+  }
+}

@@ -1,19 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, effect, OnInit, Signal, viewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import {
-  Gallery,
   GalleryConfig,
   GalleryItemData,
-  GalleryItemTypes,
+  ITEM_TYPE,
   IframeItemData,
   ImageItemData,
   VideoItemData,
   YoutubeItemData,
   GalleryModule,
-  VimeoItemData
+  GalleryComponent,
+  VimeoItemData,
+  GalleryThumbsComponent
 } from 'ng-gallery';
-import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Observable, map } from 'rxjs';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faYoutube } from '@fortawesome/free-brands-svg-icons/faYoutube';
@@ -33,85 +33,98 @@ import { NoteComponent } from '../../shared/note/note.component';
   },
   selector: 'templates-example',
   templateUrl: './templates-example.component.html',
-  styleUrls: ['./templates-example.component.scss'],
+  styleUrl: './templates-example.component.scss',
   animations: [slideInAnimation],
-  standalone: true,
-  imports: [CommonModule, SectionTitleComponent, GalleryModule, HlCodeComponent, FooterComponent, FontAwesomeModule, MatButtonModule, NoteComponent]
+  imports: [
+    CommonModule,
+    SectionTitleComponent,
+    GalleryModule,
+    HlCodeComponent,
+    FooterComponent,
+    FontAwesomeModule,
+    MatButtonModule,
+    NoteComponent,
+    GalleryThumbsComponent
+  ]
 })
-export class TemplatesExampleComponent implements OnInit {
+export class TemplatesExampleComponent {
 
   readonly arr = data;
   readonly code = code;
-  readonly media$: Observable<GalleryConfig>;
+  readonly media$: Observable<any>;
   readonly youtubeIcon = faYoutube;
   readonly vimeoIcon = faVimeo;
   readonly videoIcon = faVideo;
 
-  constructor(private _gallery: Gallery, mediaObserver: MediaObserver, private _title: Title) {
-    this.media$ = mediaObserver.asObservable().pipe(
-      map((res: MediaChange[]) => {
-        if (res.some((x => x.mqAlias === 'sm' || x.mqAlias === 'xs'))) {
-          return {
-            thumbWidth: 80,
-            thumbHeight: 80
-          };
-        }
-        return {
-          thumbWidth: 120,
-          thumbHeight: 90
-        };
-      })
-    );
-  }
+  gallery: Signal<GalleryComponent> = viewChild(GalleryComponent);
 
-  ngOnInit() {
+  constructor(private _title: Title) {
     this._title.setTitle('Custom Templates | ng-gallery');
-    const galleryRef = this._gallery.ref('mixed');
 
-    this.arr.map((item: GalleryItemData) => {
-      switch (item.type) {
-        case GalleryItemTypes.Image:
-          galleryRef.addImage(item);
-          break;
-        case GalleryItemTypes.Video:
-          galleryRef.addVideo(item);
-          break;
-        case GalleryItemTypes.Youtube:
-          galleryRef.addYoutube(item);
-          break;
-        case GalleryItemTypes.Vimeo:
-          galleryRef.addVimeo(item);
-          break;
-        default:
-          galleryRef.addIframe(item);
-      }
-    });
+    // this.media$ = mediaObserver.asObservable().pipe(
+    //   map((res: MediaChange[]) => {
+    //     if (res.some((x => x.mqAlias === 'sm' || x.mqAlias === 'xs'))) {
+    //       return {
+    //         thumbWidth: 80,
+    //         thumbHeight: 80
+    //       };
+    //     }
+    //     return {
+    //       thumbWidth: 120,
+    //       thumbHeight: 90
+    //     };
+    //   })
+    // );
+
+    // effect(() => {
+    //   const gallery: GalleryComponent = this.gallery();
+    //   if (gallery) {
+    //   this.arr.map((item: GalleryItemData) => {
+    //     switch (item.type) {
+    //       case GalleryItemTypes.Image:
+    //         gallery.addImage(item);
+    //         break;
+    //       case GalleryItemTypes.Video:
+    //         gallery.addVideo(item);
+    //         break;
+    //       case GalleryItemTypes.Youtube:
+    //         gallery.addYoutube(item);
+    //         break;
+    //       case GalleryItemTypes.Vimeo:
+    //         gallery.addVimeo(item);
+    //         break;
+    //       default:
+    //         gallery.addIframe(item);
+    //     }
+    //   });
+    // }
+    //   }, { allowSignalWrites: true });
   }
 }
 
 const data: GalleryItemData[] = [
   {
     type: 'image',
-    src: 'assets/img/img13.jpg',
-    thumb: 'assets/img/thumb/img13.jpg',
+    src: 'img/img13.jpg',
+    thumb: 'img/thumb/img13.jpg',
     alt: '🐓Scelerisque dapibus fringilla consequat scelerisque torquent senectus porttitor, placerat fames convallis molestie lobortis diam aliquam'
   } as ImageItemData,
   {
     type: 'image',
-    src: 'assets/img/img11.jpg',
-    thumb: 'assets/img/thumb/img11.jpg',
+    src: 'img/img11.jpg',
+    thumb: 'img/thumb/img11.jpg',
     alt: '🐦Lorem ipsum curabitur auctor netus facilisis inceptos vivamus fusce inceptos, ullamcorper ipsum id pharetra curabitur leo curabitur.'
   } as ImageItemData,
   {
     type: 'image',
-    src: 'assets/img/img3.jpg',
-    thumb: 'assets/img/thumb/img3.jpg',
+    src: 'img/img3.jpg',
+    thumb: 'img/thumb/img3.jpg',
     alt: '🐯Iaculis eros leo interdum erat tellus primis pharetra pulvinar, elit risus blandit tempus praesent himenaeos porta, neque elit neque ullamcorper ipsum curabitur at tempus aliquet quam fringilla.'
   } as ImageItemData,
   {
     type: 'image',
-    src: 'assets/img/img4.jpg',
-    thumb: 'assets/img/thumb/img4.jpg',
+    src: 'img/img4.jpg',
+    thumb: 'img/thumb/img4.jpg',
     alt: '🐅Morbi etiam interdum velit lacinia platea magna libero curae auctor'
   } as ImageItemData,
   {
@@ -141,7 +154,7 @@ const data: GalleryItemData[] = [
   } as VimeoItemData,
   {
     type: 'iframe',
-    src: 'https://ngx-scrollbar.netlify.com/',
+    src: 'https://ngx-scrollbar.netlify.app/',
     thumb: 'https://user-images.githubusercontent.com/8130692/64606830-d4006f00-d3cf-11e9-9874-c75269fa3a9c.png'
   } as IframeItemData
 ];
@@ -191,7 +204,6 @@ import { GalleryModule, Gallery, GalleryRef } from 'ng-gallery';
 @Component({
   selector: 'example-component',
   templateUrl: './example-templates.html',
-  standalone: true,
   imports: [CommonModule, GalleryModule]
 })
 export class ExampleComponent implements OnInit {

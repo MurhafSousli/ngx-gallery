@@ -8,10 +8,9 @@ import { NgScrollbar } from 'ngx-scrollbar';
 import { HighlightAuto } from 'ngx-highlightjs';
 
 @Component({
-  standalone: true,
   selector: 'hl-code',
   templateUrl: './hl-code.component.html',
-  styleUrls: ['./hl-code.component.scss'],
+  styleUrl: './hl-code.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatSnackBarModule, NgScrollbar, MatButtonModule, ClipboardModule, MatIconModule, HighlightAuto, MatTooltip]
 })

@@ -14,7 +14,6 @@ import { GalleryModule, GalleryItem, ImageItem, VideoItem, YoutubeItem, IframeIt
   template: `
     <gallery [items]="images"></gallery>
   `,
-  standalone: true,
   imports: [GalleryModule]
 })
 export class AppComponent implements OnInit {
@@ -58,7 +57,6 @@ import { GalleryModule, GalleryComponent, ImageItem, VideoItem, YoutubeItem, Ifr
   template: `
     <gallery></gallery>
   `,
-  standalone: true,
   imports: [GalleryModule]
 })
 export class AppComponent {
@@ -126,7 +124,6 @@ import { GalleryModule, Gallery, GalleryRef, GalleryItem, ImageItem, VideoItem, 
   template: `
     <gallery id="myGallery"></gallery>
   `,
-  standalone: true,
   imports: [GalleryModule]
 })
 export class AppComponent implements OnInit {

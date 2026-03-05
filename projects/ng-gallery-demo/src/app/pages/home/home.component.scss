@@ -1,5 +1,4 @@
-@import "../../../assets/mixin";
-@import "../../../assets/variables";
+@use "../../../mixin";
 
 gallery {
   height: 700px;
@@ -88,5 +87,5 @@ section {
 }
 
 .black-bg {
-  background: $primary-color;
+  background: var(--primary-color);
 }

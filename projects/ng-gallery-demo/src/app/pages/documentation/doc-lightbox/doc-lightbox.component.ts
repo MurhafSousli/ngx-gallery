@@ -7,7 +7,6 @@ import { SectionTitleComponent } from '../../../shared/section-title/section-tit
 import { HighlightAuto } from 'ngx-highlightjs';
 
 @Component({
-  standalone: true,
   selector: 'app-doc-lightbox',
   templateUrl: './doc-lightbox.component.html',
   styleUrls: ['./doc-lightbox.component.scss'],

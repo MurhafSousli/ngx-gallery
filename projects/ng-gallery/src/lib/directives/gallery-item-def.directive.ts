@@ -1,20 +1,17 @@
-import { Directive, TemplateRef } from '@angular/core';
-import { GalleryItemData } from '../components/templates/items.model';
-import { GalleryItemType } from '../models/constants';
+import { Directive, inject, TemplateRef } from '@angular/core';
+import { GalleryItemData } from '../templates/items.model';
 
 @Directive({
-  standalone: true,
   selector: '[galleryItemDef]'
 })
 export class GalleryItemDef {
-  constructor(public templateRef: TemplateRef<GalleryItemContext<GalleryItemDef>>) {
-  }
+  templateRef: TemplateRef<GalleryItemContext<GalleryItemData>> = inject(TemplateRef<GalleryItemContext<GalleryItemData>>);
 
   // Make sure the template checker knows the type of the context with which the
   // template of this directive will be rendered
   static ngTemplateContextGuard(
     directive: GalleryItemDef,
-    context: unknown
+    context: GalleryItemContext<GalleryItemData>
   ): context is GalleryItemContext<GalleryItemData> {
     return true;
   }
@@ -26,9 +23,6 @@ export interface GalleryItemContext<T> {
 
   /** Index of the item. */
   index?: number;
-
-  /** The type of the item. */
-  type?: GalleryItemType;
 
   /** True if this item is the active one. */
   active?: boolean;

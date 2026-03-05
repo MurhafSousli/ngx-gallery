@@ -12,10 +12,9 @@
   </section>
 
   @if (media$ | async; as config) {
-    <gallery id="mixed"
-             thumbs
-             [thumbWidth]="config.thumbWidth"
-             [thumbHeight]="config.thumbHeight">
+    <gallery id="mixed">
+      <gallery-thumbs [thumbWidth]="config.thumbWidth" [thumbHeight]="config.thumbHeight"/>
+
       <ng-container *galleryImageDef="let item; active as active">
         @if (active) {
           <span @slideAnimation class="item-text">

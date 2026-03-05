@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule, IconDefinition } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'section-title',
@@ -14,12 +13,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
       </h2>
     </div>
   `,
-  styleUrls: ['section-title.component.scss'],
+  styleUrl: 'section-title.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [FlexLayoutModule, FontAwesomeModule]
+  imports: [FontAwesomeModule]
 })
 export class SectionTitleComponent {
 
-  iconCaretRight = faCaretRight;
+  iconCaretRight: IconDefinition = faCaretRight;
 }

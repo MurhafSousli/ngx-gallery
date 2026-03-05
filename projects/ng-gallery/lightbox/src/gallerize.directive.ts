@@ -11,8 +11,8 @@ import {
   ElementRef,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { Gallery, GalleryRef, ImageItem, GalleryComponent, GalleryState, GalleryItem } from 'ng-gallery';
-import { Subject, Subscription, from, tap, map, switchMap, finalize, debounceTime, EMPTY } from 'rxjs';
+import { GalleryRef, GalleryComponent, GalleryItemData } from 'ng-gallery';
+import { Subject, Subscription, from, map, switchMap, finalize, debounceTime, EMPTY } from 'rxjs';
 
 import { Lightbox } from './lightbox.service';
 
@@ -63,9 +63,9 @@ export class GallerizeDirective implements OnInit, OnDestroy {
 
   constructor(private _zone: NgZone,
               private _el: ElementRef,
-              private _gallery: Gallery,
+              // private _gallery: Gallery,
               private _lightbox: Lightbox,
-              @Inject(DOCUMENT) private _document: any,
+              @Inject(DOCUMENT) private _document: Document,
               @Host() @Self() @Optional() private _galleryCmp: GalleryComponent) {
 
     // Set gallerize mode
@@ -75,15 +75,15 @@ export class GallerizeDirective implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._zone.runOutsideAngular(() => {
       this._galleryId = this.gallerize || this._galleryId;
-      const ref: GalleryRef = this._gallery.ref(this._galleryId);
+      // const ref: GalleryRef = this._gallery.ref(this._galleryId);
 
-      switch (this._mode) {
-        case GallerizeMode.Detector:
-          this.detectorMode(ref);
-          break;
-        case GallerizeMode.Gallery:
-          this.galleryMode(ref);
-      }
+      // switch (this._mode) {
+      //   case GallerizeMode.Detector:
+      //     this.detectorMode(ref);
+      //     break;
+      //   case GallerizeMode.Gallery:
+      //     this.galleryMode(ref);
+      // }
     });
   }
 
@@ -104,7 +104,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
   private galleryMode(galleryRef: GalleryRef): void {
     // Clone its items to the new gallery instance
     this._itemClick$ = this._galleryCmp.galleryRef.itemClick.subscribe((i: number) => this._lightbox.open(i, this._galleryId));
-    this._itemChange$ = this._galleryCmp.galleryRef.itemsChanged.subscribe((state: GalleryState) => galleryRef.load(state.items));
+    this._itemChange$ = this._galleryCmp.galleryRef.itemsChanged.subscribe(() => galleryRef.load(this._galleryCmp.galleryRef.items()));
   }
 
   /** Detector mode: means `gallerize` directive is used on a normal HTMLElement
@@ -121,7 +121,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
 
         if (imageElements && imageElements.length) {
 
-          const images: GalleryItem[] = [];
+          const images: GalleryItemData[] = [];
 
           return from(imageElements).pipe(
             map((el: HTMLElement, i: number) => {
@@ -147,7 +147,7 @@ export class GallerizeDirective implements OnInit, OnDestroy {
                 };
               }
             }),
-            tap((data: any) => images.push(new ImageItem(data))),
+            // tap((data: any) => images.push(new ImageItem(data))),
             finalize(() => galleryRef.load(images))
           );
         } else {

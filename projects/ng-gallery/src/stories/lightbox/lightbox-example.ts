@@ -30,7 +30,6 @@ import { Lightbox, LightboxModule } from 'ng-gallery/lightbox';
     }
   `],
   imports: [CommonModule, LightboxModule],
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LightboxExampleComponent implements OnInit, OnDestroy {

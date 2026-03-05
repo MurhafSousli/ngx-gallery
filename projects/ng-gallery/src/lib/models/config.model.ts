@@ -1,52 +1,35 @@
-import { InjectionToken, TemplateRef } from '@angular/core';
+import { InjectionToken, Provider, TemplateRef } from '@angular/core';
 import { BezierEasingOptions } from '../smooth-scroll';
+import { defaultConfig } from '../utils/gallery.default';
+import { GalleryItemData } from '../templates/items.model';
 
-export const GALLERY_CONFIG: InjectionToken<GalleryConfig> = new InjectionToken<GalleryConfig>('GALLERY_CONFIG');
+export const GALLERY_CONFIG: InjectionToken<GalleryConfig> = new InjectionToken<GalleryConfig>('GALLERY_CONFIG', {
+  providedIn: 'root',
+  factory: () => defaultConfig
+});
 
-type ImageSize = 'contain' | 'cover';
+export function provideGalleryOptions(options: GalleryConfig): Provider {
+  return {
+    provide: GALLERY_CONFIG,
+    useValue: { ...defaultConfig, ...options }
+  }
+}
 
-type Orientation = 'horizontal' | 'vertical';
+export type ImageSize = 'contain' | 'cover';
 
-type ThumbsPosition = 'top' | 'left' | 'right' | 'bottom';
+export type Orientation = 'horizontal' | 'vertical';
 
-type HorizontalPosition = 'top' | 'bottom';
+export type ThumbsPosition = 'top' | 'left' | 'right' | 'bottom';
 
-type LoadingStrategy = 'preload' | 'lazy' | 'default';
-
-type LoadingAttr = 'eager' | 'lazy';
+export type HorizontalPosition = 'top' | 'bottom';
 
 interface ThumbConfig {
-  thumbs?: boolean;
-  thumbWidth?: number;
-  thumbHeight?: number;
   thumbLoadingIcon?: string;
   thumbLoadingError?: string;
-  disableThumbs?: boolean;
-  detachThumbs?: boolean;
-  thumbAutosize?: boolean;
-  disableThumbScroll?: boolean;
-  disableThumbMouseScroll?: boolean;
-  thumbCentralized?: boolean;
-  thumbPosition?: ThumbsPosition;
-  thumbImageSize?: ImageSize;
-  thumbTemplate?: TemplateRef<any>;
 }
 
 interface NavConfig {
-  nav?: boolean;
   navIcon?: string;
-}
-
-interface BulletsConfig {
-  bullets?: boolean;
-  disableBullets?: boolean;
-  bulletSize?: number;
-  bulletPosition?: HorizontalPosition;
-}
-
-interface CounterConfig {
-  counter?: boolean;
-  counterPosition?: HorizontalPosition;
 }
 
 interface PlayerConfig {
@@ -59,25 +42,18 @@ interface SliderConfig {
   disableScroll?: boolean;
   disableMouseScroll?: boolean;
   itemAutosize?: boolean;
-  autoHeight?: boolean;
   loadingIcon?: string;
   loadingError?: string;
   scrollDuration?: number;
   scrollEase?: BezierEasingOptions;
   orientation?: Orientation;
   imageSize?: ImageSize;
-  loadingStrategy?: LoadingStrategy;
-  loadingAttr?: LoadingAttr;
-  boxTemplate?: TemplateRef<any>;
-  itemTemplate?: TemplateRef<any>;
-  imageTemplate?: TemplateRef<any>;
+  centralized?: boolean;
 }
 
 export type GalleryConfig = SliderConfig
   & ThumbConfig
   & NavConfig
-  & BulletsConfig
-  & CounterConfig
   & PlayerConfig
   & {
   scrollBehavior?: ScrollBehavior;

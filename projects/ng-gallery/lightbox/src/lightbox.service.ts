@@ -1,13 +1,12 @@
-import { ComponentRef, Inject, Injectable, Optional } from '@angular/core';
+import { ComponentRef, inject, Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Overlay, OverlayRef, OverlayConfig } from '@angular/cdk/overlay';
 import { LEFT_ARROW, RIGHT_ARROW, ESCAPE } from '@angular/cdk/keycodes';
-import { Gallery } from 'ng-gallery';
+// import { Gallery } from 'ng-gallery';
 import { Subject } from 'rxjs';
 
 import { LightboxConfig, LIGHTBOX_CONFIG } from './lightbox.model';
-import { defaultConfig } from './lightbox.default';
 import { LightboxComponent } from './lightbox.component';
 
 @Injectable({
@@ -18,18 +17,20 @@ export class Lightbox {
   /** Gallery overlay ref */
   private _overlayRef: OverlayRef;
 
+  // private _gallery: Gallery = inject(Gallery);
+
+  private _overlay: Overlay = inject(Overlay);
+
+  private _sanitizer: DomSanitizer = inject(DomSanitizer);
+
   /** Global config */
-  private _config: LightboxConfig;
+  private _config: LightboxConfig = inject(LIGHTBOX_CONFIG);
 
   /** Stream that emits when lightbox is opened */
-  opened = new Subject<string>();
+  opened: Subject<string> = new Subject<string>();
 
   /** Stream that emits when lightbox is closed */
-  closed = new Subject<string>();
-
-  constructor(@Optional() @Inject(LIGHTBOX_CONFIG) config: LightboxConfig, private _gallery: Gallery, private _overlay: Overlay, private _sanitizer: DomSanitizer) {
-    this._config = config ? { ...defaultConfig, ...config } : defaultConfig;
-  }
+  closed: Subject<string> = new Subject<string>();
 
   /**
    * Set Lightbox Config
@@ -58,8 +59,8 @@ export class Lightbox {
       disposeOnNavigation: true
     };
 
-    const galleryRef = this._gallery.ref(id);
-    galleryRef.set(i);
+    // const galleryRef = this._gallery.ref(id);
+    // galleryRef.set(i);
 
     this._overlayRef = this._overlay.create(overlayConfig);
 
@@ -73,16 +74,6 @@ export class Lightbox {
     const galleryPortal = new ComponentPortal(LightboxComponent);
     const lightboxRef: ComponentRef<LightboxComponent> = this._overlayRef.attach(galleryPortal);
 
-    lightboxRef.instance.id = id;
-    lightboxRef.instance.overlayRef = this._overlayRef;
-    lightboxRef.instance.closeIcon = this._sanitizer.bypassSecurityTrustHtml(this._config.closeIcon);
-    lightboxRef.instance.role = this._config.role;
-    lightboxRef.instance.ariaLabel = this._config.ariaLabel;
-    lightboxRef.instance.ariaLabelledBy = this._config.ariaLabelledBy;
-    lightboxRef.instance.ariaDescribedBy = this._config.ariaDescribedBy;
-    lightboxRef.instance.startAnimationTime = this._config.startAnimationTime;
-    lightboxRef.instance.exitAnimationTime = this._config.exitAnimationTime;
-
     if (_config.hasBackdrop) {
       this._overlayRef.backdropClick().subscribe(() => this.close());
     }
@@ -92,10 +83,10 @@ export class Lightbox {
       this._overlayRef.keydownEvents().subscribe((event: any) => {
         switch (event.keyCode) {
           case LEFT_ARROW:
-            galleryRef.prev();
+            // galleryRef.prev();
             break;
           case RIGHT_ARROW:
-            galleryRef.next();
+            // galleryRef.next();
             break;
           case ESCAPE:
             this.close();

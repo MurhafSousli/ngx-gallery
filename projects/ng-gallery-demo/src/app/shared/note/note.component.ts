@@ -13,8 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
       </div>
     </section>
   `,
-  styleUrls: ['./note.component.scss'],
-  standalone: true,
+  styleUrl: './note.component.scss',
   imports: [MatIconModule]
 })
 export class NoteComponent {

@@ -1,7 +1,6 @@
 import { Component, ViewChild, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
@@ -21,22 +20,19 @@ import { MenuComponent } from './shared/menu/menu.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeAnimation],
-  standalone: true,
   imports: [
     NgProgressbar,
     NgProgressRouter,
     NgProgressHttp,
-    RouterLink,
-    RouterOutlet,
+    RouterModule,
     MenuComponent,
     MatIconModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatButtonModule,
-    FlexLayoutModule
+    MatButtonModule
   ]
 })
 export class AppComponent implements OnInit {
@@ -49,7 +45,7 @@ export class AppComponent implements OnInit {
 
     this.matIconRegistry.addSvgIcon(
       'logo',
-      domSanitizer.bypassSecurityTrustResourceUrl('assets/img/ng-gallery.svg')
+      domSanitizer.bypassSecurityTrustResourceUrl('img/ng-gallery.svg')
     );
   }
 
@@ -57,7 +53,9 @@ export class AppComponent implements OnInit {
     /** When router changes */
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
-      tap(() => this.sideNav.close())
+      tap((e) => {
+        this.sideNav.close()
+      })
     ).subscribe();
   }
 

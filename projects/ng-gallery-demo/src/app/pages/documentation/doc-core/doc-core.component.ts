@@ -9,8 +9,7 @@ import { SectionTitleComponent } from '../../../shared/section-title/section-tit
   selector: 'app-getting-started',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './doc-core.component.html',
-  styleUrls: ['./doc-core.component.scss'],
-  standalone: true,
+  styleUrl: './doc-core.component.scss',
   imports: [SectionTitleComponent, HlCodeComponent, MatButtonModule, RouterLink, NoteComponent]
 })
 export class DocCoreComponent {

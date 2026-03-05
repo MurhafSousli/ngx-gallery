@@ -1,6 +1,6 @@
 {
   "name": "ng-gallery",
-  "version": "12.0.0",
+  "version": "13.0.0",
   "homepage": "https://ngx-gallery.netlify.app/",
   "author": {
     "name": "Murhaf Sousli",
@@ -24,9 +24,9 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": ">=16.0.0",
-    "@angular/core": ">=16.0.0",
-    "@angular/cdk": ">=16.0.0",
+    "@angular/common": ">=19.0.0",
+    "@angular/core": ">=19.0.0",
+    "@angular/cdk": ">=19.0.0",
     "rxjs": ">=7.0.0"
   },
   "dependencies": {

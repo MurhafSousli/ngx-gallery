@@ -1,3 +1,4 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
@@ -8,9 +9,8 @@
   },
   "files": [
     "src/main.ts",
-    "src/polyfills.ts",
     "src/main.server.ts",
-    "server.ts"
+    "src/server.ts"
   ],
   "include": [
     "src/**/*.d.ts"

@@ -1,5 +1,14 @@
 # Changelog
 
+## 13.0.0
+
+ - Use native dialog to display the lightbox instead of Angular CDK overlay.  
+
+## 12.0.0-beta.5
+
+- feat: Add `provideGalleryOptions` and `provideLightboxOptions` to set global options.
+- refactor: Use `useFactory` function to set the default options for `GALLERY_CONFIG` and `LIGHTBOX_CONFIG` token.
+
 ## 12.0.0
 
 - Add vimeo support in [#575](https://github.com/MurhafSousli/ngx-gallery/pull/575).
