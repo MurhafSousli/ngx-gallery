@@ -1,22 +1,20 @@
-<div fxLayout="column" fxLayoutAlign="center center">
-
+<div class="flex flex-column justify-center">
   <h4><p>Images from <a href="https://pixabay.com/">Pixabay</a></p></h4>
 
-  <h4 fxLayout fxLayoutAlign="center center">
-    <p>© {{ todayDate | date: 'YYYY' }} Angular Gallery</p>
+  <h4 class="flex">
+    <p>© {{ todayDate | date: 'y' }} Angular Gallery</p>
     <iframe src="https://ghbtns.com/github-btn.html?user=murhafsousli&repo=ngx-gallery&type=star&count=true"
             frameborder="0" scrolling="0" width="85px" height="20px"></iframe>
   </h4>
 
-  <div fxLayout fxLayoutAlign="center center">
+  <div class="flex ">
     <h4 style="margin-right: 15px">Created by Murhaf Sousli</h4>
 
     <a mat-icon-button class="icon twitter" href="https://twitter.com/MurhafSousli">
-      <fa-icon [icon]="['fab', 'twitter']" size="lg"></fa-icon>
+      <fa-icon [icon]="['fab', 'twitter']" size="lg"/>
     </a>
     <a mat-icon-button class="icon github" href="https://github.com/MurhafSousli">
-      <fa-icon [icon]="['fab', 'github']" size="lg"></fa-icon>
+      <fa-icon [icon]="['fab', 'github']" size="lg"/>
     </a>
   </div>
 </div>
-

@@ -1,0 +1,41 @@
+name: 📖 Documentation Issue
+description: Report a typo, mistake, or missing detail in the docs
+title: "[Docs]: "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: "Spot a typo or something confusing in the ngx-gallery documentation? Let us know so we can keep it sharp!"
+
+  - type: input
+    id: docs-location
+    attributes:
+      label: 📍 Where is the issue?
+      description: Provide a link to the documentation page or mention the specific file/section.
+      placeholder: "e.g., https://murhafsousli.github.io/ngx-gallery/#/getting-started or README.md"
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-docs
+    attributes:
+      label: What is currently wrong or confusing?
+      placeholder: Paste the exact sentence, broken link, or problematic code snippet here...
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested-fix
+    attributes:
+      label: What should it say instead?
+      placeholder: Provide the correct wording, updated code snippet, or explanation...
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Is there anything else we should know?
+      description: Add any extra context or drag screenshots here.
+    validations:
+      required: false

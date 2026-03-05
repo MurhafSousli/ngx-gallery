@@ -1,0 +1,59 @@
+@use 'sass:map';
+
+@mixin ng-gallery-overrides($config) {
+  // Define all supported keys in a simple list
+  $gallery-keys: (
+    'layout-gap',
+    'content-alignment'
+    'size-transition-ease',
+    'nav-filter',
+    'nav-offset',
+    'button-size',
+    'button-icon-size',
+    'item-cursor',
+    'item-loader-text-color',
+    'item-loader-background-color',
+    'item-error-text-color',
+    'item-error-background-color',
+    'item-image-transition',
+    'item-image-size',
+    'thumb-cursor',
+    'thumb-image-size',
+    'autoplay-spinner-size',
+    'autoplay-spinner-offset',
+    'autoplay-thickness',
+    'autoplay-background-color',
+    'autoplay-stroke-color',
+    'scroll-snap-stop'
+  );
+
+  @each $key in $gallery-keys {
+    @if map.has-key($config, $key) {
+      --g-#{$key}: #{map.get($config, $key)};
+    }
+  }
+}
+
+@mixin ng-lightbox-overrides($config) {
+  $keys: (
+    'container-shape',
+    'container-elevation-shadow',
+    'duration-in',
+    'duration-out',
+    'timing-in',
+    'timing-out',
+    'backdrop-color',
+    'backdrop-filter',
+    'backdrop-filter-start',
+    'opacity-start',
+    'scale-start',
+    'translate-start',
+    'rotate-start'
+  );
+
+  @each $key in $keys {
+    @if map.has-key($config, $key) {
+      --lb-#{$key}: #{map.get($config, $key)};
+    }
+  }
+}

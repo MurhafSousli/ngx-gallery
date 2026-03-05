@@ -1,0 +1,25 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as LightboxForStories from './LightboxFor.stories';
+
+<Meta title="Addons/LightboxFor" name="LightboxFor Usage" of={LightboxForStories}/>
+
+# LightboxFor directive
+
+Alternatively you can use the `lightboxFor` directive to open the lightbox programmatically.
+
+```html
+<ng-template lightbox #lightbox="lightbox">
+  <gallery [items]="items">
+    <img *galleryItemDef="let item" galleryImage [src]="item.src" [alt]="item.alt"/>
+  </gallery>
+</ng-template>
+
+<button [lightboxFor]="lightbox" [lightboxIndex]="initialIndex">Open Lightbox</button>
+```
+
+<Canvas of={LightboxForStories.LightboxForGridExample} />
+
+## Open lightbox from gallery item
+
+<Canvas of={LightboxForStories.LightboxForGalleryExample} />
+

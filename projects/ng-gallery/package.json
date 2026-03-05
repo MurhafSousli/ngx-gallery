@@ -1,17 +1,15 @@
 {
   "name": "ng-gallery",
-  "version": "13.0.0",
-  "homepage": "https://ngx-gallery.netlify.app/",
+  "version": "13.0.0-alpha.0",
+  "license": "MIT",
+  "homepage": "https://murhafsousli.github.io/ngx-gallery/",
   "author": {
     "name": "Murhaf Sousli",
     "url": "http://github.com/murhafsousli"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/murhafsousli/ngx-gallery.git"
-  },
+  "repository": "github:murhafsousli/ngx-gallery",
   "bugs": {
-    "url": "http://github.com/murhafsousli/ngx-gallery/issues"
+    "url": "https://github.com/murhafsousli/ngx-gallery/issues"
   },
   "keywords": [
     "gallery",
@@ -22,14 +20,31 @@
     "video",
     "modal"
   ],
-  "license": "MIT",
+  "exports": {
+    ".": {
+      "sass": "./_index.scss"
+    },
+    "./glass-theme": {
+      "style": "./glass-theme.css"
+    }
+  },
   "peerDependencies": {
-    "@angular/common": ">=19.0.0",
-    "@angular/core": ">=19.0.0",
-    "@angular/cdk": ">=19.0.0",
+    "@angular/common": ">=21.0.0",
+    "@angular/core": ">=21.0.0",
+    "@angular/cdk": ">=21.0.0",
     "rxjs": ">=7.0.0"
   },
   "dependencies": {
-    "tslib": "^2.3.1"
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "imports": {
+    "#*": [
+      "./*",
+      "./*.ts",
+      "./*.tsx",
+      "./*.js",
+      "./*.jsx"
+    ]
   }
 }

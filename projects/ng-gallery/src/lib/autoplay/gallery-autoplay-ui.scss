@@ -1,0 +1,72 @@
+/**
+ * Incrementing the progress via the animation requires declaring the CSS variable as a number
+ */
+@property --g-autoplay-progress {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+:host {
+  pointer-events: none;
+}
+
+/* When in progress bar mode, we "break" the host out of its corner */
+:host(.is-bar) {
+  display: block;
+  grid-column: 1 / -1; /* Spans all columns of the gallery grid */
+  width: 100%;
+
+  /* Override align-self if the directive set it to 'start' or 'center'
+     This ensures the bar stays at the edge of its grid row. */
+  align-self: end;
+}
+
+.g-spinner {
+  margin: var(--g-autoplay-spinner-offset, 8px);
+  width: var(--g-autoplay-spinner-size, 32px);
+  height: var(--g-autoplay-spinner-size, 32px);
+}
+
+svg {
+  display: block;
+  overflow: visible; /* Prevents stroke clipping if the stroke is wide */
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.g-spinner-track {
+  fill: none;
+  stroke: var(--g-autoplay-stroke-color, rgba(255 255 255 / .2));
+  stroke-width: var(--g-autoplay-thickness, 3px);
+}
+
+.g-spinner-fill {
+  fill: none;
+  stroke: var(--g-autoplay-stroke-color, white);
+  stroke-width: var(--g-autoplay-thickness, 3px);
+  stroke-linecap: initial;
+  //stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc(100 * (1 - var(--g-autoplay-progress)));
+}
+
+/**
+ * Progress bar
+ */
+
+.g-progressbar {
+  width: 100%;
+  height: var(--g-autoplay-bar-height, 4px);
+  background-color: var(--g-autoplay-background-color, rgba(255 255 255 / .2));
+  overflow: hidden;
+}
+
+.g-progressbar-fill {
+  width: calc(var(--g-autoplay-progress, 0) * 100%);
+  height: 100%;
+  background-color: var(--g-autoplay-stroke-color, white);
+  /* Smooths out the increments if your JS updates in steps */
+  //transition: width 0.1s linear;
+}

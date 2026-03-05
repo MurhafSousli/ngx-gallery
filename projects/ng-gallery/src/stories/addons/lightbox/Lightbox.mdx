@@ -1,0 +1,38 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as LightboxStories from './Lightbox.stories';
+
+<Meta title="Addons/Lightbox" name="Lightbox Usage" of={LightboxStories}/>
+
+# Lightbox
+
+Basic usage
+
+```html
+<ng-template lightbox #lightbox="lightbox">
+  <gallery [items]="items">
+    <img *galleryItemDef="let item" galleryImage [src]="item.src" [alt]="item.alt"/>
+  </gallery>
+</ng-template>
+
+<button (click)="lightbox.showModal(initialIndex)">Open lightbox</button>
+```
+
+<Canvas of={LightboxStories.LightboxExample} />
+
+
+Replace the default close button with a custom one
+
+```html
+<ng-template #custom lightbox>
+  <div class="some-content">Hello Lightbox</div>
+</ng-template>
+```
+
+Hide the close button
+
+```html
+<ng-template #custom lightbox hideCloseButton>
+  <div class="some-content">Hello Lightbox</div>
+</ng-template>
+```
+

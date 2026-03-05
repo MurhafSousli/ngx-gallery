@@ -1,0 +1,83 @@
+/* Target the same specificity as Storybook to override it */
+table:not(.docblock-argstable) tr:nth-of-type(2n) {
+  background-color: transparent !important;
+}
+
+[data-theme="dark"] {
+  body {
+    background: rgb(34, 35, 37);
+  }
+}
+
+.slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 61px;
+  color: CanvasText;
+
+  span {
+    position: absolute;
+    bottom: -1.1rem;
+    left: 1rem;
+    font-size: 4.5rem;
+  }
+}
+
+.slide-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;
+  color: CanvasText;
+}
+
+.slide2 {
+  display: flex;
+  align-items: end;
+  justify-content: start;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 61px;
+  color: CanvasText;
+  background: #4b5659;
+}
+
+.gallery-example {
+  max-width: 600px;
+  height: 160px !important;
+
+  .g-slider-item {
+    .slide {
+      background: #4b5659;
+    }
+
+    &.g-active-item .slide {
+      color: Canvas;
+      background: rgb(205 66 87);
+      //background: linear-gradient(0deg, #87de1d, #b4e900);
+      background: linear-gradient(0deg, rgb(205 66 87), rgb(87 45 107));
+    }
+  }
+
+  .slide.dot-thumb {
+    border-radius: 50%;
+    opacity: 0.5; /* Slightly dimmer when inactive */
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      background: #c4d5d7;
+    }
+  }
+}
+
+button.g-slider-item:hover .dot-thumb {
+  opacity: 1;
+}
+
+.g-slider-item.g-active-item .dot-thumb {
+  opacity: 1;
+}

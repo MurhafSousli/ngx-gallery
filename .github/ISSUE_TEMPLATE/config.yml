@@ -1,0 +1,5 @@
+blank_issues_enabled: false # Blocks users from bypassing your structured forms
+contact_links:
+  - name: 💬 Ask a Question or Get Support
+    url: https://github.com/MurhafSousli/ngx-gallery/discussions
+    about: Please ask questions and seek support within our community discussions space!

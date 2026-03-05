@@ -1,83 +1,68 @@
-import { ComponentFixture, ComponentFixtureAutoDetect, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Component, DebugElement, Signal, viewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, DebugElement, signal, Signal, viewChild, WritableSignal } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { firstValueFrom } from 'rxjs';
 import {
-  GalleryComponent,
-  GalleryCounterComponent,
-  GalleryItemData,
+  Gallery,
+  GalleryImage,
   GalleryItemDef,
-  GalleryRef,
-  ImgRecognizer
+  GalleryItemData,
+  GalleryCounter
 } from 'ng-gallery';
 import { img1, img2, img3 } from '../tests/test-images';
-import { afterTimeout } from '../tests/common';
 
 @Component({
-  imports: [GalleryComponent, GalleryCounterComponent, GalleryItemDef, ImgRecognizer],
+  imports: [Gallery, GalleryCounter, GalleryItemDef, GalleryImage],
   template: `
-    <gallery [items]="items" [style.width.px]="width" [style.height.px]="height">
+    <gallery [items]="items()" [style.width.px]="width" [style.height.px]="height">
       <img *galleryItemDef="let item"
            galleryImage
            [src]="item.src"/>
 
-      <gallery-counter [align]="align"/>
+      <gallery-counter [align]="align()"/>
     </gallery>
   `
 })
 export class TestComponent {
-  items: GalleryItemData[] = [
+  items: WritableSignal<GalleryItemData[]> = signal([
     { src: img1 },
     { src: img2 },
     { src: img3 }
-  ];
+  ]);
   width: number = 500;
   height: number = 300;
 
-  align: 'top' | 'bottom' = 'top';
+  align: WritableSignal<'top' | 'bottom'> = signal('top');
 
-  gallery: Signal<GalleryComponent> = viewChild(GalleryComponent);
+  gallery: Signal<Gallery> = viewChild(Gallery);
 }
 
 describe('Gallery counter component', () => {
   let fixture: ComponentFixture<TestComponent>;
   let component: TestComponent;
-  let counterComponent: GalleryCounterComponent;
-  let galleryRef: GalleryRef;
+  let counterComponent: GalleryCounter;
   let counterComponentElement: DebugElement;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        TestComponent
-      ],
-      providers: [
-        { provide: ComponentFixtureAutoDetect, useValue: true }
-      ]
-    }).compileComponents();
-
+  beforeEach(async () => {
     fixture = TestBed.createComponent(TestComponent);
+    fixture.autoDetectChanges();
     component = fixture.componentInstance;
-    fixture.detectChanges();
 
-    counterComponentElement = fixture.debugElement.query(By.directive(GalleryCounterComponent));
-    counterComponent = counterComponentElement.injector.get(GalleryCounterComponent);
-    galleryRef = counterComponentElement.injector.get(GalleryRef);
+    counterComponentElement = fixture.debugElement.query(By.directive(GalleryCounter));
+    counterComponent = counterComponentElement.componentInstance;
   });
 
   it('should create gallery-counter component', () => {
     expect(counterComponent).toBeTruthy();
-    expect(galleryRef).toBeTruthy();
+    expect(counterComponentElement.nativeElement).toHaveClass('g-panel', 'g-counter');
   });
 
-  it('should set the align attribute', () => {
+  it('should set the align attribute', async () => {
+    await vi.waitUntil(() => component.gallery().hasVisibleItems());
     expect(counterComponent.align()).toBe('top');
     expect((counterComponentElement.nativeElement as HTMLElement).getAttribute('align')).toBe('top');
 
     // Change attribute value
-    component.align = 'bottom';
+    component.align.set('bottom');
     fixture.detectChanges();
 
     expect(counterComponent.align()).toBe('bottom');
@@ -85,11 +70,19 @@ describe('Gallery counter component', () => {
   });
 
   it('should calculate counter based on current index and total number of items', async () => {
-    await firstValueFrom(galleryRef.afterItemsVisible);
-    expect(counterComponent.counter()).toBe('1 / 3');
+    await vi.waitUntil(() => component.gallery().hasVisibleItems());
+    expect(counterComponentElement.nativeElement).toHaveTextContent('1 / 3');
 
-    component.gallery().next('auto');
-    await afterTimeout(100);
-    expect(counterComponent.counter()).toBe('2 / 3');
+    component.gallery().next({ behavior: 'auto' });
+
+    await vi.waitFor(() => {
+      expect(counterComponentElement.nativeElement).toHaveTextContent('2 / 3');
+    });
+  });
+
+  it('should display 0/0 if items array is empty', async () => {
+    component.items.set([]);
+    fixture.detectChanges();
+    expect(counterComponentElement.nativeElement).toHaveTextContent('0 / 0');
   });
 });

@@ -1,104 +1,81 @@
 :host {
-  max-height: 100%;
-  max-width: 100%;
-  display: block;
-  z-index: 100;
+  z-index: 1;
+  position: relative;
+  overflow: hidden;
 
-  // Forward thumb variables
-  --g-item-cursor: var(--g-thumb-cursor);
-  --g-item-height: var(--g-thumb-height);
-  --g-item-width: var(--g-thumb-width);
+  display: grid;
+  grid-template-areas: "center";
 
-  &[position="top"],
-  &[position="bottom"] {
-    --thumb-slider-top: 0;
-    --thumb-slider-overflow: auto hidden;
-    --thumb-slider-flex-direction: row;
-    --g-thumb-height: 100%;
+  // Reset the CSS variable so it doesn't inherit them from gallery component
+  --_override-slider-overflow: initial;
+  --_override-slider-height: initial;
+  --_override-slider-align-items: initial;
+  --_slider-will-change: initial;
 
-    &[autosize="true"] {
-      --g-item-width: auto !important;
-    }
-  }
-
-  &[position="left"],
-  &[position="right"] {
-    --thumb-slider-left: 0;
-    --thumb-slider-overflow: hidden auto;
-    --thumb-slider-flex-direction: column;
-    --g-thumb-width: 100%;
-
-    &[autosize="true"] {
-      --g-thumb-height: auto !important;
-    }
-  }
-
-  &[disabled="true"] {
-    --g-thumb-cursor: default;
-  }
-
-  &[scrollDisabled="true"] {
-    --thumb-slider-overflow: hidden !important;
-  }
-
-  &[imageSize="contain"] {
-    --image-object-fit: contain;
-  }
-
-  &[imageSize="cover"] {
-    --image-object-fit: cover;
-  }
+  --_slider-size-transition-duration: initial;
+  // Override thumb gap
+  --g-item-gutter-size: var(--g-thumb-gutter-size);
+  // Override item's image size
+  --_item-image-size: var(--g-thumb-image-size, cover);
 }
 
-.g-slider {
-  display: flex;
-  align-items: center;
-  transition: var(--g-height-transition);
-  max-height: 100%;
-  min-width: 100%;
-  height: var(--thumb-slider-height);
-  width: var(--thumb-slider-width);
-
-  top: var(--thumb-slider-top);
-  left: var(--thumb-slider-left);
-  overflow: var(--thumb-slider-overflow);
-  scroll-snap-type: var(--slider-scroll-snap-type);
-  flex-direction: var(--thumb-slider-flex-direction);
-
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  &.g-sliding {
-    // Disable mouse click on gallery items/thumbnails when the slider is being dragged using the mouse
-    .g-slider-content {
-      pointer-events: none;
-    }
-  }
-
-  &[centralised="true"] {
-    &:before, &:after {
-      content: "";
-    }
-
-    &:before {
-      flex: 0 0 var(--centralize-start-size);
-    }
-
-    &:after {
-      flex: 0 0 var(--centralize-end-size);
-    }
-  }
+/* Horizontal: Take full width, shrink-wrap height */
+:host(:is([position="top"], [position="bottom"])) {
+  width: 100%;
+  height: var(--g-slider-thickness);
 }
 
-.g-slider-content {
-  // Never set min-width to 100%, content wrapper should always match content size to measure centralize size
-  min-width: 100%;
-  flex: 0 0 auto;
-  display: flex;
-  flex-direction: var(--thumb-slider-flex-direction);
-  align-items: center;
-  //gap: 1px;
+/* Vertical: Take full height, shrink-wrap width */
+:host(:is([position="start"], [position="end"])) {
+  height: 100%;
+  width: var(--g-slider-thickness);
+}
+
+:host[position="top"] {
+  grid-area: top;
+  align-self: start;
+}
+
+:host[position="bottom"] {
+  grid-area: bottom;
+  align-self: end;
+}
+
+:host[position="start"] {
+  grid-area: start;
+  justify-self: start;
+}
+
+:host[position="end"] {
+  grid-area: end;
+  justify-self: end;
+}
+
+:host[floating] {
+  /* Above the main slider */
+  z-index: 2;
+  /* Overlay on top of main slider */
+  grid-area: center;
+  align-self: center;
+  justify-self: center;
+}
+
+:host[floating][position="top"] {
+  align-self: start;
+}
+
+:host[floating][position="bottom"] {
+  align-self: end;
+}
+
+:host[floating][position="start"] {
+  justify-self: start;
+}
+
+:host[floating][position="end"] {
+  justify-self: end;
+}
+
+:host[scrollDisabled] {
+  --_override-slider-overflow: hidden;
 }

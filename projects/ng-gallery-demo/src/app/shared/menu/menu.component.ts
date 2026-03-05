@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, input, InputSignal, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -11,5 +11,5 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   imports: [MatButtonModule, RouterLink, RouterLinkActive, FontAwesomeModule]
 })
 export class MenuComponent {
-  @Input() toolbar = true;
+  toolbar: InputSignal<boolean> = input<boolean>(true);
 }

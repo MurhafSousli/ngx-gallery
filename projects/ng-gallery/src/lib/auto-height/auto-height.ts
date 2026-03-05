@@ -1,99 +1,50 @@
-// import {
-//   Directive,
-//   effect,
-//   inject,
-//   signal,
-//   untracked,
-//   WritableSignal,
-//   EffectCleanupRegisterFn
-// } from '@angular/core';
-// import {
-//   Observable,
-//   Subscription,
-//   of,
-//   filter,
-//   fromEvent,
-//   switchMap,
-//   tap,
-//   take,
-//   debounceTime,
-//   animationFrameScheduler
-// } from 'rxjs';
-// import { ImgManager } from '../utils/img-manager';
-// import { GalleryComponent } from '../core/gallery.component';
-// import { ResizeSensor } from '../services/resize-sensor';
-//
-// /**
-//  * Auto height feature prerequisites:
-//  * - autosize should be set to 'false'
-//  * - if thumbnails exist, it should not be aligned to the right or left
-//  */
-//
-// @Directive({
-//   selector: 'gallery[autoHeight]',
-//   host: {
-//     '[attr.autoHeight]': 'true',
-//     '[class.g-resizing]': 'isResizing()',
-//     '[style.--slider-auto-height.px]': 'height()',
-//   }
-// })
-// export class AutoHeight {
-//
-//   private readonly gallery: GalleryComponent = inject(GalleryComponent);
-//
-//   private readonly manager: ImgManager = inject(ImgManager);
-//
-//   readonly isResizing: WritableSignal<boolean> = signal(false);
-//
-//   readonly height: WritableSignal<number> = signal(0);
-//
-//   constructor() {
-//     let sub$: Subscription;
-//
-//     let afterHeightChanged$: Observable<any>;
-//
-//     effect((onCleanup: EffectCleanupRegisterFn) => {
-//       const resizeSensor: ResizeSensor = this.gallery.slider().resizeSensor();
-//       // Check if height has transition for the auto-height feature
-//       const transitionDuration: string = getComputedStyle(resizeSensor.nativeElement).transitionDuration;
-//       if (!parseFloat(transitionDuration)) {
-//         afterHeightChanged$ = of({});
-//       } else {
-//         console.log(transitionDuration)
-//         afterHeightChanged$ = fromEvent(resizeSensor.nativeElement, 'transitionend');
-//       }
-//       // if (!this.galleryRef.config().autoHeight) return;
-//       // const currIndex = this.galleryRef.currIndex();
-//       untracked(() => {
-//         sub$ = this.manager.getActiveItem().pipe(
-//           filter((img: HTMLImageElement) => !!img),
-//           // Wait for item image to be rendered
-//           debounceTime(0, animationFrameScheduler),
-//           // Skip if img height is equal the slider height
-//           filter((img: HTMLImageElement) => {
-//             console.log('🦕', resizeSensor.nativeElement.clientHeight, img.height)
-//             return img.height !== resizeSensor.nativeElement.clientHeight
-//           }),
-//           switchMap((img: HTMLImageElement) => {
-//             console.log('👽 Resize started! --slider-height', resizeSensor.nativeElement.clientHeight, img.height)
-//             resizeSensor.disabled.set(true);
-//             this.isResizing.set(true);
-//
-//             resizeSensor.nativeElement.style.setProperty('--slider-height', `${img.height}px`)
-//
-//             return afterHeightChanged$.pipe(
-//               debounceTime(0, animationFrameScheduler),
-//               tap(() => {
-//                 resizeSensor.disabled.set(false);
-//                 this.isResizing.set(false);
-//               }),
-//               take(1)
-//             );
-//           })
-//         ).subscribe();
-//
-//         onCleanup(() => sub$?.unsubscribe());
-//       });
-//     });
-//   }
-// }
+import { Directive, inject, computed, Signal, ResourceRef, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { SharedResizeObserver } from '@angular/cdk/observers/private';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { map, filter } from 'rxjs';
+import { Gallery } from '../gallery';
+import { SliderItem } from '../slider-item/slider-item';
+
+
+@Directive({
+  selector: 'gallery[autoHeight]',
+  host: {
+    '[style.height]': '"auto"',
+    '[style.--_slider-will-change]': '"scroll-position, inline-size, block-size"',
+    '[style.--_override-slider-item-height]': '"auto"',
+    '[style.--_override-slider-align-items]': '"start"',
+    '[style.--_override-slider-height.px]': 'activeItemHeight()'
+  }
+})
+export class GalleryAutoHeight {
+
+  private readonly isBrowser: boolean = isPlatformBrowser(inject(PLATFORM_ID))
+
+  private readonly gallery: Gallery = inject(Gallery);
+
+  private readonly sharedResizeObserver: SharedResizeObserver = inject(SharedResizeObserver);
+
+  private readonly activeItemResizeResource: ResourceRef<ResizeObserverEntry> = rxResource({
+    params: () => {
+      const active: SliderItem = this.gallery.activeItem();
+      if (!this.isBrowser || active?.state() !== 'ready') return undefined;
+      return {
+        activeEl: active.nativeElement
+      }
+    },
+    stream: ({ params }) => {
+      return this.sharedResizeObserver.observe(params.activeEl).pipe(
+        map((entries: ResizeObserverEntry[]) =>
+          entries.find((entry: ResizeObserverEntry) => entry.target === params.activeEl)
+        ),
+        filter((entry: ResizeObserverEntry) => !!entry)
+      )
+    }
+  });
+
+  // Expose the measured height as a computed signal for clean binding
+  readonly activeItemHeight: Signal<number> = computed(() => {
+    return this.activeItemResizeResource.value()?.contentRect.height ?? 0;
+  });
+}

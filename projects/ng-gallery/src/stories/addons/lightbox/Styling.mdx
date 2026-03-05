@@ -1,0 +1,170 @@
+import {ArgTypes, Meta} from '@storybook/addon-docs/blocks';
+import * as StylingStories from './Styling.stories';
+
+<Meta of={StylingStories}/>
+
+# 🎨 Lightbox Customizing Styles
+
+Our lightbox uses modern CSS features like `@starting-style` and `allow-discrete` to provide smooth, high-performance transitions.
+You can customize every aspect of the entry and exit animations using CSS Variables or our convenient SCSS mixin.
+
+## CSS Variables Reference
+
+All lightbox animation and appearance properties can be customized via CSS variables. They follow the `--lb-*` naming convention.
+
+<ArgTypes of={StylingStories.StylingExample} />
+
+---
+
+## Usage Examples (SCSS)
+
+Use the `ng-lightbox-overrides` mixin within your styles file (e.g., `styles.scss`) to apply these presets or create your own.
+
+### 1. The "Soft Slide Up"
+
+A clean, modern entrance that slides the lightbox up from the bottom of the screen with a subtle scale effect.
+
+```css
+@use 'ng-gallery' as gallery;
+
+:root {
+  .custom-lightbox-slide {
+    @include gallery.ng-lightbox-overrides((
+      duration-in: 400ms,
+      duration-out: 300ms,
+      timing-in: ease-out,
+      timing-out: ease-in,
+      translate-start: 0 100px,
+      scale-start: 1,
+      opacity-start: 0
+    ));
+  }
+}
+```
+
+### 2. The "Dramatic Zoom"
+
+A high-impact "pop-in" effect with a bouncy timing function and backdrop blur animation.
+
+```css
+@use 'ng-gallery' as gallery;
+
+:root {
+  .custom-lightbox-zoom {
+    @include gallery.ng-lightbox-overrides((
+      duration-in: 600ms,
+      duration-out: 400ms,
+      timing-in: cubic-bezier(0.34, 1.56, 0.64, 1),
+      timing-out: cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      scale-start: 0.2,
+      translate-start: 0 0,
+      opacity-start: 0,
+      backdrop-color: rgba(0, 0, 0, 0.85),
+      backdrop-filter: blur(12px) saturate(160%),
+      backdrop-filter-start: blur(0px) saturate(100%)
+    ));
+  }
+}
+```
+
+### 3. The "Ghost Fade"
+
+A minimal, subtle transition that focuses purely on transparency without movement.
+
+```css
+@use 'ng-gallery' as gallery;
+
+:root {
+  .custom-lightbox-fade {
+    @include gallery.ng-lightbox-overrides((
+      duration-in: 250ms,
+      duration-out: 250ms,
+      timing-in: linear,
+      timing-out: linear,
+      scale-start: 1,
+      translate-start: 0 0,
+      rotate-start: 0deg,
+      opacity-start: 0,
+      backdrop-filter-start: blur(12px) saturate(160%),
+      backdrop-filter: blur(12px) saturate(160%)
+    ));
+  }
+}
+```
+
+### 4. The "Rotate & Scale"
+
+A playful rotation combined with scale transformation for a fun, eye-catching entrance.
+
+```css
+@use 'ng-gallery' as gallery;
+
+:root {
+  .custom-lightbox-rotate {
+    @include gallery.ng-lightbox-overrides((
+      duration-in: 500ms,
+      duration-out: 400ms,
+      timing-in: cubic-bezier(0.68, -0.55, 0.27, 1.55),
+      timing-out: ease-in,
+      scale-start: 0.7,
+      rotate-start: -15deg,
+      opacity-start: 0,
+      backdrop-color: rgba(0, 0, 0, 0.6),
+      backdrop-filter: blur(8px) saturate(120%)
+    ));
+  }
+}
+```
+
+### 5. The "Asymmetric Animation"
+
+Different durations for opening (fast) and closing (slow) for a more interactive feel.
+
+```css
+@use 'ng-gallery' as gallery;
+
+:root {
+  .custom-lightbox-asymmetric {
+    @include gallery.ng-lightbox-overrides((
+      duration-in: 200ms,        // Quick entrance
+      duration-out: 600ms,       // Slow exit
+      timing-in: cubic-bezier(0.16, 1, 0.3, 1),
+      timing-out: cubic-bezier(0.7, 0, 0.84, 0),
+      scale-start: 0.85,
+      translate-start: 0 -50px,
+      opacity-start: 0
+    ));
+  }
+}
+```
+
+---
+
+## Applying Custom Styles
+
+### Method 1: Class-based (Recommended)
+
+Add your custom class to the lightbox element:
+
+```html
+<ng-template lightbox #lightbox="lightbox" panelClass="custom-lightbox-slide">
+  <gallery [items]="items">
+    <!-- gallery content -->
+  </gallery>
+</ng-template>
+```
+
+### Method 2: CSS File
+
+Define in your global CSS:
+
+```css
+.custom-lightbox {
+  --lb-duration-in: 400ms;
+  --lb-duration-out: 300ms;
+  --lb-timing-in: ease-out;
+  --lb-scale-start: 0.9;
+  --lb-translate-start: 0, 30px;
+  --lb-opacity-start: 0;
+}
+```

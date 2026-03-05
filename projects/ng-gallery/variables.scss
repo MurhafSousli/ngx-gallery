@@ -1,0 +1,77 @@
+:host {
+  /* --- SYSTEM TOKENS --- */
+  --g-panel-shape: 100px;
+
+  /* --- PANEL SEMANTIC TOKENS --- */
+  --g-panel-background-color: light-dark(#ffffff, #1a1a1a);
+  --g-panel-border-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+  --g-panel-text-color: light-dark(rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0.9));
+  --g-panel-elevation-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  /* --- DEFAULTS (Empty for flat style) --- */
+  --g-panel-blur: none;
+  --g-panel-border-width: 1px;
+
+
+  /* The "Paint" logic remains to support the dual-layer border trick if needed,
+     but defaults to a simple solid-look gradient */
+  --g-panel-background: linear-gradient(var(--g-panel-background-color), var(--g-panel-background-color)) padding-box,
+  linear-gradient(var(--g-panel-border-color), var(--g-panel-border-color)) border-box;
+
+  --g-button-transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --g-button-shape: 50%;
+  --g-button-background-color: var(--g-panel-background-color);
+  --g-button-border-color: var(--g-panel-border-color);
+  --g-button-background: linear-gradient(var(--g-button-background-color), var(--g-button-background-color)) padding-box,
+  linear-gradient(var(--g-button-border-color), var(--g-button-border-color)) border-box;
+
+  /* --- INTERACTION TOKENS --- */
+  --g-button-border-color-hover: light-dark(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2));
+  --g-button-background-color-hover: light-dark(#f5f5f5, #2a2a2a);
+  --g-button-background-hover: linear-gradient(var(--g-button-background-color-hover), var(--g-button-background-color-hover)) padding-box,
+  linear-gradient(var(--g-button-border-color-hover), var(--g-button-border-color-hover)) border-box;
+
+}
+
+:host ::ng-deep {
+  .g-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--g-panel-text-color);
+    border: var(--g-panel-border-width) solid transparent;
+    border-radius: var(--g-panel-shape);
+    background: var(--g-panel-background);
+    backdrop-filter: var(--g-panel-blur, none);
+    box-shadow: var(--g-panel-elevation-shadow);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .g-button {
+    width: var(--g-button-size, 40px);
+    height: var(--g-button-size, 40px);
+    border-radius: var(--g-button-shape);
+    background: var(--g-button-background);
+    transition: var(--g-button-transition);
+    cursor: pointer;
+
+    &:hover {
+      background: var(--g-button-background-hover);
+    }
+
+    svg {
+      width: var(--g-button-icon-size, 24px);
+      height: var(--g-button-icon-size, 24px);
+      stroke: currentColor;
+      transition: transform 200ms ease;
+    }
+  }
+
+  /* --- ACCESSIBILITY --- */
+  @media (prefers-reduced-motion: reduce) {
+    .g-panel, .g-button svg {
+      transition: none !important;
+    }
+  }
+}

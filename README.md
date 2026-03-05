@@ -9,7 +9,7 @@
 [![npm](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://ngx-gallery.netlify.app)
 [![npm](https://img.shields.io/badge/stackblitz-online-orange.svg)](https://stackblitz.com/edit/ngx-gallery)
 [![npm](https://img.shields.io/npm/v/ng-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ng-gallery)
-[![tests](https://github.com/MurhafSousli/ngx-gallery/workflows/tests/badge.svg)](https://github.com/MurhafSousli/ngx-gallery/actions?query=workflow%3Atests)
+[![CI Build](https://github.com/MurhafSousli/ngx-gallery/actions/workflows/integrate.yml/badge.svg)](https://github.com/MurhafSousli/ngx-gallery/actions/workflows/integrate.yml)
 [![codecov](https://codecov.io/gh/MurhafSousli/ngx-gallery/graph/badge.svg?token=krc4nTzgGR)](https://codecov.io/gh/MurhafSousli/ngx-gallery)
 [![npm](https://img.shields.io/npm/dt/ng-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ng-gallery)
 [![npm](https://img.shields.io/npm/l/express.svg?maxAge=2592000)](/LICENSE)

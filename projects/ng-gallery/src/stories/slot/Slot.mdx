@@ -1,0 +1,57 @@
+import { Meta, ArgTypes } from '@storybook/addon-docs/blocks';
+import * as SlotStories from './Slot.stories';
+
+<Meta title="Gallery Slot" of={SlotStories}/>
+
+# Gallery Slot
+
+Use `gallerySlot` to place custom projected content inside the gallery layout.
+
+A slot can float over the main slider or dock to one of the gallery grid areas. Slot content remains fixed in place and does not participate in slide navigation or item indexing.
+
+### Positioning Model
+
+`gallerySlot` supports three positioning inputs:
+
+  - `gallerySlot` — docking position (optional)
+  - `gallerySlotAlign` — vertical alignment
+  - `gallerySlotJustify` — horizontal alignment
+
+
+#### Default Behavior
+
+If no explicit docking position is provided, the slot is positioned as a floating overlay above the main slider.
+
+
+#### Examples
+
+```html
+<gallery [items]="items">
+  <img *galleryItemDef="let item"
+       [src]="item.src"
+       [alt]="item.alt" />
+
+  <!-- Floating bottom-right overlay -->
+  <div gallerySlot
+       gallerySlotAlign="bottom"
+       gallerySlotJustify="end">
+    This is a fixed box floating in the bottom right corner.
+  </div>
+
+  <!-- Docked at the top, centered -->
+  <div gallerySlot="top">
+    This is a fixed box docked in the top center above the main slider.
+  </div>
+
+  <!-- Docked at the right, vertically centered -->
+  <div gallerySlot="end"
+       gallerySlotAlign="center">
+    This is a fixed box docked to the right center of the main slider.
+  </div>
+</gallery>
+```
+
+
+## API
+
+<ArgTypes of={SlotStories.Slot}/>

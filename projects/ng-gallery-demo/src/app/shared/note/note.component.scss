@@ -1,3 +1,5 @@
+@use '../../../variables' as vars;
+
 :host {
   display: block;
 
@@ -7,7 +9,7 @@
     }
 
     .note-icon {
-      background-color: var(--primary-color);
+      background-color: vars.$primary-color;
     }
   }
 }
@@ -21,7 +23,7 @@
   padding-top: 20px;
   display: flex;
   justify-content: center;
-  background-color: var(--note-color);
+  background-color: vars.$note-color;
 }
 
 mat-icon {
@@ -44,7 +46,7 @@ section {
   margin: 4em 0;
   display: flex;
   align-items: center;
-  background-color: var(--note-bg);
+  background-color: vars.$note-bg;
   border-radius: 0.5em;
   overflow: hidden;
 }
