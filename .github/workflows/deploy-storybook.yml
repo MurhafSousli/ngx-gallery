@@ -1,8 +1,10 @@
-name: Deploy Storybook to GitHub Pages
+name: Deploy Storybook Lifecycle
 
 on:
   push:
     branches: [ master ]
+  release:
+    types: [ published ]
 
 permissions:
   contents: write
@@ -12,10 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v6 # Node 24 Native
+        uses: actions/checkout@v6
 
       - name: Use Node.js 24
-        uses: actions/setup-node@v6 # Node 24 Native
+        uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: 'npm'
@@ -23,40 +25,105 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Reads the major version from package.json and stores it as an environment variable
-      # Example: If your version is "13.0.1", this extracts "v13"
-      - name: Extract Major Version
-        id: get-version
+      # Strategy Pattern: Parse tags vs master branches accurately
+      - name: Compute Target Directory
+        id: target-env
         run: |
-          VERSION=$(node -p "require('./package.json').version")
-          MAJOR_VERSION="v$(echo $VERSION | cut -d. -f1)"
-          echo "major_version=$MAJOR_VERSION" >> $GITHUB_OUTPUT
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "dir=next" >> $GITHUB_OUTPUT
+            echo "is_stable=false" >> $GITHUB_OUTPUT
+          else
+            VERSION=$(node -p "require('./projects/ng-gallery/package.json').version")
+            MAJOR=$(echo $VERSION | cut -d. -f1)
+
+            if [[ "$VERSION" == *"-alpha"* ]]; then
+              echo "dir=v${MAJOR}-alpha" >> $GITHUB_OUTPUT
+              echo "is_stable=false" >> $GITHUB_OUTPUT
+            elif [[ "$VERSION" == *"-beta"* ]]; then
+              echo "dir=v${MAJOR}-beta" >> $GITHUB_OUTPUT
+              echo "is_stable=false" >> $GITHUB_OUTPUT
+            else
+              echo "dir=v${MAJOR}" >> $GITHUB_OUTPUT
+              echo "is_stable=true" >> $GITHUB_OUTPUT
+            fi
+          fi
 
       - name: Build Storybook
         run: npm run storybook-build
 
-      # Generates a root landing page inside the build folder that forwards traffic to the newest release folder
-      - name: Create Base Redirect Landing Page
-        run: |
-          cat <<EOF > ./dist/storybook/ng-gallery/index.html
-          <!DOCTYPE html>
-          <html>
-            <head>
-              <meta http-equiv="refresh" content="0; url=./${{ steps.get-version.outputs.major_version }}/" />
-              <script>window.location.href = "./${{ steps.get-version.outputs.major_version }}/"</script>
-            </head>
-            <body>
-              <p>Redirecting to documentation... <a href="./${{ steps.get-version.outputs.major_version }}/">Click here</a></p>
-            </body>
-          </html>
-          EOF
-
-      # Deploys your assets non-destructively into a versioned subfolder
-      # Keeps old major releases intact on the server
-      - name: Deploy to GitHub Pages
+      # Step 1: Deploy Storybook assets to calculated versioned subdirectory
+      - name: Deploy Storybook Build
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: ./dist/storybook/ng-gallery
           branch: gh-pages
-          target-folder: ${{ steps.get-version.outputs.major_version }}
-          clean: false # CRITICAL: Stops GitHub from deleting older versions!
+          target-folder: ${{ steps.target-env.outputs.dir }}
+          clean: false # CRITICAL: Keeps all other versions alive
+
+      # Step 2: Download, update, and build the dynamic versions.json file
+      - name: Update Versions Manifest JSON
+        run: |
+          mkdir -p ./root-router
+
+          # Try to pull your live versions.json file so we append immutably. If it's a fresh branch, start with []
+          curl -s -f "https://murhafsousli.github.io/ngx-gallery/versions.json" -o ./root-router/versions.json || echo "[]" > ./root-router/versions.json
+
+          TARGET_VALUE="${{ steps.target-env.outputs.dir }}"
+
+          # Clean title formatting logic
+          if [ "$TARGET_VALUE" = "next" ]; then
+            TARGET_TITLE="Next"
+          elif [[ "$TARGET_VALUE" == *"-beta" ]]; then
+            TARGET_TITLE="${TARGET_VALUE//-beta/ Beta}"
+          elif [[ "$TARGET_VALUE" == *"-alpha" ]]; then
+            TARGET_TITLE="${TARGET_VALUE//-alpha/ Alpha}"
+          else
+            TARGET_TITLE="${TARGET_VALUE} (Stable)"
+          fi
+
+          # Inline node compiler utility to append the entry uniquely
+          node -e "
+            const fs = require('fs');
+            const file = './root-router/versions.json';
+            let data = [];
+            try { data = JSON.parse(fs.readFileSync(file, 'utf8')); } catch(e) {}
+
+            if (!data.some(item => item.value === '$TARGET_VALUE')) {
+              data.push({ value: '$TARGET_VALUE', title: '$TARGET_TITLE' });
+              fs.writeFileSync(file, JSON.stringify(data, null, 2));
+            }
+          "
+
+      # Step 3: Conditionally prepare a new root index.html routing index
+      # This block ONLY runs on pushes to master or stable major releases.
+      - name: Generate Smart Routing Shell
+        if: ${{ steps.target-env.outputs.is_stable == 'true' || github.event_name == 'push' }}
+        run: |
+          cat << 'EOF' > ./root-router/index.html
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta charset="utf-8">
+              <title>Documentation Redirect</title>
+              <script>
+                const TARGET_DIR = "${{ steps.target-env.outputs.dir }}";
+                window.location.href = "./" + TARGET_DIR + "/";
+              </script>
+            </head>
+            <body>
+              <p>Redirecting to latest verified version... <a id="fallback" href="./">Click here</a></p>
+              <script>
+                document.getElementById('fallback').href = "./" + TARGET_DIR + "/";
+              </script>
+            </body>
+          </html>
+          EOF
+
+      # Step 4: Deploy the files inside ./root-router directly to the root of gh-pages branch
+      - name: Deploy Manifest and Router to Root
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ./root-router
+          branch: gh-pages
+          target-folder: .
+          clean: false # CRITICAL: Prevents deleting directories like /v13/ or /next/

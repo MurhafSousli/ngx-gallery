@@ -35,9 +35,9 @@ jobs:
             echo "NPM_TAG=latest" >> $GITHUB_OUTPUT
           fi
 
-      - name: Upgrade npm to 11.15.0
-        # npm stage publish requires npm >= 11.15.0, newer than the npm bundled with Node 24.
-        run: npm install -g npm@11.15.0
+      - name: Upgrade npm to 11.16.0
+        # npm stage publish requires npm >= 11.16.0, newer than the npm bundled with Node 24.
+        run: npm install -g npm@11.16.0
 
       # 🟢 Submits the package directly to your npm holding queue
       - name: Stage Publish to NPM via Trusted Publishing
