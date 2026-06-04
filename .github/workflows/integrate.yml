@@ -14,10 +14,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v6
 
-      - name: Use Node.js 24
+      - name: Use Node.js 26
         uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version: 26
           cache: 'npm'
 
       - name: Cache Playwright browsers
@@ -42,7 +42,7 @@ jobs:
         run: npm run test-lib-headless
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v6 # Node 24 Native Codecov Upgraded!
+        uses: codecov/codecov-action@v6 # Node 26 Native Codecov Upgraded!
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: MurhafSousli/ngx-gallery
