@@ -12,9 +12,9 @@ import { versionsHandler } from '#.storybook/mocks/versions.handler';
 setCompodocJson(docJson);
 
 // Initialize MSW globally
-initialize({
-  onUnhandledRequest: 'bypass',
-});
+// NOTE: we delay calling `initialize` until after we resolve the current
+// deployment path (repo + folder) so we can provide MSW with the correct
+// service worker URL when Storybook is hosted under a subpath (GitHub Pages).
 
 // --- Dynamic Release Version Resolution ---
 const currentPath = window.location.pathname; // e.g., "/ngx-gallery/v13-alpha/"
@@ -29,12 +29,27 @@ let dynamicVersionItems: { value: string; displayLabel: string; actualVersion: s
 
 const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
 
+// Choose service worker url depending on whether we're running locally or
+// deployed under a repository subpath (e.g. /<repo>/<folder>/mockServiceWorker.js).
+const swUrl = isLocalhost
+  ? '/mockServiceWorker.js'
+  : `/${ repoName }/${ activeFolderOnServer }/mockServiceWorker.js`;
+
+// Initialize MSW with explicit service worker url so registration happens
+// from the correct directory/scope on GitHub Pages.
+initialize({
+  onUnhandledRequest: 'bypass',
+  serviceWorker: {
+    url: swUrl
+  },
+});
+
 // Load dynamic versions asynchronously without blocking preview initialization
 // IIFE ensures versions are fetched after MSW is initialized
 (async () => {
   if (!isLocalhost) {
     try {
-      const response = await fetch(`/${repoName}/versions.json`, {
+      const response = await fetch(`/${ repoName }/versions.json`, {
         signal: AbortSignal.timeout(4000),
       });
       if (response.ok) {

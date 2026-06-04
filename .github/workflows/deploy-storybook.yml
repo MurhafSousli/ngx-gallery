@@ -42,6 +42,9 @@ jobs:
             elif [[ "$VERSION" == *"-beta"* ]]; then
               echo "dir=v${MAJOR}-beta" >> $GITHUB_OUTPUT
               echo "is_stable=false" >> $GITHUB_OUTPUT
+            elif [[ "$VERSION" == *"-next"* ]]; then
+              echo "dir=v${MAJOR}-next" >> $GITHUB_OUTPUT
+              echo "is_stable=false" >> $GITHUB_OUTPUT
             else
               echo "dir=v${MAJOR}" >> $GITHUB_OUTPUT
               echo "is_stable=true" >> $GITHUB_OUTPUT
