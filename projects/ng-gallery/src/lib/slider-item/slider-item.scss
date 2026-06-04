@@ -18,7 +18,7 @@
   flex-shrink: 0;
   flex-basis: var(--_slider-track-size);
   scroll-snap-align: var(--_slider-snap-align);
-  scroll-snap-stop: var(--g-scroll-snap-stop);
+  scroll-snap-stop: var(--_item-scroll-snap-stop);
 
   // Disable highlighting the elements on mouse move or click
   user-select: none;

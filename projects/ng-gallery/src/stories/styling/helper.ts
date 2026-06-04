@@ -9,12 +9,14 @@ export interface CSSVariablesArgs {
   'button-size': string;
   'button-icon-size': string;
   'item-cursor': string;
+  'item-scroll-snap-stop': string;
   'item-loader-text-color': string;
   'item-loader-background-color': string;
   'item-error-text-color': string;
   'item-error-background-color': string;
   'item-image-transition': string;
   'item-image-size': string;
+  'thumb-scroll-snap-stop': string;
   'thumb-cursor': string;
   'thumb-image-size': string;
   'autoplay-spinner-size': string;
@@ -22,7 +24,6 @@ export interface CSSVariablesArgs {
   'autoplay-thickness': string;
   'autoplay-background-color': string;
   'autoplay-stroke-color': string;
-  'scroll-snap-stop': string;
 }
 
 export const defaultStylingArgs: CSSVariablesArgs = {
@@ -47,7 +48,8 @@ export const defaultStylingArgs: CSSVariablesArgs = {
   'autoplay-thickness': '',
   'autoplay-background-color': '',
   'autoplay-stroke-color': '',
-  'scroll-snap-stop': 'always',
+  'item-scroll-snap-stop': 'always',
+  'thumb-scroll-snap-stop': 'normal',
 };
 
 export const stylingArgTypes: ArgTypes<CSSVariablesArgs> = {
@@ -79,13 +81,6 @@ export const stylingArgTypes: ArgTypes<CSSVariablesArgs> = {
       category: 'Layout',
       defaultValue: { summary: 'cubic-bezier(0.42, 0, 0.58, 1)' }
     },
-  },
-  'scroll-snap-stop': {
-    name: 'scroll-snap-stop',
-    description: 'Forces the scroll container to stop on elements (always vs normal).',
-    control: 'select',
-    options: ['normal', 'always'],
-    table: { category: 'Layout' },
   },
 
   // --- Navigation & Buttons ---
@@ -124,6 +119,16 @@ export const stylingArgTypes: ArgTypes<CSSVariablesArgs> = {
   },
 
   // --- Items & Thumbnails ---
+  'item-scroll-snap-stop': {
+    name: 'item-scroll-snap-stop',
+    description: 'Forces the scroll container to stop on elements.',
+    control: 'select',
+    options: ['normal', 'always'],
+    table: {
+      category: 'Items & Thumbs',
+      defaultValue: { summary: 'always' }
+    },
+  },
   'item-image-size': {
     name: 'item-image-size',
     description: 'Sets the object-fit sizing for the main item images (e.g., cover, contain).',
@@ -148,6 +153,16 @@ export const stylingArgTypes: ArgTypes<CSSVariablesArgs> = {
     description: 'Sets the CSS cursor property when hovering over a main gallery item.',
     control: 'text',
     table: { category: 'Items & Thumbs' },
+  },
+  'thumb-scroll-snap-stop': {
+    name: 'thumb-scroll-snap-stop',
+    description: 'Forces the scroll container to stop on elements.',
+    control: 'select',
+    options: ['normal', 'always'],
+    table: {
+      category: 'Items & Thumbs',
+      defaultValue: { summary: 'normal' }
+    },
   },
   'thumb-image-size': {
     name: 'thumb-image-size',
