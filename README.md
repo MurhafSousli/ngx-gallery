@@ -6,7 +6,7 @@
 <p align="center">Simplifies the process of creating beautiful image galleries for the web and mobile devices.</p>
 
 
-[![npm](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://ngx-gallery.netlify.app)
+[![npm](https://img.shields.io/badge/demo-online-ed1c46.svg)](https://murhafsousli.github.io/ngx-gallery/)
 [![npm](https://img.shields.io/badge/stackblitz-online-orange.svg)](https://stackblitz.com/edit/ngx-gallery)
 [![npm](https://img.shields.io/npm/v/ng-gallery.svg?maxAge=2592000?style=plastic)](https://www.npmjs.com/package/ng-gallery)
 [![CI Build](https://github.com/MurhafSousli/ngx-gallery/actions/workflows/integrate.yml/badge.svg)](https://github.com/MurhafSousli/ngx-gallery/actions/workflows/integrate.yml)
@@ -19,18 +19,16 @@ ___
 
 ### Explore ngx-gallery Documentation
 
-- For **v11:** use the [wiki page](https://github.com/MurhafSousli/ngx-gallery/wiki) 📚.
+- Documentations [storybook documentation](https://murhafsousli.github.io/ngx-gallery/).
 
-- For **v12:** use the [storybook documentation](https://ngx-gallery-next.netlify.app/)
+- Legacy documentations for versions < 13:
+  - For **v12:** use the [documentation](https://ngx-gallery-next.netlify.app/).
+  - For **v11:** use the [wiki page](https://github.com/MurhafSousli/ngx-gallery/wiki).
 
 We value your feedback and appreciate your support in testing this beta release!
 
 ___
 
-
-## Support
-
-[![npm](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=5594898)
 
 ## Issues
 
@@ -38,7 +36,4 @@ If you identify any errors in this module, or have an idea for an improvement, p
 
 ## Author
 
-**[Murhaf Sousli](http://murhafsousli.com)**
-
-- [github/murhafsousli](https://github.com/MurhafSousli)
-- [twitter/murhafsousli](https://twitter.com/MurhafSousli)
+- Murhaf Sousli [Github](https://github.com/MurhafSousli), [X](https://x.com/MurhafSousli)

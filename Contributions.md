@@ -7,7 +7,7 @@ please follow these guidelines. This project is built with **Angular v21** (Sign
 
 ### 1. Environment Setup
 
-Ensure you have [Node.js](https://nodejs.org/)@24 installed.
+Ensure you have [Node.js](https://nodejs.org/)@26 installed.
 
 ```bash
 # Install dependencies
