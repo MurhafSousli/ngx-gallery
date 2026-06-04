@@ -15,5 +15,13 @@
     "src/**/*.spec.ts",
     "lightbox/src/**/*.d.ts",
     "lightbox/src/**/*.spec.ts",
-  ]
+  ],
+  "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
+  }
 }

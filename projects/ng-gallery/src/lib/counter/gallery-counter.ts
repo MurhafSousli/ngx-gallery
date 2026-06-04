@@ -4,8 +4,7 @@ import {
   input,
   computed,
   Signal,
-  InputSignal,
-  ChangeDetectionStrategy
+  InputSignal
 } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { Gallery } from '../gallery';
@@ -21,8 +20,7 @@ import { GALLERY_OPTIONS } from '../models/gallery.token';
   },
   template: `{{ text() }}`,
   styleUrl: 'gallery-counter.scss',
-  providers: [DecimalPipe],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  providers: [DecimalPipe]
 })
 export class GalleryCounter {
 

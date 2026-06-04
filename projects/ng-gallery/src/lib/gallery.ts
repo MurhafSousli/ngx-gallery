@@ -10,7 +10,6 @@ import {
   Signal,
   InputSignal,
   WritableSignal,
-  ChangeDetectionStrategy,
   InputSignalWithTransform
 } from '@angular/core';
 import { Directionality } from '@angular/cdk/bidi';
@@ -58,8 +57,8 @@ function baseSliderOptionsFactory(): BaseSliderOptions {
   template: `
     <g-slider #sensor="intersectionSensor">
       @let template = itemDef().templateRef;
-      @let loaderTemplate = itemLoaderDef()?.templateRef;
-      @let errorTemplate = itemErrorDef()?.templateRef;
+      @let loaderTemplate = $safeNavigationMigration(itemLoaderDef()?.templateRef);
+      @let errorTemplate = $safeNavigationMigration(itemErrorDef()?.templateRef);
       @let visibleEntries = sensor.visibleEntries();
       @let active = activeIndex();
       @let anchor = anchorIndex();
@@ -90,7 +89,6 @@ function baseSliderOptionsFactory(): BaseSliderOptions {
     }
   `,
   styleUrls: ['../../variables.scss', 'gallery.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: BASE_SLIDER_OPTIONS,

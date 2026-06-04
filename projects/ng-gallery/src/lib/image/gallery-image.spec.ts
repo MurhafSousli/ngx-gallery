@@ -1,4 +1,4 @@
-import { Component, ElementRef, signal, Signal, viewChild, } from '@angular/core';
+import { Component, ElementRef, signal, Signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GalleryItemDef, Gallery, GalleryImage } from 'ng-gallery';
 import { SliderItem } from '../slider-item/slider-item';

@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit, WritableSignal, ChangeDetectionStrategy, effect } from '@angular/core';
+import { Component, inject, signal, OnInit, WritableSignal, effect } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpResourceRef } from '@angular/common/http';
@@ -29,7 +29,6 @@ import { FooterComponent } from '../../shared/footer/footer.component';
   selector: 'lab',
   templateUrl: './lab.component.html',
   styleUrl: './lab.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MatIconModule,
     MatButtonModule,

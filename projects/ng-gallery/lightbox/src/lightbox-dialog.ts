@@ -4,8 +4,7 @@ import {
   Injector,
   OnDestroy,
   ElementRef,
-  TemplateRef,
-  ChangeDetectionStrategy
+  TemplateRef
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { LightboxCloseButton } from './lightbox-close-button';
@@ -43,7 +42,6 @@ import { DIALOG_CLOSEDBY_SUPPORTED } from './lightbox-closedby.token';
     { provide: LIGHTBOX_DIALOG, useExisting: LightboxDialog }
   ],
   styleUrls: ['../../variables.scss', 'lightbox-dialog.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgTemplateOutlet, LightboxCloseButton]
 })
 export class LightboxDialog implements LightboxRef, OnDestroy {

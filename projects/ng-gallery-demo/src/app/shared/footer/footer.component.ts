@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,7 +7,6 @@ import { MatButtonModule } from '@angular/material/button';
   selector: 'footer',
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [MatButtonModule, FontAwesomeModule, DatePipe]
 })
 export class FooterComponent {
