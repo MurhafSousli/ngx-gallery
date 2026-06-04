@@ -11,44 +11,48 @@ import { versionsHandler } from '#.storybook/mocks/versions.handler';
 
 setCompodocJson(docJson);
 
-// Initialize MSW globally
-initialize({
-  onUnhandledRequest: 'bypass',
-});
-
-// --- Dynamic Release Version Resolution ---
+// --- Context and Path Resolution ---
 const currentPath = window.location.pathname; // e.g., "/ngx-gallery/v13-alpha/"
 const pathSegments = currentPath.split('/').filter(Boolean);
 const repoName = pathSegments[0] || 'ngx-gallery';
 const activeFolderOnServer = pathSegments[1] || 'next';
 
-// Default: show only the currently active version (used locally and as safe fallback)
-let dynamicVersionItems: { value: string; title: string }[] = [
+const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+
+const swUrl = isLocalhost
+  ? '/mockServiceWorker.js'
+  : `/${ repoName }/${ activeFolderOnServer }/mockServiceWorker.js`;
+
+initialize({
+  onUnhandledRequest: 'bypass',
+  serviceWorker: { url: swUrl },
+});
+
+// Seed the baseline array with your safe active server directory fallback
+const dynamicVersionItems = [
   { value: activeFolderOnServer, title: activeFolderOnServer }
 ];
 
-const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
-
-// Load dynamic versions asynchronously without blocking preview initialization
-// IIFE ensures versions are fetched after MSW is initialized
+// Completely non-blocking background fetch operation via your async IIFE pattern
 (async () => {
   if (!isLocalhost) {
     try {
-      const response = await fetch(`/${repoName}/versions.json`, {
+      const response = await fetch(`/${ repoName }/versions.json`, {
         signal: AbortSignal.timeout(4000),
       });
       if (response.ok) {
         const manifest = await response.json();
         if (Array.isArray(manifest) && manifest.length > 0) {
-          dynamicVersionItems = manifest;
-          // Update toolbar items after fetching versions
-          const updatedVersionToolbarItems = dynamicVersionItems.map(item => ({
-            value: item.value,
-            title: item.value === activeFolderOnServer ? `${item.title} [Active]` : item.title
-          }));
-          // Update the global state if Storybook provides a way to do so
-          // This might require additional Storybook API usage
-          console.log('Dynamic versions loaded:', updatedVersionToolbarItems);
+          // Clear the baseline item without breaking the array reference pointer
+          dynamicVersionItems.length = 0;
+
+          // Push the fresh values directly into the stable array reference
+          manifest.forEach(item => {
+            dynamicVersionItems.push({
+              value: item.value,       // e.g., "v13-alpha"
+              title: item.displayLabel  // e.g., "v13 Alpha"
+            });
+          });
         }
       }
     } catch (error) {
@@ -57,31 +61,21 @@ const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname
   }
 })();
 
-// Map items to explicitly mark the currently viewed path folder as "[Active]"
-const versionToolbarItems = dynamicVersionItems.map(item => ({
-  value: item.value,
-  title: item.value === activeFolderOnServer ? `${item.title} [Active]` : item.title
-}));
-
 // --- Define CSF Next Preview Configuration ---
 export default definePreview({
-  loaders: [mswLoader],
   addons: [
     addonDocs(),
     addonA11y()
   ],
+  loaders: [mswLoader],
   parameters: {
     docs: {
       theme: themes.dark,
       source: {
-        /**
-         * Cleans the code snippet before it is displayed in the "Docs" tab.
-         * It removes the wrapper we added in the decorator below.
-         */
         transform: (code: string) => {
           return code
-            .replace(/^@if\s*\(true\)\s*\{\s*/, '') // Remove opening
-            .replace(/\s*\}$/, '')                 // Remove closing
+            .replace(/^@if\s*\(true\)\s*\{\s*/, '')
+            .replace(/\s*\}$/, '')
             .trim();
         },
       },
@@ -111,50 +105,49 @@ export default definePreview({
         dynamicTitle: true
       }
     },
-    // Dynamic versions fed from server-side json file
     releaseVersion: {
       description: 'Switch Library Releases',
-      defaultValue: activeFolderOnServer, // Autofocus dropdown value onto the active directory path
+      defaultValue: activeFolderOnServer,
       toolbar: {
         title: 'Version',
         icon: 'book',
-        items: versionToolbarItems,
+        // Passes the live-mutated array reference directly
+        items: dynamicVersionItems,
         dynamicTitle: true,
       },
     },
-    initialGlobals: {
-      theme: 'dark',
-      releaseVersion: activeFolderOnServer // Dynamically balance context key assignments
-    },
-    decorators: [
-      // 1. Version Swapping Safe Route Decoupler
-      (storyFn, context) => {
-        const selectedVersion = context.globals['releaseVersion'];
-        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  },
+  initialGlobals: {
+    theme: 'dark',
+    releaseVersion: activeFolderOnServer
+  },
+  decorators: [
+    // 1. Version Swapping Router Handler (Only reads from stable, existing context properties)
+    (storyFn, context) => {
+      const selectedVersion = context.globals['releaseVersion'];
 
-        if (!isLocalhost && selectedVersion) {
-          const segments = window.location.pathname.split('/').filter(Boolean);
-          const currentRepo = segments[0];
-          const activeFolder = segments[1];
+      if (!isLocalhost && selectedVersion) {
+        const segments = window.location.pathname.split('/').filter(Boolean);
+        const currentRepo = segments[0];
+        const activeFolder = segments[1];
 
-          // Route breaking check to completely decouple string matching traps
-          if (activeFolder && activeFolder !== selectedVersion) {
-            window.top.location.href = `/${ currentRepo }/${ selectedVersion }/`;
-            return storyFn();
-          }
+        if (activeFolder && activeFolder !== selectedVersion) {
+          window.top.location.href = `/${ currentRepo }/${ selectedVersion }/`;
+          return storyFn();
         }
+      }
+      return storyFn();
+    },
 
-        return storyFn();
-      },
-      // 2. Core Color/Theme Global Strategy Decorator
-      (storyFn, context) => {
-        const theme: string = context.globals['theme'] || 'dark';
-        document.documentElement.setAttribute('data-theme', theme);
-        document.documentElement.style.colorScheme = theme;
-        return storyFn();
-      },
-      // 3. Gallery-thumbs override bug mitigation workaround
-      componentWrapperDecorator((story) => `@if(true) { ${ story } }`),
-    ],
-  }
+    // 2. Global Style & Theme Strategy Decorator
+    (storyFn, context) => {
+      const theme: string = context.globals['theme'] || 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.style.colorScheme = theme;
+      return storyFn();
+    },
+
+    // 3. Structural template hack wrapper mitigation
+    componentWrapperDecorator((story) => `@if(true) { ${ story } }`),
+  ],
 });
