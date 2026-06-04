@@ -23,8 +23,8 @@ const repoName = pathSegments[0] || 'ngx-gallery';
 const activeFolderOnServer = pathSegments[1] || 'next';
 
 // Default: show only the currently active version (used locally and as safe fallback)
-let dynamicVersionItems: { value: string; title: string }[] = [
-  { value: activeFolderOnServer, title: activeFolderOnServer }
+let dynamicVersionItems: { value: string; displayLabel: string; actualVersion: string }[] = [
+  { value: activeFolderOnServer, displayLabel: activeFolderOnServer, actualVersion: activeFolderOnServer }
 ];
 
 const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
@@ -41,14 +41,7 @@ const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname
         const manifest = await response.json();
         if (Array.isArray(manifest) && manifest.length > 0) {
           dynamicVersionItems = manifest;
-          // Update toolbar items after fetching versions
-          const updatedVersionToolbarItems = dynamicVersionItems.map(item => ({
-            value: item.value,
-            title: item.value === activeFolderOnServer ? `${item.title} [Active]` : item.title
-          }));
-          // Update the global state if Storybook provides a way to do so
-          // This might require additional Storybook API usage
-          console.log('Dynamic versions loaded:', updatedVersionToolbarItems);
+          console.log('Dynamic versions loaded:', dynamicVersionItems);
         }
       }
     } catch (error) {
@@ -57,11 +50,16 @@ const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname
   }
 })();
 
-// Map items to explicitly mark the currently viewed path folder as "[Active]"
+// Build toolbar items using displayLabel from manifest
 const versionToolbarItems = dynamicVersionItems.map(item => ({
   value: item.value,
-  title: item.value === activeFolderOnServer ? `${item.title} [Active]` : item.title
+  title: item.displayLabel
 }));
+
+// Create a map for quick lookup of actual version by value
+const versionMap = Object.fromEntries(
+  dynamicVersionItems.map(item => [item.value, item.actualVersion])
+);
 
 // --- Define CSF Next Preview Configuration ---
 export default definePreview({
@@ -116,7 +114,7 @@ export default definePreview({
       description: 'Switch Library Releases',
       defaultValue: activeFolderOnServer, // Autofocus dropdown value onto the active directory path
       toolbar: {
-        title: 'Version',
+        title: `Version: ${versionMap[activeFolderOnServer] || activeFolderOnServer}`,
         icon: 'book',
         items: versionToolbarItems,
         dynamicTitle: true,
@@ -146,11 +144,17 @@ export default definePreview({
 
         return storyFn();
       },
-      // 2. Core Color/Theme Global Strategy Decorator
+      // 2. Core Color/Theme Global Strategy Decorator with Dynamic Version Display
       (storyFn, context) => {
         const theme: string = context.globals['theme'] || 'dark';
+        const selectedVersion = context.globals['releaseVersion'];
+        const actualVersion = versionMap[selectedVersion] || selectedVersion;
+
         document.documentElement.setAttribute('data-theme', theme);
         document.documentElement.style.colorScheme = theme;
+
+        // Update the toolbar title dynamically when selection changes
+        // This is handled by Storybook's dynamicTitle: true, but we ensure version map is accurate
         return storyFn();
       },
       // 3. Gallery-thumbs override bug mitigation workaround
