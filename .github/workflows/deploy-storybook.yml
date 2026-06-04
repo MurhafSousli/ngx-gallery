@@ -25,15 +25,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Strategy Pattern: Parse tags vs master branches accurately
+      # Strategy Pattern: Parse tags vs master branches accurately without losing context
       - name: Compute Target Directory
         id: target-env
         run: |
+          # Extract version globally up-front so it's always accessible as a fallback
+          VERSION=$(node -p "require('./projects/ng-gallery/package.json').version")
+          echo "actual_version=$VERSION" >> $GITHUB_OUTPUT
+
           if [ "${{ github.event_name }}" = "push" ]; then
             echo "dir=next" >> $GITHUB_OUTPUT
             echo "is_stable=false" >> $GITHUB_OUTPUT
           else
-            VERSION=$(node -p "require('./projects/ng-gallery/package.json').version")
             MAJOR=$(echo $VERSION | cut -d. -f1)
 
             if [[ "$VERSION" == *"-alpha"* ]]; then
@@ -63,38 +66,64 @@ jobs:
           target-folder: ${{ steps.target-env.outputs.dir }}
           clean: false # CRITICAL: Keeps all other versions alive
 
-      # Step 2: Download, update, and build the dynamic versions.json file
-      - name: Update Versions Manifest JSON
+      # Step 2: Dynamically discover real active directories and build a clean manifest
+      - name: Generate Clean Versions Manifest JSON
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir -p ./root-router
 
-          # Try to pull your live versions.json file so we append immutably. If it's a fresh branch, start with []
-          curl -s -f "https://murhafsousli.github.io/ngx-gallery/versions.json" -o ./root-router/versions.json || echo "[]" > ./root-router/versions.json
+          # 1. Fetch live directories directly from the gh-pages branch structure
+          # Filters out root-level configuration files, workflows, or JSON definitions
+          DIRS=$(curl -s -H "Authorization: token $GH_TOKEN" \
+            "https://api.github.com/repos/${{ github.repository }}/contents?ref=gh-pages" \
+            | node -e "
+              const fs = require('fs');
+              const input = JSON.parse(fs.readFileSync(0, 'utf-8'));
+              const dirs = input
+                .filter(f => f.type === 'dir' && f.name !== '.github')
+                .map(f => f.name);
+              console.log(JSON.stringify(dirs));
+            ")
 
           TARGET_VALUE="${{ steps.target-env.outputs.dir }}"
+          ACTUAL_VERSION="${{ steps.target-env.outputs.actual_version }}"
 
-          # Clean title formatting logic
-          if [ "$TARGET_VALUE" = "next" ]; then
-            TARGET_TITLE="Next"
-          elif [[ "$TARGET_VALUE" == *"-beta" ]]; then
-            TARGET_TITLE="${TARGET_VALUE//-beta/ Beta}"
-          elif [[ "$TARGET_VALUE" == *"-alpha" ]]; then
-            TARGET_TITLE="${TARGET_VALUE//-alpha/ Alpha}"
-          else
-            TARGET_TITLE="${TARGET_VALUE} (Stable)"
-          fi
-
-          # Inline node compiler utility to append the entry uniquely
+          # 2. Compile clean entries inside an isolated node utility
           node -e "
             const fs = require('fs');
-            const file = './root-router/versions.json';
-            let data = [];
-            try { data = JSON.parse(fs.readFileSync(file, 'utf8')); } catch(e) {}
+            const targetDir = '$TARGET_VALUE';
+            const actualVersion = '$ACTUAL_VERSION';
+            const existingDirs = $DIRS;
 
-            if (!data.some(item => item.value === '$TARGET_VALUE')) {
-              data.push({ value: '$TARGET_VALUE', title: '$TARGET_TITLE' });
-              fs.writeFileSync(file, JSON.stringify(data, null, 2));
+            // Ensure our newly built target folder is guaranteed to be recognized
+            if (!existingDirs.includes(targetDir)) {
+              existingDirs.push(targetDir);
             }
+
+            const manifest = existingDirs.map(dir => {
+              let title = dir;
+              if (dir === 'next') {
+                title = 'Next';
+              } else if (dir.includes('-beta')) {
+                title = dir.replace('-beta', ' Beta');
+              } else if (dir.includes('-alpha')) {
+                title = dir.replace('-alpha', ' Alpha');
+              } else {
+                title = \`\${dir} (Stable)\`;
+              }
+
+              return {
+                value: dir,
+                displayLabel: title,
+                actualVersion: dir === targetDir ? actualVersion : dir
+              };
+            });
+
+            // Sort versions logically: 'next' first, then newer semver folders down
+            manifest.sort((a, b) => a.value === 'next' ? -1 : b.value === 'next' ? 1 : b.value.localeCompare(a.value));
+
+            fs.writeFileSync('./root-router/versions.json', JSON.stringify(manifest, null, 2));
           "
 
       # Step 3: Conditionally prepare a new root index.html routing index
