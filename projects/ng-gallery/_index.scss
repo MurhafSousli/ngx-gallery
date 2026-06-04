@@ -17,14 +17,15 @@
     'item-error-background-color',
     'item-image-transition',
     'item-image-size',
+    'item-scroll-snap-stop',
     'thumb-cursor',
     'thumb-image-size',
+    'thumb-scroll-snap-stop',
     'autoplay-spinner-size',
     'autoplay-spinner-offset',
     'autoplay-thickness',
     'autoplay-background-color',
     'autoplay-stroke-color',
-    'scroll-snap-stop'
   );
 
   @each $key in $gallery-keys {

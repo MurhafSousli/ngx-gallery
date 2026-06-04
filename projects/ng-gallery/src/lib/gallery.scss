@@ -22,6 +22,9 @@
 
   // override item's image size
   --_item-image-size: var(--g-item-image-size, contain);
+
+  // override item's scroll snap stop
+  --_item-scroll-snap-stop: var(--g-item-scroll-snap-stop, always);
 }
 
 

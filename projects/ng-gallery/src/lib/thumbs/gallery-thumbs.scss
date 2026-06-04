@@ -17,6 +17,8 @@
   --g-item-gutter-size: var(--g-thumb-gutter-size);
   // Override item's image size
   --_item-image-size: var(--g-thumb-image-size, cover);
+  // override item's scroll snap stop
+  --_item-scroll-snap-stop: var(--g-thumb-scroll-snap-stop, normal);
 }
 
 /* Horizontal: Take full width, shrink-wrap height */
