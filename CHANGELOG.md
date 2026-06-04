@@ -1,6 +1,6 @@
 # Changelog
 
-## 13.0.0
+## 13.0.0-next.0
 
 The library has been written from scratch.
 
@@ -20,7 +20,7 @@ The library has been written from scratch.
 - feat: Add SASS function to customize the gallery CSS variables `ng-gallery-overrides()`.
 - feat: Add SASS function to customize the lightbox CSS variables `ng-lightbox-overrides()`.
 - feat: Add `initialIndex` input to set the initial gallery index.
-- feat: Add `snapAlign` input to set the items alignment in the viewport.
+- feat: Add `snapAlign` input to set the items' alignment in the viewport.
 - feat: Add `liveIndex` signal to Gallery API.
 - feat: Add `steps` option to `next()` and `prev()` methods, extends navigation feature.
 - feat: (A11Y) Accessibility support using `provideGalleryA11yOptions()`
