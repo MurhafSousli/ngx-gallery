@@ -15,7 +15,7 @@ setCompodocJson(docJson);
 const currentPath = window.location.pathname; // e.g., "/ngx-gallery/v13-alpha/"
 const pathSegments = currentPath.split('/').filter(Boolean);
 const repoName = pathSegments[0] || 'ngx-gallery';
-const activeFolderOnServer = pathSegments[1] || 'next';
+const activeFolderOnServer = pathSegments[1] || 'Local';
 
 const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
 

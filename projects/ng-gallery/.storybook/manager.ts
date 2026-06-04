@@ -3,5 +3,6 @@ import darkTheme from './dark-theme';
 
 addons.setConfig({
   initialActive: 'Stories/Introduction',
-  theme: darkTheme
+  theme: darkTheme,
+  panelPosition: 'right'
 });
