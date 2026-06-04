@@ -7,6 +7,7 @@ import { initialize, mswLoader } from 'msw-storybook-addon';
 
 import docJson from '../documentation.json';
 import { pixabayHandler } from '#.storybook/mocks/pixabay.handler';
+import { versionsHandler } from '#.storybook/mocks/versions.handler';
 
 setCompodocJson(docJson);
 
@@ -15,6 +16,54 @@ initialize({
   onUnhandledRequest: 'bypass',
 });
 
+// --- Dynamic Release Version Resolution ---
+const currentPath = window.location.pathname; // e.g., "/ngx-gallery/v13-alpha/"
+const pathSegments = currentPath.split('/').filter(Boolean);
+const repoName = pathSegments[0] || 'ngx-gallery';
+const activeFolderOnServer = pathSegments[1] || 'next';
+
+// Default: show only the currently active version (used locally and as safe fallback)
+let dynamicVersionItems: { value: string; title: string }[] = [
+  { value: activeFolderOnServer, title: activeFolderOnServer }
+];
+
+const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+
+// Load dynamic versions asynchronously without blocking preview initialization
+// IIFE ensures versions are fetched after MSW is initialized
+(async () => {
+  if (!isLocalhost) {
+    try {
+      const response = await fetch(`/${repoName}/versions.json`, {
+        signal: AbortSignal.timeout(4000),
+      });
+      if (response.ok) {
+        const manifest = await response.json();
+        if (Array.isArray(manifest) && manifest.length > 0) {
+          dynamicVersionItems = manifest;
+          // Update toolbar items after fetching versions
+          const updatedVersionToolbarItems = dynamicVersionItems.map(item => ({
+            value: item.value,
+            title: item.value === activeFolderOnServer ? `${item.title} [Active]` : item.title
+          }));
+          // Update the global state if Storybook provides a way to do so
+          // This might require additional Storybook API usage
+          console.log('Dynamic versions loaded:', updatedVersionToolbarItems);
+        }
+      }
+    } catch (error) {
+      console.warn('Version manifest unavailable, falling back to active version:', error);
+    }
+  }
+})();
+
+// Map items to explicitly mark the currently viewed path folder as "[Active]"
+const versionToolbarItems = dynamicVersionItems.map(item => ({
+  value: item.value,
+  title: item.value === activeFolderOnServer ? `${item.title} [Active]` : item.title
+}));
+
+// --- Define CSF Next Preview Configuration ---
 export default definePreview({
   loaders: [mswLoader],
   addons: [
@@ -38,7 +87,7 @@ export default definePreview({
       },
     },
     msw: {
-      handlers: [pixabayHandler],
+      handlers: [pixabayHandler, versionsHandler],
     },
     options: {
       storySort: {
@@ -62,49 +111,50 @@ export default definePreview({
         dynamicTitle: true
       }
     },
-    // Added your version switcher global configuration
+    // Dynamic versions fed from server-side json file
     releaseVersion: {
       description: 'Switch Library Releases',
-      defaultValue: 'v13', // Update this baseline value when you upgrade to v14
+      defaultValue: activeFolderOnServer, // Autofocus dropdown value onto the active directory path
       toolbar: {
         title: 'Version',
         icon: 'book',
-        items: [
-          { value: 'v13', title: 'v13 (Latest)' }
-          // Append future major version release hooks here (e.g., { value: 'v14', title: 'v14' })
-        ],
+        items: versionToolbarItems,
         dynamicTitle: true,
       },
-    }
-  },
-  initialGlobals: {
-    theme: 'dark',
-    releaseVersion: 'v13'
-  },
-  decorators: [
-    // 1. Version Switcher Redirect Handler Interceptor
-    (storyFn, context) => {
-      const selectedVersion = context.globals['releaseVersion'];
-      const currentPath = window.location.pathname;
-      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-
-      // 🟢 Only redirect if we are NOT on localhost AND the path doesn't match our version directory
-      if (!isLocalhost && selectedVersion && !currentPath.includes(`/${selectedVersion}/`)) {
-        const repoName = currentPath.split('/')[1];
-
-        // Triggers parent browser window context redirection straight to the old directory
-        window.location.href = `/${repoName}/${selectedVersion}/`;
-      }
-      return storyFn();
     },
-    // 2. Core Color/Theme Global Strategy Decorator
-    (storyFn, context) => {
-      const theme: string = context.globals['theme'] || 'dark';
-      document.documentElement.setAttribute('data-theme', theme);
-      document.documentElement.style.colorScheme = theme;
-      return storyFn();
+    initialGlobals: {
+      theme: 'dark',
+      releaseVersion: activeFolderOnServer // Dynamically balance context key assignments
     },
-    // 3. Gallery-thumbs override bug mitigation workaround
-    componentWrapperDecorator((story) => `@if(true) { ${story} }`),
-  ],
+    decorators: [
+      // 1. Version Swapping Safe Route Decoupler
+      (storyFn, context) => {
+        const selectedVersion = context.globals['releaseVersion'];
+        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+        if (!isLocalhost && selectedVersion) {
+          const segments = window.location.pathname.split('/').filter(Boolean);
+          const currentRepo = segments[0];
+          const activeFolder = segments[1];
+
+          // Route breaking check to completely decouple string matching traps
+          if (activeFolder && activeFolder !== selectedVersion) {
+            window.top.location.href = `/${ currentRepo }/${ selectedVersion }/`;
+            return storyFn();
+          }
+        }
+
+        return storyFn();
+      },
+      // 2. Core Color/Theme Global Strategy Decorator
+      (storyFn, context) => {
+        const theme: string = context.globals['theme'] || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.style.colorScheme = theme;
+        return storyFn();
+      },
+      // 3. Gallery-thumbs override bug mitigation workaround
+      componentWrapperDecorator((story) => `@if(true) { ${ story } }`),
+    ],
+  }
 });
