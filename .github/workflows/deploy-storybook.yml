@@ -25,123 +25,128 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Strategy Pattern: Direct all pre-releases and master pushes strictly to "next"
-      - name: Compute Target Directory
+      # Strategy Pattern: Direct all master pushes and pre-releases strictly to "next"
+      # Pure stable production releases drop cleanly into exact version subdirectories (e.g., 13.0.1)
+      Sir: Compute Target Directory
         id: target-env
         run: |
           VERSION=$(node -p "require('./projects/ng-gallery/package.json').version")
           echo "actual_version=$VERSION" >> $GITHUB_OUTPUT
 
-          # If it's a branch push OR the version contains pre-release markers, it's "next"
+          # If it's a branch push OR the package.json version contains pre-release tags, route to next
           if [ "${{ github.event_name }}" = "push" ] || [[ "$VERSION" == *"-next"* ]] || [[ "$VERSION" == *"-alpha"* ]] || [[ "$VERSION" == *"-beta"* ]]; then
             echo "dir=next" >> $GITHUB_OUTPUT
             echo "is_stable=false" >> $GITHUB_OUTPUT
           else
-            # Pure stable release (e.g., 13.0.0)
-            MAJOR=$(echo $VERSION | cut -d. -f1)
-            echo "dir=v${MAJOR}" >> $GITHUB_OUTPUT
+            # Stable production release maps directly to literal patch version folder name
+            echo "dir=$VERSION" >> $GITHUB_OUTPUT
             echo "is_stable=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Build Storybook
         run: npm run storybook-build
 
-      # Step 1: Create an isolated staging directory and copy versioned assets into it
+      # Step 1: Create an isolated staging directory and copy built compilation targets into it
       - name: Stage Storybook Assets
         run: |
           mkdir -p ./deploy-staging/${{ steps.target-env.outputs.dir }}
           cp -r ./dist/storybook/ng-gallery/* ./deploy-staging/${{ steps.target-env.outputs.dir }}/
 
-      # Step 2: Dynamically discover real active directories and build a clean manifest directly inside staging
+      # Step 2: Dynamically discover real active directories on gh-pages to generate versions.json
+      # Guardrail: Enclosed in a try/catch block to handle 404s gracefully if the branch is empty
       - name: Generate Clean Versions Manifest JSON
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # 1. Fetch live directories directly from the gh-pages branch structure
+          # 1. Fetch existing folder tree strings from live gh-pages branch structure
           DIRS=$(curl -s -H "Authorization: token $GH_TOKEN" \
             "https://api.github.com/repos/${{ github.repository }}/contents?ref=gh-pages" \
             | node -e "
               const fs = require('fs');
-              const input = JSON.parse(fs.readFileSync(0, 'utf-8'));
-              if (!Array.isArray(input)) {
-                console.log(JSON.stringify([]));
-                process.exit(0);
+              try {
+                const input = JSON.parse(fs.readFileSync(0, 'utf-8'));
+                if (!Array.isArray(input)) {
+                  console.log(JSON.stringify([]));
+                } else {
+                  const dirs = input
+                    .filter(f => f.type === 'dir' && f.name !== '.github')
+                    .map(f => f.name);
+                  console.log(JSON.stringify(dirs));
+                }
+              } catch (e) {
+                console.log(JSON.stringify([])); // Branch does not exist yet or token expired
               }
-              const dirs = input
-                .filter(f => f.type === 'dir' && f.name !== '.github')
-                .map(f => f.name);
-              console.log(JSON.stringify(dirs));
             ")
 
           TARGET_VALUE="${{ steps.target-env.outputs.dir }}"
           ACTUAL_VERSION="${{ steps.target-env.outputs.actual_version }}"
 
-          # 2. Compile clean entries inside an isolated node utility directly into the staging folder
-            node -e "
-              const fs = require('fs');
-              const targetDir = '$TARGET_VALUE';
-              const actualVersion = '$ACTUAL_VERSION';
-              const existingDirs = $DIRS;
+          # 2. Compile clean structured entries using escaped template literal sequences (\${var})
+          node -e "
+            const fs = require('fs');
+            const targetDir = '$TARGET_VALUE';
+            const actualVersion = '$ACTUAL_VERSION';
+            const existingDirs = $DIRS;
 
-              if (!existingDirs.includes(targetDir)) {
-                existingDirs.push(targetDir);
+            // Ensure our newly generated runtime folder is immediately factored into the manifest list
+            if (!existingDirs.includes(targetDir)) {
+              existingDirs.push(targetDir);
+            }
+
+            const manifest = existingDirs.map(dir => {
+              if (dir === 'next') {
+                const ver = dir === targetDir ? actualVersion : '0.0.0-next';
+                return { path: 'next', version: ver };
               }
+              // Since stable folder matches version name exactly, path and version string properties are identical
+              return { path: dir, version: dir };
+            });
 
-              const manifest = existingDirs.map(dir => {
-                // For pre-release folder 'next' include a semver-like placeholder for comparison
-                if (dir === 'next') {
-                  const ver = dir === targetDir ? actualVersion : '0.0.0-next';
-                  return { value: dir, displayLabel: 'Next (Pre-release)', version: ver };
-                }
+            // Chronological Sort: Pre-release channels stay on top, followed by descending stables
+            manifest.sort((a, b) => {
+              if (a.path === 'next') return -1;
+              if (b.path === 'next') return 1;
+              const pa = (a.version || '0.0.0').split('.').map(n => parseInt(n, 10) || 0);
+              const pb = (b.version || '0.0.0').split('.').map(n => parseInt(n, 10) || 0);
+              for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+                const ai = pa[i] || 0;
+                const bi = pb[i] || 0;
+                if (ai !== bi) return bi - ai;
+              }
+              return 0;
+            });
 
-                // Stable folders like 'v13' -> '13.0.0'
-                const maj = dir.startsWith('v') ? dir.replace(/^v/, '') : dir;
-                const ver = dir === targetDir ? actualVersion : `${maj}.0.0`;
-                return { value: dir, displayLabel: dir, version: ver };
-              });
+            fs.writeFileSync('./deploy-staging/versions.json', JSON.stringify(manifest, null, 2));
+          "
 
-              // Sort: next first, then descending by semantic version
-              manifest.sort((a, b) => {
-                if (a.value === 'next') return -1;
-                if (b.value === 'next') return 1;
-                const pa = (a.version || '0.0.0').split('.').map(n => parseInt(n, 10) || 0);
-                const pb = (b.version || '0.0.0').split('.').map(n => parseInt(n, 10) || 0);
-                for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
-                  const ai = pa[i] || 0;
-                  const bi = pb[i] || 0;
-                  if (ai !== bi) return bi - ai;
-                }
-                return a.value.localeCompare(b.value);
-              });
-
-              fs.writeFileSync('./deploy-staging/versions.json', JSON.stringify(manifest, null, 2));
-            "
-
-      # Step 3: Conditionally prepare a new root index.html routing index inside staging
-      # This block ONLY runs on pushes to master or stable major releases.
+      # Step 3: Conditionally prepare a smart root index.html routing panel inside staging
+      # Determines whether the domain root should point users straight to stable or next directories
       - name: Generate Smart Routing Shell
         if: ${{ steps.target-env.outputs.is_stable == 'true' || github.event_name == 'push' }}
         run: |
-          # Choose a root redirect target: prefer Next only when its semver core > latest stable
           node -e "
             const fs = require('fs');
             const path = './deploy-staging/versions.json';
             if (!fs.existsSync(path)) { console.log('CHOICE=${{ steps.target-env.outputs.dir }}'); process.exit(0); }
             const data = JSON.parse(fs.readFileSync(path,'utf8'));
-            const next = data.find(d=>d.value==='next');
-            const stable = data.filter(d=>d.value!=='next');
+            const next = data.find(d=>d.path==='next');
+            const stable = data.filter(d=>d.path!=='next');
+
             function coreParts(v){ const s=(v||'0.0.0').split('-')[0]; return s.split('.').map(n=>parseInt(n,10)||0); }
             function cmp(a,b){ const pa=coreParts(a); const pb=coreParts(b); for(let i=0;i<Math.max(pa.length,pb.length);i++){ const ai=pa[i]||0; const bi=pb[i]||0; if(ai!==bi) return ai-bi;} return 0; }
+
             let latestStable = null;
             if (stable.length) {
               latestStable = stable.slice().sort((a,b)=>{ return cmp(b.version,a.version); })[0];
             }
+
             let choice = '${{ steps.target-env.outputs.dir }}';
             if (next && latestStable) {
+              // Prefer next strictly if its core version outpaces the current stable production track
               if (cmp(next.version, latestStable.version) > 0) choice = 'next';
-              else choice = latestStable.value;
+              else choice = latestStable.path;
             } else if (next && !latestStable) { choice = 'next'; }
-            else if (latestStable) { choice = latestStable.value; }
+            else if (latestStable) { choice = latestStable.path; }
             console.log('CHOICE='+choice);
           " > ./deploy-staging/.chosen_target
 
@@ -167,11 +172,11 @@ jobs:
           </html>
           EOF
 
-      # Step 4: Atomic Deployment of both versioned subdirectories and root-level config items
+      # Step 4: Atomic Deployment of both versioned subdirectories and root-level index files
       - name: Deploy Everything to GitHub Pages Root
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: ./deploy-staging
           branch: gh-pages
           target-folder: .
-          clean: false # CRITICAL: Prevents deleting historical version folders already stored on gh-pages branch
+          clean: false # CRITICAL: Tells the action never to wipe out other historical release folders
