@@ -254,7 +254,7 @@ describe('Mouse slider directive', () => {
       });
     });
 
-    it('should only allow swipe gestures ONLY if itemsPerView is 1 and itemSize is not set', async () => {
+    it('should allow swipe gestures ONLY if itemsPerView is 1 and itemSize is undefined', async () => {
       component.itemSize.set(300);
       fixture.detectChanges();
       await swipe({ startIndex: 1, expectedIndex: 1, func: 'goTo', direction: 'left' });
