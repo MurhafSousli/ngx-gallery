@@ -1,0 +1,42 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks';
+import * as LayoutStories from './Layout.stories';
+
+<Meta title="Documentations/Layout"/>
+
+# Layout Configuration
+
+Use `itemSize` or `itemsPerView` to control how the gallery is arranged.
+
+`itemSize` is the preferred option when you want to define the size of each item directly.
+If `itemSize` is set, `itemsPerView` is ignored.
+
+Use `itemsPerView` when you want the gallery to show a specific number of items at once.
+When `itemSize` is not set, the gallery falls back to `itemsPerView`, which defaults to `1`.
+
+The `gap` input can be used to add spacing between items.
+
+## Examples
+
+Use `itemsPerView` when you want a proportional layout:
+
+<Canvas of={LayoutStories.DefaultItemsPerViewExample}/>
+
+Use `itemsPerView="3"` when you want a proportional layout:
+
+<Canvas of={LayoutStories.MutlipleItemsPerViewExample}/>
+
+Use `itemsPerView="1.4"` when you want a proportional layout:
+
+<Canvas of={LayoutStories.FrictionItemsPerViewExample}/>
+
+Use a fixed item size `itemSize="150"`
+
+<Canvas of={LayoutStories.FixedItemSizeExample}/>
+
+Let the item size be determined automatically: `itemSize="auto"`
+
+<Canvas of={LayoutStories.AutoItemSizeExample}/>
+
+
+ > The same layout behavior applies to both `gallery` and `gallery-thumbs`.
+

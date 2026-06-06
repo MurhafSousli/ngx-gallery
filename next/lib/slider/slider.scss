@@ -1,0 +1,121 @@
+@layer variables, layout, features;
+
+
+:host[orientation='horizontal'] {
+  --_slider-overflow: auto hidden;
+  --_slider-flex-direction: row;
+
+  // Content wrapper size
+  --_slider-content-width: initial;
+  --_slider-content-height: 100%;
+
+  // Slider placeholders size
+  --_contain-intrinsic-width: var(--_slider-track-size);
+  --_contain-intrinsic-height: 100%;
+}
+
+:host[orientation='vertical'] {
+  --_slider-overflow: hidden auto;
+  --_slider-flex-direction: column;
+
+  // Content wrapper size
+  --_slider-content-width: 100%;
+  --_slider-content-height: initial;
+
+  // Slider placeholders size
+  --_contain-intrinsic-width: 100%;
+  --_contain-intrinsic-height: var(--_slider-track-size);
+}
+
+@layer layout {
+  :host {
+    grid-area: center;
+    position: relative;
+    // We need a flex system here to allow centralizing the content wrapper with :before and :after
+    display: flex;
+    flex-direction: var(--_slider-flex-direction);
+
+    /**
+     * 'safe' is critical here.
+     * Without it, 'center' or 'end' alignment would clip the start of the content
+     * if the slider items overflow the viewport, making it impossible to scroll
+     * back to the first item. 'safe' forces 'flex-start' behavior in overflow
+     * scenarios while honoring alignment when content fits.
+     */
+    justify-content: safe var(--g-content-alignment, center);
+
+    /**
+     * 'container-type: size' allows child items to use 'cqi' (inline)
+     * or 'cqb' (block) units for their dimensions.
+     * For example we cannot use 100% width on child items when they have a content wrapper parent
+     */
+    container-type: size;
+    container-name: slider-viewport;
+
+    width: var(--_override-slider-width, 100%);
+    max-width: 100%;
+    height: var(--_override-slider-height, 100%);
+    max-height: 100%;
+
+    /* Standard Layout Props */
+    overflow: var(--_override-slider-overflow, var(--_slider-overflow));
+    contain: content;
+    will-change: var(--_slider-will-change, scroll-position);
+
+    /* Scrolling */
+    scroll-snap-type: var(--_slider-snap-type);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .g-slider-content {
+    // It is important to set flex to 0 0 auto here, to allow content wrapper fit its content properly
+    flex: 0 0 auto;
+
+    display: flex;
+    /* Use stretch normally, but allow auto-height directive to override it */
+    align-items: var(--_override-slider-align-items, stretch);
+    flex-direction: var(--_slider-flex-direction);
+    gap: var(--_slider-track-gap);
+
+    // The inline axis should be auto, only the cross axis should be 100%
+    height: var(--_slider-content-height);
+    width: var(--_slider-content-width);
+    min-width: min-content;
+    min-height: min-content;
+
+    // Reset ul styles
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Force Snap Logic */
+  :host[forceSnap] {
+    &:before, &:after {
+      content: '';
+      flex: 0 0 auto;
+    }
+
+    &:before {
+      flex-basis: var(--_slider-padding-start-size);
+    }
+
+    &:after {
+      flex-basis: var(--_slider-padding-end-size);
+    }
+  }
+}
+
+/* =========================================================
+   INTERACTION
+   ========================================================= */
+:host[status="dragging"] {
+  // Disabling user-select is a must while dragging
+  user-select: none;
+  pointer-events: none;
+}

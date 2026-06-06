@@ -1,0 +1,83 @@
+:host {
+  z-index: 1;
+  position: relative;
+  overflow: hidden;
+
+  display: grid;
+  grid-template-areas: "center";
+
+  // Reset the CSS variable so it doesn't inherit them from gallery component
+  --_override-slider-overflow: initial;
+  --_override-slider-height: initial;
+  --_override-slider-align-items: initial;
+  --_slider-will-change: initial;
+
+  --_slider-size-transition-duration: initial;
+  // Override thumb gap
+  --g-item-gutter-size: var(--g-thumb-gutter-size);
+  // Override item's image size
+  --_item-image-size: var(--g-thumb-image-size, cover);
+  // override item's scroll snap stop
+  --_item-scroll-snap-stop: var(--g-thumb-scroll-snap-stop, normal);
+}
+
+/* Horizontal: Take full width, shrink-wrap height */
+:host(:is([position="top"], [position="bottom"])) {
+  width: 100%;
+  height: var(--g-slider-thickness);
+}
+
+/* Vertical: Take full height, shrink-wrap width */
+:host(:is([position="start"], [position="end"])) {
+  height: 100%;
+  width: var(--g-slider-thickness);
+}
+
+:host[position="top"] {
+  grid-area: top;
+  align-self: start;
+}
+
+:host[position="bottom"] {
+  grid-area: bottom;
+  align-self: end;
+}
+
+:host[position="start"] {
+  grid-area: start;
+  justify-self: start;
+}
+
+:host[position="end"] {
+  grid-area: end;
+  justify-self: end;
+}
+
+:host[floating] {
+  /* Above the main slider */
+  z-index: 2;
+  /* Overlay on top of main slider */
+  grid-area: center;
+  align-self: center;
+  justify-self: center;
+}
+
+:host[floating][position="top"] {
+  align-self: start;
+}
+
+:host[floating][position="bottom"] {
+  align-self: end;
+}
+
+:host[floating][position="start"] {
+  justify-self: start;
+}
+
+:host[floating][position="end"] {
+  justify-self: end;
+}
+
+:host[scrollDisabled] {
+  --_override-slider-overflow: hidden;
+}

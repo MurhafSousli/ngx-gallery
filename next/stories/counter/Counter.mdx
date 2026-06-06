@@ -1,0 +1,50 @@
+import { Canvas, Meta, ArgTypes } from '@storybook/addon-docs/blocks';
+import * as CounterStories from './Counter.stories';
+
+<Meta of={CounterStories}/>
+
+# Gallery Counter
+
+The `gallery-counter` displays the current slide position relative to the total items (e.g., `1 / 10`).
+
+It automatically handles:
+
+* **Internationalization:** Numbers are formatted using the `DecimalPipe` based on the app's `LOCALE_ID`.
+* **RTL Support:** Correctly displays the index/total ratio for Right-to-Left languages.
+* **Accessibility:** The counter is marked as `aria-live="polite"` internally so screen readers announce index changes.
+
+## Basic Usage
+
+Simply drop the component inside the gallery.
+
+```html
+<gallery [items]="items">
+  <img *galleryItemDef="let item" galleryImage [src]="item.src" [alt]="item.alt">
+  <gallery-counter/>
+</gallery>
+```
+
+<Canvas of={CounterStories.Counter}/>
+
+You can toggle the vertical alignment between `top` (default) and `bottom`.
+
+```html
+<gallery-counter align="bottom"/>
+```
+
+## Custom Counter Template Example
+
+While the default component uses the `/` separator, you may want to provide a localized text string like `Slide 1 of 12`.
+
+When to use a Custom Template If you need a specific text format or custom styling,
+bypass the `gallery-counter` component and use the `gallerySlot` directive directly with the gallery's public signals.
+
+
+<Canvas of={CounterStories.CustomCounter}/>
+
+For more info about `gallerySlot`, see the [Gallery Slot](/docs/documentations-slot--docs) page.
+
+## API
+
+<ArgTypes of={CounterStories.Counter}/>
+

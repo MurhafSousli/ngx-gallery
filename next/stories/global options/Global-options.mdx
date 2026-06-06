@@ -1,0 +1,32 @@
+import { Meta, ArgTypes } from '@storybook/addon-docs/blocks';
+import * as OptionsStories from './Global-options.stories';
+
+<Meta title="Documentations/Global Options" of={OptionsStories} />
+
+# Global Options
+
+All configuration options for the gallery component and its subcomponents (such as the slider, thumbnails, navigation, and counter) can be managed globally in one place.
+
+You can define the default behavior for all gallery instances across your application using the `provideGalleryOptions` provider.
+This ensures a consistent experience and reduces the need for repeated property binding.
+
+```ts
+import { provideGalleryOptions } from 'ng-gallery';
+
+export const appConfig = {
+  providers: [
+    provideGalleryOptions({
+      // Example: Enable loop and set a custom gap
+      loop: true,
+      gap: 10,
+      thumbPosition: 'left'
+    })
+  ]
+};
+```
+
+## Options Reference
+
+The following table details all available configuration properties, grouped by their functional area (Slider, Thumbnails, Player, etc.).
+
+<ArgTypes of={OptionsStories.APIReference} />

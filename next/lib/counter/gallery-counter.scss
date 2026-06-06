@@ -1,0 +1,27 @@
+:host {
+  /* --- LAYOUT & ALIGNMENT --- */
+  z-index: 3;
+  grid-area: center;
+  justify-self: center;
+  margin: 1rem;
+
+  /* Alignment within the gallery grid */
+  &[align='top'] {
+    align-self: start;
+  }
+
+  &[align='bottom'] {
+    align-self: end;
+  }
+
+  /* --- TYPOGRAPHY --- */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums; /* Essential for stable numbering */
+  user-select: none;
+
+  /* --- UNIQUE PANEL OVERRIDES --- */
+  /* The .g-panel global class should be applied to the host */
+  padding: 6px 20px;
+}

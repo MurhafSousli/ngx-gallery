@@ -1,0 +1,112 @@
+:host {
+  // Ensures padding doesn't break width
+  box-sizing: border-box;
+  height: var(--_override-slider-item-height);
+
+  // Make sure item size never exceed viewport size
+  max-height: var(--_override-slider-item-height, 100cqb);
+  max-width: 100cqi;
+
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  //flex: 0 0 var(--_slider-track-size);
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: var(--_slider-track-size);
+  scroll-snap-align: var(--_slider-snap-align);
+  scroll-snap-stop: var(--_item-scroll-snap-stop);
+
+  // Disable highlighting the elements on mouse move or click
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  // Performance
+  content-visibility: auto;
+  /* contain-intrinsic-size prevents the scrollbar from jumping */
+  /* by giving the browser a placeholder size for off-screen items */
+  contain-intrinsic-width: var(--_contain-intrinsic-width);
+  contain-intrinsic-height: var(--_contain-intrinsic-height);
+}
+
+:host {
+  ::ng-deep {
+    > *:not(.g-item-loader, .g-item-error) {
+      height: 100%;
+      width: 100%;
+    }
+
+    .g-image,
+    > figure {
+      width: 100%;
+      height: 100%;
+    }
+
+    .g-image {
+      pointer-events: none;
+      object-fit: var(--_item-image-size);
+      // In case NgOptimizedImage is used, it sets background-size to cover,
+      // So we need to force it here
+      background-size: var(--_item-image-size) !important;
+      // In case NgOptimizedImage is used, this animate the blur effect to shape
+      transition: var(--g-item-image-transition, filter 0.4s ease-out);
+    }
+
+    figure {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        flex: 1;
+        min-height: 0; /* CRITICAL: Allows the image to shrink below its intrinsic height */
+      }
+
+      figcaption {
+        flex-shrink: 0; /* Ensures the caption never gets squashed */
+        padding: 8px;
+      }
+    }
+
+    > .g-item-loader,
+    > .g-item-error {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    > .g-item-loader {
+      background-color: var(--g-item-loader-background-color, CanvasText);
+      color: var(--g-item-loader-text-color, Canvas);
+    }
+
+    > .g-item-error {
+      background-color: var(--g-item-error-background-color, CanvasText);
+      color: var(--g-item-error-text-color, Canvas);
+    }
+
+    > button {
+      background: none;
+      color: inherit;
+      border: none;
+      padding: 0;
+      font: inherit;
+      outline: inherit;
+      appearance: none;
+      cursor: pointer;
+
+      &[disabled] {
+        cursor: initial;
+      }
+    }
+  }
+}

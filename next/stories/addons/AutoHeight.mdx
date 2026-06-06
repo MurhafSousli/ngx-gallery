@@ -1,0 +1,60 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as GalleryStories from '../gallery/Gallery.stories';
+
+<Meta title="Addons/AutoHeight"/>
+
+# AutoHeight
+
+The **AutoHeight** feature makes the gallery container automatically adapt
+to the height of the currently active slide.
+
+This is useful when:
+
+- Slides have different heights
+- You want to avoid fixed-height layouts
+- You want smoother, content-driven layouts
+
+
+## How it works
+
+When the active slide changes, the directive:
+
+1. Measures the active slide height
+2. Updates the gallery container height
+3. (Optionally) animates the height change if your gallery has transitions enabled
+
+No manual resizing or layout hacks are needed.
+
+
+## Usage
+
+Add the `autoHeight` attribute to the `<gallery>` component:
+
+```html
+<gallery [items]="items" autoHeight>
+  <img *galleryItemDef="let item" galleryImage [src]="item.src" [alt]="item.alt"/>
+</gallery>
+```
+
+That’s it — height will now follow the active slide.
+
+## Example
+
+<Canvas of={GalleryStories.AutoHeightExample} />
+
+You can adjust transition duration by setting the CSS variable
+
+```css
+@include gallery.ng-gallery-overrides((
+  size-transition-ease: 400ms
+));
+```
+
+or `--g-size-transition-ease`.
+
+## Notes
+
+Works best when slide content has intrinsic height (e.g. images with known aspect ratio)
+
+  - If slide content loads asynchronously, height updates after content renders
+  - Can be combined with transitions for smoother resizing

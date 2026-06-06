@@ -1,0 +1,78 @@
+import { Canvas, Meta, ArgTypes} from '@storybook/addon-docs/blocks';
+import * as GalleryNavStories from './Navigation.stories';
+import * as GalleryNavButtonStories from './Navigation Button.stories';
+
+<Meta of={GalleryNavStories}/>
+
+# Navigation
+
+The `<gallery-nav>` component adds "Next" and "Previous" controls to your gallery.
+
+## Basic Usage
+
+Add the component inside your gallery container:
+
+```html
+<gallery [items]="items">
+  <img *galleryItemDef="let item" [src]="item.src" [alt]="item.alt">
+  <gallery-nav/>
+</gallery>
+```
+
+## Behavioral Options
+
+#### Show Disabled Buttons
+
+By default, navigation buttons are hidden when you reach the first or last item.
+If you prefer to keep them visible but in a `disabled` state (to prevent layout shifts), add the `showDisabledButtons` attribute.
+
+```html
+<gallery-nav showDisabledButtons/>
+```
+
+> **Note:** If the gallery has the loop attribute enabled, buttons will always stay active and visible,
+as there are no boundaries.
+
+### Basic Navigation Example
+
+<Canvas of={GalleryNavStories.NavigationExample}/>
+
+### Outside Navigation Example
+
+<Canvas of={GalleryNavStories.OutsideNavExample}/>
+
+## Customization
+
+#### Custom Templates
+
+You can provide your own button elements using the `galleryNavButton` directive.
+These buttons will automatically inherit the gallery's navigation logic and disabled states.
+
+```html
+<gallery [items]="items">
+  <img *galleryItemDef="let item" [src]="item.src" [alt]="item.alt">
+
+  <gallery-nav>
+    <button galleryNavButton="next">Next</button>
+    <button galleryNavButton="prev">Prev</button>
+  </gallery-nav>
+</gallery>
+```
+
+
+### Custom Navigation Template Example
+
+<Canvas of={GalleryNavButtonStories.CustomNavTemplateExample}/>
+
+### Custom Navigation Position Example
+
+<Canvas of={GalleryNavButtonStories.CustomNavPositionExample}/>
+
+## GalleryNav API
+
+<ArgTypes of={GalleryNavStories.NavigationExample}/>
+
+
+## GalleryNavButton API
+
+<ArgTypes of={GalleryNavButtonStories.CustomNavTemplateExample}/>

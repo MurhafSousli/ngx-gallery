@@ -1,0 +1,49 @@
+:host {
+  display: contents;
+
+  /* Handle base transforms for icon flipping */
+  /* Horizontal Logic */
+  &[orientation='horizontal'] {
+    ::ng-deep .g-nav-button {
+      margin-inline: var(--g-nav-offset, 1rem);
+    }
+    &[dir='ltr'] {
+      --_nav-next-transform: perspective(1px) rotate(0deg);
+      --_nav-prev-transform: perspective(1px) rotate(0deg) scaleX(-1);
+    }
+
+    &[dir='rtl'] {
+      --_nav-next-transform: perspective(1px) rotate(0deg) scaleX(-1);
+      --_nav-prev-transform: perspective(1px) rotate(0deg);
+    }
+  }
+
+  /* Vertical Logic */
+  &[orientation='vertical'] {
+    ::ng-deep .g-nav-button {
+      margin-block: var(--g-nav-offset, 1rem);
+    }
+    --_nav-next-transform: perspective(1px) rotate(90deg); /* Points Down */
+    --_nav-prev-transform: perspective(1px) rotate(-90deg); /* Points Up */
+  }
+}
+
+.g-nav-next {
+  transform: var(--_nav-next-transform);
+}
+
+.g-nav-prev {
+  transform: var(--_nav-prev-transform);
+}
+
+:host ::ng-deep {
+  .g-nav-button {
+    z-index: 3;
+
+    &[disabled] {
+      opacity: 0.15;
+      pointer-events: none;
+      backdrop-filter: none;
+    }
+  }
+}
