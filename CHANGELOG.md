@@ -1,55 +1,54 @@
 # Changelog
-
 ## 13.0.0-next.0
 
-The library has been rewritten from scratch.
+The library has been rewritten from scratch to support modern, zoneless Angular 21 architecture and high-performance native web APIs.
 
 ### New features
 
-- feat: Upgrade to Angular 21.
-- feat: Migrate to Vitest testing environment.
-- feat: Remove `zone.js` dependency.
-- feat: Remove `hammerjs` dependency, closes [#449](https://github.com/MurhafSousli/ngx-gallery/issues/449).
-- feat: Remove `@angular/animations` dependency.
-- feat: `gallerySlot` attribute directive for static custom templates.
-- feat: `*galleryItemDef` structural directive to define main and thumb item templates.
-- feat: `*galleryItemLoaderDef` structural directive to define main and thumb item loader templates.
-- feat: `*galleryItemErrorDef` structural directive to define main and thumb item error templates, closes [#626](https://github.com/MurhafSousli/ngx-gallery/issues/626).
-- feat: `GalleryNav` component can be used on thumbnails, closes [#448](https://github.com/MurhafSousli/ngx-gallery/issues/448) and [#591](https://github.com/MurhafSousli/ngx-gallery/issues/591).
-- feat: `GalleryNavButton` allows custom navigation buttons `GalleryNav`.
-- feat: New layout configuration such as `itemsPerView="3"`, `itemSize="auto"` and `itemSize="200"`.
-- feat: Add `steps` option to `next()` and `prev()` methods, extends navigation feature, closes [#281](https://github.com/MurhafSousli/ngx-gallery/issues/281).
-- feat: Add SASS function to customize the gallery CSS variables `ng-gallery-overrides()`.
-- feat: Add SASS function to customize the lightbox CSS variables `ng-lightbox-overrides()`.
-- feat: Add `initialIndex` input to set the initial gallery index, closes [#638](https://github.com/MurhafSousli/ngx-gallery/issues/638).
-- feat: Add `snapAlign` input to set the items' alignment in the viewport.
-- feat: Add `activeIndexChange` and `anchorIndexChange` outputs.
-- feat: (A11Y) Accessibility support using `provideGalleryA11yOptions()`.
-- feat: Ability to use `NgOptimizedImage` for lazy loading on images and thumbnails, closes [#546](https://github.com/MurhafSousli/ngx-gallery/issues/546).
-- feat: Use the native dialog element for the lightbox instead of CDK dialog, closes [#596](https://github.com/MurhafSousli/ngx-gallery/issues/596).
-- feat: Ability to hook click events on gallery images, closes [#603](https://github.com/MurhafSousli/ngx-gallery/issues/603).
-- feat: Allowing the sliding of one image at a time using gestures, closes [#616](https://github.com/MurhafSousli/ngx-gallery/issues/616).
+- **Modern Stack Upgrade:** Migrated to Angular 21 and replaced the testing environment with Vitest.
+- **Performance Boost:** Completely removed dependencies on `zone.js`, `hammerjs` (closes [#449](https://github.com/MurhafSousli/ngx-gallery/issues/449)), and `@angular/animations`.
+- **Template Flexibility:** 
+  - Added `gallerySlot` attribute directive for static custom templates.
+  - Added `*galleryItemDef` structural directive to define main and thumbnail item templates.
+  - Added `*galleryItemLoaderDef` and `*galleryItemErrorDef` structural directives for custom loading/error states (closes [#626](https://github.com/MurhafSousli/ngx-gallery/issues/626)).
+- **Navigation & Layout Enhancements:**
+  - `GalleryNav` component can now be used directly on thumbnails (closes [#448](https://github.com/MurhafSousli/ngx-gallery/issues/448), [#591](https://github.com/MurhafSousli/ngx-gallery/issues/591)).
+  - Added `GalleryNavButton` for custom navigation buttons within `GalleryNav`.
+  - Introduced new layout configurations: `itemsPerView="3"`, `itemSize="auto"`, and `itemSize="200"`.
+  - Added a `steps` option to `next()` and `prev()` navigation methods (closes [#281](https://github.com/MurhafSousli/ngx-gallery/issues/281)).
+  - Added `initialIndex` input to set the starting gallery index (closes [#638](https://github.com/MurhafSousli/ngx-gallery/issues/638)).
+  - Added `snapAlign` input to define item alignment in the viewport.
+- **Reactivity & Events:** Added `activeIndexChange` and `anchorIndexChange` outputs.
+- **Styling:** Added SASS functions `ng-gallery-overrides()` and `ng-lightbox-overrides()` to easily customize gallery and lightbox CSS variables.
+- **Accessibility (A11Y):** Added native accessibility support via `provideGalleryA11yOptions()`.
+- **Core Optimization:** 
+  - Ability to use `NgOptimizedImage` for lazy loading images and thumbnails (closes [#546](https://github.com/MurhafSousli/ngx-gallery/issues/546)).
+  - Lightbox now uses the native HTML `<dialog>` element instead of `@angular/cdk/dialog` (closes [#596](https://github.com/MurhafSousli/ngx-gallery/issues/596)).
+  - Added native gesture support for sliding one image at a time (closes [#616](https://github.com/MurhafSousli/ngx-gallery/issues/616)).
+  - Enabled hooking click events directly on gallery images (closes [#603](https://github.com/MurhafSousli/ngx-gallery/issues/603)).
 
 ### Bug fixes
 
-- fix: Use native animation instead of `@angular/animations`, closes [#639](https://github.com/MurhafSousli/ngx-gallery/issues/639) and [#637](https://github.com/MurhafSousli/ngx-gallery/issues/637).
-- fix: Lightbox focus trap and restore focus to the previously focused element when closed, closes [#642](https://github.com/MurhafSousli/ngx-gallery/issues/642).
-- fix: Use the native button element for lightbox's close button, closes [#643](https://github.com/MurhafSousli/ngx-gallery/issues/643).
-- fix: Wrong image opened in lightbox using custom imageTemplate, closes [#606](https://github.com/MurhafSousli/ngx-gallery/issues/606).
-- fix: Ability to add any attribute to images including `corssorigin`, closes [#613](https://github.com/MurhafSousli/ngx-gallery/issues/613).
-- fix: Problems with RTL mode, closes [#631](https://github.com/MurhafSousli/ngx-gallery/issues/631).
-- fix: Problems with SSR in v12, closes [#634](https://github.com/MurhafSousli/ngx-gallery/issues/634).
+- Replaced `@angular/animations` with native web animations (closes [#639](https://github.com/MurhafSousli/ngx-gallery/issues/639), [#637](https://github.com/MurhafSousli/ngx-gallery/issues/637)).
+- Fixed Lightbox focus trap and restored focus to the previously active element upon closing (closes [#642](https://github.com/MurhafSousli/ngx-gallery/issues/642)).
+- Migrated Lightbox close button to a native `<button>` element (closes [#643](https://github.com/MurhafSousli/ngx-gallery/issues/643)).
+- Resolved issue where the wrong image opened in the lightbox when using a custom `imageTemplate` (closes [#606](https://github.com/MurhafSousli/ngx-gallery/issues/606)).
+- Allowed arbitrary attributes (including `crossorigin`) to be set on images (closes [#613](https://github.com/MurhafSousli/ngx-gallery/issues/613)).
+- Fixed layout issues occurring in RTL mode (closes [#631](https://github.com/MurhafSousli/ngx-gallery/issues/631)).
+- Resolved SSR compatibility issues inherited from v12 (closes [#634](https://github.com/MurhafSousli/ngx-gallery/issues/634)).
 
 ### Breaking changes
 
-There is no migration guide, please check the docs for more info.
+> ⚠️ **Note:** There is no migration guide. Please consult the updated documentation for full integration details.
 
 - `GalleryRef` service has been removed.
-- `GalleryBullets` component has been removed, use `GalleryThumbs` instead.
-- `itemWidth` and `itemHeight` inputs have been removed, use `itemSize` and `thickness` instead.
-- `centralized` has been renamed to `forceSnap` and `thumbCentralized` to `thumbForceSnap`.
-- `gallery.currIndex` has been renamed to `activeIndex`.
-- `autosize` has been replaced with `itemSize="auto"`.
+- `GalleryBullets` component has been removed (use `GalleryThumbs` instead).
+- `itemWidth` and `itemHeight` inputs have been removed (use `itemSize` and `thickness` instead).
+- `centralized` renamed to `forceSnap`.
+- `thumbCentralized` renamed to `thumbForceSnap`.
+- `gallery.currIndex` renamed to `activeIndex`.
+- `autosize` removed (replaced by `itemSize="auto"`).
+
 
 ## 12.0.0-beta.5
 

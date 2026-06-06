@@ -116,95 +116,94 @@ jobs:
           mkdir -p "./deploy-staging/${{ steps.target-env.outputs.dir }}"
           cp -r ./dist/storybook/ng-gallery/* "./deploy-staging/${{ steps.target-env.outputs.dir }}/"
 
-          ######################################################################
-          # BUILD versions.json
-          ######################################################################
+      ######################################################################
+      # BUILD versions.json
+      ######################################################################
 
-          - name: Generate Versions Manifest
-            env:
-              GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            run: |
-              DIRS=$(curl -s \
-                -H "Authorization: Bearer $GH_TOKEN" \
-                -H "Accept: application/vnd.github+json" \
-                "https://api.github.com/repos/${{ github.repository }}/contents?ref=gh-pages" \
-                | node -e "
-                  const fs = require('fs');
-                  try {
-                    const input = JSON.parse(fs.readFileSync(0, 'utf8'));
-                    if (!Array.isArray(input)) {
-                      console.log(JSON.stringify([]));
-                    } else {
-                      console.log(JSON.stringify(
-                        input
-                          .filter(x => x.type === 'dir')
-                          .map(x => x.name)
-                      ));
-                    }
-                  } catch {
-                    console.log(JSON.stringify([]));
-                  }
-                ")
-
-              # Safely export variables to environment to prevent character/quote injection in Node
-              export DIRS
-              export TARGET_DIR="${{ steps.target-env.outputs.dir }}"
-              export ACTUAL_VERSION="${{ steps.target-env.outputs.actual_version }}"
-
-              node -e "
-                const fs = require('fs');
-
-                const dirs = JSON.parse(process.env.DIRS || '[]');
-                const targetDir = process.env.TARGET_DIR;
-                const actualVersion = process.env.ACTUAL_VERSION;
-
-                if (!dirs.includes(targetDir)) {
-                  dirs.push(targetDir);
+      - name: Generate Versions Manifest
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DIRS=$(curl -s \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/contents?ref=gh-pages" \
+            | node -e "
+              const fs = require('fs');
+              try {
+                const input = JSON.parse(fs.readFileSync(0, 'utf8'));
+                if (!Array.isArray(input)) {
+                  console.log(JSON.stringify([]));
+                } else {
+                  console.log(JSON.stringify(
+                    input
+                      .filter(x => x.type === 'dir')
+                      .map(x => x.name)
+                  ));
                 }
+              } catch {
+                console.log(JSON.stringify([]));
+              }
+            ")
 
-                const manifest = dirs.map(dir => {
-                  if (dir === 'next') {
-                    return {
-                      path: 'next',
-                      version: dir === targetDir
-                        ? actualVersion
-                        : '0.0.0-next'
-                    };
-                  }
-                  return { path: dir, version: dir };
-                });
+          export DIRS="$DIRS"
+          export TARGET_DIR="${{ steps.target-env.outputs.dir }}"
+          export ACTUAL_VERSION="${{ steps.target-env.outputs.actual_version }}"
 
-                function core(v) {
-                  return (v || '0.0.0')
-                    .split('-')[0]
-                    .split('.')
-                    .map(n => parseInt(n, 10) || 0);
+          node -e "
+            const fs = require('fs');
+
+            const dirs = JSON.parse(process.env.DIRS || '[]');
+            const targetDir = process.env.TARGET_DIR;
+            const actualVersion = process.env.ACTUAL_VERSION;
+
+            if (!dirs.includes(targetDir)) {
+              dirs.push(targetDir);
+            }
+
+            const manifest = dirs.map(dir => {
+              if (dir === 'next') {
+                return {
+                  path: 'next',
+                  version: dir === targetDir
+                    ? actualVersion
+                    : '0.0.0-next'
+                };
+              }
+              return { path: dir, version: dir };
+            });
+
+            function core(v) {
+              return (v || '0.0.0')
+                .split('-')[0]
+                .split('.')
+                .map(n => parseInt(n, 10) || 0);
+            }
+
+            manifest.sort((a, b) => {
+              if (a.path === 'next') return -1;
+              if (b.path === 'next') return 1;
+
+              const pa = core(a.version);
+              const pb = core(b.version);
+
+              for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+                const ai = pa[i] || 0;
+                const bi = pb[i] || 0;
+
+                if (ai !== bi) {
+                  return bi - ai;
                 }
+              }
 
-                manifest.sort((a, b) => {
-                  if (a.path === 'next') return -1;
-                  if (b.path === 'next') return 1;
+              return 0;
+            });
 
-                  const pa = core(a.version);
-                  const pb = core(b.version);
-
-                  for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
-                    const ai = pa[i] || 0;
-                    const bi = pb[i] || 0;
-
-                    if (ai !== bi) {
-                      return bi - ai;
-                    }
-                  }
-
-                  return 0;
-                });
-
-                fs.writeFileSync(
-                  './deploy-staging/versions.json',
-                  JSON.stringify(manifest, null, 2)
-                );
-              "
+            fs.writeFileSync(
+              './deploy-staging/versions.json',
+              JSON.stringify(manifest, null, 2)
+            );
+          "
 
       ######################################################################
       # ROOT REDIRECT
