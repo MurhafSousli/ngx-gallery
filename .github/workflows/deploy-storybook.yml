@@ -1,10 +1,15 @@
 name: Deploy Storybook Lifecycle
 
 on:
+  # Every push to master updates the preview channel (/next)
   push:
-    branches: [ master ]
+    branches:
+      - master
+
+  # Published GitHub releases create immutable versioned docs
   release:
-    types: [ published ]
+    types:
+      - published
 
 permissions:
   contents: write
@@ -12,171 +17,280 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Code
+      ######################################################################
+      # CHECKOUT
+      ######################################################################
+
+      # Push builds use the latest master commit
+      - name: Checkout Branch
+        if: github.event_name == 'push'
         uses: actions/checkout@v6
 
-      - name: Use Node.js 26
+      # Release builds use the exact tag being released
+      # This prevents accidentally deploying newer master code.
+      - name: Checkout Release Tag
+        if: github.event_name == 'release'
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      ######################################################################
+      # NODE SETUP
+      ######################################################################
+
+      - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: 26
-          cache: 'npm'
+          cache: npm
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm ci
 
-      # Strategy Pattern: Direct all master pushes and pre-releases strictly to "next"
-      # Pure stable production releases drop cleanly into exact version subdirectories (e.g., 13.0.1)
-      Sir: Compute Target Directory
+      ######################################################################
+      # RELEASE SAFETY CHECK
+      ######################################################################
+
+      # Ensures the GitHub release tag matches the library version.
+      #
+      # Example:
+      #   package.json = 13.0.0
+      #   tag          = v13.0.0
+      #
+      # This prevents accidental mismatches.
+      - name: Validate Release Version
+        if: github.event_name == 'release'
+        run: |
+          VERSION=$(node -p "require('./projects/ng-gallery/package.json').version")
+
+          TAG="${{ github.event.release.tag_name }}"
+          TAG="${TAG#v}"
+
+          if [ "$VERSION" != "$TAG" ]; then
+            echo "ERROR: package version ($VERSION) does not match release tag ($TAG)"
+            exit 1
+          fi
+
+      ######################################################################
+      # COMPUTE TARGET DIRECTORY
+      ######################################################################
+
+      - name: Compute Target Directory
         id: target-env
         run: |
           VERSION=$(node -p "require('./projects/ng-gallery/package.json').version")
+
           echo "actual_version=$VERSION" >> $GITHUB_OUTPUT
 
-          # If it's a branch push OR the package.json version contains pre-release tags, route to next
-          if [ "${{ github.event_name }}" = "push" ] || [[ "$VERSION" == *"-next"* ]] || [[ "$VERSION" == *"-alpha"* ]] || [[ "$VERSION" == *"-beta"* ]]; then
+          # All pushes always go to /next
+          if [ "${{ github.event_name }}" = "push" ]; then
             echo "dir=next" >> $GITHUB_OUTPUT
             echo "is_stable=false" >> $GITHUB_OUTPUT
+
+          # Release tag contains prerelease identifier
+          elif [[ "$VERSION" == *"-"* ]]; then
+            echo "dir=next" >> $GITHUB_OUTPUT
+            echo "is_stable=false" >> $GITHUB_OUTPUT
+
+          # Stable release gets its own immutable version folder
           else
-            # Stable production release maps directly to literal patch version folder name
             echo "dir=$VERSION" >> $GITHUB_OUTPUT
             echo "is_stable=true" >> $GITHUB_OUTPUT
           fi
 
+      ######################################################################
+      # BUILD STORYBOOK
+      ######################################################################
+
       - name: Build Storybook
         run: npm run storybook-build
 
-      # Step 1: Create an isolated staging directory and copy built compilation targets into it
+      ######################################################################
+      # STAGE FILES
+      ######################################################################
+
       - name: Stage Storybook Assets
         run: |
-          mkdir -p ./deploy-staging/${{ steps.target-env.outputs.dir }}
-          cp -r ./dist/storybook/ng-gallery/* ./deploy-staging/${{ steps.target-env.outputs.dir }}/
+          mkdir -p "./deploy-staging/${{ steps.target-env.outputs.dir }}"
+          cp -r ./dist/storybook/ng-gallery/* "./deploy-staging/${{ steps.target-env.outputs.dir }}/"
 
-      # Step 2: Dynamically discover real active directories on gh-pages to generate versions.json
-      # Guardrail: Enclosed in a try/catch block to handle 404s gracefully if the branch is empty
-      - name: Generate Clean Versions Manifest JSON
+      ######################################################################
+      # BUILD versions.json
+      ######################################################################
+
+      - name: Generate Versions Manifest
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # 1. Fetch existing folder tree strings from live gh-pages branch structure
-          DIRS=$(curl -s -H "Authorization: token $GH_TOKEN" \
+          DIRS=$(curl -s \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/${{ github.repository }}/contents?ref=gh-pages" \
             | node -e "
               const fs = require('fs');
+
               try {
-                const input = JSON.parse(fs.readFileSync(0, 'utf-8'));
+                const input = JSON.parse(fs.readFileSync(0, 'utf8'));
+
                 if (!Array.isArray(input)) {
                   console.log(JSON.stringify([]));
                 } else {
-                  const dirs = input
-                    .filter(f => f.type === 'dir' && f.name !== '.github')
-                    .map(f => f.name);
-                  console.log(JSON.stringify(dirs));
+                  console.log(JSON.stringify(
+                    input
+                      .filter(x => x.type === 'dir')
+                      .map(x => x.name)
+                  ));
                 }
-              } catch (e) {
-                console.log(JSON.stringify([])); // Branch does not exist yet or token expired
+              } catch {
+                console.log(JSON.stringify([]));
               }
             ")
 
-          TARGET_VALUE="${{ steps.target-env.outputs.dir }}"
+          TARGET_DIR="${{ steps.target-env.outputs.dir }}"
           ACTUAL_VERSION="${{ steps.target-env.outputs.actual_version }}"
 
-          # 2. Compile clean structured entries using escaped template literal sequences (\${var})
           node -e "
             const fs = require('fs');
-            const targetDir = '$TARGET_VALUE';
-            const actualVersion = '$ACTUAL_VERSION';
-            const existingDirs = $DIRS;
 
-            // Ensure our newly generated runtime folder is immediately factored into the manifest list
-            if (!existingDirs.includes(targetDir)) {
-              existingDirs.push(targetDir);
+            const dirs = $DIRS;
+
+            if (!dirs.includes('$TARGET_DIR')) {
+              dirs.push('$TARGET_DIR');
             }
 
-            const manifest = existingDirs.map(dir => {
+            const manifest = dirs.map(dir => {
               if (dir === 'next') {
-                const ver = dir === targetDir ? actualVersion : '0.0.0-next';
-                return { path: 'next', version: ver };
+                return {
+                  path: 'next',
+                  version: dir === '$TARGET_DIR'
+                    ? '$ACTUAL_VERSION'
+                    : '0.0.0-next'
+                };
               }
               // Since stable folder matches version name exactly, path and version string properties are identical
               return { path: dir, version: dir };
             });
 
-            // Chronological Sort: Pre-release channels stay on top, followed by descending stables
+              return {
+                path: dir,
+                version: dir
+              };
+            });
+
+            function core(v) {
+              return (v || '0.0.0')
+                .split('-')[0]
+                .split('.')
+                .map(n => parseInt(n, 10) || 0);
+            }
+
             manifest.sort((a, b) => {
               if (a.path === 'next') return -1;
               if (b.path === 'next') return 1;
-              const pa = (a.version || '0.0.0').split('.').map(n => parseInt(n, 10) || 0);
-              const pb = (b.version || '0.0.0').split('.').map(n => parseInt(n, 10) || 0);
+
+              const pa = core(a.version);
+              const pb = core(b.version);
+
               for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
                 const ai = pa[i] || 0;
                 const bi = pb[i] || 0;
-                if (ai !== bi) return bi - ai;
+
+                if (ai !== bi) {
+                  return bi - ai;
+                }
               }
+
               return 0;
             });
 
-            fs.writeFileSync('./deploy-staging/versions.json', JSON.stringify(manifest, null, 2));
+            fs.writeFileSync(
+              './deploy-staging/versions.json',
+              JSON.stringify(manifest, null, 2)
+            );
           "
 
-      # Step 3: Conditionally prepare a smart root index.html routing panel inside staging
-      # Determines whether the domain root should point users straight to stable or next directories
-      - name: Generate Smart Routing Shell
-        if: ${{ steps.target-env.outputs.is_stable == 'true' || github.event_name == 'push' }}
+      ######################################################################
+      # ROOT REDIRECT
+      #
+      # Rules:
+      # - If next > latest stable => root redirects to next
+      # - Otherwise root redirects to latest stable
+      ######################################################################
+
+      - name: Generate Root Redirect
         run: |
           node -e "
             const fs = require('fs');
-            const path = './deploy-staging/versions.json';
-            if (!fs.existsSync(path)) { console.log('CHOICE=${{ steps.target-env.outputs.dir }}'); process.exit(0); }
-            const data = JSON.parse(fs.readFileSync(path,'utf8'));
-            const next = data.find(d=>d.path==='next');
-            const stable = data.filter(d=>d.path!=='next');
+            const versions = JSON.parse(
+              fs.readFileSync('./deploy-staging/versions.json', 'utf8')
+            );
 
-            function coreParts(v){ const s=(v||'0.0.0').split('-')[0]; return s.split('.').map(n=>parseInt(n,10)||0); }
-            function cmp(a,b){ const pa=coreParts(a); const pb=coreParts(b); for(let i=0;i<Math.max(pa.length,pb.length);i++){ const ai=pa[i]||0; const bi=pb[i]||0; if(ai!==bi) return ai-bi;} return 0; }
+            const next = versions.find(v => v.path === 'next');
+            const stable = versions.filter(v => v.path !== 'next');
 
-            let latestStable = null;
-            if (stable.length) {
-              latestStable = stable.slice().sort((a,b)=>{ return cmp(b.version,a.version); })[0];
+            function core(v) {
+              return (v || '0.0.0')
+                .split('-')[0]
+                .split('.')
+                .map(n => parseInt(n, 10) || 0);
             }
 
-            let choice = '${{ steps.target-env.outputs.dir }}';
+            function compare(a, b) {
+              const pa = core(a);
+              const pb = core(b);
+
+              for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+                const ai = pa[i] || 0;
+                const bi = pb[i] || 0;
+
+                if (ai !== bi) {
+                  return ai - bi;
+                }
+              }
+
+              return 0;
+            }
+
+            let target = 'next';
+
+            const latestStable = stable
+              .slice()
+              .sort((a,b) => compare(b.version,a.version))[0];
+
             if (next && latestStable) {
-              // Prefer next strictly if its core version outpaces the current stable production track
-              if (cmp(next.version, latestStable.version) > 0) choice = 'next';
-              else choice = latestStable.path;
-            } else if (next && !latestStable) { choice = 'next'; }
-            else if (latestStable) { choice = latestStable.path; }
-            console.log('CHOICE='+choice);
-          " > ./deploy-staging/.chosen_target
+              target =
+                compare(next.version, latestStable.version) > 0
+                  ? 'next'
+                  : latestStable.path;
+            } else if (latestStable) {
+              target = latestStable.path;
+            }
 
-          TARGET_DIR=$(cat ./deploy-staging/.chosen_target | sed -n 's/^CHOICE=//p')
+            fs.writeFileSync(
+              './deploy-staging/index.html',
+              '<!DOCTYPE html><html><head><script>' +
+              'window.location.replace(\"/ngx-gallery/' + target + '/\");' +
+              '</script></head><body>Redirecting...</body></html>'
+            );
 
-          cat << EOF > ./deploy-staging/index.html
-          <!DOCTYPE html>
-          <html>
-            <head>
-              <meta charset="utf-8">
-              <title>Documentation Redirect</title>
-              <script>
-                const TARGET_DIR = "${TARGET_DIR}";
-                window.location.href = "/ngx-gallery/" + TARGET_DIR + "/";
-              </script>
-            </head>
-            <body>
-              <p>Redirecting to latest verified version... <a id="fallback" href="/">Click here</a></p>
-              <script>
-                document.getElementById('fallback').href = "/ngx-gallery/" + TARGET_DIR + "/";
-              </script>
-            </body>
-          </html>
-          EOF
+            fs.writeFileSync(
+              './deploy-staging/404.html',
+              '<!DOCTYPE html><html><head><script>' +
+              'window.location.replace(\"/ngx-gallery/\");' +
+              '</script></head><body>Redirecting...</body></html>'
+            );
+          "
 
-      # Step 4: Atomic Deployment of both versioned subdirectories and root-level index files
-      - name: Deploy Everything to GitHub Pages Root
+      ######################################################################
+      # DEPLOY
+      ######################################################################
+
+      - name: Deploy To GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ./deploy-staging
           branch: gh-pages
+          folder: ./deploy-staging
           target-folder: .
-          clean: false # CRITICAL: Tells the action never to wipe out other historical release folders
+          clean: false
