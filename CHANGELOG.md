@@ -2,30 +2,45 @@
 
 ## 13.0.0-next.0
 
-The library has been written from scratch.
+The library has been rewritten from scratch.
 
+### New features
 
 - feat: Upgrade to Angular 21.
 - feat: Migrate to Vitest testing environment.
 - feat: Remove `zone.js` dependency.
-- feat: Remove `hammerjs` dependency.
+- feat: Remove `hammerjs` dependency, closes [#449](https://github.com/MurhafSousli/ngx-gallery/issues/449).
+- feat: Remove `@angular/animations` dependency.
 - feat: `gallerySlot` attribute directive for static custom templates.
 - feat: `*galleryItemDef` structural directive to define main and thumb item templates.
 - feat: `*galleryItemLoaderDef` structural directive to define main and thumb item loader templates.
-- feat: `*galleryItemErrorDef` structural directive to define main and thumb item error templates.
-- feat: `GalleryNav` component can be used on thumbnails.
+- feat: `*galleryItemErrorDef` structural directive to define main and thumb item error templates, closes [#626](https://github.com/MurhafSousli/ngx-gallery/issues/626).
+- feat: `GalleryNav` component can be used on thumbnails, closes [#448](https://github.com/MurhafSousli/ngx-gallery/issues/448) and [#591](https://github.com/MurhafSousli/ngx-gallery/issues/591).
 - feat: `GalleryNavButton` allows custom navigation buttons `GalleryNav`.
 - feat: New layout configuration such as `itemsPerView="3"`, `itemSize="auto"` and `itemSize="200"`.
-- feat: Navigation has new parameter `steps` in next and prev methods, e.g. `gallery.next({ steps: 2 })`.
+- feat: Add `steps` option to `next()` and `prev()` methods, extends navigation feature, closes [#281](https://github.com/MurhafSousli/ngx-gallery/issues/281).
 - feat: Add SASS function to customize the gallery CSS variables `ng-gallery-overrides()`.
 - feat: Add SASS function to customize the lightbox CSS variables `ng-lightbox-overrides()`.
-- feat: Add `initialIndex` input to set the initial gallery index.
+- feat: Add `initialIndex` input to set the initial gallery index, closes [#638](https://github.com/MurhafSousli/ngx-gallery/issues/638).
 - feat: Add `snapAlign` input to set the items' alignment in the viewport.
-- feat: Add `liveIndex` signal to Gallery API.
-- feat: Add `steps` option to `next()` and `prev()` methods, extends navigation feature.
-- feat: (A11Y) Accessibility support using `provideGalleryA11yOptions()`
+- feat: Add `activeIndexChange` and `anchorIndexChange` outputs.
+- feat: (A11Y) Accessibility support using `provideGalleryA11yOptions()`.
+- feat: Ability to use `NgOptimizedImage` for lazy loading on images and thumbnails, closes [#546](https://github.com/MurhafSousli/ngx-gallery/issues/546).
+- feat: Use the native dialog element for the lightbox instead of CDK dialog, closes [#596](https://github.com/MurhafSousli/ngx-gallery/issues/596).
+- feat: Ability to hook click events on gallery images, closes [#603](https://github.com/MurhafSousli/ngx-gallery/issues/603).
+- feat: Allowing the sliding of one image at a time using gestures, closes [#616](https://github.com/MurhafSousli/ngx-gallery/issues/616).
 
-### Changelog:
+### Bug fixes
+
+- fix: Use native animation instead of `@angular/animations`, closes [#639](https://github.com/MurhafSousli/ngx-gallery/issues/639) and [#637](https://github.com/MurhafSousli/ngx-gallery/issues/637).
+- fix: Lightbox focus trap and restore focus to the previously focused element when closed, closes [#642](https://github.com/MurhafSousli/ngx-gallery/issues/642).
+- fix: Use the native button element for lightbox's close button, closes [#643](https://github.com/MurhafSousli/ngx-gallery/issues/643).
+- fix: Wrong image opened in lightbox using custom imageTemplate, closes [#606](https://github.com/MurhafSousli/ngx-gallery/issues/606).
+- fix: Ability to add any attribute to images including `corssorigin`, closes [#613](https://github.com/MurhafSousli/ngx-gallery/issues/613).
+- fix: Problems with RTL mode, closes [#631](https://github.com/MurhafSousli/ngx-gallery/issues/631).
+- fix: Problems with SSR in v12, closes [#634](https://github.com/MurhafSousli/ngx-gallery/issues/634).
+
+### Breaking changes
 
 There is no migration guide, please check the docs for more info.
 
