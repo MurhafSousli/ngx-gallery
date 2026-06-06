@@ -57,22 +57,17 @@ jobs:
       - name: Build Storybook
         run: npm run storybook-build
 
-      # Step 1: Deploy Storybook assets to calculated versioned subdirectory
-      - name: Deploy Storybook Build
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: ./dist/storybook/ng-gallery
-          branch: gh-pages
-          target-folder: ${{ steps.target-env.outputs.dir }}
-          clean: false # CRITICAL: Keeps all other versions alive
+      # Step 1: Create an isolated staging directory and copy versioned assets into it
+      - name: Stage Storybook Assets
+        run: |
+          mkdir -p ./deploy-staging/${{ steps.target-env.outputs.dir }}
+          cp -r ./dist/storybook/ng-gallery/* ./deploy-staging/${{ steps.target-env.outputs.dir }}/
 
-      # Step 2: Dynamically discover real active directories and build a clean manifest
+      # Step 2: Dynamically discover real active directories and build a clean manifest directly inside staging
       - name: Generate Clean Versions Manifest JSON
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          mkdir -p ./root-router
-
           # 1. Fetch live directories directly from the gh-pages branch structure
           # Filters out root-level configuration files, workflows, or JSON definitions
           DIRS=$(curl -s -H "Authorization: token $GH_TOKEN" \
@@ -80,6 +75,10 @@ jobs:
             | node -e "
               const fs = require('fs');
               const input = JSON.parse(fs.readFileSync(0, 'utf-8'));
+              if (!Array.isArray(input)) {
+                console.log(JSON.stringify([]));
+                process.exit(0);
+              }
               const dirs = input
                 .filter(f => f.type === 'dir' && f.name !== '.github')
                 .map(f => f.name);
@@ -89,7 +88,7 @@ jobs:
           TARGET_VALUE="${{ steps.target-env.outputs.dir }}"
           ACTUAL_VERSION="${{ steps.target-env.outputs.actual_version }}"
 
-          # 2. Compile clean entries inside an isolated node utility
+          # 2. Compile clean entries inside an isolated node utility directly into the staging folder
           node -e "
             const fs = require('fs');
             const targetDir = '$TARGET_VALUE';
@@ -123,15 +122,15 @@ jobs:
             // Sort versions logically: 'next' first, then newer semver folders down
             manifest.sort((a, b) => a.value === 'next' ? -1 : b.value === 'next' ? 1 : b.value.localeCompare(a.value));
 
-            fs.writeFileSync('./root-router/versions.json', JSON.stringify(manifest, null, 2));
+            fs.writeFileSync('./deploy-staging/versions.json', JSON.stringify(manifest, null, 2));
           "
 
-      # Step 3: Conditionally prepare a new root index.html routing index
+      # Step 3: Conditionally prepare a new root index.html routing index inside staging
       # This block ONLY runs on pushes to master or stable major releases.
       - name: Generate Smart Routing Shell
         if: ${{ steps.target-env.outputs.is_stable == 'true' || github.event_name == 'push' }}
         run: |
-          cat << 'EOF' > ./root-router/index.html
+          cat << 'EOF' > ./deploy-staging/index.html
           <!DOCTYPE html>
           <html>
             <head>
@@ -151,11 +150,11 @@ jobs:
           </html>
           EOF
 
-      # Step 4: Deploy the files inside ./root-router directly to the root of gh-pages branch
-      - name: Deploy Manifest and Router to Root
+      # Step 4: Atomic Deployment of both versioned subdirectories and root-level config items
+      - name: Deploy Everything to GitHub Pages Root
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ./root-router
+          folder: ./deploy-staging
           branch: gh-pages
           target-folder: .
-          clean: false # CRITICAL: Prevents deleting directories like /v13/ or /next/
+          clean: false # CRITICAL: Prevents deleting historical version folders already stored on gh-pages branch
