@@ -25,33 +25,22 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Strategy Pattern: Parse tags vs master branches accurately without losing context
+      # Strategy Pattern: Direct all pre-releases and master pushes strictly to "next"
       - name: Compute Target Directory
         id: target-env
         run: |
-          # Extract version globally up-front so it's always accessible as a fallback
           VERSION=$(node -p "require('./projects/ng-gallery/package.json').version")
           echo "actual_version=$VERSION" >> $GITHUB_OUTPUT
 
-          if [ "${{ github.event_name }}" = "push" ]; then
+          # If it's a branch push OR the version contains pre-release markers, it's "next"
+          if [ "${{ github.event_name }}" = "push" ] || [[ "$VERSION" == *"-next"* ]] || [[ "$VERSION" == *"-alpha"* ]] || [[ "$VERSION" == *"-beta"* ]]; then
             echo "dir=next" >> $GITHUB_OUTPUT
             echo "is_stable=false" >> $GITHUB_OUTPUT
           else
+            # Pure stable release (e.g., 13.0.0)
             MAJOR=$(echo $VERSION | cut -d. -f1)
-
-            if [[ "$VERSION" == *"-alpha"* ]]; then
-              echo "dir=v${MAJOR}-alpha" >> $GITHUB_OUTPUT
-              echo "is_stable=false" >> $GITHUB_OUTPUT
-            elif [[ "$VERSION" == *"-beta"* ]]; then
-              echo "dir=v${MAJOR}-beta" >> $GITHUB_OUTPUT
-              echo "is_stable=false" >> $GITHUB_OUTPUT
-            elif [[ "$VERSION" == *"-next"* ]]; then
-              echo "dir=v${MAJOR}-next" >> $GITHUB_OUTPUT
-              echo "is_stable=false" >> $GITHUB_OUTPUT
-            else
-              echo "dir=v${MAJOR}" >> $GITHUB_OUTPUT
-              echo "is_stable=true" >> $GITHUB_OUTPUT
-            fi
+            echo "dir=v${MAJOR}" >> $GITHUB_OUTPUT
+            echo "is_stable=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Build Storybook
@@ -69,7 +58,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # 1. Fetch live directories directly from the gh-pages branch structure
-          # Filters out root-level configuration files, workflows, or JSON definitions
           DIRS=$(curl -s -H "Authorization: token $GH_TOKEN" \
             "https://api.github.com/repos/${{ github.repository }}/contents?ref=gh-pages" \
             | node -e "
@@ -89,55 +77,84 @@ jobs:
           ACTUAL_VERSION="${{ steps.target-env.outputs.actual_version }}"
 
           # 2. Compile clean entries inside an isolated node utility directly into the staging folder
-          node -e "
-            const fs = require('fs');
-            const targetDir = '$TARGET_VALUE';
-            const actualVersion = '$ACTUAL_VERSION';
-            const existingDirs = $DIRS;
+            node -e "
+              const fs = require('fs');
+              const targetDir = '$TARGET_VALUE';
+              const actualVersion = '$ACTUAL_VERSION';
+              const existingDirs = $DIRS;
 
-            // Ensure our newly built target folder is guaranteed to be recognized
-            if (!existingDirs.includes(targetDir)) {
-              existingDirs.push(targetDir);
-            }
-
-            const manifest = existingDirs.map(dir => {
-              let title = dir;
-              if (dir === 'next') {
-                title = 'Next';
-              } else if (dir.includes('-beta')) {
-                title = dir.replace('-beta', ' Beta');
-              } else if (dir.includes('-alpha')) {
-                title = dir.replace('-alpha', ' Alpha');
-              } else {
-                title = \`\${dir} (Stable)\`;
+              if (!existingDirs.includes(targetDir)) {
+                existingDirs.push(targetDir);
               }
 
-              return {
-                value: dir,
-                displayLabel: title,
-                actualVersion: dir === targetDir ? actualVersion : dir
-              };
-            });
+              const manifest = existingDirs.map(dir => {
+                // For pre-release folder 'next' include a semver-like placeholder for comparison
+                if (dir === 'next') {
+                  const ver = dir === targetDir ? actualVersion : '0.0.0-next';
+                  return { value: dir, displayLabel: 'Next (Pre-release)', version: ver };
+                }
 
-            // Sort versions logically: 'next' first, then newer semver folders down
-            manifest.sort((a, b) => a.value === 'next' ? -1 : b.value === 'next' ? 1 : b.value.localeCompare(a.value));
+                // Stable folders like 'v13' -> '13.0.0'
+                const maj = dir.startsWith('v') ? dir.replace(/^v/, '') : dir;
+                const ver = dir === targetDir ? actualVersion : `${maj}.0.0`;
+                return { value: dir, displayLabel: dir, version: ver };
+              });
 
-            fs.writeFileSync('./deploy-staging/versions.json', JSON.stringify(manifest, null, 2));
-          "
+              // Sort: next first, then descending by semantic version
+              manifest.sort((a, b) => {
+                if (a.value === 'next') return -1;
+                if (b.value === 'next') return 1;
+                const pa = (a.version || '0.0.0').split('.').map(n => parseInt(n, 10) || 0);
+                const pb = (b.version || '0.0.0').split('.').map(n => parseInt(n, 10) || 0);
+                for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+                  const ai = pa[i] || 0;
+                  const bi = pb[i] || 0;
+                  if (ai !== bi) return bi - ai;
+                }
+                return a.value.localeCompare(b.value);
+              });
+
+              fs.writeFileSync('./deploy-staging/versions.json', JSON.stringify(manifest, null, 2));
+            "
 
       # Step 3: Conditionally prepare a new root index.html routing index inside staging
       # This block ONLY runs on pushes to master or stable major releases.
       - name: Generate Smart Routing Shell
         if: ${{ steps.target-env.outputs.is_stable == 'true' || github.event_name == 'push' }}
         run: |
-          cat << 'EOF' > ./deploy-staging/index.html
+          # Choose a root redirect target: prefer Next only when its semver core > latest stable
+          node -e "
+            const fs = require('fs');
+            const path = './deploy-staging/versions.json';
+            if (!fs.existsSync(path)) { console.log('CHOICE=${{ steps.target-env.outputs.dir }}'); process.exit(0); }
+            const data = JSON.parse(fs.readFileSync(path,'utf8'));
+            const next = data.find(d=>d.value==='next');
+            const stable = data.filter(d=>d.value!=='next');
+            function coreParts(v){ const s=(v||'0.0.0').split('-')[0]; return s.split('.').map(n=>parseInt(n,10)||0); }
+            function cmp(a,b){ const pa=coreParts(a); const pb=coreParts(b); for(let i=0;i<Math.max(pa.length,pb.length);i++){ const ai=pa[i]||0; const bi=pb[i]||0; if(ai!==bi) return ai-bi;} return 0; }
+            let latestStable = null;
+            if (stable.length) {
+              latestStable = stable.slice().sort((a,b)=>{ return cmp(b.version,a.version); })[0];
+            }
+            let choice = '${{ steps.target-env.outputs.dir }}';
+            if (next && latestStable) {
+              if (cmp(next.version, latestStable.version) > 0) choice = 'next';
+              else choice = latestStable.value;
+            } else if (next && !latestStable) { choice = 'next'; }
+            else if (latestStable) { choice = latestStable.value; }
+            console.log('CHOICE='+choice);
+          " > ./deploy-staging/.chosen_target
+
+          TARGET_DIR=$(cat ./deploy-staging/.chosen_target | sed -n 's/^CHOICE=//p')
+
+          cat << EOF > ./deploy-staging/index.html
           <!DOCTYPE html>
           <html>
             <head>
               <meta charset="utf-8">
               <title>Documentation Redirect</title>
               <script>
-                const TARGET_DIR = "${{ steps.target-env.outputs.dir }}";
+                const TARGET_DIR = "${TARGET_DIR}";
                 window.location.href = "/ngx-gallery/" + TARGET_DIR + "/";
               </script>
             </head>

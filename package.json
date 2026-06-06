@@ -14,7 +14,8 @@
     "lint-lib": "ng lint ng-gallery",
     "test-lib": "ng test ng-gallery --browsers=chromium",
     "test-lib-headless": "ng test ng-gallery --no-watch",
-    "serve:ssr:ng-gallery-demo": "node dist/ng-gallery-demo/server/server.mjs"
+    "serve:ssr:ng-gallery-demo": "node dist/ng-gallery-demo/server/server.mjs",
+    "test-versions-handler": "node scripts/simulate-docs.mjs"
   },
   "prettier": {
     "printWidth": 100,
