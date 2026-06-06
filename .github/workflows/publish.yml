@@ -21,9 +21,14 @@ jobs:
         with:
           node-version: 26
           cache: 'npm'
-          # registry-url is no longer required here since npm handles authentication natively via OIDC
 
-      # ... install, test, and build steps remain exactly the same ...
+      - name: Build Library
+        run: npm run build-lib
+
+      - name: Verify Build Output
+        run: |
+            echo "Current directory structure:"
+            ls -R dist/ || echo "dist folder not found!"
 
       - name: Check if Beta Release
         id: check-tag
@@ -43,7 +48,6 @@ jobs:
         # npm stage publish requires npm >= 11.16.0, newer than the npm bundled with Node 26.
         run: npm install -g npm@11.16.0
 
-      # 🟢 Submits the package directly to your npm holding queue
       - name: Stage Publish to NPM via Trusted Publishing
         run: |
           cd dist/ng-gallery
