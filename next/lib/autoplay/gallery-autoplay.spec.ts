@@ -100,25 +100,44 @@ describe('Autoplay Directive', () => {
   });
 
   it('should pause animation when mouse enters and resume when it leaves', async () => {
-    const anim: Animation = getAutoplayAnimation();
-
+    // 1. Hover the element
     await userEvent.hover(element);
-    await vi.waitFor(() => expect(anim?.playState).toBe('paused'));
 
+    // 2. Poll for the status, capturing the *current* animation state on every tick
+    await vi.waitFor(() => {
+      const anim = getAutoplayAnimation();
+      expect(anim).toBeTruthy();
+      expect(anim!.playState).toBe('paused');
+    });
+
+    // 3. Leave the element
     await userEvent.unhover(element);
-    await vi.waitFor(() => expect(anim?.playState).toBe('running'));
+
+    // 4. Poll for resumption
+    await vi.waitFor(() => {
+      const anim = getAutoplayAnimation();
+      expect(anim).toBeTruthy();
+      expect(anim!.playState).toBe('running');
+    });
   });
 
-  it('should pause on pointerdown and resume on pointerup', () => {
-    const anim: Animation = getAutoplayAnimation();
-
+  it('should pause on pointerdown and resume on pointerup', async () => {
     // 1. Simulate Pointer Down
     element.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
-    expect(anim?.playState).toBe('paused');
+
+    // Use async waitFor to let the animation engine catch up with the paused status
+    await vi.waitFor(() => {
+      const anim = getAutoplayAnimation();
+      expect(anim?.playState).toBe('paused');
+    });
 
     // 2. Simulate Pointer Up
     element.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }));
-    expect(anim?.playState).toBe('running');
+
+    await vi.waitFor(() => {
+      const anim = getAutoplayAnimation();
+      expect(anim?.playState).toBe('running');
+    });
   });
 
   it('should handle complex interaction: hover then click', async () => {
