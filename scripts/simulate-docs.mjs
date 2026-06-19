@@ -1,4 +1,4 @@
-import { coreVersion, compareCore, normalizeManifestEntry } from '../projects/ng-gallery/.storybook/version-utils.ts';
+import { coreVersion, compareCore, normalizeManifestEntry } from '../projects/ng-gallery/.storybook/addons/version-addon/version-utils.ts';
 
 function runTestSuite() {
   console.log('🧪 RUNNING ANGULAR MATERIAL STYLE VERSION SWITCHER EMULATION\n');
