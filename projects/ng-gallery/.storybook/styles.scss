@@ -3,10 +3,8 @@ table:not(.docblock-argstable) tr:nth-of-type(2n) {
   background-color: transparent !important;
 }
 
-[data-theme="dark"] {
-  body {
-    background: rgb(34, 35, 37);
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 .slide {

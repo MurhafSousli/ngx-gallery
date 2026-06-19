@@ -7343,16 +7343,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ng-gallery/src/stories/addons/autoplay/Autoplay.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "unknown",
-                "defaultValue": "preview.meta({\r\n  title: 'Addons/Autoplay',\r\n  component: GalleryAutoplay,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n  ],\r\n  args: {\r\n    autoplay: true,\r\n    autoplayInterval: 3000,\r\n    autoplayScrollBehavior: 'smooth'\r\n  },\r\n  argTypes: {\r\n    autoplay: {\r\n      control: 'boolean',\r\n      table: {\r\n        defaultValue: { summary: \"true\" },\r\n      }\r\n    },\r\n    autoplayInterval: {\r\n      control: { type: 'number', min: 0, step: 500 },\r\n      table: {\r\n        defaultValue: { summary: \"3000\" },\r\n      }\r\n    },\r\n    autoplayScrollBehavior: {\r\n      control: 'radio',\r\n      options: ['smooth', 'auto'],\r\n      table: {\r\n        defaultValue: { summary: \"smooth\" },\r\n      }\r\n    },\r\n  },\r\n})"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/ng-gallery/src/stories/addons/lightbox/Lightbox-global-options.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -7390,6 +7380,16 @@
                 "deprecationMessage": "",
                 "type": "unknown",
                 "defaultValue": "preview.type<{ args: LightboxCSSVariablesArgs }>().meta({\r\n  title: 'Addons/Lightbox/Styling',\r\n  component: Gallery,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [LightboxModule],\r\n    }),\r\n  ],\r\n  parameters: {\r\n    controls: {\r\n      // This will only show the controls for the variables you defined in args\r\n      include: Object.keys(defaultStylingArgs),\r\n    },\r\n  },\r\n  args: defaultStylingArgs,\r\n  argTypes: stylingArgTypes\r\n})"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ng-gallery/src/stories/addons/autoplay/Autoplay.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "unknown",
+                "defaultValue": "preview.meta({\r\n  title: 'Addons/Autoplay',\r\n  component: GalleryAutoplay,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n  ],\r\n  args: {\r\n    autoplay: true,\r\n    autoplayInterval: 3000,\r\n    autoplayScrollBehavior: 'smooth'\r\n  },\r\n  argTypes: {\r\n    autoplay: {\r\n      control: 'boolean',\r\n      table: {\r\n        defaultValue: { summary: \"true\" },\r\n      }\r\n    },\r\n    autoplayInterval: {\r\n      control: { type: 'number', min: 0, step: 500 },\r\n      table: {\r\n        defaultValue: { summary: \"3000\" },\r\n      }\r\n    },\r\n    autoplayScrollBehavior: {\r\n      control: 'radio',\r\n      options: ['smooth', 'auto'],\r\n      table: {\r\n        defaultValue: { summary: \"smooth\" },\r\n      }\r\n    },\r\n  },\r\n})"
             },
             {
                 "name": "MultipleExample",

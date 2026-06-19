@@ -22,5 +22,6 @@ export default defineMain({
   framework: '@storybook/angular',
   staticDirs: [
     '../src', // 👈 serves mockServiceWorker.js
+    './public', // 👈 serves mock versions.json for local testing
   ],
 });
