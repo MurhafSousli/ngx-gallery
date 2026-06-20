@@ -51,25 +51,6 @@ jobs:
         # npm stage publish requires npm >= 11.16.0, newer than the npm bundled with Node 26.
         run: npm install -g npm@11.16.0
 
-      - name: Authenticate to npm via OIDC (Trusted Publishing)
-        # Uses GitHub Actions OIDC to request a temporary token from npm. The
-        # workflow already requests `id-token: write` in permissions.
-        run: |
-          echo "Attempting OIDC authentication to npm..."
-          # Ensure npm will attempt OIDC auth non-interactively
-          npm config set //registry.npmjs.org/:always-auth true
-          # npm v11+ supports `--auth-type=oidc` which will exchange the GitHub
-          # OIDC token for temporary credentials on the runner.
-          npm login --auth-type=oidc --registry=https://registry.npmjs.org/ || true
-
-      - name: Verify npm authentication
-        run: |
-          echo "Verifying npm authentication..."
-          if ! npm whoami >/dev/null 2>&1; then
-            echo "Failed to authenticate to npm via OIDC. Check that Trusted Publishing is enabled and 'id-token: write' permission is present." >&2
-            exit 1
-          fi
-
       - name: Stage Publish to NPM via Trusted Publishing
         run: |
           cd dist/ng-gallery
