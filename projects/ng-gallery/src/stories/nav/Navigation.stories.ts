@@ -1,5 +1,5 @@
 import preview from '#.storybook/preview';
-import { moduleMetadata } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular-vite';
 import { GalleryModule, GalleryNav } from 'ng-gallery';
 import { getSlides } from '#.storybook/mocks/pixabay.service';
 

@@ -2010,7 +2010,21 @@
                     "line": 7
                 }
             ],
-            "methods": [],
+            "methods": [
+                {
+                    "name": "activateGestures",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "Observable<any>",
+                    "typeParameters": [],
+                    "line": 19,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ]
+                }
+            ],
             "indexSignatures": [],
             "extends": [],
             "hostBindings": [],
@@ -2120,6 +2134,22 @@
                     "line": 7,
                     "modifierKind": [
                         148
+                    ],
+                    "inheritance": {
+                        "file": "SliderAdapter"
+                    }
+                },
+                {
+                    "name": "slider",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "HTMLElement",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 27,
+                    "modifierKind": [
+                        125
                     ],
                     "inheritance": {
                         "file": "SliderAdapter"
@@ -2368,6 +2398,39 @@
             "deprecationMessage": "",
             "type": "class",
             "sourceCode": "export abstract class SliderAdapter {\r\n\r\n  readonly abstract scrollSnapType: string;\r\n\r\n  readonly abstract startProperty: 'left' | 'top';\r\n\r\n  abstract readonly sizeProperty: 'width' | 'height';\r\n\r\n  abstract readonly offsetSize: 'offsetWidth' | 'offsetHeight';\r\n\r\n  abstract get scrollValue(): number;\r\n\r\n  get content(): HTMLElement {\r\n    return this.slider.firstElementChild as HTMLElement;\r\n  }\r\n\r\n  abstract getVisibleEntriesRootMargin(): string;\r\n\r\n  abstract getActiveEntryRootMarginForStart(): string;\r\n\r\n  abstract getActiveEntryRootMarginForCenter(): string;\r\n\r\n  abstract getActiveEntryRootMarginForEnd(): string;\r\n\r\n  abstract getDraggingProperty(e: MouseEvent): number;\r\n\r\n  protected constructor(public slider: HTMLElement) {\r\n  }\r\n}\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "args": [
+                    {
+                        "name": "slider",
+                        "type": "HTMLElement",
+                        "optional": false,
+                        "dotDotDotToken": false,
+                        "deprecated": false,
+                        "deprecationMessage": ""
+                    }
+                ],
+                "line": 25,
+                "modifierKind": [
+                    124
+                ],
+                "jsdoctags": [
+                    {
+                        "name": "slider",
+                        "type": "HTMLElement",
+                        "optional": false,
+                        "dotDotDotToken": false,
+                        "deprecated": false,
+                        "deprecationMessage": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
             "inputsClass": [],
             "outputsClass": [],
             "properties": [
@@ -2411,6 +2474,19 @@
                     "modifierKind": [
                         128,
                         148
+                    ]
+                },
+                {
+                    "name": "slider",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "HTMLElement",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 27,
+                    "modifierKind": [
+                        125
                     ]
                 },
                 {
@@ -2703,8 +2779,250 @@
             },
             "inputsClass": [],
             "outputsClass": [],
-            "properties": [],
+            "properties": [
+                {
+                    "name": "currentAnimation",
+                    "defaultValue": "null",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Animation | null",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 12,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "currentScrollAbortController",
+                    "defaultValue": "null",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "AbortController | null",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 11,
+                    "modifierKind": [
+                        123
+                    ]
+                }
+            ],
             "methods": [
+                {
+                    "name": "animateScroll",
+                    "args": [
+                        {
+                            "name": "el",
+                            "type": "Element",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "context",
+                            "type": "SmoothScrollStep",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "signal",
+                            "type": "AbortSignal",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Promise<void>",
+                    "typeParameters": [],
+                    "line": 36,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "el",
+                            "type": "Element",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "context",
+                            "type": "SmoothScrollStep",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "signal",
+                            "type": "AbortSignal",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "applyScroll",
+                    "args": [
+                        {
+                            "name": "el",
+                            "type": "Element",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "options",
+                            "type": "SmoothScrollToOptions",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Promise<void>",
+                    "typeParameters": [],
+                    "line": 200,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "el",
+                            "type": "Element",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "options",
+                            "type": "SmoothScrollToOptions",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "getScrollAbortController",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "AbortController",
+                    "typeParameters": [],
+                    "line": 30,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "scrollElement",
+                    "args": [
+                        {
+                            "name": "el",
+                            "type": "Element",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "x",
+                            "type": "number",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "y",
+                            "type": "number",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 17,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "el",
+                            "type": "Element",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "x",
+                            "type": "number",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "y",
+                            "type": "number",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
                 {
                     "name": "scrollTo",
                     "args": [
@@ -2799,6 +3117,19 @@
                     "line": 196,
                     "deprecated": false,
                     "deprecationMessage": ""
+                },
+                {
+                    "name": "stopCurrentScroll",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 22,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ]
                 }
             ],
             "indexSignatures": [],
@@ -2910,6 +3241,22 @@
                     "line": 44,
                     "modifierKind": [
                         148
+                    ],
+                    "inheritance": {
+                        "file": "SliderAdapter"
+                    }
+                },
+                {
+                    "name": "slider",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "HTMLElement",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 27,
+                    "modifierKind": [
+                        125
                     ],
                     "inheritance": {
                         "file": "SliderAdapter"
@@ -3057,6 +3404,66 @@
                     "modifierKind": [
                         148
                     ]
+                },
+                {
+                    "name": "activeItemResizeResource",
+                    "defaultValue": "rxResource({\r\n    params: () => {\r\n      const active: SliderItem = this.gallery.activeItem();\r\n      if (!this.isBrowser || active?.state() !== 'ready') return undefined;\r\n      return {\r\n        activeEl: active.nativeElement\r\n      }\r\n    },\r\n    stream: ({ params }) => {\r\n      return this.sharedResizeObserver.observe(params.activeEl).pipe(\r\n        map((entries: ResizeObserverEntry[]) =>\r\n          entries.find((entry: ResizeObserverEntry) => entry.target === params.activeEl)\r\n        ),\r\n        filter((entry: ResizeObserverEntry) => !!entry)\r\n      )\r\n    }\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ResourceRef<ResizeObserverEntry>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 28,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "gallery",
+                    "defaultValue": "inject(Gallery)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Gallery",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 24,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "isBrowser",
+                    "defaultValue": "isPlatformBrowser(inject(PLATFORM_ID))",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "boolean",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 22,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "sharedResizeObserver",
+                    "defaultValue": "inject(SharedResizeObserver)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "SharedResizeObserver",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 26,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
                 }
             ],
             "methodsClass": [],
@@ -3120,7 +3527,53 @@
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "propertiesClass": [],
+            "propertiesClass": [
+                {
+                    "name": "defaultConfig",
+                    "defaultValue": "inject(GALLERY_OPTIONS)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "GalleryOptions",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 23,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "gallery",
+                    "defaultValue": "inject(Gallery)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Gallery",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 25,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "nativeElement",
+                    "defaultValue": "inject(ElementRef<HTMLElement>).nativeElement",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "HTMLElement",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 27,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                }
+            ],
             "methodsClass": [],
             "extends": [],
             "constructorObj": {
@@ -3470,6 +3923,104 @@
             ]
         },
         {
+            "name": "GalleryLayoutDirective",
+            "id": "directive-GalleryLayoutDirective-21a32781bb98852de2f5ceaa0acd71ca0207f624d9a06066c2dd201d78d4bcbc198e049ad6344d0cf6ad3eab119ae400c5afd26f024a9c3306dc5f92c8fd2d8d",
+            "file": "projects/ng-gallery/src/lib/gallery-layout.ts",
+            "type": "directive",
+            "description": "",
+            "rawdescription": "\n\n",
+            "sourceCode": "import { Directive, computed, contentChild, contentChildren, Signal } from '@angular/core';\r\nimport { GalleryNav } from './nav/gallery-nav';\r\nimport { GalleryPosition } from './models/config.model';\r\nimport { GallerySlot } from './directives/gallery-slot';\r\nimport { GalleryThumbContext } from './thumbs/gallery-thumb.token';\r\n\r\n/**\r\n * @internal\r\n */\r\n@Directive({\r\n  host: {\r\n    '[style.grid-template]': 'gridTemplate()'\r\n  },\r\n  selector: '[galleryLayout]'\r\n})\r\nexport class GalleryLayoutDirective {\r\n\r\n  /* v8 ignore start */\r\n  private readonly galleryNav: Signal<GalleryNav> = contentChild(GalleryNav);\r\n\r\n  private readonly galleryThumbs: Signal<readonly GalleryThumbContext[]> = contentChildren(GalleryThumbContext);\r\n\r\n  private readonly slots: Signal<readonly GallerySlot[]> = contentChildren(GallerySlot);\r\n  /* v8 ignore stop */\r\n\r\n  /** 1. Identify which docks are occupied by non-floating elements */\r\n  private readonly occupiedDocks: Signal<Set<GalleryPosition>> = computed(() => {\r\n    const active: Set<GalleryPosition> = new Set<GalleryPosition>();\r\n\r\n    this.slots().forEach(b => b.position() !== 'center' && active.add(b.position()));\r\n\r\n    this.galleryThumbs().forEach(t => !t.floating() && active.add(t.position()));\r\n\r\n    this.galleryNav()?.buttons().forEach(b => b.position() !== 'center' && active.add(b.position()));\r\n\r\n    return active;\r\n  });\r\n\r\n  readonly gridTemplate: Signal<string> = computed(() => {\r\n    const d: Set<GalleryPosition> = this.occupiedDocks();\r\n    const hasStart = d.has('start');\r\n    const hasEnd = d.has('end');\r\n\r\n    // 1. Column Definition\r\n    const columns: string[] = [\r\n      ...(hasStart ? ['auto'] : []),\r\n      'minmax(0, 1fr)',\r\n      ...(hasEnd ? ['auto'] : [])\r\n    ];\r\n\r\n    const colCount = columns.length;\r\n\r\n    // 2. Optimized Row Builder\r\n    // If 'content' is a string, we repeat it across all columns (Full Width)\r\n    // If 'content' is an object, we map specific slots\r\n    const createRow = (content: string | { start?: string, center?: string, end?: string }, height: string) => {\r\n      let rowContent: string;\r\n\r\n      if (typeof content === 'string') {\r\n        // Repeat the name (e.g., \"bottom bottom bottom\") to span all columns\r\n        rowContent = Array(colCount).fill(content).join(' ');\r\n      } else {\r\n        const cells: string[] = [];\r\n        if (hasStart) cells.push(content.start || '.');\r\n        cells.push(content.center || '.');\r\n        if (hasEnd) cells.push(content.end || '.');\r\n        rowContent = cells.join(' ');\r\n      }\r\n\r\n      return `\"${ rowContent }\" ${ height }`;\r\n    };\r\n\r\n    const rows: string[] = [];\r\n\r\n    // 3. Construct Rows\r\n    if (d.has('top')) {\r\n      // Pass the string \"top\" to trigger full-width spanning\r\n      rows.push(createRow('top', 'auto'));\r\n    }\r\n\r\n    // Center row (Mixed content)\r\n    rows.push(createRow({\r\n      start: 'start',\r\n      center: 'center',\r\n      end: 'end'\r\n    }, 'minmax(0, 1fr)'));\r\n\r\n    if (d.has('bottom')) {\r\n      // Pass the string \"bottom\" to trigger full-width spanning\r\n      rows.push(createRow('bottom', 'auto'));\r\n    }\r\n\r\n    return `${ rows.join('\\n') } / ${ columns.join(' ') }`;\r\n  });\r\n}\r\n",
+            "selector": "[galleryLayout]",
+            "providers": [],
+            "hostDirectives": [],
+            "standalone": false,
+            "inputsClass": [],
+            "outputsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "propertiesClass": [
+                {
+                    "name": "galleryNav",
+                    "defaultValue": "contentChild(GalleryNav)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<GalleryNav>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 19,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "galleryThumbs",
+                    "defaultValue": "contentChildren(GalleryThumbContext)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<GalleryThumbContext[]>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 21,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "gridTemplate",
+                    "defaultValue": "computed(() => {\r\n    const d: Set<GalleryPosition> = this.occupiedDocks();\r\n    const hasStart = d.has('start');\r\n    const hasEnd = d.has('end');\r\n\r\n    // 1. Column Definition\r\n    const columns: string[] = [\r\n      ...(hasStart ? ['auto'] : []),\r\n      'minmax(0, 1fr)',\r\n      ...(hasEnd ? ['auto'] : [])\r\n    ];\r\n\r\n    const colCount = columns.length;\r\n\r\n    // 2. Optimized Row Builder\r\n    // If 'content' is a string, we repeat it across all columns (Full Width)\r\n    // If 'content' is an object, we map specific slots\r\n    const createRow = (content: string | { start?: string, center?: string, end?: string }, height: string) => {\r\n      let rowContent: string;\r\n\r\n      if (typeof content === 'string') {\r\n        // Repeat the name (e.g., \"bottom bottom bottom\") to span all columns\r\n        rowContent = Array(colCount).fill(content).join(' ');\r\n      } else {\r\n        const cells: string[] = [];\r\n        if (hasStart) cells.push(content.start || '.');\r\n        cells.push(content.center || '.');\r\n        if (hasEnd) cells.push(content.end || '.');\r\n        rowContent = cells.join(' ');\r\n      }\r\n\r\n      return `\"${ rowContent }\" ${ height }`;\r\n    };\r\n\r\n    const rows: string[] = [];\r\n\r\n    // 3. Construct Rows\r\n    if (d.has('top')) {\r\n      // Pass the string \"top\" to trigger full-width spanning\r\n      rows.push(createRow('top', 'auto'));\r\n    }\r\n\r\n    // Center row (Mixed content)\r\n    rows.push(createRow({\r\n      start: 'start',\r\n      center: 'center',\r\n      end: 'end'\r\n    }, 'minmax(0, 1fr)'));\r\n\r\n    if (d.has('bottom')) {\r\n      // Pass the string \"bottom\" to trigger full-width spanning\r\n      rows.push(createRow('bottom', 'auto'));\r\n    }\r\n\r\n    return `${ rows.join('\\n') } / ${ columns.join(' ') }`;\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<string>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 39,
+                    "modifierKind": [
+                        148
+                    ]
+                },
+                {
+                    "name": "occupiedDocks",
+                    "defaultValue": "computed(() => {\r\n    const active: Set<GalleryPosition> = new Set<GalleryPosition>();\r\n\r\n    this.slots().forEach(b => b.position() !== 'center' && active.add(b.position()));\r\n\r\n    this.galleryThumbs().forEach(t => !t.floating() && active.add(t.position()));\r\n\r\n    this.galleryNav()?.buttons().forEach(b => b.position() !== 'center' && active.add(b.position()));\r\n\r\n    return active;\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<Set<GalleryPosition>>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<ol>\n<li>Identify which docks are occupied by non-floating elements</li>\n</ol>\n",
+                    "line": 27,
+                    "rawdescription": "\n1. Identify which docks are occupied by non-floating elements",
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "slots",
+                    "defaultValue": "contentChildren(GallerySlot)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<GallerySlot[]>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 23,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                }
+            ],
+            "methodsClass": [],
+            "extends": []
+        },
+        {
             "name": "GalleryNavButton",
             "id": "directive-GalleryNavButton-3a02f31e33de48bcda1de036320577e70342b1fa42803595fcb968475692f81b5d8e302d07f7731eb1713f4e7b6c86491b4bcbc603cbd26f03a9274a40ad776a",
             "file": "projects/ng-gallery/src/lib/nav/gallery-nav-button.ts",
@@ -3504,7 +4055,68 @@
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "propertiesClass": [],
+            "propertiesClass": [
+                {
+                    "name": "a11y",
+                    "defaultValue": "inject(GALLERY_A11Y_OPTIONS)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "GalleryA11yOptions",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 21,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "ariaLabel",
+                    "defaultValue": "computed(() => {\r\n    if (!this.a11y) return null;\r\n    if (this.type() === 'next') {\r\n      const steps: number | 'page' = this.galleryRef.steps();\r\n      const itemsPerView: number = this.galleryRef.itemsPerView();\r\n      if (this.galleryRef.getNextNavigationIndex(steps === 'page' ? itemsPerView : steps) === this.galleryRef.itemsCount() - 1) {\r\n        if (this.galleryRef.loop() && !this.galleryRef.hasNext()) {\r\n          return this.a11y.firstItemLabel;\r\n        }\r\n        return this.a11y.lastItemLabel;\r\n      }\r\n      return this.a11y.nextItemLabel;\r\n    } else {\r\n      const steps: number | 'page' = this.galleryRef.steps();\r\n      const itemsPerView: number = this.galleryRef.itemsPerView();\r\n      if (this.galleryRef.getPrevNavigationIndex(steps === 'page' ? itemsPerView : steps) === 0) {\r\n        if (this.galleryRef.loop() && !this.galleryRef.hasPrev()) {\r\n          return this.a11y.lastItemLabel;\r\n        }\r\n        return this.a11y.firstItemLabel;\r\n      }\r\n      return this.a11y.prevItemLabel;\r\n    }\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<string>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 31,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "galleryRef",
+                    "defaultValue": "inject(GalleryRef)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "GalleryRef",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 19,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "isDisabled",
+                    "defaultValue": "computed(() => {\r\n    if (this.userDisabled()) return true;\r\n    if (this.galleryRef.loop()) return false;\r\n    return this.type() === 'next'\r\n      ? !this.galleryRef.hasNext()\r\n      : !this.galleryRef.hasPrev();\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<boolean>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 56,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                }
+            ],
             "methodsClass": [],
             "extends": []
         },
@@ -3795,6 +4407,37 @@
                     ]
                 },
                 {
+                    "name": "defaultOptions",
+                    "defaultValue": "inject(BASE_SLIDER_OPTIONS)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "BaseSliderOptions",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 54,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "firstItemIndex",
+                    "defaultValue": "computed(() => 0)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<number>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>The constant starting index of the gallery (always 0)</p>\n",
+                    "line": 245,
+                    "rawdescription": "\nThe constant starting index of the gallery (always 0)",
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
                     "name": "hasNext",
                     "defaultValue": "computed(() => {\r\n    if (this.forceSnap()) {\r\n      return this.activeIndex() < this.lastItemIndex();\r\n    }\r\n    const lastVisibleIndex: number | undefined = this.lastVisibleIndex();\r\n    if (lastVisibleIndex === undefined) return false;\r\n\r\n    const lastVisibleEntry: IntersectionObserverEntry | null = this.getVisibleEntry(lastVisibleIndex);\r\n    return !this.isFullyVisible(lastVisibleEntry) || lastVisibleIndex < this.lastItemIndex();\r\n  })",
                     "deprecated": false,
@@ -3840,6 +4483,36 @@
                     ]
                 },
                 {
+                    "name": "injectedInitialIndex",
+                    "defaultValue": "inject(GALLERY_INITIAL_INDEX, { optional: true })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<number>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 219,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "intersectionSensor",
+                    "defaultValue": "viewChild.required(IntersectionSensorContext)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<IntersectionSensorContext>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 61,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
                     "name": "isOneItemPerView",
                     "defaultValue": "computed(() => this.itemsPerView() === 1 && !this.itemSize())",
                     "deprecated": false,
@@ -3867,6 +4540,36 @@
                     "rawdescription": "\n\nItems data array count\n",
                     "modifierKind": [
                         148
+                    ]
+                },
+                {
+                    "name": "lastItemIndex",
+                    "defaultValue": "computed(() => Math.max(0, this.itemsCount() - 1))",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<number>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>The final available index based on the total item count</p>\n",
+                    "line": 248,
+                    "rawdescription": "\nThe final available index based on the total item count",
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "navigationSource",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "WritableSignal<NavigationTarget>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 233,
+                    "modifierKind": [
+                        124,
+                        128
                     ]
                 },
                 {
@@ -3912,6 +4615,21 @@
                     ]
                 },
                 {
+                    "name": "resizeSensor",
+                    "defaultValue": "viewChild.required(ResizeSensorContext)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<ResizeSensorContext>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 59,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
                     "name": "scrollEase",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -3923,6 +4641,37 @@
                     "rawdescription": "\n\nSets the ease function used for smooth navigation between the items\n",
                     "modifierKind": [
                         128
+                    ]
+                },
+                {
+                    "name": "slider",
+                    "defaultValue": "viewChild.required(SliderContext)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<SliderContext>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 57,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "trackSize",
+                    "defaultValue": "computed(() => {\r\n    const explicitSize = this.itemSize();\r\n    if (explicitSize === 'auto') return 'max-content';\r\n    if (explicitSize && explicitSize !== 'auto') return explicitSize as string;\r\n    // Vertical: 100cqb of the host height, Horizontal: 100cqi of the host width\r\n    const containerUnit = this.orientation() === 'horizontal' ? '100cqi' : '100cqb';\r\n\r\n    const n: number = Math.min(this.itemsPerView(), this.itemsCount());\r\n    return `calc((${ containerUnit } - (${ this.gap() }px * ${ n - 1 })) / ${ n })`;\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<string>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>Shared sizing logic that performs the math based on current inputs.\nReturns the value for the main axis (scroll direction).</p>\n",
+                    "line": 208,
+                    "rawdescription": "\n\nShared sizing logic that performs the math based on current inputs.\nReturns the value for the main axis (scroll direction).\n",
+                    "modifierKind": [
+                        124,
+                        148
                     ]
                 },
                 {
@@ -3939,9 +4688,132 @@
                     "modifierKind": [
                         148
                     ]
+                },
+                {
+                    "name": "visibleIndices",
+                    "defaultValue": "computed(() => {\r\n    return Object.keys(this.visibleEntries())\r\n      .map(Number)\r\n      .filter((index: number) => !Number.isNaN(index))\r\n      .sort((a: number, b: number) => a - b);\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<number[]>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>A sorted list of indices currently detected within the gallery viewport</p>\n",
+                    "line": 261,
+                    "rawdescription": "\nA sorted list of indices currently detected within the gallery viewport",
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
                 }
             ],
             "methodsClass": [
+                {
+                    "name": "calculateTargetWithFit",
+                    "args": [
+                        {
+                            "name": "ctx",
+                            "type": "PageCalculationContext",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "number",
+                    "typeParameters": [],
+                    "line": 434,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "ctx",
+                            "type": "PageCalculationContext",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "getPageTarget",
+                    "args": [
+                        {
+                            "name": "direction",
+                            "type": "\"next\" | \"prev\"",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "number",
+                    "typeParameters": [],
+                    "line": 416,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "direction",
+                            "type": "\"next\" | \"prev\"",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "getVisibleEntry",
+                    "args": [
+                        {
+                            "name": "index",
+                            "type": "number | null",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "IntersectionObserverEntry | null",
+                    "typeParameters": [],
+                    "line": 288,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nValidates if the item at the given index is fully visible (100% intersection)\n",
+                    "description": "<p>Validates if the item at the given index is fully visible (100% intersection)</p>\n",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "index",
+                            "type": "number | null",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
                 {
                     "name": "goTo",
                     "args": [
@@ -3966,6 +4838,43 @@
                         {
                             "name": "",
                             "type": "NavigationTarget",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "isFullyVisible",
+                    "args": [
+                        {
+                            "name": "entry",
+                            "type": "IntersectionObserverEntry | null",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "boolean",
+                    "typeParameters": [],
+                    "line": 296,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nValidates if the item at the given index is fully visible (100% intersection)\n",
+                    "description": "<p>Validates if the item at the given index is fully visible (100% intersection)</p>\n",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "entry",
+                            "type": "IntersectionObserverEntry | null",
                             "optional": false,
                             "dotDotDotToken": false,
                             "deprecated": false,
@@ -4151,7 +5060,83 @@
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "propertiesClass": [],
+            "propertiesClass": [
+                {
+                    "name": "a11y",
+                    "defaultValue": "inject(GALLERY_A11Y_OPTIONS)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "GalleryA11yOptions",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 23,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "ariaCurrent",
+                    "defaultValue": "computed(() => {\r\n    return this.a11y && this.item.active() ? \"true\" : null\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<string | null>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 29,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "ariaLabel",
+                    "defaultValue": "computed(() => {\r\n    return this.a11y?.thumbLabel(this.item.index(), this.item.count()) || null;\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<string | null>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 25,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "gallery",
+                    "defaultValue": "inject(Gallery)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Gallery",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 19,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "item",
+                    "defaultValue": "inject(SliderItem)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "SliderItem",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 21,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                }
+            ],
             "methodsClass": [],
             "extends": []
         },
@@ -4209,6 +5194,67 @@
                     ]
                 },
                 {
+                    "name": "galleryRef",
+                    "defaultValue": "inject(GalleryRef)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "GalleryRef",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 50,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "initialHydration",
+                    "defaultValue": "computed(() => !!this.activeEntryResource.value())",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<boolean>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>In multi-item layouts (itemsPerView &gt; 1), the io emits the correct &#39;center&#39; anchor index (e.g., Index 1)\nexactly one microtask AFTER the component initializes.\nWithout this signal, stableIndex would remain &#39;0&#39; (its initial state) until the first physical &#39;scrollend&#39; event.\nBy tracking this boolean, we force the stableIndex to &#39;re-sync&#39; exactly once when the first IO entry is detected,\nbridging the gap between bootstrap and the first user interaction.</p>\n",
+                    "line": 164,
+                    "rawdescription": "\n\nIn multi-item layouts (itemsPerView > 1), the io emits the correct 'center' anchor index (e.g., Index 1)\nexactly one microtask AFTER the component initializes.\nWithout this signal, stableIndex would remain '0' (its initial state) until the first physical 'scrollend' event.\nBy tracking this boolean, we force the stableIndex to 're-sync' exactly once when the first IO entry is detected,\nbridging the gap between bootstrap and the first user interaction.\n",
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "itemsElements",
+                    "defaultValue": "computed(() => {\r\n    return this.galleryRef.renderedItems().map((item) => item.nativeElement);\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<HTMLElement[]>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 58,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "nativeElement",
+                    "defaultValue": "inject(ElementRef<HTMLElement>).nativeElement",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "HTMLElement",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 52,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
                     "name": "resizeSensor",
                     "defaultValue": "inject(ResizeSensorContext, { self: true })",
                     "deprecated": false,
@@ -4223,6 +5269,22 @@
                     ]
                 },
                 {
+                    "name": "scrollEndTrigger",
+                    "defaultValue": "toSignal(\r\n    // scrollend fires before io catches the new anchor index\r\n    // delaying 1 animationFrameScheduler or asyncScheduler still runs too early\r\n    // we could use debounceTime(50), but a double animation frame is more reliable\r\n    fromEvent(this.nativeElement, 'scrollend').pipe(\r\n      observeOn(animationFrameScheduler),\r\n      observeOn(animationFrameScheduler),\r\n      map(() => Date.now())\r\n    ),\r\n    { initialValue: 0 }\r\n  )",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<number>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>Detects the end of a physical scroll via the browser&#39;s native &#39;scrollend&#39; event.\nNecessary for capturing the conclusion of touchpad or touch-pan interactions\nwhere internal &#39;scrolling&#39; or &#39;dragging&#39; states remain &#39;idle&#39;.</p>\n",
+                    "line": 184,
+                    "rawdescription": "\n\nDetects the end of a physical scroll via the browser's native 'scrollend' event.\nNecessary for capturing the conclusion of touchpad or touch-pan interactions\nwhere internal 'scrolling' or 'dragging' states remain 'idle'.\n",
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
                     "name": "slider",
                     "defaultValue": "inject(SliderContext, { self: true })",
                     "deprecated": false,
@@ -4233,6 +5295,21 @@
                     "description": "",
                     "line": 54,
                     "modifierKind": [
+                        148
+                    ]
+                },
+                {
+                    "name": "snapAlignRootMargin",
+                    "defaultValue": "computed(() => {\r\n    const adapter = this.slider.adapter();\r\n    switch (this.galleryRef.snapAlign()) {\r\n      case 'start':\r\n        return adapter.getActiveEntryRootMarginForStart();\r\n      case 'end':\r\n        return adapter.getActiveEntryRootMarginForEnd();\r\n      default:\r\n        return adapter.getActiveEntryRootMarginForCenter();\r\n    }\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<string>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 110,
+                    "modifierKind": [
+                        123,
                         148
                     ]
                 },
@@ -4280,6 +5357,21 @@
                     "modifierKind": [
                         148
                     ]
+                },
+                {
+                    "name": "zone",
+                    "defaultValue": "inject(NgZone)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "NgZone",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 48,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
                 }
             ],
             "methodsClass": [],
@@ -4308,6 +5400,96 @@
             "hostListeners": [],
             "propertiesClass": [
                 {
+                    "name": "_document",
+                    "defaultValue": "inject(DOCUMENT)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Document",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 33,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "_platform",
+                    "defaultValue": "inject(Platform)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Platform",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 37,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "dir",
+                    "defaultValue": "inject(Directionality)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Directionality",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 35,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "galleryRef",
+                    "defaultValue": "inject(GalleryRef)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "GalleryRef",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 25,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "intersectionSensor",
+                    "defaultValue": "inject(IntersectionSensor)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "IntersectionSensor",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 29,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "nativeElement",
+                    "defaultValue": "inject(ElementRef<HTMLElement>).nativeElement",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "HTMLElement",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 31,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
                     "name": "slider",
                     "defaultValue": "inject(SliderContext, { self: true })",
                     "deprecated": false,
@@ -4318,6 +5500,21 @@
                     "description": "",
                     "line": 39,
                     "modifierKind": [
+                        148
+                    ]
+                },
+                {
+                    "name": "smoothScroll",
+                    "defaultValue": "inject(SmoothScroll)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "SmoothScroll",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 27,
+                    "modifierKind": [
+                        123,
                         148
                     ]
                 }
@@ -4367,6 +5564,21 @@
                     "description": "",
                     "line": 96,
                     "modifierKind": [
+                        148
+                    ]
+                },
+                {
+                    "name": "galleryRef",
+                    "defaultValue": "inject(GalleryRef)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "GalleryRef",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 41,
+                    "modifierKind": [
+                        123,
                         148
                     ]
                 },
@@ -4441,6 +5653,36 @@
                     ]
                 },
                 {
+                    "name": "sharedResizeObserver",
+                    "defaultValue": "inject(SharedResizeObserver)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "SharedResizeObserver",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 39,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "slider",
+                    "defaultValue": "inject(SliderContext, { self: true })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "SliderContext",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 43,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
                     "name": "snapPaddingEnd",
                     "defaultValue": "computed(() => {\r\n    const adapter: SliderAdapter = this.slider.adapter();\r\n    const align: GallerySnapAlign = this.galleryRef.snapAlign();\r\n    return this.calculatePadding(adapter, adapter.content.lastElementChild, align, 'start');\r\n  })",
                     "deprecated": false,
@@ -4483,7 +5725,100 @@
                     ]
                 }
             ],
-            "methodsClass": [],
+            "methodsClass": [
+                {
+                    "name": "calculatePadding",
+                    "args": [
+                        {
+                            "name": "adapter",
+                            "type": "SliderAdapter",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "element",
+                            "type": "Element",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "align",
+                            "type": "GallerySnapAlign",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        },
+                        {
+                            "name": "edgeCase",
+                            "type": "\"start\" | \"end\"",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "number",
+                    "typeParameters": [],
+                    "line": 122,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "adapter",
+                            "type": "SliderAdapter",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "element",
+                            "type": "Element",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "align",
+                            "type": "GallerySnapAlign",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "edgeCase",
+                            "type": "\"start\" | \"end\"",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
             "extends": [],
             "implements": [
                 "ResizeSensorContext"
@@ -4507,7 +5842,110 @@
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
-            "propertiesClass": [],
+            "propertiesClass": [
+                {
+                    "name": "activeManager",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "SmoothScrollManager",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 26,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "dir",
+                    "defaultValue": "inject(Directionality)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Directionality",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 14,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "galleryRef",
+                    "defaultValue": "inject(GalleryRef)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "GalleryRef",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 16,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "nativeElement",
+                    "defaultValue": "inject(ElementRef<HTMLElement>).nativeElement",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "HTMLElement",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 18,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "resizeSensor",
+                    "defaultValue": "inject(ResizeSensorContext, { self: true })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "ResizeSensorContext",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 22,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "scrollTaskCount",
+                    "defaultValue": "0",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 24,
+                    "modifierKind": [
+                        123
+                    ]
+                },
+                {
+                    "name": "slider",
+                    "defaultValue": "inject(SliderContext, { self: true })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "SliderContext",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 20,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                }
+            ],
             "methodsClass": [
                 {
                     "name": "scrollToIndex",
@@ -4915,6 +6353,72 @@
             "outputsClass": [],
             "propertiesClass": [
                 {
+                    "name": "a11y",
+                    "defaultValue": "inject(GALLERY_A11Y_OPTIONS)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "GalleryA11yOptions",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>A11y options</p>\n",
+                    "line": 107,
+                    "rawdescription": "\nA11y options",
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "defaultConfig",
+                    "defaultValue": "inject(GALLERY_OPTIONS)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "GalleryOptions",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>Default options</p>\n",
+                    "line": 104,
+                    "rawdescription": "\nDefault options",
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "liveRegion",
+                    "defaultValue": "computed(() => {\r\n    // Trigger only on active index changes\r\n    this.activeIndex();\r\n    const first: number = (untracked(this.firstVisibleIndex) ?? 0) + 1;\r\n    const last: number = (untracked(this.lastVisibleIndex) ?? 0) + 1;\r\n    return this.a11y.rangeLabel(first, last, this.itemsCount());\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<string>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 162,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "navigationSource",
+                    "defaultValue": "linkedSignal({\r\n    // We track both the starting point and the 'live' truth from the observer\r\n    source: () => ({\r\n      initial: this.resolvedInitialIndex(),\r\n      current: this.activeIndex()\r\n    }),\r\n    computation: (src, previous): NavigationTarget => {\r\n      // 1. If we have no previous state, we are at 'init'\r\n      if (!previous) {\r\n        return { source: 'init', behavior: 'auto', index: src.initial };\r\n      }\r\n      // 2. If activeIndex changed (e.g., via touchpad), sync the state\r\n      // scroll directive will ignore source 'sync' in the main slider, but will update thumbnails navigation source\r\n      if (src.current !== previous.value.index) {\r\n        return { source: 'sync', index: src.current };\r\n      }\r\n      // 3. Otherwise, keep the previous intent (prevents unnecessary emissions)\r\n      return previous.value;\r\n    }\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "WritableSignal<NavigationTarget>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>Navigation intent (WRITE-ONLY)\nAutomatically sync with native scroll (touch)</p>\n",
+                    "line": 119,
+                    "rawdescription": "\n\nNavigation intent (WRITE-ONLY)\nAutomatically sync with native scroll (touch)\n",
+                    "modifierKind": [
+                        124,
+                        148
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
                     "name": "activeIndex",
                     "defaultValue": "computed(() => this.intersectionSensor().stableIndex())",
                     "deprecated": false,
@@ -5005,6 +6509,43 @@
                     }
                 },
                 {
+                    "name": "defaultOptions",
+                    "defaultValue": "inject(BASE_SLIDER_OPTIONS)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "BaseSliderOptions",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 54,
+                    "modifierKind": [
+                        123,
+                        148
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
+                    "name": "firstItemIndex",
+                    "defaultValue": "computed(() => 0)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<number>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>The constant starting index of the gallery (always 0)</p>\n",
+                    "line": 245,
+                    "rawdescription": "\nThe constant starting index of the gallery (always 0)",
+                    "modifierKind": [
+                        123,
+                        148
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
                     "name": "hasNext",
                     "defaultValue": "computed(() => {\r\n    if (this.forceSnap()) {\r\n      return this.activeIndex() < this.lastItemIndex();\r\n    }\r\n    const lastVisibleIndex: number | undefined = this.lastVisibleIndex();\r\n    if (lastVisibleIndex === undefined) return false;\r\n\r\n    const lastVisibleEntry: IntersectionObserverEntry | null = this.getVisibleEntry(lastVisibleIndex);\r\n    return !this.isFullyVisible(lastVisibleEntry) || lastVisibleIndex < this.lastItemIndex();\r\n  })",
                     "deprecated": false,
@@ -5059,6 +6600,42 @@
                     }
                 },
                 {
+                    "name": "injectedInitialIndex",
+                    "defaultValue": "inject(GALLERY_INITIAL_INDEX, { optional: true })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<number>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 219,
+                    "modifierKind": [
+                        123,
+                        148
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
+                    "name": "intersectionSensor",
+                    "defaultValue": "viewChild.required(IntersectionSensorContext)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<IntersectionSensorContext>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 61,
+                    "modifierKind": [
+                        124,
+                        148
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
                     "name": "isOneItemPerView",
                     "defaultValue": "computed(() => this.itemsPerView() === 1 && !this.itemSize())",
                     "deprecated": false,
@@ -5088,6 +6665,25 @@
                     "line": 242,
                     "rawdescription": "\n\nItems data array count\n",
                     "modifierKind": [
+                        148
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
+                    "name": "lastItemIndex",
+                    "defaultValue": "computed(() => Math.max(0, this.itemsCount() - 1))",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<number>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>The final available index based on the total item count</p>\n",
+                    "line": 248,
+                    "rawdescription": "\nThe final available index based on the total item count",
+                    "modifierKind": [
+                        123,
                         148
                     ],
                     "inheritance": {
@@ -5146,6 +6742,24 @@
                     }
                 },
                 {
+                    "name": "resizeSensor",
+                    "defaultValue": "viewChild.required(ResizeSensorContext)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<ResizeSensorContext>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 59,
+                    "modifierKind": [
+                        124,
+                        148
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
                     "name": "scrollEase",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -5157,6 +6771,43 @@
                     "rawdescription": "\n\nSets the ease function used for smooth navigation between the items\n",
                     "modifierKind": [
                         128
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
+                    "name": "slider",
+                    "defaultValue": "viewChild.required(SliderContext)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<SliderContext>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 57,
+                    "modifierKind": [
+                        124,
+                        148
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
+                    "name": "trackSize",
+                    "defaultValue": "computed(() => {\r\n    const explicitSize = this.itemSize();\r\n    if (explicitSize === 'auto') return 'max-content';\r\n    if (explicitSize && explicitSize !== 'auto') return explicitSize as string;\r\n    // Vertical: 100cqb of the host height, Horizontal: 100cqi of the host width\r\n    const containerUnit = this.orientation() === 'horizontal' ? '100cqi' : '100cqb';\r\n\r\n    const n: number = Math.min(this.itemsPerView(), this.itemsCount());\r\n    return `calc((${ containerUnit } - (${ this.gap() }px * ${ n - 1 })) / ${ n })`;\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<string>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>Shared sizing logic that performs the math based on current inputs.\nReturns the value for the main axis (scroll direction).</p>\n",
+                    "line": 208,
+                    "rawdescription": "\n\nShared sizing logic that performs the math based on current inputs.\nReturns the value for the main axis (scroll direction).\n",
+                    "modifierKind": [
+                        124,
+                        148
                     ],
                     "inheritance": {
                         "file": "GalleryRef"
@@ -5179,9 +6830,144 @@
                     "inheritance": {
                         "file": "GalleryRef"
                     }
+                },
+                {
+                    "name": "visibleIndices",
+                    "defaultValue": "computed(() => {\r\n    return Object.keys(this.visibleEntries())\r\n      .map(Number)\r\n      .filter((index: number) => !Number.isNaN(index))\r\n      .sort((a: number, b: number) => a - b);\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<number[]>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>A sorted list of indices currently detected within the gallery viewport</p>\n",
+                    "line": 261,
+                    "rawdescription": "\nA sorted list of indices currently detected within the gallery viewport",
+                    "modifierKind": [
+                        123,
+                        148
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
                 }
             ],
             "methodsClass": [
+                {
+                    "name": "calculateTargetWithFit",
+                    "args": [
+                        {
+                            "name": "ctx",
+                            "type": "PageCalculationContext",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "number",
+                    "typeParameters": [],
+                    "line": 434,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "ctx",
+                            "type": "PageCalculationContext",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
+                    "name": "getPageTarget",
+                    "args": [
+                        {
+                            "name": "direction",
+                            "type": "\"next\" | \"prev\"",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "number",
+                    "typeParameters": [],
+                    "line": 416,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "direction",
+                            "type": "\"next\" | \"prev\"",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
+                    "name": "getVisibleEntry",
+                    "args": [
+                        {
+                            "name": "index",
+                            "type": "number | null",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "IntersectionObserverEntry | null",
+                    "typeParameters": [],
+                    "line": 288,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nValidates if the item at the given index is fully visible (100% intersection)\n",
+                    "description": "<p>Validates if the item at the given index is fully visible (100% intersection)</p>\n",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "index",
+                            "type": "number | null",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
                 {
                     "name": "goTo",
                     "args": [
@@ -5206,6 +6992,46 @@
                         {
                             "name": "",
                             "type": "NavigationTarget",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
+                    "name": "isFullyVisible",
+                    "args": [
+                        {
+                            "name": "entry",
+                            "type": "IntersectionObserverEntry | null",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "boolean",
+                    "typeParameters": [],
+                    "line": 296,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nValidates if the item at the given index is fully visible (100% intersection)\n",
+                    "description": "<p>Validates if the item at the given index is fully visible (100% intersection)</p>\n",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "entry",
+                            "type": "IntersectionObserverEntry | null",
                             "optional": false,
                             "dotDotDotToken": false,
                             "deprecated": false,
@@ -5422,7 +7248,68 @@
                 }
             ],
             "outputsClass": [],
-            "propertiesClass": [],
+            "propertiesClass": [
+                {
+                    "name": "decimalPipe",
+                    "defaultValue": "inject(DecimalPipe)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "DecimalPipe",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 31,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "defaultConfig",
+                    "defaultValue": "inject(GALLERY_OPTIONS)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "GalleryOptions",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 27,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "gallery",
+                    "defaultValue": "inject(Gallery)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Gallery",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 29,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "text",
+                    "defaultValue": "computed(() => {\r\n    const totalCount = this.gallery.itemsCount();\r\n    const activeIndex = totalCount ? this.gallery.activeIndex() + 1 : 0;\r\n    const active = this.decimalPipe.transform(activeIndex) ?? String(activeIndex);\r\n    const total = this.decimalPipe.transform(totalCount) ?? String(totalCount);\r\n    return this.defaultConfig.counterText(active, total);\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<string>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 38,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                }
+            ],
             "methodsClass": [],
             "deprecated": false,
             "deprecationMessage": "",
@@ -5545,7 +7432,218 @@
                 }
             ],
             "outputsClass": [],
-            "propertiesClass": [],
+            "propertiesClass": [
+                {
+                    "name": "defaultConfig",
+                    "defaultValue": "inject(GALLERY_OPTIONS)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "GalleryOptions",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 67,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "dir",
+                    "defaultValue": "inject(Directionality)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Directionality",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 69,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "galleryRef",
+                    "defaultValue": "inject(GalleryRef)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "GalleryRef",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 71,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "navButtons",
+                    "defaultValue": "contentChildren(GalleryNavButton)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<GalleryNavButton[]>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 74,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "nextAlignSlot",
+                    "defaultValue": "computed(() => {\r\n    return nextSlotRules[this.galleryRef.orientation()][this.outside() ? 'outside' : 'inside'].align;\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<GalleryAlign>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 126,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "nextJustifySlot",
+                    "defaultValue": "computed(() => {\r\n    return nextSlotRules[this.galleryRef.orientation()][this.outside() ? 'outside' : 'inside'].justify;\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<GalleryAlign>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 130,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "nextNavButton",
+                    "defaultValue": "computed(() =>\r\n    this.navButtons().find((btn: GalleryNavButton) => btn.type() === 'next')\r\n  )",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<GalleryNavButton>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 76,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "nextSlot",
+                    "defaultValue": "computed(() => {\r\n    return nextSlotRules[this.galleryRef.orientation()][this.outside() ? 'outside' : 'inside'].area;\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<GalleryPosition>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 122,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "nextVisible",
+                    "defaultValue": "computed(() => {\r\n    return (this.showDisabledButtons() || this.galleryRef.loop() || this.galleryRef.hasNext()) ? 'visible' : 'hidden';\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<\"visible\" | \"hidden\">",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 106,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "prevAlignSlot",
+                    "defaultValue": "computed(() => {\r\n    return prevSlotRules[this.galleryRef.orientation()][this.outside() ? 'outside' : 'inside'].align;\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<GalleryAlign>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 114,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "prevJustifySlot",
+                    "defaultValue": "computed(() => {\r\n    return prevSlotRules[this.galleryRef.orientation()][this.outside() ? 'outside' : 'inside'].justify;\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<GalleryAlign>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 118,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "prevNavButton",
+                    "defaultValue": "computed(() =>\r\n    this.navButtons().find((btn: GalleryNavButton) => btn.type() === 'prev')\r\n  )",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<GalleryNavButton>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 80,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "prevSlot",
+                    "defaultValue": "computed(() => {\r\n    return prevSlotRules[this.galleryRef.orientation()][this.outside() ? 'outside' : 'inside'].area;\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<GalleryPosition>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 110,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "prevVisible",
+                    "defaultValue": "computed(() => {\r\n    return (this.showDisabledButtons() || this.galleryRef.loop() || this.galleryRef.hasPrev()) ? 'visible' : 'hidden';\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<\"visible\" | \"hidden\">",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 102,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                }
+            ],
             "methodsClass": [],
             "deprecated": false,
             "deprecationMessage": "",
@@ -5900,6 +7998,54 @@
             "outputsClass": [],
             "propertiesClass": [
                 {
+                    "name": "a11y",
+                    "defaultValue": "inject(GALLERY_A11Y_OPTIONS)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "GalleryA11yOptions",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 104,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "defaultConfig",
+                    "defaultValue": "inject(GALLERY_OPTIONS)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "GalleryOptions",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 102,
+                    "modifierKind": [
+                        123,
+                        148
+                    ]
+                },
+                {
+                    "name": "navigationSource",
+                    "defaultValue": "linkedSignal<NavigationTarget, NavigationTarget>({\r\n    source: () => {\r\n      if (this.detach()) {\r\n        return {\r\n          source: 'init',\r\n          behavior: 'auto',\r\n          index: this.resolvedInitialIndex()\r\n        };\r\n      }\r\n      return this.gallery.navigationState();\r\n    },\r\n    computation: (value: NavigationTarget) => {\r\n      // The main scroll directive ignores the sync source for the main slider when it syncs with the activeIndex,\r\n      // But thumbs scroll directive should react. therefore, the source parameter is converted to 'api' instead.\r\n      if (value.source === 'sync') {\r\n        return { index: value.index, source: 'api' };\r\n      }\r\n      return value;\r\n    }\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 149,
+                    "modifierKind": [
+                        124,
+                        148
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
                     "name": "orientation",
                     "defaultValue": "computed(() => {\r\n    return (this.position() === 'top' || this.position() === 'bottom') ? 'horizontal' : 'vertical';\r\n  })",
                     "deprecated": false,
@@ -6008,6 +8154,43 @@
                     }
                 },
                 {
+                    "name": "defaultOptions",
+                    "defaultValue": "inject(BASE_SLIDER_OPTIONS)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "BaseSliderOptions",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 54,
+                    "modifierKind": [
+                        123,
+                        148
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
+                    "name": "firstItemIndex",
+                    "defaultValue": "computed(() => 0)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<number>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>The constant starting index of the gallery (always 0)</p>\n",
+                    "line": 245,
+                    "rawdescription": "\nThe constant starting index of the gallery (always 0)",
+                    "modifierKind": [
+                        123,
+                        148
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
                     "name": "hasNext",
                     "defaultValue": "computed(() => {\r\n    if (this.forceSnap()) {\r\n      return this.activeIndex() < this.lastItemIndex();\r\n    }\r\n    const lastVisibleIndex: number | undefined = this.lastVisibleIndex();\r\n    if (lastVisibleIndex === undefined) return false;\r\n\r\n    const lastVisibleEntry: IntersectionObserverEntry | null = this.getVisibleEntry(lastVisibleIndex);\r\n    return !this.isFullyVisible(lastVisibleEntry) || lastVisibleIndex < this.lastItemIndex();\r\n  })",
                     "deprecated": false,
@@ -6062,6 +8245,42 @@
                     }
                 },
                 {
+                    "name": "injectedInitialIndex",
+                    "defaultValue": "inject(GALLERY_INITIAL_INDEX, { optional: true })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<number>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 219,
+                    "modifierKind": [
+                        123,
+                        148
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
+                    "name": "intersectionSensor",
+                    "defaultValue": "viewChild.required(IntersectionSensorContext)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<IntersectionSensorContext>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 61,
+                    "modifierKind": [
+                        124,
+                        148
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
                     "name": "isOneItemPerView",
                     "defaultValue": "computed(() => this.itemsPerView() === 1 && !this.itemSize())",
                     "deprecated": false,
@@ -6091,6 +8310,25 @@
                     "line": 242,
                     "rawdescription": "\n\nItems data array count\n",
                     "modifierKind": [
+                        148
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
+                    "name": "lastItemIndex",
+                    "defaultValue": "computed(() => Math.max(0, this.itemsCount() - 1))",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<number>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>The final available index based on the total item count</p>\n",
+                    "line": 248,
+                    "rawdescription": "\nThe final available index based on the total item count",
+                    "modifierKind": [
+                        123,
                         148
                     ],
                     "inheritance": {
@@ -6132,6 +8370,24 @@
                     }
                 },
                 {
+                    "name": "resizeSensor",
+                    "defaultValue": "viewChild.required(ResizeSensorContext)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<ResizeSensorContext>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 59,
+                    "modifierKind": [
+                        124,
+                        148
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
                     "name": "scrollEase",
                     "deprecated": false,
                     "deprecationMessage": "",
@@ -6143,6 +8399,43 @@
                     "rawdescription": "\n\nSets the ease function used for smooth navigation between the items\n",
                     "modifierKind": [
                         128
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
+                    "name": "slider",
+                    "defaultValue": "viewChild.required(SliderContext)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<SliderContext>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 57,
+                    "modifierKind": [
+                        124,
+                        148
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
+                    "name": "trackSize",
+                    "defaultValue": "computed(() => {\r\n    const explicitSize = this.itemSize();\r\n    if (explicitSize === 'auto') return 'max-content';\r\n    if (explicitSize && explicitSize !== 'auto') return explicitSize as string;\r\n    // Vertical: 100cqb of the host height, Horizontal: 100cqi of the host width\r\n    const containerUnit = this.orientation() === 'horizontal' ? '100cqi' : '100cqb';\r\n\r\n    const n: number = Math.min(this.itemsPerView(), this.itemsCount());\r\n    return `calc((${ containerUnit } - (${ this.gap() }px * ${ n - 1 })) / ${ n })`;\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<string>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>Shared sizing logic that performs the math based on current inputs.\nReturns the value for the main axis (scroll direction).</p>\n",
+                    "line": 208,
+                    "rawdescription": "\n\nShared sizing logic that performs the math based on current inputs.\nReturns the value for the main axis (scroll direction).\n",
+                    "modifierKind": [
+                        124,
+                        148
                     ],
                     "inheritance": {
                         "file": "GalleryRef"
@@ -6165,9 +8458,144 @@
                     "inheritance": {
                         "file": "GalleryRef"
                     }
+                },
+                {
+                    "name": "visibleIndices",
+                    "defaultValue": "computed(() => {\r\n    return Object.keys(this.visibleEntries())\r\n      .map(Number)\r\n      .filter((index: number) => !Number.isNaN(index))\r\n      .sort((a: number, b: number) => a - b);\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<number[]>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "<p>A sorted list of indices currently detected within the gallery viewport</p>\n",
+                    "line": 261,
+                    "rawdescription": "\nA sorted list of indices currently detected within the gallery viewport",
+                    "modifierKind": [
+                        123,
+                        148
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
                 }
             ],
             "methodsClass": [
+                {
+                    "name": "calculateTargetWithFit",
+                    "args": [
+                        {
+                            "name": "ctx",
+                            "type": "PageCalculationContext",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "number",
+                    "typeParameters": [],
+                    "line": 434,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "ctx",
+                            "type": "PageCalculationContext",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
+                    "name": "getPageTarget",
+                    "args": [
+                        {
+                            "name": "direction",
+                            "type": "\"next\" | \"prev\"",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "number",
+                    "typeParameters": [],
+                    "line": 416,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "direction",
+                            "type": "\"next\" | \"prev\"",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
+                    "name": "getVisibleEntry",
+                    "args": [
+                        {
+                            "name": "index",
+                            "type": "number | null",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "IntersectionObserverEntry | null",
+                    "typeParameters": [],
+                    "line": 288,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nValidates if the item at the given index is fully visible (100% intersection)\n",
+                    "description": "<p>Validates if the item at the given index is fully visible (100% intersection)</p>\n",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "index",
+                            "type": "number | null",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
                 {
                     "name": "goTo",
                     "args": [
@@ -6192,6 +8620,46 @@
                         {
                             "name": "",
                             "type": "NavigationTarget",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ],
+                    "inheritance": {
+                        "file": "GalleryRef"
+                    }
+                },
+                {
+                    "name": "isFullyVisible",
+                    "args": [
+                        {
+                            "name": "entry",
+                            "type": "IntersectionObserverEntry | null",
+                            "optional": false,
+                            "dotDotDotToken": false,
+                            "deprecated": false,
+                            "deprecationMessage": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "boolean",
+                    "typeParameters": [],
+                    "line": 296,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "rawdescription": "\n\nValidates if the item at the given index is fully visible (100% intersection)\n",
+                    "description": "<p>Validates if the item at the given index is fully visible (100% intersection)</p>\n",
+                    "modifierKind": [
+                        123
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "entry",
+                            "type": "IntersectionObserverEntry | null",
                             "optional": false,
                             "dotDotDotToken": false,
                             "deprecated": false,
@@ -6372,6 +8840,21 @@
                     "description": "",
                     "line": 63,
                     "modifierKind": [
+                        148
+                    ]
+                },
+                {
+                    "name": "galleryRef",
+                    "defaultValue": "inject(GalleryRef)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "GalleryRef",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 47,
+                    "modifierKind": [
+                        124,
                         148
                     ]
                 },
@@ -6631,6 +9114,51 @@
             ],
             "outputsClass": [],
             "propertiesClass": [
+                {
+                    "name": "a11y",
+                    "defaultValue": "inject(GALLERY_A11Y_OPTIONS)",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "GalleryA11yOptions",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 62,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "ariaCurrent",
+                    "defaultValue": "computed(() => {\r\n    return !this.isThumb() && this.a11y && this.active() ? \"true\" : null\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<string | null>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 110,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
+                {
+                    "name": "ariaLabel",
+                    "defaultValue": "computed(() => {\r\n    return (!this.isThumb() && this.a11y?.itemLabel(this.index(), this.count())) || null;\r\n  })",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Signal<string | null>",
+                    "indexKey": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 106,
+                    "modifierKind": [
+                        124,
+                        148
+                    ]
+                },
                 {
                     "name": "containsImage",
                     "deprecated": false,
@@ -9381,5 +11909,1474 @@
                 }
             ]
         }
+    },
+    "routes": {
+        "name": "<root>",
+        "kind": "module",
+        "children": []
+    },
+    "coverage": {
+        "count": 8,
+        "status": "low",
+        "files": [
+            {
+                "filePath": "projects/ng-gallery/src/lib/a11y/a11y.default.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "defaultOptions",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/a11y/a11y.model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "GalleryA11yOptions",
+                "coveragePercent": 95,
+                "coverageCount": "20/21",
+                "status": "very-good"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/a11y/a11y.token.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "provideGalleryA11yOptions",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/a11y/a11y.token.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "GALLERY_A11Y_OPTIONS",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/adapters/base-adapter.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "SliderAdapter",
+                "coveragePercent": 0,
+                "coverageCount": "0/12",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/adapters/main-adapters.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "HorizontalAdapter",
+                "coveragePercent": 0,
+                "coverageCount": "0/12",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/adapters/main-adapters.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "VerticalAdapter",
+                "coveragePercent": 0,
+                "coverageCount": "0/12",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/auto-height/auto-height.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "GalleryAutoHeight",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/autoplay/gallery-autoplay-ui.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "GalleryAutoplayUI",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/autoplay/gallery-autoplay.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "GalleryAutoplay",
+                "coveragePercent": 37,
+                "coverageCount": "3/8",
+                "status": "medium"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/counter/gallery-counter.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "GalleryCounter",
+                "coveragePercent": 16,
+                "coverageCount": "1/6",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/debug/debug.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "GalleryDebug",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/directives/gallery-item-def.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "GalleryItemDef",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/directives/gallery-item-def.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "GalleryItemErrorDef",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/directives/gallery-item-def.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "GalleryItemLoaderDef",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/directives/gallery-item-def.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "GalleryItemContext",
+                "coveragePercent": 90,
+                "coverageCount": "9/10",
+                "status": "very-good"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/directives/gallery-slot.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "GallerySlot",
+                "coveragePercent": 75,
+                "coverageCount": "3/4",
+                "status": "good"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/gallery-layout.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "GalleryLayoutDirective",
+                "coveragePercent": 16,
+                "coverageCount": "1/6",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/gallery-ref.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "GalleryRef",
+                "coveragePercent": 77,
+                "coverageCount": "35/45",
+                "status": "very-good"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/gallery-ref.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "BaseSliderOptions",
+                "coveragePercent": 0,
+                "coverageCount": "0/12",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/gallery-ref.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "PageCalculationContext",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/gallery-ref.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "BASE_SLIDER_OPTIONS",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/gallery.default.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "defaultOptions",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/gallery.module.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "GALLERY",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/gallery.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "Gallery",
+                "coveragePercent": 80,
+                "coverageCount": "42/52",
+                "status": "very-good"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/gallery.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "baseSliderOptionsFactory",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/gestures/gestures.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "Gestures",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/gestures/mouse-sliding.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "MouseSliding",
+                "coveragePercent": 0,
+                "coverageCount": "0/10",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/image/gallery-image.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "GalleryImage",
+                "coveragePercent": 33,
+                "coverageCount": "1/3",
+                "status": "medium"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/config.model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "CounterOptions",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/config.model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "NavOptions",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/config.model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "PlayerOptions",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/config.model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "SliderOptions",
+                "coveragePercent": 0,
+                "coverageCount": "0/14",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/config.model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ThumbOptions",
+                "coveragePercent": 0,
+                "coverageCount": "0/16",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/config.model.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "GalleryAlign",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/config.model.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "GalleryCounterPosition",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/config.model.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "GalleryDock",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/config.model.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "GalleryItemState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/config.model.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "GalleryOptions",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/config.model.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "GalleryOrientation",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/config.model.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "GalleryPosition",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/config.model.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "GallerySnapAlign",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/gallery.token.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "provideGalleryOptions",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/gallery.token.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "GALLERY_INITIAL_INDEX",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/gallery.token.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "GALLERY_OPTIONS",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/item.model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "GalleryItemModel",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/item.model.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "GalleryItemData",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/slider.model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "NavigationShift",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/slider.model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "NavigationTarget",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/models/slider.model.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "NavigationSource",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/nav/gallery-nav-button.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "GalleryNavButton",
+                "coveragePercent": 16,
+                "coverageCount": "1/6",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/nav/gallery-nav.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "GalleryNav",
+                "coveragePercent": 11,
+                "coverageCount": "2/17",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/nav/gallery-nav.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "SlotRules",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/nav/gallery-nav.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "nextSlotRules",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/nav/gallery-nav.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "prevSlotRules",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/observers/intersection-observer.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "createIntersectionObserver",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/observers/intersection-sensor.token.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "IntersectionSensorContext",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/observers/intersection-sensor.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "IntersectionSensor",
+                "coveragePercent": 46,
+                "coverageCount": "7/15",
+                "status": "medium"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/observers/intersection-sensor.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "visibleEntriesThreshold",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/resize-sensor/resize-sensor.token.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "ResizeSensorContext",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/resize-sensor/resize-sensor.token.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ElementDimensions",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/resize-sensor/resize-sensor.token.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ResizeObserverResponse",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/resize-sensor/resize-sensor.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "ResizeSensor",
+                "coveragePercent": 0,
+                "coverageCount": "0/14",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/resize-sensor/resize-sensor.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "ResizeSensorParams",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/slider-item/slider-item.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "SliderItem",
+                "coveragePercent": 25,
+                "coverageCount": "5/20",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/slider/slider.token.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "SliderContext",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/slider/slider.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "Slider",
+                "coveragePercent": 22,
+                "coverageCount": "2/9",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/smooth-scroll/animate-scroll.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "SmoothScrollManager",
+                "coveragePercent": 0,
+                "coverageCount": "0/12",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/smooth-scroll/smooth-scroll.directive.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "SmoothScroll",
+                "coveragePercent": 0,
+                "coverageCount": "0/11",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/smooth-scroll/smooth-scroll.model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "BezierEasingOptions",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/smooth-scroll/smooth-scroll.model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "SmoothScrollStep",
+                "coveragePercent": 0,
+                "coverageCount": "0/9",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/smooth-scroll/smooth-scroll.model.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "SmoothScrollOptions",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/smooth-scroll/smooth-scroll.model.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "SmoothScrollToElementOptions",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/smooth-scroll/smooth-scroll.model.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "SmoothScrollToOptions",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/thumbs/gallery-thumb-click.ts",
+                "type": "directive",
+                "linktype": "directive",
+                "name": "GalleryThumbClick",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/thumbs/gallery-thumb.token.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "GalleryThumbContext",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/thumbs/gallery-thumbs.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "GalleryThumbs",
+                "coveragePercent": 74,
+                "coverageCount": "38/51",
+                "status": "good"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/thumbs/gallery-thumbs.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "baseSliderOptionsFactory",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/utils/utils.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "gapTransform",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/utils/utils.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "itemSizeTransform",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/utils/utils.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "itemsPerViewTransform",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/lib/utils/utils.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "stepsTransform",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/Playground.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AutoHeightExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/Playground.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "BasicExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/Playground.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/Playground.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Playground",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/Playground.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "GalleryArgs",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/a11y/A11y.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "APIReference",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/a11y/A11y.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/a11y/A11y.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/addons/autoplay/Autoplay.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Autoplay",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/addons/autoplay/Autoplay.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/addons/lightbox/Lightbox-global-options.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "APIReference",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/addons/lightbox/Lightbox-global-options.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 100,
+                "coverageCount": "1/1",
+                "status": "very-good"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/addons/lightbox/Lightbox-global-options.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/addons/lightbox/Lightbox.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LightboxExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/addons/lightbox/Lightbox.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/addons/lightbox/LightboxFor.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LightboxForGalleryExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/addons/lightbox/LightboxFor.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LightboxForGridExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/addons/lightbox/LightboxFor.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/addons/lightbox/Styling.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/addons/lightbox/Styling.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "StylingExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/addons/lightbox/helper.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "LightboxCSSVariablesArgs",
+                "coveragePercent": 0,
+                "coverageCount": "0/14",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/addons/lightbox/helper.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "mapToLightboxStyles",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/addons/lightbox/helper.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "defaultStylingArgs",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/addons/lightbox/helper.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "stylingArgTypes",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/alignment/Alignment.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CenterAlingmentExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/alignment/Alignment.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "EndAlingmentExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/alignment/Alignment.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/alignment/Alignment.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "StartAlingmentExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/counter/Counter.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Counter",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/counter/Counter.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CustomCounter",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/counter/Counter.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/gallery/Gallery.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AutoHeightExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/gallery/Gallery.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "BasicExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/gallery/Gallery.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "GalleryExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/gallery/Gallery.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "GapExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/gallery/Gallery.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/gallery/Gallery.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "MultipleExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/gallery/helper.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "galleryArgTypes",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/global options/Global-options.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "APIReference",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/global options/Global-options.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/global options/Global-options.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/layout/Layout.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AutoItemSizeExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/layout/Layout.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DefaultItemsPerViewExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/layout/Layout.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "FixedItemSizeExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/layout/Layout.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "FrictionItemsPerViewExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/layout/Layout.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/layout/Layout.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "MutlipleItemsPerViewExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/nav/Navigation Button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CustomNavPositionExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/nav/Navigation Button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "CustomNavTemplateExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/nav/Navigation Button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/nav/Navigation.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/nav/Navigation.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "NavigationExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/nav/Navigation.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "OutsideNavExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/slot/Slot.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/slot/Slot.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Slot",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/styling/Styling.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/styling/Styling.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "StylingExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/styling/helper.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "CSSVariablesArgs",
+                "coveragePercent": 0,
+                "coverageCount": "0/24",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/styling/helper.ts",
+                "type": "function",
+                "linktype": "miscellaneous",
+                "linksubtype": "function",
+                "name": "mapToGalleryStyles",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/styling/helper.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "defaultStylingArgs",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/styling/helper.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "stylingArgTypes",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/thumbnails/Thumbnails.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "BasicThumbExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/thumbnails/Thumbnails.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/thumbnails/Thumbnails.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ThumbAutosizeExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/thumbnails/Thumbnails.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ThumbDetachedExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/thumbnails/Thumbnails.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ThumbDotsExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/thumbnails/Thumbnails.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Thumbnails",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/thumbnails/Thumbnails.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ThumbNavExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ng-gallery/src/stories/thumbnails/Thumbnails.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ThumbPositionExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            }
+        ]
     }
 }

@@ -123,12 +123,11 @@
           }
         },
         "storybook": {
-          "builder": "@storybook/angular:start-storybook",
+          "builder": "@storybook/angular-vite:start-storybook",
           "options": {
-            "styles": [
-              "projects/ng-gallery/.storybook/styles.scss",
-              "projects/ng-gallery/glass-theme.css"
-            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/ng-gallery"]
+            },
             "configDir": "projects/ng-gallery/.storybook",
             "browserTarget": "ng-gallery:build",
             "compodoc": true,
@@ -146,12 +145,11 @@
           }
         },
         "build-storybook": {
-          "builder": "@storybook/angular:build-storybook",
+          "builder": "@storybook/angular-vite:build-storybook",
           "options": {
-            "styles": [
-              "projects/ng-gallery/.storybook/styles.scss",
-              "projects/ng-gallery/glass-theme.css"
-            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/ng-gallery"]
+            },
             "configDir": "projects/ng-gallery/.storybook",
             "browserTarget": "ng-gallery:build",
             "compodoc": true,

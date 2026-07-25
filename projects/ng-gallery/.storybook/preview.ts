@@ -1,8 +1,12 @@
-import { componentWrapperDecorator, definePreview } from '@storybook/angular';
+import { componentWrapperDecorator, definePreview } from '@storybook/angular-vite';
 import { setCompodocJson } from '@storybook/addon-docs/angular';
 import addonDocs from '@storybook/addon-docs';
 import addonA11y from '@storybook/addon-a11y';
-import { initialize, mswLoader } from 'msw-storybook-addon';
+import addonMsw from 'msw-storybook-addon';
+import { setupWorker } from 'msw/browser';
+
+import '#.storybook/styles.scss'
+import '#glass-theme.css'
 
 import docJson from '../documentation.json';
 import { pixabayHandler } from '#.storybook/mocks/pixabay.handler';
@@ -22,25 +26,43 @@ const swUrl = isLocalhost
   ? '/mockServiceWorker.js'
   : `/${repoName}/${activeFolderOnServer}/mockServiceWorker.js`;
 
-initialize({
-  onUnhandledRequest: 'bypass',
-  serviceWorker: { url: swUrl },
-});
-
 export default definePreview({
   addons: [
+    addonMsw(async () => {
+      const worker = setupWorker();
+      await worker.start({
+        onUnhandledRequest: 'bypass',
+        serviceWorker: { url: swUrl }
+      });
+      return worker;
+    }),
     addonDocs(),
     addonA11y()
   ],
-  loaders: [mswLoader],
+  loaders: [
+
+  ],
   parameters: {
     msw: { handlers: [pixabayHandler] },
     options: {
       storySort: {
         order: [
           'Documentations',
-          ['Introduction', 'Getting Started', 'Defining Template', 'Layout', 'Alignment', 'Item Templates', 'Using Images', 'Styling', 'a11y', 'i18n'],
-          'Addons', ['Autoplay', 'Autoheight'], '*'
+          [
+            'Introduction',
+            'Getting Started',
+            'Defining Template',
+            'Layout',
+            'Alignment',
+            'Item Templates',
+            'Using Images',
+            'Styling',
+            'a11y',
+            'i18n',
+          ],
+          'Addons',
+          ['Autoplay', 'Autoheight'],
+          '*',
         ],
       },
     },
@@ -51,7 +73,7 @@ export default definePreview({
   },
   initialGlobals: {
     theme: 'dark',
-    releaseVersion: activeFolderOnServer
+    releaseVersion: activeFolderOnServer,
   },
   decorators: [
     withGlobalTheme, // Simple reference

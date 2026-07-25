@@ -56,6 +56,7 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@analogjs/vite-plugin-angular": "^2.6.4",
     "@angular/build": "^22.0.8",
     "@angular/cli": "^22.0.8",
     "@angular/compiler-cli": "^22.0.8",
@@ -64,7 +65,7 @@
     "@playwright/test": "^1.60.0",
     "@storybook/addon-a11y": "^10.5.4",
     "@storybook/addon-docs": "^10.5.4",
-    "@storybook/angular-vite": "^10.5.4",
+    "@storybook/angular-vite": "10.5.4",
     "@storybook/icons": "^2.0.2",
     "@tailwindcss/postcss": "^4.3.0",
     "@types/express": "^5.0.1",
@@ -75,7 +76,7 @@
     "eslint": "^10.4.0",
     "eslint-plugin-storybook": "^10.5.4",
     "msw": "^2.14.6",
-    "msw-storybook-addon": "^2.0.7",
+    "msw-storybook-addon": "^3.0.0",
     "ng-packagr": "^22.0.2",
     "playwright": "^1.60.0",
     "postcss": "^8.5.3",
