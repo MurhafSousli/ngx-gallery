@@ -1,6 +1,6 @@
 import { addons, types } from 'storybook/manager-api';
 import { VersionSwitcher } from './addons/version-addon/version-addon';
-import { ThemeSwitcher } from './addons/theme-addon/theme-addon';
+import { ThemeSwitcher } from './addons/theme-addon/theme-addon-manager';
 
 addons.setConfig({
   initialActive: 'Stories/Introduction',

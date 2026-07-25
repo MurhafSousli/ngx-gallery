@@ -12,7 +12,7 @@ import docJson from '../documentation.json';
 import { pixabayHandler } from '#.storybook/mocks/pixabay.handler';
 
 // Import your decoupled addon parameters
-import { ThemedDocsContainer, withGlobalTheme } from '#.storybook/addons/theme-addon/theme-addon';
+import { ThemedDocsContainer, withGlobalTheme } from '#.storybook/addons/theme-addon/theme-addon-preview';
 
 setCompodocJson(docJson);
 
@@ -38,9 +38,6 @@ export default definePreview({
     }),
     addonDocs(),
     addonA11y()
-  ],
-  loaders: [
-
   ],
   parameters: {
     msw: { handlers: [pixabayHandler] },
