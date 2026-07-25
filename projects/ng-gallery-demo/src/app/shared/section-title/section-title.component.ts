@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -14,7 +14,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     </div>
   `,
   styleUrl: 'section-title.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FontAwesomeModule]
 })
 export class SectionTitleComponent {

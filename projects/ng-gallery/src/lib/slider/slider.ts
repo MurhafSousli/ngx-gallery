@@ -6,7 +6,6 @@ import {
   Signal,
   ElementRef,
   WritableSignal,
-  ChangeDetectionStrategy,
   PLATFORM_ID
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
@@ -35,7 +34,6 @@ import { HorizontalAdapter, SliderAdapter, VerticalAdapter } from '../adapters';
     </ul>
   `,
   styleUrl: 'slider.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [
     SmoothScroll,
     MouseSliding,

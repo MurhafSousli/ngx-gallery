@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { HttpResourceRef } from '@angular/common/http';
@@ -15,7 +15,6 @@ import { BadgesComponent } from '../../shared/badges/badges.component';
   selector: 'home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MatButtonModule,
     RouterLink,
