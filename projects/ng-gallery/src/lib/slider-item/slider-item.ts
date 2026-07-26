@@ -10,8 +10,7 @@ import {
   InputSignal,
   TemplateRef,
   AfterViewInit,
-  WritableSignal,
-  ChangeDetectionStrategy
+  WritableSignal
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { GalleryItemState } from '../models/config.model';

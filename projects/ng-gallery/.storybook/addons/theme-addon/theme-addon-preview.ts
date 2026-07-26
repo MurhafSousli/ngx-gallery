@@ -10,7 +10,7 @@ export const ThemedDocsContainer = (props: any) => {
   });
 
   useEffect(() => {
-    if (!channel) { // @ts-ignore
+    if (!channel) {
       return;
     }
     const handleGlobalsUpdate = ({ globals }: any) => {

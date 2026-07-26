@@ -122,50 +122,6 @@
             ]
           }
         },
-        "storybook": {
-          "builder": "@storybook/angular-vite:start-storybook",
-          "options": {
-            "stylePreprocessorOptions": {
-              "includePaths": ["projects/ng-gallery"]
-            },
-            "configDir": "projects/ng-gallery/.storybook",
-            "browserTarget": "ng-gallery:build",
-            "compodoc": true,
-            "compodocArgs": [
-              "-e",
-              "json",
-              "-d",
-              "projects/ng-gallery",
-              "--disablePrivate",
-              "--disableProtected",
-              "--disableInternal",
-              "--minimal"
-            ],
-            "port": 6006
-          }
-        },
-        "build-storybook": {
-          "builder": "@storybook/angular-vite:build-storybook",
-          "options": {
-            "stylePreprocessorOptions": {
-              "includePaths": ["projects/ng-gallery"]
-            },
-            "configDir": "projects/ng-gallery/.storybook",
-            "browserTarget": "ng-gallery:build",
-            "compodoc": true,
-            "compodocArgs": [
-              "-e",
-              "json",
-              "-d",
-              "projects/ng-gallery",
-              "--disablePrivate",
-              "--disableProtected",
-              "--disableInternal",
-              "--minimal"
-            ],
-            "outputDir": "dist/storybook/ng-gallery"
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
@@ -174,6 +130,50 @@
               "projects/ng-gallery/**/*.html"
             ],
             "eslintConfig": "projects/ng-gallery/eslint.config.js"
+          }
+        },
+        "storybook": {
+          "builder": "@storybook/angular-vite:start-storybook",
+          "options": {
+            "configDir": "projects/ng-gallery/.storybook",
+            "browserTarget": "ng-gallery:build",
+            "port": 6006,
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/ng-gallery"]
+            },
+            "compodoc": true,
+            "compodocArgs": [
+              "-e",
+              "json",
+              "-d",
+              "projects/ng-gallery",
+              "--disablePrivate",
+              "--disableProtected",
+              "--disableInternal",
+              "--minimal"
+            ]
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular-vite:build-storybook",
+          "options": {
+            "configDir": "projects/ng-gallery/.storybook",
+            "browserTarget": "ng-gallery:build",
+            "outputDir": "dist/storybook/ng-gallery",
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/ng-gallery"]
+            },
+            "compodoc": true,
+            "compodocArgs": [
+              "-e",
+              "json",
+              "-d",
+              "projects/ng-gallery",
+              "--disablePrivate",
+              "--disableProtected",
+              "--disableInternal",
+              "--minimal"
+            ]
           }
         }
       }

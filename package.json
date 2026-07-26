@@ -60,12 +60,12 @@
     "@angular/build": "^22.0.8",
     "@angular/cli": "^22.0.8",
     "@angular/compiler-cli": "^22.0.8",
-    "@compodoc/compodoc": "^1.2.1",
+    "@compodoc/compodoc": "^2.0.0",
     "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.60.0",
     "@storybook/addon-a11y": "^10.5.4",
     "@storybook/addon-docs": "^10.5.4",
-    "@storybook/angular-vite": "10.5.4",
+    "@storybook/angular-vite": "^10.5.4",
     "@storybook/icons": "^2.0.2",
     "@tailwindcss/postcss": "^4.3.0",
     "@types/express": "^5.0.1",
@@ -84,6 +84,7 @@
     "storybook": "^10.5.4",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.59.4",
+    "vite": "^8.1.5",
     "vitest": "^4.1.7"
   },
   "msw": {

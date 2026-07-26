@@ -22,7 +22,11 @@
   ],
   "exports": {
     ".": {
-      "sass": "./_index.scss"
+      "sass": "./_index.scss",
+      "storybook": "./src/public-api.ts"
+    },
+    "./lightbox": {
+      "storybook": "./lightbox/src/public_api.ts"
     },
     "./glass-theme": {
       "style": "./glass-theme.css"
