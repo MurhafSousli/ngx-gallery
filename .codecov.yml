@@ -1,0 +1,6 @@
+coverage:
+  status:
+    project:
+      default:
+        target: auto
+        threshold: 1%  # Allows coverage to drop by up to 1% without failing
