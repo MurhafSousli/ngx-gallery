@@ -67,7 +67,7 @@ export class LightboxDialog implements LightboxRef, OnDestroy {
     if (!this.isClosedBySupported) {
       let mouseDownTarget: EventTarget;
 
-      // 1. Track where the press starts
+      // Track where the press starts
       this.dialogElement.addEventListener('mousedown', (e) => {
         mouseDownTarget = e.target;
       }, { signal: this.destroyer.signal });

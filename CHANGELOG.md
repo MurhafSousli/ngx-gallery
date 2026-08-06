@@ -5,6 +5,7 @@
 - Upgrade to Angular 22.
 - Update storybook with modern fast build system (angular vite).
 - Update @compodoc to v2
+- fix: Lightbox dialog instance is not destroyed after closing, causing memory leak.
 
 ## 13.0.0-next.0
 
