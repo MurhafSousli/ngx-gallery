@@ -7,7 +7,6 @@ import {
   contentChildren,
   booleanAttribute,
   Signal,
-  ChangeDetectionStrategy,
   InputSignalWithTransform
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
@@ -61,8 +60,7 @@ import { GalleryNavButton } from './gallery-nav-button';
     </div>
   `,
   styleUrl: 'gallery-nav.scss',
-  imports: [NgTemplateOutlet, GalleryNavButton, GallerySlot],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  imports: [NgTemplateOutlet, GalleryNavButton, GallerySlot]
 })
 export class GalleryNav {
 

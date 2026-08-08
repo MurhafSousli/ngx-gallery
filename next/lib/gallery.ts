@@ -10,7 +10,6 @@ import {
   Signal,
   InputSignal,
   WritableSignal,
-  ChangeDetectionStrategy,
   InputSignalWithTransform
 } from '@angular/core';
 import { Directionality } from '@angular/cdk/bidi';
@@ -90,7 +89,6 @@ function baseSliderOptionsFactory(): BaseSliderOptions {
     }
   `,
   styleUrls: ['../../variables.scss', 'gallery.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: BASE_SLIDER_OPTIONS,

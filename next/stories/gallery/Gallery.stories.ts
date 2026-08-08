@@ -1,6 +1,6 @@
 import preview from '#.storybook/preview';
 import { fn } from 'storybook/test';
-import { moduleMetadata } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular-vite';
 import { NgOptimizedImage } from '@angular/common';
 import { Gallery, GalleryModule } from 'ng-gallery';
 import { getHDImages, getSlides } from '#.storybook/mocks/pixabay.service';

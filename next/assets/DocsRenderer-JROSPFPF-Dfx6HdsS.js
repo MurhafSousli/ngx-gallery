@@ -1,0 +1,1 @@
+import{n as e}from"./rolldown-runtime-D_-wTCJc.js";import{r as t,t as n}from"./chunk-OATZR77O-BkgOo4go.js";function init_DocsRenderer_JROSPFPF(){return(init_DocsRenderer_JROSPFPF=e((()=>{t()})))()}init_DocsRenderer_JROSPFPF();export{n as DocsRenderer};
