@@ -8,7 +8,6 @@ import {
   booleanAttribute,
   Signal,
   InputSignal,
-  ChangeDetectionStrategy,
   InputSignalWithTransform
 } from '@angular/core';
 import { Gallery } from '../gallery';
@@ -81,7 +80,6 @@ function baseSliderOptionsFactory(): BaseSliderOptions {
     <ng-content select="gallery-nav, [gallerySlot]"/>
   `,
   styleUrl: 'gallery-thumbs.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [Slider, SliderItem],
   hostDirectives: [GalleryLayoutDirective],
   providers: [

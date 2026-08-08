@@ -1,16 +1,13 @@
 {
   "name": "ng-gallery",
-  "version": "13.0.0-next.0",
+  "version": "13.0.0-next.1",
   "license": "MIT",
   "homepage": "https://murhafsousli.github.io/ngx-gallery/",
   "author": {
     "name": "Murhaf Sousli",
     "url": "http://github.com/murhafsousli"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/murhafsousli/ngx-gallery.git"
-  },
+  "repository": "github:murhafsousli/ngx-gallery",
   "bugs": {
     "url": "https://github.com/murhafsousli/ngx-gallery/issues"
   },
@@ -25,7 +22,11 @@
   ],
   "exports": {
     ".": {
-      "sass": "./_index.scss"
+      "sass": "./_index.scss",
+      "storybook": "./src/public-api.ts"
+    },
+    "./lightbox": {
+      "storybook": "./lightbox/src/public_api.ts"
     },
     "./glass-theme": {
       "style": "./glass-theme.css"

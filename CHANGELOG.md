@@ -1,7 +1,15 @@
 # Changelog
+
+## 13.0.0-next.1
+
+- Upgrade to Angular 22.
+- Update storybook with modern fast build system (angular vite).
+- Update @compodoc to v2
+- fix: Lightbox dialog instance is not destroyed after closing, causing memory leak.
+
 ## 13.0.0-next.0
 
-The library has been rewritten from scratch to support modern, zoneless Angular 21 architecture and high-performance native web APIs.
+The library has been rewritten from scratch to support zoneless Angular 21 architecture.
 
 ### New features
 

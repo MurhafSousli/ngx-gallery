@@ -1,5 +1,5 @@
 import preview from '#.storybook/preview';
-import { moduleMetadata } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular-vite';
 import { getHDImages } from '#.storybook/mocks/pixabay.service';
 import { LightboxCSSVariablesArgs, defaultStylingArgs, mapToLightboxStyles, stylingArgTypes } from '#src/stories/addons/lightbox/helper';
 import { Gallery } from 'ng-gallery';

@@ -100,15 +100,17 @@ export class Lightbox implements OnDestroy {
 
     // Cleanup on close
     dialogElement.addEventListener('close', () => {
-      // Only wait for transition if animations are NOT disabled
-      // and the user doesn't prefer reduced motion
-      const prefersReduced: boolean = this.document.defaultView.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // Inspect all running CSS transitions / animations on the dialog
+      const animations = dialogElement.getAnimations({ subtree: false });
 
-      if (this.disableAnimation() || prefersReduced) {
+      if (animations.length === 0) {
+        // Fallback if no CSS transition was active
         this.destroy();
-      } else {
-        dialogElement.addEventListener('transitionend', () => this.destroy(), { once: true });
+        return;
       }
+
+      // Wait for active exit animations (opacity, scale, etc.) to complete
+      Promise.allSettled(animations.map(anim => anim.finished)).then(() => this.destroy());
     }, { once: true });
   }
 

@@ -1,12 +1,4 @@
-import {
-  Component,
-  inject,
-  Injector,
-  OnDestroy,
-  ElementRef,
-  TemplateRef,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, inject, Injector, OnDestroy, ElementRef, TemplateRef } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { LightboxCloseButton } from './lightbox-close-button';
 import { LIGHTBOX_DIALOG, LightboxRef, DialogClosePolicy } from './lightbox.model';
@@ -43,7 +35,6 @@ import { DIALOG_CLOSEDBY_SUPPORTED } from './lightbox-closedby.token';
     { provide: LIGHTBOX_DIALOG, useExisting: LightboxDialog }
   ],
   styleUrls: ['../../variables.scss', 'lightbox-dialog.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgTemplateOutlet, LightboxCloseButton]
 })
 export class LightboxDialog implements LightboxRef, OnDestroy {
@@ -76,7 +67,7 @@ export class LightboxDialog implements LightboxRef, OnDestroy {
     if (!this.isClosedBySupported) {
       let mouseDownTarget: EventTarget;
 
-      // 1. Track where the press starts
+      // Track where the press starts
       this.dialogElement.addEventListener('mousedown', (e) => {
         mouseDownTarget = e.target;
       }, { signal: this.destroyer.signal });

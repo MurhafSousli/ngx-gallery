@@ -1,4 +1,4 @@
-import { afterNextRender, ChangeDetectionStrategy, Component, inject, Signal, viewChild } from '@angular/core';
+import { afterNextRender, Component, inject, Signal, viewChild } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NgProgressHttp } from 'ngx-progressbar/http';
 import { MenuComponent } from './shared/menu/menu.component';
@@ -30,7 +30,7 @@ import { filter, tap } from 'rxjs';
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 export class App {
 

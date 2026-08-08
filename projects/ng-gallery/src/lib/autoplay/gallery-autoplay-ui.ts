@@ -1,4 +1,4 @@
-import { Component, input, InputSignal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, InputSignal } from '@angular/core';
 
 @Component({
   host: {
@@ -19,8 +19,7 @@ import { Component, input, InputSignal, ChangeDetectionStrategy } from '@angular
       </div>
     }
   `,
-  styleUrl: 'gallery-autoplay-ui.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: 'gallery-autoplay-ui.scss'
 })
 export class GalleryAutoplayUI {
 

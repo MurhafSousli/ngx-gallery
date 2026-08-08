@@ -10,8 +10,7 @@ import {
   InputSignal,
   TemplateRef,
   AfterViewInit,
-  WritableSignal,
-  ChangeDetectionStrategy
+  WritableSignal
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { GalleryItemState } from '../models/config.model';
@@ -53,7 +52,6 @@ import { GALLERY_A11Y_OPTIONS } from '../a11y/a11y.token';
     }
   `,
   styleUrl: 'slider-item.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgTemplateOutlet]
 })
 export class SliderItem implements AfterViewInit {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -14,8 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
     </section>
   `,
   styleUrl: './note.component.scss',
-  imports: [MatIconModule],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  imports: [MatIconModule]
 })
 export class NoteComponent {
 

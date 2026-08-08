@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, Signal } from '@angular/core';
+import { Component, inject, OnInit, Signal } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { MatButtonModule } from '@angular/material/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -17,7 +17,6 @@ import { NoteComponent } from '../../shared/note/note.component';
   selector: 'lightbox-example',
   templateUrl: './lightbox-example.component.html',
   styleUrl: './lightbox-example.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     provideLightboxOptions({
     })
