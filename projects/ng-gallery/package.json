@@ -7,10 +7,7 @@
     "name": "Murhaf Sousli",
     "url": "http://github.com/murhafsousli"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/murhafsousli/ngx-gallery.git"
-  },
+  "repository": "github:murhafsousli/ngx-gallery",
   "bugs": {
     "url": "https://github.com/murhafsousli/ngx-gallery/issues"
   },
