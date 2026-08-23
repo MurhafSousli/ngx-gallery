@@ -22,6 +22,8 @@ export const defaultOptions: GalleryOptions = {
   snapAlign: 'center',
   scrollBehavior: 'smooth',
   autoplayScrollBehavior: 'smooth',
+  autoplayPause: 'never',
+  autoplayDirection: 'forward',
   resizeDebounceTime: 0,
   resizeTransitionDuration: 468,
   orientation: 'horizontal',

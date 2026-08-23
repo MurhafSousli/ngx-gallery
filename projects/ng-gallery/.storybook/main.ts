@@ -19,7 +19,22 @@ export default defineMain({
       }
     }
   ],
-  framework: '@storybook/angular-vite',
+  framework: {
+    name: '@storybook/angular-vite',
+    options: {
+      compodoc: true,
+      compodocArgs: [
+        '-e',
+        'json',
+        '-d',
+        'projects/ng-gallery',
+        '--disablePrivate',
+        '--disableProtected',
+        '--disableInternal',
+        '--minimal',
+      ]
+    }
+  },
   viteFinal: async (config) => {
     // this is just to hide the 404 not found error of this script
     config.plugins = config.plugins || [];

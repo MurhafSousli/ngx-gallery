@@ -39,8 +39,10 @@ export default definePreview({
     addonDocs(),
     addonA11y()
   ],
+  beforeEach({ msw }) {
+    msw.use(pixabayHandler);
+  },
   parameters: {
-    msw: { handlers: [pixabayHandler] },
     options: {
       storySort: {
         order: [

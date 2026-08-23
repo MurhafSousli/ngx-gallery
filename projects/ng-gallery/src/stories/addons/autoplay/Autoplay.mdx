@@ -5,39 +5,29 @@ import * as AutoplayStories from './Autoplay.stories';
 
 # Autoplay
 
-Enables automatic progression through gallery items, similar to a slideshow.
-
-### Usage
-
-Add the `autoplay` attribute to the `<gallery>` component:
-
-```html
-<gallery autoplay/>
-```
-
-This will enable autoplay for the gallery.
+Enables automatic slide progression through gallery items.
 
 ### Behavior
 
-  - Playback begins only after the current item reaches the ready state.
-  - Playback pauses when:
-    - The pointer is hovering over the gallery.
-    - The gallery is being scrolled (e.g., user interaction).
+* Slides advance only after the current item finishes loading.
+* Playback pauses on user interactions based on `autoplayPause` settings or active scrolling.
 
-### Configuration
+### Quick Start
 
-The interval between item transitions is configured using the autoplayInterval input (milliseconds).
+```html
+<gallery autoplay [items]="items" />
+```
 
-  - Type: `number`
-  - Default: `3000`
-
-Example with a custom interval and scroll behavior:
+### Full Example
 
 ```html
 <gallery [items]="items"
          [autoplay]="autoplay"
+         autoplayPause="hover"
          autoplayInterval="2500"
-         autoplayScrollBehavior="auto">
+         autoplayDirection="ping-pong"
+         autoplayScrollBehavior="auto"
+         (autoplayChange)="onAutoplayChange($event)">
   <img *galleryItemDef="let item" galleryImage [src]="item.src" [alt]="item.alt"/>
 </gallery>
 

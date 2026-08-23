@@ -140,18 +140,7 @@
             "port": 6006,
             "stylePreprocessorOptions": {
               "includePaths": ["projects/ng-gallery"]
-            },
-            "compodoc": true,
-            "compodocArgs": [
-              "-e",
-              "json",
-              "-d",
-              "projects/ng-gallery",
-              "--disablePrivate",
-              "--disableProtected",
-              "--disableInternal",
-              "--minimal"
-            ]
+            }
           }
         },
         "build-storybook": {
@@ -162,18 +151,7 @@
             "outputDir": "dist/storybook/ng-gallery",
             "stylePreprocessorOptions": {
               "includePaths": ["projects/ng-gallery"]
-            },
-            "compodoc": true,
-            "compodocArgs": [
-              "-e",
-              "json",
-              "-d",
-              "projects/ng-gallery",
-              "--disablePrivate",
-              "--disableProtected",
-              "--disableInternal",
-              "--minimal"
-            ]
+            }
           }
         }
       }

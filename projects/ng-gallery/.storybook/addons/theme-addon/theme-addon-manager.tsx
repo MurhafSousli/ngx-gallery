@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useGlobals, useStorybookApi } from 'storybook/manager-api';
-import { IconButton } from 'storybook/internal/components';
+import { Button } from 'storybook/internal/components';
 import { SunIcon, MoonIcon } from '@storybook/icons';
 import { themes } from 'storybook/theming';
 import { FORCE_RE_RENDER } from 'storybook/internal/core-events';
@@ -23,17 +23,16 @@ export const ThemeSwitcher: React.FC = () => {
   const CurrentIcon = currentTheme === 'dark' ? MoonIcon : SunIcon;
 
   return (
-    <IconButton
+    <Button
       key="theme-toggle"
+      variant="ghost"
       title={`Switch to ${currentTheme === 'dark' ? 'light' : 'dark'} theme`}
-      active={false}
       onClick={toggleTheme}
     >
       <CurrentIcon />
       <span style={{ marginLeft: 6, fontSize: 12, fontWeight: 500, fontFamily: 'sans-serif', textTransform: 'capitalize' }}>
         {currentTheme}
       </span>
-    </IconButton>
+    </Button>
   );
 };
-

@@ -6,6 +6,10 @@ export type GalleryOrientation = 'horizontal' | 'vertical';
 
 export type GalleryCounterPosition = 'top' | 'bottom';
 
+export type GalleryAutoplayPause = 'hover' | 'click' | 'never';
+
+export type GalleryAutoplayDirection = 'forward' | 'backward' | 'ping-pong';
+
 export type GalleryDock =
   | 'top'
   | 'bottom'
@@ -75,8 +79,9 @@ interface CounterOptions {
 interface PlayerOptions {
   autoplay?: boolean;
   autoplayInterval?: number;
-  autoplayPauseOnHover?: boolean;
   autoplayScrollBehavior?: ScrollBehavior;
+  autoplayDirection?: GalleryAutoplayDirection;
+  autoplayPause?: GalleryAutoplayPause;
 }
 
 export type GalleryOptions = SliderOptions

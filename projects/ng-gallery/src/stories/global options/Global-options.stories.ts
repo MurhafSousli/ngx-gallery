@@ -94,19 +94,30 @@ const meta: Meta = {
     // --- Autoplay Config ---
     autoplay: {
       description: 'Enable automatic slide transitions.',
-      table: { category: 'Player', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
+      table: { category: 'Autoplay', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
       control: 'boolean'
     },
     autoplayInterval: {
       description: 'Interval between transitions in ms.',
-      table: { category: 'Player', type: { summary: 'number' }, defaultValue: { summary: '3000' } },
+      table: { category: 'Autoplay', type: { summary: 'number' }, defaultValue: { summary: '3000' } },
       control: 'number'
     },
     autoplayScrollBehavior: {
       description: 'Scroll behavior during autoplay.',
       options: ['auto', 'smooth', 'instant'],
       control: { type: 'select' },
-      table: { category: 'Player', type: { summary: 'ScrollBehavior' }, defaultValue: { summary: 'smooth' } }
+      table: { category: 'Autoplay', type: { summary: 'ScrollBehavior' }, defaultValue: { summary: 'smooth' } }
+    },
+    autoplayPause: {
+      description: 'Pause mode for the autoplay feature.',
+      options: ['hover', 'click', 'never'],
+      control: { type: 'select' },
+      table: { category: 'Autoplay', type: { summary: 'GalleryAutoplayPause' }, defaultValue: { summary: 'hover' } }
+    },
+    autoplayReversed: {
+      description: 'Play slides in reverse order.',
+      table: { category: 'Autoplay', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
+      control: 'boolean'
     },
 
     // --- Navigation & Counter ---
