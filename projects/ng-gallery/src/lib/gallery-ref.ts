@@ -370,22 +370,30 @@ export abstract class GalleryRef {
       console.error('[NgGallery]: Unable to navigate because there is no items!');
       return;
     }
+
+    // Compute the intended target index for the navigation action
+    let targetIndex: number;
+
     if (steps === 'page') {
       if (this.itemSize()) {
-        const target = this.getPageTarget('next');
+        const pageTarget = this.getPageTarget('next');
         // Ensure we actually move forward at least by 1 to prevent getting stuck
-        const finalIndex = Math.max(target, this.activeIndex() + 1);
-        this.goTo({ index: Math.min(finalIndex, this.lastItemIndex()), behavior });
+        const finalIndex = Math.max(pageTarget, this.activeIndex() + 1);
+        targetIndex = Math.min(finalIndex, this.lastItemIndex());
       } else {
-        this.goTo({ index: this.getNextNavigationIndex(this.itemsPerView()), behavior });
+        targetIndex = this.getNextNavigationIndex(this.itemsPerView());
       }
     } else {
-      if (this.hasNext()) {
-        this.goTo({ index: this.getNextNavigationIndex(steps as number), behavior });
-      } else if (loop) {
-        this.goTo({ index: this.firstItemIndex(), behavior });
-      }
+      targetIndex = this.getNextNavigationIndex(steps as number);
     }
+
+    // If we can't move forward and loop is enabled, wrap to the first item
+    if (!this.hasNext() && loop) {
+      this.goTo({ index: this.firstItemIndex(), behavior });
+      return;
+    }
+
+    this.goTo({ index: targetIndex, behavior });
   }
 
   /**
@@ -396,21 +404,29 @@ export abstract class GalleryRef {
       console.error('[NgGallery]: Unable to navigate because there is no items!');
       return;
     }
+
+    // Compute the intended target index for the navigation action
+    let targetIndex: number;
+
     if (steps === 'page') {
       if (this.itemSize()) {
-        const target = this.getPageTarget('prev');
-        const finalIndex = Math.min(target, this.activeIndex() - 1);
-        this.goTo({ index: Math.max(finalIndex, 0), behavior });
+        const pageTarget = this.getPageTarget('prev');
+        const finalIndex = Math.min(pageTarget, this.activeIndex() - 1);
+        targetIndex = Math.max(finalIndex, 0);
       } else {
-        this.goTo({ index: this.getPrevNavigationIndex(this.itemsPerView()), behavior });
+        targetIndex = this.getPrevNavigationIndex(this.itemsPerView());
       }
     } else {
-      if (this.hasPrev()) {
-        this.goTo({ index: this.getPrevNavigationIndex(steps as number), behavior });
-      } else if (loop) {
-        this.goTo({ index: this.lastItemIndex(), behavior });
-      }
+      targetIndex = this.getPrevNavigationIndex(steps as number);
     }
+
+    // If we can't move backward and loop is enabled, wrap to the last item
+    if (!this.hasPrev() && loop) {
+      this.goTo({ index: this.lastItemIndex(), behavior });
+      return;
+    }
+
+    this.goTo({ index: targetIndex, behavior });
   }
 
   private getPageTarget(direction: 'next' | 'prev'): number {

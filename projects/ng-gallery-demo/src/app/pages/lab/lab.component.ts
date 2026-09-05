@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit, WritableSignal, effect } from '@angular/core';
+import { Component, inject, signal, OnInit, WritableSignal } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpResourceRef } from '@angular/common/http';
@@ -16,7 +16,7 @@ import {
   GalleryOrientation,
   GalleryDock,
   GallerySnapAlign,
-  GalleryCounterPosition
+  GalleryCounterPosition, GalleryAutoplayDirection
 } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
 import { Pixabay } from '../../service/pixabay.service';
@@ -60,12 +60,14 @@ export class LabComponent implements OnInit {
   itemsPerView: WritableSignal<number> = signal(1);
   resizeDebounceTime: WritableSignal<number> = signal(0);
   scrollDuration: WritableSignal<number> = signal(468);
-  autoplay: WritableSignal<boolean> = signal(false);
+  autoplay: WritableSignal<boolean> = signal(true);
   disableScroll: WritableSignal<boolean> = signal(false);
   disableMouseScroll: WritableSignal<boolean> = signal(false);
   forceAlign: WritableSignal<boolean> = signal(true);
   imageSize: WritableSignal<'cover' | 'contain'> = signal('cover');
   autoplayInterval: WritableSignal<number> = signal(3000);
+  autoplayDirection: WritableSignal<GalleryAutoplayDirection> = signal('forward');
+  autoplayPause: WritableSignal<'hover' | 'click' | 'never'> = signal('hover');
   orientation: WritableSignal<GalleryOrientation> = signal('horizontal');
   scrollBehavior: WritableSignal<ScrollBehavior> = signal('smooth');
   thumbScrollBehavior: WritableSignal<ScrollBehavior> = signal('smooth');
@@ -90,6 +92,8 @@ export class LabComponent implements OnInit {
   counterAlign: WritableSignal<GalleryCounterPosition> = signal('top');
 
   imageSizes: string[] = ['cover', 'contain'];
+  autoplayPauseOptions: string[] = ['hover', 'click', 'never'];
+  autoplayDirectionOptions: string[] = ['forward', 'backward', 'ping-pong'];
   thumbPositions: string[] = ['start', 'end', 'top', 'bottom'];
   orientations: string[] = ['vertical', 'horizontal'];
   dotsCounterPositions: string[] = ['top', 'bottom'];
@@ -132,6 +136,10 @@ export class LabComponent implements OnInit {
     setTimeout(() => {
       this.updateEvent(this.indexChange(), { active: false });
     }, 800);
+  }
+
+  onAutoPlayChange(e) {
+    console.log(e)
   }
 
   private updateEvent(eventState: WritableSignal<any>, args) {
