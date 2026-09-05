@@ -6,6 +6,7 @@ import { GALLERY_A11Y_OPTIONS } from '../a11y/a11y.token';
 @Directive({
   selector: 'button[galleryNavButton]',
   host: {
+    type: 'button',
     '[class.g-nav-button]': 'true',
     '[class.g-nav-prev]': 'type() === "prev"',
     '[class.g-nav-next]': 'type() === "next"',
