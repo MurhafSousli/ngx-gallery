@@ -1,0 +1,23 @@
+{
+  "components": {
+    "documentations-navigation": {
+      "id": "documentations-navigation",
+      "name": "GalleryNav",
+      "path": "./projects/ng-gallery/src/stories/nav/Navigation.stories.ts",
+      "stories": {
+        "documentations-navigation--navigation-example": {
+          "id": "documentations-navigation--navigation-example",
+          "name": "Navigation",
+          "snippet": "import { Component } from '@angular/core';\nimport { GalleryNav } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\n\n@Component({\n  selector: 'app-demo',\n  imports: [GalleryNav, GalleryModule],\n  template: `\n    <gallery class=\"gallery-example\" [items]=\"items\">\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\n            <span>{{ i + 1 }}</span>\n        </div>\n        <gallery-nav\n            [showDisabledButtons]=\"showDisabledButtons\"\n            [outside]=\"outside\" />\n    </gallery>`,\n})\nexport class DemoComponent {\n  showDisabledButtons = false;\n  outside = false;\n}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg."
+        },
+        "documentations-navigation--outside-nav-example": {
+          "id": "documentations-navigation--outside-nav-example",
+          "name": "Outside Nav Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { GalleryNav } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\n\n@Component({\n  selector: 'app-demo',\n  imports: [GalleryNav, GalleryModule],\n  template: `\n    <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemsPerView=\"3\">\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\n            <span>{{ i + 1 }}</span>\n        </div>\n        <gallery-nav outside showDisabledButtons/>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg."
+        }
+      }
+    }
+  }
+}

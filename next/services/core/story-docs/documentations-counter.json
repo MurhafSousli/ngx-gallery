@@ -1,0 +1,23 @@
+{
+  "components": {
+    "documentations-counter": {
+      "id": "documentations-counter",
+      "name": "GalleryCounter",
+      "path": "./projects/ng-gallery/src/stories/counter/Counter.stories.ts",
+      "stories": {
+        "documentations-counter--counter": {
+          "id": "documentations-counter--counter",
+          "name": "Counter",
+          "snippet": "import { Component } from '@angular/core';\nimport { GalleryCounter } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\n\n@Component({\n  selector: 'app-demo',\n  imports: [GalleryCounter, GalleryModule],\n  template: `\n    <gallery class=\"gallery-example\" [items]=\"items\">\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\n            <span>{{ i + 1 }}</span>\n        </div>\n        <gallery-counter [align]=\"align\"/>\n    </gallery>`,\n})\nexport class DemoComponent {\n  align = 'top';\n}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg."
+        },
+        "documentations-counter--custom-counter": {
+          "id": "documentations-counter--custom-counter",
+          "name": "Custom Counter",
+          "snippet": "import { Component } from '@angular/core';\nimport { GalleryCounter } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\n\n@Component({\n  selector: 'app-demo',\n  imports: [GalleryCounter, GalleryModule],\n  template: `\n    <gallery #gallery=\"gallery\" class=\"gallery-example\" [items]=\"items\">\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\n            <span>{{ i + 1 }}</span>\n        </div>\n        <div\n            class=\"g-panel custom-counter\"\n            gallerySlot\n            gallerySlotAlign=\"start\">\n            Slide {{ gallery.activeIndex() + 1 }} of {{ gallery.itemsCount() }}\n        </div>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg."
+        }
+      }
+    }
+  }
+}

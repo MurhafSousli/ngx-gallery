@@ -1,0 +1,53 @@
+{
+  "components": {
+    "documentations-thumbnails": {
+      "id": "documentations-thumbnails",
+      "name": "GalleryThumbs",
+      "path": "./projects/ng-gallery/src/stories/thumbnails/Thumbnails.stories.ts",
+      "stories": {
+        "documentations-thumbnails--thumbnails": {
+          "id": "documentations-thumbnails--thumbnails",
+          "name": "Thumbnails",
+          "snippet": "import { Component } from '@angular/core';\nimport { GalleryThumbs } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\nimport { NgOptimizedImage } from '@angular/common';\n\n@Component({\n  selector: 'app-demo',\n  imports: [GalleryThumbs, GalleryModule, NgOptimizedImage],\n  template: `\n    <gallery [items]=\"items\">\n        <img\n            *galleryItemDef=\"let item\"\n            galleryImage\n            [src]=\"item.src\"\n            [alt]=\"item.alt\" />\n        <gallery-thumbs\n            [position]=\"position\"\n            [gap]=\"gap\"\n            [initialIndex]=\"initialIndex\"\n            [thickness]=\"thickness\"\n            [itemSize]=\"itemSize\"\n            [itemsPerView]=\"itemsPerView\"\n            [snapAlign]=\"snapAlign\"\n            [forceSnap]=\"forceSnap\"\n            [scrollBehavior]=\"scrollBehavior\"\n            [scrollDuration]=\"scrollDuration\"\n            [disableMouseScroll]=\"disableMouseScroll\"\n            [disableScroll]=\"disableScroll\"\n            [detach]=\"detach\"\n            [loop]=\"loop\"\n            [floating]=\"floating\">\n            <button *galleryItemDef=\"let item\" galleryThumbClick>\n                <img galleryImage [src]=\"item.thumb\" [alt]=\"item.alt + '_thumb'\"/>\n            </button>\n        </gallery-thumbs>\n    </gallery>`,\n})\nexport class DemoComponent {\n  position = 'bottom';\n  itemSize = 120;\n  thickness = 90;\n  itemsPerView = 1;\n  gap = 1;\n  scrollBehavior = 'smooth';\n  scrollDuration = 268;\n  loop = false;\n  detach = false;\n  floating = false;\n  snapAlign = 'center';\n  forceSnap = false;\n  disableScroll = false;\n  disableMouseScroll = false;\n}",
+          "warning": "Incomplete snippet: `items`, `initialIndex` could not be provided, since the story declares no such arg.\nIncomplete snippet: `activeIndexChange`, `anchorIndexChange` could not be bound, since GalleryThumbs declares no such input."
+        },
+        "documentations-thumbnails--basic-thumb-example": {
+          "id": "documentations-thumbnails--basic-thumb-example",
+          "name": "Basic Thumb Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { GalleryThumbs } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\nimport { NgOptimizedImage } from '@angular/common';\n\n@Component({\n  selector: 'app-demo',\n  imports: [GalleryThumbs, GalleryModule, NgOptimizedImage],\n  template: `\n    <gallery class=\"gallery-example\" [items]=\"items\">\n        <div\n            *galleryItemDef=\"let item; index as i\"\n            class=\"slide\"\n            [style.background]=\"item.src\">\n            Slide {{ i + 1 }}\n        </div>\n        <gallery-thumbs floating itemSize=\"6\" thickness=\"6\" gap=\"6\">\n            <button\n                *galleryItemDef=\"let item; index as i\"\n                class=\"dot-thumb\">\n            </button>\n        </gallery-thumbs>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg.\nIncomplete snippet: `activeIndexChange`, `anchorIndexChange` could not be bound, since GalleryThumbs declares no such input."
+        },
+        "documentations-thumbnails--thumb-dots-example": {
+          "id": "documentations-thumbnails--thumb-dots-example",
+          "name": "Thumb Dots Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { GalleryThumbs } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\nimport { NgOptimizedImage } from '@angular/common';\n\n@Component({\n  selector: 'app-demo',\n  imports: [GalleryThumbs, GalleryModule, NgOptimizedImage],\n  template: `\n    <gallery\n        class=\"gallery-example\"\n        style=\"gap: 10px\"\n        [items]=\"items\"\n        orientation=\"vertical\"\n        gap=\"32\">\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\n            <span>{{ i + 1 }}</span>\n        </div>\n        <gallery-thumbs position=\"end\" itemSize=\"10\" thickness=\"10\" gap=\"6\">\n            <button\n                *galleryItemDef=\"let item\"\n                galleryThumbClick\n                class=\"slide dot-thumb\">\n            </button>\n        </gallery-thumbs>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg.\nIncomplete snippet: `activeIndexChange`, `anchorIndexChange` could not be bound, since GalleryThumbs declares no such input."
+        },
+        "documentations-thumbnails--thumb-position-example": {
+          "id": "documentations-thumbnails--thumb-position-example",
+          "name": "Thumb Position Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { GalleryThumbs } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\nimport { NgOptimizedImage } from '@angular/common';\n\n@Component({\n  selector: 'app-demo',\n  imports: [GalleryThumbs, GalleryModule, NgOptimizedImage],\n  template: `\n    <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\">\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\n            <span>{{ i + 1 }}</span>\n        </div>\n        <gallery-thumbs position=\"start\" itemSize=\"100\">\n            <button *galleryItemDef=\"let item; index as i\"  galleryThumbClick>\n                <div class=\"slide-thumb\">{{ i + 1 }}</div>\n            </button>\n        </gallery-thumbs>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg.\nIncomplete snippet: `activeIndexChange`, `anchorIndexChange` could not be bound, since GalleryThumbs declares no such input."
+        },
+        "documentations-thumbnails--thumb-autosize-example": {
+          "id": "documentations-thumbnails--thumb-autosize-example",
+          "name": "Thumb Autosize Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { GalleryThumbs } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\nimport { NgOptimizedImage } from '@angular/common';\n\n@Component({\n  selector: 'app-demo',\n  imports: [GalleryThumbs, GalleryModule, NgOptimizedImage],\n  template: `\n    <gallery [items]=\"items\">\n        <img\n            *galleryItemDef=\"let item\"\n            galleryImage\n            [src]=\"item.src\"\n            [alt]=\"item.alt\" />\n        <gallery-thumbs itemSize=\"auto\">\n            <button *galleryItemDef=\"let item\" galleryThumbClick>\n                <img galleryImage [src]=\"item.thumb\" [alt]=\"item.alt + '_thumb'\"/>\n            </button>\n        </gallery-thumbs>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg.\nIncomplete snippet: `activeIndexChange`, `anchorIndexChange` could not be bound, since GalleryThumbs declares no such input."
+        },
+        "documentations-thumbnails--thumb-detached-example": {
+          "id": "documentations-thumbnails--thumb-detached-example",
+          "name": "Thumb Detached Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { GalleryThumbs } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\nimport { NgOptimizedImage } from '@angular/common';\n\n@Component({\n  selector: 'app-demo',\n  imports: [GalleryThumbs, GalleryModule, NgOptimizedImage],\n  template: `\n    <gallery [items]=\"items\">\n        <img\n            *galleryItemDef=\"let item\"\n            galleryImage\n            [src]=\"item.src\"\n            [alt]=\"item.alt\" />\n        <gallery-thumbs detach>\n            <button *galleryItemDef=\"let item\" galleryThumbClick>\n                <img galleryImage [src]=\"item.thumb\" [alt]=\"item.alt + '_thumb'\"/>\n            </button>\n        </gallery-thumbs>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg.\nIncomplete snippet: `activeIndexChange`, `anchorIndexChange` could not be bound, since GalleryThumbs declares no such input."
+        },
+        "documentations-thumbnails--thumb-nav-example": {
+          "id": "documentations-thumbnails--thumb-nav-example",
+          "name": "Thumb Nav Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { GalleryThumbs } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\nimport { NgOptimizedImage } from '@angular/common';\n\n@Component({\n  selector: 'app-demo',\n  imports: [GalleryThumbs, GalleryModule, NgOptimizedImage],\n  template: `\n    <gallery class=\"g-glass-theme\" [items]=\"items\">\n        <img\n            *galleryItemDef=\"let item\"\n            galleryImage\n            [ngSrc]=\"item.src\"\n            [placeholder]=\"item.placeholder\"\n            fill\n            [alt]=\"item.alt\" />\n        <gallery-nav/>\n        <gallery-thumbs>\n            <button *galleryItemDef=\"let item\" galleryThumbClick>\n                <img\n                    galleryImage\n                    [ngSrc]=\"item.thumb\"\n                    [placeholder]=\"item.placeholder\"\n                    fill\n                    [alt]=\"item.alt + '_thumb'\" />\n            </button>\n            <gallery-nav/>\n        </gallery-thumbs>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg.\nIncomplete snippet: `activeIndexChange`, `anchorIndexChange` could not be bound, since GalleryThumbs declares no such input."
+        }
+      }
+    }
+  }
+}

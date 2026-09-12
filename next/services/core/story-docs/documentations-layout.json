@@ -1,0 +1,41 @@
+{
+  "components": {
+    "documentations-layout": {
+      "id": "documentations-layout",
+      "name": "Gallery",
+      "path": "./projects/ng-gallery/src/stories/layout/Layout.stories.ts",
+      "stories": {
+        "documentations-layout--default-items-per-view-example": {
+          "id": "documentations-layout--default-items-per-view-example",
+          "name": "Default Items Per View Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { Gallery } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\n\n@Component({\n  selector: 'app-demo',\n  imports: [Gallery, GalleryModule],\n  template: `\n    <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\">\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\n            <span>{{ i + 1 }}</span>\n        </div>\n        <gallery-nav/>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg."
+        },
+        "documentations-layout--mutliple-items-per-view-example": {
+          "id": "documentations-layout--mutliple-items-per-view-example",
+          "name": "Mutliple Items Per View Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { Gallery } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\n\n@Component({\n  selector: 'app-demo',\n  imports: [Gallery, GalleryModule],\n  template: `\n    <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemsPerView=\"3\">\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\n            <span>{{ i + 1 }}</span>\n        </div>\n        <gallery-nav/>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg."
+        },
+        "documentations-layout--friction-items-per-view-example": {
+          "id": "documentations-layout--friction-items-per-view-example",
+          "name": "Friction Items Per View Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { Gallery } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\n\n@Component({\n  selector: 'app-demo',\n  imports: [Gallery, GalleryModule],\n  template: `\n    <gallery\n        class=\"gallery-example\"\n        [items]=\"items\"\n        gap=\"32\"\n        itemsPerView=\"1.4\"\n        forceSnap>\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\n            <span>{{ i + 1 }}</span>\n        </div>\n        <gallery-nav/>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg."
+        },
+        "documentations-layout--fixed-item-size-example": {
+          "id": "documentations-layout--fixed-item-size-example",
+          "name": "Fixed Item Size Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { Gallery } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\n\n@Component({\n  selector: 'app-demo',\n  imports: [Gallery, GalleryModule],\n  template: `\n    <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemSize=\"150\">\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\n            <span>{{ i + 1 }}</span>\n        </div>\n        <gallery-nav/>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg."
+        },
+        "documentations-layout--auto-item-size-example": {
+          "id": "documentations-layout--auto-item-size-example",
+          "name": "Auto Item Size Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { Gallery } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\n\n@Component({\n  selector: 'app-demo',\n  imports: [Gallery, GalleryModule],\n  template: `\n    <gallery\n        class=\"gallery-example\"\n        [items]=\"items\"\n        gap=\"32\"\n        itemSize=\"auto\"\n        forceSnap>\n        <img\n            *galleryItemDef=\"let item\"\n            galleryImage\n            [src]=\"item.src\"\n            [alt]=\"item.alt\" />\n        <gallery-nav/>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg."
+        }
+      }
+    }
+  }
+}

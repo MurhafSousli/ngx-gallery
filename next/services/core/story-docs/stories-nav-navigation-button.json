@@ -1,0 +1,23 @@
+{
+  "components": {
+    "stories-nav-navigation-button": {
+      "id": "stories-nav-navigation-button",
+      "name": "GalleryNavButton",
+      "path": "./projects/ng-gallery/src/stories/nav/Navigation Button.stories.ts",
+      "stories": {
+        "stories-nav-navigation-button--custom-nav-template-example": {
+          "id": "stories-nav-navigation-button--custom-nav-template-example",
+          "name": "Custom Nav Template Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { GalleryNavButton } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\n\n@Component({\n  selector: 'app-demo',\n  imports: [GalleryNavButton, GalleryModule],\n  template: `\n    <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemsPerView=\"3\">\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\n            <span>{{ i + 1 }}</span>\n        </div>\n        <gallery-nav>\n            <button galleryNavButton=\"prev\">◀ Previous</button>\n            <button galleryNavButton=\"next\">Next ▶</button>\n        </gallery-nav>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg."
+        },
+        "stories-nav-navigation-button--custom-nav-position-example": {
+          "id": "stories-nav-navigation-button--custom-nav-position-example",
+          "name": "Custom Nav Position Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { GalleryNavButton } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\n\n@Component({\n  selector: 'app-demo',\n  imports: [GalleryNavButton, GalleryModule],\n  template: `\n    <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemsPerView=\"3\">\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\n            <span>{{ i + 1 }}</span>\n        </div>\n        <div gallerySlot gallerySlotAlign=\"end\" gallerySlotJustify=\"end\">\n            <button galleryNavButton=\"prev\">◀ Previous</button>\n            <button galleryNavButton=\"next\">Next ▶</button>\n        </div>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg."
+        }
+      }
+    }
+  }
+}

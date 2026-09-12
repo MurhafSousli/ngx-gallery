@@ -1,0 +1,17 @@
+{
+  "components": {
+    "documentations-slot": {
+      "id": "documentations-slot",
+      "name": "GallerySlot",
+      "path": "./projects/ng-gallery/src/stories/slot/Slot.stories.ts",
+      "stories": {
+        "documentations-slot--slot": {
+          "id": "documentations-slot--slot",
+          "name": "Slot",
+          "snippet": "import { Component } from '@angular/core';\nimport { GallerySlot } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\n\n@Component({\n  selector: 'app-demo',\n  imports: [GallerySlot, GalleryModule],\n  template: `\n    <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\">\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\n            <span>{{ i + 1 }}</span>\n        </div>\n        <div\n            class=\"static-panel\"\n            [gallerySlot]=\"position\"\n            [gallerySlotAlign]=\"align\"\n            [gallerySlotJustify]=\"justify\">\n            Static Content\n        </div>\n    </gallery>`,\n})\nexport class DemoComponent {\n  position = 'center';\n  align = 'center';\n  justify = 'center';\n}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg."
+        }
+      }
+    }
+  }
+}

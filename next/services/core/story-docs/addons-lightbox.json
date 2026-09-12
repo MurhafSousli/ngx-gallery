@@ -1,0 +1,23 @@
+{
+  "components": {
+    "addons-lightbox": {
+      "id": "addons-lightbox",
+      "name": "LightboxFor",
+      "path": "./projects/ng-gallery/src/stories/addons/lightbox/LightboxFor.stories.ts",
+      "stories": {
+        "addons-lightbox--lightbox-for-grid-example": {
+          "id": "addons-lightbox--lightbox-for-grid-example",
+          "name": "LightboxForGrid",
+          "snippet": "import { Component } from '@angular/core';\nimport { LightboxFor } from 'ng-gallery/lightbox';\nimport { LightboxModule } from 'ng-gallery/lightbox';\n\n@Component({\n  selector: 'app-demo',\n  imports: [LightboxFor, LightboxModule],\n  template: `\n    <ng-template lightbox #lightbox=\"lightbox\" panelClass=\"g-glass-theme\">\n        <gallery [items]=\"items\" gap=\"48\">\n            <img\n                *galleryItemDef=\"let item\"\n                galleryImage\n                [src]=\"item.src\"\n                [alt]=\"item.alt\"\n                [style.object-fit]=\"'cover'\" />\n            <gallery-nav/>\n            <gallery-counter/>\n        </gallery>\n    </ng-template>\n    <div class=\"grid\">\n        @for (item of items; track i; let i = $index) {\n        <div\n            class=\"grid-item\"\n            [lightboxFor]=\"lightbox\"\n            [lightboxIndex]=\"i\">\n            <img class=\"grid-image\" loading=\"lazy\" [src]=\"item.thumb\"/>\n        </div>\n        }\n    </div>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg."
+        },
+        "addons-lightbox--lightbox-for-gallery-example": {
+          "id": "addons-lightbox--lightbox-for-gallery-example",
+          "name": "LightboxForGallery",
+          "snippet": "import { Component } from '@angular/core';\nimport { LightboxFor } from 'ng-gallery/lightbox';\nimport { LightboxModule } from 'ng-gallery/lightbox';\n\n@Component({\n  selector: 'app-demo',\n  imports: [LightboxFor, LightboxModule],\n  template: `\n    <ng-template lightbox #lightbox=\"lightbox\" panelClass=\"g-glass-theme\">\n        <gallery [items]=\"items\">\n            <img\n                *galleryItemDef=\"let item\"\n                galleryImage\n                [src]=\"item.src\"\n                [alt]=\"item.alt\" />\n            <gallery-nav/>\n            <gallery-counter/>\n        </gallery>\n    </ng-template>\n    <gallery [items]=\"items\">\n        <button *galleryItemDef=\"let item\" [lightboxFor]=\"lightbox\">\n            <img\n                galleryImage\n                [src]=\"item.src\"\n                [alt]=\"item.alt\" />\n        </button>\n        <gallery-nav/>\n        <gallery-counter/>\n        <gallery-thumbs>\n            <button *galleryItemDef=\"let item\" galleryThumbClick>\n                <img\n                    galleryImage\n                    [src]=\"item.thumb\"\n                    [alt]=\"item.alt + '_thumb'\" />\n            </button>\n        </gallery-thumbs>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "components": {
+    "stories-nav-navigation-button": {
+      "id": "stories-nav-navigation-button",
+      "name": "GalleryNavButton",
+      "path": "./projects/ng-gallery/src/stories/nav/Navigation Button.stories.ts",
+      "jsDocTags": {},
+      "argTypes": {
+        "a11y": {
+          "name": "a11y",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "GalleryA11yOptions"
+            },
+            "defaultValue": {}
+          }
+        },
+        "ariaLabel": {
+          "name": "ariaLabel",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<string>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "galleryRef": {
+          "name": "galleryRef",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "GalleryRef"
+            },
+            "defaultValue": {}
+          }
+        },
+        "isDisabled": {
+          "name": "isDisabled",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<boolean>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "galleryNavButton": {
+          "name": "galleryNavButton",
+          "description": "Determines the navigation direction of the button.",
+          "type": {
+            "name": "enum",
+            "value": [
+              "next",
+              "prev"
+            ],
+            "required": true
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "\"next\" | \"prev\""
+            },
+            "defaultValue": {}
+          }
+        }
+      },
+      "apiDescription": "## Inputs\n\n```\nexport type GalleryNavButtonInputs = {\n  /** Determines the navigation direction of the button. */\n  galleryNavButton: \"next\" | \"prev\";\n}\n```",
+      "renderer": "angular",
+      "angularComponentMeta": {
+        "name": "GalleryNavButton",
+        "selector": "button[galleryNavButton]",
+        "standalone": true,
+        "inputs": [
+          "galleryNavButton"
+        ],
+        "outputs": [],
+        "enums": []
+      }
+    }
+  }
+}

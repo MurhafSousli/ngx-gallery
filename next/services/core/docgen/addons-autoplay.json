@@ -1,0 +1,129 @@
+{
+  "components": {
+    "addons-autoplay": {
+      "id": "addons-autoplay",
+      "name": "GalleryAutoplay",
+      "path": "./projects/ng-gallery/src/stories/addons/autoplay/Autoplay.stories.ts",
+      "jsDocTags": {},
+      "argTypes": {
+        "autoplay": {
+          "name": "autoplay",
+          "description": "Automatically cycle through items at time interval",
+          "type": {
+            "name": "boolean"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "string | boolean"
+            },
+            "defaultValue": {
+              "summary": true
+            }
+          }
+        },
+        "autoplayDirection": {
+          "name": "autoplayDirection",
+          "description": "Specifies the direction flow for the autoplay sequence.\n\n- `forward`: Navigates sequentially from first to last item.\n- `backward`: Navigates in reverse order from current position toward the first item.\n- `ping-pong`: Navigates forward to the end, then reverses direction back to the start.",
+          "type": {
+            "name": "enum",
+            "value": [
+              "forward",
+              "backward",
+              "ping-pong"
+            ]
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "GalleryAutoplayDirection"
+            },
+            "defaultValue": {}
+          }
+        },
+        "autoplayInterval": {
+          "name": "autoplayInterval",
+          "description": "Sets the interval used for the autoplay feature",
+          "type": {
+            "name": "number"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "string | number"
+            },
+            "defaultValue": {}
+          }
+        },
+        "autoplayPause": {
+          "name": "autoplayPause",
+          "description": "Sets the pause mode for the autoplay feature.\n- `hover`: Pauses autoplay when the user hovers over the gallery.\n- `click`: Pauses autoplay when the user clicks on the gallery.\n- `never`: Autoplay will not pause based on user interaction.",
+          "type": {
+            "name": "enum",
+            "value": [
+              "hover",
+              "click",
+              "never"
+            ]
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "GalleryAutoplayPause"
+            },
+            "defaultValue": {}
+          }
+        },
+        "autoplayScrollBehavior": {
+          "name": "autoplayScrollBehavior",
+          "description": "Sets the interval used for the autoplay feature",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "ScrollBehavior"
+            },
+            "defaultValue": {}
+          }
+        },
+        "autoplayChange": {
+          "name": "autoplayChange",
+          "description": "Stream that emits when autoplay state changes (`playing`, `paused`, or `stopped`).",
+          "type": {
+            "name": "other",
+            "value": "void"
+          },
+          "action": "autoplayChange",
+          "table": {
+            "category": "outputs",
+            "type": {
+              "summary": "GalleryAutoplayState"
+            },
+            "defaultValue": {}
+          }
+        }
+      },
+      "apiDescription": "## Inputs\n\n```\nexport type GalleryAutoplayInputs = {\n  /**\n   * Automatically cycle through items at time interval\n   *\n   * @default true\n   */\n  autoplay?: string | boolean; // two-way: [(autoplay)]\n  /**\n   * Specifies the direction flow for the autoplay sequence.\n   *\n   * - `forward`: Navigates sequentially from first to last item.\n   * - `backward`: Navigates in reverse order from current position toward the first item.\n   * - `ping-pong`: Navigates forward to the end, then reverses direction back to the start.\n   */\n  autoplayDirection?: GalleryAutoplayDirection;\n  /** Sets the interval used for the autoplay feature */\n  autoplayInterval?: string | number;\n  /**\n   * Sets the pause mode for the autoplay feature.\n   * - `hover`: Pauses autoplay when the user hovers over the gallery.\n   * - `click`: Pauses autoplay when the user clicks on the gallery.\n   * - `never`: Autoplay will not pause based on user interaction.\n   */\n  autoplayPause?: GalleryAutoplayPause;\n  /** Sets the interval used for the autoplay feature */\n  autoplayScrollBehavior?: ScrollBehavior;\n}\n```\n\n## Outputs\n\n```\nexport type GalleryAutoplayOutputs = {\n  /** Stream that emits when autoplay state changes (`playing`, `paused`, or `stopped`). */\n  autoplayChange: GalleryAutoplayState;\n}\n```",
+      "renderer": "angular",
+      "angularComponentMeta": {
+        "name": "GalleryAutoplay",
+        "selector": "gallery[autoplay]",
+        "standalone": true,
+        "inputs": [
+          "autoplay",
+          "autoplayDirection",
+          "autoplayInterval",
+          "autoplayPause",
+          "autoplayScrollBehavior"
+        ],
+        "outputs": [
+          "autoplayChange"
+        ],
+        "enums": []
+      }
+    }
+  }
+}

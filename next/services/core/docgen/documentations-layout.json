@@ -1,0 +1,619 @@
+{
+  "components": {
+    "documentations-layout": {
+      "id": "documentations-layout",
+      "name": "Gallery",
+      "path": "./projects/ng-gallery/src/stories/layout/Layout.stories.ts",
+      "jsDocTags": {},
+      "argTypes": {
+        "a11y": {
+          "name": "a11y",
+          "description": "A11y options",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "GalleryA11yOptions"
+            },
+            "defaultValue": {}
+          }
+        },
+        "activeIndex": {
+          "name": "activeIndex",
+          "description": "Stable active index - updates after scroll ends",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<number>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "activeIndexChange": {
+          "name": "activeIndexChange",
+          "description": "Emits the active index when it changes",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "OutputRef<number>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "activeItem": {
+          "name": "activeItem",
+          "description": "Active item component reference",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<SliderItem>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "anchorIndex": {
+          "name": "anchorIndex",
+          "description": "Anchor Index - updates immediately as items pass the anchor",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<number>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "anchorIndexChange": {
+          "name": "anchorIndexChange",
+          "description": "Emits the anchor index when it changes",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "OutputRef<number>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "hasNext": {
+          "name": "hasNext",
+          "description": "Whether the gallery can navigate forward.\nRemains true if the last item is not yet reached or is partially obscured.",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<boolean>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "hasPrev": {
+          "name": "hasPrev",
+          "description": "Whether the gallery can navigate backward.\nRemains true if the first item is not yet reached or is partially obscured.",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<boolean>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "hasVisibleItems": {
+          "name": "hasVisibleItems",
+          "description": "Signal indicates whether the Gallery has visible items",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<boolean>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "intersectionSensor": {
+          "name": "intersectionSensor",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<IntersectionSensorContext>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "isOneItemPerView": {
+          "name": "isOneItemPerView",
+          "description": "Whether the layout displays one item per view",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<boolean>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "items": {
+          "name": "items",
+          "description": "Loads the items array into the gallery",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "GalleryItemData<any>[]"
+            },
+            "defaultValue": {
+              "summary": "[]"
+            }
+          }
+        },
+        "itemsCount": {
+          "name": "itemsCount",
+          "description": "Items data array count",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<number>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "liveRegion": {
+          "name": "liveRegion",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<string>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "navigationSource": {
+          "name": "navigationSource",
+          "description": "Navigation intent (WRITE-ONLY)\nAutomatically sync with native scroll (touch)",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "WritableSignal<NavigationTarget>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "navigationState": {
+          "name": "navigationState",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<NavigationTarget>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "renderedItems": {
+          "name": "renderedItems",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<readonly SliderItem[]>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "resizeSensor": {
+          "name": "resizeSensor",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<ResizeSensorContext>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "slider": {
+          "name": "slider",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<SliderContext>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "trackSize": {
+          "name": "trackSize",
+          "description": "Shared sizing logic that performs the math based on current inputs.\nReturns the value for the main axis (scroll direction).",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<string>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "visibleEntries": {
+          "name": "visibleEntries",
+          "description": "Visible entries",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<Record<string, IntersectionObserverEntry>>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "disableMouseScroll": {
+          "name": "disableMouseScroll",
+          "description": "Disables sliding using the mouse",
+          "type": {
+            "name": "boolean"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "string | boolean"
+            },
+            "defaultValue": {}
+          }
+        },
+        "disableScroll": {
+          "name": "disableScroll",
+          "description": "Disables sliding using mousewheel, touchpad, scroll and gestures on touch devices",
+          "type": {
+            "name": "boolean"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "string | boolean"
+            },
+            "defaultValue": {}
+          }
+        },
+        "forceSnap": {
+          "name": "forceSnap",
+          "description": "Whether to inject dynamic padding to ensure every item can reach the `snapAlign` anchor.\n* When `false`, the gallery stops at its natural content boundaries, which may prevent\nthe first or last items from reaching the anchor point (causing an inaccurate `activeIndex`).\n* When `true`, it calculates the \"ghost space\" needed to allow every item—including\nthose at the very edges—to be fully aligned to the 'start', 'center', or 'end'.",
+          "type": {
+            "name": "boolean"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "string | boolean"
+            },
+            "defaultValue": {}
+          }
+        },
+        "gap": {
+          "name": "gap",
+          "description": "The space between items in pixels.",
+          "type": {
+            "name": "number"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "string | number"
+            },
+            "defaultValue": {}
+          }
+        },
+        "initialIndex": {
+          "name": "initialIndex",
+          "description": "Initial active index",
+          "type": {
+            "name": "number"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "string | number"
+            },
+            "defaultValue": {
+              "summary": null
+            }
+          }
+        },
+        "itemSize": {
+          "name": "itemSize",
+          "description": "Let items fit their own content size or set explicit size in px.",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "number | string | \"auto\""
+            },
+            "defaultValue": {}
+          }
+        },
+        "itemsPerView": {
+          "name": "itemsPerView",
+          "description": "Sets a fixed width/height for items in pixels, or 'auto' to fit content.\nIf undefined, calculation falls back to itemsPerView.",
+          "type": {
+            "name": "number"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "string | number"
+            },
+            "defaultValue": {}
+          }
+        },
+        "loop": {
+          "name": "loop",
+          "description": "Enables loop cycling",
+          "type": {
+            "name": "boolean"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "string | boolean"
+            },
+            "defaultValue": {}
+          }
+        },
+        "orientation": {
+          "name": "orientation",
+          "description": "Sets the sliding direction",
+          "type": {
+            "name": "enum",
+            "value": [
+              "horizontal",
+              "vertical"
+            ]
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "GalleryOrientation"
+            },
+            "defaultValue": {}
+          }
+        },
+        "resizeDebounceTime": {
+          "name": "resizeDebounceTime",
+          "description": "Sets the resize debounce time used in the resize observer",
+          "type": {
+            "name": "number"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "string | number"
+            },
+            "defaultValue": {}
+          }
+        },
+        "scrollBehavior": {
+          "name": "scrollBehavior",
+          "description": "Sets the scroll behavior of the slider.",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "ScrollBehavior"
+            },
+            "defaultValue": {}
+          }
+        },
+        "scrollDuration": {
+          "name": "scrollDuration",
+          "description": "Sets the duration used for smooth navigation between the items",
+          "type": {
+            "name": "number"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "string | number"
+            },
+            "defaultValue": {}
+          }
+        },
+        "scrollEase": {
+          "name": "scrollEase",
+          "description": "Sets the ease function used for smooth navigation between the items",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "BezierEasingOptions"
+            },
+            "defaultValue": {}
+          }
+        },
+        "snapAlign": {
+          "name": "snapAlign",
+          "description": "Defines the alignment of items within the gallery viewport when scrolling stops.\n- `start`: Items snap to the leading edge of the container.\n- `center`: Items snap to the middle of the viewport.\n- `end`: Items snap to the trailing edge of the container.\n* This alignment also determines the \"Snap Anchor\"—the point an item must reach\nto be considered the active `activeIndex`.",
+          "type": {
+            "name": "enum",
+            "value": [
+              "start",
+              "end",
+              "center"
+            ]
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "GallerySnapAlign"
+            },
+            "defaultValue": {}
+          }
+        },
+        "steps": {
+          "name": "steps",
+          "description": "Set navigation steps",
+          "type": {
+            "name": "number"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "string | number"
+            },
+            "defaultValue": {}
+          }
+        },
+        "goTo": {
+          "name": "goTo",
+          "description": "Navigate to a slide by index",
+          "type": {
+            "name": "other",
+            "value": "void"
+          },
+          "table": {
+            "category": "methods",
+            "type": {
+              "summary": "({ index, behavior, source }: NavigationTarget) => void"
+            },
+            "defaultValue": {}
+          }
+        },
+        "next": {
+          "name": "next",
+          "description": "Navigate to the next item",
+          "type": {
+            "name": "other",
+            "value": "void"
+          },
+          "table": {
+            "category": "methods",
+            "type": {
+              "summary": "({ loop = this.loop(), steps = this.steps(), behavior }: NavigationShift) => void"
+            },
+            "defaultValue": {}
+          }
+        },
+        "prev": {
+          "name": "prev",
+          "description": "Navigate to the previous item",
+          "type": {
+            "name": "other",
+            "value": "void"
+          },
+          "table": {
+            "category": "methods",
+            "type": {
+              "summary": "({ loop = this.loop(), steps = this.steps(), behavior }: NavigationShift) => void"
+            },
+            "defaultValue": {}
+          }
+        }
+      },
+      "apiDescription": "## Inputs\n\n```\nexport type GalleryInputs = {\n  /**\n   * Loads the items array into the gallery\n   *\n   * @default []\n   */\n  items?: GalleryItemData<any>[];\n  /** Disables sliding using the mouse */\n  disableMouseScroll?: string | boolean;\n  /** Disables sliding using mousewheel, touchpad, scroll and gestures on touch devices */\n  disableScroll?: string | boolean;\n  /**\n   * Whether to inject dynamic padding to ensure every item can reach the `snapAlign` anchor.\n   * * When `false`, the gallery stops at its natural content boundaries, which may prevent\n   * the first or last items from reaching the anchor point (causing an inaccurate `activeIndex`).\n   * * When `true`, it calculates the \"ghost space\" needed to allow every item—including\n   * those at the very edges—to be fully aligned to the 'start', 'center', or 'end'.\n   */\n  forceSnap?: string | boolean;\n  /** The space between items in pixels. */\n  gap?: string | number;\n  /**\n   * Initial active index\n   *\n   * @default null\n   */\n  initialIndex?: string | number;\n  /** Let items fit their own content size or set explicit size in px. */\n  itemSize?: number | string | \"auto\";\n  /**\n   * Sets a fixed width/height for items in pixels, or 'auto' to fit content.\n   * If undefined, calculation falls back to itemsPerView.\n   */\n  itemsPerView?: string | number;\n  /** Enables loop cycling */\n  loop?: string | boolean;\n  /** Sets the sliding direction */\n  orientation?: GalleryOrientation;\n  /** Sets the resize debounce time used in the resize observer */\n  resizeDebounceTime?: string | number;\n  /** Sets the scroll behavior of the slider. */\n  scrollBehavior?: ScrollBehavior;\n  /** Sets the duration used for smooth navigation between the items */\n  scrollDuration?: string | number;\n  /** Sets the ease function used for smooth navigation between the items */\n  scrollEase?: BezierEasingOptions;\n  /**\n   * Defines the alignment of items within the gallery viewport when scrolling stops.\n   * - `start`: Items snap to the leading edge of the container.\n   * - `center`: Items snap to the middle of the viewport.\n   * - `end`: Items snap to the trailing edge of the container.\n   * * This alignment also determines the \"Snap Anchor\"—the point an item must reach\n   * to be considered the active `activeIndex`.\n   */\n  snapAlign?: GallerySnapAlign;\n  /** Set navigation steps */\n  steps?: string | number;\n}\n```",
+      "renderer": "angular",
+      "angularComponentMeta": {
+        "name": "Gallery",
+        "selector": "gallery",
+        "standalone": true,
+        "inputs": [
+          "disableMouseScroll",
+          "disableScroll",
+          "forceSnap",
+          "gap",
+          "initialIndex",
+          "items",
+          "itemSize",
+          "itemsPerView",
+          "loop",
+          "orientation",
+          "resizeDebounceTime",
+          "scrollBehavior",
+          "scrollDuration",
+          "scrollEase",
+          "snapAlign",
+          "steps"
+        ],
+        "outputs": [],
+        "enums": []
+      }
+    }
+  }
+}

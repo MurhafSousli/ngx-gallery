@@ -1,0 +1,41 @@
+{
+  "components": {
+    "documentations-gallery": {
+      "id": "documentations-gallery",
+      "name": "Gallery",
+      "path": "./projects/ng-gallery/src/stories/gallery/Gallery.stories.ts",
+      "stories": {
+        "documentations-gallery--gallery-example": {
+          "id": "documentations-gallery--gallery-example",
+          "name": "Gallery",
+          "snippet": "import { Component } from '@angular/core';\nimport { Gallery } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\nimport { NgOptimizedImage } from '@angular/common';\n\n@Component({\n  selector: 'app-demo',\n  imports: [Gallery, GalleryModule, NgOptimizedImage],\n  template: `\n    <gallery\n        [items]=\"items\"\n        [loop]=\"loop\"\n        [gap]=\"gap\"\n        [itemsPerView]=\"itemsPerView\"\n        [itemSize]=\"itemSize\"\n        [steps]=\"steps\"\n        [snapAlign]=\"snapAlign\"\n        [forceSnap]=\"forceSnap\"\n        [resizeDebounceTime]=\"resizeDebounceTime\"\n        [orientation]=\"orientation\"\n        [scrollDuration]=\"scrollDuration\"\n        [scrollBehavior]=\"scrollBehavior\"\n        [disableScroll]=\"disableScroll\"\n        [disableMouseScroll]=\"disableMouseScroll\"\n        (activeIndexChange)=\"activeIndexChange($event)\"\n        (anchorIndexChange)=\"anchorIndexChange($event)\">\n        <img\n            *galleryItemDef=\"let item\"\n            galleryImage\n            [src]=\"item.src\"\n            [alt]=\"item.alt\" />\n        <gallery-nav/>\n    </gallery>`,\n})\nexport class DemoComponent {\n  loop = false;\n  snapAlign = 'center';\n  forceSnap = false;\n  disableScroll = false;\n  disableMouseScroll = false;\n  itemsPerView = 1;\n  gap = 1;\n  steps = 1;\n  itemSize = null;\n  orientation = 'horizontal';\n  scrollBehavior = 'smooth';\n  scrollDuration = 468;\n  resizeDebounceTime = 468;\n}",
+          "warning": "Incomplete snippet: `fn()` could not be resolved statically.\nIncomplete snippet: `items` could not be provided, since the story declares no such arg."
+        },
+        "documentations-gallery--basic-example": {
+          "id": "documentations-gallery--basic-example",
+          "name": "Basic Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { Gallery } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\nimport { NgOptimizedImage } from '@angular/common';\n\n@Component({\n  selector: 'app-demo',\n  imports: [Gallery, GalleryModule, NgOptimizedImage],\n  template: `\n    <gallery class=\"gallery-example\" [items]=\"items\">\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\n            <span>{{ i + 1 }}</span>\n        </div>\n        <gallery-nav/>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg.\nIncomplete snippet: `activeIndexChange`, `anchorIndexChange` could not be bound, since Gallery declares no such input."
+        },
+        "documentations-gallery--gap-example": {
+          "id": "documentations-gallery--gap-example",
+          "name": "Gap Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { Gallery } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\nimport { NgOptimizedImage } from '@angular/common';\n\n@Component({\n  selector: 'app-demo',\n  imports: [Gallery, GalleryModule, NgOptimizedImage],\n  template: `\n    <gallery\n        class=\"gallery-example\"\n        [items]=\"items\"\n        gap=\"32\"\n        itemsPerView=\"1.4\"\n        forceSnap>\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\n            <span>{{ i + 1 }}</span>\n        </div>\n        <gallery-nav/>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg.\nIncomplete snippet: `activeIndexChange`, `anchorIndexChange` could not be bound, since Gallery declares no such input."
+        },
+        "documentations-gallery--multiple-example": {
+          "id": "documentations-gallery--multiple-example",
+          "name": "Multiple Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { Gallery } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\nimport { NgOptimizedImage } from '@angular/common';\n\n@Component({\n  selector: 'app-demo',\n  imports: [Gallery, GalleryModule, NgOptimizedImage],\n  template: `\n    <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemsPerView=\"3\">\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\n            <span>{{ i + 1 }}</span>\n        </div>\n        <gallery-nav/>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg.\nIncomplete snippet: `activeIndexChange`, `anchorIndexChange` could not be bound, since Gallery declares no such input."
+        },
+        "documentations-gallery--auto-height-example": {
+          "id": "documentations-gallery--auto-height-example",
+          "name": "Auto Height Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { Gallery } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\nimport { NgOptimizedImage } from '@angular/common';\n\n@Component({\n  selector: 'app-demo',\n  imports: [Gallery, GalleryModule, NgOptimizedImage],\n  template: `\n    <gallery class=\"gallery-example\" [items]=\"items\" autoHeight>\n        <div\n            *galleryItemDef=\"let item; index as i\"\n            class=\"slide\"\n            [style.height.px]=\"i % 2 == 1 ? 150 : 200\">\n            <span>{{ i + 1 }}</span>\n        </div>\n        <gallery-nav outside/>\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg.\nIncomplete snippet: `activeIndexChange`, `anchorIndexChange` could not be bound, since Gallery declares no such input."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "components": {
+    "addons-autoplay": {
+      "id": "addons-autoplay",
+      "name": "GalleryAutoplay",
+      "path": "./projects/ng-gallery/src/stories/addons/autoplay/Autoplay.stories.ts",
+      "stories": {
+        "addons-autoplay--autoplay": {
+          "id": "addons-autoplay--autoplay",
+          "name": "Autoplay",
+          "snippet": "import { Component } from '@angular/core';\nimport { GalleryAutoplay } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\n\n@Component({\n  selector: 'app-demo',\n  imports: [GalleryAutoplay, GalleryModule],\n  template: `\n    <gallery\n        loop\n        [items]=\"items\"\n        [autoplay]=\"autoplay\"\n        [autoplayInterval]=\"autoplayInterval\"\n        [autoplayScrollBehavior]=\"autoplayScrollBehavior\"\n        [autoplayDirection]=\"autoplayDirection\"\n        [autoplayPause]=\"autoplayPause\"\n        (autoplayChange)=\"autoplayChange($event)\">\n        <img\n            *galleryItemDef=\"let item\"\n            galleryImage\n            [src]=\"item.src\"\n            [alt]=\"item.alt\" />\n        @if (showSpinner) {\n        <gallery-autoplay\n            gallerySlot\n            gallerySlotJustify=\"end\"\n            gallerySlotAlign=\"start\" />\n        }\n            @if (showProgressbar) {\n        <gallery-autoplay gallerySlot gallerySlotAlign=\"end\" mode=\"progressbar\"/>\n        }\n    </gallery>`,\n})\nexport class DemoComponent {\n  autoplay = true;\n  autoplayInterval = 3000;\n  autoplayScrollBehavior = 'smooth';\n  autoplayDirection = 'forward';\n  autoplayPause = 'hover';\n  showSpinner = true;\n  showProgressbar = true;\n  autoplayChange(event: unknown) {}\n}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg.\nIncomplete snippet: `uiColor` could not be bound, since GalleryAutoplay declares no such input."
+        }
+      }
+    }
+  }
+}

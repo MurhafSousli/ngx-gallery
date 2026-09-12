@@ -1,0 +1,235 @@
+{
+  "components": {
+    "documentations-navigation": {
+      "id": "documentations-navigation",
+      "name": "GalleryNav",
+      "path": "./projects/ng-gallery/src/stories/nav/Navigation.stories.ts",
+      "jsDocTags": {},
+      "argTypes": {
+        "dir": {
+          "name": "dir",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Directionality"
+            },
+            "defaultValue": {}
+          }
+        },
+        "galleryRef": {
+          "name": "galleryRef",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "GalleryRef"
+            },
+            "defaultValue": {}
+          }
+        },
+        "navButtons": {
+          "name": "navButtons",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<readonly GalleryNavButton[]>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "nextAlignSlot": {
+          "name": "nextAlignSlot",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<GalleryAlign>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "nextJustifySlot": {
+          "name": "nextJustifySlot",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<GalleryAlign>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "nextNavButton": {
+          "name": "nextNavButton",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<GalleryNavButton>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "nextSlot": {
+          "name": "nextSlot",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<GalleryPosition>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "nextVisible": {
+          "name": "nextVisible",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<\"visible\" | \"hidden\">"
+            },
+            "defaultValue": {}
+          }
+        },
+        "prevAlignSlot": {
+          "name": "prevAlignSlot",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<GalleryAlign>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "prevJustifySlot": {
+          "name": "prevJustifySlot",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<GalleryAlign>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "prevNavButton": {
+          "name": "prevNavButton",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<GalleryNavButton>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "prevSlot": {
+          "name": "prevSlot",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<GalleryPosition>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "prevVisible": {
+          "name": "prevVisible",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<\"visible\" | \"hidden\">"
+            },
+            "defaultValue": {}
+          }
+        },
+        "outside": {
+          "name": "outside",
+          "description": "Whether to place the buttons on the outer edges of the gallery.",
+          "type": {
+            "name": "boolean"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "string | boolean"
+            },
+            "defaultValue": {}
+          }
+        },
+        "showDisabledButtons": {
+          "name": "showDisabledButtons",
+          "description": "Whether to keep the navigation buttons visible when they are disabled.",
+          "type": {
+            "name": "boolean"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "string | boolean"
+            },
+            "defaultValue": {}
+          }
+        }
+      },
+      "apiDescription": "## Inputs\n\n```\nexport type GalleryNavInputs = {\n  /** Whether to place the buttons on the outer edges of the gallery. */\n  outside?: string | boolean;\n  /** Whether to keep the navigation buttons visible when they are disabled. */\n  showDisabledButtons?: string | boolean;\n}\n```",
+      "renderer": "angular",
+      "angularComponentMeta": {
+        "name": "GalleryNav",
+        "selector": "gallery-nav",
+        "standalone": true,
+        "inputs": [
+          "outside",
+          "showDisabledButtons"
+        ],
+        "outputs": [],
+        "enums": []
+      }
+    }
+  }
+}

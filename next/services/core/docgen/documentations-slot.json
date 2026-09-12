@@ -1,0 +1,87 @@
+{
+  "components": {
+    "documentations-slot": {
+      "id": "documentations-slot",
+      "name": "GallerySlot",
+      "path": "./projects/ng-gallery/src/stories/slot/Slot.stories.ts",
+      "jsDocTags": {},
+      "argTypes": {
+        "gallerySlot": {
+          "name": "gallerySlot",
+          "description": "Defines the docking position of the slot inside the gallery grid.\n- 'center' (default): slot floats over the main slider.",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "GalleryPosition | \"\""
+            },
+            "defaultValue": {
+              "summary": "center"
+            }
+          }
+        },
+        "gallerySlotAlign": {
+          "name": "gallerySlotAlign",
+          "description": "Controls cross-axis alignment within the selected area.",
+          "type": {
+            "name": "enum",
+            "value": [
+              "start",
+              "end",
+              "center",
+              "stretch"
+            ]
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "GalleryAlign"
+            },
+            "defaultValue": {
+              "summary": "center"
+            }
+          }
+        },
+        "gallerySlotJustify": {
+          "name": "gallerySlotJustify",
+          "description": "Controls main-axis justification within the selected area.",
+          "type": {
+            "name": "enum",
+            "value": [
+              "start",
+              "end",
+              "center",
+              "stretch"
+            ]
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "GalleryAlign"
+            },
+            "defaultValue": {
+              "summary": "center"
+            }
+          }
+        }
+      },
+      "apiDescription": "## Inputs\n\n```\nexport type GallerySlotInputs = {\n  /**\n   * Defines the docking position of the slot inside the gallery grid.\n   * - 'center' (default): slot floats over the main slider.\n   *\n   * @default center\n   */\n  gallerySlot?: GalleryPosition | \"\";\n  /**\n   * Controls cross-axis alignment within the selected area.\n   *\n   * @default center\n   */\n  gallerySlotAlign?: GalleryAlign;\n  /**\n   * Controls main-axis justification within the selected area.\n   *\n   * @default center\n   */\n  gallerySlotJustify?: GalleryAlign;\n}\n```",
+      "renderer": "angular",
+      "angularComponentMeta": {
+        "name": "GallerySlot",
+        "selector": "[gallerySlot]",
+        "standalone": true,
+        "inputs": [
+          "gallerySlot",
+          "gallerySlotAlign",
+          "gallerySlotJustify"
+        ],
+        "outputs": [],
+        "enums": []
+      }
+    }
+  }
+}

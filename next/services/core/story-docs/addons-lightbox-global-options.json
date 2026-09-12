@@ -1,0 +1,15 @@
+{
+  "components": {
+    "addons-lightbox-global-options": {
+      "id": "addons-lightbox-global-options",
+      "name": "Globaloptions",
+      "path": "./projects/ng-gallery/src/stories/addons/lightbox/Lightbox-global-options.stories.ts",
+      "stories": {
+        "addons-lightbox-global-options--api-reference": {
+          "id": "addons-lightbox-global-options--api-reference",
+          "name": "API Reference"
+        }
+      }
+    }
+  }
+}

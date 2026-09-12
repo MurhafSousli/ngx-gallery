@@ -1,0 +1,56 @@
+{
+  "components": {
+    "documentations-counter": {
+      "id": "documentations-counter",
+      "name": "GalleryCounter",
+      "path": "./projects/ng-gallery/src/stories/counter/Counter.stories.ts",
+      "jsDocTags": {},
+      "argTypes": {
+        "text": {
+          "name": "text",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Signal<string>"
+            },
+            "defaultValue": {}
+          }
+        },
+        "align": {
+          "name": "align",
+          "description": "Sets the vertical position of the counter-overlay.",
+          "type": {
+            "name": "enum",
+            "value": [
+              "top",
+              "bottom"
+            ]
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "GalleryCounterPosition"
+            },
+            "defaultValue": {}
+          }
+        }
+      },
+      "apiDescription": "## Inputs\n\n```\nexport type GalleryCounterInputs = {\n  /** Sets the vertical position of the counter-overlay. */\n  align?: GalleryCounterPosition;\n}\n```",
+      "renderer": "angular",
+      "angularComponentMeta": {
+        "name": "GalleryCounter",
+        "selector": "gallery-counter",
+        "standalone": true,
+        "inputs": [
+          "align"
+        ],
+        "outputs": [],
+        "enums": []
+      }
+    }
+  }
+}

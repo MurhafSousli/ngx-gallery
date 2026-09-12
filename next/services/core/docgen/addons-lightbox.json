@@ -1,0 +1,69 @@
+{
+  "components": {
+    "addons-lightbox": {
+      "id": "addons-lightbox",
+      "name": "LightboxFor",
+      "path": "./projects/ng-gallery/src/stories/addons/lightbox/LightboxFor.stories.ts",
+      "jsDocTags": {},
+      "argTypes": {
+        "gallery": {
+          "name": "gallery",
+          "type": {
+            "name": "other",
+            "value": "empty-enum"
+          },
+          "table": {
+            "category": "properties",
+            "type": {
+              "summary": "Gallery"
+            },
+            "defaultValue": {}
+          }
+        },
+        "lightboxFor": {
+          "name": "lightboxFor",
+          "type": {
+            "name": "other",
+            "value": "empty-enum",
+            "required": true
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "Lightbox"
+            },
+            "defaultValue": {}
+          }
+        },
+        "lightboxIndex": {
+          "name": "lightboxIndex",
+          "type": {
+            "name": "number"
+          },
+          "table": {
+            "category": "inputs",
+            "type": {
+              "summary": "number"
+            },
+            "defaultValue": {
+              "summary": 0
+            }
+          }
+        }
+      },
+      "apiDescription": "## Inputs\n\n```\nexport type LightboxForInputs = {\n  lightboxFor: Lightbox;\n  /** @default 0 */\n  lightboxIndex?: number;\n}\n```",
+      "renderer": "angular",
+      "angularComponentMeta": {
+        "name": "LightboxFor",
+        "selector": "[lightboxFor]",
+        "standalone": true,
+        "inputs": [
+          "lightboxFor",
+          "lightboxIndex"
+        ],
+        "outputs": [],
+        "enums": []
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "components": {
+    "documentations-accessibility": {
+      "id": "documentations-accessibility",
+      "name": "Accessibility",
+      "path": "./projects/ng-gallery/src/stories/a11y/A11y.stories.ts",
+      "stories": {
+        "documentations-accessibility--api-reference": {
+          "id": "documentations-accessibility--api-reference",
+          "name": "API Reference",
+          "description": "This story renders an empty template.\nThe purpose is to trigger the 'Autodocs' table above."
+        }
+      }
+    }
+  }
+}

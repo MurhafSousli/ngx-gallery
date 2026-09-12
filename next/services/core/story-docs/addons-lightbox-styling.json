@@ -1,0 +1,17 @@
+{
+  "components": {
+    "addons-lightbox-styling": {
+      "id": "addons-lightbox-styling",
+      "name": "Gallery",
+      "path": "./projects/ng-gallery/src/stories/addons/lightbox/Styling.stories.ts",
+      "stories": {
+        "addons-lightbox-styling--styling-example": {
+          "id": "addons-lightbox-styling--styling-example",
+          "name": "Styling",
+          "snippet": "import { Component } from '@angular/core';\nimport { Gallery } from 'ng-gallery';\nimport { LightboxModule } from 'ng-gallery/lightbox';\n\n@Component({\n  selector: 'app-demo',\n  imports: [Gallery, LightboxModule],\n  template: `\n    <ng-template lightbox #lightbox=\"lightbox\">\n        <gallery [items]=\"items\">\n            <img\n                *galleryItemDef=\"let item\"\n                galleryImage\n                [src]=\"item.src\"\n                [alt]=\"item.alt\" />\n            <gallery-nav/>\n            <gallery-counter/>\n        </gallery>\n    </ng-template>\n    <button (click)=\"lightbox.showModal()\">Open Lightbox</button>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg.\nIncomplete snippet: `container-shape`, `container-elevation-shadow`, `backdrop-color`, `backdrop-filter`, `backdrop-filter-start`, `duration-in`, `duration-out`, `opacity-start`, `scale-start`, `translate-start`, `rotate-start`, `timing-in`, `timing-out` could not be bound, since Gallery declares no such input."
+        }
+      }
+    }
+  }
+}

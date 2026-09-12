@@ -1,0 +1,15 @@
+{
+  "components": {
+    "documentations-global-options": {
+      "id": "documentations-global-options",
+      "name": "Globaloptions",
+      "path": "./projects/ng-gallery/src/stories/global options/Global-options.stories.ts",
+      "stories": {
+        "documentations-global-options--api-reference": {
+          "id": "documentations-global-options--api-reference",
+          "name": "API Reference"
+        }
+      }
+    }
+  }
+}

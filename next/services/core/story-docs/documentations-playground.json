@@ -1,0 +1,29 @@
+{
+  "components": {
+    "documentations-playground": {
+      "id": "documentations-playground",
+      "name": "Gallery",
+      "path": "./projects/ng-gallery/src/stories/Playground.stories.ts",
+      "stories": {
+        "documentations-playground--playground": {
+          "id": "documentations-playground--playground",
+          "name": "Playground",
+          "snippet": "import { Component } from '@angular/core';\nimport { Gallery } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\n\n@Component({\n  selector: 'app-demo',\n  imports: [Gallery, GalleryModule],\n  template: `\n    <gallery\n        [style.--g-item-image-size]=\"imageSize\"\n        [items]=\"items\"\n        [itemSize]=\"itemSize\"\n        [itemsPerView]=\"itemsPerView\"\n        [snapAlign]=\"snapAlign\"\n        [forceSnap]=\"forceSnap\"\n        [resizeDebounceTime]=\"resizeDebounceTime\"\n        [loop]=\"loop\"\n        [orientation]=\"orientation\"\n        [scrollDuration]=\"scrollDuration\"\n        [scrollBehavior]=\"scrollBehavior\"\n        [disableScroll]=\"disableScroll\"\n        [disableMouseScroll]=\"disableMouseScroll\">\n        <img\n            *galleryItemDef=\"let item\"\n            galleryImage\n            [src]=\"item.src\"\n            [alt]=\"item.alt\" />\n        @if (nav) {\n        <gallery-nav/>\n        }\n\n            @if (counter) {\n        <gallery-counter [align]=\"counterAlign\"/>\n        }\n\n            @if (thumbs) {\n        <gallery-thumbs\n            [style.--g-thumb-image-size]=\"thumbImageSize\"\n            [snapAlign]=\"thumbSnapAlign\"\n            [forceSnap]=\"thumbForceSnap\"\n            [itemsPerView]=\"thumbsPerView\"\n            [itemSize]=\"thumbSize\"\n            [thickness]=\"thickness\"\n            [disableScroll]=\"disableThumbScroll\"\n            [disableMouseScroll]=\"disableThumbMouseScroll\"\n            [position]=\"thumbPosition\"\n            [floating]=\"thumbFloating\">\n            <button *galleryItemDef=\"let item\" galleryThumbClick>\n                <img galleryImage [src]=\"item.thumb\" [alt]=\"item.alt + '_thumb'\"/>\n            </button>\n        </gallery-thumbs>\n        }\n\n            @if (debug) {\n        <gallery-debug/>\n        }\n    </gallery>`,\n})\nexport class DemoComponent {\n  debug = true;\n  thumbs = true;\n  thumbPosition = 'bottom';\n  loop = false;\n  disableScroll = false;\n  disableMouseScroll = false;\n  itemSize = null;\n  itemsPerView = 1;\n  orientation = 'horizontal';\n  snapAlign = 'center';\n  forceSnap = false;\n  scrollDuration = 468;\n  thickness = 90;\n  nav = true;\n  imageSize = 'contain';\n  thumbImageSize = 'cover';\n  thumbsPerView = 5;\n  thumbSize = 120;\n  thumbSnapAlign = 'center';\n  thumbForceSnap = false;\n  disableThumbScroll = false;\n  disableThumbMouseScroll = false;\n  counterAlign = 'bottom';\n  scrollBehavior = 'smooth';\n  thumbFloating = false;\n}",
+          "warning": "Incomplete snippet: `items`, `resizeDebounceTime`, `counter` could not be provided, since the story declares no such arg.\nIncomplete snippet: `resizeTransitionDuration`, `bullets`, `thumbDisabled` could not be bound, since Gallery declares no such input."
+        },
+        "documentations-playground--basic-example": {
+          "id": "documentations-playground--basic-example",
+          "name": "Basic Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { Gallery } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\n\n@Component({\n  selector: 'app-demo',\n  imports: [Gallery, GalleryModule],\n  template: `\n    <gallery [items]=\"items\">\n        <img\n            *galleryItemDef=\"let item\"\n            galleryImage\n            [src]=\"item.src\"\n            [alt]=\"item.alt\" />\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg.\nIncomplete snippet: `debug`, `thumbs`, `thumbPosition`, `resizeTransitionDuration`, `thickness`, `bullets`, `nav`, `imageSize`, `thumbImageSize`, `thumbsPerView`, `thumbSize`, `thumbSnapAlign`, `thumbForceSnap`, `thumbDisabled`, `disableThumbScroll`, `disableThumbMouseScroll`, `counterAlign`, `thumbFloating` could not be bound, since Gallery declares no such input."
+        },
+        "documentations-playground--auto-height-example": {
+          "id": "documentations-playground--auto-height-example",
+          "name": "Auto Height Example",
+          "snippet": "import { Component } from '@angular/core';\nimport { Gallery } from 'ng-gallery';\nimport { GalleryModule } from 'ng-gallery';\n\n@Component({\n  selector: 'app-demo',\n  imports: [Gallery, GalleryModule],\n  template: `\n    <gallery [items]=\"items\" autoHeight>\n        <gallery-nav/>\n        <img\n            *galleryItemDef=\"let item\"\n            galleryImage\n            [src]=\"item.src\"\n            [alt]=\"item.alt\" />\n    </gallery>`,\n})\nexport class DemoComponent {}",
+          "warning": "Incomplete snippet: `items` could not be provided, since the story declares no such arg.\nIncomplete snippet: `debug`, `thumbs`, `thumbPosition`, `resizeTransitionDuration`, `thickness`, `bullets`, `nav`, `imageSize`, `thumbImageSize`, `thumbsPerView`, `thumbSize`, `thumbSnapAlign`, `thumbForceSnap`, `thumbDisabled`, `disableThumbScroll`, `disableThumbMouseScroll`, `counterAlign`, `thumbFloating` could not be bound, since Gallery declares no such input."
+        }
+      }
+    }
+  }
+}
