@@ -107,7 +107,13 @@ export class GalleryThumbs extends GalleryRef {
   readonly gallery: Gallery = inject(Gallery);
 
   /** @ignore */
-  override items: Signal<any[]> = this.gallery.items;
+  override get items(): Signal<any[]> {
+    return this.gallery?.items;
+  };
+
+  set items(value: Signal<any[]>) {
+    // This setter is intentionally left empty to prevent external modification of the items signal.
+  }
 
   /** @ignore */
   override scrollEase: Signal<BezierEasingOptions> = this.gallery.scrollEase;

@@ -3,11 +3,13 @@
 ## 13.0.0-next.2
 
 - fix(gallery): Fix loop option not working when navigation by page.
+- fix(gallery-nav): Add type `button` attribute to navigation buttons, closes [#675](https://github.com/MurhafSousli/ngx-gallery/issues/675).
 - feat(autoplay): Add `autoplayDirection` to set how items are navigated.
 - feat(autoplay): Add `autoplayPause` to set how autoplay is paused.
 - feat(autoplay): Add `autoplayChange` output which emits when autoplay state changes.
 - fix(autoplay-ui): Fix the progress background CSS variable.
 - fix(storybook): Fix msw handler.
+- fix(storybook): Fix toggling the themes.
 
 ## 13.0.0-next.1
 

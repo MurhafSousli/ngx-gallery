@@ -90,7 +90,7 @@ export abstract class GalleryRef {
    * @ignore
    * Items data array
    */
-  abstract items: Signal<GalleryItemData<any>[]>;
+  abstract get items(): Signal<GalleryItemData<any>[]>;
 
   /**
    * Sets the sliding direction

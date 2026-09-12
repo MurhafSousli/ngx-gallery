@@ -8476,7 +8476,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "unknown",
-                "defaultValue": "meta.story({\r\n  tags: ['!dev'],\r\n  loaders: [\r\n    async () => ({ items: await getSlides() }),\r\n  ],\r\n  render: (args, { loaded: { items } }) => ({\r\n    props: { ...args, items },\r\n    template: `\r\n      <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemsPerView=\"3\">\r\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\r\n          <span>{{ i + 1 }}</span>\r\n        </div>\r\n        <div gallerySlot gallerySlotAlign=\"end\" gallerySlotJustify=\"end\">\r\n          <button galleryNavButton=\"prev\">◀ Previous</button>\r\n          <button galleryNavButton=\"next\">Next ▶</button>\r\n        </div>\r\n      </gallery>\r\n    `,\r\n  }),\r\n})"
+                "defaultValue": "meta.story({\r\n  // tags: ['!dev'],\r\n  loaders: [\r\n    async () => ({ items: await getSlides() }),\r\n  ],\r\n  render: (args, { loaded: { items } }) => ({\r\n    props: { ...args, items },\r\n    template: `\r\n      <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemsPerView=\"3\">\r\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\r\n          <span>{{ i + 1 }}</span>\r\n        </div>\r\n        <div gallerySlot gallerySlotAlign=\"end\" gallerySlotJustify=\"end\">\r\n          <button galleryNavButton=\"prev\">◀ Previous</button>\r\n          <button galleryNavButton=\"next\">Next ▶</button>\r\n        </div>\r\n      </gallery>\r\n    `,\r\n  }),\r\n})"
             },
             {
                 "name": "CustomNavTemplateExample",
@@ -8487,7 +8487,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "unknown",
-                "defaultValue": "meta.story({\r\n  tags: ['!dev'],\r\n  loaders: [\r\n    async () => ({ items: await getSlides() }),\r\n  ],\r\n  render: (args, { loaded: { items } }) => ({\r\n    props: { ...args, items },\r\n    template: `\r\n      <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemsPerView=\"3\">\r\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\r\n          <span>{{ i + 1 }}</span>\r\n        </div>\r\n        <gallery-nav>\r\n          <button galleryNavButton=\"prev\">◀ Previous</button>\r\n          <button galleryNavButton=\"next\">Next ▶</button>\r\n        </gallery-nav>\r\n      </gallery>\r\n    `,\r\n  }),\r\n})"
+                "defaultValue": "meta.story({\r\n  // tags: ['!dev'],\r\n  loaders: [\r\n    async () => ({ items: await getSlides() }),\r\n  ],\r\n  render: (args, { loaded: { items } }) => ({\r\n    props: { ...args, items },\r\n    template: `\r\n      <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemsPerView=\"3\">\r\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\r\n          <span>{{ i + 1 }}</span>\r\n        </div>\r\n        <gallery-nav>\r\n          <button galleryNavButton=\"prev\">◀ Previous</button>\r\n          <button galleryNavButton=\"next\">Next ▶</button>\r\n        </gallery-nav>\r\n      </gallery>\r\n    `,\r\n  }),\r\n})"
             },
             {
                 "name": "DefaultItemsPerViewExample",
@@ -8759,28 +8759,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ng-gallery/src/stories/nav/Navigation Button.stories.ts",
-                "coverageIgnore": false,
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "unknown",
-                "defaultValue": "preview.meta({\r\n  // title: 'Documentations/Navigation',\r\n  component: GalleryNavButton,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n  ],\r\n  args: {\r\n  },\r\n  argTypes: {\r\n    type: {\r\n      name: 'galleryNavButton',\r\n      table: {\r\n        defaultValue: { summary: null },\r\n      }\r\n    }\r\n  },\r\n})"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/ng-gallery/src/stories/nav/Navigation.stories.ts",
-                "coverageIgnore": false,
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "unknown",
-                "defaultValue": "preview.meta({\r\n  title: 'Documentations/Navigation',\r\n  component: GalleryNav,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n  ],\r\n  args: {\r\n    showDisabledButtons: false,\r\n    outside: false\r\n  },\r\n  argTypes: {\r\n    outside: {\r\n      control: 'boolean',\r\n      table: {\r\n        defaultValue: { summary: \"false\" },\r\n      }\r\n    },\r\n    showDisabledButtons: {\r\n      control: 'boolean',\r\n      table: {\r\n        defaultValue: { summary: \"false\" },\r\n      }\r\n    }\r\n  },\r\n})"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/ng-gallery/src/stories/layout/Layout.stories.ts",
                 "coverageIgnore": false,
                 "deprecated": false,
@@ -8798,6 +8776,28 @@
                 "deprecationMessage": "",
                 "type": "unknown",
                 "defaultValue": "preview.meta({\r\n  title: 'Documentations/Slot',\r\n  component: GallerySlot,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n  ],\r\n  args: {\r\n    position: 'center',\r\n    align: 'center',\r\n    justify: 'center'\r\n  },\r\n  argTypes: {\r\n    position: {\r\n      name: 'gallerySlot',\r\n      control: 'select',\r\n      options: ['center', 'top', 'bottom', 'start', 'end'],\r\n      table: {\r\n        type: { summary: \"'center' | 'top' | 'bottom' | 'start' | 'end'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n    align: {\r\n      name: 'gallerySlotAlign',\r\n      control: 'select',\r\n      options: ['start', 'end', 'center', 'stretch'],\r\n      table: {\r\n        type: { summary: \"'start' | 'end' | 'center' | 'stretch'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n    justify: {\r\n      name: 'gallerySlotJustify',\r\n      control: 'select',\r\n      options: ['start', 'end', 'center', 'stretch'],\r\n      table: {\r\n        type: { summary: \"'start' | 'end' | 'center' | 'stretch'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n  },\r\n})"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ng-gallery/src/stories/nav/Navigation Button.stories.ts",
+                "coverageIgnore": false,
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "unknown",
+                "defaultValue": "preview.meta({\r\n  // title: 'Documentations/Navigation',\r\n  component: GalleryNavButton,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n  ],\r\n  args: {\r\n  },\r\n  argTypes: {\r\n    type: {\r\n      name: 'galleryNavButton',\r\n      table: {\r\n        defaultValue: { summary: null },\r\n      }\r\n    }\r\n  },\r\n})"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ng-gallery/src/stories/nav/Navigation.stories.ts",
+                "coverageIgnore": false,
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "unknown",
+                "defaultValue": "preview.meta({\r\n  title: 'Documentations/Navigation',\r\n  component: GalleryNav,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n  ],\r\n  args: {\r\n    showDisabledButtons: false,\r\n    outside: false\r\n  },\r\n  argTypes: {\r\n    outside: {\r\n      control: 'boolean',\r\n      table: {\r\n        defaultValue: { summary: \"false\" },\r\n      }\r\n    },\r\n    showDisabledButtons: {\r\n      control: 'boolean',\r\n      table: {\r\n        defaultValue: { summary: \"false\" },\r\n      }\r\n    }\r\n  },\r\n})"
             },
             {
                 "name": "meta",
@@ -8931,7 +8931,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "unknown",
-                "defaultValue": "meta.story({\r\n  tags: ['!dev'],\r\n  loaders: [\r\n    async () => ({ items: await getSlides() }),\r\n  ],\r\n  render: (args, { loaded: { items } }) => ({\r\n    props: { ...args, items },\r\n    template: `\r\n      <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemsPerView=\"3\">\r\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\r\n          <span>{{ i + 1 }}</span>\r\n        </div>\r\n        <gallery-nav outside showDisabledButtons/>\r\n      </gallery>\r\n    `,\r\n  }),\r\n})"
+                "defaultValue": "meta.story({\r\n  // tags: ['!dev'],\r\n  loaders: [\r\n    async () => ({ items: await getSlides() }),\r\n  ],\r\n  render: (args, { loaded: { items } }) => ({\r\n    props: { ...args, items },\r\n    template: `\r\n      <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemsPerView=\"3\">\r\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\r\n          <span>{{ i + 1 }}</span>\r\n        </div>\r\n        <gallery-nav outside showDisabledButtons/>\r\n      </gallery>\r\n    `,\r\n  }),\r\n})"
             },
             {
                 "name": "Playground",
@@ -10179,7 +10179,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "unknown",
-                    "defaultValue": "meta.story({\r\n  tags: ['!dev'],\r\n  loaders: [\r\n    async () => ({ items: await getSlides() }),\r\n  ],\r\n  render: (args, { loaded: { items } }) => ({\r\n    props: { ...args, items },\r\n    template: `\r\n      <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemsPerView=\"3\">\r\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\r\n          <span>{{ i + 1 }}</span>\r\n        </div>\r\n        <div gallerySlot gallerySlotAlign=\"end\" gallerySlotJustify=\"end\">\r\n          <button galleryNavButton=\"prev\">◀ Previous</button>\r\n          <button galleryNavButton=\"next\">Next ▶</button>\r\n        </div>\r\n      </gallery>\r\n    `,\r\n  }),\r\n})"
+                    "defaultValue": "meta.story({\r\n  // tags: ['!dev'],\r\n  loaders: [\r\n    async () => ({ items: await getSlides() }),\r\n  ],\r\n  render: (args, { loaded: { items } }) => ({\r\n    props: { ...args, items },\r\n    template: `\r\n      <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemsPerView=\"3\">\r\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\r\n          <span>{{ i + 1 }}</span>\r\n        </div>\r\n        <div gallerySlot gallerySlotAlign=\"end\" gallerySlotJustify=\"end\">\r\n          <button galleryNavButton=\"prev\">◀ Previous</button>\r\n          <button galleryNavButton=\"next\">Next ▶</button>\r\n        </div>\r\n      </gallery>\r\n    `,\r\n  }),\r\n})"
                 },
                 {
                     "name": "CustomNavTemplateExample",
@@ -10190,7 +10190,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "unknown",
-                    "defaultValue": "meta.story({\r\n  tags: ['!dev'],\r\n  loaders: [\r\n    async () => ({ items: await getSlides() }),\r\n  ],\r\n  render: (args, { loaded: { items } }) => ({\r\n    props: { ...args, items },\r\n    template: `\r\n      <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemsPerView=\"3\">\r\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\r\n          <span>{{ i + 1 }}</span>\r\n        </div>\r\n        <gallery-nav>\r\n          <button galleryNavButton=\"prev\">◀ Previous</button>\r\n          <button galleryNavButton=\"next\">Next ▶</button>\r\n        </gallery-nav>\r\n      </gallery>\r\n    `,\r\n  }),\r\n})"
+                    "defaultValue": "meta.story({\r\n  // tags: ['!dev'],\r\n  loaders: [\r\n    async () => ({ items: await getSlides() }),\r\n  ],\r\n  render: (args, { loaded: { items } }) => ({\r\n    props: { ...args, items },\r\n    template: `\r\n      <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemsPerView=\"3\">\r\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\r\n          <span>{{ i + 1 }}</span>\r\n        </div>\r\n        <gallery-nav>\r\n          <button galleryNavButton=\"prev\">◀ Previous</button>\r\n          <button galleryNavButton=\"next\">Next ▶</button>\r\n        </gallery-nav>\r\n      </gallery>\r\n    `,\r\n  }),\r\n})"
                 },
                 {
                     "name": "meta",
@@ -10400,6 +10400,30 @@
                     "defaultValue": "preview.meta({\r\n  title: 'Addons/Lightbox',\r\n  component: LightboxFor,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [LightboxModule],\r\n    }),\r\n  ]\r\n})"
                 }
             ],
+            "projects/ng-gallery/src/stories/slot/Slot.stories.ts": [
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ng-gallery/src/stories/slot/Slot.stories.ts",
+                    "coverageIgnore": false,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "defaultValue": "preview.meta({\r\n  title: 'Documentations/Slot',\r\n  component: GallerySlot,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n  ],\r\n  args: {\r\n    position: 'center',\r\n    align: 'center',\r\n    justify: 'center'\r\n  },\r\n  argTypes: {\r\n    position: {\r\n      name: 'gallerySlot',\r\n      control: 'select',\r\n      options: ['center', 'top', 'bottom', 'start', 'end'],\r\n      table: {\r\n        type: { summary: \"'center' | 'top' | 'bottom' | 'start' | 'end'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n    align: {\r\n      name: 'gallerySlotAlign',\r\n      control: 'select',\r\n      options: ['start', 'end', 'center', 'stretch'],\r\n      table: {\r\n        type: { summary: \"'start' | 'end' | 'center' | 'stretch'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n    justify: {\r\n      name: 'gallerySlotJustify',\r\n      control: 'select',\r\n      options: ['start', 'end', 'center', 'stretch'],\r\n      table: {\r\n        type: { summary: \"'start' | 'end' | 'center' | 'stretch'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n  },\r\n})"
+                },
+                {
+                    "name": "Slot",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ng-gallery/src/stories/slot/Slot.stories.ts",
+                    "coverageIgnore": false,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "defaultValue": "meta.story({\r\n  name: 'Slot',\r\n  loaders: [\r\n    async () => ({ items: await getSlides() }),\r\n  ],\r\n  render: (args, { loaded: { items } }) => ({\r\n    props: { ...args, items },\r\n    template: `\r\n      <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\">\r\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\r\n          <span>{{ i + 1 }}</span>\r\n        </div>\r\n\r\n        <div class=\"static-panel\"\r\n             [gallerySlot]=\"position\"\r\n             [gallerySlotAlign]=\"align\"\r\n             [gallerySlotJustify]=\"justify\">\r\n          Static Content\r\n        </div>\r\n      </gallery>\r\n    `,\r\n    styles: [`\r\n      .gallery-example {\r\n        height: 300px !important;\r\n      }\r\n      .static-panel {\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: center;\r\n        background-color: rgba(0 0 0 / 0.5);\r\n        border: 1px solid black;\r\n        font-size: 20px;\r\n        font-family: monospace, monospace;\r\n        width: 250px;\r\n        height: 75px;\r\n        color: coral;\r\n      }\r\n    `]\r\n  })\r\n})"
+                }
+            ],
             "projects/ng-gallery/src/stories/nav/Navigation.stories.ts": [
                 {
                     "name": "meta",
@@ -10432,31 +10456,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "unknown",
-                    "defaultValue": "meta.story({\r\n  tags: ['!dev'],\r\n  loaders: [\r\n    async () => ({ items: await getSlides() }),\r\n  ],\r\n  render: (args, { loaded: { items } }) => ({\r\n    props: { ...args, items },\r\n    template: `\r\n      <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemsPerView=\"3\">\r\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\r\n          <span>{{ i + 1 }}</span>\r\n        </div>\r\n        <gallery-nav outside showDisabledButtons/>\r\n      </gallery>\r\n    `,\r\n  }),\r\n})"
-                }
-            ],
-            "projects/ng-gallery/src/stories/slot/Slot.stories.ts": [
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/ng-gallery/src/stories/slot/Slot.stories.ts",
-                    "coverageIgnore": false,
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "unknown",
-                    "defaultValue": "preview.meta({\r\n  title: 'Documentations/Slot',\r\n  component: GallerySlot,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n  ],\r\n  args: {\r\n    position: 'center',\r\n    align: 'center',\r\n    justify: 'center'\r\n  },\r\n  argTypes: {\r\n    position: {\r\n      name: 'gallerySlot',\r\n      control: 'select',\r\n      options: ['center', 'top', 'bottom', 'start', 'end'],\r\n      table: {\r\n        type: { summary: \"'center' | 'top' | 'bottom' | 'start' | 'end'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n    align: {\r\n      name: 'gallerySlotAlign',\r\n      control: 'select',\r\n      options: ['start', 'end', 'center', 'stretch'],\r\n      table: {\r\n        type: { summary: \"'start' | 'end' | 'center' | 'stretch'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n    justify: {\r\n      name: 'gallerySlotJustify',\r\n      control: 'select',\r\n      options: ['start', 'end', 'center', 'stretch'],\r\n      table: {\r\n        type: { summary: \"'start' | 'end' | 'center' | 'stretch'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n  },\r\n})"
-                },
-                {
-                    "name": "Slot",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/ng-gallery/src/stories/slot/Slot.stories.ts",
-                    "coverageIgnore": false,
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "unknown",
-                    "defaultValue": "meta.story({\r\n  name: 'Slot',\r\n  loaders: [\r\n    async () => ({ items: await getSlides() }),\r\n  ],\r\n  render: (args, { loaded: { items } }) => ({\r\n    props: { ...args, items },\r\n    template: `\r\n      <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\">\r\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\r\n          <span>{{ i + 1 }}</span>\r\n        </div>\r\n\r\n        <div class=\"static-panel\"\r\n             [gallerySlot]=\"position\"\r\n             [gallerySlotAlign]=\"align\"\r\n             [gallerySlotJustify]=\"justify\">\r\n          Static Content\r\n        </div>\r\n      </gallery>\r\n    `,\r\n    styles: [`\r\n      .gallery-example {\r\n        height: 300px !important;\r\n      }\r\n      .static-panel {\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: center;\r\n        background-color: rgba(0 0 0 / 0.5);\r\n        border: 1px solid black;\r\n        font-size: 20px;\r\n        font-family: monospace, monospace;\r\n        width: 250px;\r\n        height: 75px;\r\n        color: coral;\r\n      }\r\n    `]\r\n  })\r\n})"
+                    "defaultValue": "meta.story({\r\n  // tags: ['!dev'],\r\n  loaders: [\r\n    async () => ({ items: await getSlides() }),\r\n  ],\r\n  render: (args, { loaded: { items } }) => ({\r\n    props: { ...args, items },\r\n    template: `\r\n      <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemsPerView=\"3\">\r\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\r\n          <span>{{ i + 1 }}</span>\r\n        </div>\r\n        <gallery-nav outside showDisabledButtons/>\r\n      </gallery>\r\n    `,\r\n  }),\r\n})"
                 }
             ],
             "projects/ng-gallery/src/stories/styling/Styling.stories.ts": [
