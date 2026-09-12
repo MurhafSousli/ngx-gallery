@@ -1,4 +1,4 @@
-import { componentWrapperDecorator, definePreview } from '@storybook/angular-vite';
+import { definePreview } from '@storybook/angular-vite';
 import { setCompodocJson } from '@storybook/addon-docs/angular';
 import addonDocs from '@storybook/addon-docs';
 import addonA11y from '@storybook/addon-a11y';
@@ -24,7 +24,7 @@ const activeFolderOnServer = pathSegments[1] || 'Local';
 const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
 const swUrl = isLocalhost
   ? '/mockServiceWorker.js'
-  : `/${repoName}/${activeFolderOnServer}/mockServiceWorker.js`;
+  : `/${ repoName }/${ activeFolderOnServer }/mockServiceWorker.js`;
 
 export default definePreview({
   addons: [
@@ -39,8 +39,10 @@ export default definePreview({
     addonDocs(),
     addonA11y()
   ],
+  beforeEach({ msw }) {
+    msw.use(pixabayHandler);
+  },
   parameters: {
-    msw: { handlers: [pixabayHandler] },
     options: {
       storySort: {
         order: [
@@ -73,7 +75,6 @@ export default definePreview({
     releaseVersion: activeFolderOnServer,
   },
   decorators: [
-    withGlobalTheme, // Simple reference
-    componentWrapperDecorator((story) => `@if(true) { ${story} }`),
-  ],
+    withGlobalTheme // Simple reference
+  ]
 });

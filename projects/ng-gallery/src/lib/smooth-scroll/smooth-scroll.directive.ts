@@ -50,6 +50,7 @@ export class SmoothScroll {
         || !this.resizeSensor.isScrollable()) return;
 
       const scrollBehavior: ScrollBehavior = state.behavior || this.galleryRef.scrollBehavior();
+      console.log('scrollBehavior', scrollBehavior, this.galleryRef.scrollBehavior());
 
       untracked(() => {
         if (scrollBehavior === 'auto') {

@@ -140,7 +140,11 @@ export class Gallery extends GalleryRef {
   /**
    * Loads the items array into the gallery
    */
-  override items: InputSignal<GalleryItemData<any>[]> = input<GalleryItemData<any>[]>([]);
+  itemsInput: InputSignal<GalleryItemData<any>[]> = input<GalleryItemData<any>[]>([], { alias: 'items' });
+
+  override get items(): Signal<GalleryItemData<any>[]> {
+    return this.itemsInput;
+  }
 
   /**
    * Sets the resize debounce time used in the resize observer
