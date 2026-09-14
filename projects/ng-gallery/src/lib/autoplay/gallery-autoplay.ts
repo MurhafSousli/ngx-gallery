@@ -38,7 +38,7 @@ export class GalleryAutoplay {
   private pingPongDirection: 'forward' | 'backward' = 'forward';
 
   /**
-   * Automatically cycle through items at time interval
+   * Automatically cycle through items at a time interval
    */
   readonly autoplay: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(true, {
     transform: booleanAttribute

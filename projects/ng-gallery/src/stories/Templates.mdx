@@ -91,7 +91,7 @@ If you want a single gallery-level loader instead of per-item state templates, u
 <gallery #gallery="gallery" [items]="items">
   <img *galleryItemDef="let item" galleryImage [src]="item.src" [alt]="item.alt"/>
 
-  @if (gallery.activeItem().state() === 'loading') {
+  @if (gallery.activeItem()?.state() === 'loading') {
     <my-loader gallerySlot />
   }
 </gallery>
