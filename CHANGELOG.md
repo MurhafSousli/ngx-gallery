@@ -1,12 +1,19 @@
 # Changelog
 
+
+## 13.0.0-next.3
+
+- fix(gallery): Clean up wrongful console.log on index change.
+- regret(storybook): Bring back `@compodoc` instead of the default option in storybook.
+- refactor(autoplay): Rename 'autoplayChange' output to 'autoplayStateChange' for better clarity.
+
 ## 13.0.0-next.2
 
 - fix(gallery): Fix loop option not working when navigation by page.
 - fix(gallery-nav): Add type `button` attribute to navigation buttons, closes [#675](https://github.com/MurhafSousli/ngx-gallery/issues/675).
 - feat(autoplay): Add `autoplayDirection` to set how items are navigated.
 - feat(autoplay): Add `autoplayPause` to set how autoplay is paused.
-- feat(autoplay): Add `autoplayChange` output which emits when autoplay state changes.
+- feat(autoplay): Add `autoplayStateChange` output which emits when autoplay state changes (renamed to `autoplayStateChange` in later versions).
 - fix(autoplay-ui): Fix the progress background CSS variable.
 - fix(storybook): Fix msw handler.
 - fix(storybook): Fix toggling the themes.

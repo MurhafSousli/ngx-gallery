@@ -76,13 +76,13 @@ export class GalleryAutoplay {
   /**
    * Stream that emits when autoplay state changes (`playing`, `paused`, or `stopped`).
    */
-  readonly autoplayChange: OutputEmitterRef<GalleryAutoplayState> = output<GalleryAutoplayState>();
+  readonly autoplayStateChange: OutputEmitterRef<GalleryAutoplayState> = output<GalleryAutoplayState>();
 
   constructor() {
     effect((onCleanup: EffectCleanupRegisterFn) => {
       if (!this.autoplay()) {
         this.gallery.suppressLiveRegion.set(false);
-        this.autoplayChange.emit('stopped');
+        this.autoplayStateChange.emit('stopped');
         return;
       }
 
@@ -100,7 +100,7 @@ export class GalleryAutoplay {
       const emitState = (state: GalleryAutoplayState) => {
         if (this.autoplayState !== state) {
           this.autoplayState = state;
-          this.autoplayChange.emit(state);
+          this.autoplayStateChange.emit(state);
         }
       };
 
