@@ -2,8 +2,15 @@
 @use '@angular/material' as mat;
 @use 'variables' as vars;
 @use 'ng-gallery' as gallery;
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+// Roboto Font weights used by Angular Material
+@use '@fontsource/roboto/300.css' as *;
+@use '@fontsource/roboto/400.css' as *;
+@use '@fontsource/roboto/500.css' as *;
+@use '@fontsource/roboto/700.css' as *;
+
+// Material Icons
+@use '@fontsource/material-icons' as *;
 
 @include mat.core();
 

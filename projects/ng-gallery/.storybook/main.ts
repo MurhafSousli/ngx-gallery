@@ -6,6 +6,9 @@ export default defineMain({
     '../src/**/*.mdx',
     '../src/**/*.stories.@(ts|tsx)'
   ],
+  features: {
+    experimentalDocgenServer: false
+  },
   addons: [
     '@storybook/addon-a11y',
     {
@@ -31,7 +34,7 @@ export default defineMain({
         '--disablePrivate',
         '--disableProtected',
         '--disableInternal',
-        '--minimal',
+        '--minimal'
       ]
     }
   },

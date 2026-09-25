@@ -4,6 +4,8 @@ import {
   effect,
   inject,
   output,
+  Signal,
+  computed,
   numberAttribute,
   booleanAttribute,
   ElementRef,
@@ -38,7 +40,7 @@ export class GalleryAutoplay {
   private pingPongDirection: 'forward' | 'backward' = 'forward';
 
   /**
-   * Automatically cycle through items at time interval
+   * Automatically cycle through items at a time interval
    */
   readonly autoplay: InputSignalWithTransform<boolean, string | boolean> = input<boolean, string | boolean>(true, {
     transform: booleanAttribute
@@ -71,25 +73,42 @@ export class GalleryAutoplay {
    * - `backward`: Navigates in reverse order from current position toward the first item.
    * - `ping-pong`: Navigates forward to the end, then reverses direction back to the start.
    */
-  readonly autoplayDirection = input<GalleryAutoplayDirection>(this.defaultConfig.autoplayDirection);
+  readonly autoplayDirection: InputSignal<GalleryAutoplayDirection> = input<GalleryAutoplayDirection>(this.defaultConfig.autoplayDirection);
+
+  /**
+   * Specifies the number of steps to take when navigating items during autoplay.
+   */
+  readonly autoplaySteps: InputSignal<number | 'page'> = input<number | 'page'>(this.defaultConfig.autoplaySteps);
+
+  /**
+   * Signal that indicates whether all visible items are ready (i.e., not in a loading state).
+   */
+  readonly isVisibleItemsReady: Signal<boolean> = computed(() => {
+    return this.gallery.visibleItems().reduce((acc, item) => {
+      return acc && item.state() !== 'loading';
+    }, true);
+  });
 
   /**
    * Stream that emits when autoplay state changes (`playing`, `paused`, or `stopped`).
    */
-  readonly autoplayChange: OutputEmitterRef<GalleryAutoplayState> = output<GalleryAutoplayState>();
+  readonly autoplayStateChange: OutputEmitterRef<GalleryAutoplayState> = output<GalleryAutoplayState>();
 
   constructor() {
     effect((onCleanup: EffectCleanupRegisterFn) => {
       if (!this.autoplay()) {
         this.gallery.suppressLiveRegion.set(false);
-        this.autoplayChange.emit('stopped');
+        this.autoplayStateChange.emit('stopped');
         return;
       }
 
       this.gallery.suppressLiveRegion.set(true);
 
-      const item: SliderItem = this.gallery.activeItem();
-      if (item?.state() !== 'ready') return;
+      // Trigger the effect on active index changes to ensure autoplay is keeps cycling.
+      this.gallery.activeIndex();
+
+      /* v8 ignore next -- @preserve */
+      if (!this.isVisibleItemsReady()) return;
 
       const pauseMode: GalleryAutoplayPause = this.autoplayPause();
       const controller = new AbortController();
@@ -100,7 +119,7 @@ export class GalleryAutoplay {
       const emitState = (state: GalleryAutoplayState) => {
         if (this.autoplayState !== state) {
           this.autoplayState = state;
-          this.autoplayChange.emit(state);
+          this.autoplayStateChange.emit(state);
         }
       };
 
@@ -149,12 +168,12 @@ export class GalleryAutoplay {
 
           // (no autoplayReversed in this implementation)
 
-          const doNext = () => this.gallery.next({ behavior: this.autoplayScrollBehavior(), steps: 'page', loop: true });
-          const doPrev = () => this.gallery.prev({ behavior: this.autoplayScrollBehavior(), steps: 'page', loop: true });
+          const doNext = () => this.gallery.next({ behavior: this.autoplayScrollBehavior(), steps: this.autoplaySteps(), loop: true });
+          const doPrev = () => this.gallery.prev({ behavior: this.autoplayScrollBehavior(), steps: this.autoplaySteps(), loop: true });
 
           if (mode === 'ping-pong') {
             if (currentDirection === 'forward') {
-              // If we can go forward, do it. Otherwise flip and go backward if possible.
+              // If we can go forward, do it. Otherwise, flip and go backward if possible.
               if (this.gallery.hasNext()) {
                 doNext();
               } else if (this.gallery.hasPrev()) {
