@@ -140,3 +140,35 @@ export const Autoplay = meta.story({
     `,
   })
 });
+
+
+export const AutoplayMultipleItemsPerView = meta.story({
+  loaders: [
+    async () => ({
+      items: await getHDImages('Boat'),
+    }),
+  ],
+  render: (args, { loaded: { items } }) => ({
+    props: { ...args, items },
+    template: `
+      <gallery loop
+               [items]="items"
+               itemsPerView="3"
+               [autoplay]="autoplay"
+               [autoplayInterval]="autoplayInterval"
+               [autoplayScrollBehavior]="autoplayScrollBehavior"
+               [autoplayDirection]="autoplayDirection"
+               [autoplayPause]="autoplayPause"
+               (autoplayChange)="autoplayChange($event)">
+        <img *galleryItemDef="let item" galleryImage [src]="item.src" [alt]="item.alt"/>
+
+        @if (showSpinner) {
+          <gallery-autoplay gallerySlot gallerySlotJustify="end" gallerySlotAlign="start"/>
+        }
+        @if (showProgressbar) {
+          <gallery-autoplay gallerySlot gallerySlotAlign="end" mode="progressbar"/>
+        }
+      </gallery>
+    `,
+  })
+});

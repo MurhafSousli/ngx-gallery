@@ -82,6 +82,7 @@ interface PlayerOptions {
   autoplayScrollBehavior?: ScrollBehavior;
   autoplayDirection?: GalleryAutoplayDirection;
   autoplayPause?: GalleryAutoplayPause;
+  autoplaySteps?: number | 'page';
 }
 
 export type GalleryOptions = SliderOptions

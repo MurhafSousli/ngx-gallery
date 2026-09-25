@@ -3,8 +3,10 @@
 
 ## 13.0.0-next.3
 
-- fix(gallery): Clean up wrongful console.log on index change.
+- fix(gallery): Clean up wrongful `console.log` on index change.
 - regret(storybook): Bring back `@compodoc` instead of the default option in storybook.
+- feat(autoplay): Wait until all visible items are loaded before starting autoplay.
+- feat(autoplay): Add `autoplaySteps` input to control the number of steps for autoplay navigation.
 - refactor(autoplay): Rename 'autoplayChange' output to 'autoplayStateChange' for better clarity.
 
 ## 13.0.0-next.2
