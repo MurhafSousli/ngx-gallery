@@ -8271,7 +8271,7 @@
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ":host {\r\n  // Ensures padding doesn't break width\r\n  box-sizing: border-box;\r\n  height: var(--_override-slider-item-height);\r\n\r\n  // Make sure item size never exceed viewport size\r\n  max-height: var(--_override-slider-item-height, 100cqb);\r\n  max-width: 100cqi;\r\n\r\n  position: relative;\r\n  overflow: hidden;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex-direction: column;\r\n  //flex: 0 0 var(--_slider-track-size);\r\n  flex-grow: 0;\r\n  flex-shrink: 0;\r\n  flex-basis: var(--_slider-track-size);\r\n  scroll-snap-align: var(--_slider-snap-align);\r\n  scroll-snap-stop: var(--_item-scroll-snap-stop);\r\n\r\n  // Disable highlighting the elements on mouse move or click\r\n  user-select: none;\r\n  -webkit-user-drag: none;\r\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\r\n\r\n  // Performance\r\n  content-visibility: auto;\r\n  /* contain-intrinsic-size prevents the scrollbar from jumping */\r\n  /* by giving the browser a placeholder size for off-screen items */\r\n  contain-intrinsic-width: var(--_contain-intrinsic-width);\r\n  contain-intrinsic-height: var(--_contain-intrinsic-height);\r\n}\r\n\r\n:host {\r\n  ::ng-deep {\r\n    > *:not(.g-item-loader, .g-item-error) {\r\n      height: 100%;\r\n      width: 100%;\r\n    }\r\n\r\n    .g-image,\r\n    > figure {\r\n      width: 100%;\r\n      height: 100%;\r\n    }\r\n\r\n    .g-image {\r\n      pointer-events: none;\r\n      object-fit: var(--_item-image-size);\r\n      // In case NgOptimizedImage is used, it sets background-size to cover,\r\n      // So we need to force it here\r\n      background-size: var(--_item-image-size) !important;\r\n      // In case NgOptimizedImage is used, this animate the blur effect to shape\r\n      transition: var(--g-item-image-transition, filter 0.4s ease-out);\r\n    }\r\n\r\n    figure {\r\n      display: flex;\r\n      flex-direction: column;\r\n      align-items: center;\r\n      justify-content: center;\r\n\r\n      img {\r\n        flex: 1;\r\n        min-height: 0; /* CRITICAL: Allows the image to shrink below its intrinsic height */\r\n      }\r\n\r\n      figcaption {\r\n        flex-shrink: 0; /* Ensures the caption never gets squashed */\r\n        padding: 8px;\r\n      }\r\n    }\r\n\r\n    > .g-item-loader,\r\n    > .g-item-error {\r\n      position: absolute;\r\n      inset: 0;\r\n      z-index: 1;\r\n      pointer-events: none;\r\n      display: flex;\r\n      align-items: center;\r\n      justify-content: center;\r\n    }\r\n\r\n    > .g-item-loader {\r\n      background-color: var(--g-item-loader-background-color, CanvasText);\r\n      color: var(--g-item-loader-text-color, Canvas);\r\n    }\r\n\r\n    > .g-item-error {\r\n      background-color: var(--g-item-error-background-color, CanvasText);\r\n      color: var(--g-item-error-text-color, Canvas);\r\n    }\r\n\r\n    > button {\r\n      background: none;\r\n      color: inherit;\r\n      border: none;\r\n      padding: 0;\r\n      font: inherit;\r\n      outline: inherit;\r\n      appearance: none;\r\n      cursor: pointer;\r\n\r\n      &[disabled] {\r\n        cursor: initial;\r\n      }\r\n    }\r\n  }\r\n}\r\n",
+                    "data": ":host {\r\n  // Ensures padding doesn't break width\r\n  box-sizing: border-box;\r\n  height: var(--_override-slider-item-height);\r\n\r\n  // Make sure item size never exceed viewport size\r\n  max-height: var(--_override-slider-item-height, 100cqb);\r\n  max-width: 100cqi;\r\n\r\n  position: relative;\r\n  overflow: hidden;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  flex-direction: column;\r\n  flex-grow: 0;\r\n  flex-shrink: 0;\r\n  flex-basis: var(--_slider-track-size);\r\n  scroll-snap-align: var(--_slider-snap-align);\r\n  scroll-snap-stop: var(--_item-scroll-snap-stop);\r\n\r\n  // Disable highlighting the elements on mouse move or click\r\n  user-select: none;\r\n  -webkit-user-drag: none;\r\n  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\r\n\r\n  // Performance\r\n  content-visibility: auto;\r\n  /* contain-intrinsic-size prevents the scrollbar from jumping */\r\n  /* by giving the browser a placeholder size for off-screen items */\r\n  contain-intrinsic-width: var(--_contain-intrinsic-width);\r\n  contain-intrinsic-height: var(--_contain-intrinsic-height);\r\n}\r\n\r\n:host {\r\n  ::ng-deep {\r\n    > *:not(.g-item-loader, .g-item-error) {\r\n      height: 100%;\r\n      width: 100%;\r\n    }\r\n\r\n    .g-image,\r\n    > figure {\r\n      width: 100%;\r\n      height: 100%;\r\n    }\r\n\r\n    .g-image {\r\n      pointer-events: none;\r\n      object-fit: var(--_item-image-size);\r\n      // In case NgOptimizedImage is used, it sets background-size to cover,\r\n      // So we need to force it here\r\n      background-size: var(--_item-image-size) !important;\r\n      // In case NgOptimizedImage is used, this animate the blur effect to shape\r\n      transition: var(--g-item-image-transition, filter 0.4s ease-out);\r\n    }\r\n\r\n    figure {\r\n      display: flex;\r\n      flex-direction: column;\r\n      align-items: center;\r\n      justify-content: center;\r\n\r\n      img {\r\n        flex: 1;\r\n        min-height: 0; /* CRITICAL: Allows the image to shrink below its intrinsic height */\r\n      }\r\n\r\n      figcaption {\r\n        flex-shrink: 0; /* Ensures the caption never gets squashed */\r\n        padding: 8px;\r\n      }\r\n    }\r\n\r\n    > .g-item-loader,\r\n    > .g-item-error {\r\n      position: absolute;\r\n      inset: 0;\r\n      z-index: 1;\r\n      pointer-events: none;\r\n      display: flex;\r\n      align-items: center;\r\n      justify-content: center;\r\n    }\r\n\r\n    > .g-item-loader {\r\n      background-color: var(--g-item-loader-background-color, CanvasText);\r\n      color: var(--g-item-loader-text-color, Canvas);\r\n    }\r\n\r\n    > .g-item-error {\r\n      background-color: var(--g-item-error-background-color, CanvasText);\r\n      color: var(--g-item-error-text-color, Canvas);\r\n    }\r\n\r\n    > button {\r\n      background: none;\r\n      color: inherit;\r\n      border: none;\r\n      padding: 0;\r\n      font: inherit;\r\n      outline: inherit;\r\n      appearance: none;\r\n      cursor: pointer;\r\n\r\n      &[disabled] {\r\n        cursor: initial;\r\n      }\r\n    }\r\n  }\r\n}\r\n",
                     "styleUrl": "slider-item.scss"
                 }
             ],
@@ -8868,17 +8868,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ng-gallery/src/stories/gallery/Gallery.stories.ts",
-                "coverageIgnore": false,
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "unknown",
-                "defaultValue": "preview.meta({\r\n  title: 'Documentations/Gallery',\r\n  component: Gallery,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule, NgOptimizedImage],\r\n    }),\r\n  ],\r\n  args: {\r\n    loop: false,\r\n    snapAlign: 'center',\r\n    forceSnap: false,\r\n    disableScroll: false,\r\n    disableMouseScroll: false,\r\n    itemsPerView: 1,\r\n    gap: 1,\r\n    steps: 1,\r\n    itemSize: null,\r\n    orientation: 'horizontal',\r\n    scrollBehavior: 'smooth',\r\n    scrollDuration: 468,\r\n    resizeDebounceTime: 468,\r\n    scrollEase: { x1: 0.42, y1: 0, x2: 0.58, y2: 1 },\r\n    activeIndexChange: fn() as any,\r\n    anchorIndexChange: fn() as any,\r\n  },\r\n  argTypes: {\r\n    items: {\r\n      control: false,\r\n      table: {\r\n        defaultValue: { summary: \"[]\" },\r\n      }\r\n    },\r\n    ...galleryArgTypes\r\n  },\r\n})"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/ng-gallery/src/stories/global options/Global-options.stories.ts",
                 "coverageIgnore": false,
                 "deprecated": false,
@@ -8890,23 +8879,23 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/ng-gallery/src/stories/gallery/Gallery.stories.ts",
+                "coverageIgnore": false,
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "unknown",
+                "defaultValue": "preview.meta({\r\n  title: 'Documentations/Gallery',\r\n  component: Gallery,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule, NgOptimizedImage],\r\n    }),\r\n  ],\r\n  args: {\r\n    loop: false,\r\n    snapAlign: 'center',\r\n    forceSnap: false,\r\n    disableScroll: false,\r\n    disableMouseScroll: false,\r\n    itemsPerView: 1,\r\n    gap: 1,\r\n    steps: 1,\r\n    itemSize: null,\r\n    orientation: 'horizontal',\r\n    scrollBehavior: 'smooth',\r\n    scrollDuration: 468,\r\n    resizeDebounceTime: 468,\r\n    scrollEase: { x1: 0.42, y1: 0, x2: 0.58, y2: 1 },\r\n    activeIndexChange: fn() as any,\r\n    anchorIndexChange: fn() as any,\r\n  },\r\n  argTypes: {\r\n    items: {\r\n      control: false,\r\n      table: {\r\n        defaultValue: { summary: \"[]\" },\r\n      }\r\n    },\r\n    ...galleryArgTypes\r\n  },\r\n})"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/ng-gallery/src/stories/layout/Layout.stories.ts",
                 "coverageIgnore": false,
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "unknown",
                 "defaultValue": "preview.meta({\r\n  title: 'Documentations/Layout',\r\n  component: Gallery,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule]\r\n    }),\r\n  ]\r\n})"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/ng-gallery/src/stories/slot/Slot.stories.ts",
-                "coverageIgnore": false,
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "unknown",
-                "defaultValue": "preview.meta({\r\n  title: 'Documentations/Slot',\r\n  component: GallerySlot,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n  ],\r\n  args: {\r\n    position: 'center',\r\n    align: 'center',\r\n    justify: 'center'\r\n  },\r\n  argTypes: {\r\n    position: {\r\n      name: 'gallerySlot',\r\n      control: 'select',\r\n      options: ['center', 'top', 'bottom', 'start', 'end'],\r\n      table: {\r\n        type: { summary: \"'center' | 'top' | 'bottom' | 'start' | 'end'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n    align: {\r\n      name: 'gallerySlotAlign',\r\n      control: 'select',\r\n      options: ['start', 'end', 'center', 'stretch'],\r\n      table: {\r\n        type: { summary: \"'start' | 'end' | 'center' | 'stretch'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n    justify: {\r\n      name: 'gallerySlotJustify',\r\n      control: 'select',\r\n      options: ['start', 'end', 'center', 'stretch'],\r\n      table: {\r\n        type: { summary: \"'start' | 'end' | 'center' | 'stretch'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n  },\r\n})"
             },
             {
                 "name": "meta",
@@ -8934,6 +8923,17 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "projects/ng-gallery/src/stories/slot/Slot.stories.ts",
+                "coverageIgnore": false,
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "unknown",
+                "defaultValue": "preview.meta({\r\n  title: 'Documentations/Slot',\r\n  component: GallerySlot,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n  ],\r\n  args: {\r\n    position: 'center',\r\n    align: 'center',\r\n    justify: 'center'\r\n  },\r\n  argTypes: {\r\n    position: {\r\n      name: 'gallerySlot',\r\n      control: 'select',\r\n      options: ['center', 'top', 'bottom', 'start', 'end'],\r\n      table: {\r\n        type: { summary: \"'center' | 'top' | 'bottom' | 'start' | 'end'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n    align: {\r\n      name: 'gallerySlotAlign',\r\n      control: 'select',\r\n      options: ['start', 'end', 'center', 'stretch'],\r\n      table: {\r\n        type: { summary: \"'start' | 'end' | 'center' | 'stretch'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n    justify: {\r\n      name: 'gallerySlotJustify',\r\n      control: 'select',\r\n      options: ['start', 'end', 'center', 'stretch'],\r\n      table: {\r\n        type: { summary: \"'start' | 'end' | 'center' | 'stretch'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n  },\r\n})"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "projects/ng-gallery/src/stories/styling/Styling.stories.ts",
                 "coverageIgnore": false,
                 "deprecated": false,
@@ -8951,17 +8951,6 @@
                 "deprecationMessage": "",
                 "type": "unknown",
                 "defaultValue": "preview.meta({\r\n  title: 'Documentations/Thumbnails',\r\n  component: GalleryThumbs,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule, NgOptimizedImage],\r\n    }),\r\n  ],\r\n  args: {\r\n    position: 'bottom',\r\n    itemSize: 120,\r\n    thickness: 90,\r\n    itemsPerView: 1,\r\n    gap: 1,\r\n    scrollBehavior: 'smooth',\r\n    scrollDuration: 268,\r\n    steps: 'page',\r\n    loop: false,\r\n    detach: false,\r\n    floating: false,\r\n    snapAlign: 'center',\r\n    forceSnap: false,\r\n    disableScroll: false,\r\n    disableMouseScroll: false,\r\n    activeIndexChange: fn() as any,\r\n    anchorIndexChange: fn() as any,\r\n  },\r\n  argTypes: {\r\n    ...galleryArgTypes,\r\n    thickness: {\r\n      control: { type: 'number', min: 0, step: 10 },\r\n      table: {\r\n        defaultValue: { summary: \"90\" },\r\n      }\r\n    },\r\n    detach: {\r\n      control: 'boolean',\r\n      table: {\r\n        defaultValue: { summary: \"false\" },\r\n      }\r\n    },\r\n    floating: {\r\n      control: 'boolean',\r\n      table: {\r\n        defaultValue: { summary: \"false\" },\r\n      }\r\n    },\r\n    position: {\r\n      control: 'radio',\r\n      options: ['top', 'bottom', 'start', 'end'],\r\n      table: {\r\n        type: { summary: \"'top' | 'bottom' | 'start' | 'end'\" },\r\n        defaultValue: { summary: \"'bottom'\" },\r\n      }\r\n    },\r\n    orientation: {\r\n      control: false,\r\n      table: {\r\n        type: { summary: \"signal<'horizontal' | 'vertical'>\" },\r\n        defaultValue: { summary: null },\r\n      }\r\n    },\r\n    resizeDebounceTime: {\r\n      control: false,\r\n      table: { disable: true }\r\n    },\r\n    scrollEase: {\r\n      control: false,\r\n      table: { disable: true }\r\n    },\r\n  },\r\n})"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "projects/ng-gallery/src/stories/addons/autoplay/Autoplay.stories.ts",
-                "coverageIgnore": false,
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "unknown",
-                "defaultValue": "preview.meta<GalleryAutoplay & DemoArgs>({\r\n  title: 'Addons/Autoplay',\r\n  component: GalleryAutoplay,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n    // Custom decorator to set the CSS variable dynamically without modifying template source code\r\n    (storyFn, context) => {\r\n      const story = storyFn();\r\n      const uiColor = context.args['uiColor'];\r\n      const uiBgColor = context.args['uiBgColor'];\r\n\r\n      if (uiColor) {\r\n        // Set CSS variable on story container or gallery wrapper after frame renders\r\n        requestAnimationFrame(() => {\r\n          const galleryEl: HTMLElement = document.querySelector('gallery');\r\n          galleryEl?.style.setProperty('--g-autoplay-stroke-color', uiColor);\r\n          console.log(`Set ${uiColor}`);\r\n          if (uiBgColor) {\r\n            galleryEl?.style.setProperty('--g-autoplay-background-color', uiBgColor);\r\n          }\r\n        });\r\n      }\r\n\r\n      return story;\r\n    },\r\n  ],\r\n  args: {\r\n    autoplay: true,\r\n    autoplayInterval: 3000,\r\n    autoplayScrollBehavior: 'smooth',\r\n    autoplayDirection: 'forward',\r\n    autoplayPause: 'hover',\r\n    autoplaySteps: 'page',\r\n    // Demo-only defaults\r\n    showSpinner: true,\r\n    showProgressbar: true,\r\n    uiColor: '#3b78ff'\r\n  },\r\n  argTypes: {\r\n    autoplay: {\r\n      control: 'boolean',\r\n      table: {\r\n        defaultValue: { summary: \"true\" },\r\n      }\r\n    },\r\n    autoplayInterval: {\r\n      control: { type: 'number', min: 0, step: 500 },\r\n      table: {\r\n        defaultValue: { summary: \"3000\" },\r\n      }\r\n    },\r\n    autoplayScrollBehavior: {\r\n      control: 'radio',\r\n      options: ['smooth', 'auto'],\r\n      table: {\r\n        defaultValue: { summary: \"smooth\" },\r\n      }\r\n    },\r\n    autoplayDirection: {\r\n      control: 'radio',\r\n      options: ['forward', 'backward', 'ping-pong'],\r\n      table: {\r\n        type: { summary: \"forward | backward | ping-pong\" },\r\n        defaultValue: { summary: \"forward\" },\r\n      }\r\n    },\r\n    autoplayPause: {\r\n      control: 'radio',\r\n      options: ['hover', 'click', 'never'],\r\n      table: {\r\n        type: { summary: \"hover | click | never\" },\r\n        defaultValue: { summary: \"hover\" },\r\n      }\r\n    },\r\n    autoplaySteps: {\r\n      control: 'text',\r\n      table: {\r\n        defaultValue: { summary: 'page' },\r\n      }\r\n    },\r\n    // Demo Controls\r\n    showSpinner: {\r\n      control: 'boolean',\r\n      table: { disable: true }\r\n    },\r\n    showProgressbar: {\r\n      control: 'boolean',\r\n      table: { disable: true }\r\n    },\r\n    uiColor: {\r\n      control: 'color',\r\n      table: { disable: true }\r\n    },\r\n    uiBgColor: {\r\n      control: 'color',\r\n      table: { disable: true }\r\n    }\r\n  },\r\n})"
             },
             {
                 "name": "meta",
@@ -9008,6 +8997,17 @@
                 "deprecationMessage": "",
                 "type": "unknown",
                 "defaultValue": "preview.type<{ args: LightboxCSSVariablesArgs }>().meta({\r\n  title: 'Addons/Lightbox/Styling',\r\n  component: Gallery,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [LightboxModule],\r\n    }),\r\n  ],\r\n  parameters: {\r\n    controls: {\r\n      // This will only show the controls for the variables you defined in args\r\n      include: Object.keys(defaultStylingArgs),\r\n    },\r\n  },\r\n  args: defaultStylingArgs,\r\n  argTypes: stylingArgTypes\r\n})"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ng-gallery/src/stories/addons/autoplay/Autoplay.stories.ts",
+                "coverageIgnore": false,
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "unknown",
+                "defaultValue": "preview.meta<GalleryAutoplay & DemoArgs>({\r\n  title: 'Addons/Autoplay',\r\n  component: GalleryAutoplay,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n    // Custom decorator to set the CSS variable dynamically without modifying template source code\r\n    (storyFn, context) => {\r\n      const story = storyFn();\r\n      const uiColor = context.args['uiColor'];\r\n      const uiBgColor = context.args['uiBgColor'];\r\n\r\n      if (uiColor) {\r\n        // Set CSS variable on story container or gallery wrapper after frame renders\r\n        requestAnimationFrame(() => {\r\n          const galleryEl: HTMLElement = document.querySelector('gallery');\r\n          galleryEl?.style.setProperty('--g-autoplay-stroke-color', uiColor);\r\n          console.log(`Set ${uiColor}`);\r\n          if (uiBgColor) {\r\n            galleryEl?.style.setProperty('--g-autoplay-background-color', uiBgColor);\r\n          }\r\n        });\r\n      }\r\n\r\n      return story;\r\n    },\r\n  ],\r\n  args: {\r\n    autoplay: true,\r\n    autoplayInterval: 3000,\r\n    autoplayScrollBehavior: 'smooth',\r\n    autoplayDirection: 'forward',\r\n    autoplayPause: 'hover',\r\n    autoplaySteps: 'page',\r\n    // Demo-only defaults\r\n    showSpinner: true,\r\n    showProgressbar: true,\r\n    uiColor: '#3b78ff'\r\n  },\r\n  argTypes: {\r\n    autoplay: {\r\n      control: 'boolean',\r\n      table: {\r\n        defaultValue: { summary: \"true\" },\r\n      }\r\n    },\r\n    autoplayInterval: {\r\n      control: { type: 'number', min: 0, step: 500 },\r\n      table: {\r\n        defaultValue: { summary: \"3000\" },\r\n      }\r\n    },\r\n    autoplayScrollBehavior: {\r\n      control: 'radio',\r\n      options: ['smooth', 'auto'],\r\n      table: {\r\n        defaultValue: { summary: \"smooth\" },\r\n      }\r\n    },\r\n    autoplayDirection: {\r\n      control: 'radio',\r\n      options: ['forward', 'backward', 'ping-pong'],\r\n      table: {\r\n        type: { summary: \"forward | backward | ping-pong\" },\r\n        defaultValue: { summary: \"forward\" },\r\n      }\r\n    },\r\n    autoplayPause: {\r\n      control: 'radio',\r\n      options: ['hover', 'click', 'never'],\r\n      table: {\r\n        type: { summary: \"hover | click | never\" },\r\n        defaultValue: { summary: \"hover\" },\r\n      }\r\n    },\r\n    autoplaySteps: {\r\n      control: 'text',\r\n      table: {\r\n        defaultValue: { summary: 'page' },\r\n      }\r\n    },\r\n    // Demo Controls\r\n    showSpinner: {\r\n      control: 'boolean',\r\n      table: { disable: true }\r\n    },\r\n    showProgressbar: {\r\n      control: 'boolean',\r\n      table: { disable: true }\r\n    },\r\n    uiColor: {\r\n      control: 'color',\r\n      table: { disable: true }\r\n    },\r\n    uiBgColor: {\r\n      control: 'color',\r\n      table: { disable: true }\r\n    }\r\n  },\r\n})"
             },
             {
                 "name": "MultipleExample",
@@ -10531,30 +10531,6 @@
                     "defaultValue": "preview.meta({\r\n  title: 'Addons/Lightbox',\r\n  component: LightboxFor,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [LightboxModule],\r\n    }),\r\n  ]\r\n})"
                 }
             ],
-            "projects/ng-gallery/src/stories/slot/Slot.stories.ts": [
-                {
-                    "name": "meta",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/ng-gallery/src/stories/slot/Slot.stories.ts",
-                    "coverageIgnore": false,
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "unknown",
-                    "defaultValue": "preview.meta({\r\n  title: 'Documentations/Slot',\r\n  component: GallerySlot,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n  ],\r\n  args: {\r\n    position: 'center',\r\n    align: 'center',\r\n    justify: 'center'\r\n  },\r\n  argTypes: {\r\n    position: {\r\n      name: 'gallerySlot',\r\n      control: 'select',\r\n      options: ['center', 'top', 'bottom', 'start', 'end'],\r\n      table: {\r\n        type: { summary: \"'center' | 'top' | 'bottom' | 'start' | 'end'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n    align: {\r\n      name: 'gallerySlotAlign',\r\n      control: 'select',\r\n      options: ['start', 'end', 'center', 'stretch'],\r\n      table: {\r\n        type: { summary: \"'start' | 'end' | 'center' | 'stretch'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n    justify: {\r\n      name: 'gallerySlotJustify',\r\n      control: 'select',\r\n      options: ['start', 'end', 'center', 'stretch'],\r\n      table: {\r\n        type: { summary: \"'start' | 'end' | 'center' | 'stretch'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n  },\r\n})"
-                },
-                {
-                    "name": "Slot",
-                    "ctype": "miscellaneous",
-                    "subtype": "variable",
-                    "file": "projects/ng-gallery/src/stories/slot/Slot.stories.ts",
-                    "coverageIgnore": false,
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "unknown",
-                    "defaultValue": "meta.story({\r\n  name: 'Slot',\r\n  loaders: [\r\n    async () => ({ items: await getSlides() }),\r\n  ],\r\n  render: (args, { loaded: { items } }) => ({\r\n    props: { ...args, items },\r\n    template: `\r\n      <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\">\r\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\r\n          <span>{{ i + 1 }}</span>\r\n        </div>\r\n\r\n        <div class=\"static-panel\"\r\n             [gallerySlot]=\"position\"\r\n             [gallerySlotAlign]=\"align\"\r\n             [gallerySlotJustify]=\"justify\">\r\n          Static Content\r\n        </div>\r\n      </gallery>\r\n    `,\r\n    styles: [`\r\n      .gallery-example {\r\n        height: 300px !important;\r\n      }\r\n      .static-panel {\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: center;\r\n        background-color: rgba(0 0 0 / 0.5);\r\n        border: 1px solid black;\r\n        font-size: 20px;\r\n        font-family: monospace, monospace;\r\n        width: 250px;\r\n        height: 75px;\r\n        color: coral;\r\n      }\r\n    `]\r\n  })\r\n})"
-                }
-            ],
             "projects/ng-gallery/src/stories/nav/Navigation.stories.ts": [
                 {
                     "name": "meta",
@@ -10588,6 +10564,30 @@
                     "deprecationMessage": "",
                     "type": "unknown",
                     "defaultValue": "meta.story({\r\n  tags: ['!dev'],\r\n  loaders: [\r\n    async () => ({ items: await getSlides() }),\r\n  ],\r\n  render: (args, { loaded: { items } }) => ({\r\n    props: { ...args, items },\r\n    template: `\r\n      <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\" itemsPerView=\"3\">\r\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\r\n          <span>{{ i + 1 }}</span>\r\n        </div>\r\n        <gallery-nav outside showDisabledButtons/>\r\n      </gallery>\r\n    `,\r\n  }),\r\n})"
+                }
+            ],
+            "projects/ng-gallery/src/stories/slot/Slot.stories.ts": [
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ng-gallery/src/stories/slot/Slot.stories.ts",
+                    "coverageIgnore": false,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "defaultValue": "preview.meta({\r\n  title: 'Documentations/Slot',\r\n  component: GallerySlot,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n  ],\r\n  args: {\r\n    position: 'center',\r\n    align: 'center',\r\n    justify: 'center'\r\n  },\r\n  argTypes: {\r\n    position: {\r\n      name: 'gallerySlot',\r\n      control: 'select',\r\n      options: ['center', 'top', 'bottom', 'start', 'end'],\r\n      table: {\r\n        type: { summary: \"'center' | 'top' | 'bottom' | 'start' | 'end'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n    align: {\r\n      name: 'gallerySlotAlign',\r\n      control: 'select',\r\n      options: ['start', 'end', 'center', 'stretch'],\r\n      table: {\r\n        type: { summary: \"'start' | 'end' | 'center' | 'stretch'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n    justify: {\r\n      name: 'gallerySlotJustify',\r\n      control: 'select',\r\n      options: ['start', 'end', 'center', 'stretch'],\r\n      table: {\r\n        type: { summary: \"'start' | 'end' | 'center' | 'stretch'\" },\r\n        defaultValue: { summary: \"'center'\" },\r\n      }\r\n    },\r\n  },\r\n})"
+                },
+                {
+                    "name": "Slot",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ng-gallery/src/stories/slot/Slot.stories.ts",
+                    "coverageIgnore": false,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "unknown",
+                    "defaultValue": "meta.story({\r\n  name: 'Slot',\r\n  loaders: [\r\n    async () => ({ items: await getSlides() }),\r\n  ],\r\n  render: (args, { loaded: { items } }) => ({\r\n    props: { ...args, items },\r\n    template: `\r\n      <gallery class=\"gallery-example\" [items]=\"items\" gap=\"32\">\r\n        <div *galleryItemDef=\"let item; index as i\" class=\"slide\">\r\n          <span>{{ i + 1 }}</span>\r\n        </div>\r\n\r\n        <div class=\"static-panel\"\r\n             [gallerySlot]=\"position\"\r\n             [gallerySlotAlign]=\"align\"\r\n             [gallerySlotJustify]=\"justify\">\r\n          Static Content\r\n        </div>\r\n      </gallery>\r\n    `,\r\n    styles: [`\r\n      .gallery-example {\r\n        height: 300px !important;\r\n      }\r\n      .static-panel {\r\n        display: flex;\r\n        align-items: center;\r\n        justify-content: center;\r\n        background-color: rgba(0 0 0 / 0.5);\r\n        border: 1px solid black;\r\n        font-size: 20px;\r\n        font-family: monospace, monospace;\r\n        width: 250px;\r\n        height: 75px;\r\n        color: coral;\r\n      }\r\n    `]\r\n  })\r\n})"
                 }
             ],
             "projects/ng-gallery/src/stories/styling/Styling.stories.ts": [
