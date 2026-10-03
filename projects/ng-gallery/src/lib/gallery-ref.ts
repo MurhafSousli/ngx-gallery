@@ -67,6 +67,9 @@ export abstract class GalleryRef {
   /** @ignore */
   readonly itemErrorDef: Signal<GalleryItemErrorDef> = contentChild(GalleryItemErrorDef);
 
+  /**
+   * A signal that provides access to the rendered SliderItem components
+   */
   readonly renderedItems: Signal<readonly SliderItem[]> = viewChildren(SliderItem);
   /* v8 ignore stop */
 

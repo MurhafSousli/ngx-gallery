@@ -44,6 +44,7 @@ const meta = preview.meta<GalleryAutoplay & DemoArgs>({
     autoplayScrollBehavior: 'smooth',
     autoplayDirection: 'forward',
     autoplayPause: 'hover',
+    autoplaySteps: 'page',
     // Demo-only defaults
     showSpinner: true,
     showProgressbar: true,
@@ -85,10 +86,11 @@ const meta = preview.meta<GalleryAutoplay & DemoArgs>({
         defaultValue: { summary: "hover" },
       }
     },
-    autoplayChange: {
-      type: 'function',
-      action: 'autoplayChange',
-      table: { category: 'Outputs' }
+    autoplaySteps: {
+      control: 'text',
+      table: {
+        defaultValue: { summary: 'page' },
+      }
     },
     // Demo Controls
     showSpinner: {
@@ -101,11 +103,11 @@ const meta = preview.meta<GalleryAutoplay & DemoArgs>({
     },
     uiColor: {
       control: 'color',
-      // table: { disable: true }
+      table: { disable: true }
     },
     uiBgColor: {
       control: 'color',
-      // table: { disable: true }
+      table: { disable: true }
     }
   },
 });
@@ -142,33 +144,33 @@ export const Autoplay = meta.story({
 });
 
 
-export const AutoplayMultipleItemsPerView = meta.story({
-  loaders: [
-    async () => ({
-      items: await getHDImages('Boat'),
-    }),
-  ],
-  render: (args, { loaded: { items } }) => ({
-    props: { ...args, items },
-    template: `
-      <gallery loop
-               [items]="items"
-               itemsPerView="3"
-               [autoplay]="autoplay"
-               [autoplayInterval]="autoplayInterval"
-               [autoplayScrollBehavior]="autoplayScrollBehavior"
-               [autoplayDirection]="autoplayDirection"
-               [autoplayPause]="autoplayPause"
-               (autoplayChange)="autoplayChange($event)">
-        <img *galleryItemDef="let item" galleryImage [src]="item.src" [alt]="item.alt"/>
-
-        @if (showSpinner) {
-          <gallery-autoplay gallerySlot gallerySlotJustify="end" gallerySlotAlign="start"/>
-        }
-        @if (showProgressbar) {
-          <gallery-autoplay gallerySlot gallerySlotAlign="end" mode="progressbar"/>
-        }
-      </gallery>
-    `,
-  })
-});
+// export const AutoplayMultipleItemsPerView = meta.story({
+//   loaders: [
+//     async () => ({
+//       items: await getHDImages('Boat'),
+//     }),
+//   ],
+//   render: (args, { loaded: { items } }) => ({
+//     props: { ...args, items },
+//     template: `
+//       <gallery loop
+//                [items]="items"
+//                itemsPerView="3"
+//                [autoplay]="autoplay"
+//                [autoplayInterval]="autoplayInterval"
+//                [autoplayScrollBehavior]="autoplayScrollBehavior"
+//                [autoplayDirection]="autoplayDirection"
+//                [autoplayPause]="autoplayPause"
+//                (autoplayStateChange)="autoplayChange($event)">
+//         <img *galleryItemDef="let item" galleryImage [src]="item.src" [alt]="item.alt"/>
+//
+//         @if (showSpinner) {
+//           <gallery-autoplay gallerySlot gallerySlotJustify="end" gallerySlotAlign="start"/>
+//         }
+//         @if (showProgressbar) {
+//           <gallery-autoplay gallerySlot gallerySlotAlign="end" mode="progressbar"/>
+//         }
+//       </gallery>
+//     `,
+//   })
+// });

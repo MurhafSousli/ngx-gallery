@@ -16,7 +16,6 @@ import {
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Gallery } from '../gallery';
-import { SliderItem } from '../slider-item/slider-item';
 import { GalleryAutoplayDirection, GalleryAutoplayPause, GalleryOptions } from '../models/config.model';
 import { GALLERY_OPTIONS } from '../models/gallery.token';
 
@@ -83,7 +82,7 @@ export class GalleryAutoplay {
   /**
    * Signal that indicates whether all visible items are ready (i.e., not in a loading state).
    */
-  readonly isVisibleItemsReady: Signal<boolean> = computed(() => {
+  private readonly isVisibleItemsReady: Signal<boolean> = computed(() => {
     return this.gallery.visibleItems().reduce((acc, item) => {
       return acc && item.state() !== 'loading';
     }, true);
