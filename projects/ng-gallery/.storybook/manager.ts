@@ -1,10 +1,12 @@
 import { addons, types } from 'storybook/manager-api';
 import { VersionSwitcher } from './addons/version-addon/version-addon';
 import { ThemeSwitcher } from './addons/theme-addon/theme-addon-manager';
+import { darkTheme } from './addons/theme-addon/themes';
 
 addons.setConfig({
   initialActive: 'Stories/Introduction',
-  panelPosition: 'right'
+  panelPosition: 'right',
+  theme: darkTheme,
 });
 
 const ADDON_ID = 'ngx-gallery';

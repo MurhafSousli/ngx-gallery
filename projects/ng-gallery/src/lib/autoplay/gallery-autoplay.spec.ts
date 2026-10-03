@@ -9,11 +9,11 @@ import { afterTimeout } from '../tests/common';
 @Component({
   imports: [GalleryModule],
   template: `
-    <gallery [loop]="loop()" [autoplay]="autoplay()" [autoplayInterval]="autoplayInterval()"
+    <gallery [loop]="loop()" [itemsPerView]="itemsPerView()" [autoplay]="autoplay()" [autoplayInterval]="autoplayInterval()"
              [autoplayScrollBehavior]="autoplayBehavior()" [autoplayDirection]="autoplayDirection()"
-             [autoplayPause]="autoplayPause()" [items]="items"
+             [autoplayPause]="autoplayPause()" [autoplaySteps]="autoplaySteps()" [items]="items()"
              [style.width.px]="width()" [style.height.px]="height()"
-             (autoplayChange)="onAutoplayChange($event)">
+             (autoplayStateChange)="onAutoplayStateChange($event)">
       <img *galleryItemDef="let item"
            galleryImage
            [src]="item.src"/>
@@ -21,19 +21,21 @@ import { afterTimeout } from '../tests/common';
   `
 })
 export class TestComponent {
-  items: GalleryItemData[] = [
+  items: WritableSignal<GalleryItemData[]> = signal([
     { src: img1 },
     { src: img2 },
     { src: img3 }
-  ];
+  ]);
   width: WritableSignal<number> = signal(400);
   height: WritableSignal<number> = signal(300);
+  itemsPerView: WritableSignal<number> = signal(1);
   autoplay: WritableSignal<boolean> = signal(true);
   autoplayInterval: WritableSignal<number> = signal(300);
   autoplayBehavior: WritableSignal<ScrollBehavior> = signal('smooth');
   // New signals for the added inputs
   autoplayDirection: WritableSignal<'forward' | 'backward' | 'ping-pong'> = signal('forward');
   autoplayPause: WritableSignal<'hover' | 'click' | 'never'> = signal('hover');
+  autoplaySteps: WritableSignal<number | 'page'> = signal('page');
 
   loop: WritableSignal<boolean> = signal(false);
   // Captured autoplayChange events
@@ -41,7 +43,7 @@ export class TestComponent {
 
   gallery: Signal<Gallery> = viewChild(Gallery);
 
-  onAutoplayChange(state: string) {
+  onAutoplayStateChange(state: string): void {
     console.log(state);
   }
 }
@@ -93,7 +95,7 @@ describe('Autoplay Directive', () => {
 
   it('should stop the timer and animation when disabled', async () => {
     const nextSpy = vi.spyOn(gallery, 'next');
-    const autoplayChangeSpy = vi.spyOn(component, 'onAutoplayChange');
+    const autoplayStateChangeSpy = vi.spyOn(component, 'onAutoplayStateChange');
 
     // 1. Initial State: Autoplay is ON
     await vi.waitFor(() => {
@@ -109,7 +111,7 @@ describe('Autoplay Directive', () => {
     expect(anim).toBeUndefined();
 
     // 3, Verify that the 'stopped' event was emitted
-    expect(autoplayChangeSpy).toHaveBeenCalledWith('stopped');
+    expect(autoplayStateChangeSpy).toHaveBeenCalledWith('stopped');
 
     // 4. Final check: Ensure the 'next' function isn't called again
     await afterTimeout(autoplayDirective.autoplayInterval() + 100);
@@ -117,7 +119,7 @@ describe('Autoplay Directive', () => {
   });
 
   it('should pause animation when mouse enters and resume when it leaves', async () => {
-    const autoplayChangeSpy = vi.spyOn(component, 'onAutoplayChange');
+    const autoplayStateChangeSpy = vi.spyOn(component, 'onAutoplayStateChange');
     // Ensure pause-mode is hover
     component.autoplayPause.set('hover');
     fixture.detectChanges();
@@ -130,7 +132,7 @@ describe('Autoplay Directive', () => {
       const anim = getAutoplayAnimation();
       expect(anim).toBeTruthy();
       expect(anim!.playState).toBe('paused');
-      expect(autoplayChangeSpy).toHaveBeenCalledWith('paused');
+      expect(autoplayStateChangeSpy).toHaveBeenCalledWith('paused');
     });
 
     // 3. Leave the element
@@ -141,12 +143,12 @@ describe('Autoplay Directive', () => {
       const anim = getAutoplayAnimation();
       expect(anim).toBeTruthy();
       expect(anim!.playState).toBe('running');
-      expect(autoplayChangeSpy).toHaveBeenCalledWith('playing');
+      expect(autoplayStateChangeSpy).toHaveBeenCalledWith('playing');
     });
   });
 
   it('should pause on pointerdown and resume on pointerup', async () => {
-    const autoplayChangeSpy = vi.spyOn(component, 'onAutoplayChange');
+    const autoplayStateChangeSpy = vi.spyOn(component, 'onAutoplayStateChange');
     // Ensure pause-mode is hover
     component.autoplayPause.set('click');
     fixture.detectChanges();
@@ -157,7 +159,7 @@ describe('Autoplay Directive', () => {
     await vi.waitFor(() => {
       const anim = getAutoplayAnimation();
       expect(anim?.playState).toBe('paused');
-      expect(autoplayChangeSpy).toHaveBeenCalledWith('paused');
+      expect(autoplayStateChangeSpy).toHaveBeenCalledWith('paused');
     });
 
     // 2. Simulate Pointer Up
@@ -166,12 +168,12 @@ describe('Autoplay Directive', () => {
     await vi.waitFor(() => {
       const anim = getAutoplayAnimation();
       expect(anim?.playState).toBe('running');
-      expect(autoplayChangeSpy).toHaveBeenCalledWith('playing');
+      expect(autoplayStateChangeSpy).toHaveBeenCalledWith('playing');
     });
   });
 
   it('should handle complex interaction: hover then click', async () => {
-    const autoplayChangeSpy = vi.spyOn(component, 'onAutoplayChange');
+    const autoplayStateChangeSpy = vi.spyOn(component, 'onAutoplayStateChange');
     component.autoplayPause.set('hover');
     fixture.detectChanges();
 
@@ -181,7 +183,7 @@ describe('Autoplay Directive', () => {
     await userEvent.hover(element);
     await vi.waitFor(() => {
       expect(anim?.playState).toBe('paused');
-      expect(autoplayChangeSpy).toHaveBeenCalledWith('paused');
+      expect(autoplayStateChangeSpy).toHaveBeenCalledWith('paused');
     });
 
     // 2. Pointer Down (using native dispatch as userEvent might not have a "hold" for pointer)
@@ -199,7 +201,7 @@ describe('Autoplay Directive', () => {
     // Should finally resume
     await vi.waitFor(() => {
       expect(anim?.playState).toBe('running');
-      expect(autoplayChangeSpy).toHaveBeenCalledWith('playing');
+      expect(autoplayStateChangeSpy).toHaveBeenCalledWith('playing');
     });
   });
 

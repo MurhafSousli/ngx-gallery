@@ -67,6 +67,9 @@ export abstract class GalleryRef {
   /** @ignore */
   readonly itemErrorDef: Signal<GalleryItemErrorDef> = contentChild(GalleryItemErrorDef);
 
+  /**
+   * A signal that provides access to the rendered SliderItem components
+   */
   readonly renderedItems: Signal<readonly SliderItem[]> = viewChildren(SliderItem);
   /* v8 ignore stop */
 
@@ -137,6 +140,10 @@ export abstract class GalleryRef {
 
   /**
    * Set navigation steps
+   *
+   * Can be a number (e.g., 1, 2, 3) or the string 'page' to navigate by the number of items that fit in the viewport.
+   * When set to 'page', the gallery will calculate how many items can fit in the current viewport and navigate by that number.
+   * This is useful for creating a "page-like" navigation experience, where each navigation action moves the user by a full set of visible items.
    */
   readonly steps: InputSignalWithTransform<number | 'page', string | number> = input<number | 'page', string | number>(
     stepsTransform(this.defaultOptions.steps), {
@@ -263,6 +270,13 @@ export abstract class GalleryRef {
       .map(Number)
       .filter((index: number) => !Number.isNaN(index))
       .sort((a: number, b: number) => a - b);
+  });
+
+  /**
+   * Get visible items
+   */
+  readonly visibleItems: Signal<SliderItem[]> = computed(() => {
+    return this.visibleIndices().map((index: number) => this.renderedItems()[index]).filter(Boolean);
   });
 
   /**

@@ -19,8 +19,7 @@ export function getHDImages(key: string): Promise<GalleryItemData[]> {
 }
 
 
-export function getSlides(): Promise<GalleryItemData[]> {
-  const count = 18;
+export function getSlides(count = 18): Promise<GalleryItemData[]> {
   const colors: string[] = [];
 
   // Use a golden ratio offset to ensure colors are visually distinct

@@ -54,13 +54,15 @@ export class LabComponent implements OnInit {
 
   readonly images: HttpResourceRef<GalleryItemData[]> = this.pixabay.getImages('Fruits');
 
+  initialIndex: WritableSignal<number> = signal(0);
+
   loop: WritableSignal<boolean> = signal(true);
   itemSize: WritableSignal<number | 'auto'> = signal(null);
   snapAlign: WritableSignal<GallerySnapAlign> = signal('center');
   itemsPerView: WritableSignal<number> = signal(1);
   resizeDebounceTime: WritableSignal<number> = signal(0);
   scrollDuration: WritableSignal<number> = signal(468);
-  autoplay: WritableSignal<boolean> = signal(true);
+  autoplay: WritableSignal<boolean> = signal(false);
   disableScroll: WritableSignal<boolean> = signal(false);
   disableMouseScroll: WritableSignal<boolean> = signal(false);
   forceAlign: WritableSignal<boolean> = signal(true);
@@ -114,6 +116,11 @@ export class LabComponent implements OnInit {
     setTimeout(() => {
       this.updateEvent(this.player(), { active: false });
     }, 800);
+  }
+
+  loadTwo() {
+    // Load only the first 2 images
+    this.images.set(this.images.value().slice(0, 2));
   }
 
   onItemClick(e) {

@@ -5,14 +5,24 @@ import addonA11y from '@storybook/addon-a11y';
 import addonMsw from 'msw-storybook-addon';
 import { setupWorker } from 'msw/browser';
 
-import '#.storybook/styles.scss'
-import '#glass-theme.css'
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import '@fontsource/material-icons';
 
-import docJson from '../documentation.json';
+import '#.storybook/styles.scss';
+import '#glass-theme.css';
+
 import { pixabayHandler } from '#.storybook/mocks/pixabay.handler';
 
 // Import your decoupled addon parameters
-import { ThemedDocsContainer, withGlobalTheme } from '#.storybook/addons/theme-addon/theme-addon-preview';
+import {
+  ThemedDocsContainer,
+  withGlobalTheme,
+} from '#.storybook/addons/theme-addon/theme-addon-preview';
+
+import docJson from '../documentation.json';
 
 setCompodocJson(docJson);
 
@@ -24,7 +34,7 @@ const activeFolderOnServer = pathSegments[1] || 'Local';
 const isLocalhost = ['localhost', '127.0.0.1'].includes(window.location.hostname);
 const swUrl = isLocalhost
   ? '/mockServiceWorker.js'
-  : `/${ repoName }/${ activeFolderOnServer }/mockServiceWorker.js`;
+  : `/${repoName}/${activeFolderOnServer}/mockServiceWorker.js`;
 
 export default definePreview({
   addons: [
@@ -32,12 +42,12 @@ export default definePreview({
       const worker = setupWorker();
       await worker.start({
         onUnhandledRequest: 'bypass',
-        serviceWorker: { url: swUrl }
+        serviceWorker: { url: swUrl },
       });
       return worker;
     }),
     addonDocs(),
-    addonA11y()
+    addonA11y(),
   ],
   beforeEach({ msw }) {
     msw.use(pixabayHandler);
@@ -75,6 +85,6 @@ export default definePreview({
     releaseVersion: activeFolderOnServer,
   },
   decorators: [
-    withGlobalTheme // Simple reference
-  ]
+    withGlobalTheme
+  ],
 });
