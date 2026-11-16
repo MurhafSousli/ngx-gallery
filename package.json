@@ -80,6 +80,7 @@
     "msw": "^3.0.2",
     "msw-storybook-addon": "^3.0.3",
     "ng-packagr": "^22.2.4",
+    "pexels": "^1.4.0",
     "playwright": "^1.62.1",
     "postcss": "^8.5.28",
     "remark-gfm": "^4.0.1",
