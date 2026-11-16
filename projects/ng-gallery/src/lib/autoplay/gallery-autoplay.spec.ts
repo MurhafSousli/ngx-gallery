@@ -1,7 +1,7 @@
 import { Component, DebugElement, Signal, signal, viewChild, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { userEvent } from '@vitest/browser/context';
+import { userEvent } from 'vitest/browser';
 import { GalleryAutoplay, Gallery, GalleryItemData, GalleryModule } from 'ng-gallery';
 import { img1, img2, img3 } from '../tests/test-images';
 import { afterTimeout } from '../tests/common';

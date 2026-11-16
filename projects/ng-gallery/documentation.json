@@ -8857,23 +8857,23 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ng-gallery/src/stories/gallery/Gallery.stories.ts",
-                "coverageIgnore": false,
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "unknown",
-                "defaultValue": "preview.meta({\r\n  title: 'Documentations/Gallery',\r\n  component: Gallery,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule, NgOptimizedImage],\r\n    }),\r\n  ],\r\n  args: {\r\n    loop: false,\r\n    snapAlign: 'center',\r\n    forceSnap: false,\r\n    disableScroll: false,\r\n    disableMouseScroll: false,\r\n    itemsPerView: 1,\r\n    gap: 1,\r\n    steps: 1,\r\n    itemSize: null,\r\n    orientation: 'horizontal',\r\n    scrollBehavior: 'smooth',\r\n    scrollDuration: 468,\r\n    resizeDebounceTime: 468,\r\n    scrollEase: { x1: 0.42, y1: 0, x2: 0.58, y2: 1 },\r\n    activeIndexChange: fn() as any,\r\n    anchorIndexChange: fn() as any,\r\n  },\r\n  argTypes: {\r\n    items: {\r\n      control: false,\r\n      table: {\r\n        defaultValue: { summary: \"[]\" },\r\n      }\r\n    },\r\n    ...galleryArgTypes\r\n  },\r\n})"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/ng-gallery/src/stories/counter/Counter.stories.ts",
                 "coverageIgnore": false,
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "unknown",
                 "defaultValue": "preview.meta({\r\n  title: 'Documentations/Counter',\r\n  component: GalleryCounter,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n  ],\r\n  args: {\r\n    align: 'top',\r\n  },\r\n  argTypes: {\r\n    align: {\r\n      control: 'radio',\r\n      options: ['top', 'bottom'],\r\n      table: {\r\n        type: { summary: \"'top' | 'bottom'\" },\r\n        defaultValue: { summary: \"'top'\" },\r\n      }\r\n    },\r\n  },\r\n})"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ng-gallery/src/stories/gallery/Gallery.stories.ts",
+                "coverageIgnore": false,
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "unknown",
+                "defaultValue": "preview.meta({\r\n  title: 'Documentations/Gallery',\r\n  component: Gallery,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule, NgOptimizedImage],\r\n    }),\r\n  ],\r\n  args: {\r\n    loop: false,\r\n    snapAlign: 'center',\r\n    forceSnap: false,\r\n    disableScroll: false,\r\n    disableMouseScroll: false,\r\n    itemsPerView: 1,\r\n    gap: 1,\r\n    steps: 1,\r\n    itemSize: null,\r\n    orientation: 'horizontal',\r\n    scrollBehavior: 'smooth',\r\n    scrollDuration: 468,\r\n    resizeDebounceTime: 468,\r\n    scrollEase: { x1: 0.42, y1: 0, x2: 0.58, y2: 1 },\r\n    activeIndexChange: fn() as any,\r\n    anchorIndexChange: fn() as any,\r\n  },\r\n  argTypes: {\r\n    items: {\r\n      control: false,\r\n      table: {\r\n        defaultValue: { summary: \"[]\" },\r\n      }\r\n    },\r\n    ...galleryArgTypes\r\n  },\r\n})"
             },
             {
                 "name": "meta",
@@ -8934,23 +8934,23 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ng-gallery/src/stories/thumbnails/Thumbnails.stories.ts",
-                "coverageIgnore": false,
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "unknown",
-                "defaultValue": "preview.meta({\r\n  title: 'Documentations/Thumbnails',\r\n  component: GalleryThumbs,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule, NgOptimizedImage],\r\n    }),\r\n  ],\r\n  args: {\r\n    position: 'bottom',\r\n    itemSize: 120,\r\n    thickness: 90,\r\n    itemsPerView: 1,\r\n    gap: 1,\r\n    scrollBehavior: 'smooth',\r\n    scrollDuration: 268,\r\n    steps: 'page',\r\n    loop: false,\r\n    detach: false,\r\n    floating: false,\r\n    snapAlign: 'center',\r\n    forceSnap: false,\r\n    disableScroll: false,\r\n    disableMouseScroll: false,\r\n    activeIndexChange: fn() as any,\r\n    anchorIndexChange: fn() as any,\r\n  },\r\n  argTypes: {\r\n    ...galleryArgTypes,\r\n    thickness: {\r\n      control: { type: 'number', min: 0, step: 10 },\r\n      table: {\r\n        defaultValue: { summary: \"90\" },\r\n      }\r\n    },\r\n    detach: {\r\n      control: 'boolean',\r\n      table: {\r\n        defaultValue: { summary: \"false\" },\r\n      }\r\n    },\r\n    floating: {\r\n      control: 'boolean',\r\n      table: {\r\n        defaultValue: { summary: \"false\" },\r\n      }\r\n    },\r\n    position: {\r\n      control: 'radio',\r\n      options: ['top', 'bottom', 'start', 'end'],\r\n      table: {\r\n        type: { summary: \"'top' | 'bottom' | 'start' | 'end'\" },\r\n        defaultValue: { summary: \"'bottom'\" },\r\n      }\r\n    },\r\n    orientation: {\r\n      control: false,\r\n      table: {\r\n        type: { summary: \"signal<'horizontal' | 'vertical'>\" },\r\n        defaultValue: { summary: null },\r\n      }\r\n    },\r\n    resizeDebounceTime: {\r\n      control: false,\r\n      table: { disable: true }\r\n    },\r\n    scrollEase: {\r\n      control: false,\r\n      table: { disable: true }\r\n    },\r\n  },\r\n})"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/ng-gallery/src/stories/styling/Styling.stories.ts",
                 "coverageIgnore": false,
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "unknown",
                 "defaultValue": "preview.type<{ args: CSSVariablesArgs }>().meta({\r\n  title: 'Documentations/Styling',\r\n  component: Gallery,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule],\r\n    }),\r\n  ],\r\n  parameters: {\r\n    controls: {\r\n      // This will only show the controls for the variables you defined in args\r\n      include: Object.keys(defaultStylingArgs),\r\n    },\r\n  },\r\n  args: defaultStylingArgs,\r\n  argTypes: stylingArgTypes\r\n})"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ng-gallery/src/stories/thumbnails/Thumbnails.stories.ts",
+                "coverageIgnore": false,
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "unknown",
+                "defaultValue": "preview.meta({\r\n  title: 'Documentations/Thumbnails',\r\n  component: GalleryThumbs,\r\n  decorators: [\r\n    moduleMetadata({\r\n      imports: [GalleryModule, NgOptimizedImage],\r\n    }),\r\n  ],\r\n  args: {\r\n    position: 'bottom',\r\n    itemSize: 120,\r\n    thickness: 90,\r\n    itemsPerView: 1,\r\n    gap: 1,\r\n    scrollBehavior: 'smooth',\r\n    scrollDuration: 268,\r\n    steps: 'page',\r\n    loop: false,\r\n    detach: false,\r\n    floating: false,\r\n    snapAlign: 'center',\r\n    forceSnap: false,\r\n    disableScroll: false,\r\n    disableMouseScroll: false,\r\n    activeIndexChange: fn() as any,\r\n    anchorIndexChange: fn() as any,\r\n  },\r\n  argTypes: {\r\n    ...galleryArgTypes,\r\n    thickness: {\r\n      control: { type: 'number', min: 0, step: 10 },\r\n      table: {\r\n        defaultValue: { summary: \"90\" },\r\n      }\r\n    },\r\n    detach: {\r\n      control: 'boolean',\r\n      table: {\r\n        defaultValue: { summary: \"false\" },\r\n      }\r\n    },\r\n    floating: {\r\n      control: 'boolean',\r\n      table: {\r\n        defaultValue: { summary: \"false\" },\r\n      }\r\n    },\r\n    position: {\r\n      control: 'radio',\r\n      options: ['top', 'bottom', 'start', 'end'],\r\n      table: {\r\n        type: { summary: \"'top' | 'bottom' | 'start' | 'end'\" },\r\n        defaultValue: { summary: \"'bottom'\" },\r\n      }\r\n    },\r\n    orientation: {\r\n      control: false,\r\n      table: {\r\n        type: { summary: \"signal<'horizontal' | 'vertical'>\" },\r\n        defaultValue: { summary: null },\r\n      }\r\n    },\r\n    resizeDebounceTime: {\r\n      control: false,\r\n      table: { disable: true }\r\n    },\r\n    scrollEase: {\r\n      control: false,\r\n      table: { disable: true }\r\n    },\r\n  },\r\n})"
             },
             {
                 "name": "meta",
