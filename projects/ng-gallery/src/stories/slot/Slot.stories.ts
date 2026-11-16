@@ -1,7 +1,7 @@
 import { moduleMetadata } from '@storybook/angular-vite';
 import { GallerySlot, GalleryModule } from 'ng-gallery';
 import preview from '#.storybook/preview';
-import { getSlides } from '#.storybook/mocks/pixabay.service';
+import { getSlides } from '#.storybook/mocks/slides.service';
 
 const meta = preview.meta({
   title: 'Documentations/Slot',
