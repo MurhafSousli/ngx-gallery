@@ -24,7 +24,6 @@ setCompodocJson(docJson);
 
 const currentPath = window.location.pathname;
 const pathSegments = currentPath.split('/').filter(Boolean);
-const repoName = pathSegments[0] || 'ngx-gallery';
 const activeFolderOnServer = pathSegments[1] || 'Local';
 
 export default definePreview({

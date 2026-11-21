@@ -8846,23 +8846,23 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "projects/ng-gallery/src/stories/counter/Counter.stories.ts",
-                "coverageIgnore": false,
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "unknown",
-                "defaultValue": "preview.meta({\n  title: 'Documentations/Counter',\n  component: GalleryCounter,\n  decorators: [\n    moduleMetadata({\n      imports: [GalleryModule],\n    }),\n  ],\n  args: {\n    align: 'top',\n  },\n  argTypes: {\n    align: {\n      control: 'radio',\n      options: ['top', 'bottom'],\n      table: {\n        type: { summary: \"'top' | 'bottom'\" },\n        defaultValue: { summary: \"'top'\" },\n      }\n    },\n  },\n})"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "projects/ng-gallery/src/stories/alignment/Alignment.stories.ts",
                 "coverageIgnore": false,
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "unknown",
                 "defaultValue": "preview.meta({\n  title: 'Documentations/Alignment',\n  component: Gallery,\n  decorators: [\n    moduleMetadata({\n      imports: [GalleryModule]\n    }),\n  ]\n})"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ng-gallery/src/stories/counter/Counter.stories.ts",
+                "coverageIgnore": false,
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "unknown",
+                "defaultValue": "preview.meta({\n  title: 'Documentations/Counter',\n  component: GalleryCounter,\n  decorators: [\n    moduleMetadata({\n      imports: [GalleryModule],\n    }),\n  ],\n  args: {\n    align: 'top',\n  },\n  argTypes: {\n    align: {\n      control: 'radio',\n      options: ['top', 'bottom'],\n      table: {\n        type: { summary: \"'top' | 'bottom'\" },\n        defaultValue: { summary: \"'top'\" },\n      }\n    },\n  },\n})"
             },
             {
                 "name": "meta",

@@ -75,7 +75,7 @@ export class LabComponent implements OnInit {
   thumbScrollBehavior: WritableSignal<ScrollBehavior> = signal('smooth');
   debug: WritableSignal<boolean> = signal(true);
 
-  thumbs: WritableSignal<boolean> = signal(false);
+  thumbs: WritableSignal<boolean> = signal(true);
   thumbDisableScroll: WritableSignal<boolean> = signal(false);
   thumbDisableMouseScroll: WritableSignal<boolean> = signal(false);
   thumbSize: WritableSignal<number | 'autosize'> = signal(120);
@@ -84,7 +84,7 @@ export class LabComponent implements OnInit {
   thumbImageSize: WritableSignal<'cover' | 'contain'> = signal('cover');
   thumbDisabled: WritableSignal<boolean> = signal(false);
   thumbForceAlign: WritableSignal<boolean> = signal(false);
-  thumbPosition: WritableSignal<GalleryDock> = signal('start');
+  thumbPosition: WritableSignal<GalleryDock> = signal('bottom');
   thumbFloating: WritableSignal<boolean> = signal(false);
   thumbDetach: WritableSignal<boolean> = signal(false);
 
