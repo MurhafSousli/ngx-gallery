@@ -26,10 +26,12 @@
   "exports": {
     ".": {
       "sass": "./_index.scss",
-      "storybook": "./src/public-api.ts"
+      "storybook": "./src/public-api.ts",
+      "default": "./src/public-api.ts"
     },
     "./lightbox": {
-      "storybook": "./lightbox/src/public_api.ts"
+      "storybook": "./lightbox/src/public_api.ts",
+      "default": "./lightbox/src/public_api.ts"
     },
     "./glass-theme": {
       "style": "./glass-theme.css"
@@ -40,9 +42,6 @@
     "@angular/core": ">=21.0.0",
     "@angular/cdk": ">=21.0.0",
     "rxjs": ">=7.0.0"
-  },
-  "dependencies": {
-    "tslib": "^2.3.0"
   },
   "sideEffects": false,
   "imports": {
