@@ -164,9 +164,9 @@ export class GalleryThumbs extends GalleryRef {
       return this.gallery.navigationState();
     },
     computation: (value: NavigationTarget) => {
-      // The main scroll directive ignores the sync source for the main slider when it syncs with the activeIndex,
-      // But thumbs scroll directive should react. therefore, the source parameter is converted to 'api' instead.
-      if (value.source === 'sync') {
+      // The main slider ignores 'sync' to avoid replaying user scroll, but the thumbnail rail must follow it.
+      // Re-tag parent targets as 'api' so they scroll the rail without becoming its pending thumb-arrow position.
+      if (value.source === 'sync' || value.source === 'nav') {
         return { index: value.index, source: 'api' };
       }
       return value;

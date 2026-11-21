@@ -316,9 +316,9 @@ export abstract class GalleryRef {
    * Calculates the next target index based on the current position and step count.
    * Clamps the result to the final item index to prevent out-of-bounds navigation.
    */
-  getNextNavigationIndex(steps: number): number {
+  getNextNavigationIndex(steps: number, originIndex = this.getNavigationOriginIndex()): number {
     return Math.min(
-      this.navigationState().index + Math.max(1, steps),
+      originIndex + Math.max(1, steps),
       this.lastItemIndex()
     );
   }
@@ -328,11 +328,37 @@ export abstract class GalleryRef {
    * Calculates the previous target index based on the current position and step count.
    * Clamps the result to the first item index (0) to prevent out-of-bounds navigation.
    */
-  getPrevNavigationIndex(steps: number): number {
+  getPrevNavigationIndex(steps: number, originIndex = this.getNavigationOriginIndex()): number {
     return Math.max(
-      this.navigationState().index - Math.max(1, steps),
+      originIndex - Math.max(1, steps),
       this.firstItemIndex()
     );
+  }
+
+  private getNavigationOriginIndex(): number {
+    const navigation: NavigationTarget = this.navigationState();
+
+    // Keep rapid arrow clicks based on the latest requested target until the observer catches up.
+    if (navigation.source === 'nav') return navigation.index;
+
+    const anchorIndex: number = this.anchorIndex();
+    const fullyVisible: number[] = this.getFullyVisibleIndices();
+
+    // At a clamped center edge, the anchor can still be the first or last item; use the visible window's center instead.
+    if (this.snapAlign() === 'center' && fullyVisible.length > 1) {
+      const firstVisible: number = fullyVisible[0];
+      const lastVisible: number = fullyVisible.at(-1);
+      if (anchorIndex <= firstVisible || anchorIndex >= lastVisible) {
+        return fullyVisible[Math.floor((fullyVisible.length - 1) / 2)];
+      }
+    }
+
+    // Each slider's observer anchor is local to its own viewport, unlike a synchronized selection index.
+    return anchorIndex;
+  }
+
+  private getFullyVisibleIndices(): number[] {
+    return this.visibleIndices().filter(index => this.isFullyVisible(this.getVisibleEntry(index)));
   }
 
   /**
@@ -392,10 +418,11 @@ export abstract class GalleryRef {
       if (this.itemSize()) {
         const pageTarget = this.getPageTarget('next');
         // Ensure we actually move forward at least by 1 to prevent getting stuck
-        const finalIndex = Math.max(pageTarget, this.activeIndex() + 1);
+        const finalIndex = Math.max(pageTarget, this.getNavigationOriginIndex() + 1);
         targetIndex = Math.min(finalIndex, this.lastItemIndex());
       } else {
-        targetIndex = this.getNextNavigationIndex(this.itemsPerView());
+        // The configured item count defines a page from the current navigation target, not its center anchor.
+        targetIndex = this.getNextNavigationIndex(this.itemsPerView(), this.navigationState().index);
       }
     } else {
       targetIndex = this.getNextNavigationIndex(steps as number);
@@ -403,11 +430,11 @@ export abstract class GalleryRef {
 
     // If we can't move forward and loop is enabled, wrap to the first item
     if (!this.hasNext() && loop) {
-      this.goTo({ index: this.firstItemIndex(), behavior });
+      this.goTo({ index: this.firstItemIndex(), behavior, source: 'nav' });
       return;
     }
 
-    this.goTo({ index: targetIndex, behavior });
+    this.goTo({ index: targetIndex, behavior, source: 'nav' });
   }
 
   /**
@@ -425,10 +452,11 @@ export abstract class GalleryRef {
     if (steps === 'page') {
       if (this.itemSize()) {
         const pageTarget = this.getPageTarget('prev');
-        const finalIndex = Math.min(pageTarget, this.activeIndex() - 1);
+        const finalIndex = Math.min(pageTarget, this.getNavigationOriginIndex() - 1);
         targetIndex = Math.max(finalIndex, 0);
       } else {
-        targetIndex = this.getPrevNavigationIndex(this.itemsPerView());
+        // Use the current navigation target so page steps stay symmetric at clamped edges.
+        targetIndex = this.getPrevNavigationIndex(this.itemsPerView(), this.navigationState().index);
       }
     } else {
       targetIndex = this.getPrevNavigationIndex(steps as number);
@@ -436,19 +464,22 @@ export abstract class GalleryRef {
 
     // If we can't move backward and loop is enabled, wrap to the last item
     if (!this.hasPrev() && loop) {
-      this.goTo({ index: this.lastItemIndex(), behavior });
+      this.goTo({ index: this.lastItemIndex(), behavior, source: 'nav' });
       return;
     }
 
-    this.goTo({ index: targetIndex, behavior });
+    this.goTo({ index: targetIndex, behavior, source: 'nav' });
   }
 
   private getPageTarget(direction: 'next' | 'prev'): number {
     const isForward = direction === 'next';
 
-    // Determine the anchor point (the index we are paging from)
-    const fullyVisible = this.visibleIndices().filter(i => this.isFullyVisible(this.getVisibleEntry(i)));
-    const anchorIndex = isForward ? fullyVisible.at(-1) : fullyVisible[0];
+    // Prefer fully visible items to prevent partially clipped edge items from shrinking a page.
+    const visibleIndices = this.visibleIndices();
+    const fullyVisible = this.getFullyVisibleIndices();
+    const pageItems = fullyVisible.length ? fullyVisible : visibleIndices;
+    const anchorIndex = isForward ? pageItems.at(-1) : pageItems[0];
+    if (anchorIndex === undefined) return this.getNavigationOriginIndex();
 
     const targetStartPoint = isForward ? anchorIndex + 1 : anchorIndex - 1;
 
@@ -460,6 +491,7 @@ export abstract class GalleryRef {
       viewportSize: this.resizeSensor().viewportSize()[this.slider().adapter().sizeProperty]
     });
   }
+
 
   private calculateTargetWithFit(ctx: PageCalculationContext): number {
     const rendered = this.renderedItems();

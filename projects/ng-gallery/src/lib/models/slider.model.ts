@@ -1,4 +1,4 @@
-export type NavigationSource = 'api' | 'sync' | 'init';
+export type NavigationSource = 'api' | 'sync' | 'init' | 'nav';
 
 export interface NavigationTarget {
   index: number;
