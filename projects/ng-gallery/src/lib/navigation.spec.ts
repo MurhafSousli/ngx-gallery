@@ -138,6 +138,7 @@ describe('Navigation', () => {
   describe('Multiple items per view navigation', () => {
 
     it('should advance the viewport by one item from the clamped start edge', async () => {
+      component.width.set(420);
       component.itemsPerView.set(3);
       await vi.waitFor(() => expect(gallery.hasVisibleItems()).toBe(true));
       await vi.waitFor(() => expect(gallery.anchorIndex()).toBe(1));
