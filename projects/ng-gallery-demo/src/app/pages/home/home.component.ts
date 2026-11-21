@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { HttpResourceRef } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { GalleryItemData, GalleryModule } from 'ng-gallery';
-import { Pixabay } from '../../service/pixabay.service';
+import { Picsum } from '../../service/picsum.service';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { BadgesComponent } from '../../shared/badges/badges.component';
 
@@ -26,9 +26,9 @@ import { BadgesComponent } from '../../shared/badges/badges.component';
 export class HomeComponent implements OnInit {
 
   private readonly title: Title = inject(Title);
-  private readonly pixabay: Pixabay = inject(Pixabay);
+  private readonly picsum: Picsum = inject(Picsum);
 
-  readonly images: HttpResourceRef<GalleryItemData[]> = this.pixabay.getImages('mountain');
+  readonly images: HttpResourceRef<GalleryItemData[]> = this.picsum.getImages('mountain');
 
   ngOnInit() {
     this.title.setTitle('Home | ng-gallery');

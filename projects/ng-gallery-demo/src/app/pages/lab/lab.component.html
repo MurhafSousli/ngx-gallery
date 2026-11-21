@@ -131,12 +131,14 @@
     <div class="buttons-container">
       <!--      <button mat-flat-button (click)="gallery.play()">Play</button>-->
       <!--      <button mat-button color="accent" (click)="gallery.stop()">Stop</button>-->
-      <button mat-button color="primary" (click)="gallery.prev({ steps: 2 })">Prev</button>
-      <button mat-button color="primary" (click)="gallery.next({ steps: 2 })">Next</button>
-      <button matButton="elevated" color="primary" (click)="gallery.prev({steps: 'page'})">Prev Page</button>
-      <button matButton="elevated" color="primary" (click)="gallery.next({steps: 'page'})">Next Page</button>
+      <button matButton (click)="gallery.prev({ steps: 2 })">Prev</button>
+      <button matButton (click)="gallery.next({ steps: 2 })">Next</button>
+      <button matButton="elevated" (click)="gallery.prev({steps: 'page'})">Prev Page</button>
+      <button matButton="elevated" (click)="gallery.next({steps: 'page'})">Next Page</button>
       <!--      <button mat-button color="primary" (click)="gallery.remove(gallery.galleryRef.currIndex())">Remove-->
       <!--      </button>-->
+
+      <button matButton="outlined" (click)="gallery.goTo({ index: 0, behavior: 'auto' }); loadTwo()">load 2 items</button>
     </div>
   </div>
 

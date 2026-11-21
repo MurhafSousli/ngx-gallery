@@ -118,7 +118,7 @@ describe('Lightbox component', () => {
       removeEventListener: vi.fn(),
     } as any);
 
-    fixture.componentRef.setInput('disableAnimation', false);
+    component.disableAnimation.set(false);
     fixture.detectChanges();
 
     lightbox.showModal();

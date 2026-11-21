@@ -1,11 +1,15 @@
 import { defineMain } from '@storybook/angular-vite/node';
 import remarkGfm from 'remark-gfm';
+import { searchForWorkspaceRoot } from 'vite';
 
 export default defineMain({
   stories: [
     '../src/**/*.mdx',
     '../src/**/*.stories.@(ts|tsx)'
   ],
+  features: {
+    experimentalDocgenServer: false
+  },
   addons: [
     '@storybook/addon-a11y',
     {
@@ -31,12 +35,20 @@ export default defineMain({
         '--disablePrivate',
         '--disableProtected',
         '--disableInternal',
-        '--minimal',
+        '--minimal'
       ]
     }
   },
   viteFinal: async (config) => {
-    // this is just to hide the 404 not found error of this script
+    // Extend server.fs.allow to include the workspace root node_modules
+    config.server = config.server || {};
+    config.server.fs = config.server.fs || {};
+    config.server.fs.allow = [
+      ...(config.server.fs.allow || []),
+      searchForWorkspaceRoot(process.cwd()),
+    ];
+
+    // Preserve your existing custom plugin
     config.plugins = config.plugins || [];
     config.plugins.push({
       name: 'strip-mocker-entry-script',
@@ -49,10 +61,11 @@ export default defineMain({
         );
       },
     });
+
     return config;
   },
   staticDirs: [
-    '../src', // 👈 serves mockServiceWorker.js
+    '../src',
     './public', // 👈 serves mock versions.json for local testing
   ],
 });

@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": false
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -92,16 +93,24 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular/build:ng-packagr",
+          "builder": "@angular/build:library",
           "configurations": {
             "production": {
               "tsConfig": "projects/ng-gallery/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/ng-gallery/tsconfig.lib.json"
+              "compilationMode": "full"
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "production",
+          "options": {
+            "tsConfig": "projects/ng-gallery/tsconfig.lib.json",
+            "outputPath": "dist/ng-gallery",
+            "assets": [
+              "projects/ng-gallery/_index.scss",
+              "projects/ng-gallery/glass-theme.css"
+            ]
+          }
         },
         "test": {
           "builder": "@angular/build:unit-test",

@@ -138,7 +138,7 @@ export class Gallery extends GalleryRef {
   });
 
   /**
-   * Loads the items array into the gallery
+   * Loads the items into the gallery
    */
   itemsInput: InputSignal<GalleryItemData<any>[]> = input<GalleryItemData<any>[]>([], { alias: 'items' });
 

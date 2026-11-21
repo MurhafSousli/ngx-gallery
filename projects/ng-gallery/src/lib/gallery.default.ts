@@ -11,6 +11,7 @@ export const defaultOptions: GalleryOptions = {
   disableScroll: false,
   disableMouseScroll: false,
   autoplayInterval: 3000,
+  autoplaySteps: 'page',
   scrollDuration: 268,
   scrollEase: {
     x1: 0.42,

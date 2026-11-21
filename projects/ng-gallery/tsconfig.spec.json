@@ -9,12 +9,12 @@
     ]
   },
   "include": [
-    "src/**/*.ts",
+    "**/*.ts",
     "lightbox/src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.spec.ts",
+    "**/*.d.ts",
+    "**/*.spec.ts",
     "lightbox/src/**/*.d.ts",
-    "lightbox/src/**/*.spec.ts",
+    "lightbox/src/**/*.spec.ts"
   ],
   // Add this block to block the Angular compiler from touching Storybook files
   "exclude": [

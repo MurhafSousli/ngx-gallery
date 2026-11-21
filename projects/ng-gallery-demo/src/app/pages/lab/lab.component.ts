@@ -19,7 +19,7 @@ import {
   GalleryCounterPosition, GalleryAutoplayDirection
 } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
-import { Pixabay } from '../../service/pixabay.service';
+import { Picsum } from '../../service/picsum.service';
 import { FooterComponent } from '../../shared/footer/footer.component';
 
 @Component({
@@ -48,11 +48,13 @@ export class LabComponent implements OnInit {
 
   private _title: Title = inject(Title);
 
-  private pixabay: Pixabay = inject(Pixabay);
+  private picsum: Picsum = inject(Picsum);
 
   mixedData = mixedData;
 
-  readonly images: HttpResourceRef<GalleryItemData[]> = this.pixabay.getImages('Fruits');
+  readonly images: HttpResourceRef<GalleryItemData[]> = this.picsum.getImages('Fruits');
+
+  initialIndex: WritableSignal<number> = signal(0);
 
   loop: WritableSignal<boolean> = signal(true);
   itemSize: WritableSignal<number | 'auto'> = signal(null);
@@ -60,7 +62,7 @@ export class LabComponent implements OnInit {
   itemsPerView: WritableSignal<number> = signal(1);
   resizeDebounceTime: WritableSignal<number> = signal(0);
   scrollDuration: WritableSignal<number> = signal(468);
-  autoplay: WritableSignal<boolean> = signal(true);
+  autoplay: WritableSignal<boolean> = signal(false);
   disableScroll: WritableSignal<boolean> = signal(false);
   disableMouseScroll: WritableSignal<boolean> = signal(false);
   forceAlign: WritableSignal<boolean> = signal(true);
@@ -73,7 +75,7 @@ export class LabComponent implements OnInit {
   thumbScrollBehavior: WritableSignal<ScrollBehavior> = signal('smooth');
   debug: WritableSignal<boolean> = signal(true);
 
-  thumbs: WritableSignal<boolean> = signal(false);
+  thumbs: WritableSignal<boolean> = signal(true);
   thumbDisableScroll: WritableSignal<boolean> = signal(false);
   thumbDisableMouseScroll: WritableSignal<boolean> = signal(false);
   thumbSize: WritableSignal<number | 'autosize'> = signal(120);
@@ -82,7 +84,7 @@ export class LabComponent implements OnInit {
   thumbImageSize: WritableSignal<'cover' | 'contain'> = signal('cover');
   thumbDisabled: WritableSignal<boolean> = signal(false);
   thumbForceAlign: WritableSignal<boolean> = signal(false);
-  thumbPosition: WritableSignal<GalleryDock> = signal('start');
+  thumbPosition: WritableSignal<GalleryDock> = signal('bottom');
   thumbFloating: WritableSignal<boolean> = signal(false);
   thumbDetach: WritableSignal<boolean> = signal(false);
 
@@ -114,6 +116,11 @@ export class LabComponent implements OnInit {
     setTimeout(() => {
       this.updateEvent(this.player(), { active: false });
     }, 800);
+  }
+
+  loadTwo() {
+    // Load only the first 2 images
+    this.images.set(this.images.value().slice(0, 2));
   }
 
   onItemClick(e) {

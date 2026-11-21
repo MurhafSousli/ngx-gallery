@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { DocsContainer } from '@storybook/addon-docs/blocks';
-import { themes } from 'storybook/theming';
 import { addons } from 'storybook/internal/preview-api';
+import { darkTheme, lightTheme } from './themes';
 
-// Helper to mutate DOM theme attributes without re-rendering components
 const applyThemeToDOM = (theme: string) => {
   document.documentElement.setAttribute('data-theme', theme);
   document.documentElement.style.colorScheme = theme;
@@ -16,7 +15,7 @@ const applyThemeToDOM = (theme: string) => {
   }
 };
 
-// Listen globally at the preview module level for DOM theme updates
+// Module-level channel listener for standard preview frames
 const channel = addons.getChannel();
 channel.on('THEME_CHANGED', (newTheme: 'light' | 'dark') => {
   applyThemeToDOM(newTheme);
@@ -24,7 +23,7 @@ channel.on('THEME_CHANGED', (newTheme: 'light' | 'dark') => {
 
 // --- THE MDX WORKAROUND CONTAINER ---
 export const ThemedDocsContainer = (props: any) => {
-  const containerChannel = props.context?.channel;
+  const containerChannel = props.context?.channel || addons.getChannel();
   const [currentTheme, setCurrentTheme] = useState<'light' | 'dark'>('dark');
 
   useEffect(() => {
@@ -36,19 +35,25 @@ export const ThemedDocsContainer = (props: any) => {
     };
 
     containerChannel.on('THEME_CHANGED', handleThemeChange);
+
+    // Request active theme from manager on mount (handles page navigation)
+    containerChannel.emit('GET_CURRENT_THEME');
+
     return () => {
       containerChannel.off('THEME_CHANGED', handleThemeChange);
     };
   }, [containerChannel]);
 
-  const activeDocsTheme = currentTheme === 'dark' ? themes.dark : themes.light;
+  const activeDocsTheme = currentTheme === 'dark' ? darkTheme : lightTheme;
   return React.createElement(DocsContainer, { ...props, theme: activeDocsTheme });
 };
 
 // --- THE CANVAS IFRAME DECORATOR ---
 export const withGlobalTheme = (storyFn: any, context: any) => {
-  const theme = context.globals['theme'] || 'dark';
-  applyThemeToDOM(theme);
+  const storyChannel = context.channel || addons.getChannel();
+
+  // Ask manager for current theme when story mounts
+  storyChannel.emit('GET_CURRENT_THEME');
 
   return storyFn();
 };

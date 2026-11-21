@@ -22,17 +22,17 @@ Enables automatic slide progression through gallery items.
 
 ```html
 <gallery [items]="items"
-         [autoplay]="autoplay"
+         [autoplay]="autoplay()"
          autoplayPause="hover"
          autoplayInterval="2500"
          autoplayDirection="ping-pong"
          autoplayScrollBehavior="auto"
-         (autoplayChange)="onAutoplayChange($event)">
+         (autoplayStateChange)="onAutoplayStateChange($event)">
   <img *galleryItemDef="let item" galleryImage [src]="item.src" [alt]="item.alt"/>
 </gallery>
 
-<button (click)="autoplay = true">Play</button>
-<button (click)="autoplay = false">Stop</button>
+<button (click)="autoplay.set(true)">Play</button>
+<button (click)="autoplay.set(false)">Stop</button>
 ```
 
 ## API

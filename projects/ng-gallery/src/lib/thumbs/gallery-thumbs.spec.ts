@@ -77,6 +77,7 @@ describe('Gallery thumbs component', () => {
     expect(thumbsComponent).toBeDefined();
     expect(thumbsComponent.position()).toBe('bottom');
     expect(thumbsComponent.orientation()).toBe('horizontal');
+    expect(thumbsComponent.snapAlign()).toBe('center');
     expect(thumbsComponent.floating()).toBeFalsy();
     expect(thumbsComponent.disableScroll()).toBeFalsy();
 
@@ -112,6 +113,46 @@ describe('Gallery thumbs component', () => {
         source: 'api',
         index: 1
       });
+    });
+  });
+
+  it('should navigate from the thumbnail rail anchor after main-gallery navigation', async () => {
+    const images = [img1, img2, img3];
+    component.items = Array.from({ length: 12 }, (_, index) => ({
+      src: images[index % images.length],
+      thumb: images[index % images.length]
+    }));
+    fixture.detectChanges();
+
+    await vi.waitUntil(() => thumbsComponent.hasVisibleItems());
+    await vi.waitUntil(() => thumbsComponent.anchorIndex() > 1);
+    const thumbnailAnchor = thumbsComponent.anchorIndex();
+
+    gallery.next({ behavior: 'auto', loop: false });
+    await vi.waitFor(() => expect(gallery.activeIndex()).toBe(1));
+    await vi.waitFor(() => expect(thumbsComponent.navigationState().source).toBe('api'));
+
+    thumbsComponent.next({ steps: 1, behavior: 'auto', loop: false });
+
+    expect(thumbsComponent.navigationState().index).toBe(thumbnailAnchor + 1);
+  });
+
+  it('should advance the thumbnail viewport by one item from the start edge', async () => {
+    const images = [img1, img2, img3];
+    component.items = Array.from({ length: 10 }, (_, index) => ({
+      src: images[index % images.length],
+      thumb: images[index % images.length]
+    }));
+    component.width.set(180);
+    fixture.detectChanges();
+
+    await vi.waitUntil(() => thumbsComponent.hasVisibleItems());
+    expect(sliderComponent.nativeElement.scrollLeft).toBe(0);
+
+    thumbsComponent.next({ steps: 1, behavior: 'auto', loop: false });
+
+    await vi.waitFor(() => {
+      expect(sliderComponent.nativeElement.scrollLeft).toBeGreaterThan(0);
     });
   });
 

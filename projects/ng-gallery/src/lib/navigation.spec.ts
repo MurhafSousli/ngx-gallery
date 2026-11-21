@@ -137,6 +137,17 @@ describe('Navigation', () => {
 
   describe('Multiple items per view navigation', () => {
 
+    it('should advance the viewport by one item from the clamped start edge', async () => {
+      component.width.set(420);
+      component.itemsPerView.set(3);
+      await vi.waitFor(() => expect(gallery.hasVisibleItems()).toBe(true));
+      await vi.waitFor(() => expect(gallery.anchorIndex()).toBe(1));
+
+      gallery.next({ steps: 1, behavior: 'auto', loop: false });
+
+      await vi.waitFor(() => expect(gallery.anchorIndex()).toBe(2));
+    });
+
     it('should not loop to the last index if first is not visible yet', async () => {
       component.loop.set(true);
       component.itemsPerView.set(3);
