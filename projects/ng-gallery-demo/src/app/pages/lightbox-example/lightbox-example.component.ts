@@ -1,12 +1,12 @@
-import { Component, inject, OnInit, Signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { HttpResourceRef } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { GalleryItemData, } from 'ng-gallery';
 import { LightboxModule, provideLightboxOptions } from 'ng-gallery/lightbox';
 
-import { Pixabay } from '../../service/pixabay.service';
+import { Picsum } from '../../service/picsum.service';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { NoteComponent } from '../../shared/note/note.component';
 
@@ -31,11 +31,11 @@ import { NoteComponent } from '../../shared/note/note.component';
 })
 export class LightboxExampleComponent implements OnInit {
 
-  private pixabay: Pixabay = inject(Pixabay);
+  private picsum: Picsum = inject(Picsum);
 
   private _title: Title = inject(Title);
 
-  photos: Signal<GalleryItemData[]> = toSignal(this.pixabay.getHDImages('sea'));
+  photos: HttpResourceRef<GalleryItemData[]> = this.picsum.getImages('sea');
 
   ngOnInit(): void {
     this._title.setTitle('Lightbox | ng-gallery');

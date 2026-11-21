@@ -3,7 +3,7 @@ import { fn } from 'storybook/test';
 import { moduleMetadata } from '@storybook/angular-vite';
 import { NgOptimizedImage } from '@angular/common';
 import { Gallery, GalleryModule } from 'ng-gallery';
-import { getHDImages } from '#.storybook/mocks/pixabay.service';
+import { getHDImages } from '#.storybook/mocks/images.service';
 import { getSlides } from '#.storybook/mocks/slides.service';
 import { galleryArgTypes } from '#src/stories/gallery/helper';
 

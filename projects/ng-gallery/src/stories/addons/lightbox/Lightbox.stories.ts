@@ -1,7 +1,7 @@
 import preview from '#.storybook/preview';
 import { moduleMetadata } from '@storybook/angular-vite';
 import { LightboxModule, Lightbox } from 'ng-gallery/lightbox';
-import { getHDImages } from '#.storybook/mocks/pixabay.service';
+import { getHDImages } from '#.storybook/mocks/images.service';
 
 const meta = preview.meta({
   title: 'Addons/Lightbox',

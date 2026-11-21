@@ -1,7 +1,7 @@
 import preview from '#.storybook/preview';
 import { moduleMetadata } from '@storybook/angular-vite';
 import { Gallery, GalleryModule } from 'ng-gallery';
-import { getHDImages } from '#.storybook/mocks/pixabay.service';
+import { getHDImages } from '#.storybook/mocks/images.service';
 import { getSlides } from '#.storybook/mocks/slides.service';
 
 const meta = preview.meta({

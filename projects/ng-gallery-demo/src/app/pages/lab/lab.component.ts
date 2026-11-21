@@ -19,7 +19,7 @@ import {
   GalleryCounterPosition, GalleryAutoplayDirection
 } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
-import { Pixabay } from '../../service/pixabay.service';
+import { Picsum } from '../../service/picsum.service';
 import { FooterComponent } from '../../shared/footer/footer.component';
 
 @Component({
@@ -48,11 +48,11 @@ export class LabComponent implements OnInit {
 
   private _title: Title = inject(Title);
 
-  private pixabay: Pixabay = inject(Pixabay);
+  private picsum: Picsum = inject(Picsum);
 
   mixedData = mixedData;
 
-  readonly images: HttpResourceRef<GalleryItemData[]> = this.pixabay.getImages('Fruits');
+  readonly images: HttpResourceRef<GalleryItemData[]> = this.picsum.getImages('Fruits');
 
   initialIndex: WritableSignal<number> = signal(0);
 

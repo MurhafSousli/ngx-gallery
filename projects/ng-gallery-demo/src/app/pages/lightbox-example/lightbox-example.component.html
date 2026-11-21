@@ -8,7 +8,7 @@
     <h3>Demo</h3>
 
     <ng-template lightbox #lightbox="lightbox" panelClass="g-glass-theme">
-      <gallery [items]="photos()">
+      <gallery [items]="photos.value()">
         <img *galleryItemDef="let item"
              galleryImage
              [src]="item.src"
@@ -24,7 +24,7 @@
     </ng-template>
 
     <div class="grid">
-      @for (item of photos(); track i; let i = $index) {
+      @for (item of photos.value(); track i; let i = $index) {
         <button mat-raised-button
                 class="grid-item"
                 [lightboxFor]="lightbox"

@@ -65,7 +65,7 @@ export default defineMain({
     return config;
   },
   staticDirs: [
-    '../src', // 👈 serves mockServiceWorker.js
+    '../src',
     './public', // 👈 serves mock versions.json for local testing
   ],
 });
