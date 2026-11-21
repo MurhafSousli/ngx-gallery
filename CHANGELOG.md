@@ -1,8 +1,9 @@
 # Changelog
 
-
 ## 13.0.0-next.3
 
+- Upgrade to Angular 22.3.0
+- fix(gallery): Refine navigation origin for consistent multi-item scrolling.
 - fix(gallery): Clean up wrongful `console.log` on index change.
 - regret(storybook): Bring back `@compodoc` instead of the default option in storybook.
 - feat(autoplay): Wait until all visible items are loaded before starting autoplay.
